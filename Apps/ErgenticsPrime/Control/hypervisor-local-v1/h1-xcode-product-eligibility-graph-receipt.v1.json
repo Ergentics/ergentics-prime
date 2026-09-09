@@ -1,0 +1,88 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h2_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "graph": {
+    "aggregate_merkle_root": "23fdbc75aa627f6d0ea28dfcc0971f82f2d036268b49cf12e5945fef5d336cb1",
+    "edge_count": 3,
+    "leaf_labels": [
+      "schema",
+      "graph.json",
+      "graph.cbor"
+    ],
+    "node_count": 3,
+    "state_root": "ec47f37f9efbf34a6471a1c3a79b7184e6d4f5b10a21f092a000f473c75b72cc",
+    "transition_root": "4852bb589cba2f7d0d9f52a385e3934d362f8995e339f5d4be2960041f46c596",
+    "witness_root": "8347175f9e6470fc10b93b6129ce2b61b472f405a3fac8f6b30665ca0528b005"
+  },
+  "lineage": {
+    "continuity_result_checkpoint": {
+      "commit": "603a789085c7ef9db061641c54f9259bfbc0948b",
+      "result_file": "Control/hypervisor-local-v1/h1-xcode-build-archive-continuity-result.v1.json",
+      "result_sha256": "908ea5d0fc095b2c3df17a0465400b4a0fdb4d44e896ca43bc7edce4eec6da07",
+      "tree": "f9e28f335d054da5e00a8394ec6d67eeec0ab208"
+    },
+    "stage_output_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+    "stage_receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94"
+  },
+  "recorded_at_utc": "2026-09-01T01:11:38Z",
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor.xcode-product-eligibility-graph-receipt.v1",
+  "stage_id": "hypervisor_product_schema_and_pure_contract_v1",
+  "stage_ordinal": "1",
+  "status": "PASS_EVIDENCE_DERIVED_DUAL_STREAM_ELIGIBILITY_GRAPH",
+  "streams": {
+    "cbor": {
+      "bytes": 5176,
+      "path": "Control/hypervisor-local-v1/h1-xcode-product-eligibility-graph.v1.cbor",
+      "profile": "RFC8949_CORE_DETERMINISTIC_SUBSET",
+      "sha256": "51ffda46233533dcc281af9e9db560a9658cb26f3813c54ffa5255389718dd2b"
+    },
+    "json": {
+      "bytes": 5572,
+      "path": "Control/hypervisor-local-v1/h1-xcode-product-eligibility-graph.v1.json",
+      "profile": "SORTED_KEYS_NO_WHITESPACE_WITHOUT_ESCAPING_SLASHES",
+      "sha256": "f615485593777d6022d1e76b9fab275f2857bc5d68a8fc84f2478cf591f90768"
+    },
+    "maximum_each_bytes": 65536
+  },
+  "tooling": {
+    "projector": {
+      "binary_sha256": "f194f7eb51b4497d2992697efd5cab4cef0897c4187edd482bb391e45194f765",
+      "source_path": "Control/hypervisor-local-v1/stage-xcode-eligibility-projector.v1.swift",
+      "source_sha256": "6c19be5fd75403df454cf45f8ea3b636a03098e99d0b86dea1873a6579f568f8",
+      "zero_arguments": true
+    },
+    "verifier": {
+      "binary_sha256": "5f0ca198ff8b2478544014824f53a8f0e847e4c7b236715e37259ac89a4d4cf0",
+      "source_path": "Control/hypervisor-local-v1/stage-xcode-eligibility-verifier.v1.swift",
+      "source_sha256": "beaf8c863d91b1bb9cd72c8b49bd2201bc4bffc7804f46461232976e51533788",
+      "zero_arguments": true
+    }
+  },
+  "verification": {
+    "aggregate_merkle_reconstruction": "SATISFIED",
+    "cbor_exact_reencode": "SATISFIED",
+    "cbor_round_trip": "SATISFIED",
+    "continuity_result_exact_sha256": "908ea5d0fc095b2c3df17a0465400b4a0fdb4d44e896ca43bc7edce4eec6da07",
+    "descriptor_held_no_follow_evidence_reads": "SATISFIED",
+    "evidence_derived_full_semantic_reconstruction": "SATISFIED",
+    "full_authority_ceiling_inside_state_root": "SATISFIED",
+    "graph_streams_without_evidence": "REJECTED",
+    "json_cbor_semantic_join": "SATISFIED",
+    "json_exact_reencode": "SATISFIED",
+    "json_round_trip": "SATISFIED",
+    "node_projection_reconstruction": "SATISFIED",
+    "one_byte_stage_result_mutation": "REJECTED_AT_DIGEST_ADMISSION",
+    "predicate_count": 21,
+    "predicate_set_exact": "SATISFIED",
+    "source_manifest_exact_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "stage_result_exact_sha256": "deea60ee59ce64e01de29d207bb7d67902da7195cbe7a58c833bfc94d12ff428"
+  }
+}

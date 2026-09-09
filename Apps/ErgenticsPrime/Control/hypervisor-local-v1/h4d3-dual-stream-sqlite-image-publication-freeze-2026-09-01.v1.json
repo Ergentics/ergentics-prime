@@ -1,0 +1,471 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3-freeze.v1",
+  "checkpoint": "H4-D3_DUAL_STREAM_SQLITE_IMAGE_PUBLICATION_FREEZE",
+  "recorded_at_utc": "2026-09-02T04:58:09Z",
+  "predecessor": {
+    "freeze_parent_commit": "98c8fb1b992bed1047638f1ba016f8743a40b052",
+    "freeze_parent_tree": "238e379847d205537493eed08242824ba6d33d9a",
+    "d2c_implementation_commit": "76569fa2dc819a8ca36cb2e5a2c9b7fd1c4d2256",
+    "d2c_implementation_tree": "4730555b82c4ecd6ab439200b9aa98705e07c070",
+    "d2b_implementation_commit": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876",
+    "d2b_checkpoint_commit": "6f3de30313bde8b5321f1bfa63248d0a82e63dd9"
+  },
+  "implementation_parent_rule": "The implementation commit must have this freeze commit as its direct parent.",
+  "result_contract": "PASS_H4D3_DUAL_STREAM_PUBLICATION_MECHANICS_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "scientific_authority": false,
+    "production_h3_mint": "ABSENT",
+    "production_store_mint": "ABSENT",
+    "next_stage_authorized": false
+  },
+  "roadmap_boundary": {
+    "roadmap_stage": "hypervisor_durable_receipt_fault_injection_v1",
+    "relation": "H4_PRE_ENTRY_FIXTURE_MECHANICS",
+    "d3_closes": [
+      "a fresh disjoint v3 SQLite image retains the exact canonical JSON bytes inherited from the H4-C independent-stream projection",
+      "the same image retains the exact canonical CBOR bytes inherited from the H4-C independent-stream projection",
+      "the same row retains the exact indexed scalar representation",
+      "writer-side prepublication and postpublication reconstruction joins all three representations to the original owner-bound projection",
+      "descriptor-rooted publication and returned durability requests complete in the frozen order"
+    ],
+    "d3_does_not_close": [
+      "fresh-process restart adoption",
+      "historical owner or lease recovery",
+      "verified-live H3 provenance",
+      "H4 entry or completion",
+      "Gate-E candidate selection",
+      "graph or Merkle commitment",
+      "real crash-cut, power-loss or constrained-I/O evidence"
+    ]
+  },
+  "format": {
+    "schema": "com.ergentics.provenance.hypervisor.h4.dual-stream-sqlite-image-publication.v3",
+    "application_id": 1162891828,
+    "application_id_ascii": "EPR4",
+    "user_version": 2,
+    "page_size": 4096,
+    "maximum_pages": 64,
+    "maximum_image_bytes": 262144,
+    "table": "h4_dual_receipts",
+    "table_properties": [
+      "STRICT",
+      "WITHOUT ROWID"
+    ],
+    "create_table_sql": "CREATE TABLE h4_dual_receipts(singleton INTEGER PRIMARY KEY CHECK(singleton=1),semantic_schema TEXT NOT NULL CHECK(semantic_schema='com.ergentics.provenance.hypervisor.h4.canonical-receipt.v1'),claim_state TEXT NOT NULL CHECK(claim_state='OBSERVED_NONPASS'),predicate_count INTEGER NOT NULL CHECK(predicate_count>0 AND predicate_count<=4096),authority_vector TEXT NOT NULL CHECK(authority_vector='00000000'),canonical_json BLOB NOT NULL CHECK(length(canonical_json)>0 AND length(canonical_json)<=158),canonical_cbor BLOB NOT NULL CHECK(length(canonical_cbor)>0 AND length(canonical_cbor)<=158)) STRICT, WITHOUT ROWID",
+    "insert_sql": "INSERT INTO h4_dual_receipts(singleton,semantic_schema,claim_state,predicate_count,authority_vector,canonical_json,canonical_cbor) VALUES(1,?,?,?,?,?,?)",
+    "row_select_sql": "SELECT singleton,semantic_schema,claim_state,predicate_count,authority_vector,canonical_json,canonical_cbor FROM h4_dual_receipts LIMIT 2",
+    "caller_mutable_sql_surface": "NONE",
+    "row_cardinality": 1,
+    "columns": [
+      {
+        "name": "singleton",
+        "storage": "INTEGER",
+        "constraint": "PRIMARY KEY CHECK(singleton=1)"
+      },
+      {
+        "name": "semantic_schema",
+        "storage": "TEXT",
+        "constraint": "exact H4-C semantic schema"
+      },
+      {
+        "name": "claim_state",
+        "storage": "TEXT",
+        "constraint": "OBSERVED_NONPASS"
+      },
+      {
+        "name": "predicate_count",
+        "storage": "INTEGER",
+        "constraint": "1...4096"
+      },
+      {
+        "name": "authority_vector",
+        "storage": "TEXT",
+        "constraint": "00000000"
+      },
+      {
+        "name": "canonical_json",
+        "storage": "BLOB",
+        "constraint": "1...158 exact bytes"
+      },
+      {
+        "name": "canonical_cbor",
+        "storage": "BLOB",
+        "constraint": "1...158 exact bytes"
+      }
+    ],
+    "secondary_indexes": 0,
+    "triggers": 0,
+    "views": 0,
+    "virtual_tables": 0,
+    "extensions": 0,
+    "filesystem_sqlite_connections": 0,
+    "canonical_json_source": "direct binding from OwnerBoundCanonicalProjection canonical Projection.json",
+    "canonical_cbor_source": "direct binding from OwnerBoundCanonicalProjection canonical Projection.cbor",
+    "cross_derivation": "FORBIDDEN",
+    "independence_claim": "inherited H4-C predecessor evidence; D3 dynamically proves exact direct retention and equality, not stream-production independence",
+    "required_static_dataflow_audit": [
+      "canonical_json binds Projection.json directly",
+      "canonical_cbor binds Projection.cbor directly",
+      "no encoder derives either stored stream from the other"
+    ]
+  },
+  "namespace": {
+    "root": "fresh disjoint canonical absolute 0700 effective-uid-owned empty directory",
+    "root_descriptor": "O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC",
+    "root_lock": "nonblocking exclusive flock",
+    "staging_leaf": ".h4d3-dual-receipt.sqlite.staging",
+    "final_leaf": "h4d3-dual-receipt.sqlite",
+    "staging_creation": "openat root descriptor with O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC mode 0600",
+    "sealed_mode": "0400",
+    "final_open": "openat root descriptor with O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC",
+    "publication": "renameatx_np root descriptor to root descriptor",
+    "publication_flags": [
+      "RENAME_EXCL",
+      "RENAME_NOFOLLOW_ANY",
+      "RENAME_RESOLVE_BENEATH"
+    ],
+    "v2_namespace_relation": "DISJOINT_AND_UNTOUCHED"
+  },
+  "closed_input_surface": {
+    "operation": "persist()",
+    "operation_arguments": 0,
+    "caller_root_arguments": 0,
+    "caller_path_arguments": 0,
+    "caller_descriptor_arguments": 0,
+    "caller_byte_arguments": 0,
+    "caller_sql_arguments": 0,
+    "caller_schema_arguments": 0,
+    "caller_policy_arguments": 0,
+    "caller_clock_arguments": 0,
+    "caller_owner_arguments": 0,
+    "production_factory": "ABSENT",
+    "test_factory": "EPR_H4_PRIVACY_TESTS_ONLY_OWNER_BOUND_PROJECTION_PRIVATE_ROOT_AND_D3_GRANT_VALIDTHROUGHTICK_READTICK",
+    "test_root_admission_failure": "throws before a coordinator or one-shot operation outcome exists",
+    "fixed_c_wrappers": [
+      "epr_h4d3_create_staging(directory_fd)",
+      "epr_h4d3_publish_staging(directory_fd)",
+      "epr_h4d3_open_final(directory_fd)"
+    ]
+  },
+  "ownership_and_one_shot": {
+    "canonical_input": "existing OwnerBoundCanonicalProjection",
+    "owner_lease": "existing shared PersistenceLease",
+    "store_grant": "new D3-specific one-shot grant",
+    "claim_lock_order": [
+      "D3 store transition",
+      "shared owner persistence transition"
+    ],
+    "claim_order": [
+      "shared owner persistence lease",
+      "D3 store grant"
+    ],
+    "completion_order": [
+      "D3 store grant",
+      "shared owner persistence lease"
+    ],
+    "release_lock_order": [
+      "shared owner persistence transition",
+      "D3 store transition"
+    ],
+    "d2_d3_copied_projection_rule": "one shared owner-lease winner",
+    "liveness_revalidation": [
+      "before COMMIT",
+      "before staging creation",
+      "before rename"
+    ],
+    "concurrent_call": "inProgress",
+    "replay_state_map": {
+      "operation_in_progress": "inProgress",
+      "admitted": "alreadyConsumed",
+      "rejectedBeforePublication": "poisoned",
+      "transactionOutcomeUnknown": "persistenceRequiresInspection",
+      "prepublicationStateUnknown": "persistenceRequiresInspection",
+      "stagingRetained": "persistenceRequiresInspection",
+      "publicationOutcomeUnknown": "persistenceRequiresInspection",
+      "publishedUnverified": "persistenceRequiresInspection",
+      "leaseCompletionUnknown": "persistenceRequiresInspection",
+      "unavailable_owner_claim_failure": "no D3 owner or store claim was acquired; a later call observes the current shared owner/store state",
+      "unavailable_after_owner_claim_store_failure": "complete the shared owner claim as rejectedBeforePublication; later coordinator replay observes poisoned, or persistenceRequiresInspection if owner completion was not exact; the losing D3 store grant retains its independently observed state"
+    },
+    "retry": false,
+    "cleanup": false,
+    "repair": false,
+    "adoption": false
+  },
+  "sqlite_policy": {
+    "writer_database": ":memory:",
+    "writer_flags": "READWRITE|CREATE|MEMORY|FULLMUTEX|PRIVATECACHE|EXRESCODE",
+    "journal_mode": "MEMORY",
+    "temp_store": "MEMORY",
+    "foreign_keys": true,
+    "defensive": true,
+    "trusted_schema": false,
+    "dqs_ddl": false,
+    "dqs_dml": false,
+    "busy_timeout_milliseconds": 0,
+    "readers": {
+      "prepublication": "one fresh private in-memory copy-deserialize of serialized_image with SQLITE_DESERIALIZE_READONLY; validate and close exactly before staging creation",
+      "final_readback": "a distinct fresh private in-memory copy-deserialize of final_readback with SQLITE_DESERIALIZE_READONLY; validate and close exactly before closing final/still-held staging file descriptors",
+      "shared_policy": [
+        "SELECT_AND_READ_ONLY authorizer",
+        "PRAGMA query_only=ON",
+        "sqlite3_db_filename(main) is empty",
+        "PRAGMA integrity_check(1) returns exactly ok"
+      ]
+    },
+    "statement_close_predicates": [
+      "sqlite3_next_stmt(database,nil) == nil before every successful close",
+      "sqlite3_close(database) == SQLITE_OK",
+      "a leaked statement may be finalized for containment, but the operation fails"
+    ],
+    "wal": false,
+    "shm": false,
+    "rollback_journal_file": false,
+    "backup_to_path": false,
+    "custom_vfs": false
+  },
+  "semantic_join": {
+    "required_before_commit": true,
+    "required_after_insert": true,
+    "required_after_serialize_before_publication": true,
+    "required_after_final_readback": true,
+    "predicates": [
+      "stored canonical_json bytes equal original Projection.json bytes",
+      "stored canonical_cbor bytes equal original Projection.cbor bytes",
+      "strict JSON decode followed by identical canonical JSON re-encode",
+      "strict CBOR decode followed by identical deterministic CBOR re-encode",
+      "indexed scalar storage classes and values are exact",
+      "JSON semantic equals CBOR semantic",
+      "JSON semantic equals indexed scalar semantic",
+      "all semantics equal the original owner-bound Projection reconstruction"
+    ],
+    "self_consistent_three_field_substitution": "REJECT_AGAINST_ORIGINAL_OWNER_BOUND_PROJECTION"
+  },
+  "publication_order": [
+    "lock D3 store then shared owner transitions; claim shared owner persistence lease then D3 store grant",
+    "rejoin named and held root and require empty inventory",
+    "open and harden private in-memory SQLite writer",
+    "begin one transaction",
+    "create exact v3 schema",
+    "insert exact JSON, CBOR and indexed scalar values",
+    "validate schema, storage classes, bytes and three-way semantics",
+    "revalidate both lifetimes",
+    "enter and return from one COMMIT",
+    "verify autocommit and no active transaction",
+    "serialize exact image",
+    "close writer exactly",
+    "validate SQLite header, page count, size and alignment",
+    "copy-deserialize into fresh read-only memory and repeat exact reconstruction",
+    "require no live statements and close the prepublication reader exactly before staging creation",
+    "revalidate both lifetimes and empty root",
+    "create fixed staging exclusively",
+    "perform the one frozen complete-image pwrite",
+    "seal staging 0400",
+    "join held staging metadata",
+    "fsync staging",
+    "F_FULLFSYNC staging",
+    "pread exact staging bytes, require EOF and require staging_readback == serialized_image",
+    "rejoin named staging to held staging vnode",
+    "revalidate both lifetimes",
+    "enter and return from exclusive rename",
+    "join named final to still-held staging vnode",
+    "fsync held root directory",
+    "open fixed final descriptor-rooted and nonblocking",
+    "join named and opened final metadata",
+    "pread exact final bytes, require EOF and require final_readback == staging_readback == serialized_image",
+    "repeat exact v3 schema, JSON, CBOR, scalar and owner-bound joins",
+    "close the distinct final-readback reader exactly",
+    "close final then still-held staging/final file descriptors exactly",
+    "retain the root descriptor and require final-only inventory and terminal final/root joins",
+    "complete both leases",
+    "mint opaque receipt last while the root descriptor remains retained"
+  ],
+  "write_primitive": {
+    "call": "one pwrite at offset zero for the complete serialized image",
+    "success": "return == image.count",
+    "failure_returns": [
+      "error",
+      "zero",
+      "short",
+      "overrun"
+    ],
+    "failure_state": "stagingRetained",
+    "second_write_call": false
+  },
+  "metadata_join_profiles": {
+    "root": [
+      "device",
+      "inode",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "flags"
+    ],
+    "same_phase_file": [
+      "device",
+      "inode",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "flags",
+      "mtime",
+      "ctime"
+    ],
+    "staging_to_final_rename": [
+      "device",
+      "inode",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "flags",
+      "mtime"
+    ],
+    "post_rename_rule": "capture the post-rename final stat as the new ctime baseline"
+  },
+  "outcome_taxonomy": {
+    "admitted": "all writer-side ordered predicates passed; this is not restart adoption or H4 entry",
+    "rejectedBeforePublication": "staging creation was not entered and empty namespace is re-proven",
+    "transactionOutcomeUnknown": "COMMIT was entered without an exact successful return",
+    "prepublicationStateUnknown": "no rename was entered, but exact inspection cannot prove both that staging creation was never entered and that the final leaf is absent",
+    "stagingRetained": "before rename, the created named staging leaf remains joined to the held regular effective-uid-owned nlink-1 vnode; its currently observed mode, size and bytes are retained and are not necessarily sealed or image-exact",
+    "publicationOutcomeUnknown": "rename was entered without an exact successful return, or the post-entry namespace cannot be classified exactly",
+    "publishedUnverified": "rename succeeded but a later durability, identity, reconstruction, close, lifetime or completion predicate failed",
+    "unavailable": "one-shot owner or store claim failed after coordinator construction and before mutation"
+  },
+  "entered_call_counters": {
+    "commit": "exactly one maximum",
+    "staging_create": "exactly one maximum",
+    "complete_image_pwrite": "exactly one maximum",
+    "rename": "exactly one maximum",
+    "final_open": "exactly one maximum"
+  },
+  "success_receipt": {
+    "payload_exposure": "NONE",
+    "reflection": "EMPTY",
+    "fixed_facts": {
+      "sqlite_image_exact": "staging_readback == final_readback == serialized_image",
+      "canonical_json_retained_exact": true,
+      "canonical_cbor_retained_exact": true,
+      "indexed_fields_exact": true,
+      "writer_three_way_join_exact": true,
+      "restart_adopted": false,
+      "h4_entered": false,
+      "authority_vector": "00000000"
+    }
+  },
+  "required_tests": [
+    "exact JSON, CBOR and indexed-scalar persistence and writer three-way join",
+    "independent JSON corruption, noncanonicality, aliases, unknown fields and trailing bytes",
+    "independent CBOR corruption, noncanonicality, aliases, unknown fields and trailing bytes",
+    "scalar-only mismatch and wrong SQLite storage classes",
+    "self-consistent three-field substitution rejects against the original owner-bound projection",
+    "v2 schema, wrong version or application ID, extra schema object, extra column and extra row reject",
+    "root alias, symlink, ownership, mode, inventory and competing-lock rejection",
+    "staging and final symlink, FIFO and nonregular rebound reject without blocking",
+    "staging unlink, rebound or added hardlink before rename cannot return stagingRetained and maps to prepublicationStateUnknown unless the exact joined retained-vnode predicate is re-proven",
+    "same-bytes new-inode substitution before open, after read, before rename and after publication",
+    "staging replacement after named snapshot and before rename entry maps to prepublicationStateUnknown; after rename entry it maps to publicationOutcomeUnknown",
+    "final replacement after rename and before final open maps to publishedUnverified without blocking",
+    "final replacement after final read and before terminal rejoin maps to publishedUnverified",
+    "root rebound before each returned empty, staging, publication, published and success outcome is detected; no claim extends past the terminal observation",
+    "every transaction, serialization, write, seal, sync, rename, reopen, reconstruction and close fault maps to its exact retained state",
+    "complete-image pwrite error, zero, short and overrun returns each retain staging and never enter a second write call",
+    "writer, prepublication-reader and final-reader leaked-statement faults are contained by finalization but fail exact close",
+    "one winner under copied, sequential and forced-concurrent calls",
+    "same-coordinator and cross-D2b/D3 replay follows the exact replay_state_map for every taxonomy class",
+    "owner-claim unavailable is distinguished from store-grant unavailable after owner claim, including poisoned versus inspection-required replay",
+    "D2b versus D3 coordinators copied from one owner-bound projection have one shared owner-lease winner without consuming the losing coordinator store grant",
+    "D3 grant expiry before COMMIT, before staging creation and before rename maps to the exact namespace outcome and proves every later phase was not entered",
+    "store-completion rejection, owner-completion rejection and the completion interstice cannot expose an admitted half-state and require inspection",
+    "staging and final byte-divergence faults reject even with exact length and EOF",
+    "static source/dataflow audit proves direct Projection.json and Projection.cbor bindings and no cross-encoder path",
+    "success receipt has empty reflection, exposes no payload and contains only the fixed receipt facts",
+    "a v2 sentinel namespace and its bytes remain exactly unchanged across D3 success and every failure class",
+    "all pre-existing H4 focused and full Debug and Release regression suites remain green",
+    "entered-call counters prove at most one COMMIT, staging create, complete-image pwrite, rename and final open on every path",
+    "production Debug and Release binaries exclude test factories, root/path loaders, fault hooks and diagnostic canaries",
+    "no process, VM, network, environment, wall-clock API, graph, Merkle, H4, candidate or Gate-E effect"
+  ],
+  "d3b_successor_boundary": {
+    "separate_freeze_required": true,
+    "predecessor": "future D3 result checkpoint",
+    "fresh_operating_system_process_required": true,
+    "retained_writer_objects": false,
+    "retained_expected_byte_arrays": false,
+    "retained_owner_anchor": false,
+    "retained_persistence_lease": false,
+    "required_result": "VALID_V3_DUAL_STREAM_THREE_WAY_JOIN",
+    "representation_admission_only": true,
+    "historical_producer_identity_recovered": false,
+    "authority_effect": "NONE"
+  },
+  "effects": {
+    "application_launch": false,
+    "vm_launch": false,
+    "guest_execution": false,
+    "process_launch": false,
+    "network": false,
+    "environment_read": false,
+    "wall_clock_api_read": false,
+    "filesystem_timestamp_metadata_read": true,
+    "graph_construction": false,
+    "merkle_commitment": false,
+    "v2_namespace_read": false,
+    "v2_namespace_write": false,
+    "file_creation": "ONE_FIXED_STAGING_LEAF_INSIDE_A_PREEXISTING_TEST_ONLY_ADMITTED_ROOT",
+    "file_content_write": "D3_STAGING_ONLY_BEFORE_RENAME",
+    "file_rename": "ONE_FIXED_D3_STAGING_TO_FINAL",
+    "file_delete": false
+  },
+  "implementation_allowlist": [
+    "ErgenticsProvenance.xcodeproj/project.pbxproj",
+    "Sources/HypervisorStageH4DualStreamPersistence.swift",
+    "Sources/HypervisorStageH4OwnerBinding.swift",
+    "Sources/HypervisorStageH4CanonicalStreams.swift",
+    "Sources/ProvenanceReadOnly.h",
+    "Tests/HypervisorStageH4DualStreamPersistenceTests.swift"
+  ],
+  "excluded_paths_and_work": [
+    "Sources/HypervisorStageH4Persistence.swift",
+    "Tests/HypervisorStageH4PersistenceTests.swift",
+    "all retained D2b/v2 roots and bytes",
+    "H4-D3b reader or harness",
+    "graph and Merkle implementation",
+    "crash-cut and constrained-I/O execution",
+    "production store/root mint",
+    "UI, process, VM, network, GitHub or Gate-E work",
+    "unrelated dirty Control files and untracked artifacts"
+  ],
+  "hard_stops": [
+    "Do not migrate, rewrite, rename, clean, repair, delete or adopt any D2b/v2 namespace.",
+    "Do not derive canonical JSON from CBOR or canonical CBOR from JSON.",
+    "Do not let a caller supply paths, bytes, SQL, schema, flags, clocks, owners, roles or faults in production.",
+    "Do not let D2b and D3 both consume one copied owner-bound projection.",
+    "Do not call writer-side admitted a restart adoption, H4 entry, candidate evaluation or authority transition.",
+    "Do not add graph, Merkle, crash-cut, constrained-I/O, process, VM, network, UI, distribution or Gate-E work to this allowlist."
+  ],
+  "residuals": [
+    "The named-staging snapshot-to-rename interval cannot atomically instruct Darwin to rename one exact held inode; descriptor, inventory and post-rename joins detect but do not prevent every same-uid substitution.",
+    "Advisory flock does not exclude same-euid, root or Full-Disk-Access mutation.",
+    "fsync and F_FULLFSYNC are returned Darwin durability requests, not mathematical proof against every device, firmware, filesystem or power-loss failure.",
+    "Filesystem, SQLite and transition-lock calls have no independent constrained-I/O deadline.",
+    "Same-process writer reconstruction is not fresh-process restart evidence."
+  ],
+  "nonclaims": [
+    "D3 proves only the frozen local fixture publication mechanics on its exact implementation and test objects.",
+    "SQLite is a checked non-authoritative container; JSON, CBOR and scalar agreement creates no truth or authority.",
+    "No authenticity, anti-replay, rollback resistance, historical owner recovery, H4 entry, Gate-E movement, candidate result or scientific conclusion is claimed.",
+    "No successor stage or authority-bearing launch is authorized by this freeze."
+  ]
+}

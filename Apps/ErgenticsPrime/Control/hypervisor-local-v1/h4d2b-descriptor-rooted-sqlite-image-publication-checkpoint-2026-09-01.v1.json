@@ -1,0 +1,315 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d2b-checkpoint.v1",
+  "checkpoint": "H4-D2B_DESCRIPTOR_ROOTED_SQLITE_IMAGE_PUBLICATION",
+  "result": "PASS_H4D2B_DESCRIPTOR_ROOTED_SQLITE_IMAGE_PUBLICATION_CONTRACT_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "next_stage_authorized": false,
+    "production_h3_mint": "ABSENT",
+    "production_projection_persisted": false,
+    "production_store_mint": "ABSENT",
+    "roadmap_relation": "H4_PRE_ENTRY_FIXTURE_MECHANICS",
+    "scientific_authority": false
+  },
+  "object_binding": {
+    "implementation_commit": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876",
+    "implementation_tree": "070c48ba68236a6f5ede0cd0b03de9681b174345",
+    "implementation_parent": "3c64f3e85bd4464cb62c75cd83548e47de53c735",
+    "implementation_paths": [
+      "Sources/HypervisorStageH4OwnerBinding.swift",
+      "Sources/HypervisorStageH4Persistence.swift",
+      "Sources/ProvenanceReadOnly.h",
+      "Tests/HypervisorStageH4PersistenceTests.swift"
+    ],
+    "delta_equals_freeze_allowlist": true,
+    "diff_check": "PASS",
+    "worktree_implementation_bytes_equal_head": true
+  },
+  "control_binding": {
+    "initial_freeze_commit": "26a26569cdd04091e0be6cee986a4b6de26420cc",
+    "initial_freeze_tree": "8752f89a89590b27dae3b668c4369cabbcd113d2",
+    "terminal-state-clarification_commit": "3c64f3e85bd4464cb62c75cd83548e47de53c735",
+    "terminal-state-clarification_tree": "555d5bd79e83f1795ccfb6fbfb6b2872f92b9b77",
+    "freeze_path": "Control/hypervisor-local-v1/h4d2b-descriptor-rooted-sqlite-image-publication-freeze-2026-09-01.v1.json",
+    "freeze_blob_at_implementation_parent": "5c93855315a4abc1b56c56e73ed797e6e15ba281",
+    "freeze_sha256": "e1a32ee7ad9e3842944472045430c07c3f55e36027a52d9b8e2f18023f288c32",
+    "d2_predecessor_commit": "2e9b3cc018822882ef264472e42bca87778dbf8e",
+    "d2_predecessor_tree": "c3cd80862fb41b19ceb326ebda2f2cf47ad48825"
+  },
+  "closed_mechanics": {
+    "scope": "Local fixture-only descriptor-rooted SQLite-image publication mechanics",
+    "sqlite": {
+      "filesystem_path_connections": 0,
+      "open_callsite_count": 1,
+      "database": ":memory:",
+      "writer_open_flags": "READWRITE|CREATE|MEMORY|FULLMUTEX|PRIVATECACHE|EXRESCODE",
+      "reader_open_flags": "READWRITE|MEMORY|FULLMUTEX|PRIVATECACHE|EXRESCODE followed by defensive query-only hardening",
+      "successful_runtime_connection_sequence": [
+        "writer",
+        "prepublication reader",
+        "postpublication reader"
+      ],
+      "transaction_count": 1,
+      "row_cardinality": 1,
+      "claim_state": "OBSERVED_NONPASS",
+      "authority_vector": "00000000",
+      "serialization": "one fixed-arity sqlite3_serialize-main bridge",
+      "prepublication_reconstruction": "copy-deserialize into a fresh private read-only connection",
+      "postpublication_reconstruction": "copy-deserialize held final read-back bytes into a fresh private read-only connection",
+      "custom_vfs": false,
+      "sqlite_backup_to_path": false,
+      "writer_journal_mode": "MEMORY",
+      "filesystem_rollback_journal_or_wal_or_shm": false
+    },
+    "filesystem": {
+      "root": "held canonical empty 0700 effective-uid-owned directory with exclusive advisory flock",
+      "staging_leaf": ".h4d2b-receipt.sqlite.staging",
+      "staging_creation": "descriptor-rooted O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC mode 0600",
+      "sealed_mode": "0400",
+      "maximum_image_bytes": 262144,
+      "page_size": 4096,
+      "publication_leaf": "h4d2b-receipt.sqlite",
+      "publication_primitive": "one descriptor-rooted renameatx_np",
+      "publication_flags": [
+        "RENAME_EXCL",
+        "RENAME_NOFOLLOW_ANY",
+        "RENAME_RESOLVE_BENEATH"
+      ],
+      "durability_order": [
+        "staging fsync",
+        "staging F_FULLFSYNC",
+        "exclusive rename",
+        "immediate final-only inventory and held-staging-to-named-final vnode join",
+        "parent-directory fsync",
+        "final descriptor and byte reconstruction",
+        "final inventory, vnode, and named-parent joins",
+        "receipt mint last"
+      ]
+    },
+    "one_shot_state_machine": {
+      "outcome_classes": [
+        "admitted",
+        "unavailable",
+        "rejectedBeforePublication",
+        "transactionOutcomeUnknown",
+        "prepublicationStateUnknown",
+        "stagingRetained",
+        "publicationOutcomeUnknown",
+        "publishedUnverified"
+      ],
+      "ordered_transition_locks": "store then owner; release owner then store",
+      "physical_append_outside_transition_locks": true,
+      "completion_mismatch_rule": "force both participating states to inspection before releasing either transition lock",
+      "one_winner": true,
+      "retry": false,
+      "cleanup_or_adoption": false,
+      "transient_false_already_consumed_window": "ABSENT"
+    },
+    "terminology_normalization": {
+      "historical_freeze_token": "COMMIT_REQUIRES_INSPECTION",
+      "implementation_and_replay_token": "PERSISTENCE_REQUIRES_INSPECTION",
+      "semantic_relation": "The implementation token is the same fail-closed terminal class with a broader name because inspection may be required after transaction, staging, or publication uncertainty.",
+      "authority_effect": "NONE"
+    }
+  },
+  "apfs_rename_join": {
+    "evidence_class": "LOCAL_IMPLEMENTATION_DIAGNOSTIC_CORROBORATED_BY_FINAL_FOCUSED_TEST",
+    "host_filesystem_behavior": "same-directory rename advanced ctime while the sealed file's device, inode, mode, uid, gid, nlink, size, flags, mtime, and read-back bytes remained joined",
+    "numeric_before_after_timestamps_retained": false,
+    "implementation_rule": "exclude ctime only from the cross-rename comparison; capture the post-rename stat as the final baseline; resume complete metadata comparisons after that boundary",
+    "false_restore_by_same_bytes_new_inode": "REJECTED"
+  },
+  "linearizability_proof": {
+    "copied_owner_distinct_store": {
+      "probe": "ownerBlocked",
+      "meaning": "the observer acquired its distinct store lock but could not acquire the exact shared owner lock"
+    },
+    "shared_store_distinct_owner": {
+      "probe": "storeBlocked",
+      "meaning": "the observer could not acquire the exact shared store lock"
+    },
+    "probe_primitive": "EPR_H4_PRIVACY_TESTS-only nonblocking NSLock.try() using production store-to-owner order",
+    "elapsed_time_inference": false,
+    "observer_outcomes_are_secondary_evidence": true
+  },
+  "verification": {
+    "tests": {
+      "focused_h4d2b": {
+        "configuration": "Debug",
+        "result": "Passed",
+        "executed": 18,
+        "passed": 18,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2b-final-focused-8aeb7e5/Logs/Test/Test-ErgenticsProvenance-2026.09.01_19-43-25--0700.xcresult"
+      },
+      "full_debug": {
+        "result": "Passed",
+        "executed": 643,
+        "passed": 643,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2b-final-full-debug-8aeb7e5/Logs/Test/Test-ErgenticsProvenance-2026.09.01_19-43-29--0700.xcresult"
+      },
+      "full_release": {
+        "result": "Passed",
+        "executed": 596,
+        "passed": 596,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2b-final-full-release-8aeb7e5/Logs/Test/Test-ErgenticsProvenance-2026.09.01_19-43-27--0700.xcresult"
+      },
+      "root_result_issue_summaries": "EMPTY",
+      "h4d2b_outcome_classes_covered": 8,
+      "h4d2b_test_fault_values_covered_including_none": 41
+    },
+    "application_builds": {
+      "debug": {
+        "result": "PASS",
+        "architecture": "arm64",
+        "path": "/private/tmp/epr-h4d2b-final-app-debug-8aeb7e5/Build/Products/Debug/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "sha256": "b351097722e7222f80742ad71317141694a44b0a149de256c2fe461699f10214",
+        "uuid": "DA293203-FDA0-3F43-8A24-FDB6BA2030A6",
+        "size_bytes": 9233912,
+        "signature": {
+          "kind": "ADHOC_LINKER_SIGNED_NO_TEAM",
+          "code_directory_flags": "0x20002(adhoc,linker-signed)",
+          "cdhash": "9b09d08ec66271c8daaa2c674033ea6119220948",
+          "team_identifier": "NOT_SET",
+          "info_plist": "NOT_BOUND",
+          "sealed_resources": "NONE"
+        }
+      },
+      "release": {
+        "result": "PASS",
+        "architecture": "arm64",
+        "path": "/private/tmp/epr-h4d2b-final-app-release-8aeb7e5/Build/Products/Release/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "sha256": "6af5c343f147cd28987393b40b80813ccfab5efab84a0965dc7790f45c1216c7",
+        "uuid": "C9CF4133-5911-304E-B1F9-A4880680B4D9",
+        "size_bytes": 3531752,
+        "signature": {
+          "kind": "ADHOC_LINKER_SIGNED_NO_TEAM",
+          "code_directory_flags": "0x20002(adhoc,linker-signed)",
+          "cdhash": "8f0d6b6f234ea26531ff25546497749e2f4a1ac8",
+          "team_identifier": "NOT_SET",
+          "info_plist": "NOT_BOUND",
+          "sealed_resources": "NONE"
+        }
+      },
+      "apple_signing": "DISABLED_FOR_LOCAL_BUILD_CHECK"
+    },
+    "production_binary_surface": {
+      "pattern_family": "H4-D2b test compile flag, test fault types, completion rejection hooks, interstice and try-lock probes, test factories, named injected faults, and diagnostic canaries",
+      "pattern_regex": "EPR_H4_PRIVACY_TESTS|TestFault|rejectStoreCompletionForTest|rejectOwnerCompletionForTest|rejectNextCompletionForTest|completionIntersticeForTest|probeTransitionForTest|tryCoordinatorTransitionForTest|makeTestCoordinator|makeTestSharedStore|inspectTestStore|renameResponseLost|parentReboundAfterPublish|prepublicationDeserialize|postpublicationDeserialize|H4D2B-RAW-DIAGNOSTIC-CANARY|epr-h4d2b",
+      "scan_commands": [
+        "strings -a <binary> | rg -n <pattern_regex>",
+        "nm -gj <binary> | rg -n <pattern_regex>"
+      ],
+      "debug_strings_matches": 0,
+      "debug_nm_matches": 0,
+      "release_strings_matches": 0,
+      "release_nm_matches": 0,
+      "focused_test_binary_strings_positive_control": 10,
+      "focused_test_binary_nm_positive_control": 27
+    },
+    "static": {
+      "sqlite_open_v2_calls": 1,
+      "sqlite_open_v2_database": ":memory:",
+      "forbidden_surface_matches": 0,
+      "forbidden_surface_pattern": "sqlite3_vfs_register|sqlite3_backup|/dev/fd|posix_spawn|CommandLine|Process\\b|getenv\\(",
+      "project_pbxproj_plist": "PASS",
+      "freeze_json": "PASS",
+      "diff_check": "PASS"
+    },
+    "optional_thread_sanitizer": {
+      "classification": "HARNESS_BOOTSTRAP_FAILURE",
+      "evaluation": "NOT_EVALUATED",
+      "bound_to_final_implementation_commit": false,
+      "selected_test_methods_entered": 0,
+      "xcresult_synthetic_runner_failures": 1,
+      "failure": "The xctest runner aborted in tsan.module_ctor while preparing to run tests; no restart was attempted.",
+      "xcresult": "/private/tmp/epr-h4d2b-focused-linearization-tsan/Logs/Test/Test-ErgenticsProvenance-2026.09.01_19-33-25--0700.xcresult",
+      "race_finding": "NONE_CLAIMED",
+      "sanitizer_clean_claim": false,
+      "retry": false
+    },
+    "independent_reviews": [
+      {
+        "review": "API, descriptor publication, call graph, and production-surface audit",
+        "object": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876/070c48ba68236a6f5ede0cd0b03de9681b174345",
+        "result": "PASS"
+      },
+      {
+        "review": "state-machine and linearizability audit",
+        "object": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876/070c48ba68236a6f5ede0cd0b03de9681b174345",
+        "result": "PASS"
+      },
+      {
+        "review": "test matrix, deterministic proof, failure taxonomy, and authority audit",
+        "object": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876/070c48ba68236a6f5ede0cd0b03de9681b174345",
+        "result": "PASS"
+      }
+    ],
+    "tool_notices": [
+      "AppIntents metadata extraction was skipped because the app has no AppIntents.framework dependency; this did not affect the build result.",
+      "The optional TSAN bundle is retained as failed harness evidence and is not part of the PASS basis."
+    ]
+  },
+  "source_commitments": [
+    {
+      "path": "Sources/HypervisorStageH4OwnerBinding.swift",
+      "sha256": "97a0b48dec3ff579fb580a81bbcba622ee2282fa8094cd27f559ff9640875f87"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Persistence.swift",
+      "sha256": "d0531a8351277a8d96cc5319426ef664bdd1d0176a630cf9e6770b521a462c7e"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.h",
+      "sha256": "72cc9632153dda9668342730256c672da2da4fdc68562562c6916246373d19da"
+    },
+    {
+      "path": "Tests/HypervisorStageH4PersistenceTests.swift",
+      "sha256": "a438af211765dee7eb84d514161ba50c1e92794b619748b3b9251adf51d56cb9"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d2b-descriptor-rooted-sqlite-image-publication-freeze-2026-09-01.v1.json",
+      "sha256": "e1a32ee7ad9e3842944472045430c07c3f55e36027a52d9b8e2f18023f288c32"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "macos": "26.5.2",
+    "host_build": "25F84",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "swift": "6.3.3",
+    "swift_target": "arm64-apple-macosx26.0",
+    "sdk": "macOS 26.5"
+  },
+  "residuals": [
+    "Darwin flock is advisory; same-euid, root, or Full-Disk-Access code can mutate reachable objects. Mutations observed by the joins fail closed, but the design does not provide hostile same-user isolation.",
+    "RENAME_EXCL prevents replacement of an already-present final leaf at the publication call but cannot atomically compare-and-rename one exact inode; post-joins detect rather than prevent every transient namespace or ancestor ABA.",
+    "Final open does not request O_NONBLOCK. A hostile same-euid FIFO replacement could block before the subsequent type and vnode rejection.",
+    "Open, fsync, F_FULLFSYNC, and transition-lock acquisition have no outer deadline. F_FULLFSYNC is the strongest exposed Darwin flush request, not mathematical proof against every device, firmware, power-loss, or filesystem failure.",
+    "The owner or store-grant lifetime can expire after the last pre-rename lifetime check; success still proves the frozen ordered checks, not a continuously live external clock authority.",
+    "A crash after staging creation or final publication but before receipt leaves an unadopted orphan and cannot become PASS in this slice.",
+    "Crash-cut, restart adoption, ENOSPC/EIO/partial-write evidence, authenticity, anti-replay, Merkle commitment, encryption, backup/snapshot exclusion, and secure deletion remain later work.",
+    "The production paired boundary is enforced by fileprivate call structure rather than an unforgeable lock-token type; NSLock has no fairness guarantee.",
+    "The EPR_H4_PRIVACY_TESTS-only interstice deliberately waits without a timeout while both transition locks are held. Deterministic try-lock probes precede release, but a reentrant callback or failed release orchestration can deadlock the test harness; no callback or probe exists in production."
+  ],
+  "nonclaims": [
+    "This PASS is fixture publication mechanics only; it neither enters nor completes H4.",
+    "No Gate-E authority, candidate evaluation, scientific conclusion, production H3/store capability, or authority-bearing runtime process, VM, Git, GitHub, network, or signal action occurred. Local implementation commits and non-authoritative build, test, and inspection processes are evidence generation only.",
+    "SQLite is a checked non-authoritative container. JSON and CBOR reconstruction proves representation agreement only; neither stream creates authority.",
+    "No successor stage or authority-bearing launch is authorized by this checkpoint."
+  ]
+}

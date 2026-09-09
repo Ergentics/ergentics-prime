@@ -1,0 +1,78 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3c-checkpoint-correction.v1",
+  "record_kind": "NONDESTRUCTIVE_METADATA_CORRECTION",
+  "recorded_at_utc": "2026-09-04T08:18:06Z",
+  "subject": {
+    "checkpoint_commit": "bcff078be4bf6fddb3d3e1af834f008241e5b7d4",
+    "checkpoint_tree": "bf6247a54e823fdf23db0fe34eb6acedddf64ef2",
+    "checkpoint_path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-2026-09-04.v1.json",
+    "checkpoint_blob": "83912e15fef368d515b5c233c394e2aeb09f94aa",
+    "checkpoint_sha256": "f1f590c639607c4b6a5a180ba0f3105ea6513e95470cfe50a1a85331a324757f",
+    "checkpoint_result": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY"
+  },
+  "correction": {
+    "json_member": "verification.static.correct_finalDescriptorCloseResponseLost_references_in_d3c_test",
+    "recorded_value": 1,
+    "correct_value": 0,
+    "count_scope": "exact fixed-string occurrences in Tests/HypervisorStageH4DualStreamSigkillCutClassificationTests.swift at implementation commit 4103dc10c5f1c1c9507c44211f584b2c6820643e",
+    "test_source_blob": "e2d35691b056da9df7dafe0cf0a2dedebf8888fe",
+    "test_source_sha256": "761a6da1127bd20f1fc86e3b07d7099a9d8f3f6652859b97d714e80b8b10f9f9",
+    "observation": "The D3c XCTest source contains zero occurrences of finalDescriptorCloseResponseLost. The correct D3 enum occurs in the shared dual-stream persistence source and earlier D3 persistence tests, not in the D3c process-harness test.",
+    "cause": "The checkpoint static-count field joined the corrected shared D3 enum vocabulary to the wrong file scope.",
+    "original_checkpoint_mutated": false
+  },
+  "unchanged_facts": {
+    "stale_truncateRejected_references_in_d3c_test": 0,
+    "stale_finalDescriptorCloseRejected_references_in_d3c_test": 0,
+    "shared_dual_stream_source_uses_finalDescriptorCloseResponseLost": true,
+    "compiled_behavior_changed": false,
+    "test_behavior_changed": false,
+    "test_counts_changed": false,
+    "xcresult_or_attachment_hash_changed": false,
+    "implementation_commit_or_tree_changed": false,
+    "checkpoint_result_changed": false
+  },
+  "scope": {
+    "only_added_path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-correction-2026-09-04.v1.json",
+    "source_change": false,
+    "test_change": false,
+    "project_change": false,
+    "product_or_test_runtime_execution": false,
+    "xcode_execution": false,
+    "product_or_test_child_process_launch_or_control": false,
+    "signal": false,
+    "host_side_validation_tools": "jq, rg, shasum and local Git metadata/index/commit operations only",
+    "vm": false,
+    "network": false,
+    "github": false,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+    "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1",
+    "rule": "Both pre-existing tracked modifications remain unstaged and byte-identical; untracked and ignored evidence is not cleaned, moved or pruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "next_stage_authorized": false
+  },
+  "verification": {
+    "jq_parse_required": true,
+    "predecessor_and_source_bindings_required": true,
+    "exact_fixed_string_recount_required": true,
+    "staged_delta_must_contain_only_this_record": true,
+    "xcode_build_or_test_required": false,
+    "reason_no_xcode_run": "This record corrects one noncompiled numeric metadata field without changing the immutable subject checkpoint or any compiled input."
+  },
+  "nonclaims": [
+    "The immutable checkpoint object is not rewritten.",
+    "This correction does not add a test case, alter an enum, modify a test result or promote the D3c mechanics result.",
+    "Occurrences of truncateRejected and finalDescriptorCloseRejected in the separate earlier H4 persistence surface are not classified as stale by this record.",
+    "No H4 entry, Gate-E movement, authority transition or successor implementation is authorized."
+  ]
+}

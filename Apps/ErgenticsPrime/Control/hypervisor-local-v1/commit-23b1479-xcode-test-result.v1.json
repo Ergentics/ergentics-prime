@@ -1,0 +1,287 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h2_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "effects": {
+    "app_launches": 0,
+    "guest_entries": 0,
+    "live_hypervisor_calls": 0,
+    "network_observation": "NOT_INSTRUMENTED",
+    "postflight_process_name_census": "NO_XCTEST_OR_CAPABILITYFLOWRECEIPTVERIFIER_MATCHES",
+    "repository_tracked_mutation_observed": false,
+    "sealed_verifier_child_invocations": {
+      "argv_entries": 1,
+      "count": 6,
+      "count_basis": "STRUCTURALLY_DERIVED_FROM_SIX_PASSING_RUNVERIFIER_CALL_SITES",
+      "cwd": "/private/var/empty",
+      "environment_entries": 0,
+      "expected_exit_0": 1,
+      "expected_exit_70": 5,
+      "exact_direct_pid_reaps": 6,
+      "hard_deadline_seconds": 5,
+      "kernel_process_census": "NOT_CAPTURED",
+      "kill_entries": 0,
+      "kill_entries_basis": "DERIVED_FROM_ALL_ASSERTTERMINAL_CALLS_PASSING_WITH_TIMEDOUT_FALSE",
+      "operation_deadline_seconds": 4,
+      "private_process_group": true,
+      "stderr_nonempty_results": 0,
+      "stdout_nonempty_results": 0,
+      "timeouts": 0
+    },
+    "temporary_file_activity": {
+      "derived_uuid_scoped_fixture_roots": 41,
+      "export_fixture_roots": 27,
+      "journal_fixture_roots": 14,
+      "postflight_matching_roots_in_checked_user_temp_and_private_tmp": 0,
+      "global_filesystem_census": "NOT_PERFORMED"
+    },
+    "test_cases_executed": 379,
+    "uploads": 0,
+    "vm_launches": 0,
+    "xcode_test_actions": 1,
+    "xctest_bundle_executions": 1
+  },
+  "inventory_hash_profile": {
+    "entry_order": "BYTEWISE_SORTED_RELATIVE_PATH",
+    "entry_row": "relative_path NUL type NUL mode_low_07777_decimal NUL lstat_size_decimal NUL payload_digest_or_dash",
+    "entry_separator": "LF",
+    "file_payload_digest": "SHA256_FILE_BYTES",
+    "name": "ERGENTICS_DIRECTORY_INVENTORY_V1",
+    "root_digest": "SHA256_CONCATENATED_ENTRY_ROWS",
+    "root_entry": "EXCLUDED",
+    "special_payload": "DASH",
+    "symlink_payload_digest": "SHA256_LINK_TARGET_BYTES",
+    "type_labels": [
+      "file",
+      "directory",
+      "symlink",
+      "special"
+    ],
+    "walk": "DESCEND_ALL_DOT_ENTRIES_EXCEPT_DOT_AND_DOTDOT_USING_LSTAT"
+  },
+  "lineage": {
+    "build_archive_result_file": "Control/hypervisor-local-v1/commit-23b1479-xcode-build-archive-result.v1.json",
+    "build_archive_result_file_sha256": "ea0a3200ed3a36ed767b39680232794e499905b769f1dacf355895346e6ddbad",
+    "source_commit": "23b1479fcc2ee576a5f0e3c3d8101bbe48b45d2c",
+    "source_tree": "9b16a5cdae313a9ec6ea38ad20f9bab030c2bc7d",
+    "tracked_index_preflight": "CLEAN",
+    "tracked_index_postflight": "CLEAN",
+    "tracked_worktree_preflight": "CLEAN",
+    "tracked_worktree_postflight": "CLEAN",
+    "untracked_control_material": "PRESENT_PREEXISTING_EXCLUDED_FROM_PRODUCT_IDENTITY"
+  },
+  "recorded_at_utc": "2026-09-01T01:50:34Z",
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "disposition": "TRACKED_COMPATIBILITY_SIGNAL",
+      "predicate": "swift_deprecated_initializer_present",
+      "reason": "the Release test action passed but emitted one DeprecatedDeclaration diagnostic; compatibility-clear status is not claimed"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_SCOPE_BOUNDARY",
+      "predicate": "xcode_unit_suite_is_not_live_app_vm_or_guest_execution",
+      "reason": "the standalone XCTest target executes pure or fabricated contract cases; standalone native-substitute C harnesses were not target members or executed, and the action does not close functional Hypervisor readiness"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_OBSERVABILITY_LIMIT",
+      "predicate": "test_runner_and_child_kernel_census_not_captured",
+      "reason": "one XCTest bundle execution is reported by Xcode and six verifier invocations are source-and-result derived, not independently joined to a retained process census"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_CONTAINMENT_LIMIT",
+      "predicate": "verifier_spawn_has_no_mapped_vnode_or_process_group_empty_join",
+      "reason": "the test admits and revalidates a held file identity around path-based posix_spawn and exactly reaps each direct PID; containment targets positive PID, with no suspended-child mapped-vnode join or post-reap group conservation proof"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "DIAGNOSTIC_ONLY",
+      "predicate": "postflight_process_name_census_found_no_xctest_or_verifier",
+      "reason": "a bounded host ps census found no matching process names after completion; no generation identity was retained, so this is not a conservation proof"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_ENVIRONMENT_LIMIT",
+      "predicate": "ambient_xcodebuild_environment_not_captured_or_emptied",
+      "reason": "the shared scheme contributed no arguments or environment, but the host xcodebuild action used the ambient local login environment"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_DURABILITY_LIMIT",
+      "predicate": "built_test_bundle_is_in_derived_data",
+      "reason": "the xcresult is retained in the Xcode Archives area; the executable test bundle remains Xcode DerivedData"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_CLEANUP_LIMIT",
+      "predicate": "temporary_fixture_cleanup_is_not_globally_proven",
+      "reason": "41 UUID-scoped roots are source-derived and scoped postflight found no matches, but cleanup uses try? and no global filesystem census was retained"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_RUNTIME_LIMIT",
+      "predicate": "process_wide_syscall_and_debugger_closure_not_measured",
+      "reason": "the scheme requested no debugger and test-authored source has no network operation, but runtime debugger state, ambient dynamic imports, and process-wide syscall or network behavior were not instrumented"
+    }
+  ],
+  "result_bundle": {
+    "directory_count": 1,
+    "entry_count": 787,
+    "file_count": 786,
+    "inventory_root_sha256": "82e8db8e1affc4c6334cc01509a4e9006538e74a4eaac64889032a33c32f886f",
+    "mode_low_07777_decimal_histogram": {
+      "420": 786,
+      "493": 1
+    },
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-23b1479-tests.xcresult",
+    "regular_file_bytes": 759528,
+    "serialized_inventory_bytes": 139788,
+    "special_count": 0,
+    "symlink_count": 0
+  },
+  "schema": "ergentics.provenance.hypervisor.post-control-xcode-test-result.v1",
+  "scope": {
+    "actual_xcode_test_action": true,
+    "app_target_built_for_testing": false,
+    "debugger_requested_by_scheme": false,
+    "empty_environment_claimed": false,
+    "live_app_functional_test": false,
+    "live_guest_test": false,
+    "live_hypervisor_test": false,
+    "private_mock_outer_harness": false,
+    "pure_or_fabricated_hypervisor_contract_cases_present": true,
+    "runtime_debugger_census": "NOT_CAPTURED",
+    "standalone_hostless_xctest_bundle": true,
+    "unit_cases_with_native_substitutes_present": false
+  },
+  "status": "PASS_LOCAL_SIGNED_XCODE_RELEASE_HOSTLESS_UNIT_TESTS_WITH_TRACKED_DEPRECATION",
+  "structured_test_results": {
+    "action_interval_milliseconds": 29349,
+    "case_manifest": {
+      "case_count": 379,
+      "duplicates": 0,
+      "profile": "ERGENTICS_XCRESULT_TEST_CASE_IDENTIFIER_MANIFEST_V1: ASCII domain NUL; each row=nodeIdentifier NUL nodeIdentifierURL; valid UTF-8; reject NUL, LF, and duplicate rows; bytewise row sort; LF join; no terminal LF; SHA256 complete stream",
+      "serialized_bytes": 80950,
+      "sha256": "cd51c447110bc854cedfe02511736ff73f0058afbec317b76f92519710aff693"
+    },
+    "expected_failures": 0,
+    "failed_tests": 0,
+    "passed_tests": 379,
+    "result": "Passed",
+    "skipped_tests": 0,
+    "suite_manifest": {
+      "profile": "BYTEWISE_SORT(nodeIdentifierURL,name); row=name NUL nodeIdentifierURL NUL result; LF join; no terminal LF; SHA256",
+      "sha256": "9e150431f1a3dd0e10b3bd388d4327bc53a32e9dccc3a9f0b1f93587f8e98fd7",
+      "suite_count": 25
+    },
+    "test_plan_configuration_id": "1",
+    "test_plan_configuration_name": "Test Scheme Action",
+    "total_test_count": 379
+  },
+  "test_action": {
+    "analyzer_warning_count": 0,
+    "argv": [
+      "/usr/bin/xcodebuild",
+      "-project",
+      "ErgenticsProvenance.xcodeproj",
+      "-scheme",
+      "ErgenticsProvenance",
+      "-configuration",
+      "Release",
+      "-destination",
+      "platform=macOS,arch=arm64",
+      "-derivedDataPath",
+      "/Users/ergentics/Library/Developer/Xcode/DerivedData/ErgenticsProvenance-23b1479-XcodeTests",
+      "-resultBundlePath",
+      "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-23b1479-tests.xcresult",
+      "-disableAutomaticPackageResolution",
+      "-skipPackageUpdates",
+      "-only-testing:ProvenanceTests",
+      "test"
+    ],
+    "destination": {
+      "architecture": "arm64",
+      "device_id": "00006050-001659CE1A90C01C",
+      "device_name": "My Mac",
+      "model_name": "MacBook Pro",
+      "os_build": "25F84",
+      "os_version": "26.5.2",
+      "platform": "macOS"
+    },
+    "code_coverage_enabled": false,
+    "ended_epoch_seconds_decimal": "1788227221.988",
+    "ended_utc": "2026-09-01T01:47:01.988Z",
+    "error_count": 0,
+    "exit_code": 0,
+    "provisioning_updates_requested": false,
+    "parallelizable_testable": false,
+    "resolved_xcodebuild_path": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+    "scheme_environment_and_arguments": "NONE",
+    "started_epoch_seconds_decimal": "1788227192.639",
+    "started_utc": "2026-09-01T01:46:32.639Z",
+    "status": "succeeded",
+    "warning_count": 1
+  },
+  "test_bundle": {
+    "bundle_identifier": "com.ergentics.provenance.tests",
+    "candidate_cdhash_full_sha256": "5700ab2133c4fa89df5ac4beda3cb98a779ea5134ee47844aab6d197f9fe5987",
+    "codesign_deep_strict_host": "SATISFIED",
+    "durability": "XCODE_DERIVED_DATA",
+    "executable_bytes": 4144464,
+    "executable_sha256": "d55d90a11ab8443901e22db8fa5914d2b46d7a4b88f0bc6261c40cae4a5d182b",
+    "hardened_runtime": false,
+    "info_plist_sha256": "5866bc1b2f1c00ad3cfb073f760dca961d76c7774ea2849fa006d2bde8adda46",
+    "linked_hypervisor_framework": false,
+    "macho_architecture": "arm64",
+    "macho_uuid": "FCE5FBD9-C629-373A-8DC6-7D4B852A9D87",
+    "path": "/Users/ergentics/Library/Developer/Xcode/DerivedData/ErgenticsProvenance-23b1479-XcodeTests/Build/Products/Release/ProvenanceTests.xctest",
+    "sealed_verifier_resource": {
+      "bytes": 418400,
+      "macho_architecture": "arm64",
+      "macho_uuid": "D3E6EC8D-1900-31D7-9019-A0C780B510A6",
+      "mode": "0755",
+      "nlink": 1,
+      "sha256": "1459be25d714cb7a615604db231fd3baf73cbb28bd7863a51f9161fee07d6851"
+    },
+    "configured_entitlements": "NONE",
+    "team_identifier": "ZCQ435U8JP",
+    "test_host": "EMPTY",
+    "bundle_loader": "EMPTY"
+  },
+  "toolchain": {
+    "sdk": "macOS 26.5",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "verification_predicates": {
+    "all_executed_tests_passed": "SATISFIED",
+    "deprecation_warning_tracked": "SATISFIED",
+    "exact_result_bundle_inventory_closed": "SATISFIED",
+    "no_app_vm_or_guest_launch": "SATISFIED",
+    "no_distribution_action": "SATISFIED",
+    "real_xcode_release_test_action": "SATISFIED",
+    "runtime_debugger_absence": "NOT_MEASURED",
+    "scheme_requested_no_debugger": "SATISFIED",
+    "source_commit_tree_exact_postflight": "SATISFIED",
+    "test_bundle_host_signature_valid": "SATISFIED"
+  },
+  "warning_register": [
+    {
+      "classification": "POTENTIAL_DEPRECATION_COMPROMISE_NON_BLOCKING_FOR_THIS_ACTION",
+      "file": "Sources/GuestJournal.swift",
+      "issue_type": "DeprecatedDeclaration",
+      "message": "'init(validatingUTF8:)' is deprecated: replaced by 'String.init(validatingCString:)'",
+      "source_physical_line_1_based": 454,
+      "xcode_source_url_line": 453
+    }
+  ]
+}

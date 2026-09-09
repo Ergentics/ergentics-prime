@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion="2660" version="1.7">
+   <BuildAction parallelizeBuildables="NO" buildImplicitDependencies="NO">
+      <BuildActionEntries>
+         <BuildActionEntry buildForTesting="NO" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="B40000000000000000000001" BuildableName="Ergentics Provenance.app" BlueprintName="ErgenticsProvenance" ReferencedContainer="container:ErgenticsProvenance.xcodeproj"/>
+         </BuildActionEntry>
+         <BuildActionEntry buildForTesting="NO" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="D30000000000000000000001" BuildableName="ErgenticsProvenanceH3QualificationController" BlueprintName="ErgenticsProvenanceH3QualificationController" ReferencedContainer="container:ErgenticsProvenance.xcodeproj"/>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+</Scheme>

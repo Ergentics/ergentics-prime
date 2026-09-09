@@ -1,0 +1,498 @@
+{
+  "accepted_product_checkpoint": {
+    "archive_binary_sha256": "002d744d3c600b4a3dc1059cb33bf56a63859b97682532265629886aae3de6d2",
+    "archive_macho_uuid": "468B0D86-5776-3FA9-9E5B-ACF3807DCB09",
+    "archive_receipt_commit": "19c1503ac1c898acc38e5dd0dfbee5846ecb5355",
+    "archive_receipt_file": "Distribution/LocalArchive-1.0.4-receipt.json",
+    "archive_receipt_sha256": "abbad30af3fd192c23ae164a7550b9ae87e3b2bd073197dc1ba5161e4500bf39",
+    "archive_receipt_tree": "dbf3ec3af57aab61c15649288c25dc115b292770",
+    "archive_role": "PACKAGE_CONTINUITY_ONLY_NOT_EXECUTION_GRANT",
+    "build_number": "4",
+    "bundle_identifier": "com.ergentics.provenance",
+    "marketing_version": "1.0",
+    "release_tests": {
+      "failed": 0,
+      "passed": 399,
+      "result": "Passed",
+      "skipped": 0,
+      "total": 399
+    },
+    "source_commit": "2eab0918b2bc01e2b2f4775e282af00f01cc5dca",
+    "source_tree": "25547ef9ef6bb0c8ba29ea7ce4e80a8dc44cbe4b"
+  },
+  "allowed_implementation_paths": [
+    "ErgenticsProvenance.xcodeproj/project.pbxproj",
+    "Sources/HypervisorStageH2Admission.swift",
+    "Tests/HypervisorStageH2AdmissionTests.swift"
+  ],
+  "authority_ceiling": {
+    "authority_delta": "00000000",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "high_value_ingress": "DENIED",
+    "h2_live_execution_authorized": false,
+    "scientific_authority": false,
+    "trusted_egress": "DENIED"
+  },
+  "control_predecessor": {
+    "commit": "23b1479fcc2ee576a5f0e3c3d8101bbe48b45d2c",
+    "file": "Control/hypervisor-local-v1/stage-xcode-build-archive-admission-freeze.v1.json",
+    "sha256": "3421282f6b866712d0b68f7ccc40b6ae1cd4af70761a53941c8a9136c9c2255d",
+    "tree": "9b16a5cdae313a9ec6ea38ad20f9bab030c2bc7d"
+  },
+  "effects": {
+    "app_launch": false,
+    "clock_read": false,
+    "environment_read": false,
+    "file_read": false,
+    "file_write": false,
+    "git_operation": false,
+    "hypervisor_call": false,
+    "journal_open": false,
+    "native_image_accessor_read": true,
+    "network": false,
+    "process_launch": false,
+    "sqlite_open": false,
+    "ui_entry": false,
+    "vm_launch": false
+  },
+  "fixed_guest_contract": {
+    "capability_plan": {
+      "architectural_channels": "UNASSESSED",
+      "architectural_channels_raw": 0,
+      "endpoint": "0x1000c000",
+      "pc": "0x10000050",
+      "profile": 1,
+      "region_count": 3,
+      "stack_top": "0x1000bff0",
+      "store_value": 1,
+      "store_width_bytes": 4,
+      "version": 1
+    },
+    "doorbell": {
+      "fault_ipa": "0x1000c000",
+      "instruction_little_endian_hex": "640000b9",
+      "instruction_offset": 80,
+      "instruction_word": "0xb9000064",
+      "store_width_bits": 32,
+      "target_mapping": "ABSENT"
+    },
+    "image": {
+      "byte_count": 92,
+      "instruction_count": 23,
+      "instruction_words": [
+        "0xd2880000",
+        "0xf2a20000",
+        "0xd2900001",
+        "0xf2a20001",
+        "0xd2980003",
+        "0xf2a20003",
+        "0xc8dffc04",
+        "0xf100049f",
+        "0x540001c1",
+        "0xf9400405",
+        "0xf10004bf",
+        "0x54000161",
+        "0xf9400806",
+        "0xf9400c07",
+        "0x8b0700c6",
+        "0xf9000425",
+        "0xf9000826",
+        "0xf9000c3f",
+        "0xc89ffc24",
+        "0xd5033f9f",
+        "0xb9000064",
+        "0xd43bd5a0",
+        "0xd42175a0"
+      ],
+      "load_ipa": "0x10000000",
+      "profile": "BASELINE_ASSEMBLY_92",
+      "sha256": "67290a73b53047374096142356a35338f6722d724586cc10373dfecab9a4cc44"
+    },
+    "mapped_regions": [
+      {
+        "ipa": "0x10000000",
+        "length": 16384,
+        "object_id": 1,
+        "role": "code",
+        "rights": "READ_EXECUTE",
+        "rights_raw": 5
+      },
+      {
+        "ipa": "0x10004000",
+        "length": 16384,
+        "object_id": 2,
+        "role": "request",
+        "rights": "READ_ONLY",
+        "rights_raw": 1
+      },
+      {
+        "ipa": "0x10008000",
+        "length": 16384,
+        "object_id": 3,
+        "role": "reply",
+        "rights": "READ_WRITE",
+        "rights_raw": 3
+      }
+    ],
+    "register_plan": {
+      "cpsr": "0x3c5",
+      "general_registers_before_entry": "X0_THROUGH_X30_ZERO",
+      "pc": "0x10000000",
+      "sctlr_el1": "0x30d00800",
+      "sp_el1": "0x1000bff0",
+      "vbar_el1": "0x0"
+    },
+    "reply": {
+      "little_endian_hex": "010000000000000001000000000000002a000000000000000000000000000000",
+      "words_u64": [
+        1,
+        1,
+        42,
+        0
+      ]
+    },
+    "request": {
+      "little_endian_hex": "0100000000000000010000000000000013000000000000001700000000000000",
+      "words_u64": [
+        1,
+        1,
+        19,
+        23
+      ]
+    },
+    "snapshot": {
+      "leaf_labels": [
+        "guest_image",
+        "reply",
+        "request",
+        "schema"
+      ],
+      "merkle_root": "37b6aa19da562bf99810c8169e091357bc4e789a82b50366e0752ffb1a9d89df",
+      "schema": "ergentics.hypervisor.guest.snapshot.v1"
+    }
+  },
+  "frozen_at_utc": "2026-09-01T04:26:07Z",
+  "h1_predecessor": {
+    "eligibility_graph": {
+      "aggregate_merkle_root": "23fdbc75aa627f6d0ea28dfcc0971f82f2d036268b49cf12e5945fef5d336cb1",
+      "cbor_sha256": "51ffda46233533dcc281af9e9db560a9658cb26f3813c54ffa5255389718dd2b",
+      "json_sha256": "f615485593777d6022d1e76b9fab275f2857bc5d68a8fc84f2478cf591f90768"
+    },
+    "implementation": {
+      "commit": "24be18ff033072cd4206bae226a444b27a1ebf47",
+      "tree": "8fa29a04b4582f638116c04b7b1f2a54e1bcb10b"
+    },
+    "output_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+    "receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+    "result": {
+      "commit": "af58d8bdd3fe9ba90fc44a05d33d8a394dc91d9d",
+      "file": "Control/hypervisor-local-v1/h1-pure-contract-result.v1.json",
+      "sha256": "deea60ee59ce64e01de29d207bb7d67902da7195cbe7a58c833bfc94d12ff428",
+      "tree": "0375eb125f3ca35a70d7c603318edb6e9f934373"
+    },
+    "verification_rule": "RECONSTRUCT_EXACT_H1_RECEIPT_AND_ROOT; NEVER_ACCEPT_RESULT_STRING_OR_BOOLEAN_AS_CAPABILITY"
+  },
+  "implementation_source_pins": [
+    {
+      "git_blob": "d685eadaa2c88d73b4d2426f460ee3bea4ed9d6c",
+      "path": "Guest/doorbell.S",
+      "sha256": "60ae1941fd43a5d3410fdedefe2ecb99adad0d2bcfdfd429b75c35fb59a409fd"
+    },
+    {
+      "git_blob": "7c48eba52420e668353271c6e80506d415f29b41",
+      "path": "Sources/GuestContract.swift",
+      "sha256": "0a60872f4edb891888598442681b8b720ecda38b4b3d6a0ced09d1ce775627f7"
+    },
+    {
+      "git_blob": "ae2012e796d391e6374bd572d97020085b123f8c",
+      "path": "Sources/HypervisorGuest.c",
+      "sha256": "e5374a2afd7467332abef6303f0ddd85fd800d86baac42d82c10c6c8f3803547"
+    },
+    {
+      "git_blob": "6a6325a61934197b9a93a7b36d90053a49324ac5",
+      "path": "Sources/HypervisorGuest.h",
+      "sha256": "e19229d2faa27274b1a8b86464a60cc082caedef379139d98f738c9bf59fdf3a"
+    },
+    {
+      "git_blob": "3b01399c4b9c8ed4ca62243d12d4bc8b8628c142",
+      "path": "Sources/GuestCapabilityPlan.h",
+      "sha256": "5d4ee247d70fb3a6708ed6f04dac6ad81b0ce936bdbcae66e56864b89670ab70"
+    },
+    {
+      "git_blob": "a0c6439e2aabf598ca993d9bc6ac5b36e47d5c50",
+      "path": "Sources/MerkleGenesis.swift",
+      "sha256": "6d6a47252e498ca3c6ce27d4d4405e2201bf3b6b296fd2a6d4d035de83c730c3"
+    },
+    {
+      "git_blob": "a8039960c49f7815530fe56b5fa35c23c0ddbe5d",
+      "path": "Tests/HypervisorContractTests.swift",
+      "sha256": "4062a17f513de3d540eb42eede0fe1fb4cc8427916dce5f19355f392d2684024"
+    },
+    {
+      "git_blob": "7aa698ce77701660920d8bb9b5ec28115f2e0800",
+      "path": "Tests/NativeSnapshotCheck.c",
+      "sha256": "539d2a08d37ba65abf860c7903ded3916b92f2e8b8bda2624e60e786f088f27a"
+    }
+  ],
+  "native_symbol_policy": {
+    "allowed_calls": [
+      "epr_guest_image_bytes",
+      "epr_guest_image_size",
+      "epr_guest_image_load_address",
+      "epr_guest_doorbell_instruction_offset"
+    ],
+    "copy_returned_image_bytes_once_before_validation": true,
+    "forbidden_calls": [
+      "epr_guest_run",
+      "epr_guest_run_reserved",
+      "epr_rust_guest_run",
+      "epr_rust_guest_run_reserved",
+      "epr_guest_reserve",
+      "epr_guest_reservation_copy_capability_witness",
+      "epr_guest_reservation_retain",
+      "epr_guest_reservation_release",
+      "epr_guest_reservation_request_cancel",
+      "epr_guest_reservation_cancel",
+      "epr_guest_reservation_is_cancelled",
+      "epr_guest_cancel",
+      "hv_*"
+    ],
+    "hypervisor_framework_import_in_h2_swift": false,
+    "native_call_count": 4,
+    "native_run_symbol_reference_count": 0
+  },
+  "project_delta_policy": {
+    "allowed": [
+      "add_HypervisorStageH2Admission_swift_file_reference",
+      "add_HypervisorStageH2Admission_swift_to_application_sources_phase",
+      "add_HypervisorStageH2Admission_swift_to_test_sources_phase",
+      "add_HypervisorStageH2AdmissionTests_swift_file_reference",
+      "add_HypervisorStageH2AdmissionTests_swift_to_test_sources_phase",
+      "add_existing_HypervisorGuest_c_to_test_sources_phase",
+      "set_test_only_HypervisorGuest_c_compiler_flags_-fno-autolink_-ffunction-sections_-fvisibility=hidden",
+      "set_ProvenanceTests_Debug_DEAD_CODE_STRIPPING_YES",
+      "set_ProvenanceTests_Release_DEAD_CODE_STRIPPING_YES"
+    ],
+    "build_setting_changes": [
+      "ProvenanceTests.Debug.DEAD_CODE_STRIPPING=YES",
+      "ProvenanceTests.Release.DEAD_CODE_STRIPPING=YES"
+    ],
+    "entitlement_changes": false,
+    "existing_file_membership_changes": [
+      "Sources/HypervisorGuest.c->ProvenanceTests.Sources"
+    ],
+    "identity_or_version_changes": false,
+    "resource_phase_changes": false,
+    "run_script_changes": false,
+    "test_linkage_policy": {
+      "admission_sequence": [
+        "build-for-testing",
+        "audit_exact_unloaded_test_bundle",
+        "test-without-building_same_audited_product"
+      ],
+      "audit_before_bundle_load": true,
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "dead_code_stripping_required": true,
+      "forbidden_defined_or_undefined_symbol_prefixes": [
+        "_epr_admit_signing",
+        "_epr_guest_cancel",
+        "_epr_guest_reserve",
+        "_epr_guest_reservation_",
+        "_epr_guest_run",
+        "_epr_guest_stage_name",
+        "_epr_rust_guest_",
+        "_hv_"
+      ],
+      "hypervisor_framework_linked": false,
+      "mach_o_namespace": "TWOLEVEL_NOUNDEFS",
+      "module_autolink_disabled_for_test_c_membership": true,
+      "no_all_load_force_load_objc_or_dynamic_lookup": true,
+      "no_constructor_or_initialization_hook": true,
+      "required_per_file_compiler_flags": [
+        "-fno-autolink",
+        "-ffunction-sections",
+        "-fvisibility=hidden"
+      ],
+      "required_retained_native_symbols": [
+        "_epr_guest_doorbell_instruction_offset",
+        "_epr_guest_image_bytes",
+        "_epr_guest_image_load_address",
+        "_epr_guest_image_size"
+      ],
+      "retained_epr_guest_symbol_set_must_equal_required": true,
+      "test_binary_sha256_and_uuid_join_required": true
+    }
+  },
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "predicate": "accepted_archive_does_not_cryptographically_embed_git_commit_tree"
+    },
+    {
+      "authority_effect": "NONE",
+      "predicate": "native_image_accessors_co_reside_with_live_hypervisor_implementation_but_do_not_call_it"
+    },
+    {
+      "authority_effect": "NONE",
+      "predicate": "static_source_and_linkage_audit_is_not_runtime_confinement"
+    }
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "result_graph_contract": {
+    "node_types": [
+      "h1_input_state",
+      "h2_static_witness",
+      "h2_static_transition",
+      "h2_static_output_state"
+    ],
+    "outer_receipt_merkle_leaf_labels": [
+      "schema",
+      "state.json",
+      "state.cbor",
+      "transition.json",
+      "transition.cbor",
+      "witnesses.json",
+      "witnesses.cbor"
+    ],
+    "output_state_exact_fields": {
+      "authority_delta": "00000000",
+      "authority_vector": "00000000",
+      "execution_disposition": "NOT_ENTERED",
+      "gate_e": "ABSTAIN",
+      "high_value_ingress": "DENIED",
+      "h2_live_execution_authorized": false,
+      "next_stage": "NONE",
+      "parent_receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+      "parent_state_roots": [
+        "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c"
+      ],
+      "status": "PASS_H2_STATIC_ADMISSION_ONLY",
+      "trusted_egress": "DENIED",
+      "vm_disposition": "NOT_CREATED",
+      "vm_entry_count": "0"
+    },
+    "projection_merkle_leaf_labels": [
+      "schema",
+      "ROLE.json",
+      "ROLE.cbor"
+    ],
+    "projection_roles": {
+      "h1_input_state": "state",
+      "h2_static_output_state": "state",
+      "h2_static_transition": "transition",
+      "h2_static_witness": "witness"
+    },
+    "schemas": {
+      "input_state": "ergentics.provenance.hypervisor-stage.state.v1",
+      "output_state": "ergentics.provenance.hypervisor-stage.h2-static.state.v1",
+      "receipt": "ergentics.provenance.hypervisor-stage.h2-static.receipt.v1",
+      "transition": "ergentics.provenance.hypervisor-stage.h2-static.transition.v1",
+      "witness": "ergentics.provenance.hypervisor-stage.h2-static.witness.v1"
+    },
+    "stream_policy": {
+      "cbor": "DETERMINISTIC_RFC8949_SUBSET",
+      "exact_reencode_required": true,
+      "json": "CANONICAL_SORTED_KEYS_NO_WHITESPACE",
+      "lowercase_64_hex_roots": true,
+      "maximum_cbor_bytes": 65536,
+      "maximum_json_bytes": 65536,
+      "semantic_join_required": true
+    },
+    "transition_exact_fields": {
+      "combiner": "ALL_OF",
+      "derived_outcome": "PASS_H2_STATIC_ADMISSION_ONLY",
+      "gate_e": "ABSTAIN",
+      "input_receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+      "input_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+      "successor_authorized": false,
+      "vm_disposition": "NOT_CREATED"
+    },
+    "verification": {
+      "fresh_root_field_mutations_reject": true,
+      "full_semantics_reconstructed_from_both_streams": true,
+      "h1_input_projection_exact": true,
+      "pass_string_or_boolean_is_capability": false,
+      "receipt_root_independently_reconstructed": true,
+      "witness_order_and_inventory_exact": true
+    },
+    "witness_inventory": [
+      {
+        "position": 0,
+        "predicate_id": "h1_receipt_reconstructed_exact"
+      },
+      {
+        "position": 1,
+        "predicate_id": "h1_authority_ceiling_preserved"
+      },
+      {
+        "position": 2,
+        "predicate_id": "fixed_guest_image_bytes_exact"
+      },
+      {
+        "position": 3,
+        "predicate_id": "fixed_guest_native_metadata_exact"
+      },
+      {
+        "position": 4,
+        "predicate_id": "fixed_request_reply_exact"
+      },
+      {
+        "position": 5,
+        "predicate_id": "fixed_capability_and_register_plan_exact"
+      },
+      {
+        "position": 6,
+        "predicate_id": "fixed_snapshot_commitment_exact"
+      },
+      {
+        "position": 7,
+        "predicate_id": "no_live_or_persistence_effects"
+      }
+    ],
+    "witness_node_exact_fields": {
+      "authority_delta": "00000000",
+      "observed": true,
+      "outcome": "SATISFIED",
+      "producer_scope": "PURE_DETERMINISTIC_IN_IMAGE_RECONSTRUCTION",
+      "vm_disposition": "NOT_CREATED"
+    }
+  },
+  "schema": "ergentics.provenance.hypervisor-stage-h2-static-admission-freeze.v1",
+  "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+  "stage_ordinal": 2,
+  "static_admission_contract": {
+    "entrypoint": "HypervisorStageH2Admission.runStaticAdmission()",
+    "operation": "ZERO_ARGUMENT_IN_MEMORY_AND_IN_IMAGE_STATIC_ADMISSION_ONLY",
+    "predicate_ids": [
+      "h1_receipt_reconstructed_exact",
+      "h1_authority_ceiling_preserved",
+      "fixed_guest_image_bytes_exact",
+      "fixed_guest_native_metadata_exact",
+      "fixed_request_reply_exact",
+      "fixed_capability_and_register_plan_exact",
+      "fixed_snapshot_commitment_exact",
+      "no_live_or_persistence_effects"
+    ],
+    "production_inputs": "FROZEN_CONSTANTS_AND_IMMUTABLE_NATIVE_IMAGE_ACCESSORS_ONLY",
+    "result_authorizes_live_execution": false,
+    "stage_completion": false,
+    "success_outcome": "PASS_H2_STATIC_ADMISSION_ONLY",
+    "vm_disposition": "NOT_CREATED"
+  },
+  "status": "FROZEN_H2_STATIC_ADMISSION_ONLY_LIVE_NOT_AUTHORIZED",
+  "transition_policy": {
+    "failed_static_admission": "RETAIN_FAILURE_AND_DO_NOT_FREEZE_LIVE_H2",
+    "h2_static_pass_allows_only": "SEPARATE_H2_LIVE_MECHANICS_FREEZE_RECOMMENDATION",
+    "live_h2_requires_separate_freeze": true,
+    "may_close_gate_e": false,
+    "may_create_or_run_vm": false,
+    "may_mint_execution_capability": false,
+    "per_stage_release_build_archive_required_after_static_result": true,
+    "prior_historical_guest_results_are_comparators_only": true
+  }
+}

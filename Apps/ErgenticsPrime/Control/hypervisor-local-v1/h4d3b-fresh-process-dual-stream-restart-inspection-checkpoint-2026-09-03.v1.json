@@ -1,0 +1,623 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3b-checkpoint.v1",
+  "checkpoint": "H4-D3B_FRESH_PROCESS_DUAL_STREAM_RESTART_INSPECTION",
+  "recorded_at_utc": "2026-09-04T04:16:49Z",
+  "result": "PASS_H4D3B_FRESH_PROCESS_DUAL_STREAM_RESTART_INSPECTION_MECHANICS_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "restart_representation_admission": "VALID_V3_DUAL_STREAM_THREE_WAY_JOIN",
+    "restart_adoption": false,
+    "historical_producer_identity_recovered": false,
+    "restart_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "scientific_authority": false,
+    "production_h3_mint": "ABSENT",
+    "production_reader_mint": "ABSENT",
+    "next_stage_authorized": false
+  },
+  "object_binding": {
+    "implementation_commit": "d8f614adda0de64c85f9daecb45cec5d7c1454bb",
+    "implementation_tree": "a5bd069391bb2fb30b5c19e0b87c39987205677b",
+    "implementation_parent": "f8d405bccbf81c848e411483af1db1fd3d7a1f48",
+    "implementation_paths": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Sources/HypervisorStageH4DualStreamRestartInspection.swift",
+      "Sources/H4D3bRestartReaderMain.swift",
+      "Tests/HypervisorStageH4DualStreamRestartInspectionTests.swift"
+    ],
+    "delta_equals_freeze_allowlist": true,
+    "diff_check": "PASS",
+    "worktree_implementation_bytes_equal_head": true,
+    "unrelated_dirty_files_preserved_and_unstaged": true
+  },
+  "control_binding": {
+    "freeze_commit": "f8d405bccbf81c848e411483af1db1fd3d7a1f48",
+    "freeze_tree": "e67d026e4cfcb97564425fa4df05ac9d5abb1415",
+    "freeze_path": "Control/hypervisor-local-v1/h4d3b-fresh-process-dual-stream-restart-inspection-freeze-2026-09-03.v1.json",
+    "freeze_blob_at_implementation_parent": "98751a446b5b2b8dc63ef4853e4166ef401bc793",
+    "freeze_sha256": "117deed1a720e89b600a58289bbde199475c236bee4b1b3d799eed8c47fa1612",
+    "d3_checkpoint_path": "Control/hypervisor-local-v1/h4d3-dual-stream-sqlite-image-publication-checkpoint-2026-09-02.v1.json",
+    "d3_checkpoint_blob": "3afdef40f09e9c1a482d86dbe14dd522bb6f8fff",
+    "d3_checkpoint_sha256": "f2c6b4cb83bc575555d1157e859a72255204ce6f2d3c9716702049e5e8709b23",
+    "d3_checkpoint_result": "PASS_H4D3_DUAL_STREAM_PUBLICATION_MECHANICS_ONLY",
+    "d3_implementation_commit": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5",
+    "d3_freeze_commit": "5adafd6acce2037f1323a6c5d71585e245d9bb20"
+  },
+  "closed_mechanics": {
+    "result_contract": "VALID_V3_DUAL_STREAM_THREE_WAY_JOIN",
+    "fresh_process_boundary": {
+      "process_kind": "new native command-line helper created by posix_spawn from the hostless XCTest runner",
+      "helper_product_name": "H4D3bRestartReader",
+      "application_launch": false,
+      "vm_launch": false,
+      "guest_execution": false,
+      "helper_child_processes": 0,
+      "helper_signal_calls": 0,
+      "helper_process_control_calls": 0,
+      "helper_environment_value_reads": 0,
+      "helper_wall_clock_reads": 0,
+      "helper_network_operations": 0,
+      "helper_file_writes": 0,
+      "helper_sqlite_filesystem_connections": 0,
+      "inherited_publication_descriptors": 0,
+      "inherited_root_descriptors": 0,
+      "inherited_expected_byte_descriptors": 0,
+      "retained_writer_objects": false,
+      "retained_expected_byte_arrays": false,
+      "retained_owner_anchor": false,
+      "retained_persistence_lease": false,
+      "retained_coordinator_or_store": false,
+      "fresh_process_validation_executed": true,
+      "real_crash_or_power_cut_executed": false
+    },
+    "helper_target": {
+      "target_name": "H4D3bRestartReader",
+      "target_kind": "command-line tool",
+      "sources": [
+        "Sources/HypervisorStageH4DualStreamRestartInspection.swift",
+        "Sources/H4D3bRestartReaderMain.swift"
+      ],
+      "source_count": 2,
+      "compiled_writer_sources": 0,
+      "compiled_owner_binding_sources": 0,
+      "compiled_persistence_lease_sources": 0,
+      "compiled_h4_canonical_projection_sources": 0,
+      "epr_h4_privacy_tests_definition": false,
+      "hypervisor_framework_linked": false,
+      "hypervisor_entitlement": false,
+      "application_target_dependency": false,
+      "test_target_dependency": "ProvenanceTests has one explicit PBXTargetDependency on H4D3bRestartReader",
+      "code_signing_for_verification": "DISABLED; ad-hoc linker-signed compile/link evidence only",
+      "dynamic_dependency_categories_allowed": [
+        "system Swift runtime and weak runtime support libraries",
+        "Foundation and Objective-C runtime",
+        "Darwin libSystem",
+        "system libsqlite3"
+      ]
+    },
+    "closed_input_surface": {
+      "helper_argument_count_excluding_argv0": 1,
+      "helper_argument": "canonical absolute private-root path only",
+      "caller_file_leaf_arguments": 0,
+      "caller_descriptor_arguments": 0,
+      "caller_expected_byte_arguments": 0,
+      "caller_sql_arguments": 0,
+      "caller_schema_arguments": 0,
+      "caller_policy_arguments": 0,
+      "caller_clock_arguments": 0,
+      "caller_owner_arguments": 0,
+      "caller_lease_arguments": 0,
+      "caller_authority_arguments": 0,
+      "caller_fault_arguments": 0,
+      "environment_configuration": 0,
+      "stdin_protocol_bytes": 0,
+      "fixed_final_leaf": "h4d3-dual-receipt.sqlite"
+    },
+    "parent_fixture_lifetime": {
+      "publisher": "existing EPR_H4_PRIVACY_TESTS-only D3 fixture publisher",
+      "construction_scope": "non-inlined nested scope returning only the canonical absolute root-path value",
+      "destroyed_before_spawn": [
+        "D3 writer database and serialized image",
+        "D3 coordinator and store",
+        "owner-bound projection and canonical JSON/CBOR byte arrays",
+        "owner anchor and persistence lease",
+        "publisher-held root, staging and final descriptors",
+        "D3 receipt"
+      ],
+      "exclusive_lock_release_probe": "parent acquires and releases LOCK_EX|LOCK_NB after nested publication scope and before helper spawn",
+      "spawn_input_retained_by_parent": "canonical absolute root-path String only",
+      "publication_kind": "normal D3 XCTest fixture publication, not a crash-cut or power-loss publication"
+    },
+    "namespace": {
+      "root_path": "canonical absolute non-root path; no NUL, repeated slash, dot component, dot-dot component or trailing slash",
+      "canonical_path": "realpath byte-for-byte equals supplied path",
+      "root_open": "O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC",
+      "root_lock": "LOCK_SH|LOCK_NB retained through terminal inspection",
+      "root_profile": "directory, effective-uid-owned, exact mode 0700",
+      "root_join": "named, opened and terminal observations join device/inode and the frozen metadata profile",
+      "inventory": "exactly h4d3-dual-receipt.sqlite and no staging or extra leaf",
+      "final_named_admission": "fstatat AT_SYMLINK_NOFOLLOW beneath retained root descriptor",
+      "final_open": "openat O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC",
+      "final_profile": "regular, effective-uid-owned, nlink 1, exact mode 0400, 100...262144 bytes and page aligned",
+      "final_join": "named pre-open, opened, post-header, post-read, post-close and terminal observations join the frozen vnode and metadata profile",
+      "nonblocking_special_file_rule": "symlink, FIFO, device, socket, directory and other nonregular replacements reject without a blocking read",
+      "v2_namespace_relation": "DISJOINT_AND_UNTOUCHED"
+    },
+    "metadata_join_profiles": {
+      "root": [
+        "device",
+        "inode",
+        "mode",
+        "uid",
+        "gid",
+        "nlink",
+        "flags"
+      ],
+      "final": [
+        "device",
+        "inode",
+        "mode",
+        "uid",
+        "gid",
+        "nlink",
+        "size",
+        "flags",
+        "mtime",
+        "ctime"
+      ],
+      "post_close": "fresh named final observation still joins admitted vnode after exact final-descriptor close",
+      "terminal": "final-only inventory, final named-vnode join and root named/opened join repeat before success"
+    },
+    "format": {
+      "schema": "com.ergentics.provenance.hypervisor.h4.dual-stream-sqlite-image-publication.v3",
+      "semantic_schema": "com.ergentics.provenance.hypervisor.h4.canonical-receipt.v1",
+      "application_id": 1162891828,
+      "application_id_ascii": "EPR4",
+      "user_version": 2,
+      "page_size": 4096,
+      "minimum_image_bytes": 100,
+      "maximum_pages": 64,
+      "maximum_image_bytes": 262144,
+      "maximum_stream_bytes": 158,
+      "table": "h4_dual_receipts",
+      "table_properties": [
+        "STRICT",
+        "WITHOUT ROWID"
+      ],
+      "row_count": 1,
+      "column_count": 7,
+      "secondary_indexes": 0,
+      "triggers": 0,
+      "views": 0,
+      "virtual_tables": 0,
+      "extensions": 0,
+      "filesystem_sqlite_connections": 0,
+      "caller_mutable_sql_surface": "NONE"
+    },
+    "image_admission": {
+      "read": "EINTR-aware pread at explicit offsets; positive short reads accumulate",
+      "header_prefix_bytes": 100,
+      "header_magic": "SQLite format 3 followed by NUL",
+      "header_page_size_bytes_16_17": "0x10 0x00",
+      "header_write_version_byte_18": "0x01",
+      "header_read_version_byte_19": "0x01",
+      "page_count_range": "1...64",
+      "page_geometry": "checked UInt64(page_count) * UInt64(4096) equals admitted file size",
+      "allocation_order": [
+        "admit bounded final metadata size without image-sized allocation",
+        "allocate and read only the fixed 100-byte header",
+        "validate magic, page size, version bytes, page count, cap and exact checked geometry",
+        "allocate the bounded image Data and read the exact image",
+        "require one-byte EOF at the exact admitted size",
+        "allocate the exact sqlite3_malloc64 copy only after complete image admission"
+      ],
+      "allocation_cap_checked_first": true,
+      "integer_overflow_rejected": true,
+      "short_or_zero_before_exact_size_rejected": true,
+      "trailing_byte_rejected": true
+    },
+    "sqlite_policy": {
+      "reader_database": ":memory:",
+      "connection_open_flags": "READWRITE|CREATE|MEMORY|FULLMUTEX|PRIVATECACHE|EXRESCODE",
+      "deserialize": "one private sqlite3_malloc64 copy with SQLITE_DESERIALIZE_FREEONCLOSE|SQLITE_DESERIALIZE_READONLY",
+      "deserialize_allocation_bytes": "exact admitted image size after header, cap and geometry validation",
+      "resizeable": false,
+      "authorizer": "SELECT_AND_READ_ONLY",
+      "query_only": true,
+      "trusted_schema": false,
+      "dqs_ddl": false,
+      "dqs_dml": false,
+      "busy_timeout_milliseconds": 0,
+      "database_filename_empty": true,
+      "integrity_check": "PRAGMA integrity_check(1) returns exactly one text row equal to ok",
+      "schema_admission": "sqlite_schema and pragma_table_xinfo exactly match the frozen v3 schema",
+      "row_admission": "exactly one row with exact SQLite storage classes before value decoding",
+      "sqlite3_db_readonly_observed_for_in_memory_connection": 0,
+      "sqlite3_db_readonly_interpretation": "reports sqlite3_open_v2 connection flags, not SQLITE_DESERIALIZE_READONLY; retained as test diagnostics and not used as a false admission predicate",
+      "readonly_enforcement": [
+        "fixed SQLITE_DESERIALIZE_READONLY wrapper",
+        "PRAGMA query_only=ON",
+        "SELECT-and-READ-only authorizer"
+      ],
+      "statement_close_predicates": [
+        "every prepared statement reaches its frozen terminal",
+        "every sqlite3_finalize returns SQLITE_OK",
+        "sqlite3_next_stmt(database,nil) equals nil",
+        "sqlite3_close returns SQLITE_OK"
+      ]
+    },
+    "semantic_join": {
+      "json": "strict schema decode followed by byte-identical canonical JSON re-encode",
+      "cbor": "strict schema decode followed by byte-identical deterministic CBOR re-encode",
+      "unknown_fields": "REJECT",
+      "aliases": "REJECT",
+      "duplicates": "REJECT",
+      "noncanonical_encodings": "REJECT",
+      "trailing_bytes": "REJECT",
+      "required_equalities": [
+        "decoded JSON semantic equals decoded CBOR semantic",
+        "decoded JSON semantic equals indexed scalar semantic",
+        "decoded CBOR semantic equals indexed scalar semantic"
+      ],
+      "external_expected_representation": "ABSENT",
+      "owner_bound_projection_join": "ABSENT",
+      "historical_producer_identity_join": "ABSENT",
+      "coherent_three_field_substitution": "ACCEPTED when canonical, schema-valid and semantically equal",
+      "result_scope": "REPRESENTATION_ADMISSION_ONLY"
+    },
+    "inspection_order": [
+      "admit canonical absolute root path",
+      "open, lock and join root vnode",
+      "require final-only inventory",
+      "open and join fixed final vnode",
+      "validate fixed header and checked geometry before image allocation",
+      "read exact bounded image and EOF, then rejoin final vnode",
+      "copy-deserialize into a fresh private read-only in-memory SQLite database",
+      "prove connection policy, integrity, schema, storage and row cardinality",
+      "strictly re-encode and join canonical JSON, canonical CBOR and indexed scalars",
+      "finalize and close SQLite exactly",
+      "close final descriptor and repeat post-close and terminal joins",
+      "release lock and close root descriptor exactly",
+      "construct fixed opaque receipt last and exit silently"
+    ],
+    "success_receipt": {
+      "type": "opaque fixed receipt",
+      "result": "VALID_V3_DUAL_STREAM_THREE_WAY_JOIN",
+      "reflection": "EMPTY",
+      "path_exposure": false,
+      "byte_exposure": false,
+      "row_value_exposure": false,
+      "owner_exposure": false,
+      "authority_exposure": false,
+      "process_output": "NONE",
+      "reusable_core_process_freshness_claim": false,
+      "fresh_process_fact": "parent composition only: successful spawn, distinct positive direct-child PID, exact reap, exit zero, empty stdout/stderr EOF and completion before deadline"
+    },
+    "helper_terminal_protocol": {
+      "stdout_bytes_on_modeled_terminals": 0,
+      "stderr_bytes_on_modeled_terminals": 0,
+      "success_exit": 0,
+      "all_modeled_rejection_exit": 70,
+      "signal_termination_is_success": false,
+      "success_requires_exact_reap": true,
+      "success_after_timeout": false
+    },
+    "xctest_process_harness": {
+      "scope": "Tests/HypervisorStageH4DualStreamRestartInspectionTests.swift only",
+      "helper_lookup": "fixed sibling H4D3bRestartReader product",
+      "helper_admission": "canonical path plus named/held executable vnode join, effective uid and exact mode 0755",
+      "helper_revalidation": "immediately before spawn and after exact reap while held descriptor remains open",
+      "spawn_api": "posix_spawn",
+      "stdin": "/dev/null",
+      "stdout_stderr": "separate nonblocking CLOEXEC pipes, each capped at 4096 bytes",
+      "working_directory": "/private/var/empty",
+      "environment": "empty envp",
+      "spawn_attributes": [
+        "POSIX_SPAWN_CLOEXEC_DEFAULT",
+        "POSIX_SPAWN_SETSIGMASK with empty child mask",
+        "POSIX_SPAWN_SETSIGDEF with catchable signals restored to default"
+      ],
+      "set_process_group": false,
+      "wait": "waitpid exact direct-child PID with WNOHANG only",
+      "operation_deadline_seconds": 4,
+      "hard_horizon_seconds": 5,
+      "timeout_signal": "at most one SIGKILL to the exact positive direct-child PID after the operation deadline",
+      "timeout_case": "authorized XCTest-only POSIX_SPAWN_START_SUSPENDED containment test",
+      "timeout_reap": "exact reap before hard horizon",
+      "foundation_process_api": false,
+      "production_process_or_signal_path": false,
+      "helper_process_or_signal_path": false,
+      "synthetic_predicates": [
+        "copied-stat foreign-owner rejection",
+        "copied-stat device-node rejection"
+      ],
+      "real_predicates": [
+        "D3 SQLite publication",
+        "fresh helper execution",
+        "root and final vnode replacements",
+        "bounded timeout, exact-PID kill and reap"
+      ]
+    },
+    "outcome_taxonomy": {
+      "admitted": "helper completed every frozen representation predicate and returned the fixed result",
+      "rejected": "helper normally exited 70 with empty streams after a modeled predicate failure",
+      "spawnRejected": "helper admission or spawn setup failed before a child outcome",
+      "abnormal": "signal termination, unfrozen exit, output or non-exact reap",
+      "timedOut": "operation deadline elapsed and the sole exact-PID SIGKILL containment path was entered",
+      "containmentUnproven": "exact child was not reaped by hard horizon after the sole permitted signal"
+    }
+  },
+  "verification": {
+    "focused_test_class": "HypervisorStageH4DualStreamRestartInspectionTests",
+    "focused_test_method_count": 16,
+    "tests": {
+      "focused_debug": {
+        "result": "Passed",
+        "executed": 16,
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3b-Focused-Debug-final-r3.xcresult"
+      },
+      "focused_release": {
+        "result": "Passed",
+        "executed": 16,
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3b-Focused-Release-final-r2.xcresult"
+      },
+      "full_debug": {
+        "result": "Passed",
+        "executed": 691,
+        "passed": 691,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3b-Full-Debug-final-r2.xcresult"
+      },
+      "full_release": {
+        "result": "Passed",
+        "executed": 644,
+        "passed": 644,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3b-Full-Release-final-r2.xcresult"
+      }
+    },
+    "test_execution_binding": {
+      "runs_predated_implementation_commit": true,
+      "tested_worktree_implementation_paths_later_committed_byte_identically": true,
+      "current_implementation_paths_equal_implementation_commit": true
+    },
+    "required_predicates": {
+      "nested_publisher_lifetime_destroyed_before_spawn": true,
+      "exclusive_root_lock_release_proved_before_spawn": true,
+      "fresh_helper_valid_acceptance": true,
+      "fresh_helper_validation_rejection": true,
+      "fresh_helper_coherent_substitution_acceptance": true,
+      "canonical_namespace_and_special_file_rejection": true,
+      "header_geometry_and_allocation_ordering": true,
+      "all_final_vnode_hook_interstices": true,
+      "all_root_rebound_hook_interstices": true,
+      "schema_row_storage_json_cbor_and_scalar_rejection": true,
+      "fixed_payloadless_receipt_boundary": true,
+      "terminal_admission_negative_matrix": true,
+      "wrong_argument_count_exit_70_and_empty_streams": true,
+      "timeout_at_least_4_and_less_than_5_seconds": true,
+      "timeout_one_exact_pid_kill_and_exact_reap": true,
+      "helper_source_and_binary_authority_exclusions": true,
+      "stale_enum_scan_paths": [
+        "Tests/HypervisorStageH4DualStreamPersistenceTests.swift",
+        "Tests/HypervisorStageH4DualStreamRestartInspectionTests.swift"
+      ],
+      "stale_truncateRejected_references_in_scanned_d3_and_d3b_tests": 0,
+      "stale_finalDescriptorCloseRejected_references_in_scanned_d3_and_d3b_tests": 0,
+      "d3_final_descriptor_close_fault_name": "finalDescriptorCloseResponseLost"
+    },
+    "helper_builds": {
+      "scope": "Xcode code signing disabled; ad-hoc linker-signed compile/link evidence only",
+      "debug": {
+        "result": "BUILD_SUCCEEDED",
+        "configuration": "Debug",
+        "architecture": "arm64",
+        "binary": "/private/tmp/ErgenticsProvenance-H4D3b-Helper-Debug-final-r2/Build/Products/Debug/H4D3bRestartReader",
+        "derived_data": "/private/tmp/ErgenticsProvenance-H4D3b-Helper-Debug-final-r2",
+        "binary_sha256": "326930b2f59879fd594619bba2cff74d7fae211b426e1daa6191f2bd436f4f01",
+        "binary_uuid": "B56C34DC-EE70-3EB8-85A5-FD5AB43F7943",
+        "binary_size_bytes": 314192,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "release": {
+        "result": "BUILD_SUCCEEDED",
+        "configuration": "Release",
+        "architecture": "arm64",
+        "binary": "/private/tmp/ErgenticsProvenance-H4D3b-Helper-Release-final-r2/Build/Products/Release/H4D3bRestartReader",
+        "derived_data": "/private/tmp/ErgenticsProvenance-H4D3b-Helper-Release-final-r2",
+        "binary_sha256": "e8554683310aecc9d3ebfa18af9056dc02a171dec2e80ff5d4f7dd13ad1e9266",
+        "binary_uuid": "1FACF6D3-91BB-36E4-87C4-8891489E9096",
+        "binary_size_bytes": 161312,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      }
+    },
+    "helper_binary_surface": {
+      "forbidden_pattern": "Hypervisor.framework|/System/Library/Frameworks/Hypervisor.framework|\\bhv_[A-Za-z0-9_]+|EPR_H4_PRIVACY_TESTS|makeTest|TestFault|OwnerBoundCanonicalProjection|OwnerAnchor|PersistenceLease|DualStreamPersistence|posix_spawn|waitpid|SIGKILL|VALID_H4|Gate-E",
+      "commands": [
+        "otool -L <binary>",
+        "otool -l <binary>",
+        "nm -gjU <binary>",
+        "nm -gju <binary>",
+        "nm -gj <binary>",
+        "strings -a <binary>",
+        "codesign -dvv <binary>",
+        "codesign -d --entitlements :- <binary>"
+      ],
+      "debug_nm_gjU_matches": 0,
+      "debug_nm_gju_matches": 0,
+      "debug_nm_gj_matches": 0,
+      "debug_strings_matches": 0,
+      "release_nm_gjU_matches": 0,
+      "release_nm_gju_matches": 0,
+      "release_nm_gj_matches": 0,
+      "release_strings_matches": 0,
+      "debug_hypervisor_load_or_entitlement_matches": 0,
+      "release_hypervisor_load_or_entitlement_matches": 0,
+      "debug_entitlements": "NONE",
+      "release_entitlements": "NONE",
+      "fixed_product_identity": "H4D3bRestartReader",
+      "debug_test_binary_strings_positive_control": 51,
+      "debug_test_binary_nm_positive_control": 529,
+      "release_test_binary_strings_positive_control": 37,
+      "release_test_binary_nm_matches": 0,
+      "release_nm_note": "Release dead stripping removes the positive-control global names; strings remains positive while all helper scans remain zero."
+    },
+    "static": {
+      "helper_source_phase_membership": [
+        "Sources/HypervisorStageH4DualStreamRestartInspection.swift",
+        "Sources/H4D3bRestartReaderMain.swift"
+      ],
+      "helper_source_phase_count": 2,
+      "application_target_unchanged": true,
+      "application_target_full_block_sha256_parent_and_implementation": "425a6dd6f6449f71404560d9596b315d44fc23025467564bea12cab8e46db833",
+      "application_sources_phase_full_block_sha256_parent_and_implementation": "85736460cc88f4490ed8c154422694230287cb992c2dc1f3ab9de4179bcd4382",
+      "application_frameworks_phase_full_block_sha256_parent_and_implementation": "924bd774321ffe34211c7acca4f946b4d73857f909e830b13d9130afe1a41334",
+      "application_debug_config_full_block_sha256_parent_and_implementation": "94aa94000371843c6a7a96744e04d88ac021c5b3fda7e7a19eee03968c84af0e",
+      "application_release_config_full_block_sha256_parent_and_implementation": "5631ce64d082f8c5d5aae9cf72bb034f9acff7f957fd1555dc8bc1a1dfdd6e35",
+      "application_dependency_on_helper": false,
+      "test_target_dependency_on_helper_count": 1,
+      "application_hypervisor_framework_linked": true,
+      "application_hypervisor_entitlement_configured": true,
+      "application_entitlements_blob_unchanged": "d7bd491f0c772584a3bfa1b977306e3f31941bf4",
+      "application_entitlements_sha256_unchanged": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2",
+      "helper_hypervisor_framework_linked": false,
+      "helper_hypervisor_entitlement": false,
+      "reader_no_external_commitment_pattern": "OwnerBoundCanonicalProjection|OwnerAnchor|PersistenceLease|expectedJSON|expectedCBOR|serialized_image|staging_readback|final_readback",
+      "reader_no_external_commitment_matches": 0,
+      "reader_process_control_pattern": "posix_spawn|Process\\b|waitUntilExit|waitpid|poll\\(|kill\\(|signal\\(|fork\\(|exec[lvpe]*\\(",
+      "reader_process_control_matches": 0,
+      "reader_forbidden_effect_pattern": "import Hypervisor|\\bhv_[A-Za-z0-9_]+|URLSession|NWConnection|system\\(|popen\\(|getenv\\(|Date\\(|ContinuousClock|DispatchTime",
+      "reader_forbidden_effect_matches": 0,
+      "process_and_signal_calls_in_added_non_test_sources": 0,
+      "excluded_source_test_header_entitlement_readme_diff_lines": 0,
+      "dead_code_stripping_project_occurrences": 2,
+      "dead_code_stripping_occurrences_scope": "existing ProvenanceTests Debug and Release configurations only",
+      "duplicate_pbx_object_ids": 0,
+      "project_pbxproj_plist": "PASS",
+      "freeze_json_jq_parse": "PASS",
+      "checkpoint_json_jq_parse": "PASS",
+      "diff_check": "PASS"
+    },
+    "independent_reviews": [
+      {
+        "review": "reader SQLite header, allocation, namespace, vnode and exact-close audit",
+        "object": "d8f614adda0de64c85f9daecb45cec5d7c1454bb/a5bd069391bb2fb30b5c19e0b87c39987205677b",
+        "result": "PASS"
+      },
+      {
+        "review": "XCTest launcher deadline, exact-PID containment and terminal-admission audit",
+        "object": "d8f614adda0de64c85f9daecb45cec5d7c1454bb/a5bd069391bb2fb30b5c19e0b87c39987205677b",
+        "result": "PASS"
+      },
+      {
+        "review": "PBX target isolation, application entitlement/linkage invariance and dirty-file containment audit",
+        "object": "d8f614adda0de64c85f9daecb45cec5d7c1454bb/a5bd069391bb2fb30b5c19e0b87c39987205677b",
+        "result": "PASS"
+      }
+    ]
+  },
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "blob": "8301fb3cb00132dca5771938565d7a5fb68bd877",
+      "sha256": "086842c078b98ba6085990651703095d463f6e59404bdaca0d37dec06d9e35d2"
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamRestartInspection.swift",
+      "blob": "7e64fbc7d2e1f185e7a0717356fc28f864b6c877",
+      "sha256": "d8db38b1ec42d2d21254c339f66010c4f4b4a47a3267382dc43e3ab6f2d053df"
+    },
+    {
+      "path": "Sources/H4D3bRestartReaderMain.swift",
+      "blob": "a0a647706bf9774b1d0ecef27397a4bc0f6b2924",
+      "sha256": "4a759aa4bf21c44c0c8f733585feeb56b23a65349643a37dd05ad66f19ad38c9"
+    },
+    {
+      "path": "Tests/HypervisorStageH4DualStreamRestartInspectionTests.swift",
+      "blob": "7341286835dc5f8f4c530b3b1f5b2db90c91da6c",
+      "sha256": "c5d3eeb6985e0bb2a512750af812180097060e619ad6aa90d16b093fd8878c2d"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3b-fresh-process-dual-stream-restart-inspection-freeze-2026-09-03.v1.json",
+      "blob": "98751a446b5b2b8dc63ef4853e4166ef401bc793",
+      "sha256": "117deed1a720e89b600a58289bbde199475c236bee4b1b3d799eed8c47fa1612"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "macos": "26.6.2",
+    "host_build": "25G83",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "swift": "6.3.3",
+    "swift_target": "arm64-apple-macosx26.0",
+    "sdk": "macOS 26.5"
+  },
+  "effects": {
+    "xctest_runner_execution": true,
+    "native_helper_process_launch": true,
+    "xctest_posix_spawn": true,
+    "xctest_poll": true,
+    "xctest_waitpid": true,
+    "xctest_sigkill_only_after_timeout": true,
+    "production_process_control": false,
+    "helper_process_control": false,
+    "production_signal_call": false,
+    "helper_signal_call": false,
+    "application_launch": false,
+    "vm_launch": false,
+    "guest_execution": false,
+    "hypervisor_api_execution": false,
+    "network": false,
+    "installation": false,
+    "github": false,
+    "authority_bearing_execution": false,
+    "child_file_reads": "one admitted private root and its fixed final SQLite image plus dynamic loader/runtime dependencies",
+    "child_file_writes": false,
+    "child_filesystem_timestamp_metadata_reads": true,
+    "parent_test_fixture_file_creation_mutation_and_deletion": true,
+    "code_signing_disabled_adhoc_linker_signed_compile_and_link": true
+  },
+  "residuals": [
+    "A canonical absolute same-uid path is an input locator, not a capability; same-euid, root or Full-Disk-Access actors can mutate the namespace outside the advisory-lock convention.",
+    "Shared advisory flock proves only cooperating-reader coordination and does not exclude noncooperating mutation.",
+    "Named, opened and post-close joins detect but cannot prevent every same-uid replacement between observations.",
+    "Path-based posix_spawn cannot bind execution to the retained helper descriptor; pre-spawn and post-reap joins detect but cannot prevent every replacement between observations.",
+    "The child validates a retained image after normal D3 test publication; it does not execute a real crash cut, power loss or device-cache interruption.",
+    "The four-second operation deadline and five-second hard horizon are best-effort userspace bounds; an entered kernel call has no independent external supervisor bound.",
+    "If the exact child is not reaped after the one permitted SIGKILL by the hard horizon, containment is unproven and no second signal is authorized.",
+    "Dynamic-loader and Swift/Foundation runtime filesystem activity is outside the application-level one-root read protocol and is not claimed absent.",
+    "Canonical JSON, deterministic CBOR and indexed scalar agreement can all be coherently replaced and therefore supplies no external commitment."
+  ],
+  "nonclaims": [
+    "This PASS is H4-D3b fresh-process local representation-inspection mechanics only.",
+    "VALID_V3_DUAL_STREAM_THREE_WAY_JOIN means representation agreement, not validity of the underlying historical claim.",
+    "SQLite is a checked non-authoritative container; schema, integrity and three-way semantic agreement create no truth or authority.",
+    "A newly exec'd process establishes object-lifetime separation from the publisher, not fresh data, producer authenticity, continuity, anti-replay or rollback resistance.",
+    "The wider app configures com.apple.security.hypervisor and links Hypervisor.framework, but the helper has neither and executes no Hypervisor API.",
+    "No H4 entry, Gate-E movement, candidate result, scientific conclusion, authority transition or successor stage is authorized by this checkpoint."
+  ],
+  "next_recommendation": null
+}

@@ -1,0 +1,197 @@
+{
+  "schema": "ergentics.capability-flow-independent-verifier.result.v1",
+  "recordedAtUTC": "2026-08-31T23:18:30Z",
+  "outcome": "PASS_LOCAL_OFFLINE_MECHANICS",
+  "effectiveContract": {
+    "contractSHA256": "af122183045151f05500e16b7fea8d110ad02c58f7e0ae74d4b0d83b20466e1a",
+    "correctionSHA256": "7bf08a9cdc3a4cdc75869bcc01e0b1721aef49362380f234f023726926214710",
+    "predecessorResultSHA256": "44036f316ee83da0ee001da5a2823b367180667a80b24f637793eae4d15fd07a"
+  },
+  "claims": {
+    "coreDeterministicCBORAndSemanticSetRepresentation": "PASS",
+    "swiftDomainArrayNormalForm": "NOT_ENFORCED",
+    "independentMerkleReconstruction": "PASS",
+    "independentRiemannDenyOnlyReconstruction": "PASS",
+    "declaredAccessEvidenceBijection": "PASS",
+    "structuralScenarioReferenceJoins": "PASS",
+    "declaredOperationSemanticValidity": "PARTIAL_RIEMANN_ONLY",
+    "runtimeAttemptCompleteness": "UNASSESSED",
+    "verifierRuntimeSyscallCompleteness": "UNASSESSED",
+    "hostileRuntimeNoninterference": "UNASSESSED",
+    "formalRiemannProof": "NOT_CLAIMED",
+    "gateE": "ABSTAIN",
+    "authorityVector": "00000000",
+    "changeIndexDelta": 0
+  },
+  "platform": {
+    "operatingSystem": "macOS 26.5.2 (25F84)",
+    "architecture": "arm64",
+    "xcode": "26.6 (17F113)",
+    "sdk": "macOS 26.5",
+    "deploymentTarget": "26.0"
+  },
+  "toolchain": {
+    "rustc": "1.98.0",
+    "commit": "88d9e12ae178fab0fb5cc050a94da85685d449ea",
+    "llvm": "22.1.8",
+    "host": "aarch64-apple-darwin",
+    "disjointPrefix": "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-capability-receipt-verifier/prefix",
+    "cargo": false,
+    "registry": false,
+    "systemInstall": false
+  },
+  "sources": {
+    "rust": {
+      "path": "Tools/CapabilityFlowRustReceiptVerifier/main.rs",
+      "sha256": "c08b0da7510fb82fd764f97b69782ebdf6debee35663f4682f91ebf41f71b747"
+    },
+    "swiftHarness": {
+      "path": "Tests/CapabilityFlowRustReceiptVerifierTests.swift",
+      "sha256": "0c97a4060a809070f189d475b3e7f33eb60c05672a34a3f382a8519f820a9cdb"
+    },
+    "project": {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "5c764511f56d90ca770b439e26d4b6a3efb8f7d29ec3f98cde8ad30fd9babfd4"
+    }
+  },
+  "verifierImage": {
+    "path": "Control/capability-flow-independent-verifier-2026-08-31/CapabilityFlowReceiptVerifier",
+    "bytes": 418400,
+    "sha256": "1459be25d714cb7a615604db231fd3baf73cbb28bd7863a51f9161fee07d6851",
+    "uuid": "D3E6EC8D-1900-31D7-9019-A0C780B510A6",
+    "codeDirectoryHash": "e1dced5473f5901586df9c098d619f1a7ac2f5b6",
+    "signature": "ADHOC_LINKER_SIGNED",
+    "mode": "0555",
+    "linkCount": 1,
+    "dynamicDependencies": [
+      "/usr/lib/libSystem.B.dylib"
+    ],
+    "hostAbsoluteOrScratchPathsEmbedded": false,
+    "deterministicRemappedSourcePathsEmbedded": [
+      "/ergentics/provenance/Tools/CapabilityFlowRustReceiptVerifier/main.rs"
+    ]
+  },
+  "buildEvidence": {
+    "unitTestBuilds": 2,
+    "unitTestRootsDisjoint": true,
+    "unitTestsPerBuild": 7,
+    "unitTestPassesPerBuild": 7,
+    "productionBuilds": 2,
+    "productionRootsDisjoint": true,
+    "rawBytesIdentical": true,
+    "sha256Identical": true,
+    "uuidIdentical": true,
+    "capturedCompilerBytesForSelectedBuilds": 0,
+    "rustEdition": "2024",
+    "panicStrategy": "unwind",
+    "codegenUnits": 1,
+    "lto": "fat",
+    "localSymbolsRemovedByLinker": true,
+    "rejectedPreliminaryBuild": {
+      "selected": false,
+      "reason": "optional rust-objcopy strip helper could not load its private libLLVM.dylib",
+      "effect": "warning-bearing output rejected before admission"
+    }
+  },
+  "xcodeIntegration": {
+    "target": "ProvenanceTests",
+    "hostless": true,
+    "appTargetDependencyAdded": false,
+    "shellBuildPhaseAdded": false,
+    "debugBuildForTesting": "PASS",
+    "releaseBuildForTesting": "PASS",
+    "debugCopiedResourceSHA256": "1459be25d714cb7a615604db231fd3baf73cbb28bd7863a51f9161fee07d6851",
+    "releaseCopiedResourceSHA256": "1459be25d714cb7a615604db231fd3baf73cbb28bd7863a51f9161fee07d6851"
+  },
+  "processTests": {
+    "debug": {
+      "startedAtUTC": "2026-08-31T23:18:00.481Z",
+      "endedAtUTC": "2026-08-31T23:18:00.504Z",
+      "testMethods": 3,
+      "testPasses": 3,
+      "verifierInvocations": 6
+    },
+    "release": {
+      "startedAtUTC": "2026-08-31T23:18:05.104Z",
+      "endedAtUTC": "2026-08-31T23:18:05.125Z",
+      "testMethods": 3,
+      "testPasses": 3,
+      "verifierInvocations": 6
+    },
+    "acceptedInvocations": 2,
+    "rejectedInvocations": 10,
+    "timeouts": 0,
+    "signalsEntered": 0,
+    "exactDirectChildReaps": 12,
+    "verifierStdoutBytes": 0,
+    "verifierStderrBytes": 0,
+    "applicationLaunches": 0,
+    "guestLaunches": 0
+  },
+  "coverage": {
+    "accepted": [
+      "exact Swift canonical receipt",
+      "exact three-leaf Merkle root",
+      "safe blocked Riemann claim with denied certification and exact evidence"
+    ],
+    "rejected": [
+      "eligible-bit forgery with recomputed Merkle root",
+      "ordinary-goal laundering of a theorem object with recomputed Merkle root",
+      "unknown access outcome",
+      "changed evidence digest with recomputed Merkle root",
+      "trailing frame byte"
+    ],
+    "rustKnownAnswerAndAdversarial": [
+      "FIPS SHA-256 empty abc and million-a vectors",
+      "fixed external Merkle vector",
+      "fixed external access-evidence digest vector",
+      "noncanonical CBOR aliases and map order",
+      "unknown capability missing grant zero generation and Change Index mutation"
+    ]
+  },
+  "runtimeBoundary": {
+    "verifierApplicationRequestedEnvironmentValueReads": 0,
+    "verifierApplicationRequestedPathOrFileOperations": 0,
+    "verifierApplicationRequestedNetworkOperations": 0,
+    "verifierApplicationRequestedPersistenceOperations": 0,
+    "verifierApplicationRequestedChildProcesses": 0,
+    "verifierChildEnvironmentEntries": 0,
+    "verifierAdditionalArguments": 0,
+    "staticRuntimeImportsIncludeAmbientAPIs": true,
+    "staticRuntimeImportExamples": [
+      "getenv",
+      "getcwd",
+      "open",
+      "opendir",
+      "readdir_r"
+    ],
+    "interpretation": "The Rust application has no such protocol, but dynamically linked Rust std and libSystem prevent a process-wide zero-syscall claim without a separate runtime census."
+  },
+  "containment": {
+    "operationDeadlineSeconds": 4,
+    "hardHorizonSeconds": 5,
+    "maximumDirectPidKillCommitmentsPerInvocation": 1,
+    "blockingPostKillWait": false,
+    "passRequiresExactReap": true,
+    "postSpawnIndefiniteWaitObserved": false,
+    "postSpawnHardHorizon": "BEST_EFFORT_USERSPACE",
+    "postSpawnKernelCallBound": "UNASSESSED_WITHOUT_EXTERNAL_SUPERVISOR",
+    "wholeInvocationIndefiniteWait": "UNASSESSED_SYNCHRONOUS_POSIX_SPAWN"
+  },
+  "postRun": {
+    "globalProcessCensus": "UNAVAILABLE_IN_CURRENT_SANDBOX",
+    "censusError": "sysmond service not found",
+    "directChildConservation": "PASS_BY_12_EXACT_WAITPID_REAPS"
+  },
+  "namedResiduals": [
+    "posix_spawn is a synchronous kernel call and is not interruptible by the in-process deadline while entered",
+    "path-based posix_spawn has a name-lookup interval; held-fd and pre/post vnode joins are not a suspended-child mapped-vnode proof and cannot detect transient same-inode mutate-and-restore between validations",
+    "direct-PID containment depends on the admitted image's reviewed no-child property",
+    "the v1 Access schema has no per-event transition ID or generation field",
+    "non-Riemann findings and channels are shape checked but not independently reconstructed",
+    "Swift's unique sorted domain-array normal form is not enforced; accepted arrays are canonical CBOR with set semantics",
+    "runtime attempts outside the caller-declared graph remain unassessed",
+    "process-wide dynamic-loader and standard-library effects remain unassessed",
+    "the userspace hard horizon does not externally bound entered pread poll waitpid or other kernel calls"
+  ]
+}

@@ -1,0 +1,811 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-externality-privacy-delta-review.v1",
+  "checkpoint": "H4_EXTERNALITY_PRIVACY_DELTA_REVIEW",
+  "recorded_at_utc": "2026-09-04T08:57:26Z",
+  "result_contract": "REVIEW_COMPLETE_ARCHITECTURE_SELECTION_PENDING_USER_DECISION",
+  "predecessor": {
+    "parent_commit": "1db6d5a0e8c473d77f19d7485c3a59812940929e",
+    "parent_tree": "1bc194c8ca7133daf9bf02be92919d4d4806d776",
+    "parent_relation": "the committed external-commitment and anti-replay threat-model freeze is the required direct parent of this review",
+    "threat_model_path": "Control/hypervisor-local-v1/h4-external-commitment-anti-replay-threat-model-freeze-2026-09-04.v1.json",
+    "threat_model_blob": "0b11d60af0bd68c98cea0cf56ad9dd331d70a45f",
+    "threat_model_sha256": "e7e78687199e34ad70c36d98fb86a5205d0624fd702eff1f57d052b5822a902b",
+    "threat_model_result": "FREEZE_H4_EXTERNAL_COMMITMENT_ANTI_REPLAY_THREAT_MODEL_ONLY"
+  },
+  "governing_controls": {
+    "privacy_architecture": {
+      "path": "Documentation/Architecture/PrivacyArchitecture.md",
+      "blob": "18b1060199c425e31c8c563ae070a6bac828abdf",
+      "sha256": "b638cea7f9224587da7deb0b31fd7721a07cdab43086817528157b3c684c2ecb",
+      "applicable_sections": [
+        "11 Destination boundaries",
+        "14 Retention, expiration, revocation, and deletion",
+        "15 Privacy luminosity and work accounting",
+        "19 Change-control triggers",
+        "Appendix B concise audit questions"
+      ]
+    },
+    "host_integrity_boundary": {
+      "path": "Control/host-integrity-trust-boundary.v1.json",
+      "blob": "4514b64da3019177c993ad75f81923ba86e0b757",
+      "sha256": "a4b1f3f850ec9d6939241f91398c7964dac6502fb7436f9aea8eaea5cd28e56b"
+    },
+    "stage_genesis": {
+      "path": "Control/hypervisor-local-v1/stage0-genesis-freeze.v1.json",
+      "blob": "777bd7b1e6b51b73214da9f2ebd6affdc1d99ee1",
+      "sha256": "459a830f72910236ec8d7c430229f3d82d974c1cc9396d3b4a551bc14c7487f7"
+    },
+    "precedence": "This review applies the governing controls to the threat-model candidates. It does not supersede them or select an architecture."
+  },
+  "static_baseline_evidence": {
+    "h4a_privacy_envelope": {
+      "path": "Control/hypervisor-local-v1/h4a-privacy-envelope-checkpoint-2026-09-01.v1.json",
+      "blob": "fea590bd579abae33667fee39880848e80897f51",
+      "sha256": "d77fc7bec04eae6b09b443fcc5ae45a0058a2f8375885087000aa8cadd852353"
+    },
+    "h4b_destination_dispatch": {
+      "path": "Control/hypervisor-local-v1/h4b-destination-dispatch-checkpoint-2026-09-01.v1.json",
+      "blob": "7cdf764f0fbe163e22889915d2f23c405d64d98c",
+      "sha256": "cd6aeaeca09b4b2847d89824d068fbc2f70a2d714cc2d9d24baf797084aefe3f"
+    },
+    "entitlements": {
+      "path": "Entitlements.plist",
+      "blob": "d7bd491f0c772584a3bfa1b977306e3f31941bf4",
+      "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2"
+    },
+    "privacy_manifest": {
+      "path": "PrivacyInfo.xcprivacy",
+      "blob": "33f1b94709774c88925ec84a6a3df5c7f8ad3fbf",
+      "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    },
+    "repository_guidance": {
+      "path": "README.md",
+      "blob": "067217e916813efaef94c51bf3f7df4ffbb27116",
+      "sha256": "4405d02d456a4f36bc57a2cf03a05ac9efdb3f035055912233073000a085fd45"
+    },
+    "scope": "Repository-static evidence only. These files do not establish current runtime behavior, live externality, attestation or independent custody."
+  },
+  "roadmap_boundary": {
+    "roadmap_stage": "hypervisor_durable_receipt_fault_injection_v1",
+    "relation": "H4_PRE_ENTRY_EXTERNALITY_AND_PRIVACY_DELTA_REVIEW",
+    "roadmap_ordinal_advanced": false,
+    "d3d_or_d4_identifier_assigned": false,
+    "architecture_selected": false,
+    "custody_selected": false,
+    "durable_representation_changed": false,
+    "runtime_implementation_added": false,
+    "test_execution_added": false,
+    "h4_entry_evaluated": false,
+    "reason": "The threat-model successor requires a structured privacy review before architecture selection. This record completes that review but leaves every selection-dependent recipient, retention, rollback-domain and custody fact unresolved."
+  },
+  "review_scope": {
+    "objective": "Identify the privacy and externality change created by each admissible independent-anchor family, distinguish transport-agnostic controls from selection-dependent facts, and expose the exact user decision required before any architecture or byte-format freeze.",
+    "review_complete": true,
+    "privacy_delta_closed": false,
+    "architecture_selection_ready": true,
+    "format_or_implementation_ready": false,
+    "assurance_target_selected": false,
+    "scope_limit": "Design review only. No assertion, recipient, key, verifier, network path, device, VM, external volume, format, source, test or product state is created or exercised."
+  },
+  "current_zero_externality_baseline": {
+    "claim_state": "OBSERVED",
+    "evidence_scope": "the exact repository-static files pinned above plus the current control-only Git history",
+    "product_runtime": "No external assertion, external verifier read or write, external recipient, production key, external storage, network connection or VM interaction is implemented or exercised by this review.",
+    "current_h4_destinations": "H4-A and H4-B record bounded process-local privacy-envelope and typed destination mechanics; H4-B expressly does not prove external sink identity or delivery.",
+    "entitlements": [
+      "com.apple.security.app-sandbox = true",
+      "com.apple.security.files.user-selected.read-only = true",
+      "com.apple.security.hypervisor = true"
+    ],
+    "network_entitlements_observed": false,
+    "privacy_manifest_declaration": {
+      "tracking": false,
+      "tracking_domains": [],
+      "collected_data_types": [],
+      "required_reason_api_categories": [
+        "NSPrivacyAccessedAPICategoryFileTimestamp",
+        "NSPrivacyAccessedAPICategorySystemBootTime"
+      ],
+      "claim_limit": "A manifest declaration is not proof of all runtime behavior or a future external-verifier configuration."
+    },
+    "prime_git_boundary": "The product Prime Git surface is a thin read-only snapshot viewer. A local Git commit preserves repository history but is not an external recipient, independent verifier, remote backup, transparency service or rollback-proof high-water authority.",
+    "vm_boundary": "The existence of a Prime Git VM is not enough to classify it. It qualifies as independent only if its administration, policy, trust roots, replay-state write authority and backing storage are not replaceable by the evaluated Mac and its rollback domain.",
+    "high_value_boundary": "High-value ingress and trusted egress remain unimplemented and default-deny under the host-integrity control."
+  },
+  "actual_control_artifact_delta": {
+    "claim_state": "OBSERVED",
+    "DeltaDataVisible": "One local repository control JSON exposes architecture, threat, privacy-review and decision facts; it contains no product subject payload or production secret.",
+    "DeltaFieldsVisible": "Local repository readers can observe schema, roadmap, commit/tree/blob hashes, control identities, candidate categories, policy requirements, residuals and nonclaims.",
+    "DeltaRetention": "The intended local commit creates one Git blob, tree and commit and advances local main and its reflog; no remote retention follows.",
+    "DeltaRecipients": "Local filesystem and repository readers only. No service, device, VM, external relying party or remote collaborator is contacted.",
+    "DeltaLinkability": "Pinned object and SHA-256 values intentionally join this review to the threat model, H4 baseline and governing controls.",
+    "DeltaPersistence": "Control-plane Git metadata only; no product SQLite, journal, cache, key store, external store, VM disk or build artifact changes.",
+    "DeltaInferenceSurface": "The control record reveals implementation intent, internal artifact identities and security assumptions but no runtime subject data.",
+    "DeltaLeakage": "No app, test, helper, network, service, device or VM execution occurs, so no new transport, service-log or runtime diagnostic channel is introduced."
+  },
+  "future_information_classes": [
+    {
+      "class": "protocol_context",
+      "members": [
+        "schema and version",
+        "product and roadmap domain",
+        "stage and claim class",
+        "purpose and policy identity",
+        "algorithm identifiers"
+      ],
+      "privacy_character": "Context prevents cross-domain replay but can reveal product use, policy membership and protocol evolution."
+    },
+    {
+      "class": "stable_identity_and_order_metadata",
+      "members": [
+        "genesis and lineage identity",
+        "epoch and sequence",
+        "predecessor",
+        "issuer and verifier",
+        "audience",
+        "key identifier",
+        "high-water and conflict or terminal state"
+      ],
+      "privacy_character": "Stable values support replay and fork decisions while creating presence, history and cross-run correlation signals."
+    },
+    {
+      "class": "representation_and_evidence_fingerprints",
+      "members": [
+        "D3 semantic commitment",
+        "JSON and CBOR commitments",
+        "indexed-scalar and graph commitments",
+        "predicate and evidence commitments",
+        "source, build, tree, host, session or environment commitments when policy requires them",
+        "byte counts"
+      ],
+      "privacy_character": "A digest may reveal equality or permit dictionary testing. It is not declassified merely because the preimage is absent."
+    },
+    {
+      "class": "audit_and_replay_records",
+      "members": [
+        "issuer assertion body",
+        "detached signature envelope",
+        "verifier predicate and decision record",
+        "high-water record",
+        "post-update admission receipt",
+        "fork or bootstrap-conflict evidence",
+        "rotation and revocation state"
+      ],
+      "privacy_character": "These records support reconstruction and recovery but preserve relationship, sequence, policy, error and conflict history."
+    },
+    {
+      "class": "operational_metadata",
+      "members": [
+        "request and access time",
+        "request cadence",
+        "endpoint, account and network metadata",
+        "message sizes",
+        "retries and availability failures",
+        "service logs",
+        "backup and replica inventory",
+        "billing records"
+      ],
+      "privacy_character": "Operational systems may retain and correlate metadata even when the protocol payload contains commitments only."
+    },
+    {
+      "class": "secret_custody_material",
+      "members": [
+        "issuer private keys",
+        "verifier and recovery roots",
+        "challenge entropy",
+        "nonce anti-reuse state",
+        "recovery authorization material"
+      ],
+      "privacy_character": "Secrets and authority state must never enter ordinary diagnostics, candidate-controlled storage or host-controlled backups."
+    },
+    {
+      "class": "raw_evidence_and_preimages",
+      "members": [
+        "canonical semantic evidence needed for independent reconstruction",
+        "predicate inputs and necessity witnesses",
+        "source or execution evidence required by a selected assurance policy"
+      ],
+      "privacy_character": "If disclosed, the verifier is a recipient of the exact fields. If withheld, commitments can preserve ordering and equality but cannot independently prove the hidden semantics, execution or claim truth."
+    },
+    {
+      "class": "raw_protected_payload",
+      "members": [
+        "user text",
+        "secrets",
+        "credentials",
+        "unrestricted paths",
+        "consumer payload",
+        "unbounded diagnostics or environment dumps"
+      ],
+      "privacy_character": "Excluded by default. A future exceptional disclosure needs a separate purpose, field, destination, retention and declassification decision."
+    }
+  ],
+  "protected_flow_and_record_inventory": [
+    {
+      "record": "audience_neutral_lineage_state",
+      "why_it_exists": "Provide the stable semantic fork and predecessor key defined by the threat model.",
+      "required_predicate": "exact lineage, sequence, predecessor and representation joins",
+      "future_observers": "selected verifier; any additional witness or relying party only if separately allowed",
+      "observation_necessity": "The selected verifier must compare the candidate with authenticated accepted lineage state to classify current, successor, gap or eligible fork. No other observer receives it without a separate destination necessity.",
+      "minimum_projection": "one high-entropy domain-separated commitment plus only the context required to interpret it",
+      "retention_need": "at least while the lineage remains admissible and through any policy-defined recovery window",
+      "correlation": "Deliberately stable across honest verifier wrappers; cross-recipient exposure therefore permits correlation.",
+      "inference": "presence, equality, ordering and possible low-entropy preimage membership",
+      "descendants": "assertion, decision, high-water, receipt and conflict records",
+      "descendant_trace_and_protection": "Each descendant carries the exact lineage-state commitment and inherits its protection and correlation classification; omission, mismatch or an unauthorized protection downgrade rejects.",
+      "instrumentation_duplication": "No payload or preimage is duplicated for instrumentation. Structural records may repeat the commitment only where an exact join predicate requires it, and diagnostics use a separately gated reference or class rather than a new payload copy.",
+      "unresolved": "whether it remains inside one verifier correlation domain or is shared for cross-view conflict detection"
+    },
+    {
+      "record": "issuer_assertion_body_and_signature_envelope",
+      "why_it_exists": "Bind one complete claim body to an authorized issuer without circular commitment construction.",
+      "required_predicate": "issuer, key epoch, audience, policy, context and exact signature-input verification",
+      "future_observers": "selected verifier and a separately authorized auditor if any",
+      "observation_necessity": "The verifier requires the exact bounded assertion and signature input to authenticate the issuer and policy joins. An auditor may receive only the projection required by a separately frozen audit purpose.",
+      "minimum_projection": "the exact bounded assertion body and signature material required for verification; no raw payload by default",
+      "retention_need": "policy-defined audit and idempotence window",
+      "correlation": "issuer, key, audience, epoch and body commitment can join requests across time",
+      "inference": "issuer activity, policy membership, cadence and assertion equality",
+      "descendants": "decision, high-water and admission-receipt records",
+      "descendant_trace_and_protection": "Descendants bind the assertion-body and signature-envelope commitments and inherit their issuer, audience, policy and protection labels; they do not silently copy or declassify the assertion body.",
+      "instrumentation_duplication": "Verifier diagnostics and metrics do not duplicate the assertion or signature bytes. Any separately retained audit copy must be the one policy-authorized canonical record or an exact commitment reference, not an unrestricted log copy.",
+      "unresolved": "exact assertion fields, signature suite, key custody and retention"
+    },
+    {
+      "record": "verifier_decision_and_high_water",
+      "why_it_exists": "Authorize at most one exact transition from authenticated prior verifier state and retain replay position.",
+      "required_predicate": "ordered eligibility predicates plus atomic compare-and-set, compare-and-append or equivalent serialization",
+      "future_observers": "verifier policy engine; internal operator or recovery role only when authorized",
+      "observation_necessity": "The policy engine requires the exact prior state and decision inputs to serialize an eligible transition. Operators and recovery roles may observe only the state needed for a named maintenance or recovery action.",
+      "minimum_projection": "complete internal decision evidence and minimal authenticated retained replay state",
+      "retention_need": "current head must survive for the lineage lifetime; superseded records depend on selected audit and recovery policy",
+      "correlation": "sequence and lineage state create an activity timeline",
+      "inference": "existence, current position, rejection causes, conflict and service availability",
+      "descendants": "resulting high-water record, admission receipt, conflict or recovery state",
+      "descendant_trace_and_protection": "The decision commitment binds the authenticated prior state and proposed tuple; the resulting high-water record and receipt bind that decision and inherit its restricted verifier-state classification.",
+      "instrumentation_duplication": "The complete decision record remains in the gated verifier store only when policy requires it. Requester errors, logs and metrics receive minimized classes or commitments and never an additional copy of predicate inputs or protected evidence.",
+      "unresolved": "history depth, tombstone form, backup, replica, deletion, legal hold and recovery"
+    },
+    {
+      "record": "post_update_admission_receipt",
+      "why_it_exists": "Prove that an authenticated resulting high-water record was observed after update or lost-ack resolution.",
+      "required_predicate": "decision-record and fresh resulting high-water commitment join",
+      "future_observers": "authorized requester, auditor or relying party under separate destination rules",
+      "observation_necessity": "An authorized requester or relying party may need bounded evidence that the verifier observed the resulting state; each recipient sees only the receipt fields required by its own acceptance policy.",
+      "minimum_projection": "bounded claim-labelled outcome; the full internal predicate record is not automatically returned",
+      "retention_need": "separately declared; it is not automatically coextensive with the high-water state",
+      "correlation": "receipt identifiers and resulting head can join activity across destinations",
+      "inference": "success, timing, sequence and verifier usage",
+      "descendants": "later audit or relying-party records",
+      "descendant_trace_and_protection": "Later records reference the receipt commitment and preserve its source claim, audience and protection labels; presentation or republication cannot upgrade the claim or broaden its recipients.",
+      "instrumentation_duplication": "The receipt may repeat the minimum commitments necessary to prove its joins but carries no underlying payload. Logs and presentation diagnostics use bounded status classes and do not duplicate the full receipt unless separately authorized.",
+      "unresolved": "recipient, presentation, expiration, export and exact retention"
+    },
+    {
+      "record": "fork_conflict_and_bootstrap_tombstone",
+      "why_it_exists": "Prevent erased conflict history or reinitialization from silently restoring automatic admission.",
+      "required_predicate": "only authenticated eligible assertions may create conflict state",
+      "future_observers": "restricted verifier policy, recovery and audit roles",
+      "observation_necessity": "The verifier needs minimal conflict state to preserve denial, while a named recovery or audit role may need bounded evidence to authorize or inspect an explicit resolution.",
+      "minimum_projection": "minimal authenticated commitments, classification and policy state; unrestricted conflicting payload is not implied",
+      "retention_need": "long enough to preserve denial and recovery semantics; post-resolution deletion or justified nondeletion must be explicit",
+      "correlation": "conflict evidence can permanently associate parties, keys and lineage positions",
+      "inference": "existence of dispute, competing history and recovery action",
+      "descendants": "inspection, rotation, recovery or terminal-state records",
+      "descendant_trace_and_protection": "Every resolution, rotation, recovery or terminal descendant binds the conflict-tombstone commitment and retains its restricted conflict classification until an authenticated policy transition explicitly changes it.",
+      "instrumentation_duplication": "Instrumentation records only a bounded conflict class and commitment. It does not copy competing assertion bodies, signatures, evidence preimages or operator notes into general logs.",
+      "unresolved": "resolution authority, lifetime, legal hold, redaction and recovery transition"
+    },
+    {
+      "record": "provisioning_rotation_revocation_and_recovery_material",
+      "why_it_exists": "Create and maintain independently trusted genesis, key and policy ancestry.",
+      "required_predicate": "trusted provisioning or an authenticated transition from prior authority",
+      "future_observers": "named custodians and recovery roles only",
+      "observation_necessity": "Each custodian observes only the public or secret material required to perform its separated provisioning, rotation, revocation or recovery role; the evaluated host has no necessity to observe independent secret authority.",
+      "minimum_projection": "separate public trust data from non-exportable or offline secret authority",
+      "retention_need": "policy lifecycle plus recovery requirements",
+      "correlation": "stable custodial identities and key epochs link operations",
+      "inference": "administrative relationships and compromise or recovery events",
+      "descendants": "every admitted epoch and verifier state",
+      "descendant_trace_and_protection": "Epoch transitions bind prior and new trust commitments, and every admitted descendant records the applicable policy and key epoch while preserving the strongest protection of its authority inputs.",
+      "instrumentation_duplication": "Private keys, recovery secrets, raw entropy and nonce anti-reuse state are never duplicated into product diagnostics, control artifacts or host-controlled backups. Any authorized secure backup is a separately inventoried custody copy, not instrumentation.",
+      "unresolved": "owner, operator, administrators, quorum, secret storage, loss behavior and recovery authority"
+    },
+    {
+      "record": "transport_service_and_backup_metadata",
+      "why_it_exists": "Operational systems may require routing, authentication, reliability and recovery records.",
+      "required_predicate": "none until a concrete transport or storage topology is selected",
+      "future_observers": "provider, network intermediaries, operators, backup controllers or device custodians depending on selection",
+      "observation_necessity": "No observer is authorized by this review. A later topology must justify each operational observer and field as necessary for routing, authentication, bounded reliability, billing or recovery before collection.",
+      "minimum_projection": "omit or coarsen unless a named service or policy predicate requires it",
+      "retention_need": "default none; every log, backup and replica requires a declared lifetime",
+      "correlation": "accounts, endpoints, addresses, times, sizes and cadence may join otherwise opaque commitments",
+      "inference": "usage patterns, lineage activity, outages and participant relationships",
+      "descendants": "logs, metrics, billing, backups, support and incident records",
+      "descendant_trace_and_protection": "Every allowed operational derivative remains linked in the holder and retention inventory, inherits the request's metadata protection, and cannot become protocol authority or an undeclared secondary-use dataset.",
+      "instrumentation_duplication": "Default instrumentation is absent or bounded structural counting. Payload, assertion, evidence and secret duplication into logs, traces, metrics, crash reports or support bundles is prohibited unless a separate purpose and destination explicitly require it.",
+      "unresolved": "all fields, recipients, durations and deletion effects"
+    }
+  ],
+  "structured_privacy_delta": {
+    "DeltaDataVisible": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "No product data is visible to an external verifier.",
+      "proposed_delta": "Positive: a selected verifier receives assertion, replay-state and possibly canonical evidence classes.",
+      "minimum_control": "No raw protected payload by default; disclose only independently justified evidence bytes or high-entropy commitments needed by the selected assurance target.",
+      "unresolved": "Which exact preimages must be visible for independent reconstruction rather than ordering-only verification.",
+      "residual": "Commitments alone do not prove hidden semantics or execution truth; disclosed evidence enlarges the recipient's observation surface."
+    },
+    "DeltaFieldsVisible": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "No external protocol fields exist.",
+      "proposed_delta": "Positive: domain, lineage, epoch, sequence, issuer, verifier, audience, policy, key, digest, decision, high-water and conflict fields may become visible.",
+      "minimum_control": "Assign every field REQUIRED, POLICY_CONDITIONAL or EXCLUDE and retain a named necessity witness before byte-format freeze.",
+      "unresolved": "Exact field set, byte counts, timing, source/build/tree, host/session and evidence-predicate coverage.",
+      "residual": "Even bounded structural fields can reveal presence, cadence, policy membership and history."
+    },
+    "DeltaRetention": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "No external verifier retention; local D3 and Git retention remain in their existing scopes.",
+      "proposed_delta": "Positive: genesis, current high-water, decision, receipt, conflict, key-lifecycle, log, backup and replica records may persist.",
+      "minimum_control": "Declare purpose, lifetime, access role, deletion authority, backup/replica propagation, legal-hold conflict and loss behavior for every class.",
+      "unresolved": "Durations, history depth, tombstone lifetime, archive and recovery policy.",
+      "residual": "Already observed external copies and compromised recipients cannot be made to forget by a local deletion claim."
+    },
+    "DeltaRecipients": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "Local repository and product-local destinations only.",
+      "proposed_delta": "Positive: verifier, operator, administrator, custodian, recovery role, backup controller, auditor, relying party or public-log reader depending on architecture.",
+      "minimum_control": "Name every role, legal or administrative controller, purpose, audience and destination before emission; deny ambient or public access by default.",
+      "unresolved": "Exact verifier owner, deployment, operators, recovery actors, infrastructure and relying parties.",
+      "residual": "Service or threshold designs may create recipients outside direct user control."
+    },
+    "DeltaLinkability": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "Local H4 commitments are not emitted to an external correlation domain.",
+      "proposed_delta": "Positive: stable lineage, issuer, key, epoch, policy, sequence and timing can correlate executions and destinations.",
+      "minimum_control": "Keep the audience-neutral lineage commitment within the smallest accepted correlation domain; use purpose-scoped wrappers and prohibit cross-recipient sharing unless conflict-detection policy explicitly requires it.",
+      "unresolved": "Verifier-local privacy versus shared-log or multi-witness cross-view conflict detection.",
+      "residual": "A stable fork key cannot simultaneously be broadly shared for comparison and claimed unlinkable across those same recipients without an additional controlled-blinding or gossip design."
+    },
+    "DeltaPersistence": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "Local D3 SQLite publication and repository Git objects only; neither is an independent anti-replay anchor.",
+      "proposed_delta": "Positive: external high-water, assertion, conflict, key-state, backup and replica persistence.",
+      "minimum_control": "Separate local publication, verifier authority state, replicas and operational backup; prove the selected rollback domain and atomic state transition.",
+      "unresolved": "Physical storage, VM placement, administrators, backup controllers, atomicity and recovery.",
+      "residual": "A copy improves availability but is not independent if the evaluated Mac can replace policy or accepted state."
+    },
+    "DeltaInferenceSurface": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "No external observer can query H4 lineage or replay position.",
+      "proposed_delta": "Positive: commitments, status, sequence, errors, timing, sizes and access patterns can expose existence and activity.",
+      "minimum_control": "Use high-entropy commitments, hide or separately authorize low-entropy preimages, minimize requester outcomes, and keep full typed reasons inside a gated verifier-internal record.",
+      "unresolved": "Authorized query classes, hiding mechanism, timing/size treatment and whether public consistency evidence is required.",
+      "residual": "Hashing alone does not stop offline guessing; an authorized verifier necessarily learns the state needed for its decision."
+    },
+    "DeltaLeakage": {
+      "claim_state": "NORMATIVE",
+      "current_baseline": "No external transport, service logs, verifier errors or recovery exports are introduced.",
+      "proposed_delta": "Positive: diagnostics, transport metadata, access logs, retries, availability failures, conflict records, backups, exports and recovery material create new channels.",
+      "minimum_control": "Payload-free diagnostics by default, separate internal and requester projections, no secret custody material in logs or host backups, bounded retry and explicit export policy.",
+      "unresolved": "Concrete transport, provider/device logging, support access, backup, export and incident response.",
+      "residual": "Network and storage infrastructure may observe metadata beyond the canonical protocol payload."
+    }
+  },
+  "privacy_luminosity": {
+    "rule": "This vector directs review effort and is neither a score nor a privacy verdict.",
+    "current_control_only_delta": {
+      "disclosure": "LOCAL_CONTROL_METADATA_ONLY",
+      "inference": "LOCAL_DESIGN_INTENT_ONLY",
+      "linkability": "POSITIVE_INTENTIONAL_CONTROL_PINNING",
+      "retention": "ONE_LOCAL_GIT_COMMIT",
+      "cross_agent": "NONE",
+      "metadata": "LOCAL_OBJECT_IDENTITIES",
+      "externality": "NONE"
+    },
+    "future_anchor_transition": {
+      "disclosure": "POSITIVE",
+      "inference": "POSITIVE_OR_UNKNOWN_UNTIL_FORMAT_AND_QUERY_POLICY",
+      "linkability": "POSITIVE",
+      "retention": "POSITIVE",
+      "cross_agent": "POSITIVE_WHEN_OPERATOR_AUDITOR_OR_RELYING_PARTY_ROLES_EXIST",
+      "metadata": "POSITIVE",
+      "externality": "POSITIVE"
+    }
+  },
+  "field_necessity_review": {
+    "classification_is_semantic_not_byte_format": true,
+    "REQUIRED": [
+      {
+        "field_class": "domain_and_schema",
+        "necessity": "prevent cross-protocol and unsupported-version interpretation"
+      },
+      {
+        "field_class": "genesis_lineage_epoch_sequence_and_predecessor",
+        "necessity": "identify the verifier-relative replay position and exact successor relation"
+      },
+      {
+        "field_class": "issuer_key_epoch_and_authentication_input",
+        "necessity": "authenticate the assertion under the selected policy"
+      },
+      {
+        "field_class": "verifier_audience_purpose_and_policy",
+        "necessity": "prevent cross-verifier, cross-purpose and stale-policy reuse"
+      },
+      {
+        "field_class": "lineage_assertion_decision_and_high_water_commitments",
+        "necessity": "join the noncircular decision and atomic replay-state transition"
+      },
+      {
+        "field_class": "typed eligibility_outcome_for_internal_record",
+        "necessity": "reconstruct why verifier state did or did not change without trusting producer prose"
+      }
+    ],
+    "POLICY_CONDITIONAL": [
+      {
+        "field_class": "canonical evidence bytes or preimages",
+        "condition": "required only to the extent the verifier independently reconstructs semantics instead of checking order and authentication alone"
+      },
+      {
+        "field_class": "product_roadmap_stage_source_build_tree_host_session_and_environment",
+        "condition": "include only when a selected replay or assurance predicate requires the exact identity; high-value claims require a separate host-evidence design"
+      },
+      {
+        "field_class": "timestamps_freshness_intervals_challenges_nonces_and_byte_counts",
+        "condition": "include only when the selected freshness, anti-reuse, framing or resource policy requires them"
+      },
+      {
+        "field_class": "full_predicate_inventory_and_rejection_detail",
+        "condition": "retain internally when needed for audit; do not return automatically to an untrusted requester"
+      },
+      {
+        "field_class": "historical_high_water_decisions_receipts_and_conflict_payload",
+        "condition": "retain only under explicit audit, recovery, conflict and deletion rules"
+      },
+      {
+        "field_class": "operator_account_endpoint_transport_log_backup_and_billing_metadata",
+        "condition": "depends on the selected service, device or host topology and must be minimized separately"
+      }
+    ],
+    "EXCLUDE_BY_DEFAULT": [
+      "raw user text, consumer payload, credentials and secrets",
+      "unrestricted local paths, environment dumps and native diagnostic text",
+      "issuer private keys, recovery secrets and raw entropy",
+      "host-controlled fallback copies presented as independent authority",
+      "public lineage or conflict publication without a separately accepted correlation and retention purpose",
+      "local Git commit, branch or repository identity unless an exact selected policy proves necessity",
+      "precise timing, location, account or network identifiers without a named predicate"
+    ],
+    "counterfactual_rule": "Removing each included field must either preserve the selected assurance target or produce a named necessity witness. A small allowlist is not itself proof of minimum sufficient information."
+  },
+  "recipient_and_destination_review": {
+    "current_recipients": [
+      {
+        "role": "local_repository_reader",
+        "data": "control metadata and pinned artifact identities",
+        "status": "OBSERVED"
+      }
+    ],
+    "future_roles_requiring_selection": [
+      {
+        "role": "verifier_policy_engine",
+        "minimum_access": "bounded assertion, authenticated prior state and exact policy-required evidence",
+        "authority": "may serialize its own high-water transition but cannot promote H4, Gate E or scientific authority"
+      },
+      {
+        "role": "verifier_operator_or_administrator",
+        "minimum_access": "operational status and strictly necessary recovery controls",
+        "authority": "must be separated from candidate-controlled reset or replacement"
+      },
+      {
+        "role": "trust_root_key_or_recovery_custodian",
+        "minimum_access": "only the material required for its separated lifecycle role",
+        "authority": "cannot be left implicit or colocated with evaluated-host write authority"
+      },
+      {
+        "role": "auditor_or_relying_party",
+        "minimum_access": "claim-labelled receipt or consistency evidence under a separate destination policy",
+        "authority": "independently decides whether to rely; receipt presentation cannot self-promote"
+      },
+      {
+        "role": "provider_backup_replica_or_network_operator",
+        "minimum_access": "metadata or ciphertext strictly implied by the selected topology",
+        "authority": "no implicit authorization; must be inventoried even if it does not receive plaintext"
+      },
+      {
+        "role": "public_or_shared_log_reader",
+        "minimum_access": "none by default",
+        "authority": "exists only if the user explicitly accepts public/shared correlation and retention"
+      }
+    ],
+    "destination_rules": {
+      "verifier_internal_record": "May retain full typed decision detail only under the selected access and retention policy.",
+      "requester_outcome": "Must be authenticated and minimized. An untrusted or over-broad requester receives a non-enumerating rejection and cannot read raw high-water, sequence, existence or conflict detail.",
+      "audit_or_relying_party_receipt": "Requires its own audience, purpose, field and retention gate; it is not automatically the verifier-internal record.",
+      "recovery_export": "Requires separate custody and destination authorization and must never become a candidate-controlled rebaseline path.",
+      "backup_or_replica": "Must preserve access control and rollback semantics; ordinary backup storage is not automatically verifier authority.",
+      "public_log": "Denied unless a later user decision accepts the correlation, effectively durable history and governance consequences."
+    },
+    "existence_and_sequence_oracle": {
+      "risk": "Raw high-water reads or differentiated stale, gap, fork, missing-lineage and policy errors let a requester enumerate existence and activity.",
+      "required_split": "Keep complete typed reasons in the authorized verifier-internal record. Return only the minimum claim-labelled outcome allowed for the requester.",
+      "selection_dependency": "Exact authentication, rate, query and error-equivalence policy remains UNKNOWN until topology and recipients are selected."
+    }
+  },
+  "retention_deletion_and_recovery_review": {
+    "default": "No external retention is authorized by this review.",
+    "required_per_class": [
+      "purpose",
+      "retention lifetime",
+      "read and write roles",
+      "deletion authority",
+      "backup and replica propagation",
+      "legal-hold or audit conflict behavior",
+      "lineage and descendant consequences",
+      "cryptographic domain",
+      "loss and recovery outcome"
+    ],
+    "minimum_live_state": "A selected verifier must retain authenticated current high-water and any minimal conflict or terminal state required to prevent replay, erased conflict history or silent reinitialization.",
+    "superseded_history": "Retention of every assertion, decision and receipt is not automatically necessary; the selected audit, recovery and conflict model must justify the depth.",
+    "conflict_tombstone": "If denial must survive resolution, retain a minimal authenticated tombstone and policy state. Indefinite unrestricted conflict payload or metadata retention is not implied.",
+    "deletion_limit": "Local deletion cannot recall recipient, provider, backup, offline, logged or compromised copies. Physical overwrite and cryptographic erasure require separate evidence.",
+    "loss_rule": "Unavailable or lost verifier state fails closed for new adoption and cannot fall back to the candidate, local D3 image or local Git history.",
+    "unresolved": [
+      "retention durations and history depth",
+      "recovery time and acceptable outage",
+      "backup and replica controllers",
+      "single-custodian or quorum recovery",
+      "key loss, compromise and rotation policy",
+      "conflict resolution and post-resolution deletion",
+      "legal-hold behavior"
+    ]
+  },
+  "assurance_target_gate": {
+    "verifier_relative_anti_replay": {
+      "status": "RECOMMENDED_INITIAL_TARGET_PENDING_USER_SELECTION",
+      "claim": "Distinguish the selected verifier's exact accepted lineage head or one exact successor from stale, conflicting or invalid input.",
+      "limit": "Does not prove global newest state, hidden-fork absence, historical execution truth, host integrity or honest computation."
+    },
+    "high_value_ingress_or_trusted_egress": {
+      "status": "SEPARATE_DESIGN_REQUIRED_DEFAULT_DENY",
+      "claim": "Would require independent host evidence, operation/session binding, one-use grant consumption and, for trusted egress, independent result verification under the host-integrity control.",
+      "limit": "The anti-replay witness cannot be relabelled as host attestation or execution proof."
+    },
+    "ordinary_synthetic_development": "May continue under existing controls without importing high-value material or trusting outputs.",
+    "selection_required": "The user must decide whether the next architecture remains anti-replay-only. Selecting high-value ingress or trusted egress expands scope and requires a separate review before this roadmap can proceed."
+  },
+  "candidate_architecture_matrix": [
+    {
+      "kind": "private_single_append_only_witness",
+      "status": "RECOMMENDED_LOGICAL_TOPOLOGY_PENDING_CUSTODY_SELECTION",
+      "security_value": "A separately controlled serialized log or high-water service can provide verifier-relative freshness, replay rejection, idempotence and retained conflict audit.",
+      "privacy_delta": "One private verifier and its operators receive stable lineage/order metadata and any selected evidence; service logs, backups and account metadata depend on deployment.",
+      "split_view": "One witness does not establish global newest state or reveal successors withheld from it.",
+      "availability": "Outage or state loss denies new adoption; recovery and backup authority must be frozen.",
+      "deployment_choices": [
+        "independently administered private remote host or service for automation",
+        "user-custodied physically separate verifier for a smaller external-recipient surface",
+        "independently administered host or VM only when the evaluated Mac cannot replace its policy, keys, replay state or backing storage"
+      ]
+    },
+    {
+      "kind": "physically_separate_verifier_state",
+      "status": "ADMISSIBLE_CUSTODY_OPTION_PENDING_EXACT_BOUNDARY",
+      "security_value": "Can preserve verifier-relative high-water outside the local rollback domain if the evaluated Mac lacks reset and replacement authority.",
+      "privacy_delta": "Potentially smallest recipient and network surface under user custody.",
+      "split_view": "No global or multi-view fork detection by itself.",
+      "availability": "Device loss, unavailability, manual handling and recovery become primary failure modes.",
+      "disqualifier": "An ordinary host-writable disk, mounted file or copied database is storage, not independent verifier authority."
+    },
+    {
+      "kind": "independent_host_or_vm_replica",
+      "status": "ADMISSIBLE_ONLY_IF_INDEPENDENCE_IS_PROVEN",
+      "security_value": "Can implement the private witness contract when administration, trust roots, replay-state authority and durable backing storage are outside evaluated-host control.",
+      "privacy_delta": "Administrator, transport, host logs, backups and infrastructure become recipients or metadata observers.",
+      "split_view": "A single replica still lacks global split-view detection.",
+      "availability": "Depends on host, network or transfer path, backup and recovery governance.",
+      "disqualifier": "A VM controlled by the evaluated Mac or stored only on its replaceable disk is not independent."
+    },
+    {
+      "kind": "threshold_or_multi_witness",
+      "status": "DEFERRED_UPGRADE_PATH",
+      "security_value": "Can reduce reliance on one operator and improve equivocation or split-view detection under a frozen quorum and consistency protocol.",
+      "privacy_delta": "Multiplies recipients, copies, stable correlation, operational logs and governance.",
+      "split_view": "Stronger only to the exact quorum, gossip and partition assumptions later proven.",
+      "availability": "Adds quorum, liveness, recovery and partial-failure complexity.",
+      "recommendation": "Design compatibility now but do not select for the first bounded implementation."
+    },
+    {
+      "kind": "public_or_shared_transparency_log",
+      "status": "NOT_RECOMMENDED_FOR_INITIAL_SCOPE",
+      "security_value": "May improve broad consistency and externally visible equivocation evidence.",
+      "privacy_delta": "Highest externality: stable identifiers, sequence, timing and history can become broadly correlatable and effectively difficult to delete.",
+      "split_view": "Depends on monitor, consistency, gossip and governance behavior; publication alone is insufficient.",
+      "availability": "External service and policy dependency.",
+      "selection_rule": "Requires explicit user acceptance of public/shared correlation, retention and governance."
+    },
+    {
+      "kind": "local_prime_git_or_same_host_vm",
+      "status": "NOT_ADMISSIBLE_AS_INDEPENDENT_ANCHOR_ON_CURRENT_EVIDENCE",
+      "security_value": "Can become a useful local versioned store, backup or transport staging area under a separate product plan.",
+      "privacy_delta": "Local storage and VM metadata without necessarily creating an external recipient.",
+      "split_view": "No independent view when the evaluated Mac controls replacement.",
+      "availability": "May improve ordinary recovery but remains correlated with the same host and storage failures unless separately placed.",
+      "selection_rule": "Prime Git or its VM qualifies only after exact evidence shows independent administration, policy, trust roots, replay-state write authority and backing storage outside the evaluated Mac's rollback domain."
+    }
+  ],
+  "transport_agnostic_invariants_ready_for_later_freeze": [
+    "No raw protected payload, path, user text, credential, private key or unrestricted diagnostic is disclosed by default.",
+    "Every field has a named necessity witness and every recipient, purpose, audience, persistence class and lifetime is explicit.",
+    "The verifier's policy, trust roots, accepted replay state and write authority are not replaceable by the evaluated Mac.",
+    "Unavailable, unauthenticated, stale, divergent, ambiguous or lost verifier state fails closed without candidate or local-Git rebaseline.",
+    "A new independently provisioned genesis starts a new claim class or epoch and cannot retroactively promote D3, D3b, D3c or consumed H3 evidence.",
+    "Only authenticated eligible assertions may affect replay or conflict state.",
+    "Complete typed rejection detail remains verifier-internal; requester-visible outcomes are authorized, minimized and non-enumerating.",
+    "The audience-neutral lineage commitment is shared only within the selected correlation domain; purpose-scoped wrappers do not erase core correlation.",
+    "Retention of current high-water, conflict tombstone and recovery state is separated from assertion, receipt, log, backup and audit history.",
+    "Commitments support exact binding and ordering but do not prove hidden semantics, host integrity, execution truth, secrecy, deletion or authority.",
+    "High-value ingress and trusted egress remain default-deny unless the separate host-integrity and result-verification predicates are implemented and independently verified.",
+    "A later live transport, device, VM or external-volume slice requires its own authorization, manifest/entitlement review, monitoring, evidence and recovery bounds."
+  ],
+  "selection_dependent_unknowns": [
+    "anti-replay-only versus high-value ingress or trusted-egress assurance target",
+    "exact verifier owner, operator, administrators and legal or organizational controller",
+    "remote service, physical device, independent host, qualifying VM or multi-witness topology",
+    "exact physical and administrative rollback domain",
+    "trust-root, issuer-key, verifier-key, policy, rotation, revocation and recovery custody",
+    "single-witness versus quorum consistency and split-view policy",
+    "verifier-local correlation versus shared conflict-detection visibility",
+    "exact evidence bytes or preimages needed for independent semantic reconstruction",
+    "canonical formats, cryptographic suite, sizes, limits and transport authentication",
+    "retention durations, deletion, conflict tombstone, backup, replica, legal hold and recovery",
+    "requester query authorization, error projection, rate and existence privacy",
+    "availability target, acceptable outage, offline behavior and permanent-loss consequence",
+    "network, file-write, external-device, helper, privacy-manifest and entitlement changes"
+  ],
+  "manifest_and_entitlement_review": {
+    "current_static_result": "NO_CHANGE_REQUIRED_FOR_THIS_CONTROL_ONLY_REVIEW",
+    "current_entitlements": [
+      "App Sandbox",
+      "user-selected read-only files",
+      "Hypervisor"
+    ],
+    "current_absences": [
+      "network client entitlement",
+      "network server entitlement",
+      "user-selected read-write entitlement",
+      "declared tracking domains",
+      "declared collected-data types"
+    ],
+    "claim_limit": "Static absence is not a runtime no-network or no-collection proof.",
+    "future_remote_service": "Requires a separate network, destination, privacy-manifest, effective-entitlement and archive review before implementation or launch.",
+    "future_external_device_or_volume": "Requires a separate file-write, mount, custody, rollback-domain, cleanup and evidence review before mutation.",
+    "future_vm": "Requires separate VM administration, storage placement, trust-root, process, network and lifecycle authorization; the existing Hypervisor entitlement does not prove verifier independence.",
+    "future_provider_or_public_log": "Requires exact recipient, operator, logging, retention, backup, legal, account and metadata review.",
+    "no_automatic_manifest_claim": "Selection of a design candidate does not itself decide whether Apple treats future protocol data as collected or tracking; evaluate the exact shipped data flow and current Apple requirements at implementation time."
+  },
+  "recommended_user_decision": {
+    "recommended_initial_assurance": "VERIFIER_RELATIVE_ANTI_REPLAY_ONLY",
+    "recommended_logical_topology": "PRIVATE_SINGLE_APPEND_ONLY_VERIFIER",
+    "recommended_disclosure": "Purpose-scoped high-entropy commitments plus only the bounded canonical evidence proven necessary for the verifier's selected semantic predicates; no raw protected payload and no public log.",
+    "recommended_correlation": "One private verifier correlation domain initially; split-view and withheld-successor detection remain explicit residuals.",
+    "recommended_upgrade_path": "Keep the logical contract compatible with a later second or threshold witness, but defer quorum, gossip and public consistency.",
+    "custody_choice_required": [
+      "independently administered private remote host or service, favored for automated availability but adding provider, network, account, log, backup and cost exposure",
+      "user-custodied physically separate verifier, favored for the smallest external-recipient surface but adding manual availability, loss and recovery burdens",
+      "the existing Prime Git VM only if the user can establish that its administration, trust roots, replay-state authority and backing storage are not replaceable by the evaluated Mac"
+    ],
+    "decision_limit": "Choosing a custody class authorizes an architecture freeze only. Provider selection, key creation, byte formats, implementation, VM/network/device operation and high-value transfer remain separate work."
+  },
+  "selection_gate": {
+    "status": "CLOSED_PENDING_USER_DECISION",
+    "minimum_user_decisions": [
+      "confirm verifier-relative anti-replay-only as the initial assurance target",
+      "choose the independent custody topology and name its rollback boundary",
+      "accept one private witness initially with split-view detection deferred, or require multi-witness behavior now",
+      "choose verifier-local correlation by default, or explicitly accept broader shared-log correlation",
+      "state whether the Prime Git VM is on the evaluated Mac or is independently administered with separately controlled backing storage"
+    ],
+    "after_selection": "Create an architecture-and-custody freeze plus its architecture-specific privacy delta. Only after that may canonical bytes, cryptography and atomicity be frozen.",
+    "format_or_runtime_work_before_selection": "DENIED"
+  },
+  "implementation_boundary": {
+    "implementation_allowlist": [],
+    "source_change_allowed": false,
+    "test_change_allowed": false,
+    "project_change_allowed": false,
+    "entitlement_or_manifest_change_allowed": false,
+    "durable_format_change_allowed": false,
+    "runtime_execution_allowed": false,
+    "only_added_path": "Control/hypervisor-local-v1/h4-externality-privacy-delta-review-2026-09-04.v1.json",
+    "future_parent_rule": "A later architecture freeze must cite the committed exact bytes of this review, record the explicit user selection and retain a separate architecture-specific privacy delta."
+  },
+  "authorization_boundary": {
+    "review_creation_validation_and_local_commit": "AUTHORIZED_BY_USER_ON_2026-09-04",
+    "architecture_or_custody_selection": "PENDING_USER_DECISION",
+    "local_git_commit_effect": "one control-only commit may create the required Git blob/tree/commit objects and advance local main plus its reflog; no remote operation",
+    "external_key_creation_or_import": false,
+    "keychain_or_secure_enclave_mutation": false,
+    "network_or_remote_service": false,
+    "external_device_or_volume_write": false,
+    "vm_launch_or_guest_mutation": false,
+    "product_application_test_or_helper_process_launch_or_control": false,
+    "signal": false,
+    "application_launch": false,
+    "xctest_execution": false,
+    "durable_representation_mutation": false,
+    "production_authority": false,
+    "github": false,
+    "installation": false
+  },
+  "effects": {
+    "control_artifact_added": true,
+    "production_source_changed": false,
+    "test_source_changed": false,
+    "project_configuration_changed": false,
+    "entitlement_or_privacy_manifest_changed": false,
+    "existing_tracked_worktree_files_modified": false,
+    "existing_dirty_files_preserved": true,
+    "runtime_file_or_database_mutation": false,
+    "product_application_test_helper_or_vm_effect": false,
+    "local_git_commit_object_ref_and_reflog_mutation": true,
+    "network_effect": false,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "preserved_paths": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1"
+    },
+    "rule": "These pre-existing tracked modifications remain outside this review, unstaged and byte-identical. Untracked and ignored evidence is not cleaned, moved, copied or pruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "external_commitment_established": false,
+    "architecture_selected": false,
+    "custody_selected": false,
+    "privacy_delta_closed": false,
+    "issuer_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "rollback_resistance_established": false,
+    "fork_exclusion_established": false,
+    "host_integrity_established": false,
+    "trusted_ingress_or_egress": false,
+    "power_loss_evaluated": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "verification": {
+    "required_before_commit": [
+      "jq parses the review",
+      "the direct predecessor commit and tree plus threat-model blob and SHA-256 join exactly",
+      "all governing-control and static-baseline blobs and SHA-256 values join exactly",
+      "the staged delta contains only this one new review artifact",
+      "both pre-existing tracked dirty paths retain their recorded SHA-256 values and remain unstaged",
+      "no source, test, project, entitlement, manifest, runtime, VM, network, external-device, build-cache or retained-evidence mutation occurs",
+      "independent semantic review finds no architecture selection, invented successor ordinal, privacy guarantee, host-attestation claim or commitment-only truth claim"
+    ],
+    "xcode_build_or_test_required": false,
+    "reason_no_xcode_run": "This review adds one control JSON artifact and changes no compiled input, runtime format, entitlement or privacy manifest. Xcode execution would not test its design semantics."
+  },
+  "nonclaims": [
+    "This artifact completes a pre-selection review; it is not an architecture, custody, provider, protocol, key, cryptographic-suite, byte-format or atomicity freeze.",
+    "No verifier, recipient, trust root, policy authority, key, service, device, VM, external volume, network path, backup, replica or public log is selected, provisioned or contacted.",
+    "The current PrivacyInfo declarations and entitlement file do not prove complete runtime privacy or decide the requirements for a future shipped external flow.",
+    "A commitment, hash, signature, Git object, SQLite image, APFS snapshot, Secure Enclave key, physical copy or VM does not alone prove freshness, independent custody, execution truth, host integrity, secrecy or deletion.",
+    "The audience-neutral lineage commitment is not claimed unlinkable across recipients that can compare it.",
+    "Verifier-relative high-water state does not prove a globally newest state or reveal withheld successors or split views.",
+    "The anti-replay witness is not host attestation, honest-computation proof, high-value ingress authorization, trusted-egress verification or Gate-E authority.",
+    "Prime Git and its VM remain available as product or storage concepts, but no current evidence promotes them to an independent anchor.",
+    "No existing H3 or H4 result is reclassified, no H4 entry is evaluated and no D3d, D4 or higher ordinal is assigned.",
+    "No production authority, candidate result, scientific conclusion or Gate-E transition follows."
+  ],
+  "next_recommendation": "Ask the user to confirm the initial anti-replay-only assurance target and choose the private single verifier's independent custody topology, including whether the Prime Git VM is genuinely outside the evaluated Mac's administrative and storage rollback domain. Then freeze that architecture and its architecture-specific privacy delta before any byte-format or implementation work."
+}

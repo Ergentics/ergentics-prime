@@ -1,0 +1,657 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-external-commitment-anti-replay-threat-model-freeze.v1",
+  "checkpoint": "H4_EXTERNAL_COMMITMENT_ANTI_REPLAY_THREAT_MODEL_FREEZE",
+  "recorded_at_utc": "2026-09-04T08:26:05Z",
+  "result_contract": "FREEZE_H4_EXTERNAL_COMMITMENT_ANTI_REPLAY_THREAT_MODEL_ONLY",
+  "predecessor": {
+    "parent_commit": "30860f46e6628164ba464d93e0b9ed0b68762e95",
+    "parent_tree": "4745b2fcb9523d0fb1857a643b19f329ea749f88",
+    "parent_relation": "the reviewed D3c metadata-correction commit is the required direct parent of this freeze",
+    "d3c_correction_path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-correction-2026-09-04.v1.json",
+    "d3c_correction_blob": "df7ba1e32e319fe5211397df633805d4b00aac2e",
+    "d3c_correction_sha256": "0f059090ac905baf53240954566f55e78f916a185b8f35a9aba6f92629a2631e",
+    "d3c_checkpoint_path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-2026-09-04.v1.json",
+    "d3c_checkpoint_blob": "83912e15fef368d515b5c233c394e2aeb09f94aa",
+    "d3c_checkpoint_sha256": "f1f590c639607c4b6a5a180ba0f3105ea6513e95470cfe50a1a85331a324757f",
+    "d3c_checkpoint_result": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY",
+    "d3c_implementation_commit": "4103dc10c5f1c1c9507c44211f584b2c6820643e",
+    "d3c_implementation_tree": "52560134836670f788bc3e1aa8b0c7abeaf4373a",
+    "d3c_governing_freeze_commit": "38cc438544e6e7f692b09d5b2ee0b79d5bb091c5",
+    "d3c_governing_freeze_tree": "c2c2d4d7ec92723c1532514a0cdf28d28b0debee"
+  },
+  "governing_controls": {
+    "privacy_architecture": {
+      "path": "Documentation/Architecture/PrivacyArchitecture.md",
+      "blob": "18b1060199c425e31c8c563ae070a6bac828abdf",
+      "sha256": "b638cea7f9224587da7deb0b31fd7721a07cdab43086817528157b3c684c2ecb"
+    },
+    "host_integrity_boundary": {
+      "path": "Control/host-integrity-trust-boundary.v1.json",
+      "blob": "4514b64da3019177c993ad75f81923ba86e0b757",
+      "sha256": "a4b1f3f850ec9d6939241f91398c7964dac6502fb7436f9aea8eaea5cd28e56b"
+    },
+    "stage_genesis": {
+      "path": "Control/hypervisor-local-v1/stage0-genesis-freeze.v1.json",
+      "blob": "777bd7b1e6b51b73214da9f2ebd6affdc1d99ee1",
+      "sha256": "459a830f72910236ec8d7c430229f3d82d974c1cc9396d3b4a551bc14c7487f7"
+    },
+    "precedence": "This artifact narrows a future H4 obligation and does not supersede any governing control."
+  },
+  "roadmap_boundary": {
+    "roadmap_stage": "hypervisor_durable_receipt_fault_injection_v1",
+    "relation": "H4_PRE_ENTRY_THREAT_MODEL_FREEZE_WITHIN_DURABLE_RECEIPT_OBLIGATION",
+    "roadmap_ordinal_advanced": false,
+    "durable_representation_changed": false,
+    "runtime_implementation_added": false,
+    "test_execution_added": false,
+    "h4_entry_evaluated": false,
+    "reason": "D3c established bounded same-boot SIGKILL interstice mechanics and retained representation classification but expressly left coherent substitution, rollback, authenticity, freshness and external commitment unresolved."
+  },
+  "objective": {
+    "question": "What additional evidence lets a verifier distinguish its exact currently accepted lineage head or one exact successor from an intact but old, coherently substituted or conflicting D3 representation?",
+    "answer": "No bytes stored solely inside the mutable D3 SQLite publication root can answer that question when an adversary can roll back that root and every verifier datum held in the same rollback domain. Admission requires both an independently provisioned authenticated genesis or lineage trust anchor and independently controlled current high-water state outside that domain, plus exact cryptographic and semantic joins. This establishes order only relative to that verifier's retained state; it does not reveal a withheld successor or prove a globally newest state.",
+    "freeze_scope": "Threats, trust boundaries, necessary evidence, insufficiency rules, fail-closed behavior and successor sequencing only. No anchor provider, key, signature algorithm, durable byte format, network protocol or runtime authority is selected here."
+  },
+  "protected_claim": {
+    "subject": "one exact H4 D3-series publication lineage",
+    "representation": "the independently canonical JSON stream, deterministic CBOR stream, indexed scalar projection and their existing exact semantic agreement",
+    "properties_sought": [
+      "representation integrity",
+      "lineage identity",
+      "authenticated external assertion issuer identity under a named verifier policy",
+      "strict successor ordering within one epoch",
+      "freshness relative to an independently retained verifier high-water mark",
+      "rollback detection",
+      "conflict detection when incompatible assertions reach the same verifier or a selected shared-log, gossip or quorum mechanism",
+      "cross-product, cross-lineage and cross-epoch replay rejection"
+    ],
+    "properties_not_supplied_by_d3c": [
+      "historical authenticity",
+      "freshness",
+      "anti-replay",
+      "rollback resistance",
+      "fork exclusion",
+      "external commitment",
+      "power-loss durability"
+    ]
+  },
+  "rollback_domain": {
+    "definition": "A set of state an attacker or restore operation can replace with one older mutually consistent snapshot.",
+    "d3_local_domain_includes": [
+      "the final and staging SQLite path namespace",
+      "all bytes and SQLite metadata in the publication image",
+      "sibling files, sidecars, manifests and local hash files under the same mutable root",
+      "local preferences, caches and ordinary application files restored with the same host state",
+      "local clocks and timestamps recorded in those files",
+      "a VM image or VM snapshot stored only on the same physical host volume"
+    ],
+    "independence_rule": "An anchor is external only if its accepted policy, trust roots, replay-state write authority and retained state are not replaceable by the evaluated Mac or its VM, and rollback of the complete D3 local domain cannot also roll back or replace every trusted copy without detection. Availability and suppression resistance are separate properties.",
+    "same_disk_rule": "A second directory, repository, APFS volume, clone, snapshot or VM on the same physical disk may improve operational recovery but is not by itself an independent anti-replay trust domain.",
+    "availability_is_separate": "Deletion or unavailability may prevent admission; it must never be converted into acceptance of an older state."
+  },
+  "adversary_model": {
+    "in_scope": [
+      {
+        "id": "coherent_local_rollback",
+        "capability": "replace the SQLite image and every same-domain sidecar with an older byte-for-byte valid set",
+        "required_detection": "the external high-water mark is newer than the presented lineage position"
+      },
+      {
+        "id": "coherent_substitution",
+        "capability": "construct or copy a different internally consistent JSON, CBOR and indexed-scalar representation",
+        "required_detection": "the candidate's independently reconstructed current D3 semantic commitment and audience-neutral lineage-state commitment do not join the exact commitments retained by the authenticated verifier head"
+      },
+      {
+        "id": "fork_or_equivocation",
+        "capability": "present two different successors for one lineage position or parent",
+        "required_detection": "one verifier records and rejects different audience-neutral lineage-state commitments that it observes for the same epoch, sequence and parent only after both assertions independently pass canonical, context, policy, issuer-authentication and required-evidence eligibility predicates except mutual uniqueness; unauthenticated or otherwise ineligible input is rejected without poisoning retained fork state. Detection across split views requires a separately selected shared-log, gossip or quorum mechanism"
+      },
+      {
+        "id": "withheld_successor",
+        "capability": "withhold a later valid assertion while presenting the verifier's exact current accepted head",
+        "required_detection": "not detectable from one verifier high-water mark alone; the state may be classified VALID_CURRENT_READ_ONLY for that verifier but never globally newest"
+      },
+      {
+        "id": "split_view",
+        "capability": "show incompatible but individually valid histories to isolated verifiers",
+        "required_detection": "requires separately selected shared-log consistency, gossip or quorum evidence; a single isolated verifier makes no global fork-exclusion claim"
+      },
+      {
+        "id": "cross_context_replay",
+        "capability": "replay valid bytes from another product, schema, roadmap, lineage, epoch, environment or purpose",
+        "required_detection": "every domain-separation and context field joins exactly"
+      },
+      {
+        "id": "stale_valid_signature",
+        "capability": "replay a genuinely signed older assertion",
+        "required_detection": "signature validity is necessary but the independently retained high-water mark and predecessor relation still reject the older assertion"
+      },
+      {
+        "id": "anchor_suppression",
+        "capability": "withhold the current anchor or make the anchor service or medium unavailable",
+        "required_detection": "classify unavailable or incomplete and deny adoption; never fall back to unanchored local state"
+      },
+      {
+        "id": "replayed_verifier_state_or_response",
+        "capability": "replay an old authenticated high-water snapshot or verifier response to the evaluated host",
+        "required_detection": "the relying verifier obtains current replay state from its independently controlled store or binds a fresh verifier challenge and response under the selected protocol; a host-supplied cached response is insufficient"
+      },
+      {
+        "id": "verifier_state_rollback_or_conflict_erasure",
+        "capability": "restore an older verifier database, erase retained conflict evidence or roll replicas back to divergent accepted heads",
+        "required_detection": "the selected architecture must identify at least one trusted current-state witness outside this adversary's rollback authority and define replica consistency, restore and conflict-retention rules; otherwise freshness remains UNKNOWN"
+      },
+      {
+        "id": "untrusted_transport_or_endpoint",
+        "capability": "substitute, redirect, truncate or reorder anchor requests and responses",
+        "required_detection": "the selected protocol pins verifier identity, audience, policy and transport or message authentication and fails closed on ambiguity; transport confidentiality alone is not authority"
+      },
+      {
+        "id": "key_or_epoch_rotation_confusion",
+        "capability": "present a valid assertion under a retired, unrelated or rolled-back key epoch",
+        "required_detection": "the trusted genesis and explicit rotation chain bind issuer, key identifier, prior epoch terminal lineage-state commitment and new epoch independently provisioned trusted genesis"
+      },
+      {
+        "id": "valid_key_misuse_or_stale_policy",
+        "capability": "an authorized or compromised issuer key signs a false successor, or a verifier evaluates under stale policy or revocation state",
+        "required_detection": "signature validity alone is insufficient; the pinned policy, claim class, issuer authorization, revocation or key-state position, evidence predicates and independent result checks must all admit the assertion. Historical execution truth remains unproven when its required evidence is unavailable"
+      },
+      {
+        "id": "torn_or_partial_update",
+        "capability": "interrupt publication, anchor preparation or high-water update",
+        "required_detection": "local adoption is denied on an incomplete or ambiguous operation. The external atomic update may already have advanced before acknowledgment or local publication failed, so the caller must freshly read and authenticate verifier state and enter the separately frozen resolution path rather than assume either advancement or non-advancement"
+      }
+    ],
+    "outside_this_freeze": [
+      "cryptographic primitive compromise",
+      "malicious hardware or firmware",
+      "side-channel and traffic-analysis resistance",
+      "denial-of-service prevention",
+      "root or kernel compromise on the independently trusted verifier host while that verifier is actively executing",
+      "remote service selection, governance, availability or billing",
+      "physical power-loss behavior and partial physical writes"
+    ],
+    "outside_scope_is_not_assumed_safe": "An excluded threat is unmeasured or deferred, never disproved."
+  },
+  "insufficient_evidence_alone": [
+    {
+      "mechanism": "canonical JSON, deterministic CBOR and indexed scalar agreement",
+      "reason": "all representations can be replaced coherently"
+    },
+    {
+      "mechanism": "SHA-256, a Merkle root or a hash chain stored with the representation",
+      "reason": "integrity and ancestry can be recomputed or replayed together with old state"
+    },
+    {
+      "mechanism": "a valid digital signature",
+      "reason": "it authenticates possession of a signing key for the signed bytes but does not establish that a valid signed assertion is the newest one"
+    },
+    {
+      "mechanism": "a Secure Enclave or other non-exportable signing key",
+      "reason": "non-exportability can strengthen issuer-key custody but does not itself expose a rollback-proof monotonic counter or verifier high-water mark"
+    },
+    {
+      "mechanism": "Keychain, local preferences or another ordinary host database",
+      "reason": "state restored or rolled back with the same host domain cannot independently prove freshness"
+    },
+    {
+      "mechanism": "wall clock, monotonic process clock, UUID, file timestamp, inode, device identifier or generation observation",
+      "reason": "these values do not create a trusted cross-restore lineage order"
+    },
+    {
+      "mechanism": "fsync, F_FULLFSYNC, directory fsync or a successful SQLite integrity check",
+      "reason": "these are local synchronization or representation-integrity observations, not independent historical freshness evidence"
+    },
+    {
+      "mechanism": "APFS clone, snapshot, second local directory, Git commit, reflog or local bare repository",
+      "reason": "operational copies in one rollback or failure domain do not supply an independent current-state witness"
+    },
+    {
+      "mechanism": "a VM or VM snapshot whose only backing storage is the same host disk",
+      "reason": "logical separation does not prevent coordinated rollback or loss of both states"
+    },
+    {
+      "mechanism": "code signing or the application hypervisor entitlement",
+      "reason": "executable identity and capability admission do not establish durable-record freshness"
+    }
+  ],
+  "necessary_external_anchor_semantics": {
+    "trusted_genesis": {
+      "required": true,
+      "fields": [
+        "product identifier",
+        "roadmap identifier",
+        "durable schema identifier",
+        "lineage identifier",
+        "epoch identifier",
+        "issuer identifier and verification-key identifier",
+        "verifier identity and audience",
+        "accepted policy digest",
+        "genesis commitment",
+        "purpose and domain-separation identifier"
+      ],
+      "rule": "The verifier receives the genesis or its trust root independently of the mutable D3 representation. A genesis first learned from the candidate under review is not trusted genesis. The first anchored state begins a newly and explicitly frozen claim class or epoch; anchoring an existing D3, D3b or D3c fixture cannot retroactively promote its historical claim or predecessor status."
+    },
+    "bootstrap_transition": {
+      "required": true,
+      "precondition": "The independently controlled verifier already has the exact trusted genesis, policy, issuer/key authorization and an authenticated replay-state cell in the typed UNINITIALIZED_FOR_THIS_GENESIS state. Neither the candidate nor the evaluated Mac may create or reset that state.",
+      "initial_position": "The separately frozen initial issuer assertion uses sequence zero, the exact genesis predecessor sentinel or commitment, and one complete audience-neutral lineage-state commitment for the new claim class or epoch.",
+      "eligibility": "Canonical bytes, context, claim class, policy/audience, issuer authentication, key state and required evidence all verify before bootstrap compare-and-set. Ineligible input returns its typed rejection and cannot initialize or poison replay state.",
+      "atomicity": "One verifier-controlled atomic compare-and-set, compare-and-append or equivalent serialized transition changes UNINITIALIZED_FOR_THIS_GENESIS to the exact initial high-water record containing the lineage-state, issuer-assertion-body, signature-envelope and verifier-decision-record commitments plus the fixed bootstrap predecessor. No candidate-controlled reinitialization, reset-on-missing or fallback is allowed.",
+      "duplicate": "After a fresh authenticated high-water read, an exact already-initialized lineage-state plus exact issuer-assertion-body commitment is idempotent read-only and never advances twice; the signature-envelope commitment remains exact audit evidence but is not the logical idempotence key.",
+      "conflict": "A different eligible initial lineage-state commitment for the same trusted genesis, lineage and epoch becomes retained BOOTSTRAP_CONFLICT_REQUIRES_INSPECTION evidence; an ineligible assertion only receives its ordinary typed rejection.",
+      "ambiguous_acknowledgment": "If acknowledgment, transport or local publication fails, local adoption is denied. The external state may already be initialized, so the caller freshly reads and authenticates it and follows the separately frozen resolution protocol instead of retrying initialization blindly.",
+      "loss_or_restore": "Missing or restored verifier state cannot be reconstructed from the candidate or treated as UNINITIALIZED. It is VERIFIER_STATE_STALE_OR_DIVERGENT until independently resolved.",
+      "authority_limit": "Bootstrap initializes verifier-relative anti-replay state only. It does not retroactively promote predecessor evidence, prove execution truth, enter H4, move Gate E or grant scientific authority."
+    },
+    "successor_assertion": {
+      "required": true,
+      "minimum_semantic_fields": [
+        "schema and version",
+        "product, roadmap, stage and purpose domains",
+        "verifier identity, audience and accepted policy digest",
+        "lineage and epoch identifiers",
+        "strictly increasing unsigned sequence",
+        "predecessor audience-neutral lineage-state commitment",
+        "audience-neutral lineage-state commitment",
+        "current D3 semantic commitment",
+        "canonical JSON digest and byte count",
+        "deterministic CBOR digest and byte count",
+        "indexed scalar commitment",
+        "exact state, witness and transition graph commitment",
+        "exact predicate inventory, ordered results and evidence commitment",
+        "claim state and nonclaim boundary",
+        "source revision, implementation tree or separately admitted artifact identity when required by policy, without treating identity alone as execution truth",
+        "policy-conditional execution-environment, admitted host or logical session identity and its required evidence commitment",
+        "issuer and verification-key identifiers",
+        "algorithm suite identifier"
+      ],
+      "exactness": "All strings, integer domains, field inventories, canonical encodings, byte counts and domain separators require a separately frozen byte-level format before implementation.",
+      "self_reference_rule": "The complete canonical issuer-assertion body is frozen without an embedded self-commitment. Its domain-separated commitment is computed over those completed bytes and carried by the detached signature envelope, verifier decision record and high-water state, then joined by any later admission receipt; it is never an unconstrained member of the body it commits.",
+      "lineage_state_commitment_rule": "The audience-neutral lineage-state commitment is domain-separated over product, roadmap, stage, durable schema, purpose, lineage, epoch, sequence, predecessor lineage-state commitment, current D3 semantic commitment, canonical JSON digest/count, deterministic CBOR digest/count, indexed-scalar commitment, exact state/witness/transition graph commitment, exact predicate inventory/results/evidence commitments, claim/nonclaim/authority ceiling, and any source, implementation, execution-environment, host or session identity/evidence fields frozen by the independently provisioned genesis as part of this lineage's stable claim inventory. It excludes verifier, audience, verifier policy, transport, issuer signature and per-verifier wrapper fields so honest wrappers do not create false lineage forks.",
+      "lineage_inventory_stability": "The independently provisioned genesis freezes one exact audience-neutral lineage-state field inventory for the epoch. Per-verifier policies may require additional wrapper evidence but cannot add, remove or reinterpret lineage-state fields or thereby manufacture a fork."
+    },
+    "verifier_decision_record": {
+      "required_before_external_update": true,
+      "minimum_semantic_fields": [
+        "decision-record schema and version",
+        "verifier identity and audience",
+        "accepted policy identity, version and digest",
+        "exact issuer-assertion body commitment and canonical body byte count",
+        "exact detached signature-envelope commitment and canonical envelope byte count",
+        "authenticated high-water-record commitment and sequence before evaluation, or the exact fixed bootstrap predecessor",
+        "ordered verifier predicate inventory, results and evidence commitments",
+        "typed decision state and complete rejection reasons",
+        "proposed lineage-state, issuer-assertion-body and signature-envelope commitments plus sequence after evaluation",
+        "typed external-update eligibility without any claim that the update completed"
+      ],
+      "noncircularity": "The issuer assertion never contains the later verifier decision. The verifier decision record commits the already complete assertion body and detached signature envelope, independently read prior high-water record or fixed bootstrap predecessor, policy, predicate evidence and proposed transition, but never its own commitment, a future high-water-record commitment or a later admission receipt.",
+      "authority_limit": "The decision record only establishes eligibility to attempt the separately frozen atomic external update; it is not completed admission and cannot mint H4 entry, Gate E, scientific authority or historical execution truth."
+    },
+    "verifier_admission_receipt": {
+      "required_to_claim_completed_verifier_admission": true,
+      "minimum_semantic_fields": [
+        "admission-receipt schema and version",
+        "exact verifier-decision-record commitment",
+        "exact authenticated high-water-record commitment and sequence observed after update",
+        "exact retained lineage-state, issuer-assertion-body and signature-envelope commitments",
+        "typed completed, read-only-current, unavailable, conflict or ambiguous outcome"
+      ],
+      "construction_order": "Only after a successful external update and authenticated readback, or a fresh read establishing the exact state after a lost acknowledgment, may a receipt claim completed verifier-relative admission. The receipt is not an input to the high-water record and therefore introduces no self-reference.",
+      "ambiguous_rule": "No completed receipt exists while the authoritative external state is ambiguous; local adoption remains denied.",
+      "authority_limit": "The receipt remains verifier-policy evidence only and cannot mint H4 entry, Gate E, scientific authority or historical execution truth."
+    },
+    "verifier_high_water_mark": {
+      "required": true,
+      "minimum_state": [
+        "lineage identifier",
+        "epoch identifier",
+        "highest admitted sequence",
+        "highest admitted audience-neutral lineage-state commitment",
+        "exact admitted issuer-assertion body commitment",
+        "exact admitted signature-envelope commitment",
+        "exact verifier-decision-record commitment authorizing the admitted transition",
+        "previous authenticated high-water-record commitment or the fixed bootstrap predecessor",
+        "verification-key or rotation-chain position",
+        "known conflict or terminal status"
+      ],
+      "independent_retention": "At least one trusted copy must survive rollback of the complete D3 local domain and remain under policy, trust-root and replay-state write authority not replaceable by the evaluated Mac or its VM.",
+      "update_rule": "Advance only by one verifier-controlled atomic compare-and-set, compare-and-append or equivalent serialized transition from the exact authenticated prior high-water-record commitment to a new record that binds the verified successor tuple and verifier-decision-record commitment. An interrupted or ambiguous acknowledgment denies local admission and requires a fresh authenticated read because the external update may already have advanced.",
+      "read_rule": "The verifier must read and authenticate its current high-water state before evaluating freshness. Missing, stale, forked, unauthenticated or unavailable state cannot be silently recreated from the candidate.",
+      "rollback_rule": "Architecture selection must state which trusted current-state witness cannot be rolled back by the modeled adversary, how replica divergence and restore are detected, and why conflict history cannot be silently erased. Without that evidence the result is UNKNOWN, not fresh."
+    },
+    "fork_evidence": {
+      "required": true,
+      "eligibility": "Each candidate assertion must independently pass canonical bytes, domain/context, pinned policy and audience, issuer authentication and required-evidence predicates except the mutual-uniqueness predicate before it can create retained fork evidence. Ineligible or unauthenticated input rejects but cannot poison lineage conflict state.",
+      "comparison": "Compare the audience-neutral lineage-state commitment, not verifier, audience, policy, transport or signature-wrapper bytes.",
+      "rule": "Two different eligible audience-neutral lineage-state commitments observed by the same verifier for the same lineage, epoch and sequence, or two different eligible child lineage-state commitments claiming the same parent, are retained as conflict evidence and permanently deny automatic adoption until a separately authorized resolution. Detecting conflicts hidden across isolated views requires a selected shared-log, gossip or quorum architecture."
+    }
+  },
+  "commitment_taxonomy": {
+    "audience_neutral_lineage_state_commitment": {
+      "role": "the sole ordering, predecessor and state-fork comparison key",
+      "binds": "all frozen lineage-state semantics listed by successor_assertion.lineage_state_commitment_rule, transitively including representation, indexed projection, graph, predicate, evidence, claim/nonclaim, source and policy-required execution-context commitments",
+      "excludes": "verifier identity, audience, verifier policy, transport, issuer signature and per-verifier wrapper fields",
+      "limit": "It commits claims and evidence bytes; it does not prove them true."
+    },
+    "issuer_assertion_commitment": {
+      "role": "logical issuer-assertion identity and same-assertion idempotence key",
+      "construction": "domain-separated commitment over the complete separately frozen canonical issuer-assertion body, including the audience-neutral lineage-state commitment, verifier/audience/policy binding and issuer/key/algorithm fields but excluding its detached signature and any embedded self-commitment",
+      "signature_rule": "The detached issuer signature covers the exact canonical assertion body under a separately frozen domain and algorithm suite; the body commitment and signature are carried by an outer envelope.",
+      "self_reference": "The canonical assertion body cannot contain its own final commitment as an unconstrained member.",
+      "fork_rule": "Different issuer-assertion-body commitments with the same audience-neutral lineage-state commitment are not by themselves lineage forks; they remain exact verifier, audience, policy, issuer or key-wrapper and audit differences."
+    },
+    "signature_envelope_commitment": {
+      "role": "exact byte-audit key, not order, fork or logical idempotence identity",
+      "construction": "domain-separated commitment over the complete separately frozen canonical envelope containing the exact assertion body or its unambiguous byte binding, assertion-body commitment, signature bytes, algorithm and key identifier",
+      "randomness_limit": "If a future signature suite permits more than one valid signature encoding for one body, different envelope commitments do not create a lineage fork or second logical assertion."
+    },
+    "verifier_decision_record_commitment": {
+      "role": "exact audit and authorization input for attempting one external high-water transition",
+      "construction": "domain-separated commitment over the complete separately frozen canonical decision record after it binds the issuer-assertion-body and signature-envelope commitments, authenticated prior high-water-record commitment or fixed bootstrap predecessor, policy, predicate evidence, typed eligibility decision and proposed successor tuple, while excluding its own commitment and every future high-water or receipt commitment",
+      "authority_limit": "It authorizes only an attempt under the selected verifier policy and cannot claim the external update completed, prove historical execution truth or grant H4 or Gate-E authority."
+    },
+    "verifier_high_water_record_commitment": {
+      "role": "authenticated external replay-state and lineage-head key",
+      "construction": "domain-separated commitment over a complete separately frozen high-water record containing its prior high-water-record commitment or fixed bootstrap predecessor, current lineage-state, issuer-assertion-body, signature-envelope and verifier-decision-record commitments, sequence, key/epoch position and conflict or terminal status, while excluding its own commitment and later receipts",
+      "authority_limit": "It establishes only the state accepted by this verifier under its pinned policy and cannot reveal withheld successors or hidden split views."
+    },
+    "verifier_admission_receipt_commitment": {
+      "role": "post-update audit key for completed verifier-relative admission or read-only-current observation",
+      "construction": "domain-separated commitment over a complete separately frozen receipt that binds the decision-record commitment and the exact authenticated high-water-record commitment freshly observed after update or resolution; it is not stored inside the high-water record it references",
+      "authority_limit": "It cannot prove historical execution truth or grant H4, Gate E, candidate or scientific authority."
+    },
+    "transitive_binding": "The lineage-state commitment transitively binds all state semantics. The issuer-assertion body binds that lineage-state plus verifier/audience/policy and issuer semantics; its envelope binds the exact signature bytes. The decision record binds the assertion and authenticated prior high-water state. The new high-water record binds the decision and admitted tuple. A later receipt binds the resulting high-water record without feeding back into it. Ordering and forks compare only lineage-state commitments; logical idempotence compares assertion-body commitments; exact signature audit compares envelope commitments; update authorization compares decision-record commitments; current replay state compares high-water-record commitments; completed-admission audit compares receipt commitments.",
+    "format_status": "SEMANTIC_ROLES_ONLY; byte encodings, algorithms, labels, signature coverage and sizes remain unfrozen and unimplemented."
+  },
+  "admissible_anchor_architectures": {
+    "status": "ARCHITECTURE_SELECTION_DEFERRED",
+    "common_requirement": "The chosen architecture must provide independently retained authenticated high-water state under verifier policy and write authority not replaceable by the evaluated Mac. Merely moving identical bytes elsewhere is insufficient; global conflict detection additionally requires shared-log consistency, gossip or quorum semantics.",
+    "candidates_for_later_selection": [
+      {
+        "kind": "independent_append_only_witness",
+        "description": "an independently administered append-only service or log retains lineage assertions and exposes inclusion plus consistency or conflict evidence",
+        "future_effects": "may require networking, identity provisioning, service governance, retention and cost decisions; none are authorized here"
+      },
+      {
+        "kind": "physically_separate_verifier_state",
+        "description": "a separate trusted verifier device or medium retains the authenticated high-water mark, policy and trust roots, is not rolled back with the product host and does not grant the evaluated Mac authority to replace accepted state",
+        "future_effects": "requires explicit verifier ownership, write authority, device, mounting, custody, loss and recovery policy; an external backup disk writable as ordinary evaluated-host state is operational storage, not sufficient verifier independence; none are authorized here"
+      },
+      {
+        "kind": "independent_host_or_vm_replica",
+        "description": "an independently administered host or VM whose policy, trust roots, replay-state authority and backing storage are not controlled or replaceable by the evaluated Mac retains the high-water mark and observed conflict history",
+        "future_effects": "a VM controlled by the evaluated Mac is not an independent verifier even if copied to another disk; a VM on the same unreplicated host disk is also not independent storage. VM launch, guest mutation, administration and storage placement remain separately authorized work"
+      },
+      {
+        "kind": "threshold_or_multi_witness",
+        "description": "multiple independent witnesses reduce reliance on one operator or storage domain and can expose equivocation",
+        "future_effects": "quorum, recovery, liveness and governance semantics require a separate freeze"
+      }
+    ],
+    "selection_gate": "No durable-format or runtime implementation may begin until one architecture, its trust root, lifecycle, failure behavior and recovery policy are explicitly frozen."
+  },
+  "verification_state_machine": {
+    "states": [
+      "UNAVAILABLE",
+      "UNINITIALIZED_FOR_THIS_GENESIS",
+      "MALFORMED",
+      "UNTRUSTED_GENESIS",
+      "AUTHENTICATION_REJECTED",
+      "POLICY_OR_AUDIENCE_REJECTED",
+      "CONTEXT_OR_CLAIM_REJECTED",
+      "VERIFIER_STATE_STALE_OR_DIVERGENT",
+      "STALE_REPLAY",
+      "FORK_DETECTED",
+      "BOOTSTRAP_CONFLICT_REQUIRES_INSPECTION",
+      "GAP_OR_PARENT_MISMATCH",
+      "KEY_EPOCH_REJECTED",
+      "VALID_CURRENT_READ_ONLY",
+      "VALID_EXACT_SUCCESSOR",
+      "UPDATE_AMBIGUOUS_REQUIRES_INSPECTION"
+    ],
+    "predicate_precedence": [
+      "bounded framing, canonical decoding and exact schema",
+      "independently provisioned trusted genesis and supported algorithm suite",
+      "product, roadmap, stage, durable-schema, purpose, lineage, epoch and policy-required execution context",
+      "pinned verifier identity, audience and accepted policy",
+      "issuer identity, key authorization, signature and current revocation or key-state position",
+      "exact representation, indexed-scalar, graph, predicate, evidence, claim/nonclaim, authority-ceiling and admitted-artifact joins",
+      "fresh authenticated verifier high-water state and its rollback or divergence status",
+      "only then sequence, predecessor, current-versus-successor, idempotence and eligible-fork classification",
+      "only after every preceding predicate passes may the separately frozen atomic external update be attempted"
+    ],
+    "classification_precondition": "A malformed, wrong-context, wrong-policy/audience, unauthenticated, key-rejected or evidence-ineligible assertion returns its earlier typed rejection. Its untrusted sequence, predecessor or commitment fields cannot produce STALE_REPLAY, GAP_OR_PARENT_MISMATCH, FORK_DETECTED, bootstrap conflict or retained conflict-state mutation.",
+    "admission_rules": [
+      "VALID_CURRENT_READ_ONLY permits read-only inspection only after full canonical, domain, policy, issuer-authentication and independently obtained high-water verification of the exact already-admitted state; it does not advance state or assert global newest state, and any observational receipt requires its separately frozen non-authorizing path.",
+      "VALID_EXACT_SUCCESSOR requires exact semantic reconstruction, valid issuer authentication, one-step sequence increase, exact predecessor lineage-state commitment join, no known eligible fork and an independently retained current high-water mark.",
+      "VALID_CURRENT_READ_ONLY and VALID_EXACT_SUCCESSOR are threat-model states only; neither mints H4 entry, Gate E, scientific authority, a candidate result or historical execution truth.",
+      "Every other state denies adoption and authority effects.",
+      "No retry, repair, cleanup, rollback selection or conflict resolution is implicit.",
+      "The high-water mark is advanced only by a separately frozen atomic protocol after every predecessor, representation, authentication and external-retention predicate succeeds."
+    ],
+    "replay_rules": {
+      "precondition": "all predicate_precedence members through fresh authenticated verifier high-water state have passed; otherwise return the earlier typed rejection without replay or conflict-state mutation",
+      "sequence_less_than_high_water": "STALE_REPLAY",
+      "sequence_equal_and_lineage_state_commitment_equal": "an equal stored issuer-assertion-body commitment is exact idempotent VALID_CURRENT_READ_ONLY without a second advance; a different eligible body or envelope over the same lineage-state commitment is not a lineage fork but requires its separately frozen wrapper, policy and audit decision and cannot advance the lineage sequence",
+      "sequence_equal_and_lineage_state_commitment_different": "after both assertions satisfy fork-evidence eligibility, FORK_DETECTED; outer wrapper, verifier-decision or admission-receipt difference alone is not a lineage fork",
+      "sequence_greater_than_high_water_plus_one": "GAP_OR_PARENT_MISMATCH",
+      "sequence_high_water_plus_one_and_predecessor_lineage_state_commitment_mismatch": "GAP_OR_PARENT_MISMATCH",
+      "sequence_high_water_plus_one_and_predecessor_lineage_state_commitment_equal": "continue full verification; no local admission until the exact successor transition and external update or freshly resolved already-advanced state succeeds"
+    }
+  },
+  "key_and_epoch_lifecycle": {
+    "signing_key_is_not_freshness_state": true,
+    "purpose_separation_required": true,
+    "algorithm_agility_identifier_required": true,
+    "rotation": "A new key or epoch requires an authenticated transition committed by the old trusted epoch or a separately provisioned recovery root. The transition binds the old terminal commitment and new genesis commitment.",
+    "revocation": "Revocation semantics, effective position and offline behavior must be frozen before live use; wall-clock text alone is not a replay boundary.",
+    "loss": "Loss or unavailability of the key or independent high-water state denies new adoption. Recovery cannot infer current state solely from a candidate D3 image.",
+    "compromise": "Suspected compromise or valid-key misuse terminates automatic admission for the affected epoch and retains all conflict evidence. A valid issuer signature does not prove the signed execution or claim true.",
+    "policy_state": "The verifier pins policy identity and version plus key authorization and revocation state. Candidate-provided or stale cached policy cannot authorize admission."
+  },
+  "durability_and_ordering_boundary": {
+    "separate_atomicity_problem": "The order joining local publication, external assertion retention and high-water advancement is not solved by this threat model.",
+    "forbidden_partial_claim": "A local image must not be called anti-replay protected merely because an assertion was prepared or signed but not independently and unambiguously retained.",
+    "minimum_noncircular_record_order": [
+      "complete the audience-neutral lineage-state semantics and compute its commitment",
+      "complete the canonical issuer-assertion body and compute its body commitment",
+      "sign the exact assertion body and compute the detached signature-envelope commitment",
+      "freshly read and authenticate the current high-water record",
+      "evaluate ordered predicates and compute a verifier-decision-record commitment that binds the prior high-water record and proposed successor tuple but no future record",
+      "atomically compare-and-set, compare-and-append or equivalently serialize a new high-water record that binds the decision-record commitment",
+      "freshly read and authenticate the resulting high-water-record commitment",
+      "only then compute a post-update verifier-admission-receipt commitment that is not fed back into that high-water record"
+    ],
+    "local_publication_placement": "The exact placement and recovery semantics of local D3 publication relative to this minimum external record order remain unresolved and require the later atomicity freeze.",
+    "future_protocol_must_define": [
+      "prepare, publish, witness and acknowledge order",
+      "what survives interruption at every boundary",
+      "whether an externally retained successor may exist before local publication",
+      "how orphaned local or external successors are classified",
+      "idempotence without accepting a conflicting retry",
+      "atomic high-water update or explicit inspection-required outcome",
+      "retention and recovery of fork evidence",
+      "TOCTOU exclusion or classification between high-water read, candidate verification, competing update, external retention, local adoption and acknowledgment",
+      "concurrent-successor serialization, exact same-assertion-body idempotence and signature-envelope audit behavior"
+    ],
+    "physical_evidence_separation": "Constrained-capacity, ENOSPC, EIO, partial-write, remount, reboot and physical power-loss evidence remain distinct future campaigns after the format and atomicity protocol are frozen."
+  },
+  "privacy_delta_and_externality": {
+    "claim_state": "NORMATIVE_FREEZE_ONLY",
+    "current_effect": "No runtime or external assertion is emitted and no runtime or external recipient, retention, stable identifier, key, network or storage mechanism is added by this artifact. The control record itself necessarily contains local schema, object and hash identifiers.",
+    "future_delta_privacy_required_before_architecture_selection": {
+      "DeltaDataVisible": "enumerate whether semantic, graph, predicate, evidence, source or claim commitments reveal protected membership or permit dictionary testing",
+      "DeltaFieldsVisible": "minimize and enumerate product, roadmap, lineage, epoch, issuer, verifier, audience, policy, sequence, digest, byte-count, timing and conflict fields",
+      "DeltaRetention": "freeze retention, expiration, deletion, legal hold, backup, replica and conflict-evidence rules for every external copy",
+      "DeltaRecipients": "name each verifier, operator, service, device, log reader, auditor and relying party; no ambient or public recipient is implied",
+      "DeltaLinkability": "assess stable lineage, epoch, key, policy and digest identifiers plus cross-run and cross-destination correlation",
+      "DeltaPersistence": "separate local D3 retention from external assertion, verifier high-water, replica and backup persistence",
+      "DeltaInferenceSurface": "assess low-entropy commitment dictionary attacks, presence, count, ordering, size, timing and access-pattern inference",
+      "DeltaLeakage": "bound diagnostics, transport metadata, access logs, errors, conflict records, exports and recovery material"
+    },
+    "destination_gate": "Every external recipient, purpose and audience requires an independently frozen allow decision before emission. A digest, root, signature or encrypted value is not automatically declassified.",
+    "minimum_disclosure_rule": "The future assertion format includes only fields justified as necessary to the selected verifier policy; raw protected payloads, paths, user text and unrestricted diagnostics remain absent by default.",
+    "low_entropy_rule": "Commitments to low-entropy or enumerable values require an independently justified hiding or disclosure design; hashing alone does not prevent offline guessing.",
+    "conflict_evidence_rule": "Future conflict evidence must be minimized, purpose/destination gated and governed by an explicit retention, access, recovery, post-resolution deletion or justified nondeletion policy; permanent automatic-admission denial does not imply indefinite retention of unrestricted payload or metadata.",
+    "privacy_review_trigger": "Selection of an external verifier, stable identifier, key, retention store, network path, device, VM, external relying party or durable format requires a structured privacy delta and manifest, entitlement and destination review as applicable."
+  },
+  "trusted_computing_base_obligation": {
+    "status": "MUST_BE_ENUMERATED_BY_EACH_FUTURE_EXECUTABLE_SLICE",
+    "components": [
+      "application, helper and native runtime",
+      "canonical codecs, cryptographic implementations and key custody",
+      "SQLite, VFS, filesystem, OS, kernel and storage stack",
+      "verifier implementation, policy engine and replay-state store",
+      "transport, endpoint identity and external service or device",
+      "compiler, linker, signing and admitted artifact identity",
+      "VM, host, hardware and administrator boundaries when relied upon",
+      "entropy, nonce and verifier-challenge generation plus anti-reuse state when relied upon",
+      "provisioning, policy-update, key-rotation, revocation, backup, restore and recovery tooling when relied upon"
+    ],
+    "rule": "Each relied-upon component requires named evidence and residuals. Unknown transitive dependencies remain UNKNOWN and cannot be omitted from the trust boundary."
+  },
+  "future_test_obligations": {
+    "pure_and_hostless_first": [
+      "canonical byte-format vectors for genesis, successor, rotation, terminal and conflict records",
+      "independently provisioned genesis bootstraps exactly once by authenticated compare-and-set; exact duplicate is idempotent, eligible different bootstrap conflicts, ineligible bootstrap cannot initialize or poison, and lost acknowledgment resolves by fresh high-water read",
+      "independent reconstruction of every commitment and signature input",
+      "audience-neutral lineage-state, issuer-assertion-body, detached signature-envelope, verifier-decision-record, high-water-record and post-update admission-receipt commitments are independently reconstructed in the frozen noncircular order and transitively join; embedded self-commitment or cyclic construction rejects; honest per-verifier wrapper or valid signature-byte differences over one lineage-state commitment are not lineage forks",
+      "invalid signature, untrusted root, wrong verifier audience, stale or wrong policy, wrong context and unsupported claim class reject with typed states",
+      "forged or ineligible sequence, predecessor and commitment fields receive the earlier typed rejection and cannot produce stale, gap, fork or retained-conflict classification",
+      "old valid signed assertion rejects below high-water",
+      "two eligible same-position different audience-neutral lineage-state commitments produce retained fork evidence; ineligible input rejects without poisoning fork state",
+      "cross-product, cross-roadmap, cross-lineage, cross-epoch and cross-purpose replay rejects",
+      "policy-required cross-environment, cross-host or cross-session replay rejects when those context claims are present",
+      "unknown field, duplicate field, noncanonical encoding, integer overflow, unsupported algorithm and signature mutation reject",
+      "sequence gap, parent mismatch, lost anchor, stale anchor, ambiguous update and recovery-from-candidate reject",
+      "replayed authenticated high-water response, verifier-state rollback, divergent replicas and erased conflict history reject or remain UNKNOWN under the frozen architecture",
+      "concurrent competing eligible lineage-state successors admit at most one exact successor; an eligible different lineage-state loser becomes retained conflict evidence, ineligible input cannot poison fork state, exact same assertion-body replay is idempotent without a second advance, and signature-envelope differences alone are audit differences",
+      "key rotation and recovery transitions require exact trusted ancestry",
+      "valid current is observational only and valid successor cannot advance authority by itself"
+    ],
+    "live_anchor_later": "Provisioning, network, external device, independent host or VM interaction requires a separate freeze and explicit authorization after architecture selection.",
+    "constrained_io_later": "Run only on a separately authorized sacrificial root or volume with explicit capacity, cleanup, monitoring and retention bounds.",
+    "power_loss_later": "Host-orchestrated power-loss or reboot work remains a distinct campaign and is not implied by any hostless PASS."
+  },
+  "successor_sequence": [
+    {
+      "order": 1,
+      "action": "Complete the structured externality and privacy-delta review, then select and freeze one independent anchor architecture, trust root, lifecycle, recovery policy and exact rollback domain.",
+      "authorization": "SEPARATE_USER_DECISION_REQUIRED"
+    },
+    {
+      "order": 2,
+      "action": "Freeze the canonical lineage-state, issuer-assertion body, signature-envelope, verifier-decision, high-water, admission-receipt, bootstrap and conflict byte formats plus cryptographic suite and atomicity state machine.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS_ARTIFACT"
+    },
+    {
+      "order": 3,
+      "action": "Implement pure verification and fabricated negative vectors without external I/O, then run focused Debug, focused Release and full local suites.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS_ARTIFACT"
+    },
+    {
+      "order": 4,
+      "action": "Separately implement and evaluate the selected live external anchor transport and retention behavior.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS_ARTIFACT"
+    },
+    {
+      "order": 5,
+      "action": "Separately freeze and run constrained physical-I/O evidence, followed only later by sacrificial-volume host-orchestrated power-loss evidence.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS_ARTIFACT"
+    }
+  ],
+  "implementation_boundary": {
+    "implementation_allowlist": [],
+    "source_change_allowed": false,
+    "project_change_allowed": false,
+    "durable_format_change_allowed": false,
+    "test_change_allowed": false,
+    "runtime_execution_allowed": false,
+    "only_added_path": "Control/hypervisor-local-v1/h4-external-commitment-anti-replay-threat-model-freeze-2026-09-04.v1.json",
+    "future_implementation_parent_rule": "A later implementation may not cite this threat model as sufficient authorization. It requires the architecture and byte-format freezes above and its own exact parent and path allowlist."
+  },
+  "authorization_boundary": {
+    "threat_model_freeze_creation_validation_and_local_commit": "AUTHORIZED_BY_USER_ON_2026-09-04",
+    "local_git_commit_effect": "one control-only commit may create the required Git blob/tree/commit objects and advance local main plus its reflog; no remote operation",
+    "external_anchor_architecture_selection": "NOT_SELECTED",
+    "external_key_creation_or_import": false,
+    "keychain_or_secure_enclave_mutation": false,
+    "network_or_remote_service": false,
+    "external_device_or_volume_write": false,
+    "vm_launch_or_guest_mutation": false,
+    "product_application_test_or_helper_process_launch_or_control": false,
+    "signal": false,
+    "host_side_validation_tools": "ordinary bounded read-only repository, JSON, hash and independent-review tooling, including jq, rg and shasum, plus local Git metadata, index and commit operations; no product, app, test or helper execution",
+    "application_launch": false,
+    "xctest_execution": false,
+    "durable_representation_mutation": false,
+    "production_authority": false,
+    "github": false,
+    "installation": false
+  },
+  "effects": {
+    "control_artifact_added": true,
+    "production_source_changed": false,
+    "test_source_changed": false,
+    "project_configuration_changed": false,
+    "existing_tracked_worktree_files_modified": false,
+    "existing_dirty_files_preserved": true,
+    "runtime_file_or_database_mutation": false,
+    "product_application_test_helper_or_vm_effect": false,
+    "host_side_validation_and_git_metadata_effect": "ordinary bounded read-only repository, JSON, hash and independent-review tooling plus local Git index/commit operations only",
+    "local_git_commit_object_ref_and_reflog_mutation": true,
+    "network_effect": false,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "preserved_paths": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1"
+    },
+    "rule": "These pre-existing tracked modifications are outside this freeze, remain unstaged and must retain the exact recorded SHA-256 values through validation and commit. Untracked and ignored evidence is not cleaned, moved or pruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "external_commitment_established": false,
+    "issuer_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "rollback_resistance_established": false,
+    "fork_exclusion_established": false,
+    "power_loss_evaluated": false,
+    "restart_adoption": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "verification": {
+    "required_before_commit": [
+      "jq parses the artifact",
+      "the direct predecessor commit and tree, D3c correction blob and SHA-256, and original checkpoint blob and SHA-256 join exactly",
+      "the PrivacyArchitecture, host-integrity boundary and stage-genesis governing-control blobs and SHA-256 values join exactly",
+      "the staged delta contains only the one added freeze artifact",
+      "both pre-existing tracked dirty paths retain their recorded SHA-256 values and remain unstaged",
+      "no source, test, project, entitlement, VM, product/application/test/helper process, network, repository/application/build-cache artifact or temporary-evidence mutation occurs; no cleanup or pruning is performed; the allowed commit creates Git objects and advances local main and its reflog, while incidental developer-tool state outside the repository and Git index is not audited",
+      "independent reviews find no claim that a local hash, signature, Secure Enclave key, clock, APFS state, Git object or same-disk VM alone establishes freshness"
+    ],
+    "xcode_build_or_test_required": false,
+    "reason_no_xcode_run": "The freeze adds one control JSON artifact and changes no compiled input or runtime format; rerunning Xcode would add unrelated process and filesystem effects without testing the threat-model semantics."
+  },
+  "nonclaims": [
+    "This artifact is a threat-model freeze, not an implemented external commitment or anti-replay mechanism.",
+    "No anchor architecture, provider, remote service, device, VM placement, key type, signature suite or canonical byte format is selected.",
+    "A signature, hash chain, Secure Enclave key, Keychain item, local Git object, APFS snapshot or same-disk VM is not claimed sufficient alone.",
+    "The existence of a physically separate or remote copy would improve retention but would not establish anti-replay unless a trusted verifier preserves and enforces its high-water state.",
+    "A verifier high-water mark establishes order only relative to that verifier's accepted state; it does not reveal withheld successors or conflicts hidden in an isolated split view.",
+    "An authenticated assertion issuer and valid signature do not prove the historical producer, execution, evidence or claim true.",
+    "A first anchored state does not retroactively promote any D3, D3b or D3c fixture or consumed H3 non-PASS.",
+    "No existing D3, D3b or D3c result is reclassified as authentic, fresh, anti-replay protected, rollback resistant or power-loss durable.",
+    "No H4 entry, Gate-E movement, candidate result, scientific conclusion, authority transition or higher roadmap ordinal is authorized."
+  ],
+  "next_recommendation": "Complete the structured externality and privacy-delta review, then ask the user to select the independent anchor architecture and custody model before freezing any commitment bytes or implementing a verifier; keep VM, networking, external-device writes, constrained-I/O and power-loss work in separately authorized slices."
+}

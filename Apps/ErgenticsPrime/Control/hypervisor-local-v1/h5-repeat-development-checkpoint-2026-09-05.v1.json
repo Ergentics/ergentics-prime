@@ -1,0 +1,159 @@
+{
+  "schema": "ergentics.provenance.hypervisor-stage.h5.development-checkpoint.v1",
+  "recorded_at_utc": "2026-09-05T20:48:50Z",
+  "status": "PASS_HOSTLESS_PREFLIGHT_AND_SIGNED_BUILDS_LIVE_H5_PENDING",
+  "predecessor": {
+    "commit": "7cdb2c3d7d579d526f5cbcd9b91d4b6a17790a03",
+    "note": "Full predecessor commit resolved below; Build 11 archive unchanged"
+  },
+  "user_direction": "Resume H5 bounded repeated resume runs and determinism checks; independent OS attestation remains deferred",
+  "product": {
+    "version": "1.0",
+    "development_build": "12",
+    "archive_created": false
+  },
+  "implementation": {
+    "explicit_action": "Hypervisor lab -> Run H5 · 3 resume pairs",
+    "maximum_attempts": 3,
+    "maximum_successful_vm_intervals": 6,
+    "one_batch_per_application_launch": true,
+    "same_host_scope": "ONE_APPLICATION_PROCESS_LOCAL_OBSERVATION",
+    "input": "Fresh production native H3 returns only; no imported cursor or history-to-execution adapter",
+    "equality": "H3-verified invariant cursor bytes, checkpoint/terminal replies, phase results/statuses and native result flags",
+    "excluded_from_equality": [
+      "two generation words",
+      "generation-dependent cursor and Merkle commitments",
+      "monotonic timing",
+      "allowed watchdog wait status"
+    ],
+    "freshness": [
+      "strictly later source generation than previous target",
+      "nonoverlapping monotonic intervals",
+      "identical timebase",
+      "distinct original H3 receipt roots"
+    ],
+    "stop_conditions": [
+      "first invalid native return",
+      "cancellation",
+      "failed release",
+      "replay/stale generation",
+      "clock change",
+      "comparison mismatch",
+      "work budget"
+    ],
+    "work_seconds": 15,
+    "subsequent_stop_grace_seconds": 5,
+    "native_watchdog_changed": false,
+    "deadline_claim": "Application scheduling policy; no hard kernel latency guarantee",
+    "persistence": "NONE_VOLATILE_UNTIL_QUIT",
+    "raw_evidence_preserved": true,
+    "successful_raw_cursor_bytes": 2040,
+    "intermediate_completion_reopens_guest_gate": false
+  },
+  "privacy_delta": {
+    "DataVisible": "Three fixed guest observations, versus the single H3 observation",
+    "FieldsVisible": "Original 680-byte cursor evidence is newly inspectable; exact comparison and cumulative run accounting are added",
+    "Retention": "Volatile app lifetime; accepted prefixes retained on incomplete batch; no erasure claim",
+    "Recipients": [
+      "application memory",
+      "local GUI and Accessibility"
+    ],
+    "Linkability": "Three runs linked by fresh purpose-scoped batch UUID; existing H3 content roots remain linkable across batches",
+    "Persistence": "No H5 file, export, bookmark, host identifier or history admission",
+    "InferenceSurface": "Bounded declared class union and run/interval counts; incomplete attempts are not all claimed to have entered a VM",
+    "Leakage": "Timing, generations, counts and commitments remain visible local metadata; no constant-time, hiding or noninterference claim"
+  },
+  "tests": {
+    "h5-focused-debug-r2": {
+      "tests": 76,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h5-focused-debug-r2.log",
+      "log_sha256": "4f3fad28b9eb6fe14dee2d8a5c3bbbd798ff16c6f2d043a2ecd2bd022885bd68"
+    },
+    "h5-focused-release": {
+      "tests": 76,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h5-focused-release.log",
+      "log_sha256": "fb9579cf078261e0057caeb231c7a7665c560cc653f3688362cbd4111f32faf3"
+    },
+    "h5-full-debug-r2": {
+      "tests": 932,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h5-full-debug-r2.log",
+      "log_sha256": "7e911ca1d26b060119b168f40367ac0bab916f97763fad8b16beac3b187cb1a7"
+    },
+    "h5-full-release": {
+      "tests": 885,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h5-full-release.log",
+      "log_sha256": "6d19e7796328c6d6569bdc4f103184686e7e5db98d8891232030f89d80483679"
+    }
+  },
+  "new_h5_test_methods": 16,
+  "test_scope": "FABRICATED_NATIVE_RETURNS_AND_EXISTING_HOSTLESS_PRODUCT_LOCAL_STORAGE_FIXTURES",
+  "initial_failures_retained": [
+    "Focused Debug compile: missing try in new test assertion; fixed",
+    "Signed Debug compile: error binding shadowed model error property; fixed; new DispatchWorkItem capture wrapped",
+    "Initial full Debug: 932 tests, 10 assertions in one existing lineage test failed because isolated export had no Git metadata; fixed by isolated local Git metadata, without changing the test"
+  ],
+  "signed_builds": {
+    "Debug": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/Signed/Build/Products/Debug/Ergentics Provenance.app",
+      "executable_sha256": "fd2b8a8e93ef404fad306e051541ff2217b601fd4553bdcf68f711dc39b430b8",
+      "strict_deep_signature": "PASS_WITH_NORMAL_KEYCHAIN_ACCESS",
+      "entitlements": [
+        "com.apple.security.app-sandbox",
+        "com.apple.security.files.user-selected.read-only",
+        "com.apple.security.hypervisor"
+      ]
+    },
+    "Release": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/Signed/Build/Products/Release/Ergentics Provenance.app",
+      "executable_sha256": "f9574005cf11beaf80c573d7e7721829f589537eaea842b43cb84b32d7326354",
+      "strict_deep_signature": "PASS_WITH_NORMAL_KEYCHAIN_ACCESS",
+      "entitlements": [
+        "com.apple.security.app-sandbox",
+        "com.apple.security.files.user-selected.read-only",
+        "com.apple.security.hypervisor"
+      ]
+    }
+  },
+  "live_validation": {
+    "status": "NOT_PERFORMED",
+    "debug_process_observed_running": true,
+    "h5_action_delivered": false,
+    "blocker": "Computer-use native pipe closed while selecting the exact signed app, including after reset",
+    "release_app_launched": false,
+    "independent_os_attestation": "DEFERRED"
+  },
+  "spdx": {
+    "file_count": 93,
+    "independently_recomputed_file_checksums": 186,
+    "embedded_copies_match": true
+  },
+  "source_sha256": {
+    "Sources/HypervisorStageH5Repeat.swift": "cb55c50661c59a62449695c1e3a973b8d53e0c5d9881d055e57c96fbda10f324",
+    "Sources/HypervisorModel.swift": "43e84cf55572a1419d4ebe67e02970668bb5fa9def0e100e18e747b3e631d548",
+    "Sources/HypervisorLabView.swift": "261b67781ab049d453c6e01242c5bcc71458476320c0a4737deeed13e588ea1b",
+    "Tests/HypervisorH3LiveVerifierTests.swift": "e219ead1f5373298c7381180a0eb52a5ef51c29b3ee4f446ba5e8f61d9cb328a",
+    "ErgenticsProvenance.xcodeproj/project.pbxproj": "66cc175c1cb1d8548b2a75e9477366d89a8b00858bee51167e98ceaed8c67d29",
+    "ERGENTICS.spdx.json": "c8a87cd81bfab68ed717c95bb63afcb2dbc8d53f172542c744f0e829f6d09af2"
+  },
+  "retained_work_directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work",
+  "preserved": [
+    "Build 11 archive and receipt",
+    "all preexisting unrelated dirty files",
+    "all retained H3/H4 evidence"
+  ],
+  "remaining": [
+    "Actual signed H5 GUI/native acceptance",
+    "Separate H4 physical-I/O and power-loss qualification",
+    "Independent OS attestation deferred"
+  ],
+  "stage_completed": false,
+  "next_stage_authorized": false,
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "git_commit_performed": false,
+  "upload_performed": false
+}

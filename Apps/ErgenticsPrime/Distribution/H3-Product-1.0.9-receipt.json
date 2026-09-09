@@ -1,0 +1,513 @@
+{
+  "schema": "com.ergentics.provenance.h3-product-result.v4",
+  "recorded_at_utc": "2026-09-01T19:23:05Z",
+  "status": "FAIL_CONSUMED_PRODUCT_H3_NATIVE_NONPASS",
+  "outcome_partition": {
+    "product_h3": "FAIL_CONSUMED_PRODUCT_H3_NATIVE_NONPASS",
+    "abi_v5_observability": "PASS_ABI5_ORDERED_SCTLR_TRACE",
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000",
+    "product_durable": false,
+    "h4_entered": false
+  },
+  "bindings": {
+    "source_implementation": {
+      "commit": "69ad3c246f7aa0440c7d03f1e579d140693ce77f",
+      "tree": "cb16945a895573b7117a358edcb5a306294d3cde"
+    },
+    "readiness_checkpoint": {
+      "commit": "324ccaa5079a308958c527edd369bcc0331338c8",
+      "tree": "24876091d756aaee8ab43ee5e8bd715f56f35604",
+      "path": "Distribution/H3-Product-1.0.9-readiness.json",
+      "sha256": "61fbda75d81ece7a357aab4d92d33ab9bfbbbc7363221b69a13c14c04e3af9a5",
+      "git_blob": "9f345d7b4190674f7ce1a56ac5f526fc253ab918",
+      "status": "PASS_PRELIVE_EVIDENCE_CAPTURED_LIVE_NOT_ENTERED"
+    },
+    "predecessor_failure_receipt": {
+      "path": "Distribution/H3-Product-1.0.8-receipt.json",
+      "sha256": "3782a3f12bce03819f1cf88b20376d40df275411981f0dd0aefbf51017b25e90",
+      "git_blob": "f47b7ac38743644e481a670a9dc116e9318c9451",
+      "status": "FAIL_CONSUMED_PRODUCT_H3_NATIVE_NONPASS"
+    },
+    "signed_archive": {
+      "logical_name": "Ergentics Provenance 1.0 (9).xcarchive",
+      "archive_content_root_sha256": "b74a612e185ad381a1f3ceba217992c580b20f47802d60b0366e7bcd7a29e99c",
+      "regular_files": 14,
+      "regular_bytes": 10607330,
+      "binary_sha256": "04d31697fa210604c9d155bcdcf74d87cdc67652659eb82ecb8b3d8b03904e13",
+      "macho_uuid": "BD2536DA-1D13-3044-B326-BE05078D20E1",
+      "cdhash": "43b222374df177a2d327a9032e85a1bcca39f270",
+      "candidate_cdhash_full_sha256": "43b222374df177a2d327a9032e85a1bcca39f270bb70719047d34e7ed0aaf784",
+      "codesign_verification": "PASS_VALID_ON_DISK_AND_DESIGNATED_REQUIREMENT",
+      "codesign_verification_scope": "OBSERVED_WITH_REQUIRED_HOST_ACCESS_DURING_READINESS_AND_PREACTION_REJOIN; CONSTRAINED_SANDBOX BASELINE REMAINS CSSMERR_TP_NOT_TRUSTED",
+      "preaction_archive_and_binary_rejoin": "PASS"
+    },
+    "static_build_archive_entitlement_spdx_authority": "BOUND_BY_READINESS_CHECKPOINT_NOT_DUPLICATED"
+  },
+  "single_live_h3_attempt": {
+    "attempt_count": 1,
+    "consumed": true,
+    "rerun_authorized": false,
+    "application_launch_entries": 1,
+    "navigation_axpress_entries": 1,
+    "h3_axpress_entries": 1,
+    "total_axpress_entries": 2,
+    "launch": {
+      "transport": "/usr/bin/open -n",
+      "arguments_beyond_exact_archived_app": [],
+      "helper_sha256": "dd48cc6f8ca7d9a24ecc13975e1d7af99c3c110792513ef21f505374363e801b",
+      "request_utc": "2026-09-01T18:22:39.942520Z",
+      "request_monotonic_ns": "3412914115184000",
+      "return_utc": "2026-09-01T18:22:40.003520Z",
+      "return_monotonic_ns": "3412914175830000",
+      "exit_status": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    "application_generation": {
+      "pid_diagnostic_only": 41147,
+      "start_seconds": "1788286959",
+      "start_microseconds": "978028",
+      "parent_pid": 1,
+      "process_group": 41147,
+      "expected_archived_executable_path_equal": true,
+      "bundle_identifier": "com.ergentics.provenance",
+      "debugger_attached": false
+    },
+    "navigation": {
+      "jxa_sha256": "24388b1a6b25347c5243f453fa33982c4b90f77d9fcb41f0bfcdaf61315dc124",
+      "axpress_entries": 1,
+      "prepress_utc": "2026-09-01T18:26:47.249Z",
+      "postpress_utc": "2026-09-01T18:26:47.363Z",
+      "postcondition": "HYPERVISOR_VIEW_PRESENT"
+    }
+  },
+  "action_transport_history": [
+    {
+      "ordinal": 1,
+      "classification": "PRE_ACTION_REJECTION_NO_AXPRESS",
+      "controller_sha256": null,
+      "jxa_sha256": null,
+      "digest_retention": "NOT_RETAINED_EXACT_DIGEST",
+      "exit_status": 1,
+      "stdout_bytes": 0,
+      "stderr_bytes": 148,
+      "failure": "AppKit was not imported; NSRunningApplication symbol access raised TypeError before lookup, window inspection, button inspection, or AXPress",
+      "axpress_entries": 0,
+      "application_mutation_entries": 0,
+      "application_signal_entries": 0,
+      "h3_attempt_entered": false,
+      "invoke_utc": "2026-09-01T18:35:02.891958Z",
+      "return_utc": "2026-09-01T18:35:03.116925Z"
+    },
+    {
+      "ordinal": 2,
+      "classification": "H3_AXPRESS_ENTERED",
+      "controller_sha256": "940854712d354a7c21dabecf758119e943a81db5d59865ebe9af899e7a76a975",
+      "jxa_sha256": "b8fe859dc780d90c92856328cc65af070c9e2054203a118d5fd0efd46016e363",
+      "controller_mode_octal": "0400",
+      "independent_preexecution_reviews": 2,
+      "invoke_utc": "2026-09-01T18:37:51.577908Z",
+      "invoke_monotonic_ns": "3413825750588000",
+      "return_utc": "2026-09-01T18:40:52.425717Z",
+      "return_monotonic_ns": "3414006598026000",
+      "inner_exit_status": 0,
+      "inner_stdout_bytes": 932,
+      "inner_stderr_bytes": 0,
+      "target": {
+        "accessibility_identifier": "run-h3-cursor-resume",
+        "cardinality": 1,
+        "axpress_entries": 1,
+        "prepress_utc": "2026-09-01T18:40:52.372Z",
+        "postpress_utc": "2026-09-01T18:40:52.423Z"
+      },
+      "process_archive_and_debugger_rejoin": "PASS"
+    }
+  ],
+  "observation_transport_history": [
+    {
+      "ordinal": 1,
+      "classification": "OBSERVER_PRECONDITION_REJECTION",
+      "controller_sha256": "e1da718b04ebf2f6a2f91af90014a4cd1f53c2856fcd1addb8912b926d14fdf3",
+      "jxa_sha256": "49a24db5c840318aaee2133033aed687e3037869cdee84c494a1fafabb455e98",
+      "exit_status": 1,
+      "error": "create-private-journal terminal state rejected",
+      "root_cause": "semantic observer asserted an accessibility name although the result button records had name null",
+      "classification_scope": "OBSERVER_DATA_PREEMPTION_FAILURE_NOT_AN_H3_ATTEMPT",
+      "app_axpress_entries": 0,
+      "application_mutation_entries": 0,
+      "application_signal_entries": 0,
+      "rerun": false
+    },
+    {
+      "ordinal": 2,
+      "classification": "RAW_SUCCESSOR_PASS",
+      "controller_sha256": "3b85db6f4ae4ecf5ebddb7623ce792e1dfe5143aa17bbe795df0241ab4c7ddcf",
+      "jxa_sha256": "3de2e13b3fc39d380c9c72cefbf07b0f2afc57d3183f5bf15033bfa475d4982a",
+      "controller_mode_octal": "0400",
+      "independent_preexecution_reviews": 2,
+      "invoke_utc": "2026-09-01T19:10:41.756092Z",
+      "invoke_monotonic_ns": "3415795928768000",
+      "return_utc": "2026-09-01T19:14:46.498696Z",
+      "return_monotonic_ns": "3416040671005000",
+      "exit_status": 0,
+      "stdout_bytes": 109387,
+      "stderr_bytes": 0,
+      "observer_child_pid_diagnostic_only": 44987,
+      "observer_child_exact_reap": true,
+      "term_entries": 0,
+      "kill_entries": 0,
+      "stable_snapshot_count": 2,
+      "stable_snapshots_equal": true,
+      "content_count": 58,
+      "record_count": 51,
+      "diagnostic_cardinality": 1,
+      "diagnostic_ordinal": 30,
+      "application_generation_equal_pre_post": true,
+      "debugger_attached_pre_post": false,
+      "full_ax_envelope_retained_in_receipt": false,
+      "model_visible_full_ax_envelope_retained": false,
+      "model_visibility_limit": "OUTER_TOOL_DISPLAY_TRUNCATION",
+      "full_ax_envelope_reinterpreted": false
+    }
+  ],
+  "raw_native_diagnostic": {
+    "source": {
+      "accessibility_identifier": "h3-native-diagnostic",
+      "cardinality": 1,
+      "ordinal": 30,
+      "stable_snapshot_count": 2,
+      "stable_snapshots_equal": true
+    },
+    "encoding": "UTF-8",
+    "utf8_bytes": 3499,
+    "sha256": "70edc5725a845e241f3ac0056f483dae3106141d79a86a3e79562ad36639ca87",
+    "trailing_lf": false,
+    "utf8": "failure_stage=11 failure_stage_name=terminal-predicates first_error=100 signing_error=0\nabi=5 outcome=2 execution_pass=0 teardown_pass=1 signing_admitted=1\ncursor sealed=0 decoded=0 restored=0 evidence_byte_count=0 checkpoint_valid=0 terminal_valid=0\nconservation source=1 target=0 quarantined=0\ncancellation requested=0 calls=0 status=-2147483648\nwatchdog fired=0 create_entries=1 join_entries=1 create_status=0 join_status=0 wait_status=0\nclock start_ticks=64448561200890 end_ticks=64448561316289 timebase=125/3\nsource.generation=1 run_entries=1 mappings_entered=3 register_set_calls=36 register_read_calls=36 conserved=1\nsource.status vm_create=0 map=[0, 0, 0] vcpu_create=0 register=0 run=0 read=0 vcpu_destroy=0 unmap=[0, 0, 0] vm_destroy=0 host_unmap=[0, 0, 0]\nsource.frame entry_ticks=64448561309354 exit_ticks=64448561310150 exception_reason=1 syndrome=2474901575 pc=268435536 fault_ipa=268484608 fault_va=268484608 x4=1\ntarget.generation=2 run_entries=0 mappings_entered=0 register_set_calls=0 register_read_calls=0 conserved=0\ntarget.status vm_create=-2147483648 map=[-2147483648, -2147483648, -2147483648] vcpu_create=-2147483648 register=-2147483648 run=-2147483648 read=-2147483648 vcpu_destroy=-2147483648 unmap=[-2147483648, -2147483648, -2147483648] vm_destroy=-2147483648 host_unmap=[-2147483648, -2147483648, -2147483648]\ntarget.frame entry_ticks=0 exit_ticks=0 exception_reason=18446744073709551615 syndrome=0 pc=0 fault_ipa=0 fault_va=0 x4=0\ncheckpoint.witness schema=1 required=0x000001ff evaluated=0x000001ff passed=0x000001bf gpr_mismatch=0x00000000 reserved_zero=0\ncheckpoint.sequence=1\ncheckpoint.gprs x0=268451840/0x0000000010004000 x1=268468224/0x0000000010008000 x2=0/0x0000000000000000 x3=268484608/0x000000001000c000 x4=1/0x0000000000000001 x5=1/0x0000000000000001 x6=42/0x000000000000002a x7=23/0x0000000000000017 x8=0/0x0000000000000000 x9=0/0x0000000000000000 x10=0/0x0000000000000000 x11=0/0x0000000000000000 x12=0/0x0000000000000000 x13=0/0x0000000000000000 x14=0/0x0000000000000000 x15=0/0x0000000000000000 x16=0/0x0000000000000000 x17=0/0x0000000000000000 x18=0/0x0000000000000000 x19=0/0x0000000000000000 x20=0/0x0000000000000000 x21=0/0x0000000000000000 x22=0/0x0000000000000000 x23=0/0x0000000000000000 x24=0/0x0000000000000000 x25=0/0x0000000000000000 x26=0/0x0000000000000000 x27=0/0x0000000000000000 x28=0/0x0000000000000000 x29=0/0x0000000000000000 x30=0/0x0000000000000000\ncheckpoint.system cpsr=1610613701/0x00000000600003c5 sctlr=818940288/0x0000000030d00980 sp=268484592/0x000000001000bff0 vbar=0/0x0000000000000000\ncheckpoint.page role=code first_mismatch_offset=4294967295 observed_byte=0 expected_byte=0 reserved_zero=0\ncheckpoint.page role=request first_mismatch_offset=4294967295 observed_byte=0 expected_byte=0 reserved_zero=0\ncheckpoint.page role=reply first_mismatch_offset=4294967295 observed_byte=0 expected_byte=0 reserved_zero=0\nsctlr.transition schema=1 sampled=0x00000007 pre_entries=1 post_entries=1 pre_status=0 post_status=0 reserved_zero_0=0 reserved_zero_1=0 requested=818939904/0x0000000030d00800 source_pre_entry=818939904/0x0000000030d00800 source_post_exit=818940288/0x0000000030d00980\nderived sctlr.requested_xor_pre_entry=0/0x0000000000000000 sctlr.pre_entry_xor_post_exit=384/0x0000000000000180\nderived classification=NATIVE_NONPASS checkpoint_integrity=VALID_FAILURE checkpoint_failures=[\"checkpoint.sctlr\"] sctlr_transition_integrity=VALID_FULL sctlr_transition_failures=[]\nverifier_error=H3 native PASS predicates rejected"
+  },
+  "typed_native_diagnostic": {
+    "derived_from_raw_sha256": "70edc5725a845e241f3ac0056f483dae3106141d79a86a3e79562ad36639ca87",
+    "raw_precedes_typed_interpretation": true,
+    "typed_fields_are_authority": false,
+    "failure": {
+      "stage": 11,
+      "stage_name": "terminal-predicates",
+      "first_error": 100,
+      "first_error_name": "EPROTO",
+      "signing_error": 0,
+      "verifier_error": "H3 native PASS predicates rejected"
+    },
+    "result": {
+      "abi": 5,
+      "outcome": 2,
+      "execution_pass": 0,
+      "teardown_pass": 1,
+      "signing_admitted": 1,
+      "checkpoint_valid": 0,
+      "terminal_valid": 0
+    },
+    "cursor": {
+      "sealed": 0,
+      "decoded": 0,
+      "restored": 0,
+      "evidence_byte_count": 0
+    },
+    "conservation": {
+      "source": 1,
+      "target": 0,
+      "quarantined": 0
+    },
+    "cancellation": {
+      "requested": 0,
+      "calls": 0,
+      "status": -2147483648
+    },
+    "watchdog": {
+      "fired": 0,
+      "create_entries": 1,
+      "join_entries": 1,
+      "create_status": 0,
+      "join_status": 0,
+      "wait_status": 0
+    },
+    "clock": {
+      "start_ticks": "64448561200890",
+      "end_ticks": "64448561316289",
+      "timebase_numerator": "125",
+      "timebase_denominator": "3"
+    },
+    "source": {
+      "generation": "1",
+      "run_entries": 1,
+      "mappings_entered": 3,
+      "register_set_calls": 36,
+      "register_read_calls": 36,
+      "conserved": 1,
+      "status": {
+        "vm_create": 0,
+        "map": [0, 0, 0],
+        "vcpu_create": 0,
+        "register": 0,
+        "run": 0,
+        "read": 0,
+        "vcpu_destroy": 0,
+        "unmap": [0, 0, 0],
+        "vm_destroy": 0,
+        "host_unmap": [0, 0, 0]
+      },
+      "frame": {
+        "entry_ticks": "64448561309354",
+        "exit_ticks": "64448561310150",
+        "exception_reason": "1",
+        "syndrome": "2474901575",
+        "pc": "268435536",
+        "fault_ipa": "268484608",
+        "fault_virtual_address": "268484608",
+        "x4": "1"
+      }
+    },
+    "target": {
+      "generation": "2",
+      "run_entries": 0,
+      "mappings_entered": 0,
+      "register_set_calls": 0,
+      "register_read_calls": 0,
+      "conserved": 0,
+      "status": {
+        "vm_create": -2147483648,
+        "map": [-2147483648, -2147483648, -2147483648],
+        "vcpu_create": -2147483648,
+        "register": -2147483648,
+        "run": -2147483648,
+        "read": -2147483648,
+        "vcpu_destroy": -2147483648,
+        "unmap": [-2147483648, -2147483648, -2147483648],
+        "vm_destroy": -2147483648,
+        "host_unmap": [-2147483648, -2147483648, -2147483648]
+      },
+      "frame": {
+        "entry_ticks": "0",
+        "exit_ticks": "0",
+        "exception_reason": "18446744073709551615",
+        "syndrome": "0",
+        "pc": "0",
+        "fault_ipa": "0",
+        "fault_virtual_address": "0",
+        "x4": "0"
+      }
+    },
+    "checkpoint": {
+      "schema": 1,
+      "required_mask": "0x000001ff",
+      "evaluated_mask": "0x000001ff",
+      "passed_mask": "0x000001bf",
+      "gpr_mismatch_mask": "0x00000000",
+      "reserved_zero": 0,
+      "sequence": "1",
+      "gprs_decimal_strings_x0_through_x30": [
+        "268451840", "268468224", "0", "268484608", "1", "1", "42", "23",
+        "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0",
+        "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"
+      ],
+      "system": {
+        "cpsr": "1610613701",
+        "cpsr_hex": "0x00000000600003c5",
+        "sctlr": "818940288",
+        "sctlr_hex": "0x0000000030d00980",
+        "sp": "268484592",
+        "sp_hex": "0x000000001000bff0",
+        "vbar": "0",
+        "vbar_hex": "0x0000000000000000"
+      },
+      "pages": [
+        {"role": "code", "first_mismatch_offset": "4294967295", "observed_byte": 0, "expected_byte": 0, "reserved_zero": 0},
+        {"role": "request", "first_mismatch_offset": "4294967295", "observed_byte": 0, "expected_byte": 0, "reserved_zero": 0},
+        {"role": "reply", "first_mismatch_offset": "4294967295", "observed_byte": 0, "expected_byte": 0, "reserved_zero": 0}
+      ]
+    },
+    "sctlr_transition": {
+      "schema": 1,
+      "sampled_mask": "0x00000007",
+      "pre_entries": 1,
+      "post_entries": 1,
+      "pre_status": 0,
+      "post_status": 0,
+      "reserved_zero_0": 0,
+      "reserved_zero_1": 0,
+      "requested": "818939904",
+      "requested_hex": "0x0000000030d00800",
+      "source_pre_entry": "818939904",
+      "source_pre_entry_hex": "0x0000000030d00800",
+      "source_post_exit": "818940288",
+      "source_post_exit_hex": "0x0000000030d00980",
+      "requested_xor_pre_entry": "0",
+      "requested_xor_pre_entry_hex": "0x0000000000000000",
+      "pre_entry_xor_post_exit": "384",
+      "pre_entry_xor_post_exit_hex": "0x0000000000000180",
+      "integrity": "VALID_FULL",
+      "failures": []
+    }
+  },
+  "minimal_ui_projection": {
+    "status_occurrences": {"FAIL": 2},
+    "verification_disposition": "NATIVE_NONPASS",
+    "detail": "H3 native execution returned non-PASS. Exact copied diagnostic fields are shown below. No PASS or durable evidence was published.",
+    "source_generation": 1,
+    "source_run_entries": 1,
+    "target_generation": 2,
+    "target_run_entries": 0,
+    "diagnostic_cardinality": 1,
+    "diagnostic_ordinal": 30,
+    "create_private_journal": {"ordinal": 18, "name": null, "enabled": false},
+    "run_fixed_guest": {"ordinal": 19, "name": null, "enabled": false},
+    "run_h3_cursor_resume": {"ordinal": 20, "name": null, "enabled": false},
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000",
+    "durable": false,
+    "h4_entered": false,
+    "cursor_sha256": null,
+    "checkpoint_merkle_root": null,
+    "terminal_merkle_root": null,
+    "projection_root": null,
+    "graph_root": null
+  },
+  "derived_assessment": {
+    "derived_from_raw_sha256": "70edc5725a845e241f3ac0056f483dae3106141d79a86a3e79562ad36639ca87",
+    "product_predicate": {
+      "result": "FAIL_CONSUMED_PRODUCT_H3_NATIVE_NONPASS",
+      "checkpoint_integrity": "VALID_FAILURE",
+      "checkpoint_failures": ["checkpoint.sctlr"],
+      "failure_stage": "terminal-predicates",
+      "first_error": "EPROTO"
+    },
+    "observability_predicate": {
+      "result": "PASS_ABI5_ORDERED_SCTLR_TRACE",
+      "transition_integrity": "VALID_FULL",
+      "transition_failures": [],
+      "requested_equals_immediate_pre_entry": true,
+      "immediate_pre_entry_equals_first_post_exit": false,
+      "requested_xor_pre_entry_hex": "0x0000000000000000",
+      "pre_entry_xor_post_exit_hex": "0x0000000000000180",
+      "differing_bit_positions": [7, 8],
+      "localized_interval": "AFTER_IMMEDIATE_PRE_ENTRY_READ_AND_BY_FIRST_POST_EXIT_READ_ACROSS_EXACTLY_ONE_SOURCE_HV_VCPU_RUN"
+    },
+    "conservation_predicate": {
+      "source_entered": true,
+      "source_conserved": true,
+      "teardown_pass": true,
+      "quarantined": false,
+      "target_entered": false,
+      "target_conserved_zero_is_unentered_representation": true
+    },
+    "exact_timing": {
+      "native_interval_ticks": "115399",
+      "native_interval_nanoseconds_numerator": "14424875",
+      "native_interval_nanoseconds_denominator": "3",
+      "source_run_interval_ticks": "796",
+      "source_run_interval_nanoseconds_numerator": "99500",
+      "source_run_interval_nanoseconds_denominator": "3"
+    },
+    "established": [
+      "the requested SCTLR and immediate pre-entry SCTLR are both 0x30d00800",
+      "the first post-exit SCTLR and checkpoint SCTLR are both 0x30d00980",
+      "the 0x180 delta is localized between the immediate pre-entry and first post-exit reads across the single source vCPU run",
+      "all checkpoint predicates except checkpoint.sctlr passed",
+      "source teardown and conservation passed",
+      "target execution was not entered",
+      "Build 8's missing immediate pre-entry SCTLR witness is closed"
+    ],
+    "not_established": [
+      "whether guest-visible execution caused the SCTLR change",
+      "whether Hypervisor Framework run or exit semantics caused the SCTLR change",
+      "a TOCTOU defect",
+      "a guest mutation defect",
+      "cursor seal, decode, or restore",
+      "target execution",
+      "durable H3 product evidence",
+      "H3 product PASS",
+      "Gate E authority",
+      "H4 entry"
+    ],
+    "successor": "Add an in-guest SCTLR witness immediately before the checkpoint trap, or independently specify and freeze the architectural post-run SCTLR predicate. Do not mask or admit 0x180 from one sample."
+  },
+  "termination": {
+    "prequit_observation": {
+      "utc": "2026-09-01T19:16:37.878932Z",
+      "monotonic_ns": "3416152051668000",
+      "exact_generation_match": true,
+      "debugger_attached": false
+    },
+    "normal_termination_selector_entries": 1,
+    "normal_termination_accepted": true,
+    "transport_exit_status": 1,
+    "transport_postaccept_error": "TypeError after running.terminate returned true",
+    "quit_jxa_sha256": "e545f6fc6b1330691dc8b64095f801d2fac2d0c4ccc23ce93942d5cabd3dfb13",
+    "force_terminate_entries": 0,
+    "signal_entries": 0,
+    "retry_entries": 0,
+    "absence_observations": [
+      {"utc": "2026-09-01T19:17:10.505168Z", "monotonic_ns": "3416184677874000", "exact_matches": 0},
+      {"utc": "2026-09-01T19:17:21.293609Z", "monotonic_ns": "3416195466295000", "exact_matches": 0}
+    ],
+    "post_accepted_normal_termination_absence_observed": true,
+    "exit_cause_directly_observed": false,
+    "application_processes_remaining": 0
+  },
+  "privacy_boundary": {
+    "classification": "ERGENTICS_INTERNAL_DEVELOPMENT_DIAGNOSTIC",
+    "classification_is_not_access_control": true,
+    "purpose": "Durable reconstruction of the one authorized Build 9 H3 product action",
+    "consumer_payload_present": false,
+    "credentials_or_private_keys_present": false,
+    "environment_values_retained_in_receipt": false,
+    "raw_ax_tree_retained_in_receipt": false,
+    "outer_tool_ax_envelope_retention": "UNKNOWN_NOT_ASSERTED",
+    "retained_payload": "one structural native diagnostic plus minimal UI and process-identity predicates",
+    "sensitive_metadata": [
+      "local timestamps",
+      "target process generation",
+      "local archive identity referenced through readiness",
+      "native register and trap fields",
+      "native lifecycle counters and exact timing fields"
+    ],
+    "external_projection_authorized": false,
+    "current_release_ui_visibility": "PRESENT_IN_SIGNED_DEVELOPMENT_ARCHIVE_ACCESSIBILITY_TREE",
+    "target_release_ui_visibility": "PROHIBITED_PENDING_PRIVACY_HARDENING",
+    "external_disclosure_requires": "separate allowlisted redacted projection; hashing low-entropy names or paths is not declassification"
+  },
+  "roadmap": {
+    "h1": "PASS_ACCEPTED_PREDECESSOR",
+    "h2_product_local_mechanics": "PASS_ACCEPTED_PREDECESSOR",
+    "h3_static_contract": "PASS",
+    "h3_abi_v5_observability": "PASS",
+    "h3_product_live": "FAIL_CONSUMED_NO_RETRY",
+    "h4": "NOT_ENTERED",
+    "gate_e": "ABSTAIN_NONBLOCKING",
+    "authority_vector": "00000000",
+    "scientific_authority": false
+  },
+  "receipt_boundary": {
+    "role": "outer durable observation of signed archive and consumed product action",
+    "is_product_journal_evidence": false,
+    "gui_role": "presentation only",
+    "raw_numeric_diagnostic_precedes_typed_and_derived_interpretation": true,
+    "observability_pass_does_not_promote_product_result": true
+  },
+  "actions_not_performed": [
+    "second Build 9 H3 action",
+    "Build 8 rerun",
+    "journal Create",
+    "journal Open",
+    "fixed guest Run",
+    "Stop",
+    "Quit Now",
+    "debugger attachment",
+    "process signal",
+    "direct journal read or write",
+    "H4 entry",
+    "GitHub action",
+    "Gate-E promotion",
+    "energy inference",
+    "second or manual VM lifecycle action"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_h3_mint": "ABSENT",
+    "production_store_mint": "ABSENT"
+  },
+  "checkpoint": "H4-D2_ONE_SHOT_SQLITE_PERSISTENCE_ADMISSION_FREEZE",
+  "failure_semantics": {
+    "admitted": "COMMIT returned success, writer closed, a fresh read-only connection reconstructed one exact row, the canonical CBOR bytes round-tripped, and all checked columns rejoined the independently decoded JSON and CBOR semantics.",
+    "committed_unverified": "COMMIT returned success but close, reopen, schema, row, byte, or semantic reconstruction did not complete exactly. The handoff is terminal and no retry is permitted.",
+    "precommit_rejected": "COMMIT was not entered, rollback and close completed, and no admitted row exists. The handoff is poisoned and no retry is permitted.",
+    "transaction_outcome_unknown": "COMMIT was entered but did not return success, or rollback/close could not establish the precommit state. The handoff is terminal and no retry is permitted. Inspection is evidence-only.",
+    "unavailable": "A competing call observes IN_PROGRESS; a later call observes ALREADY_CONSUMED, COMMIT_REQUIRES_INSPECTION, EXPIRED, or POISONED according to the retained process-local state."
+  },
+  "filesystem_admission": {
+    "database_committed_size": "positive page-aligned and <=262144 bytes",
+    "database_fresh_size": 0,
+    "database_mode": "0600",
+    "database_nlink": 1,
+    "database_open": "precreated O_CREAT|O_EXCL|O_NOFOLLOW then SQLite SQLITE_OPEN_NOFOLLOW",
+    "directory_inventory": "descriptor-rooted openat-dot plus fdopendir/readdir joined to the held directory vnode",
+    "failure_retention": "Rejected, unknown, and committed-unverified outcomes do not delete or reinterpret offending entries; a retained unexpected sidecar or inventory entry is evidence of non-admission.",
+    "parent_mode": "0700",
+    "parent_owner": "effective_uid",
+    "phase_inventory": {
+      "before_writer_open": ["main"],
+      "admission_required_after_commit_writer_close": ["main"],
+      "admission_required_before_and_after_read_only_reopen": ["main"],
+      "rejection_required_after_proven_rollback_close": ["main"],
+      "while_writer_transaction_may_exist": ["main", "optional_-journal"]
+    },
+    "production_path_or_url_api": false,
+    "test_store_factory": "EPR_H4_PRIVACY_TESTS_ONLY"
+  },
+  "lifecycle": [
+    "available",
+    "claimed",
+    "admitted_or_poisoned_or_terminal_unknown"
+  ],
+  "nonclaims": [
+    "This freeze authorizes implementation and bounded local tests only; it does not enter or complete H4.",
+    "It does not create a production storage-path capability, production H3 mint, live H3 run, VM/process action, graph, Merkle root, release projection, Gate-E promotion, or authority bit.",
+    "SQLite is a durable container and checked projection, not semantic, transition, execution, or scientific authority.",
+    "No owner anchor, epoch, source identity, envelope identity, run identifier, timestamp, digest, filesystem path, or diagnostic payload is serialized or stored in SQLite, its transient rollback journal, or the success receipt.",
+    "The D2 lease closes process-local replay of ordinary handoff copies. Restart-spanning replay, same-user host mutation resistance, rollback resistance, authenticity, WAL/crash recovery, disk-full behavior, and partial physical-write behavior remain separate D2b or later evidence obligations.",
+    "SQLite still opens the database by its admitted named path rather than a held-descriptor custom VFS. Ancestor mutation and same-user ABA inside the named-open gap are not excluded.",
+    "A rollback journal can transiently contain page copies only while the owned writer transaction may exist. No secure erase, backup exclusion, snapshot exclusion, or at-rest cryptographic protection is claimed.",
+    "The fresh read-only reopen is in the same process. It is not crash, power-loss, restart-adoption, disk-full, SQLITE_IOERR, or partial-physical-write evidence.",
+    "A successful fixture transaction does not convert the structural H3 fixture into verified-live product provenance."
+  ],
+  "predecessor": {
+    "commit": "4995ba85031b3643df6598eb450ad612d16508a4",
+    "tree": "c69f1ccd3063f38b118bc6e3cbddd159fb42dfe7"
+  },
+  "sqlite": {
+    "application_id": 1162891828,
+    "busy_timeout_ms": 0,
+    "canonical_cbor_max_bytes": 158,
+    "indexed_fields": [
+      "semantic_schema",
+      "claim_state",
+      "predicate_count",
+      "authority_vector"
+    ],
+    "journal_mode": "DELETE",
+    "limits": {
+      "SQLITE_LIMIT_ATTACHED": 0,
+      "SQLITE_LIMIT_COLUMN": 16,
+      "SQLITE_LIMIT_COMPOUND_SELECT": 1,
+      "SQLITE_LIMIT_EXPR_DEPTH": 16,
+      "SQLITE_LIMIT_FUNCTION_ARG": 8,
+      "SQLITE_LIMIT_LENGTH": 1024,
+      "SQLITE_LIMIT_SQL_LENGTH": 8192,
+      "SQLITE_LIMIT_TRIGGER_DEPTH": 0,
+      "SQLITE_LIMIT_VDBE_OP": 20000,
+      "SQLITE_LIMIT_WORKER_THREADS": 0
+    },
+    "max_page_count": 64,
+    "page_size": 4096,
+    "policy": [
+      "SQLITE_DBCONFIG_DEFENSIVE=1",
+      "SQLITE_DBCONFIG_DQS_DDL=0",
+      "SQLITE_DBCONFIG_DQS_DML=0",
+      "SQLITE_DBCONFIG_TRUSTED_SCHEMA=0",
+      "foreign_keys=ON",
+      "trusted_schema=OFF",
+      "temp_store=MEMORY",
+      "synchronous=EXTRA",
+      "fullfsync=ON",
+      "cell_size_check=ON"
+    ],
+    "retained_streams": [
+      "canonical_cbor"
+    ],
+    "row_cardinality": 1,
+    "schema_sql": "CREATE TABLE h4_receipts(singleton INTEGER PRIMARY KEY CHECK(singleton=1),semantic_schema TEXT NOT NULL CHECK(semantic_schema='com.ergentics.provenance.hypervisor.h4.canonical-receipt.v1'),claim_state TEXT NOT NULL CHECK(claim_state='OBSERVED_NONPASS'),predicate_count INTEGER NOT NULL CHECK(predicate_count>0 AND predicate_count<=4096),authority_vector TEXT NOT NULL CHECK(authority_vector='00000000'),canonical_cbor BLOB NOT NULL CHECK(length(canonical_cbor)>0 AND length(canonical_cbor)<=158)) STRICT, WITHOUT ROWID",
+    "transaction": "one BEGIN IMMEDIATE transaction creates the frozen schema, sets user_version/application_id, inserts exactly one row, reads it back, and COMMITs",
+    "user_version": 1
+  },
+  "store_grant": {
+    "admission_clock": "mach_continuous_time-compatible retained monotonic reader",
+    "admission_deadline": "inclusive valid-through tick checked at grant claim and immediately before COMMIT",
+    "lifecycle": [
+      "ready",
+      "claimed",
+      "admitted_or_poisoned_or_terminal_unknown"
+    ],
+    "owner_join": "private object-identity join to the D1 owner epoch anchor",
+    "persistence": "private-sqlite",
+    "production_mint": "ABSENT",
+    "purpose": "durable-receipt-verification",
+    "recipient": "sqlite-projection",
+    "retention_rule": "private-fixture-until-explicit-test-teardown",
+    "test_mint": "EPR_H4_PRIVACY_TESTS_ONLY"
+  },
+  "success_receipt": {
+    "contains_owner_or_epoch": false,
+    "construction": "fileprivate and reachable only after exact committed close/reopen reconstruction",
+    "reflection": "empty",
+    "variable_metadata": "absent; no predicate count or CBOR byte count is exposed",
+    "predicates": [
+      "atomic_append_exact",
+      "writer_closed",
+      "read_only_reopen_exact",
+      "schema_exact",
+      "row_cardinality_exact",
+      "canonical_cbor_exact",
+      "indexed_fields_exact",
+      "json_round_trip_exact",
+      "cbor_round_trip_exact",
+      "semantic_join_exact"
+    ]
+  },
+  "test_schedule": [
+    "zero-argument coordinator success and exact close/reopen reconstruction",
+    "ordinary handoff copies share one persistence lease",
+    "a separate owner-joined store grant has an inclusive deadline, one winner, terminal replay, and a fixed retention rule",
+    "sequential and concurrent calls have exactly one admitted winner",
+    "expiry before claim poisons without SQLite transaction",
+    "pre-BEGIN, post-BEGIN, post-schema, and post-insert injected failures roll back and never admit a row",
+    "entered-COMMIT and post-COMMIT schedules produce named terminal unknown or committed-unverified states and never retry",
+    "schema/application version, extra schema object/column, row cardinality, storage-class attempt, byte, and checked-column mismatch never produce an admitted receipt",
+    "existing database, pre-open journal, live-transaction journal mode/hard-link/symlink-shaped metadata fault injection through the production validator, post-COMMIT journal, parent alias/mode, database mode/vnode replacement/nlink, unknown entry, oversized file, and non-page-aligned initialized file reject",
+    "explicit close and read-only reopen failures after COMMIT remain committed-unverified",
+    "the exact canonical JSON stream and diagnostic, owner, epoch, root, path, and SQL-detail canaries are absent from the database, receipt, errors, and reflection",
+    "an external static application-binary audit must show that EPR_H4_PRIVACY_TESTS, test store/path/fault seams, and arbitrary raw reopened-stream entry points are absent"
+  ],
+  "schema": "com.ergentics.provenance.hypervisor.h4d2-freeze.v1"
+}

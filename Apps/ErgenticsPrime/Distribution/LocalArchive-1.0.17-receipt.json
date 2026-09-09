@@ -1,0 +1,114 @@
+{
+  "build": "1.0 (17)",
+  "source_commit": "d07ff7586cb8d76ad06b488d71fe3a138eeaa467",
+  "recorded_at_utc": "2026-09-06T00:10:17Z",
+  "archive_path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Ergentics Provenance 1.0 (17).xcarchive",
+  "standalone_app": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build17/Ergentics Provenance.app",
+  "packaging_review": {
+    "status": "PASS",
+    "source_commit": "d07ff7586cb8d76ad06b488d71fe3a138eeaa467",
+    "source_clean": true,
+    "spdx_version": "SPDX-2.3",
+    "source_records": 102,
+    "source_directory_files": 75,
+    "package_coverage_files": 102,
+    "checksums_verified": 204,
+    "source_bytes": 3763098,
+    "package_verification_code": "6d673dd4f01c5f228aa866027a30e36190bde507",
+    "embedded_records": {
+      "ERGENTICS.spdx.json": {
+        "bytes": 89911,
+        "sha256": "965534a336f6241ce77434c84a3b15cc2b0086898160961faaf1fc19a664c9bd",
+        "matches_source": true
+      },
+      "LICENSE": {
+        "bytes": 579,
+        "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8",
+        "matches_source": true
+      },
+      "THIRD_PARTY_NOTICES.md": {
+        "bytes": 656,
+        "sha256": "80acba3f9e986d09384b4e5615d400207795fc39a6545452c1ebc3411c19a675",
+        "matches_source": true
+      },
+      "PrivacyInfo.xcprivacy": {
+        "bytes": 854,
+        "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+        "matches_source": true
+      }
+    },
+    "artifact_hashes": {
+      "executable": {
+        "bytes": 2382352,
+        "sha256": "7b64526e19450ac6d3820af22518b50055734c0b9785ab97ded8fb449101fb5e"
+      },
+      "dsym": {
+        "bytes": 12341792,
+        "sha256": "9c3d73a39a1b8ca4684b3182760c41dc6aca05996f4eadbf422c774c47fb551b"
+      },
+      "info_plist": {
+        "bytes": 1899,
+        "sha256": "feb62eac38eb4ab2bd580b31519fae9d31a67fc85c6fed7c619a1166c725e6c5"
+      },
+      "code_resources": {
+        "bytes": 3634,
+        "sha256": "4e2ceee0a1248ed83ddcd13694f2cd8ff9d26e2cf2b41becf32dff10554f8828"
+      }
+    },
+    "issues": [
+
+    ],
+    "scope": "Independent read-only file/package verification. Signature metadata and UUIDs were checked separately; app was not launched."
+  },
+  "strict_signature": "PASS_WITH_MACOS_TRUST_SERVICE_ACCESS",
+  "signing_team": "ZCQ435U8JP",
+  "bundle_identifier": "com.ergentics.provenance",
+  "hardened_runtime": true,
+  "signed_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.user-selected.read-write": true,
+    "com.apple.security.hypervisor": true,
+    "com.apple.security.virtualization": true
+  },
+  "app_and_dsym_uuid": "6CA91BF0-98F2-3504-B170-86D24F7F0644",
+  "standalone_copy_matches_archive": true,
+  "zip_contents_match_archive": true,
+  "app_zip_sha256": "e9ca783e5321b90ad5ff9a5e2707064926e6c1b0a83270cc46ec0d6b431fcfc2",
+  "source_bundle_sha256": "35feff1fbf4f6a020a8acbe8c7a448195717bfa163b6187c464d0b277b628b7b",
+  "tests": {
+    "release": {
+      "passed": 973,
+      "failed": 0
+    },
+    "debug": {
+      "passed": 1020,
+      "failed": 0
+    },
+    "new_vm_cases": 16,
+    "new_git_cases": 19,
+    "new_signing_cases": 4,
+    "new_h2_cases": 7
+  },
+  "live": {
+    "exact_standalone_path_process_observed": true,
+    "process_id": 38363,
+    "accessibility_read": "BLOCKED: Sky Computer Use native pipe closed before response",
+    "recovery_attempts": "Full path/name and fresh control session failed; Xcode remained accessible.",
+    "signing_admission_in_app": "NOT_OBSERVED",
+    "git_workflow": "NOT_RUN",
+    "vm_import_and_boot": "NOT_RUN",
+    "normal_quit": "NOT_TESTED_IN_BUILD_17"
+  },
+  "scope": "Native VM and local Git app integration plus H2 checked teardown; local signed development build.",
+  "prime_model": "Prime native/Metal baseline retained. No new Prime model integration or execution in this app build.",
+  "prime_gate_e": "OPEN; reviewed publisher-admission repair saved separately in Prime-Gate-E-Repair.",
+  "independent_os_attestation": "PARKED_BY_USER",
+  "uploaded": false,
+  "macos_settings_changed": false,
+  "limitations": [
+    "Full unit regression tests are not signed-app VM/Git workflow acceptance.",
+    "No real guest installer was selected or booted; the Alpine preference question remains unanswered.",
+    "Build 16 H1–H8 live evidence retains its original binary scope.",
+    "Prime Gate E, its downstream F–H progression and comprehensive model integration remain open."
+  ]
+}

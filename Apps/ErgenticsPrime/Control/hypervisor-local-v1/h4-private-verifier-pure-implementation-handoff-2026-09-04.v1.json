@@ -1,0 +1,325 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-private-verifier-pure-implementation-handoff.v1",
+  "recorded_at_utc": "2026-09-04T10:54:31Z",
+  "checkpoint": "H4_PRIVATE_VERIFIER_PURE_IMPLEMENTATION_HANDOFF",
+  "status": "FROZEN_PURE_IMPLEMENTATION_AND_HOSTLESS_TESTS_ONLY",
+  "predecessor": {
+    "commit": "eafecae93199410fd3ee605617ec0d319774b424",
+    "tree": "50fbcdfe54a70931ccd2545d4b28f0c60441c8d8",
+    "parent_commit": "0ece13fa7aac0ab516a1bbd0fc44b7ab6e52170d",
+    "commit_subject": "Freeze H4 private verifier format and atomicity"
+  },
+  "sealed_format_contract": {
+    "path": "Control/hypervisor-local-v1/h4-private-verifier-canonical-format-crypto-atomicity-freeze-2026-09-04.v1.json",
+    "git_blob": "fc29ebbb15954018228d26a744ee4ae6cf7af314",
+    "sha256": "bd6e3ab19dba9501c4c9595e571959cad318831571f8b3decb5455f77763dd21",
+    "rule": "The implementation must consume this exact committed contract and may not relax any byte, canonicality, cryptographic, privacy, state, reserve, authority or live-effect rule."
+  },
+  "handoff_commit_contract": {
+    "changed_paths_exact": [
+      "Control/hypervisor-local-v1/h4-private-verifier-pure-implementation-handoff-2026-09-04.v1.json"
+    ],
+    "control_only": true,
+    "source_changes": 0,
+    "test_changes": 0,
+    "project_changes": 0,
+    "build_or_test_execution": false,
+    "runtime_execution": false,
+    "authority_effect": "NONE",
+    "immediate_parent_exact": "eafecae93199410fd3ee605617ec0d319774b424",
+    "local_commit_allowed": true,
+    "remote_operation_allowed": false
+  },
+  "implementation_scope": {
+    "allowed_paths_exact": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Sources/HypervisorStageH4PrivateVerifier.swift",
+      "Sources/HypervisorStageH4PrivateVerifierFormat.swift",
+      "Tests/HypervisorStageH4PrivateVerifierTests.swift",
+      "Tests/HypervisorStageH4PrivateVerifierFormatTests.swift"
+    ],
+    "existing_path_preimage": {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "git_blob": "93a6006f4be9ccfb340a1ab0fd646963a2a3dd08",
+      "sha256": "8c0ae98bb061d2d5df27aeac5f1fdcd96479e8e8b217690fb2bd499ec491110a",
+      "required_final_mode": "100644"
+    },
+    "new_paths_exact": [
+      "Sources/HypervisorStageH4PrivateVerifier.swift",
+      "Sources/HypervisorStageH4PrivateVerifierFormat.swift",
+      "Tests/HypervisorStageH4PrivateVerifierTests.swift",
+      "Tests/HypervisorStageH4PrivateVerifierFormatTests.swift"
+    ],
+    "new_paths_required_mode": "100644",
+    "source_target_membership_exact": [
+      "Sources/HypervisorStageH4PrivateVerifier.swift",
+      "Sources/HypervisorStageH4PrivateVerifierFormat.swift"
+    ],
+    "test_target_membership_exact": [
+      "Sources/HypervisorStageH4PrivateVerifier.swift",
+      "Sources/HypervisorStageH4PrivateVerifierFormat.swift",
+      "Tests/HypervisorStageH4PrivateVerifierTests.swift",
+      "Tests/HypervisorStageH4PrivateVerifierFormatTests.swift"
+    ],
+    "path_rule": "The implementation commit delta against the handoff commit must equal this five-path allowlist. No rename, deletion, generated output, control result or ambient evidence is admitted."
+  },
+  "pure_format_and_crypto_contract": {
+    "scope": [
+      "the exact EPRH4PV1 length-delimited common frame and all 37 immutable domains",
+      "bounded RFC 8949 core deterministic CBOR for the closed H4 private-verifier schema subset",
+      "all 26 frozen schema identities, including the nontransmitted private-token descriptor and 25 conveyed, authorization or retained schemas",
+      "schema-specific exact field inventory, type, constant, range, packed-vector and local cross-field validation",
+      "SHA-256 commitments, HMAC-SHA-256 private tokens and storage authentication joins",
+      "raw Ed25519 seed, public-key and detached-signature wrappers using CryptoKit with explicit canonical point, small-order and S-less-than-L rejection"
+    ],
+    "decoder_order": "Prove aggregate, declared and derived bounds before allocation; decode only allowed types; reject nonminimal, indefinite, duplicate, reordered, unknown, missing and trailing data; validate the selected schema; re-encode and require exact bytes before any cryptographic operation.",
+    "secret_input_rule": "Production functions accept exact byte inputs but do not generate, persist, log or export keys, blinds, nonces or challenges. Tests use only fixed fabricated bytes.",
+    "local_source_digest_boundary": "For canonical JSON and deterministic CBOR only, the implementation may compute the exact frozen framed preimage digests from exact H4-C stream bytes. D3 semantic, indexed-scalar, state/witness/transition graph, predicate-identifier and predicate-evidence source-to-digest projectors remain unfrozen, forbidden and unimplemented; only EPR_H4_PRIVACY_TESTS may supply fabricated typed 32-byte digest inputs for them. No live or full-D3 assertion may be issued from those inputs.",
+    "app_compilation_boundary": "Both pure sources are added to the application target as inert library code and to the hostless test target. This slice adds no application call site, entry point, UI, automatic work, authority transition or runtime invocation; source and binary-surface review must confirm that boundary.",
+    "no_live_claim": "Use of reviewed platform primitives in a hostless fabricated test does not qualify a physical key store, entropy source, transport or constant-time device boundary."
+  },
+  "pure_abstract_verifier_contract": {
+    "scope": [
+      "one in-memory provisioned lineage with one serializer and up to 16 injected outstanding one-use challenges",
+      "uninitialized, active, conflict, storage-fault-locked and terminal lifecycle precedence",
+      "bootstrap, successor, current, nonce-only wrapper variance, occupied conflict, stale, gap or parent mismatch and post-4095 capacity classification",
+      "immutable record bodies, storage-wrapper HMAC chain and a single authenticated authority-pointer projection",
+      "separate ordinary, conflict, terminal and storage-fault capacity",
+      "abstract interruption outcomes for pre-linearization, durable-child-before-pointer, pointer-advanced-before-response, expectation mismatch, torn or unauthenticated data, old pointer, index gap and multiple child"
+    ],
+    "response_boundary": "Unsupported or malformed outer bytes and invalid challenge state produce no authenticated result, consume no challenge and read no authority state. Authenticated embedded rejection consumes only that challenge, emits one minimized class and reads no authority state.",
+    "mutation_rule": "An admitting, conflict or terminal result is constructible only after the intended immutable record and authenticated pointer are committed and freshly read back. Ambiguity stops service for recovery and cannot manufacture a sibling record.",
+    "abstraction_limit": "The in-memory store models state-machine and transaction outcomes. It is not SQLite, a physical device, a filesystem, a rollback-resistant store or a live authority."
+  },
+  "required_hostless_tests": {
+    "sealed_required_known_answer_vectors_verbatim": [
+      "canonical bytes and SHA-256 commitment for every body schema at minimum and maximum structural boundaries, including the framed H4-C JSON and CBOR preimage digests",
+      "private-token HMAC with fixed fabricated 32-byte blinds for every field kind and ordinal boundary",
+      "issuer and verifier Ed25519 public-key ID, exact signature input, signature and strict verification vectors from fixed fabricated test seeds",
+      "storage genesis tag, record-wrapper HMAC chain and authority-pointer HMAC from one fixed fabricated storage key",
+      "initial and independently old-anchored migration-intent genesis, fixed predecessor, bootstrap, successor, current, assertion-nonce wrapper, conflict, fault, terminal, migration and all three receipt classes",
+      "full noncircular commitment graph with independently recomputed joins"
+    ],
+    "sealed_required_negative_vectors_verbatim": [
+      "unknown, missing, duplicate, reordered, nonminimal, indefinite, trailing, wrong-type and over-bound CBOR",
+      "wrong suite/domain/context/audience/policy/key position/key ID/public key and every mutated signature byte",
+      "noncanonical Ed25519 encodings, small-order key or R and out-of-range S",
+      "private token wrong length/order/count/domain, raw deterministic sibling leakage, blind reuse and attempted reblinding of an ambiguous exact retry",
+      "hidden-preimage truth or full-D3 assurance request rejected before lifecycle/position access",
+      "bootstrap nonzero/wrong predecessor, stale, gap, parent mismatch, exact current, assertion-instance wrapper and occupied conflict reachability",
+      "malformed outer or invalid challenge emits no receipt and consumes no challenge; authenticated embedded rejection is one minimized class and reads no authority state",
+      "ineligible competitor cannot poison conflict state and two separately challenged concurrent eligible siblings admit at most one before conflict lock",
+      "record self-reference, decision-to-future-record reference and receipt feedback cycles rejected",
+      "unexpected compare mismatch, append ambiguity, torn record, bad auth tag, old pointer, index gap, multiple child, capacity exhaustion and each reserved-latch path",
+      "cached receipt wrong challenge/request and terminal ambiguity through assertion query rejected",
+      "old valid coherent snapshot rejected by the live-qualified store or reported UNKNOWN in the pure abstract harness"
+    ],
+    "additional_slice_refinements": [
+      "common-frame domain uniqueness and checked packed-vector multiplication",
+      "one-use and 16-outstanding challenge bounds",
+      "pre-linearization retry, durable-child reconciliation and post-pointer response-loss recovery",
+      "terminal-close and terminal-migration idempotence remain separate from assertion-query ambiguity"
+    ]
+  },
+  "verification_plan": {
+    "project": "ErgenticsProvenance.xcodeproj",
+    "scheme": "ErgenticsProvenance",
+    "destination": "platform=macOS,arch=arm64",
+    "focused_test_classes": [
+      "ProvenanceTests/HypervisorStageH4PrivateVerifierFormatTests",
+      "ProvenanceTests/HypervisorStageH4PrivateVerifierTests"
+    ],
+    "order": [
+      "code-sign-disabled app Debug build and inert-surface audit",
+      "code-sign-disabled app Release build and inert-surface audit",
+      "focused Debug",
+      "focused Release",
+      "full hostless Debug after explicit inherited-effect confirmation",
+      "full hostless Release after explicit inherited-effect confirmation"
+    ],
+    "focused_debug_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Debug", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-focused-debug", "-jobs", "1", "-parallel-testing-enabled", "NO", "-only-testing:ProvenanceTests/HypervisorStageH4PrivateVerifierFormatTests", "-only-testing:ProvenanceTests/HypervisorStageH4PrivateVerifierTests", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "focused_release_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Release", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-focused-release", "-jobs", "1", "-parallel-testing-enabled", "NO", "-only-testing:ProvenanceTests/HypervisorStageH4PrivateVerifierFormatTests", "-only-testing:ProvenanceTests/HypervisorStageH4PrivateVerifierTests", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "full_debug_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Debug", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-full-debug", "-jobs", "1", "-parallel-testing-enabled", "NO", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "full_release_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Release", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-full-release", "-jobs", "1", "-parallel-testing-enabled", "NO", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "app_debug_build_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "build", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Debug", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-app-debug", "-jobs", "1", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "app_release_build_argv_exact": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "build", "-project", "ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance", "-configuration", "Release", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "/private/tmp/ergentics-h4-private-verifier-app-release", "-jobs", "1", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO"
+    ],
+    "derived_data_roots": [
+      "/private/tmp/ergentics-h4-private-verifier-focused-debug",
+      "/private/tmp/ergentics-h4-private-verifier-focused-release",
+      "/private/tmp/ergentics-h4-private-verifier-full-debug",
+      "/private/tmp/ergentics-h4-private-verifier-full-release",
+      "/private/tmp/ergentics-h4-private-verifier-app-debug",
+      "/private/tmp/ergentics-h4-private-verifier-app-release"
+    ],
+    "app_membership_verification": "Run both exact code-sign-disabled app builds, prove neither new source contains EPR_H4_PRIVACY_TESTS code or an application call site, and prove the project, scheme, framework, resource and settings delta remains exactly the frozen PBX contract. No app binary is launched.",
+    "focused_effect_boundary": {
+      "app_launches": 0,
+      "vm_launches": 0,
+      "network_actions": 0,
+      "process_control_actions": 0,
+      "signal_actions": 0,
+      "sqlite_runtime_actions": 0,
+      "physical_key_or_randomness_actions": 0
+    },
+    "inherited_full_suite_effect_boundary": {
+      "known_existing_sqlite_tests": true,
+      "known_existing_posix_spawn_waitpid_tests": true,
+      "known_existing_kill_sigkill_tests": true,
+      "new_slice_adds_any_of_these_effects": false,
+      "authorization_status": "EXPLICIT_CONFIRMATION_REQUIRED_BEFORE_FULL_SUITE_BECAUSE_THE_ORIGINAL_BOUNDARY_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "still_forbidden": [
+        "application launch",
+        "VM or guest launch",
+        "networking",
+        "installation",
+        "GitHub or remote Git",
+        "authority-bearing execution"
+      ]
+    }
+  },
+  "project_edit_contract": {
+    "file_references_exact": [
+      "B10000000000000000000257 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifier.swift; sourceTree = \"<group>\"; };",
+      "B10000000000000000000258 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormat.swift; sourceTree = \"<group>\"; };",
+      "B10000000000000000000259 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierTests.swift; sourceTree = \"<group>\"; };",
+      "B10000000000000000000260 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormatTests.swift; sourceTree = \"<group>\"; };"
+    ],
+    "build_files_exact": [
+      "B20000000000000000000268 = {isa = PBXBuildFile; fileRef = B10000000000000000000257; };",
+      "B20000000000000000000269 = {isa = PBXBuildFile; fileRef = B10000000000000000000257; };",
+      "B20000000000000000000270 = {isa = PBXBuildFile; fileRef = B10000000000000000000258; };",
+      "B20000000000000000000271 = {isa = PBXBuildFile; fileRef = B10000000000000000000258; };",
+      "B20000000000000000000272 = {isa = PBXBuildFile; fileRef = B10000000000000000000259; };",
+      "B20000000000000000000273 = {isa = PBXBuildFile; fileRef = B10000000000000000000260; };"
+    ],
+    "group_membership_exact": {
+      "B30000000000000000000002_sources": [
+        "B10000000000000000000257",
+        "B10000000000000000000258"
+      ],
+      "B30000000000000000000003_tests": [
+        "B10000000000000000000259",
+        "B10000000000000000000260"
+      ]
+    },
+    "build_phase_membership_exact": {
+      "B50000000000000000000001_app_sources": [
+        "B20000000000000000000268",
+        "B20000000000000000000270"
+      ],
+      "B50000000000000000000004_test_sources": [
+        "B20000000000000000000269",
+        "B20000000000000000000271",
+        "B20000000000000000000272",
+        "B20000000000000000000273"
+      ]
+    },
+    "object_option_rule": "Every new PBXFileReference and PBXBuildFile equals the exact one-line object above; no settings, attributes or alternate source tree are permitted.",
+    "no_other_project_delta": "No other PBX object, option, group, phase, build setting, framework, resource, product, dependency, target or configuration changes. The shared scheme is byte-identical to its pinned preimage."
+  },
+  "unchanged_project_surface_pins": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes/ErgenticsProvenance.xcscheme",
+      "git_blob": "412b603ef4b0ca473dbae34dbd8051690e01a7b8",
+      "sha256": "3a34c15f9ecb369fd18956ee671fa3b67d83414d6af35c4a9a486bcca1df4666"
+    },
+    {
+      "path": "PrivacyInfo.xcprivacy",
+      "git_blob": "33f1b94709774c88925ec84a6a3df5c7f8ad3fbf",
+      "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    }
+  ],
+  "existing_product_pins": [
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "git_blob": "7e640f2c8621a3b990f867421b2bafaa38d85e64",
+      "sha256": "cce3f47aa84795b58f290e938f3547f106948dd35c2b66a8703daa7964f979c1"
+    },
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "git_blob": "8930a4ae727e3fb4a2d35cdb4713519df89f479a",
+      "sha256": "a88fff5977d3cd9b98f20f0f11851ddaea267323fb49c198f0b517257bdf91a5"
+    },
+    {
+      "path": "Sources/HypervisorStageH4OwnerBinding.swift",
+      "git_blob": "1b93fd605a45f2e7fef634c5bc864b3087b6c43a",
+      "sha256": "67639694dc2b8a80eb09c62b9966da53d428158d957b05f18134465c02b508d7"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Persistence.swift",
+      "git_blob": "6c021c21ee8a601f19f9d5fb5525e136a26f9b4d",
+      "sha256": "c06dcc9807772718df66b97e3bfff99ef2854a21dcb7e5519363cec012dd7096"
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "git_blob": "c54eef92afa479386723d87926779873a48d798f",
+      "sha256": "96c0c7bba313da97521fcd652bf21db7d07050de362fdd3cb7208f3b66079ace"
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamRestartInspection.swift",
+      "git_blob": "7e64fbc7d2e1f185e7a0717356fc28f864b6c877",
+      "sha256": "d8db38b1ec42d2d21254c339f66010c4f4b4a47a3267382dc43e3ab6f2d053df"
+    },
+    {
+      "path": "Entitlements.plist",
+      "git_blob": "d7bd491f0c772584a3bfa1b977306e3f31941bf4",
+      "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2"
+    }
+  ],
+  "dirty_file_guard": [
+    {
+      "path": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "worktree_sha256": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "disposition": "UNRELATED_UNSTAGED_PRESERVE_EXACT"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "worktree_sha256": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1",
+      "disposition": "UNRELATED_UNSTAGED_PRESERVE_EXACT"
+    }
+  ],
+  "forbidden_effects": [
+    "Prime Git VM observation, launch, shutdown, snapshot, mount, copy, Git receive or mutation",
+    "application launch, GUI automation, guest or Hypervisor.framework execution",
+    "SQLite file creation, open, mutation, migration or retained-image inspection",
+    "filesystem, Keychain, Secure Enclave, device, transport, network or remote service use by the implementation",
+    "entropy or live key generation",
+    "entitlement, privacy manifest, application entry point, UI, run script or deployment setting change",
+    "staging, deleting, rewriting or using ambient dirty or untracked evidence as an input",
+    "Gate E, H4 entry, authority-vector or scientific-authority promotion"
+  ],
+  "manifest_entitlement_boundary": {
+    "com_apple_security_hypervisor": "PRESENT_AND_UNCHANGED_BUT_UNUSED_BY_THIS_PURE_IMPLEMENTATION",
+    "network_entitlement": "ABSENT_AND_UNCHANGED",
+    "privacy_manifest": "UNCHANGED",
+    "prime_git_vm": "USER_REPORTS_PRESENT_ON_SAME_MAC_BUT_NOT_OBSERVED_OR_OPERATED"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "result": "PURE_FORMAT_STATE_MACHINE_AND_FABRICATED_TEST_EVIDENCE_ONLY"
+  },
+  "hard_stops": [
+    "STOP_IF_HEAD_OR_FORMAT_ARTIFACT_BYTES_DIFFER_BEFORE_THE_HANDOFF_COMMIT",
+    "STOP_IF_THE_HANDOFF_COMMIT_INCLUDES_ANY_PATH_OTHER_THAN_THIS_JSON",
+    "STOP_IF_THE_IMPLEMENTATION_DELTA_DIFFERS_FROM_THE_EXACT_FIVE_PATH_ALLOWLIST",
+    "STOP_IF_EITHER_UNRELATED_DIRTY_FILE_HASH_CHANGES_OR_ENTERS_THE_INDEX",
+    "STOP_IF_ANY_AMBIENT_UNTRACKED_EVIDENCE_IS_MODIFIED_STAGED_OR_COMMITTED",
+    "STOP_IF_THE_IMPLEMENTATION_ADDS_EXTERNAL_IO_RUNTIME_AUTHORITY_OR_LIVE_CRYPTOGRAPHIC_MATERIAL",
+    "STOP_IF_EITHER_NEW_FOCUSED_TEST_CLASS_REQUIRES_APP_VM_GUEST_NETWORK_SQLITE_PROCESS_CONTROL_SIGNAL_INSTALLATION_OR_GITHUB_ACTION",
+    "STOP_BEFORE_THE_INHERITED_FULL_SUITE_UNLESS_ITS_EXISTING_PROCESS_AND_SIGNAL_EFFECTS_RECEIVE_EXPLICIT_CONFIRMATION"
+  ]
+}

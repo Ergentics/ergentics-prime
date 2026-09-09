@@ -1,0 +1,711 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-private-verifier-execution-surface-workflow-correction.v1",
+  "recorded_at_utc": "2026-09-04T14:12:21Z",
+  "checkpoint": "H4_PRIVATE_VERIFIER_EXECUTION_SURFACE_WORKFLOW_CORRECTION",
+  "status": "FROZEN_LAYERED_PREFLIGHT_AND_REAL_GUEST_QUALIFICATION_SEQUENCE",
+  "predecessor": {
+    "commit": "c526bb960422ac4eee3af6264d8989d9fccc157f",
+    "tree": "88f8a02d42b868b6ff9076dcfa63df70d743a811",
+    "parent_commit": "55ee5f246957f36e4db49ef9a547713b1089b31a",
+    "commit_subject": "Implement H4 private verifier preflight",
+    "relation": "The exact five-path pure implementation remains valid preflight evidence and is the direct parent of this correction."
+  },
+  "corrected_handoff": {
+    "path": "Control/hypervisor-local-v1/h4-private-verifier-pure-implementation-handoff-2026-09-04.v1.json",
+    "git_blob": "08b075a40c9a6aa1ebd77ad03922a7e270a8d21c",
+    "sha256": "dead227fbd720e6f134afc4517daa42c13a6ce125fb8c441444ae8986332f6cb",
+    "retained": [
+      "the frozen EPRH4PV1 format, cryptographic and abstract state-machine contract",
+      "the exact five-path pure implementation delta",
+      "the focused deterministic hostless test vectors",
+      "the claim that pure and fabricated evidence creates no live authority"
+    ],
+    "corrected": [
+      "Hostless focused or full-suite PASS is preflight evidence only and is not the terminal H4 workflow checkpoint.",
+      "A code-sign-disabled application build proves compilation only and is not application admission, entitlement effectiveness or guest execution.",
+      "The next product-integration lane must exercise the real embedded Apple Hypervisor guest through the signed application before any live-H3-seeded host-H4 integration claim.",
+      "Prime Git UI, Prime Git VM, embedded product guest and a future physically separate verifier are distinct surfaces and may not substitute for one another."
+    ],
+    "supersession_limit": "This artifact corrects workflow ordering, terminology and evidence labels only. It does not alter frozen bytes, promote authority, qualify a live verifier or retroactively relabel a hostless result as guest evidence."
+  },
+  "user_direction": {
+    "received_at_stage": "after focused pure Debug and Release tests and before either full hostless suite",
+    "intent": "Restore real guest execution to the product qualification workflow and prevent application, host test, embedded guest, Prime Git VM and independent verifier roles from being conflated.",
+    "selected_immediate_guest": "THE_PRODUCT_EMBEDDED_APPLE_HYPERVISOR_H3_CURSOR_RESUME_GUEST",
+    "prime_git_vm_disposition": "SEPARATE_AND_UNTOUCHED",
+    "interpretation_limit": "The selected embedded guest is not a guest operating system. Existing XCTest, SQLite and general H4 Swift code cannot execute inside it; exact fixed guest workloads remain possible through separately frozen images and ABIs. The signed application remains the lifecycle orchestrator and post-return verifier."
+  },
+  "component_registry": [
+    {
+      "id": "macos_product_application",
+      "location": "evaluated Mac host",
+      "implementation": "ProvenanceApp plus HypervisorModel",
+      "purpose": "Own UI, admission, lifecycle, signing checks and bounded Hypervisor orchestration.",
+      "current_function": [
+        "launch one admitted fixed embedded guest through production HypervisorGuest code",
+        "verify copied native results",
+        "retain a volatile H3 presentation without publishing an H4 capability"
+      ],
+      "intended_after_additive_freeze": [
+        "coordinate a reservation-bound, non-importable, one-use live H3 result into a separately frozen H4 source contract"
+      ],
+      "is_not": [
+        "the guest",
+        "Prime Git VM",
+        "an independent anti-rollback authority"
+      ]
+    },
+    {
+      "id": "native_hypervisor_lifecycle",
+      "location": "evaluated Mac host inside the signed application process on its dedicated worker and watchdog paths",
+      "implementation": "Sources/HypervisorGuest.c called through Sources/HypervisorGuest.h",
+      "purpose": "Own signing admission, host allocation, hv_vm/hv_vcpu creation, mapping, register setup/readback, run, cancellation, teardown, conservation counters and copied native-result export.",
+      "is_not": [
+        "guest-resident code",
+        "the H3 semantic host verifier",
+        "Prime Git VM",
+        "an independent host attestation"
+      ]
+    },
+    {
+      "id": "embedded_guest_workload",
+      "location": "fixed instructions entered by one app-created hv_vcpu in each of two conserved H3 intervals",
+      "implementation": "Guest/cursor-resume.S materialized as the fixed 136-byte AArch64 H3 image",
+      "purpose": "Execute the bounded H3 mailbox, arithmetic, checkpoint/resume and doorbell-trap instructions only. Host native code, not these guest instructions, owns lifecycle and teardown.",
+      "profiles": [
+        "136-byte H3 cursor/resume"
+      ],
+      "is_not": [
+        "a guest operating system",
+        "an XCTest runner",
+        "a SQLite or filesystem host",
+        "Prime Git VM",
+        "the future physical verifier"
+      ]
+    },
+    {
+      "id": "provenance_hostless_xctest",
+      "location": "evaluated Mac host",
+      "implementation": "ProvenanceTests with empty TEST_HOST and BUNDLE_LOADER",
+      "purpose": "Deterministically test pure parsers, codecs, state machines, fabricated native values and host SQLite mechanics.",
+      "claim_ceiling": "HOST_PREFLIGHT_OR_HOST_STORAGE_MECHANICS_ONLY",
+      "is_not": [
+        "application execution",
+        "guest execution",
+        "effective Hypervisor-entitlement evidence",
+        "independent physical-verifier qualification"
+      ]
+    },
+    {
+      "id": "h3_live_host_verifier",
+      "location": "signed macOS application process after native guest return",
+      "implementation": "GuestH3LiveVerifier",
+      "purpose": "Independently reconstruct the fixed H3 semantic cursor, pages and roots, then validate copied native status, counter, chronology and conservation claims for the two host-owned VM/vCPU intervals.",
+      "current_limit": "A PASS returns presentation fields only. Its immutable projection receipt is not exposed as a one-use production H4 capability and HypervisorModel deliberately publishes nothing."
+    },
+    {
+      "id": "h4_host_sqlite_pipeline",
+      "location": "evaluated Mac host",
+      "implementation": "HypervisorStageH4Privacy through HypervisorStageH4DualStreamRestartInspection",
+      "purpose": "Exercise bounded canonical projection, descriptor-rooted SQLite image publication, restart inspection, and real bounded host helper-process/signal effects applied at synthetic cut points.",
+      "current_limit": "The v1 schema admits only H3_STRUCTURAL_FIXTURE, CONTRACT_ONLY and OBSERVED_NONPASS. It has no production H3 mint and cannot accept a live H3 PASS without a new additive freeze."
+    },
+    {
+      "id": "h4_pure_private_verifier",
+      "location": "pure Swift library and hostless XCTest",
+      "implementation": "HypervisorStageH4PrivateVerifier and HypervisorStageH4PrivateVerifierFormat",
+      "purpose": "Validate EPRH4PV1 formats, cryptographic joins and an abstract append-only verifier state machine with deterministic fabricated material.",
+      "claim_ceiling": "PURE_PREFLIGHT_ONLY",
+      "current_limit": "No transport, physical storage, live keys, randomness, rollback resistance or authority-bearing application call site."
+    },
+    {
+      "id": "prime_git_product_ui",
+      "location": "macOS product application",
+      "implementation": "PrimeGitModel, PrimeGitSnapshot and PrimeGitView",
+      "purpose": "Display imported repository snapshots through a deliberately read-only development surface.",
+      "scope_limit": "Read-only and inert describes only the current product UI. It does not decide whether the separate Prime Git VM may later become a repository home, mirror or test runner under its own frozen scope.",
+      "is_not": [
+        "a live Git server",
+        "a VM controller",
+        "the embedded guest",
+        "an H4 authority"
+      ]
+    },
+    {
+      "id": "prime_git_vm",
+      "location": "user reports a separate VM on the evaluated Mac; not independently inventoried in this sequence",
+      "purpose": "NO_CURRENT_ROLE_ASSIGNED_IN_THIS_WORKFLOW",
+      "possible_future_roles": [
+        "non-authoritative development or test runner",
+        "repository home or storage mirror",
+        "transfer-staging infrastructure"
+      ],
+      "connection_in_this_workflow": "NONE",
+      "external_or_user_configuration": "UNOBSERVED",
+      "is_not": [
+        "the product embedded guest",
+        "connected to the Xcode scheme",
+        "an independent rollback anchor while controlled and stored by the evaluated Mac"
+      ]
+    },
+    {
+      "id": "future_physical_verifier",
+      "location": "physically separate compute and storage not yet selected or implemented",
+      "purpose": "Once exact hardware is selected and qualified, hold verifier policy, keys and evaluated-Mac-independent verifier-relative append-only state with the selected rollback guarantees.",
+      "current_state": "NORMATIVE_DESIGN_ONLY",
+      "is_not": [
+        "the product embedded guest",
+        "Prime Git VM",
+        "implemented or qualified by the pure H4 slice"
+      ]
+    }
+  ],
+  "terminology": {
+    "hostless_test": "XCTest executes in ProvenanceTests on macOS without an application test host and without hv_vm entry.",
+    "app_hosted_test": "A separately configured signed application process hosts the outer integration harness; this alone still does not prove guest entry.",
+    "guest_backed_test": "An evidence-source label that must name the exact fixed predicate executed guest-side. The admitted signed application causes production hv_vm/hv_vcpu entry and joins exact native guest observations through teardown.",
+    "live_h3_seeded_host_h4_integration": "A real H3 guest run is joined to host Swift or host SQLite H4 work. It is not guest-resident H4 and is not guest-backed H4 computation.",
+    "guest_resident_test": "The tested workload itself executes inside the guest. General XCTest, SQLite and H4 Swift residency are unsupported by the current fixed bare-metal images; a future exact fixed H4 known-answer workload is feasible only after a new guest profile and ABI.",
+    "prime_git_vm_test": "A test runner executes in the separate Prime Git VM. No such runner, source transfer, toolchain or evidence channel is presently frozen or connected to this workflow.",
+    "physical_verifier_qualification": "An exact separately administered device, transport, live key ceremony and durable rollback-resistant store are exercised. No current host or guest test provides this evidence."
+  },
+  "pinned_existing_surfaces": [
+    {
+      "path": "Entitlements.plist",
+      "git_blob": "d7bd491f0c772584a3bfa1b977306e3f31941bf4",
+      "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2",
+      "role": "Application requests com.apple.security.hypervisor; configuration is not proof of effective entitlement."
+    },
+    {
+      "path": "ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes/ErgenticsProvenance.xcscheme",
+      "git_blob": "412b603ef4b0ca473dbae34dbd8051690e01a7b8",
+      "sha256": "3a34c15f9ecb369fd18956ee671fa3b67d83414d6af35c4a9a486bcca1df4666",
+      "role": "Current TestAction selects the hostless ProvenanceTests target and does not build the application for testing."
+    },
+    {
+      "path": "Sources/HypervisorGuest.c",
+      "git_blob": "f4262e98bab43d9d649fa7a3b5d69d36f3cc3ec6",
+      "sha256": "006b15327db939ad930ef8594eca61b5bbd71cc243250caee9393fbf539baf87",
+      "role": "Production fixed-image hv_vm/hv_vcpu lifecycle."
+    },
+    {
+      "path": "Sources/HypervisorGuest.h",
+      "git_blob": "4630c11f629f57b7086328448fabc1c7ddb18d35",
+      "sha256": "d663619e58a267dce936a4551ba69a493c238fa9c6897ef68ebf003fa9dbb58d",
+      "role": "Zero-input fixed guest run APIs and copied result ABIs."
+    },
+    {
+      "path": "Guest/cursor-resume.S",
+      "git_blob": "0abbf5d5cc460b6c8f042e6f80b9edf137b33182",
+      "sha256": "5c0461d4d61bf798c334e33f822ff37f9e8f0b1a3272f812d4d2154ace4197a3",
+      "role": "Selected 136-byte freestanding H3 guest-resident cursor/resume workload source."
+    },
+    {
+      "path": "Sources/HypervisorH3LiveVerifier.swift",
+      "git_blob": "3e2f7504e0d16df16c2064f41a7ddf4d1fd4bef1",
+      "sha256": "3072f6b85a310ddc8c3a7bf5eedb8fe7ef7cfcd86fedd9d7b56593e5a54666cd",
+      "role": "Host-side independent verifier of actual H3 native guest observations."
+    },
+    {
+      "path": "Sources/HypervisorModel.swift",
+      "git_blob": "e57277d21cfffbdfd6c9bc8d71151d08460971a5",
+      "sha256": "216a72a262f275ae9e1c6da57e3cb35ee9f76bcac41db484e7c9c80a27a36ede",
+      "role": "Application-owned guest admission, worker lifecycle and current volatile H3 presentation."
+    },
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "git_blob": "7e640f2c8621a3b990f867421b2bafaa38d85e64",
+      "sha256": "cce3f47aa84795b58f290e938f3547f106948dd35c2b66a8703daa7964f979c1",
+      "role": "H4 v1 fixture-only capability boundary with no production live H3 mint."
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "git_blob": "c54eef92afa479386723d87926779873a48d798f",
+      "sha256": "96c0c7bba313da97521fcd652bf21db7d07050de362fdd3cb7208f3b66079ace",
+      "role": "Host Darwin/SQLite persistence implementation; not guest-resident code."
+    }
+  ],
+  "historical_host_storage_provenance": [
+    {
+      "path": "Control/hypervisor-local-v1/h4d3-dual-stream-sqlite-image-publication-checkpoint-2026-09-02.v1.json",
+      "git_blob": "3afdef40f09e9c1a482d86dbe14dd522bb6f8fff",
+      "sha256": "f2c6b4cb83bc575555d1157e859a72255204ce6f2d3c9716702049e5e8709b23",
+      "result": "PASS_H4D3_DUAL_STREAM_PUBLICATION_MECHANICS_ONLY"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3b-fresh-process-dual-stream-restart-inspection-checkpoint-2026-09-03.v1.json",
+      "git_blob": "c9cde226e1bff8531da9928493a1ded93254d5df",
+      "sha256": "f1f318001bbb35bbb37aa86ea6fc5fbed9e00feb200e7a1cd19e302a29e1d4d5",
+      "result": "PASS_H4D3B_FRESH_PROCESS_DUAL_STREAM_RESTART_INSPECTION_MECHANICS_ONLY"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-2026-09-04.v1.json",
+      "git_blob": "83912e15fef368d515b5c233c394e2aeb09f94aa",
+      "sha256": "f1f590c639607c4b6a5a180ba0f3105ea6513e95470cfe50a1a85331a324757f",
+      "result": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint-correction-2026-09-04.v1.json",
+      "git_blob": "df7ba1e32e319fe5211397df633805d4b00aac2e",
+      "sha256": "0f059090ac905baf53240954566f55e78f916a185b8f35a9aba6f92629a2631e",
+      "result": "CORRECTED_STATIC_ENUM_REFERENCE_COUNT_ONLY"
+    }
+  ],
+  "current_preflight_result": {
+    "implementation_commit": "c526bb960422ac4eee3af6264d8989d9fccc157f",
+    "changed_paths_exact": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Sources/HypervisorStageH4PrivateVerifier.swift",
+      "Sources/HypervisorStageH4PrivateVerifierFormat.swift",
+      "Tests/HypervisorStageH4PrivateVerifierFormatTests.swift",
+      "Tests/HypervisorStageH4PrivateVerifierTests.swift"
+    ],
+    "code_sign_disabled_app_debug_build": "PASS_COMPILE_ONLY",
+    "code_sign_disabled_app_release_build": "PASS_COMPILE_ONLY",
+    "focused_hostless_debug": "PASS_36_OF_36",
+    "focused_hostless_release": "PASS_36_OF_36",
+    "full_hostless_debug": "NOT_RUN_AFTER_WORKFLOW_CORRECTION",
+    "full_hostless_release": "NOT_RUN_AFTER_WORKFLOW_CORRECTION",
+    "app_launches": 0,
+    "vm_or_guest_launches": 0,
+    "classification": "PURE_PREFLIGHT_IMPLEMENTATION_PASS_ONLY"
+  },
+  "evidence_lane_order_rule": "Lane order is logical evidence layering, not an implication that a later lane satisfies an earlier one. The current-tree full host regression is required before the first live guest launch; it must run again after any runner, project or shared-source change before the resulting guest evidence is joined to a checkpoint.",
+  "post_change_requalification_gate": {
+    "trigger": "Any retained controller, application, native lifecycle, guest image, shared source, project, signing or build-setting change after a regression or admission receipt.",
+    "invalidation": "Earlier regression, admission and guest evidence remains historical evidence for its exact old identities but cannot qualify the changed tree or binaries.",
+    "ordered_requirements_before_next_live_app_or_guest_claim": [
+      "run the full bounded hostless Debug and Release regression under separately authorized helper-process and signal effects",
+      "build and sign the exact changed Debug and Release application identities",
+      "perform one bounded admission-only launch for each exact signed identity with zero hv_vm_create calls under separately authorized nonce, containment and reap effects",
+      "only then perform the separately frozen and authorized live app or guest action"
+    ]
+  },
+  "corrected_evidence_lanes": [
+    {
+      "order": 1,
+      "id": "pure_host_preflight",
+      "subject": "EPRH4PV1 codec, crypto joins and abstract state machine",
+      "runner": "hostless ProvenanceTests on macOS",
+      "required": true,
+      "claim_ceiling": "PURE_PREFLIGHT_ONLY",
+      "state": "FOCUSED_DEBUG_AND_RELEASE_PASS"
+    },
+    {
+      "order": 2,
+      "id": "host_sqlite_mechanics",
+      "subject": "descriptor-rooted host SQLite publication, restart inspection, and real bounded host helper-process/SIGCONT/SIGKILL effects applied at synthetic cut points",
+      "runner": "hostless ProvenanceTests plus bounded local helper processes",
+      "required": true,
+      "required_before": "first current-tree guest qualification launch and again after runner, project or shared-source changes",
+      "claim_ceiling": "HOST_STORAGE_MECHANICS_ONLY",
+      "state": "PINNED_HISTORICAL_FIXTURE_EVIDENCE_PRESENT_FULL_CURRENT_REGRESSION_NOT_YET_RUN",
+      "effect_boundary": "This lane is outside the guest qualification action and requires its own explicit bounded helper-process and signal authorization. Hostless describes the XCTest bundle, not the absence of child-process effects."
+    },
+    {
+      "order": 3,
+      "id": "signed_application_admission",
+      "subject": "exact built application identity, signature, effective com.apple.security.hypervisor entitlement and closed launch grammar",
+      "runner": "exactly one design selected after a static no-entry signing/test-injection feasibility gate, then exercised through separate signed Debug and Release admission-only app launches with zero hv_vm_create calls",
+      "required": true,
+      "claim_ceiling": "SIGNED_APP_ADMISSION_ONLY",
+      "state": "NOT_RUN_FOR_CURRENT_IMPLEMENTATION"
+    },
+    {
+      "order": 4,
+      "id": "real_embedded_h3_guest",
+      "subject": "actual H3 cursor/resume hv_vm and hv_vcpu intervals, fixed image, mailboxes, registers, traps, chronology and teardown",
+      "runner": "signed application host as active lifecycle orchestrator and post-return verifier; only the fixed H3 arithmetic/checkpoint workload is guest-resident",
+      "required": true,
+      "claim_ceiling": "REAL_H3_GUEST_EXECUTION_AND_TEARDOWN_ONLY",
+      "state": "MISSING_CURRENT_QUALIFICATION_RUNNER"
+    },
+    {
+      "order": 5,
+      "id": "live_h3_to_h4_handoff",
+      "subject": "reservation-bound, non-importable, one-use live H3 result transfer under the frozen process-local API into a newly frozen additive H4 source and persistence contract",
+      "runner": "same admitted signed application lifetime",
+      "required": true,
+      "claim_ceiling": "LIVE_H3_SEEDED_HOST_H4_INTEGRATION_WITHOUT_INDEPENDENT_AUTHORITY",
+      "state": "MISSING_SOURCE_FORMAT_MINT_AND_CALL_SITE"
+    },
+    {
+      "order": 6,
+      "id": "production_h4_issuer_projection_and_assertion",
+      "subject": "exact source-to-digest projectors for D3 semantic, indexed scalar, graph, predicate identifier and predicate evidence inputs; production assertion construction; live key position; signature generation; and self-verification",
+      "runner": "admitted signed application issuer path under a separately frozen additive format and key lifecycle",
+      "required": true,
+      "claim_ceiling": "ISSUER_AUTHENTICATED_COMMITMENT_CONSTRUCTION_ONLY",
+      "state": "UNFROZEN_AND_UNIMPLEMENTED"
+    },
+    {
+      "order": 7,
+      "id": "bounded_verifier_transport_and_response_join",
+      "subject": "fresh challenge acquisition, exact bounded request transmission, authenticated response receipt, challenge/request binding and application-side response verification",
+      "runner": "separately selected direct transport joined to the exact issuer and verifier implementations",
+      "required": true,
+      "claim_ceiling": "BOUNDED_LIVE_PROTOCOL_INTEGRATION_WITHOUT_PHYSICAL_DURABILITY_QUALIFICATION",
+      "state": "TRANSPORT_UNSELECTED_AND_UNIMPLEMENTED"
+    },
+    {
+      "order": 8,
+      "id": "h4_guest_profile_if_required",
+      "subject": "guest-specific implementation of bounded H4 known-answer operations",
+      "runner": "a separately frozen fixed no_std guest profile with an exact bounded ABI",
+      "required": false,
+      "claim_ceiling": "GUEST_IMPLEMENTATION_KNOWN_ANSWER_ONLY",
+      "state": "NOT_DESIGNED",
+      "reason_optional": "The current H4 implementation is host Swift. Duplicating it inside the guest is useful only if guest-resident H4 computation becomes a product requirement."
+    },
+    {
+      "order": 9,
+      "id": "physical_verifier_qualification",
+      "subject": "exact external hardware, firmware, transport, live keys, persistent append, rollback, reboot, ENOSPC, EIO and power-loss behavior",
+      "runner": "future separately authorized physical campaign",
+      "required_for_current_h3_sequence": false,
+      "required_for_target_private_verifier_authority": true,
+      "required_for": "ultimate verifier-relative anti-replay or authority claims; not required for H3 guest qualification or live-H3-seeded host-H4 integration",
+      "claim_ceiling": "QUALIFIED_VERIFIER_RELATIVE_ANTI_REPLAY",
+      "state": "DEFERRED_UNTIL_EXACT_HARDWARE_SELECTION"
+    }
+  ],
+  "immediate_successor_sequence": [
+    {
+      "order": 1,
+      "action": "Commit this one-path control-only workflow correction with the pure preflight implementation as its exact parent.",
+      "authorization": "AUTHORIZED_BY_USER_PROCEED_DIRECTION",
+      "runtime_effect": "NONE"
+    },
+    {
+      "order": 2,
+      "action": "Run the bounded full hostless ProvenanceTests suite in Debug and Release on the exact current tree before any guest launch. Retain the already audited helper-process, SIGCONT and deliberate-child-SIGKILL counts separately from the guest lane.",
+      "authorization": "REQUIRES_EXPLICIT_BOUNDED_HELPER_PROCESS_AND_SIGNAL_AUTHORIZATION_BECAUSE_THE_ORIGINAL_SCOPE_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "runtime_effect": "HOST_XCTEST_SQLITE_AND_BOUNDED_LOCAL_HELPER_PROCESS_EFFECTS_ONLY"
+    },
+    {
+      "order": 3,
+      "action": "Perform a static no-entry feasibility gate for exactly two candidate mechanisms: a separately configured app-hosted XCTest target or the established signed-application one-shot plus external canonical-report verifier. Select exactly one design for the next freeze. Prefer the signed-application one-shot unless static inspection shows app-hosted XCTest can preserve the production signing, entitlement, lifecycle and Release shape. This gate cannot prove effective runtime admission.",
+      "authorization": "AUTHORIZED_FOR_READ_ONLY_SOURCE_PROJECT_AND_BUILD_SETTING_INSPECTION_PLUS_EXISTING_CONFIGURATION_COMPILE_PROBES_ONLY",
+      "retention_limit": "No source or project edit may be retained by this gate; compile products remain disposable derived data. Any needed implementation change belongs to order 5.",
+      "runtime_effect": "NO_APP_OR_GUEST_ENTRY"
+    },
+    {
+      "order": 4,
+      "action": "Freeze the selected signed H3 qualification runner, exact production lifecycle entry, closed one-run activation grammar, acyclic inner-report/outer-receipt/final-manifest evidence, signature and effective-entitlement predicates, fixed-minimal environment, outer-issued nonce binding, monotonic deadline, application cancellation, teardown, quarantine, and signed Debug/Release matrix. The freeze must name one exact-positive-PID SIGKILL containment action and exact reap, maximum once per launched app and used only after the hard deadline; containment can never prove teardown.",
+      "authorization": "AUTHORIZED_FOR_CONTROL_ONLY_FREEZE_AFTER_FEASIBILITY",
+      "runtime_effect": "CONTROL_ONLY"
+    },
+    {
+      "order": 5,
+      "action": "Implement only the frozen runner and pure evidence verifier. Test malformed, truncated, duplicate, stale, identity-mismatch, signing-mismatch, timeout, cancellation, quarantine, abnormal-exit and containment representations as synthetic parser rejection vectors; do not claim live lifecycle coverage from them.",
+      "authorization": "AUTHORIZED_FOR_LOCAL_IMPLEMENTATION_AND_NON_GUEST_TESTING",
+      "runtime_effect": "NO_GUEST_DURING_PURE_REPORT_TESTS"
+    },
+    {
+      "order": 6,
+      "action": "Because runner, project or shared-source changes invalidate the earlier current-tree regression, rerun the bounded full hostless Debug and Release suite before joining any guest evidence to a checkpoint.",
+      "authorization": "REQUIRES_EXPLICIT_BOUNDED_HELPER_PROCESS_AND_SIGNAL_AUTHORIZATION_BECAUSE_THE_ORIGINAL_SCOPE_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "runtime_effect": "HOST_XCTEST_SQLITE_AND_BOUNDED_LOCAL_HELPER_PROCESS_EFFECTS_ONLY"
+    },
+    {
+      "order": 7,
+      "action": "Execute one bounded signed Debug and one bounded signed Release admission-only application launch through the selected runner with Hypervisor entry disabled and hv_vm_create_count fixed at zero. Verify actual process identity, signature and effective entitlement metadata; runtime Hypervisor admission remains unproven until guest entry.",
+      "authorization": "REQUIRES_SEPARATE_EXACT_TWO_APP_LAUNCH_TWO_32_BYTE_SECRANDOMCOPYBYTES_NONCE_DRAW_MAXIMUM_TWO_EXACT_PID_SIGKILL_AND_TWO_EXACT_REAP_EFFECT_AUTHORIZATION_AFTER_RUNNER_FREEZE",
+      "runtime_effect": "TWO_SIGNED_APPLICATION_LAUNCHES_ZERO_HV_VM_CREATE_EXACTLY_TWO_32_BYTE_NONCE_DRAWS_AND_ZERO_OR_ONE_FROZEN_CONTAINMENT_SIGNAL_PER_APP_RUN",
+      "boundedness": "Each admission-only launch is subject to the same frozen monotonic deadline, exact-positive-PID containment maximum and exact reap as a guest launch. Containment makes the admission result incomplete."
+    },
+    {
+      "order": 8,
+      "action": "After exact binary, image, signing, effective-entitlement, lifecycle and effect review, execute one bounded signed Debug H3 guest qualification and one bounded signed Release H3 guest qualification. The outer observer uses the frozen hard deadline; on expiry it may send the single frozen SIGKILL to the exact positive app PID and must reap it. A contained run is incomplete failure evidence and cannot claim guest teardown.",
+      "authorization": "REQUIRES_SEPARATE_EXACT_TWO_APP_AND_GUEST_LAUNCH_TWO_32_BYTE_SECRANDOMCOPYBYTES_NONCE_DRAW_MAXIMUM_TWO_EXACT_PID_SIGKILL_AND_TWO_EXACT_REAP_EFFECT_AUTHORIZATION",
+      "runtime_effect": "TWO_PRODUCT_EMBEDDED_H3_GUEST_RUNS_EXACTLY_TWO_32_BYTE_NONCE_DRAWS_AND_ZERO_OR_ONE_FROZEN_CONTAINMENT_SIGNAL_PER_APP_RUN",
+      "boundedness": "The observer wait always ends at the frozen monotonic deadline. Normal application-owned return is required for PASS; deadline containment exists only to prevent an indefinite launched process."
+    },
+    {
+      "order": 9,
+      "action": "Freeze an additive live H3-to-H4 source contract. Do not reinterpret H3_STRUCTURAL_FIXTURE, CONTRACT_ONLY or OBSERVED_NONPASS as live PASS and do not mutate the historical v1 SQLite schema in place.",
+      "authorization": "SEPARATE_ADDITIVE_FORMAT_FREEZE_REQUIRED",
+      "runtime_effect": "CONTROL_ONLY"
+    },
+    {
+      "order": 10,
+      "action": "Implement the frozen one-use H3-to-H4 handoff and its non-live focused tests only. H4 host persistence remains distinct from guest execution and physical-verifier authority; no app or guest launch is part of implementation.",
+      "authorization": "AUTHORIZED_FOR_SOURCE_AND_NON_LIVE_TEST_IMPLEMENTATION_ONLY_AFTER_THE_COMMITTED_ADDITIVE_FORMAT_FREEZE",
+      "runtime_effect": "SOURCE_AND_NON_LIVE_FOCUSED_TESTS_ONLY"
+    },
+    {
+      "order": 11,
+      "action": "Run the full bounded hostless Debug and Release regression on the changed H3-to-H4 tree before any application or guest qualification of that tree.",
+      "authorization": "REQUIRES_EXPLICIT_BOUNDED_HELPER_PROCESS_AND_SIGNAL_AUTHORIZATION_BECAUSE_THE_ORIGINAL_SCOPE_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "runtime_effect": "HOST_XCTEST_SQLITE_AND_BOUNDED_LOCAL_HELPER_PROCESS_EFFECTS_ONLY"
+    },
+    {
+      "order": 12,
+      "action": "Build, sign and perform one bounded admission-only Debug and one bounded admission-only Release launch for the exact changed H3-to-H4 application binaries, with zero hv_vm_create calls.",
+      "authorization": "REQUIRES_SEPARATE_EXACT_TWO_APP_LAUNCH_TWO_32_BYTE_SECRANDOMCOPYBYTES_NONCE_DRAW_MAXIMUM_TWO_EXACT_PID_SIGKILL_AND_TWO_EXACT_REAP_EFFECT_AUTHORIZATION",
+      "runtime_effect": "TWO_SIGNED_APPLICATION_LAUNCHES_ZERO_HV_VM_CREATE_EXACTLY_TWO_32_BYTE_NONCE_DRAWS_AND_ZERO_OR_ONE_FROZEN_CONTAINMENT_SIGNAL_PER_APP_RUN"
+    },
+    {
+      "order": 13,
+      "action": "Qualify the frozen one-use handoff with one bounded signed Debug and one bounded signed Release live-H3-seeded host-H4 integration run, explicitly joining guest evidence to host SQLite evidence while retaining their separate labels.",
+      "authorization": "REQUIRES_SEPARATE_EXACT_TWO_APP_AND_GUEST_LAUNCH_TWO_32_BYTE_SECRANDOMCOPYBYTES_NONCE_DRAW_HOST_SQLITE_WRITE_MAXIMUM_TWO_EXACT_PID_SIGKILL_AND_TWO_EXACT_REAP_EFFECT_AUTHORIZATION_AFTER_THE_ORDER_11_AND_12_GATES_PASS",
+      "runtime_effect": "TWO_LIVE_H3_SEEDED_HOST_H4_RUNS_EXACTLY_TWO_32_BYTE_NONCE_DRAWS_BOUNDED_HOST_SQLITE_WRITES_AND_ZERO_OR_ONE_FROZEN_CONTAINMENT_SIGNAL_PER_APP_RUN"
+    },
+    {
+      "order": 14,
+      "action": "Freeze the production H4 issuer source-to-digest projectors, assertion construction, key position, signing and self-verification contract. Do not substitute fabricated preflight keys or digests.",
+      "authorization": "SEPARATE_ADDITIVE_ISSUER_FORMAT_AND_KEY_LIFECYCLE_FREEZE_REQUIRED",
+      "runtime_effect": "CONTROL_ONLY"
+    },
+    {
+      "order": 15,
+      "action": "Implement the frozen issuer projectors, assertion and signing interfaces with deterministic non-live vectors and no live key material, entropy or durable key storage.",
+      "authorization": "AUTHORIZED_ONLY_AFTER_THE_COMMITTED_ISSUER_FREEZE_FOR_SOURCE_AND_NON_LIVE_TEST_IMPLEMENTATION",
+      "runtime_effect": "SOURCE_AND_SYNTHETIC_TESTS_ONLY"
+    },
+    {
+      "order": 16,
+      "action": "Run the full bounded hostless Debug and Release regression after issuer implementation and before any live issuer action.",
+      "authorization": "REQUIRES_EXPLICIT_BOUNDED_HELPER_PROCESS_AND_SIGNAL_AUTHORIZATION_BECAUSE_THE_ORIGINAL_SCOPE_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "runtime_effect": "HOST_XCTEST_SQLITE_AND_BOUNDED_LOCAL_HELPER_PROCESS_EFFECTS_ONLY"
+    },
+    {
+      "order": 17,
+      "action": "Build, sign and perform bounded admission-only Debug and Release launches for the exact issuer-capable application binaries before live key or assertion qualification.",
+      "authorization": "REQUIRES_A_FUTURE_EXACT_FREEZE_AND_EXPLICIT_APP_LAUNCH_PER_SPAWN_32_BYTE_NONCE_EXACT_PID_CONTAINMENT_AND_REAP_EFFECT_COUNTS",
+      "runtime_effect": "DEFERRED_UNTIL_EXACT_ISSUER_QUALIFICATION_RUN_COUNTS_ARE_FROZEN"
+    },
+    {
+      "order": 18,
+      "action": "Perform any live key generation, entropy use, key storage, signing ceremony and signed production assertion qualification only under its own exact key-material and persistence effect authorization.",
+      "authorization": "REQUIRES_ORDER_16_AND_17_GATES_PLUS_SEPARATE_EXPLICIT_LIVE_KEY_ENTROPY_STORAGE_SIGNING_APP_LAUNCH_PER_SPAWN_NONCE_CONTAINMENT_AND_REAP_EFFECT_AUTHORIZATION",
+      "runtime_effect": "DEFERRED_UNTIL_EXACT_KEY_LIFECYCLE_AND_EFFECTS_ARE_AUTHORIZED"
+    },
+    {
+      "order": 19,
+      "action": "Select, freeze and implement without live transport a bounded verifier transport and response join covering fresh challenge acquisition, exact request transmission, authenticated response receipt and challenge/request binding.",
+      "authorization": "SEPARATE_TRANSPORT_AND_EFFECT_SCOPE_REQUIRED",
+      "runtime_effect": "CONTROL_SOURCE_AND_NON_LIVE_TESTS_UNTIL_EXACT_TRANSPORT_IS_SELECTED"
+    },
+    {
+      "order": 20,
+      "action": "After any retained transport or controller implementation change, run the full bounded hostless Debug and Release regression before live protocol qualification.",
+      "authorization": "REQUIRES_EXPLICIT_BOUNDED_HELPER_PROCESS_AND_SIGNAL_AUTHORIZATION_BECAUSE_THE_ORIGINAL_SCOPE_EXCLUDED_PROCESS_CONTROL_AND_SIGNALS",
+      "runtime_effect": "HOST_XCTEST_SQLITE_AND_BOUNDED_LOCAL_HELPER_PROCESS_EFFECTS_ONLY"
+    },
+    {
+      "order": 21,
+      "action": "Repeat exact-binary bounded signed Debug and Release admission-only launches under the post-change requalification gate before live protocol qualification.",
+      "authorization": "REQUIRES_A_FUTURE_EXACT_FREEZE_AND_EXPLICIT_APP_LAUNCH_PER_SPAWN_32_BYTE_NONCE_EXACT_PID_CONTAINMENT_AND_REAP_EFFECT_COUNTS",
+      "runtime_effect": "DEFERRED_UNTIL_EXACT_TRANSPORT_CAPABLE_APPLICATION_ADMISSION_COUNTS_ARE_FROZEN"
+    },
+    {
+      "order": 22,
+      "action": "Qualify the selected live transport and authenticated response join only under the separately frozen run, nonce, containment, storage and transport effect counts.",
+      "authorization": "REQUIRES_ORDER_20_AND_21_GATES_PLUS_SEPARATE_EXPLICIT_APP_GUEST_NONCE_CONTAINMENT_REAP_KEY_STORAGE_AND_TRANSPORT_EFFECT_AUTHORIZATION",
+      "runtime_effect": "DEFERRED_UNTIL_EXACT_LIVE_PROTOCOL_CAMPAIGN_IS_FROZEN_AND_AUTHORIZED"
+    },
+    {
+      "order": 23,
+      "action": "Select and qualify a physically separate verifier only when ultimate verifier-relative anti-replay, durable rollback or independent authority claims enter scope.",
+      "authorization": "FUTURE_SEPARATE_HARDWARE_AND_EFFECT_SCOPE_REQUIRED",
+      "runtime_effect": "NONE_IN_THIS_SEQUENCE"
+    }
+  ],
+  "test_reporting_rules": [
+    "Every result must name runner_location, subject_location, app_launched, hv_vm_created, guest_entered, sqlite_opened, helper_processes, signals, signing_state and authority_effect.",
+    "Guest-backed evidence must name the exact guest-side predicate and prove at least one production hv_vcpu_run entry for the selected fixed image. Guest-backed PASS additionally requires complete host-owned per-phase teardown.",
+    "An H3 PASS requires exactly two ordered vCPU entries, source then target, with phase conservation and complete teardown before the next interval. A partial entry is guest-backed failure evidence only.",
+    "A hostless or app-hosted test with fabricated native values remains synthetic even when it links guest-related source.",
+    "A signed app build without launch is not live evidence; an app launch without guest entry is not guest evidence.",
+    "Host SQLite evidence and guest execution evidence are separate and must be joined explicitly; neither implies the other.",
+    "A nonzero exit, abnormal termination, external containment kill or missing reap cannot claim successful application-owned teardown. It may be retained only as bounded failure evidence.",
+    "Copied native observations are claims made relative to the exact pinned and instrumented application/native binary; they are not an independent host attestation.",
+    "Prime Git VM execution, if ever selected, must be labeled prime_git_vm and cannot be reported as embedded product guest execution.",
+    "Physical verifier authority cannot be inferred from the embedded guest, Prime Git VM, local Git, host SQLite or their combination."
+  ],
+  "qualification_evidence_artifacts": {
+    "acyclic_binding": "The signed application emits inner report bytes before exit. After EOF, bounded wait and exact reap, the outer controller emits a receipt containing the inner-report SHA-256. A final retained manifest contains the SHA-256 of both prior artifacts. The final checkpoint records the manifest SHA-256. No artifact contains its own hash and no earlier artifact contains a later artifact hash.",
+    "inner_application_h3_report": {
+      "producer": "exact signed product application after the production native H3 function returns and application-side semantic verification completes, but before process exit",
+      "required_fields": [
+        "schema_version",
+        "run_id",
+        "outer_nonce_echo",
+        "build_configuration",
+        "guest_profile_id",
+        "guest_image_sha256",
+        "guest_image_byte_count",
+        "hv_vm_create_count",
+        "hv_vcpu_run_count",
+        "source_phase_native_status_counters_chronology_and_teardown",
+        "target_phase_native_status_counters_chronology_and_teardown",
+        "phase_conservation_result",
+        "mailbox_register_trap_and_semantic_join_digests",
+        "application_verifier_result",
+        "cancellation_watchdog_and_quarantine_status",
+        "mach_continuous_start_tick",
+        "mach_continuous_end_tick",
+        "mach_timebase_numer",
+        "mach_timebase_denom"
+      ],
+      "forbidden_fields": [
+        "its_own_sha256",
+        "later_process_exit_status",
+        "later_parent_reap_status",
+        "later_outer_receipt_sha256",
+        "later_retained_manifest_sha256"
+      ]
+    },
+    "outer_observer_receipt": {
+      "producer": "the selected external qualification controller after inner-report EOF and either normal exit plus exact reap or frozen deadline containment plus exact reap",
+      "required_fields": [
+        "schema_version",
+        "run_id",
+        "source_commit_sha",
+        "source_tree_sha",
+        "dirty_state_and_allowlisted_paths",
+        "controller_kind",
+        "controller_executable_sha256",
+        "controller_mach_o_uuid",
+        "application_executable_sha256",
+        "application_mach_o_uuid",
+        "application_code_directory_hash",
+        "application_designated_requirement",
+        "application_team_identifier",
+        "effective_entitlements_sha256",
+        "effective_com_apple_security_hypervisor_value",
+        "guest_profile_id",
+        "guest_image_sha256",
+        "guest_image_byte_count",
+        "macos_build",
+        "architecture",
+        "hypervisor_support_result",
+        "outer_nonce",
+        "closed_argv",
+        "fixed_minimal_environment",
+        "mach_continuous_spawn_tick",
+        "mach_continuous_deadline_tick",
+        "mach_timebase_numer",
+        "mach_timebase_denom",
+        "inner_report_byte_count",
+        "inner_report_sha256",
+        "inner_report_parse_and_nonce_binding_result",
+        "stdout_and_stderr_eof_status",
+        "normal_exit_or_signal_status",
+        "exact_child_reap_status",
+        "containment_signal_count_and_exact_pid",
+        "outer_classification"
+      ],
+      "identity_rule": "The controller executable and signed application executable are two separately hashed and UUID-pinned identities for the preferred one-shot pattern; neither is called merely runner_sha256."
+    },
+    "final_retained_manifest": {
+      "producer": "the outer controller after both prior artifacts and all allowlisted evidence files are closed",
+      "required_fields": [
+        "schema_version",
+        "run_id",
+        "inner_report_relative_path_byte_count_and_sha256",
+        "outer_receipt_relative_path_byte_count_and_sha256",
+        "each_additional_allowlisted_artifact_relative_path_byte_count_and_sha256"
+      ],
+      "self_hash_rule": "The manifest contains no manifest hash. The final checkpoint computes and records the SHA-256 of the closed manifest bytes."
+    }
+  },
+  "runner_freeze_semantics": {
+    "environment": "The outer controller constructs a frozen fixed-minimal environment and rejects or removes inherited extras. Only non-secret allowlisted names and literal public values are recorded; inherited values and their digests are never retained.",
+    "nonce": "Immediately before each spawn, the outer controller issues exactly 32 bytes from SecRandomCopyBytes, records the lowercase hexadecimal value in the outer receipt, supplies it through the frozen closed activation grammar, requires the inner application report to echo it exactly, and rejects reuse within the retained qualification checkpoint.",
+    "clock": "All enforcement uses mach_continuous_time with recorded mach_timebase_info numerator and denominator. Wall-clock timestamps may be descriptive only and never decide deadline or ordering.",
+    "containment": "After the frozen monotonic deadline only, the controller may send SIGKILL exactly once to the exact positive PID it spawned, never to a process group, and must perform an exact reap. Such containment proves bounded observation only and never proves application-owned guest teardown."
+  },
+  "negative_evidence_classes": {
+    "synthetic_parser_negative_cases": [
+      "malformed_truncated_duplicate_or_stale_inner_report",
+      "nonce_or_run_id_mismatch",
+      "binary_signature_team_entitlement_or_guest_image_identity_mismatch_representation",
+      "timeout_cancellation_quarantine_abnormal_exit_or_containment_representation",
+      "cyclic_self_hash_or_manifest_binding_attempt"
+    ],
+    "static_admission_negative_cases": [
+      "absent_or_false_entitlement_metadata_is_rejected_as_qualification_input",
+      "unexpected_test_injection_or_signature_shape_is_rejected_by_the_static_runner_gate",
+      "Debug_only_activation_is_rejected_as_a_final_runner"
+    ],
+    "live_failure_cases_not_authorized_in_this_sequence": [
+      "deliberately launch an incorrectly signed or unentitled application",
+      "deliberately force application launch without guest entry",
+      "deliberately force watchdog timeout cancellation or quarantine",
+      "deliberately force abnormal exit or external containment kill"
+    ],
+    "effect_rule": "Synthetic rejection vectors do not qualify live lifecycle behavior. A deliberate live fault campaign requires a separate freeze with exact app and guest run counts, exact fault injection, exact-positive-PID signal maxima, exact reap behavior and explicit user effect authorization. Incidental failure or containment during a positive run is retained as incomplete evidence but does not qualify a negative campaign."
+  },
+  "implementation_constraints": {
+    "hostless_target": "Remain hostless and retain its deterministic preflight role.",
+    "live_target": "Use a static no-entry feasibility gate to select exactly one runner design: a separately configured app-hosted XCTest target or the established signed-application one-shot plus external canonical-report verifier. Prefer the signed-application one-shot unless static inspection shows app-hosted XCTest can preserve the production signing, entitlement, lifecycle and Release shape. Static inspection cannot prove effective runtime admission; that proof begins with the separate signed Debug and Release admission-only launches and completes for Hypervisor admission only through real guest entry. The selected runner must support bounded signed Debug and Release activation.",
+    "native_execution": "All hv_vm and hv_vcpu operations remain in the production HypervisorGuest implementation on its dedicated worker thread.",
+    "guest_inputs": "Remain fixed and bounded. No caller path, arbitrary image, shell, environment, command language or network input is added.",
+    "current_guest_capacity": "The H3 image and mappings cannot carry the approximately one-megabyte H4 maximum aggregate request. Any future H4 guest profile needs a separately frozen bounded mailbox or scatter/gather ABI.",
+    "sqlite_location": "Existing D3 SQLite code remains host-side because the embedded guest has no filesystem, VFS or block device.",
+    "release_coverage": "A Debug-only development convenience is insufficient for final guest qualification; exact signed Debug and Release product images must be distinguished.",
+    "effect_authorization": "A committed control freeze is a prerequisite, not execution authority. Host helper processes and signals, app launches, guest entries, deadline containment, SQLite integration, live entropy/key material/signing, transport and external hardware each require their separately stated exact effect authorization.",
+    "prime_git_vm": "Do not inventory, launch, stop, mount, mutate, copy to or configure it in this sequence."
+  },
+  "control_commit_contract": {
+    "changed_paths_exact": [
+      "Control/hypervisor-local-v1/h4-private-verifier-execution-surface-workflow-correction-2026-09-04.v1.json"
+    ],
+    "control_only": true,
+    "source_changes": 0,
+    "test_changes": 0,
+    "project_changes": 0,
+    "application_launches": 0,
+    "guest_or_vm_launches": 0,
+    "sqlite_actions": 0,
+    "network_actions": 0,
+    "prime_git_vm_actions": 0,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "preserved_paths": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1"
+    },
+    "ambient_evidence_rule": "All unrelated untracked and ignored evidence remains unstaged, unmodified, unmoved and unpruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "pure_preflight": "IMPLEMENTED_FOCUSED_TESTED_AND_COMMITTED",
+    "real_guest_current_slice": "NOT_RUN",
+    "live_h3_to_h4_handoff": "ABSENT",
+    "physical_verifier": "UNSELECTED_AND_UNQUALIFIED"
+  },
+  "hard_stops": [
+    "STOP_IF_THIS_CONTROL_COMMIT_CONTAINS_ANY_PATH_OTHER_THAN_ITS_EXACT_ONE_PATH_ALLOWLIST",
+    "STOP_IF_EITHER_GUARDED_H2_FILE_CHANGES_HASH_OR_ENTERS_THE_INDEX",
+    "STOP_IF_AMBIENT_UNTRACKED_OR_IGNORED_EVIDENCE_IS_STAGED_MODIFIED_MOVED_OR_PRUNED",
+    "STOP_IF_HOSTLESS_PREFLIGHT_IS_REPORTED_AS_APP_GUEST_PRIME_GIT_VM_OR_PHYSICAL_VERIFIER_EVIDENCE",
+    "STOP_IF_THE_FULL_HOST_SUITE_IS_STARTED_WITHOUT_EXPLICIT_AUTHORIZATION_FOR_ITS_FROZEN_HELPER_PROCESS_SIGCONT_AND_SIGKILL_EFFECT_COUNTS",
+    "STOP_IF_THE_FULL_CURRENT_TREE_HOSTLESS_DEBUG_AND_RELEASE_REGRESSION_HAS_NOT_PASSED_BEFORE_FIRST_GUEST_ENTRY",
+    "STOP_IF_RUNNER_PROJECT_OR_SHARED_SOURCE_CHANGES_OCCUR_AFTER_REGRESSION_WITHOUT_A_REPEAT_FULL_DEBUG_AND_RELEASE_REGRESSION",
+    "STOP_IF_ANY_CHANGED_CONTROLLER_APP_NATIVE_GUEST_PROJECT_SIGNING_OR_BUILD_IDENTITY_USES_PRECHANGE_ADMISSION_OR_GUEST_EVIDENCE_WITHOUT_THE_POST_CHANGE_REQUALIFICATION_GATE",
+    "STOP_IF_THE_STATIC_NO_ENTRY_GATE_IS_REPORTED_AS_EFFECTIVE_RUNTIME_APP_OR_HYPERVISOR_ADMISSION",
+    "STOP_IF_AN_UNSIGNED_OR_CODE_SIGN_DISABLED_APP_IS_USED_FOR_HYPERVISOR_QUALIFICATION",
+    "STOP_IF_A_GUEST_RUNNER_BYPASSES_PRODUCTION_HYPERVISOR_LIFECYCLE_ADMISSION_OR_TEARDOWN",
+    "STOP_IF_LIVE_QUALIFICATION_ARTIFACT_HASH_BINDINGS_ARE_CYCLIC_OR_IF_AN_INNER_REPORT_CLAIMS_POST_EXIT_OR_PARENT_REAP_STATE",
+    "STOP_IF_THE_RUNNER_INHERITS_OR_RETAINS_UNFROZEN_ENVIRONMENT_VALUES_OR_FAILS_NONCE_OR_MONOTONIC_DEADLINE_BINDING",
+    "STOP_IF_ANY_LAUNCHED_APP_RUN_LACKS_SEPARATELY_AUTHORIZED_EXACT_PID_DEADLINE_CONTAINMENT_AND_EXACT_REAP",
+    "STOP_IF_ANY_SECRANDOMCOPYBYTES_RUNNER_NONCE_DRAW_LACKS_A_SEPARATELY_AUTHORIZED_EXACT_32_BYTE_PER_SPAWN_COUNT",
+    "STOP_IF_A_NONZERO_ABNORMAL_EXTERNALLY_KILLED_OR_UNREAPED_APP_RUN_IS_REPORTED_AS_SUCCESSFUL_TEARDOWN",
+    "STOP_IF_H3_PASS_LACKS_EXACTLY_TWO_ORDERED_VCPU_ENTRIES_WITH_PHASE_CONSERVATION_AND_COMPLETE_PER_PHASE_TEARDOWN",
+    "STOP_IF_SYNTHETIC_REPORT_REJECTION_VECTORS_ARE_REPORTED_AS_LIVE_FAILURE_LIFECYCLE_QUALIFICATION",
+    "STOP_IF_EXISTING_H4_V1_STRUCTURAL_FIXTURE_OR_OBSERVED_NONPASS_BYTES_ARE_RELABELLED_AS_LIVE_H3_PASS",
+    "STOP_IF_THE_LIVE_H3_TO_H4_HANDOFF_SKIPS_ITS_ADDITIVE_SOURCE_FORMAT_OR_ONE_USE_RESERVATION_BOUNDARY",
+    "STOP_IF_PRODUCTION_H4_ISSUER_EVIDENCE_SKIPS_SOURCE_TO_DIGEST_PROJECTORS_ASSERTION_SIGNING_OR_SELF_VERIFICATION",
+    "STOP_IF_LIVE_PROTOCOL_EVIDENCE_SKIPS_A_FROZEN_BOUNDED_TRANSPORT_OR_AUTHENTICATED_RESPONSE_JOIN",
+    "STOP_IF_PRIME_GIT_VM_IS_OBSERVED_OR_OPERATED_WITHOUT_A_SEPARATE_EXACT_SCOPE",
+    "STOP_IF_ANY_GUEST_OR_APP_PROCESS_CAN_REMAIN_INDEFINITE_OR_REQUIRES_AN_UNBOUNDED_EXTERNAL_WAIT",
+    "STOP_IF_ANY_CURRENT_RESULT_IS_USED_TO CLAIM_PHYSICAL_VERIFIER_AUTHORITY_OR_H4_ENTRY"
+  ],
+  "next_recommendation": "Commit this correction alone, then obtain explicit authorization for the already audited bounded helper-process, SIGCONT and deliberate-child-SIGKILL effects before running the full hostless Debug and Release regression. Next perform the static no-entry gate and freeze exactly one Release-capable signed H3 runner, preferring the signed-application one-shot plus external controller. The runner freeze must use the acyclic inner-report, outer-receipt and final-manifest chain; every app spawn requires separately authorized one-per-spawn 32-byte SecRandomCopyBytes nonce entropy, exact-PID deadline containment maximum and exact reap. Rerun the full host suite after runner changes, perform signed admission-only Debug/Release launches, and only then perform two bounded embedded-H3 guest runs. After any H3-to-H4 or later implementation change, repeat the full regression and exact-binary signed admission before live qualification. Keep Prime Git VM untouched and require separate freezes and effect authority for live H3-to-H4, production issuer/key work and verifier transport."
+}

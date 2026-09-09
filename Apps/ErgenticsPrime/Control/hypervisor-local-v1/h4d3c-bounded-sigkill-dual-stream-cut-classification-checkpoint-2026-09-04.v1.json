@@ -1,0 +1,1109 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3c-checkpoint.v1",
+  "checkpoint": "H4-D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION",
+  "recorded_at_utc": "2026-09-04T07:07:10Z",
+  "result": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "sigkill_cut_mechanics": "PASS_FROZEN_NATIVE_INTERSTICE_MECHANICS_ONLY",
+    "retained_state_classification": "PASS_FROZEN_TEST_TAXONOMY_ONLY",
+    "power_loss_evaluated": false,
+    "restart_adoption": false,
+    "historical_producer_identity_recovered": false,
+    "restart_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "scientific_authority": false,
+    "production_h3_mint": "ABSENT",
+    "production_reader_mint": "ABSENT",
+    "next_stage_authorized": false
+  },
+  "object_binding": {
+    "implementation_commit": "4103dc10c5f1c1c9507c44211f584b2c6820643e",
+    "implementation_tree": "52560134836670f788bc3e1aa8b0c7abeaf4373a",
+    "implementation_parent": "38cc438544e6e7f692b09d5b2ee0b79d5bb091c5",
+    "implementation_paths": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Sources/HypervisorStageH4Privacy.swift",
+      "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "Sources/H4D3cCutPublisherMain.swift",
+      "Tests/HypervisorStageH4DualStreamSigkillCutClassificationTests.swift"
+    ],
+    "delta_equals_v2_freeze_allowlist": true,
+    "direct_child_of_governing_v2_freeze": true,
+    "diff_check": "PASS",
+    "worktree_implementation_bytes_equal_head": true,
+    "unrelated_dirty_files_preserved_and_unstaged": true
+  },
+  "control_binding": {
+    "governing_freeze_commit": "38cc438544e6e7f692b09d5b2ee0b79d5bb091c5",
+    "governing_freeze_tree": "c2c2d4d7ec92723c1532514a0cdf28d28b0debee",
+    "governing_freeze_path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-freeze-2026-09-03.v2.json",
+    "governing_freeze_blob_at_implementation_parent": "e22fa97d9d815b35df3ec6bfe11bd060a9ec76ac",
+    "governing_freeze_sha256": "d7107016287274ee4b98e8fa731904cc4533e8ff158dab396bd077b7f58b4111",
+    "superseded_v1": {
+      "path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-freeze-2026-09-03.v1.json",
+      "commit": "9672b7f12592dd83718e60ae03f720a85e908f87",
+      "tree": "5bc768f1320800cade4d29d873366f8c87cd747f",
+      "blob": "2564a1d99fd4e560119406fe5cf34f08c237ca1d",
+      "sha256": "c77e202051206755e8c435cf068b4d30476c53f424b7a6e9a8f857fe0bf4eab7",
+      "disposition": "SUPERSEDED_BEFORE_IMPLEMENTATION",
+      "errno_zero_terminator_predicate_satisfied": false,
+      "pass_claimed": false
+    },
+    "d3b_checkpoint_path": "Control/hypervisor-local-v1/h4d3b-fresh-process-dual-stream-restart-inspection-checkpoint-2026-09-03.v1.json",
+    "d3b_checkpoint_blob": "c9cde226e1bff8531da9928493a1ded93254d5df",
+    "d3b_checkpoint_sha256": "f1f318001bbb35bbb37aa86ea6fc5fbed9e00feb200e7a1cd19e302a29e1d4d5",
+    "d3b_checkpoint_result": "PASS_H4D3B_FRESH_PROCESS_DUAL_STREAM_RESTART_INSPECTION_MECHANICS_ONLY",
+    "d3b_implementation_commit": "d8f614adda0de64c85f9daecb45cec5d7c1454bb",
+    "d3_checkpoint_path": "Control/hypervisor-local-v1/h4d3-dual-stream-sqlite-image-publication-checkpoint-2026-09-02.v1.json",
+    "d3_checkpoint_result": "PASS_H4D3_DUAL_STREAM_PUBLICATION_MECHANICS_ONLY",
+    "d3_implementation_commit": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5"
+  },
+  "preflight_and_supersession": {
+    "pre_execution_corrections": [
+      "Removed the stale truncateRejected D3 XCTest schedule and condition references.",
+      "Replaced the stale finalDescriptorCloseRejected XCTest reference with the D3 finalDescriptorCloseResponseLost name.",
+      "Added the new D3c XCTest file to the ProvenanceTests Sources phase before any signal-matrix execution.",
+      "Completed classifier close, bounded-allocation, storage-class, terminal-join and lifecycle evidence hardening before signal-matrix execution."
+    ],
+    "v1_observation": {
+      "xcresult": "/private/tmp/h4d3c-focused-debug-20260903-01.xcresult",
+      "configuration": "Debug",
+      "result": "Failed",
+      "executed": 17,
+      "passed": 11,
+      "failed": 6,
+      "skipped": 0,
+      "failure": "The frozen v1 mapped-image enumeration required a zero return with errno zero, but Darwin libproc returned zero with errno EINVAL.",
+      "bounded_diagnostic": {
+        "positive_exact_size_region_records": 17,
+        "regions_matching_held_executable_device_and_inode": 4,
+        "regions_matching_device_inode_offset_zero_and_executable_protection": 1,
+        "qualifying_region_offset": 0,
+        "qualifying_region_protection": 5,
+        "qualifying_region_path_join": "canonical exact admitted path",
+        "terminal_result": 0,
+        "terminal_errno": 22,
+        "terminal_errno_name": "EINVAL"
+      },
+      "result_used_for_pass": false,
+      "v1_pass_claimed": false
+    },
+    "v2_single_semantic_correction": {
+      "scope": "PROC_PIDREGIONPATHINFO terminal result and errno pair only",
+      "accepted_terminal_pair": {
+        "result": 0,
+        "errno": 22,
+        "errno_name": "EINVAL"
+      },
+      "unchanged": "All v1 record-size, cap, checked-cursor, vnode, offset-zero, executable-protection, path and exactly-one-match predicates."
+    },
+    "v2_harness_cleanup_retry": {
+      "xcresult": "/private/tmp/h4d3c-v2-official-07-focused-debug.xcresult",
+      "configuration": "Debug",
+      "result": "Failed",
+      "executed": 17,
+      "passed": 16,
+      "failed": 1,
+      "skipped": 0,
+      "failure": "Released-gate mode closed its gate writer after the exact release byte and common cleanup attempted a second close of descriptor -1, yielding EBADF 9.",
+      "correction": "Common success cleanup now calls closeRequired for the gate writer only when gateWrite is nonnegative.",
+      "final_replacement_run": "/private/tmp/h4d3c-v2-official-07b-focused-debug.xcresult",
+      "result_used_for_pass": false
+    },
+    "pass_evidence_policy": "Only the final v2-governed 07b through 12 runs and their byte-identical committed implementation paths support this checkpoint PASS."
+  },
+  "closed_mechanics": {
+    "result_contract": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY",
+    "slice": {
+      "kind": "synthetic fixed-fixture native XCTest writer-death slice",
+      "publisher_product": "H4D3cCutPublisher",
+      "reader_product": "H4D3bRestartReader",
+      "focused_test_class": "HypervisorStageH4DualStreamSigkillCutClassificationTests",
+      "focused_test_method_count": 17,
+      "application_launch": false,
+      "vm_launch": false,
+      "guest_execution": false,
+      "hypervisor_api_execution": false,
+      "network": false,
+      "installation": false,
+      "github": false,
+      "authority_bearing_execution": false,
+      "real_native_sigkill": true,
+      "real_power_loss": false,
+      "production_behavior_change": false,
+      "production_process_or_signal_path": false
+    },
+    "publisher_target": {
+      "target_name": "H4D3cCutPublisher",
+      "target_kind": "command-line tool",
+      "source_phase_count": 6,
+      "source_phase": [
+        "Sources/HypervisorStageH4Privacy.swift",
+        "Sources/HypervisorStageH4CanonicalStreams.swift",
+        "Sources/HypervisorStageH4OwnerBinding.swift",
+        "Sources/HypervisorStageH4Persistence.swift",
+        "Sources/HypervisorStageH4DualStreamPersistence.swift",
+        "Sources/H4D3cCutPublisherMain.swift"
+      ],
+      "system_library_link": "libsqlite3",
+      "other_explicit_framework_or_library_links": 0,
+      "target_dependencies": 0,
+      "resources": 0,
+      "epr_h4_privacy_tests_definition": true,
+      "hypervisor_framework_linked": false,
+      "hypervisor_entitlement": false,
+      "installed": false,
+      "code_signing_for_verification": "DISABLED; ad-hoc linker-signed compile/link evidence only",
+      "child_process_calls": 0,
+      "signal_calls": 0,
+      "process_control_calls": 0,
+      "libproc_calls": 0,
+      "network_calls": 0,
+      "environment_value_reads": 0,
+      "wall_clock_reads": 0
+    },
+    "test_only_d3_surface": {
+      "compile_condition": "EPR_H4_PRIVACY_TESTS",
+      "defined_for": [
+        "ProvenanceTests Debug and Release",
+        "H4D3cCutPublisher Debug and Release"
+      ],
+      "absent_from": [
+        "ErgenticsProvenance application Debug and Release",
+        "H4D3bRestartReader Debug and Release"
+      ],
+      "new_callback": "one synchronous TestPublicationInterstice callback",
+      "interstice_count": 10,
+      "new_classifier": "one EPR-only descriptor-rooted TestRetainedStateClassifier",
+      "test_mint_is_production_mint": false,
+      "application_target_dependency_on_helper": false
+    },
+    "closed_child_inputs": {
+      "argv_count_excluding_argv0": 1,
+      "argv": "one canonical absolute private-root path",
+      "environment": "empty envp",
+      "stdin": "/dev/null",
+      "working_directory": "/private/var/empty",
+      "fixed_command_descriptor": 3,
+      "fixed_gate_descriptor": 4,
+      "fixed_event_descriptor": 5,
+      "caller_selected_leaf": false,
+      "caller_expected_bytes_or_semantics": false,
+      "caller_owner_lease_or_authority": false,
+      "caller_sql_or_schema": false,
+      "inherited_root_or_publication_descriptor": false
+    },
+    "protocol": {
+      "command_frame_bytes": 16,
+      "command_magic": "EPRD3CC1",
+      "event_frame_bytes": 16,
+      "event_magic": "EPRD3CE1",
+      "command_and_event_byte_order": "big endian",
+      "positive_stream_fragmentation_supported": true,
+      "truncated_trailing_duplicate_out_of_order_bad_magic_bad_status_and_over_cap_frames_rejected": true,
+      "positive_short_zero_and_error_writes_rejected": true,
+      "selected_gate_release_byte": "a5",
+      "cut_gate_released_or_closed_before_sigkill": false,
+      "normal_baseline": "ten ordered passed frames then one normalTerminal frame",
+      "intentional_cut_prefix": "every lower ordinal passed exactly once, selected ordinal reached exactly once, no later frame",
+      "failure_terminal": "kind 4, ordinal 255, next sequence, status 70, no later frame, normal exit 70"
+    },
+    "executable_admission": {
+      "applies_to": [
+        "H4D3cCutPublisher",
+        "H4D3bRestartReader when launched by the D3c harness"
+      ],
+      "fixed_sibling_product_lookup": true,
+      "held_executable_descriptor": "O_RDONLY|O_NOFOLLOW|O_CLOEXEC",
+      "profile": "regular, effective-uid-owned, nlink 1, exact mode 0755 with named-held device, inode, size, flags, mtime and ctime join",
+      "descriptor_sha256_and_macho_uuid": "chunked complete pread, exact EOF and 67108864-byte cap",
+      "spawn_state": "POSIX_SPAWN_START_SUSPENDED",
+      "generation_snapshots": "two exact PROC_PIDTBSDINFO selected-field snapshots joined to the positive direct-child PID, XCTest parent PID and SSTOP",
+      "mapped_image_positive_record_rule": "each PROC_PIDREGIONPATHINFO call returns exactly PROC_PIDREGIONPATHINFO_SIZE with nonzero size and a checked strictly advancing cursor",
+      "mapped_image_positive_record_cap": 4096,
+      "mapped_image_terminal_contract": {
+        "result": 0,
+        "errno": 22,
+        "errno_name": "EINVAL"
+      },
+      "mapped_main_image_match": "exactly one held device/inode region at file offset zero with executable protection and canonical exact admitted path",
+      "debug_publisher_positive_records": 17,
+      "debug_reader_positive_records": 16,
+      "release_publisher_positive_records": 17,
+      "release_reader_positive_records": 16,
+      "qualifying_match_count_each": 1,
+      "pre_resume_and_post_reap_sha_uuid_vnode_revalidation": true,
+      "v1_errno_zero_terminator_claim": false
+    },
+    "process_state_machine": {
+      "launcher_scope": "hostless XCTest only",
+      "spawn_api": "posix_spawn",
+      "parent_capture_descriptors_nonblocking": true,
+      "wait": "exact direct-child waitpid with WNOHANG only",
+      "blocking_waitpid": false,
+      "process_group_created_or_signaled": false,
+      "sigcont_maximum_per_admitted_child": 1,
+      "sigkill_maximum_per_child": 1,
+      "signal_target": "only the exact positive direct-child PID returned by successful posix_spawn",
+      "intentional_sigkill": "one successful exact-PID SIGKILL after the selected reached frame, before the 10-second operation deadline",
+      "containment_sigkill": "at most the same one exact-PID SIGKILL for a mutually exclusive failure or deadline reason and never admitted as cut evidence",
+      "publisher_operation_deadline_seconds": 10,
+      "publisher_hard_horizon_seconds": 15,
+      "reader_operation_deadline_seconds": 4,
+      "reader_hard_horizon_seconds": 5,
+      "post_reap_order": "exact reap, bounded event/stdout/stderr EOF, executable revalidation, exclusive root-lock proof, retained-state classification, then independent D3b reader outcome",
+      "no_second_signal_if_return_is_ambiguous": true,
+      "hard_horizon_miss": "CONTAINMENT_UNPROVEN"
+    },
+    "publication_interstices": [
+      {
+        "ordinal": 0,
+        "token": "beforeStagingCreate",
+        "expected_observed_class": "EMPTY_BEFORE_PUBLICATION"
+      },
+      {
+        "ordinal": 1,
+        "token": "afterStagingCreate",
+        "expected_observed_class": "STAGING_ONLY_EMPTY_0600"
+      },
+      {
+        "ordinal": 2,
+        "token": "afterCompleteImagePwrite",
+        "expected_observed_class": "STAGING_ONLY_VALID_V3_0600"
+      },
+      {
+        "ordinal": 3,
+        "token": "afterModeSealAndFstat",
+        "expected_observed_class": "STAGING_ONLY_VALID_V3_0400"
+      },
+      {
+        "ordinal": 4,
+        "token": "afterStagingFSync",
+        "expected_observed_class": "STAGING_ONLY_VALID_V3_0400"
+      },
+      {
+        "ordinal": 5,
+        "token": "afterStagingFullSync",
+        "expected_observed_class": "STAGING_ONLY_VALID_V3_0400"
+      },
+      {
+        "ordinal": 6,
+        "token": "afterStagingReadbackAndVnodeJoin",
+        "expected_observed_class": "STAGING_ONLY_VALID_V3_0400"
+      },
+      {
+        "ordinal": 7,
+        "token": "afterPublicationRename",
+        "expected_observed_class": "FINAL_ONLY_VALID_V3",
+        "reached_evidence_tag": "publicationRenameReturned_directorySyncNotEntered"
+      },
+      {
+        "ordinal": 8,
+        "token": "afterDirectoryFSync",
+        "expected_observed_class": "FINAL_ONLY_VALID_V3",
+        "reached_evidence_tag": "directorySyncReturned_finalOpenNotEntered"
+      },
+      {
+        "ordinal": 9,
+        "token": "afterFinalVerificationBeforeStoreReceipt",
+        "expected_observed_class": "FINAL_ONLY_VALID_V3",
+        "reached_evidence_tag": "finalVerificationAndDescriptorClosesCompleted_storeReceiptConstructionNotEntered"
+      }
+    ],
+    "retained_state_classifier": {
+      "taxonomy": [
+        "EMPTY_BEFORE_PUBLICATION",
+        "STAGING_ONLY_EMPTY_0600",
+        "STAGING_ONLY_VALID_V3_0600",
+        "STAGING_ONLY_VALID_V3_0400",
+        "FINAL_ONLY_VALID_V3",
+        "FINAL_ONLY_REJECTED",
+        "AMBIGUOUS_OR_UNEXPECTED"
+      ],
+      "root": "canonical non-root path; O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC; exact effective-uid-owned mode-0700 profile and named-opened-terminal vnode joins",
+      "root_lock": "exclusive LOCK_EX|LOCK_NB after publisher reap and before classification",
+      "inventory": "empty, exact staging-only, or exact final-only; mixed and extra inventory reject",
+      "leaf": "descriptor-rooted O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC; regular effective-uid-owned nlink-1 exact-mode vnode with terminal joins",
+      "bounded_image_order": [
+        "admit bounded metadata size before image-sized allocation",
+        "allocate and validate only the fixed 100-byte SQLite header",
+        "require SQLite format 3 NUL magic, page-size bytes 0x10 0x00, write/read versions 0x01 0x01 and page count 1 through 64",
+        "use checked UInt64 page-count times 4096 geometry and require exact admitted size",
+        "allocate only the bounded admitted image",
+        "EINTR-aware exact pread with positive-short accumulation and exact one-byte EOF",
+        "repeat leaf and root metadata, vnode, inventory and exact-close joins"
+      ],
+      "maximum_image_bytes": 262144,
+      "allocation_cap_checked_before_image_allocation": true,
+      "integer_overflow_rejected": true,
+      "sqlite_reader": "fresh private read-only-deserialized in-memory SQLite connection with query_only, trusted_schema off and SELECT-and-READ-only authorizer",
+      "sqlite3_db_readonly_observed_value": 0,
+      "sqlite3_db_readonly_is_admission_predicate": false,
+      "representation": "exact integrity, schema, storage class, row cardinality, canonical JSON, deterministic CBOR and indexed-scalar three-way join",
+      "every_statement_finalized_and_connection_closed_exactly": true,
+      "classification_mutates_repairs_retries_adopts_or_cleans": false,
+      "nonmutation_identity_and_sha256_test": "PASS",
+      "fault_and_replacement_hooks_fail_closed": true
+    },
+    "fresh_reader_join": {
+      "product": "unchanged H4D3bRestartReader",
+      "source_and_tests_changed": false,
+      "ordinals_0_through_6": "normal exit 70, empty stdout/stderr, exact reap",
+      "ordinals_7_through_9": "normal exit zero, empty stdout/stderr, exact reap and VALID_V3_DUAL_STREAM_THREE_WAY_JOIN",
+      "reader_mutation_or_adoption": false,
+      "historical_owner_lease_or_authenticity_recovery": false
+    }
+  },
+  "verification": {
+    "required_run_order_completed": true,
+    "parallel_testing_enabled": false,
+    "tests": {
+      "focused_debug": {
+        "result": "Passed",
+        "executed": 17,
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 25.362,
+        "test_operation_seconds": 12.990,
+        "xcresult": "/private/tmp/h4d3c-v2-official-07b-focused-debug.xcresult"
+      },
+      "focused_release": {
+        "result": "Passed",
+        "executed": 17,
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 76.311,
+        "test_operation_seconds": 12.644,
+        "xcresult": "/private/tmp/h4d3c-v2-official-08-focused-release.xcresult"
+      },
+      "d3_d3b_regression_debug": {
+        "result": "Passed",
+        "executed": 40,
+        "passed": 40,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 19.733,
+        "test_operation_seconds": 6.411,
+        "xcresult": "/private/tmp/h4d3c-v2-official-09-regression-debug.xcresult"
+      },
+      "d3_d3b_regression_release": {
+        "result": "Passed",
+        "executed": 40,
+        "passed": 40,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 70.245,
+        "test_operation_seconds": 6.361,
+        "xcresult": "/private/tmp/h4d3c-v2-official-10-regression-release.xcresult"
+      },
+      "full_debug": {
+        "result": "Passed",
+        "executed": 708,
+        "passed": 708,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 40.423,
+        "test_operation_seconds": 26.783,
+        "xcresult": "/private/tmp/h4d3c-v2-official-11-full-debug.xcresult"
+      },
+      "full_release": {
+        "result": "Passed",
+        "executed": 661,
+        "passed": 661,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "session_elapsed_seconds": 86.895,
+        "test_operation_seconds": 23.145,
+        "xcresult": "/private/tmp/h4d3c-v2-official-12-full-release.xcresult"
+      }
+    },
+    "test_execution_binding": {
+      "runs_predated_implementation_commit": true,
+      "tested_worktree_implementation_paths_later_committed_byte_identically": true,
+      "current_implementation_paths_equal_implementation_commit": true,
+      "failed_preflight_runs_excluded_from_pass": true
+    },
+    "required_predicates": {
+      "all_ten_exact_pid_sigkill_cuts_debug_and_release": true,
+      "all_cut_event_prefixes_exact_and_frame_aligned": true,
+      "one_sigcont_and_one_intentional_sigkill_per_cut": true,
+      "exact_sigkill_reap_and_post_reap_eof": true,
+      "mapped_main_image_result_zero_errno_einval_debug_and_release": true,
+      "normal_baseline": true,
+      "released_gate_all_interstices_without_sigkill": true,
+      "command_event_and_failure_frame_negative_matrix": true,
+      "containment_paths_never_admit_cut_evidence": true,
+      "ten_second_publisher_deadline_and_single_containment_sigkill": true,
+      "classifier_fault_schedule_and_allocation_order": true,
+      "sqlite_header_and_page_geometry_fields": true,
+      "classifier_observation_only": true,
+      "positive_namespace_taxonomy": true,
+      "invalid_root_inventory_and_leaf_kind_rejection": true,
+      "all_vnode_and_root_replacement_hooks": true,
+      "copied_stat_metadata_axes_and_special_vnode_modes": true,
+      "interstice_order_and_target_isolation": true,
+      "unchanged_d3b_reader_outcomes": true,
+      "zero_skipped_d3c_tests": true
+    },
+    "attachment_evidence": {
+      "schema": "H4D3C_CUT_ROW_EVIDENCE_V2",
+      "method": "HypervisorStageH4DualStreamSigkillCutClassificationTests/testEveryExactPidSigkillCutJoinsRetainedClassAndFreshReader()",
+      "attachment_count": 20,
+      "manifest_sets": [
+        {
+          "configuration": "Debug",
+          "directory": "/private/tmp/h4d3c-v2-official-07b-attachments",
+          "manifest": "/private/tmp/h4d3c-v2-official-07b-attachments/manifest.json",
+          "manifest_sha256": "3bb3ce9df5b80368e1ea831e8f81c56d996f7658d0542d8a4f420846878bef72",
+          "attachment_count": 10
+        },
+        {
+          "configuration": "Release",
+          "directory": "/private/tmp/h4d3c-v2-official-08-attachments",
+          "manifest": "/private/tmp/h4d3c-v2-official-08-attachments/manifest.json",
+          "manifest_sha256": "bc8bb990b1226c94ca97922596a45b4067a50ffa2a165f73ff0ba90f31f2ef94",
+          "attachment_count": 10
+        }
+      ],
+      "common_cut_evidence": {
+        "expected_class_equals_actual_class": true,
+        "complete_event_prefix_by_ordinal": {
+          "0": "reached:0:0:0",
+          "1": "passed:0:0:0,reached:1:1:0",
+          "2": "passed:0:0:0,passed:1:1:0,reached:2:2:0",
+          "3": "passed:0:0:0,passed:1:1:0,passed:2:2:0,reached:3:3:0",
+          "4": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,reached:4:4:0",
+          "5": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,passed:4:4:0,reached:5:5:0",
+          "6": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,passed:4:4:0,passed:5:5:0,reached:6:6:0",
+          "7": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,passed:4:4:0,passed:5:5:0,passed:6:6:0,reached:7:7:0",
+          "8": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,passed:4:4:0,passed:5:5:0,passed:6:6:0,passed:7:7:0,reached:8:8:0",
+          "9": "passed:0:0:0,passed:1:1:0,passed:2:2:0,passed:3:3:0,passed:4:4:0,passed:5:5:0,passed:6:6:0,passed:7:7:0,passed:8:8:0,reached:9:9:0"
+        },
+        "retained_representation_by_ordinal": {
+          "0": {
+            "inventory": [],
+            "byte_count": 0,
+            "sha256": null,
+            "sqlite3_db_readonly_diagnostic": null
+          },
+          "1": {
+            "inventory": [
+              ".h4d3-dual-receipt.sqlite.staging"
+            ],
+            "byte_count": 0,
+            "sha256": null,
+            "sqlite3_db_readonly_diagnostic": null
+          },
+          "2_through_6": {
+            "inventory": [
+              ".h4d3-dual-receipt.sqlite.staging"
+            ],
+            "byte_count": 8192,
+            "sha256": "9f286073eb9f962d8a4fe043da2befe1469bba39876598f10dcdc15881df219f",
+            "sqlite3_db_readonly_diagnostic": 0,
+            "full_v3_representation_join": true
+          },
+          "7_through_9": {
+            "inventory": [
+              "h4d3-dual-receipt.sqlite"
+            ],
+            "byte_count": 8192,
+            "sha256": "9f286073eb9f962d8a4fe043da2befe1469bba39876598f10dcdc15881df219f",
+            "sqlite3_db_readonly_diagnostic": 0,
+            "full_v3_representation_join": true
+          }
+        },
+        "publisher_signal_count": 2,
+        "publisher_signal_sequence": [
+          "one successful exact-PID SIGCONT",
+          "one successful exact-PID SIGKILL for the selected ordinal"
+        ],
+        "publisher_wait_status": 9,
+        "publisher_term_signal": 9,
+        "publisher_exact_reap": true,
+        "publisher_gate_release_count": 0,
+        "publisher_streams_open_and_event_frame_aligned_at_signal": true,
+        "publisher_event_stdout_and_stderr_eof": true,
+        "publisher_stdout_and_stderr_byte_count": 0,
+        "publisher_mapped_terminal_result": 0,
+        "publisher_mapped_terminal_errno": 22,
+        "publisher_mapped_terminal_errno_name": "EINVAL",
+        "publisher_mapped_qualifying_match_count": 1,
+        "reader_exact_reap": true,
+        "reader_stdout_and_stderr_eof": true,
+        "reader_stdout_and_stderr_byte_count": 0,
+        "reader_mapped_terminal_result": 0,
+        "reader_mapped_terminal_errno": 22,
+        "reader_mapped_terminal_errno_name": "EINVAL",
+        "reader_mapped_qualifying_match_count": 1
+      },
+      "rows": [
+        {
+          "configuration": "Debug",
+          "ordinal": 0,
+          "token": "beforeStagingCreate",
+          "observed_class": "EMPTY_BEFORE_PUBLICATION",
+          "event_frame_count": 1,
+          "publisher_elapsed_ns": 25325709,
+          "publisher_reap_elapsed_ns": 23826834,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 234079250,
+          "reader_reap_elapsed_ns": 233271167,
+          "file": "C5709999-4BF7-4509-B9BF-1081E03C8109.txt",
+          "sha256": "5ea65cba319985b849d8666f0b709eef8f912e23f04da0766036767ac95e4400"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 1,
+          "token": "afterStagingCreate",
+          "observed_class": "STAGING_ONLY_EMPTY_0600",
+          "event_frame_count": 2,
+          "publisher_elapsed_ns": 25838709,
+          "publisher_reap_elapsed_ns": 24216542,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13312458,
+          "reader_reap_elapsed_ns": 12846250,
+          "file": "91E53BB4-E500-4836-B45A-3BABAEA396F0.txt",
+          "sha256": "627a037674ac339dae5cb8433d63488a79387637e4ba235c46de6296c4bdccc1"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 2,
+          "token": "afterCompleteImagePwrite",
+          "observed_class": "STAGING_ONLY_VALID_V3_0600",
+          "event_frame_count": 3,
+          "publisher_elapsed_ns": 24132625,
+          "publisher_reap_elapsed_ns": 22914709,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13332750,
+          "reader_reap_elapsed_ns": 12949333,
+          "file": "8A9C8677-92B8-4433-A724-687389E066EC.txt",
+          "sha256": "70981204232b6898ec0d9d45f33faa763d9a235b8059d041d521b1d82c48d8a5"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 3,
+          "token": "afterModeSealAndFstat",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 4,
+          "publisher_elapsed_ns": 23075916,
+          "publisher_reap_elapsed_ns": 21922375,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13208625,
+          "reader_reap_elapsed_ns": 12871500,
+          "file": "F82C96AA-76BB-41D8-BB4F-26BDD38C90C2.txt",
+          "sha256": "948883b7da6e6b58da0b5a1711d6a318eabb4030e962ee60d6776284fab0d274"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 4,
+          "token": "afterStagingFSync",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 5,
+          "publisher_elapsed_ns": 21929542,
+          "publisher_reap_elapsed_ns": 20778500,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13242042,
+          "reader_reap_elapsed_ns": 12877042,
+          "file": "AB8AE8D5-3BC2-4337-A055-70B434C65F44.txt",
+          "sha256": "58773bc8bca82acf95a89ab9b86e9f93e1956a0beb7a7e157c2a389b3902a16a"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 5,
+          "token": "afterStagingFullSync",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 6,
+          "publisher_elapsed_ns": 25939791,
+          "publisher_reap_elapsed_ns": 24719916,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13193917,
+          "reader_reap_elapsed_ns": 12853334,
+          "file": "FFBE606A-D151-4B5F-AB7F-5AF47F457DC6.txt",
+          "sha256": "0eb1d1de26c4e3ae8006e4cbd5344a22ee4f25096dd5060d5f93b97577166ea6"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 6,
+          "token": "afterStagingReadbackAndVnodeJoin",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 7,
+          "publisher_elapsed_ns": 25418583,
+          "publisher_reap_elapsed_ns": 24313541,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 13181917,
+          "reader_reap_elapsed_ns": 12816834,
+          "file": "32992B9A-00D6-4554-9CD8-2531B166927F.txt",
+          "sha256": "9293d0c89e4b277bf541b6cd5bde200adc2f8388ecf36cc6742c5d36a1ab5090"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 7,
+          "token": "afterPublicationRename",
+          "reached_evidence_tag": "publicationRenameReturned_directorySyncNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 8,
+          "publisher_elapsed_ns": 25514333,
+          "publisher_reap_elapsed_ns": 24390250,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 13182083,
+          "reader_reap_elapsed_ns": 12807875,
+          "file": "C1AB4A94-2858-4023-B4A9-72B025416F8E.txt",
+          "sha256": "aa98fab7607e94ff03711ea78bfb96f46ed2a3fd19d848647a944a8ec4ea26c8"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 8,
+          "token": "afterDirectoryFSync",
+          "reached_evidence_tag": "directorySyncReturned_finalOpenNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 9,
+          "publisher_elapsed_ns": 25725959,
+          "publisher_reap_elapsed_ns": 24608375,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 13224958,
+          "reader_reap_elapsed_ns": 12800666,
+          "file": "FAE13A84-50B4-4192-88E3-7D584C91F862.txt",
+          "sha256": "71c3f16e6cf3f067fd1b988b1a012f039ce42e08ed24814e4cd34fb0c1f3eb81"
+        },
+        {
+          "configuration": "Debug",
+          "ordinal": 9,
+          "token": "afterFinalVerificationBeforeStoreReceipt",
+          "reached_evidence_tag": "finalVerificationAndDescriptorClosesCompleted_storeReceiptConstructionNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 10,
+          "publisher_elapsed_ns": 25058208,
+          "publisher_reap_elapsed_ns": 24007708,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 13118875,
+          "reader_reap_elapsed_ns": 12800833,
+          "file": "ABEB61E6-1838-4CDB-B3E0-D01CDFFBFB68.txt",
+          "sha256": "fcb82e95a3747b9a8213912785d2a76b8a8285ccfa0b997a259976bf1ed25a0b"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 0,
+          "token": "beforeStagingCreate",
+          "observed_class": "EMPTY_BEFORE_PUBLICATION",
+          "event_frame_count": 1,
+          "publisher_elapsed_ns": 22119125,
+          "publisher_reap_elapsed_ns": 21502875,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 227094500,
+          "reader_reap_elapsed_ns": 226752833,
+          "file": "7222C384-C9FA-47ED-B1E9-B3D8DA7A15C7.txt",
+          "sha256": "84b34af03f1b8b972ee8bbe16851cc724c1ee6ceaf4b83409586ff16fcee4a84"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 1,
+          "token": "afterStagingCreate",
+          "observed_class": "STAGING_ONLY_EMPTY_0600",
+          "event_frame_count": 2,
+          "publisher_elapsed_ns": 22323459,
+          "publisher_reap_elapsed_ns": 21642667,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 12861959,
+          "reader_reap_elapsed_ns": 12603542,
+          "file": "01261E5C-47F2-494D-A844-A899A5FD5F87.txt",
+          "sha256": "eddbeb0bf2f8885cf44b62e868b9cbad64972768e636af3996853b5daf682fdd"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 2,
+          "token": "afterCompleteImagePwrite",
+          "observed_class": "STAGING_ONLY_VALID_V3_0600",
+          "event_frame_count": 3,
+          "publisher_elapsed_ns": 20587458,
+          "publisher_reap_elapsed_ns": 19992625,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 12855166,
+          "reader_reap_elapsed_ns": 12622291,
+          "file": "7A6FB3DC-C1F5-4DCC-876F-02C430FA3B1E.txt",
+          "sha256": "8965763d0c4fef9be1bcf79cdd3dddabcd0ab829f03fcdfd26b90ef444c1f56b"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 3,
+          "token": "afterModeSealAndFstat",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 4,
+          "publisher_elapsed_ns": 19873792,
+          "publisher_reap_elapsed_ns": 19335542,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 12733334,
+          "reader_reap_elapsed_ns": 12555959,
+          "file": "5C4EBDFD-526A-4D51-A93A-E09489A352DF.txt",
+          "sha256": "bbb9629b0af4716caef1d460bfaa8c2b7259a1d4cf2f2014f08a9d0a719ec9b0"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 4,
+          "token": "afterStagingFSync",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 5,
+          "publisher_elapsed_ns": 19882916,
+          "publisher_reap_elapsed_ns": 19400625,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 11484542,
+          "reader_reap_elapsed_ns": 11220917,
+          "file": "C3D100FE-6D1D-49A1-B39E-5F5BA318CC62.txt",
+          "sha256": "302ad3aecd9f4caad68aea26b66022c56e815227eacfe9b168d5e5fafd1d1b09"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 5,
+          "token": "afterStagingFullSync",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 6,
+          "publisher_elapsed_ns": 23360333,
+          "publisher_reap_elapsed_ns": 22879083,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 12756375,
+          "reader_reap_elapsed_ns": 12554584,
+          "file": "D5CC567F-2DAB-47BF-A457-0BA9B73C5223.txt",
+          "sha256": "b75eb103ecc233406544e29da352b5e4b2010188846a196f746b85b40f9c81a2"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 6,
+          "token": "afterStagingReadbackAndVnodeJoin",
+          "observed_class": "STAGING_ONLY_VALID_V3_0400",
+          "event_frame_count": 7,
+          "publisher_elapsed_ns": 22635709,
+          "publisher_reap_elapsed_ns": 22149917,
+          "reader_exit": 70,
+          "reader_elapsed_ns": 12030375,
+          "reader_reap_elapsed_ns": 11832875,
+          "file": "153F5DD0-9B32-4A9D-8B8E-BAFD5B850BC9.txt",
+          "sha256": "cd3dacbd81cb818efa9d2c406b19600bc988b95acd4f030f9a437119d5c4d034"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 7,
+          "token": "afterPublicationRename",
+          "reached_evidence_tag": "publicationRenameReturned_directorySyncNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 8,
+          "publisher_elapsed_ns": 22799250,
+          "publisher_reap_elapsed_ns": 22338708,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 12717333,
+          "reader_reap_elapsed_ns": 12529708,
+          "file": "2E250979-392D-46B7-9490-0FAFDBE01F04.txt",
+          "sha256": "60115e144e6a7c03d22bb8ebb87452a8745486b8d7c3f745ae346f10ed662663"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 8,
+          "token": "afterDirectoryFSync",
+          "reached_evidence_tag": "directorySyncReturned_finalOpenNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 9,
+          "publisher_elapsed_ns": 22827750,
+          "publisher_reap_elapsed_ns": 22366417,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 11408375,
+          "reader_reap_elapsed_ns": 11173291,
+          "file": "A55DAEBC-FA45-44A9-B694-125326320CC9.txt",
+          "sha256": "6f3673719fedee8767db210c6ed5d6df744ae7a2ea143dddd47435cb8a599f24"
+        },
+        {
+          "configuration": "Release",
+          "ordinal": 9,
+          "token": "afterFinalVerificationBeforeStoreReceipt",
+          "reached_evidence_tag": "finalVerificationAndDescriptorClosesCompleted_storeReceiptConstructionNotEntered",
+          "observed_class": "FINAL_ONLY_VALID_V3",
+          "event_frame_count": 10,
+          "publisher_elapsed_ns": 21993375,
+          "publisher_reap_elapsed_ns": 21533792,
+          "reader_exit": 0,
+          "reader_elapsed_ns": 12119791,
+          "reader_reap_elapsed_ns": 11911458,
+          "file": "463E52AD-62B5-4B73-A4C9-0630CE543721.txt",
+          "sha256": "957b441d827f8a8c3d21c54f830f2e492bb41c59ddb75cc91c19ca05a14c1e54"
+        }
+      ],
+      "all_exported_file_hashes_verified": true,
+      "all_rows_join_frozen_token_class_and_reader_outcome": true
+    },
+    "builds": {
+      "scope": "Xcode code signing disabled; ad-hoc linker-signed compile/link evidence only",
+      "publisher_debug": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-01-publisher-debug",
+        "binary": "/private/tmp/h4d3c-v2-official-01-publisher-debug/Build/Products/Debug/H4D3cCutPublisher",
+        "architecture": "arm64",
+        "binary_sha256": "033ee51a6a696cb4c67c5e223c8c3b16e595a735cad7d852b346bb93ed923cec",
+        "binary_uuid": "E4832D4B-40E3-3050-A840-1992B12C1713",
+        "binary_size_bytes": 1908352,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "publisher_release": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-02-publisher-release",
+        "binary": "/private/tmp/h4d3c-v2-official-02-publisher-release/Build/Products/Release/H4D3cCutPublisher",
+        "architecture": "arm64",
+        "binary_sha256": "61d7b6cfac1842245e5d72a95bec520d8a26e2518272cdbffb165fdad581845f",
+        "binary_uuid": "11DA56FC-365F-3DE3-8797-A0E9CAB3F443",
+        "binary_size_bytes": 685808,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "reader_debug": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-03-reader-debug",
+        "binary": "/private/tmp/h4d3c-v2-official-03-reader-debug/Build/Products/Debug/H4D3bRestartReader",
+        "architecture": "arm64",
+        "binary_sha256": "a69d8964959d6588a5a90a123eaca146fd0875be64ffcd737fad08e613779b21",
+        "binary_uuid": "C3C789B4-4276-3C90-ADB7-92476E819C4B",
+        "binary_size_bytes": 314160,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "reader_release": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-04-reader-release",
+        "binary": "/private/tmp/h4d3c-v2-official-04-reader-release/Build/Products/Release/H4D3bRestartReader",
+        "architecture": "arm64",
+        "binary_sha256": "9ef52754d852873493df1651b9d47aca33b129b22ed58c3ddd97fe5d6dd3ab75",
+        "binary_uuid": "3A32036A-4AFC-35C0-9D29-665E93EB3BE8",
+        "binary_size_bytes": 161264,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "application_debug": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-05-app-debug",
+        "binary": "/private/tmp/h4d3c-v2-official-05-app-debug/Build/Products/Debug/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "architecture": "arm64",
+        "binary_sha256": "57443a8a5a1247beb144af26fd097f56121fc20a8fae15480c1febcead7e3130",
+        "binary_uuid": "1B95EDF8-7D6C-321F-9EB3-2E45A2B8BB25",
+        "binary_size_bytes": 9514408,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      },
+      "application_release": {
+        "result": "BUILD_SUCCEEDED",
+        "derived_data": "/private/tmp/h4d3c-v2-official-06-app-release",
+        "binary": "/private/tmp/h4d3c-v2-official-06-app-release/Build/Products/Release/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "architecture": "arm64",
+        "binary_sha256": "2955f4598330ff759d2942dd43d025b03640e92e8394ee94dfcac01d0c45c369",
+        "binary_uuid": "B53B09E7-C2EC-3C13-AF04-C85177C82EB3",
+        "binary_size_bytes": 3554760,
+        "mode": "0755",
+        "uid": 501,
+        "gid": 0
+      }
+    },
+    "binary_surfaces": {
+      "audit_tools": [
+        "otool -L",
+        "otool -l",
+        "nm -gjU",
+        "nm -gju",
+        "nm -gj",
+        "strings -a",
+        "dwarfdump --uuid",
+        "shasum -a 256",
+        "codesign -d --entitlements :-"
+      ],
+      "publisher_debug_all_frozen_forbidden_gate_matches": 0,
+      "publisher_release_all_frozen_forbidden_gate_matches": 0,
+      "publisher_debug_hypervisor_load_or_entitlement_matches": 0,
+      "publisher_release_hypervisor_load_or_entitlement_matches": 0,
+      "publisher_debug_entitlements": "NONE",
+      "publisher_release_entitlements": "NONE",
+      "publisher_required_writer_owner_lease_test_surfaces_present": true,
+      "reader_debug_all_committed_d3b_forbidden_gate_matches": 0,
+      "reader_release_all_committed_d3b_forbidden_gate_matches": 0,
+      "reader_debug_hypervisor_load_or_entitlement_matches": 0,
+      "reader_release_hypervisor_load_or_entitlement_matches": 0,
+      "reader_debug_entitlements": "NONE",
+      "reader_release_entitlements": "NONE",
+      "application_debug_d3c_epr_symbol_and_string_matches": 0,
+      "application_release_d3c_epr_symbol_and_string_matches": 0,
+      "application_debug_hypervisor_load_commands": 1,
+      "application_release_hypervisor_load_commands": 1,
+      "application_binaries_embedded_entitlements": "NONE because verification code signing was disabled",
+      "application_configured_hypervisor_entitlement": true,
+      "application_configured_hypervisor_framework": true,
+      "no_byte_identical_application_binary_claim": true
+    },
+    "static": {
+      "project_pbxproj_plist": "PASS",
+      "project_pbx_identifiers": 318,
+      "project_pbx_identifier_occurrences": 318,
+      "duplicate_pbx_identifiers": 0,
+      "publisher_source_phase_count": 6,
+      "publisher_explicit_links": [
+        "libsqlite3"
+      ],
+      "publisher_target_dependency_count": 0,
+      "publisher_resource_count": 0,
+      "test_target_helper_dependencies": [
+        "H4D3bRestartReader",
+        "H4D3cCutPublisher"
+      ],
+      "application_target_dependency_count": 0,
+      "epr_h4_privacy_tests_configuration_scope": "ProvenanceTests Debug/Release and H4D3cCutPublisher Debug/Release only",
+      "application_target_unchanged": true,
+      "application_target_full_block_sha256_parent_and_implementation": "425a6dd6f6449f71404560d9596b315d44fc23025467564bea12cab8e46db833",
+      "application_sources_phase_full_block_sha256_parent_and_implementation": "85736460cc88f4490ed8c154422694230287cb992c2dc1f3ab9de4179bcd4382",
+      "application_frameworks_phase_full_block_sha256_parent_and_implementation": "924bd774321ffe34211c7acca4f946b4d73857f909e830b13d9130afe1a41334",
+      "application_debug_config_full_block_sha256_parent_and_implementation": "94aa94000371843c6a7a96744e04d88ac021c5b3fda7e7a19eee03968c84af0e",
+      "application_release_config_full_block_sha256_parent_and_implementation": "5631ce64d082f8c5d5aae9cf72bb034f9acff7f957fd1555dc8bc1a1dfdd6e35",
+      "application_entitlements_blob_unchanged": "d7bd491f0c772584a3bfa1b977306e3f31941bf4",
+      "application_entitlements_sha256_unchanged": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2",
+      "application_hypervisor_entitlement_value": true,
+      "excluded_source_test_header_entitlement_readme_file_count": 11,
+      "excluded_source_test_header_entitlement_readme_diff_lines": 0,
+      "stale_truncateRejected_references_in_d3c_test": 0,
+      "stale_finalDescriptorCloseRejected_references_in_d3c_test": 0,
+      "correct_finalDescriptorCloseResponseLost_references_in_d3c_test": 1,
+      "process_signal_libproc_hypervisor_network_or_wall_clock_matches_in_publisher_sources": 0,
+      "process_signal_or_libproc_calls_in_added_or_changed_non_test_production_regions": 0,
+      "privacy_non_documentation_diff_lines": 0,
+      "d3b_reader_source_main_and_test_diff_lines": 0,
+      "freeze_v2_json_jq_parse": "PASS",
+      "checkpoint_json_jq_parse": "PASS",
+      "diff_check": "PASS"
+    },
+    "independent_reviews": [
+      {
+        "review": "SQLite header, bounded allocation, read-only policy, namespace, vnode and exact-close audit",
+        "object": "4103dc10c5f1c1c9507c44211f584b2c6820643e/52560134836670f788bc3e1aa8b0c7abeaf4373a",
+        "result": "PASS"
+      },
+      {
+        "review": "XCTest protocol, suspended executable admission, exact-PID signal, deadline, reap, EOF and negative-matrix audit",
+        "object": "4103dc10c5f1c1c9507c44211f584b2c6820643e/52560134836670f788bc3e1aa8b0c7abeaf4373a",
+        "result": "PASS"
+      },
+      {
+        "review": "PBX target isolation, application entitlement and linkage invariance, binary surfaces and dirty-file containment audit",
+        "object": "4103dc10c5f1c1c9507c44211f584b2c6820643e/52560134836670f788bc3e1aa8b0c7abeaf4373a",
+        "result": "PASS"
+      }
+    ]
+  },
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "blob": "93a6006f4be9ccfb340a1ab0fd646963a2a3dd08",
+      "sha256": "8c0ae98bb061d2d5df27aeac5f1fdcd96479e8e8b217690fb2bd499ec491110a"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "blob": "7e640f2c8621a3b990f867421b2bafaa38d85e64",
+      "sha256": "cce3f47aa84795b58f290e938f3547f106948dd35c2b66a8703daa7964f979c1"
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "blob": "c54eef92afa479386723d87926779873a48d798f",
+      "sha256": "96c0c7bba313da97521fcd652bf21db7d07050de362fdd3cb7208f3b66079ace"
+    },
+    {
+      "path": "Sources/H4D3cCutPublisherMain.swift",
+      "blob": "31a9268a938d2d378452688689eda1920ac28079",
+      "sha256": "ef07e949f206806a8c4d123d91a97ff2aa76d2dd855ddf2c4e5bd0892722adf3"
+    },
+    {
+      "path": "Tests/HypervisorStageH4DualStreamSigkillCutClassificationTests.swift",
+      "blob": "e2d35691b056da9df7dafe0cf0a2dedebf8888fe",
+      "sha256": "761a6da1127bd20f1fc86e3b07d7099a9d8f3f6652859b97d714e80b8b10f9f9"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-freeze-2026-09-03.v2.json",
+      "blob": "e22fa97d9d815b35df3ec6bfe11bd060a9ec76ac",
+      "sha256": "d7107016287274ee4b98e8fa731904cc4533e8ff158dab396bd077b7f58b4111"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "macos": "26.6.2",
+    "host_build": "25G83",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "swift": "6.3.3",
+    "swift_target": "arm64-apple-macosx26.0",
+    "sdk": "macOS 26.5"
+  },
+  "effects": {
+    "xctest_runner_execution": true,
+    "native_publisher_process_launch": true,
+    "native_reader_process_launch": true,
+    "xctest_posix_spawn": true,
+    "xctest_libproc_read_only_inspection": true,
+    "xctest_poll": true,
+    "xctest_waitpid_wnohang": true,
+    "xctest_exact_pid_sigcont": true,
+    "xctest_exact_pid_sigkill": true,
+    "xctest_test_root_file_mutation": true,
+    "publisher_pwrite_chmod_fsync_fullfsync_rename": true,
+    "production_process_control": false,
+    "publisher_process_control": false,
+    "reader_process_control": false,
+    "production_signal_call": false,
+    "publisher_signal_call": false,
+    "reader_signal_call": false,
+    "application_launch": false,
+    "vm_launch": false,
+    "guest_execution": false,
+    "hypervisor_api_execution": false,
+    "network": false,
+    "installation": false,
+    "github": false,
+    "authority_bearing_execution": false,
+    "reader_file_writes": false,
+    "parent_test_fixture_creation_mutation_and_cleanup_after_evidence": true,
+    "code_signing_disabled_adhoc_linker_signed_compile_and_link": true
+  },
+  "residuals": [
+    "SIGKILL terminated real native child processes, but the fixed fixture, interstice barriers and retained-state expectations are synthetic test constructs.",
+    "SIGKILL leaves the kernel, filesystem, APFS page cache and storage device alive; this is not a host crash, reboot or physical power cut.",
+    "The ten cuts occur only between returned userspace operations and provide no evidence for interruption inside pwrite, rename, fsync, F_FULLFSYNC or another entered call.",
+    "A returned fsync, F_FULLFSYNC or directory fsync is a synchronization-request fact, not a mathematical proof of survival across firmware, device or power failure.",
+    "Barrier IPC perturbs scheduling and proves a frozen ordered interstice rather than natural uninstrumented timing or instruction-cycle adjacency.",
+    "Evidence on the ordinary /private/tmp APFS volume does not model ENOSPC, EIO, constrained capacity, remount, device cache, firmware or partial physical writes.",
+    "Advisory flock coordinates cooperating processes only and does not exclude a noncooperating same-euid, root or Full-Disk-Access actor.",
+    "Named, opened, mapped and post-reap joins narrow but cannot abolish every same-euid path-spawn or namespace replacement window or attest dynamic-loader dependencies.",
+    "Userspace deadlines cannot preempt posix_spawn, an uninterruptible kernel call, or the in-process filesystem and SQLite classifier; a hard-horizon miss leaves containment unproven.",
+    "The fixed semantic oracle and JSON, CBOR and indexed-scalar agreement establish representation consistency, not historical authenticity or an external commitment."
+  ],
+  "nonclaims": [
+    "This PASS is H4-D3c bounded native SIGKILL interstice and retained-state classification mechanics only.",
+    "No PASS against the superseded v1 errno-zero libproc terminator predicate is claimed.",
+    "The word crash in a test name denotes intentional SIGKILL of the exact direct publisher child, never host, kernel, VM or power loss.",
+    "An observed final-only representation before directory fsync returned is not claimed durable even when the unchanged D3b reader admitted it on the same boot.",
+    "An observed final-only representation after directory fsync returned remains same-boot local evidence and is not power-loss survival evidence.",
+    "SQLite is a checked non-authoritative container; integrity and canonical representation predicates create no truth or authority.",
+    "No retained state was adopted, repaired, retried, cleaned or converted into a production receipt by this slice.",
+    "The wider application configures com.apple.security.hypervisor and links Hypervisor.framework; neither helper has that entitlement or framework, and no Hypervisor API executed.",
+    "No producer identity, owner or lease continuity, authenticity, freshness, anti-replay or rollback resistance is established.",
+    "No H4 entry, Gate-E movement, candidate result, scientific conclusion, authority transition or successor stage is authorized by this checkpoint."
+  ],
+  "next_recommendation": "Freeze an external-commitment and anti-replay threat model before any durable-format change; keep constrained physical-I/O and sacrificial-volume host-orchestrated power-loss evidence as separate future slices, and do not advance the roadmap ordinal until those obligations are closed."
+}

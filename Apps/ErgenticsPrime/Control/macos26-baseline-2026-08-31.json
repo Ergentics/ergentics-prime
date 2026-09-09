@@ -1,0 +1,114 @@
+{
+  "schema": "com.ergentics.provenance.macos26-baseline.v1",
+  "recordedUTC": "2026-08-31T17:44:24.862Z",
+  "status": "CONFIGURATION_STATIC_PASS_BUILD_AND_RUNTIME_NOT_RUN",
+  "request": "Next-version macOS 26 baseline; Python and Python/C permitted for app work.",
+  "previousDeploymentMinimum": "14.0",
+  "newDeploymentMinimum": "26.0",
+  "architecture": "arm64",
+  "configuration": "Exactly two project-level settings changed: Debug and Release. App and hostless test targets inherit. Info.plist uses MACOSX_DEPLOYMENT_TARGET. Xcode project format compatibilityVersion intentionally unchanged.",
+  "installedXcode": {
+    "version": "26.6",
+    "build": "17F113",
+    "coreAIFrameworkInSDK": false
+  },
+  "appleAvailability": {
+    "CoreAI": {
+      "platform": {
+        "beta": true,
+        "introducedAt": "27.0",
+        "name": "macOS"
+      },
+      "source": "https://developer.apple.com/documentation/coreai",
+      "metadataSource": "https://developer.apple.com/tutorials/data/documentation/coreai.json"
+    },
+    "FoundationModels": {
+      "platform": {
+        "beta": false,
+        "introducedAt": "26.0",
+        "name": "macOS"
+      },
+      "source": "https://developer.apple.com/documentation/foundationmodels",
+      "metadataSource": "https://developer.apple.com/tutorials/data/documentation/foundationmodels.json"
+    }
+  },
+  "python": {
+    "permittedFor": [
+      "application development",
+      "application components",
+      "Python/C shims"
+    ],
+    "addedRuntime": false,
+    "addedDependency": false,
+    "qualification": "Permission does not require replacing Swift/C VM/lifecycle ownership. Evaluate a narrow explicitly configured boundary when an actual feature needs Python."
+  },
+  "rubyDiagnostic": {
+    "cause": "--disable-gems disabled RubyGems startup; rubygems/package referenced Gem before initialization.",
+    "observedError": "NameError: uninitialized constant Gem",
+    "affected": "Offline diagnostic only, before evidence reads; no app or archive corruption.",
+    "explicitBootstrapCheck": "/usr/bin/ruby --disable-gems -r rubygems -r rubygems/package -e 'puts Gem::Package::TarReader.name'",
+    "explicitBootstrapResult": "Gem::Package::TarReader, exit 0; read-only library load, no evidence read."
+  },
+  "validation": {
+    "plutil": "PASS for project, Info.plist, Entitlements.plist and PrivacyInfo.xcprivacy",
+    "projectExactTwoSettingDelta": true,
+    "otherConfigurationOrSourceChanges": false,
+    "unchangedSourceAndMetadataPins": 47,
+    "build": "NOT_RUN",
+    "appLaunch": "NOT_RUN",
+    "guestLaunch": "NOT_RUN",
+    "modelLoad": "NOT_RUN",
+    "signingChange": false,
+    "networkEntitlementsChange": false,
+    "gitMutation": false
+  },
+  "changedFiles": {
+    "ErgenticsProvenance.xcodeproj/project.pbxproj": {
+      "before": {
+        "bytes": 31859,
+        "sha256": "829f980973e0cd7dbfec3fcacfbbb4cf35c31a0be1e645866d49b7b5c8a7ccf0"
+      },
+      "after": {
+        "bytes": 31859,
+        "sha256": "debe148e92ccab3321f7d2dcb7209f17fdbc4a5ab24f56b8ce7daeee4288aa33"
+      }
+    },
+    "README.md": {
+      "before": {
+        "bytes": 26376,
+        "sha256": "94c53f8be749c4d491a495780d303e1d4ef9f02c607ee02e1a590ef95b0d9629"
+      },
+      "after": {
+        "bytes": 28168,
+        "sha256": "b4843bfeda5bd968dc49381a7acdf79b6813d05be4d25d6db9b35168acfc3fa5"
+      }
+    },
+    "Distribution/README.md": {
+      "before": {
+        "bytes": 4897,
+        "sha256": "9d16fc6e1c98cb755a7d653d810cfcb940af906ea4025e46e26252ad90a5313b"
+      },
+      "after": {
+        "bytes": 5484,
+        "sha256": "23a429137079a02258f31b305ecdc8f6563a01255cec2369baaae4b55839393b"
+      }
+    }
+  },
+  "previousAcceptance": {
+    "path": "Control/functional-readiness-live-2026-08-31.ED79CA",
+    "contentManifestSHA256": "c6dee34fa3c06598a8d585a13532852f83f4089e997cde972a4e22d917a83da7",
+    "retainedPinsVerified": 73,
+    "testedImageMinimum": "14.0",
+    "actualRuntime": "macOS 26.5.2",
+    "qualification": "Retained source/binary/evidence unchanged. Prior acceptance is not reassigned to the new configuration."
+  },
+  "next": "Build and hostless-test the macOS 26 configuration before any new signed-app acceptance. Keep AI optional and local; Foundation Models availability first, separately gated Core AI only with a supporting SDK and macOS 27 runtime. No model or guest execution implied.",
+  "authorityVector": "00000000",
+  "gateE": "ABSTAIN",
+  "independentStaticReview": {
+    "status": "PASS",
+    "deploymentInheritance": "PASS",
+    "minorCurrentDocumentationResidual": "Corrected prior-image acceptance vs unbuilt26 successor distinction",
+    "historicalRustBuildPin": "Guest/RustBootstrap/build.rb pins old project bytes; archived proof not rerun or resealed."
+  }
+}

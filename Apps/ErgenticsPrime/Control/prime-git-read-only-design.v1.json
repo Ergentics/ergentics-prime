@@ -1,0 +1,36 @@
+{
+  "schema": "com.ergentics.provenance.prime-git.design.v1",
+  "date": "2026-08-30",
+  "mode": "thin native development feature",
+  "source_home": "/Users/ergentics/Developer/ErgenticsProvenance",
+  "repository_role": "read-only view of the separately selected local Prime repository, not a new Prime Git history",
+  "implemented_scope": {
+    "native_screen": "Prime Git",
+    "repository_selection": "path label only; no enumeration or implicit metadata access",
+    "snapshot_import": "explicitly selected local JSON, at most 1 MiB, held regular-file read with before/after vnode and metadata joins",
+    "data_semantics": "reported local observation; schema validation is not independent Git graph recomputation or live verification",
+    "unknown": "absent values remain unobserved, never zero or clean",
+    "remote_semantics": "locally cached tracking refs only; no current GitHub claim",
+    "persistence": "import stays in memory; no bookmark, journal, or repository write",
+    "action_buttons": "visible and inert; no execution closure",
+    "git_processes": 0,
+    "network_actions": 0,
+    "automatic_refresh": false,
+    "new_commits": 0
+  },
+  "future_read_only_adapter_requirements": [
+    "Explicit user read grants for the selected worktree and any separate gitdir/commondir; no automatic traversal outside the grant",
+    "Capture start/end and HEAD, index, and tracking-ref identities; concurrent change is a stale display, not an execution failure or authority",
+    "Return unknown when upstream, cached ref, objects, or complete ancestry are unavailable",
+    "Suppress optional Git writes, config-driven helpers/hooks/fsmonitor, credential actions, pagers and lazy fetching before introducing a Git subprocess",
+    "Local refresh never means fetch; push, pull, commit, stage, checkout, merge and reset remain separate future actions"
+  ],
+  "environment_test": {
+    "requested": "non-VM unit tests entered through env -i with no replacement variables",
+    "meaning": "empty launch-environment compatibility of that test process only",
+    "not_claimed": ["GUI launch compatibility", "network isolation", "private cloud", "full application sandbox proof"]
+  },
+  "unchanged": ["bundle identifier", "signing admission", "entitlement set", "Hypervisor guest and owner", "original Prime checkout and Git history", "historical execution evidence"],
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000"
+}

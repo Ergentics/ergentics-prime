@@ -1,0 +1,771 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-private-physical-verifier-architecture-custody-freeze.v1",
+  "checkpoint": "H4_PRIVATE_PHYSICAL_VERIFIER_ARCHITECTURE_CUSTODY_FREEZE",
+  "recorded_at_utc": "2026-09-04T09:18:47Z",
+  "result_contract": "FREEZE_H4_PRIVATE_PHYSICAL_VERIFIER_ARCHITECTURE_AND_CUSTODY_ONLY",
+  "predecessor": {
+    "parent_commit": "341aacda5675415ca31f2850bcd906c99ec939a6",
+    "parent_tree": "52ff1cd82269b53aa4ba0816afa8f1ade11c0d6b",
+    "parent_relation": "the committed structured externality and privacy-delta review is the required direct parent of this architecture-and-custody freeze",
+    "privacy_review_path": "Control/hypervisor-local-v1/h4-externality-privacy-delta-review-2026-09-04.v1.json",
+    "privacy_review_blob": "d4c6029d94187b01762d52fa35c6956135da32d5",
+    "privacy_review_sha256": "b4427dda15773081b2e30fdad132fee4a14ac71454013273c825be82caa6622e",
+    "privacy_review_result": "REVIEW_COMPLETE_ARCHITECTURE_SELECTION_PENDING_USER_DECISION"
+  },
+  "governing_controls": {
+    "threat_model": {
+      "path": "Control/hypervisor-local-v1/h4-external-commitment-anti-replay-threat-model-freeze-2026-09-04.v1.json",
+      "blob": "0b11d60af0bd68c98cea0cf56ad9dd331d70a45f",
+      "sha256": "e7e78687199e34ad70c36d98fb86a5205d0624fd702eff1f57d052b5822a902b"
+    },
+    "privacy_architecture": {
+      "path": "Documentation/Architecture/PrivacyArchitecture.md",
+      "blob": "18b1060199c425e31c8c563ae070a6bac828abdf",
+      "sha256": "b638cea7f9224587da7deb0b31fd7721a07cdab43086817528157b3c684c2ecb"
+    },
+    "host_integrity_boundary": {
+      "path": "Control/host-integrity-trust-boundary.v1.json",
+      "blob": "4514b64da3019177c993ad75f81923ba86e0b757",
+      "sha256": "a4b1f3f850ec9d6939241f91398c7964dac6502fb7436f9aea8eaea5cd28e56b"
+    },
+    "stage_genesis": {
+      "path": "Control/hypervisor-local-v1/stage0-genesis-freeze.v1.json",
+      "blob": "777bd7b1e6b51b73214da9f2ebd6affdc1d99ee1",
+      "sha256": "459a830f72910236ec8d7c430229f3d82d974c1cc9396d3b4a551bc14c7487f7"
+    },
+    "precedence": "This artifact selects one architecture and custody class inside the exact threat and privacy boundaries. It does not supersede a governing control or supply implementation evidence."
+  },
+  "user_direction_and_selection_basis": {
+    "standing_direction": "PROCEED_AT_RECOMMENDATIONS",
+    "standing_direction_date": "2026-09-04",
+    "prime_git_vm_statement": {
+      "claim_state": "USER_DECLARED_NOT_INDEPENDENTLY_OBSERVED",
+      "reported_location": "ON_THE_EVALUATED_MAC",
+      "reported_disposition": "the user did not delete it and expects it still to exist",
+      "inspection_performed": false,
+      "classification_rule": "Whether or not the VM presently exists, a VM located on this evaluated Mac remains inside the same administrative and storage rollback domain on the facts supplied."
+    },
+    "selection_interpretation": "The prior instruction to proceed at recommendations, joined to the supplied same-Mac VM fact, resolves the preselection gate to the recommended lowest-externality admissible alternative: one private user-custodied verifier on physically separate compute and storage.",
+    "selected_tradeoff": "Prefer minimum external recipients, no provider account, no network dependency and no recurring service cost over automated availability, continuity backup, global fork visibility or multi-witness resilience.",
+    "selection_effect": "NORMATIVE_DESIGN_ONLY; no existing or future physical device is identified, qualified, provisioned, written, mounted, launched or contacted."
+  },
+  "roadmap_boundary": {
+    "roadmap_stage": "hypervisor_durable_receipt_fault_injection_v1",
+    "relation": "H4_PRE_ENTRY_PRIVATE_PHYSICAL_VERIFIER_ARCHITECTURE_AND_CUSTODY_FREEZE",
+    "roadmap_ordinal_advanced": false,
+    "d3d_or_d4_identifier_assigned": false,
+    "architecture_selected": true,
+    "custody_class_selected": true,
+    "selection_claim_state": "NORMATIVE",
+    "live_verifier_selected_or_qualified": false,
+    "durable_representation_changed": false,
+    "runtime_implementation_added": false,
+    "test_execution_added": false,
+    "h4_entry_evaluated": false,
+    "reason": "Architecture and custody are prerequisites to a later format freeze. A design selection is not a live anchor, implementation result, H-stage entry or roadmap advance."
+  },
+  "selected_architecture": {
+    "assurance_target": "VERIFIER_RELATIVE_ISSUER_ASSERTION_ANTI_REPLAY_ONLY",
+    "logical_topology": "ONE_PRIVATE_SERIALIZED_APPEND_ONLY_VERIFIER",
+    "custody": "USER_CUSTODIED_PHYSICALLY_SEPARATE_COMPUTE_AND_STORAGE",
+    "correlation_domain": "ONE_VERIFIER_LOCAL_PURPOSE_SCOPED_DOMAIN",
+    "initial_witness_count": 1,
+    "external_provider": "NONE",
+    "remote_operator": "NONE",
+    "public_or_shared_log": false,
+    "ambient_network_dependency": false,
+    "authority_bearing_backup_or_replica": false,
+    "same_mac_prime_git_vm_role": "NON_AUTHORITATIVE_STORAGE_AND_TEST_INFRASTRUCTURE_ONLY",
+    "split_view_or_withheld_successor_detection": "NOT_CLAIMED",
+    "global_newest_state": "NOT_CLAIMED",
+    "high_value_ingress_or_trusted_egress": "DEFAULT_DENY_SEPARATE_DESIGN_REQUIRED",
+    "selection_summary": "One physically separate device or appliance owns verifier policy, trust roots and append-only replay state behind a protocol-limited interface. The evaluated Mac may later relay bounded messages but cannot read, mount, replace, reset, restore or administer authority state."
+  },
+  "assurance_scope": {
+    "positive_design_target": [
+      "authenticate one bounded issuer assertion under one device-pinned policy",
+      "reconstruct the exact canonical assertion body, detached signature envelope and each outer commitment join whose complete canonical inputs are transmitted; validate only syntax, domain, length and exact joins for opaque inner D3 and evidence digests",
+      "distinguish the verifier's exact current accepted issuer assertion or one exact eligible assertion successor from a stale, gap, conflicting, malformed or unauthenticated assertion",
+      "serialize at most one exact high-water transition per lineage position",
+      "retain verifier-relative replay, conflict and terminal state outside rollback of the evaluated Mac"
+    ],
+    "selected_evidence_assurance": "ISSUER_AUTHENTICATED_COMMITMENT_AND_ORDERING_ONLY",
+    "hidden_evidence_rule": "The device receives commitments to D3 semantic, representation, graph, predicate and evidence material, not the underlying D3 JSON, CBOR, SQLite image, graph or evidence preimages. It therefore authenticates and orders the issuer's claims but does not independently prove the hidden semantics or evidence true.",
+    "predicate_result_rule": "The canonical assertion carries the bounded predicate inventory and ordered result vector plus commitments to its evidence. The device can verify that those claims are exactly signed and ordered; it cannot infer that hidden evidence exists or supports the claimed result.",
+    "local_verification_relation": "Any local D3 semantic reconstruction remains a separate evaluated-Mac observation and cannot upgrade the physical verifier's narrower anti-replay assurance.",
+    "governing_state_mapping": "The device outcomes selected here are narrower ASSERTION_ORDERING states. They are not the governing threat model's full VALID_CURRENT_READ_ONLY or VALID_EXACT_SUCCESSOR states because the device does not receive or independently reconstruct hidden D3 and evidence preimages. They cannot close a full H4 anti-replay, D3-validity or admission gate.",
+    "explicit_nonassurance": [
+      "historical execution truth",
+      "honest computation",
+      "host integrity or attestation",
+      "guest integrity or confidentiality",
+      "hidden evidence validity",
+      "global newest state",
+      "absence of a successor withheld from this verifier",
+      "cross-verifier split-view or fork exclusion",
+      "availability, backup or disaster recovery",
+      "Gate E, candidate or scientific authority"
+    ]
+  },
+  "selected_claim_eligibility": {
+    "eligible_term": "ELIGIBLE_FOR_ISSUER_ASSERTION_ORDERING_ONLY",
+    "global_term_rule": "Every unqualified use of eligible, eligibility, successor or conflict in this artifact is scoped to ELIGIBLE_FOR_ISSUER_ASSERTION_ORDERING_ONLY and never means that hidden D3 semantics or evidence passed the governing threat model's fuller verification predicates.",
+    "common_device_observable_predicates": [
+      "bounded framing, canonical assertion and signature-envelope decoding, exact schema and supported suite",
+      "independently provisioned verifier identity, trusted genesis and immutable current-epoch policy",
+      "exact product, roadmap, stage, durable-schema, purpose, lineage and epoch context",
+      "exact verifier, audience and policy binding",
+      "issuer identity, current-epoch key authorization and detached signature validity",
+      "independent reconstruction of each outer commitment, count, predicate-inventory and ordered-result-vector relation whose complete canonical inputs are transmitted; opaque inner D3 and evidence digests receive syntax, domain, length and exact-join validation only and are never recomputed",
+      "exact claim, nonclaim and authority-ceiling joins",
+      "fresh authenticated device high-water or exact uninitialized-genesis state"
+    ],
+    "position_classification_rules": {
+      "evaluation_order": "All common device-observable predicates and the unsupported-assurance gate pass before any lifecycle or position result can reveal state. The authoritative lifecycle-state precedence is then applied before position classification. Only ACTIVE reaches the occupied/current/successor position rules, and a tuple need satisfy only its applicable rule below, not the bootstrap or successor rule of another class.",
+      "authoritative_state_precedence": "UNPROVISIONED exposes no assertion interface, emits no authenticated assertion result and accepts no candidate state. UNINITIALIZED_FOR_TRUSTED_GENESIS permits only the exact bootstrap rule; every other authenticated assertion rejects without mutation. ACTIVE permits the current, wrapper-variant, occupied-conflict and exact-successor rules below. CONFLICT_REQUIRES_INSPECTION overrides every assertion position with INSPECTION_REQUIRED and no assertion mutation; only a separately authenticated device-local terminal transition remains possible. STORAGE_FAULT_LOCKED overrides every assertion position with UNAVAILABLE_OR_AMBIGUOUS and no assertion mutation; only the constrained device-local terminal path remains possible. TERMINAL rejects every assertion without mutation. These overrides are evaluated before looking up an assertion as current, wrapper, conflict or successor.",
+      "bootstrap": "Only while uninitialized: sequence exactly zero and predecessor lineage-state commitment exactly equal to the independently provisioned fixed-genesis predecessor.",
+      "current": "Only while ACTIVE, the exact admitted assertion-body commitment at the authenticated current high-water sequence is current read-only; a valid signature-envelope difference over that exact body is audit variance only.",
+      "wrapper_variant": "Only while ACTIVE, at an occupied retained sequence, the candidate sequence and predecessor equal that accepted record's sequence and predecessor and its audience-neutral lineage-state commitment is the same, but its issuer-assertion-body commitment differs. It requires inspection without mutation and does not need to satisfy the exact-next-successor tuple.",
+      "occupied_conflict": "Only while ACTIVE, at an occupied retained sequence, the candidate sequence equals that occupied sequence and its predecessor equals the accepted record's predecessor, but its independently eligible audience-neutral lineage-state commitment differs from the accepted record. This includes a concurrently submitted child that loses after its sibling with the same parent is accepted. It may create conflict state only through the durable conflict rule and does not need to name the now-current head as predecessor.",
+      "exact_successor": "Only while active: sequence exactly authenticated current high-water sequence plus one and predecessor lineage-state commitment exactly equal to the authenticated current head.",
+      "stale_gap_or_other": "Every other position tuple is non-admitting ASSERTION_REJECTED and cannot create a fork, wrapper, bootstrap, high-water or fault-state mutation."
+    },
+    "hidden_claim_treatment": "D3 semantic, representation, graph, predicate-evidence and execution values appear only as issuer-authenticated commitments or claimed result values. They remain UNKNOWN to this device as underlying facts and are not promoted to verifier-verified evidence.",
+    "unsupported_assurance_rule": "If the requested policy or claim class requires evidence-preimage validation, independent D3 semantic reconstruction, host attestation, honest computation, high-value ingress or trusted egress, return UNSUPPORTED_ASSURANCE_OR_EVIDENCE_UNKNOWN before sequence, predecessor, current, successor, gap or fork classification.",
+    "mutation_precondition": "Only an assertion that passes every common device-observable predicate, the unsupported-assurance gate and the applicable classification-specific position rule under the exact commitment-and-ordering policy may initialize, advance or create retained conflict state. Current and wrapper-variant classifications are read-only. Malformed, unauthenticated, wrong-context, wrong-policy, key-rejected, unsupported-assurance, hidden-evidence-dependent, stale, gap or other position input cannot mutate bootstrap, high-water, conflict, fault or terminal state.",
+    "selected_internal_states": [
+      "ASSERTION_ORDERING_CURRENT_READ_ONLY",
+      "ASSERTION_ORDERING_EXACT_SUCCESSOR",
+      "ASSERTION_ORDERING_WRAPPER_VARIANT_REQUIRES_INSPECTION",
+      "ASSERTION_ORDERING_CONFLICT_REQUIRES_INSPECTION",
+      "ASSERTION_ORDERING_UNAVAILABLE_OR_AMBIGUOUS"
+    ],
+    "authority_limit": "Passing this eligibility predicate authenticates and orders an issuer assertion only. It does not establish that the committed D3 bytes, evidence, predicates, execution or claim are true."
+  },
+  "adversary_and_trust_model": {
+    "modeled_adversary_may": [
+      "control, restore or coherently substitute the evaluated Mac's local files, databases, preferences, caches, clocks, Git objects and same-Mac VM state",
+      "send malformed, replayed, reordered, duplicated, conflicting or oversized protocol inputs",
+      "withhold, delay, reorder or duplicate request and response delivery",
+      "interrupt the evaluated Mac before, during or after a verifier transaction",
+      "present stale locally cached verifier responses or receipts",
+      "attempt to enumerate lineage existence or high-water position through queries and error differences",
+      "compromise the issuer role on the evaluated Mac and sign false content if the later issuer-key design permits that host to use the key"
+    ],
+    "trusted_for_selected_claim": [
+      "the user's physical custody and device-local policy decisions",
+      "the qualifying physical verifier's hardware, firmware or operating runtime, codec, cryptography, entropy and atomic storage implementation",
+      "the device-local administration boundary and its protection from evaluated-Mac reset or replacement"
+    ],
+    "outside_selected_threat_model": [
+      "a malicious or coerced user-custodian",
+      "compromise or supply-chain subversion of the physical verifier",
+      "physical invasive attacks, secret extraction and side channels",
+      "device theft, destruction, firmware failure or storage failure",
+      "denial of service and permanently withheld successors",
+      "collusion with an unselected second verifier or relying party"
+    ],
+    "fail_closed_rule": "An outside-threat or unavailable condition never becomes evidence of freshness. It makes new admission unavailable or leaves the claim UNKNOWN."
+  },
+  "rollback_domains": {
+    "evaluated_mac_domain": {
+      "classification": "UNTRUSTED_FOR_FRESHNESS_AND_REPLACEABLE_BY_MODELED_ADVERSARY",
+      "includes": [
+        "the application executable, process memory, container and preferences",
+        "D3 final and staging SQLite paths, SQLite image bytes, WAL, sidecars and filesystem metadata",
+        "local journals, receipts, caches, clocks, keychain items and ordinary application files",
+        "local Git objects, refs, main, reflogs, hashes and worktrees",
+        "APFS volumes, clones and snapshots controlled by the Mac",
+        "the Prime Git VM, its virtual disks, snapshots, configuration and same-Mac backing storage",
+        "local backups, test fixtures and every external copy the Mac can directly overwrite, reset or replace"
+      ],
+      "rule": "No member can serve as the selected verifier trust root, authoritative replay state, recovery source or proof of current freshness."
+    },
+    "independent_verifier_domain": {
+      "classification": "SELECTED_AUTHORITY_LOCATION_PENDING_LIVE_QUALIFICATION",
+      "must_include": [
+        "physically separate compute that executes the verifier policy",
+        "device-internal storage for trusted genesis, policy, key position and append-only replay state",
+        "device-owned verifier identity and trust-root material",
+        "device-local administration and explicit physical-custodian control",
+        "atomic high-water and conflict-state update mechanism"
+      ],
+      "must_exclude": [
+        "a host-mountable or host-writable authority database",
+        "candidate-controlled reset, restore, rollback or factory-rebaseline",
+        "firmware, administrator or recovery authority delegated to the evaluated Mac",
+        "an authority-bearing backup stored in local Git, D3, the Prime Git VM or another same-Mac path",
+        "automatic remote service, provider account, public log or second witness"
+      ],
+      "boundary_invariant": "Rollback or coherent replacement of the entire evaluated-Mac domain cannot roll back, replace or reset the verifier's accepted head, policy or trust roots without the verifier becoming unavailable, changing authenticated identity or rejecting."
+    },
+    "physical_separation_limit": "Physical separation alone is insufficient. The selected hardware must execute the verifier and mediate its state through a bounded protocol; an ordinary removable disk or filesystem writable by the Mac does not qualify.",
+    "reset_rule": "A device reset or replacement changes verifier identity and requires a new independently provisioned lineage or epoch. It cannot silently recreate or continue the old head from candidate, D3, Git or Prime VM state."
+  },
+  "roles_and_custody": {
+    "user_custodian": {
+      "count": 1,
+      "role": "sole initial physical custodian, policy approver and device-local lifecycle authority",
+      "may": [
+        "perform a later separately authorized device-local provisioning ceremony",
+        "approve planned terminal state or authenticated migration while the old device remains available",
+        "start a visibly new lineage or epoch after unrecoverable loss"
+      ],
+      "may_not": [
+        "use candidate or same-Mac state to restore continuity",
+        "convert a reset identity into the old verifier identity",
+        "promote verifier receipts to H4, Gate E or scientific authority"
+      ],
+      "trust_limit": "Protection against a malicious custodian is not claimed by this single-user design."
+    },
+    "evaluated_mac_and_issuer": {
+      "role": "construct a bounded candidate assertion and relay a later protocol exchange",
+      "authority": "not freshness, replay-state, reset, recovery or verifier-policy authority",
+      "compromise_limit": "A compromised issuer may submit or sign false claims and may withhold or deny service. It still cannot make the selected verifier accept an older head as current or replace the verifier's retained state under the selected assumptions."
+    },
+    "physical_verifier": {
+      "role": "independently parse, canonicalize, authenticate, classify and exclusively serialize verifier-relative replay-state transitions",
+      "authority": "only its own policy-relative assertion head; no product-stage, Gate-E, host-integrity, execution-truth or scientific authority",
+      "state_ownership": "exclusive over trusted genesis, policy, verifier identity, key position, current head, append-only transition records and conflict or terminal tombstones"
+    },
+    "requester": {
+      "role": "submit one exact bounded assertion and receive one minimized authenticated outcome for that assertion",
+      "access_limit": "no list, enumeration, raw high-water read, arbitrary history query, reset, restore, admin, firmware or raw-state export"
+    },
+    "absent_initial_roles": [
+      "provider or service operator",
+      "remote administrator",
+      "network intermediary",
+      "backup or replica controller",
+      "public or shared-log reader",
+      "separate auditor",
+      "external relying party",
+      "quorum or gossip participant"
+    ]
+  },
+  "trust_root_and_key_custody": {
+    "architecture_selected_root": "One device-owned verifier identity and independently provisioned trusted genesis/policy root under user physical custody.",
+    "provisioning_authority": "Device-local user-custodian ceremony outside the evaluated Mac's authority. Before any candidate bootstrap, the ceremony fixes the exact verifier identity, trusted genesis and fixed-genesis predecessor, policy, algorithm suite, issuer and key authorization, key position and authenticated uninitialized replay-state cell. The candidate cannot create that cell, choose any pinned value, reset policy or rebaseline after missing state.",
+    "verifier_private_material": "Must remain device-owned and unavailable to the evaluated Mac. Exact algorithm, key type, bytes, generation, backup and hardware protection remain for the format, crypto and live-device freezes.",
+    "verifier_public_identity": "Must be bound to the independently provisioned genesis and available for authenticated result verification under a later exact distribution rule. A same-Mac unprotected pin alone is not independent.",
+    "issuer_key": "Issuer authorization and signature are required, but key type, generation and location remain unfrozen. An issuer key is never freshness state, and a host-usable issuer key cannot prove the host's claim true.",
+    "current_epoch_immutability": "The exact verifier identity, trusted genesis and fixed-genesis predecessor, policy identity, issuer and key authorization, algorithm suite and key positions are pinned during device-local provisioning before any candidate bootstrap and remain immutable for the complete selected initial epoch.",
+    "in_epoch_rotation_or_policy_update": "FORBIDDEN_IN_INITIAL_ARCHITECTURE",
+    "change_or_compromise_rule": "A required policy, issuer-key, verifier-key or algorithm change, or suspected compromise of any of them, denies automatic advancement and requires an authenticated device-local terminal transition. If the old device remains available, a separately frozen terminal-to-new-genesis migration may start a new epoch; otherwise replacement is an explicitly discontinuous new lineage or epoch.",
+    "recovery_root": "NONE_IN_INITIAL_ARCHITECTURE",
+    "authority_backup": "NONE_IN_INITIAL_ARCHITECTURE",
+    "continuity_recovery": "Only an authenticated old-device-to-new-device migration while the old device and its accepted head remain available can preserve continuity. The exact migration protocol is separately deferred.",
+    "lost_device_rule": "Without the old device or a separately frozen independent continuity mechanism, replacement starts a new verifier identity and new lineage or epoch with explicit non-continuation."
+  },
+  "verifier_interface_restrictions": {
+    "interface_model": "OPAQUE_BOUNDED_REQUEST_RESPONSE_NOT_A_MOUNTED_STORE",
+    "transport": "UNSELECTED_AND_UNIMPLEMENTED",
+    "future_mac_role": "untrusted message relay only",
+    "required_properties": [
+      "bounded canonical framing with fixed schema, one genesis-fixed current-epoch suite identifier and explicit unsupported-suite rejection",
+      "device-generated or device-bound freshness input sufficient to reject cached responses under the later protocol",
+      "exact audience, purpose, policy and verifier-identity binding",
+      "one assertion per transaction and no ambient namespace enumeration",
+      "authenticated response joined to the exact request and resulting device state",
+      "no host-visible raw authority-state database, secret, reset primitive or factory-rebaseline control",
+      "no implicit retry after ambiguous acknowledgment",
+      "no automatic network, provider, telemetry, backup, replica or firmware channel"
+    ],
+    "query_privacy": {
+      "list_or_enumerate_lineages": "DENIED",
+      "raw_high_water_read": "DENIED_TO_HOST",
+      "arbitrary_history_export": "DENIED",
+      "exact_authenticated_assertion_query": "MAY_RETURN_ONE_MINIMIZED_OUTCOME_AFTER_FULL_AUTHENTICATION",
+      "preauthentication_and_rejection_projection": "NON_ENUMERATING_EXTERNAL_CLASS",
+      "complete_reasoning": "TRANSIENT_OR_DEVICE_INTERNAL_ACCESS_CONTROLLED_ONLY"
+    },
+    "administration": "Device-local and physically mediated under user custody. Exact controls, display, accessibility, firmware/update and reset mechanisms must be reviewed with actual hardware before live use."
+  },
+  "selected_disclosure_boundary": {
+    "device_transient_input": {
+      "records": [
+        "one complete canonical issuer-assertion body",
+        "one detached signature envelope",
+        "protocol framing and verifier-bound freshness material selected later"
+      ],
+      "required_field_classes": [
+        "schema and version",
+        "product, roadmap, stage, durable-schema and purpose identifiers",
+        "verifier, audience and policy identifiers",
+        "high-entropy purpose-scoped lineage and epoch identifiers",
+        "sequence and predecessor/current lineage-state commitments",
+        "D3 semantic, canonical JSON, deterministic CBOR, indexed-scalar and graph commitments with exact byte or member counts",
+        "bounded predicate inventory and ordered result vector",
+        "commitments to predicate evidence, not evidence preimages",
+        "claim, nonclaim and authority ceiling",
+        "issuer, key and algorithm identifiers",
+        "assertion-body commitment and exact signature bytes in the detached envelope"
+      ],
+      "field_inventory_stability": "The later independently provisioned genesis freezes the exact required inventory for the epoch; a candidate cannot add, remove or reinterpret fields.",
+      "necessity": "These fields prevent cross-domain replay, bind the issuer's exact claim and allow the device to reconstruct ordering, authentication and internal commitment relations.",
+      "retention": "Transient through the completed or rejected transaction unless a minimal accepted-state or eligible-conflict commitment is selected below."
+    },
+    "device_persistent_state": {
+      "records": [
+        "trusted genesis, verifier identity, policy and key-position records",
+        "one minimal append-only accepted high-water transition record per admitted sequence",
+        "minimal eligible-fork, storage-fault, terminal or compromise tombstones"
+      ],
+      "accepted_transition_fields": [
+        "prior and resulting high-water-record commitments",
+        "prior and current lineage-state commitments",
+        "issuer-assertion-body commitment",
+        "signature-envelope commitment",
+        "verifier-decision-record commitment",
+        "lineage, epoch, sequence and key-position identifiers",
+        "bounded status and conflict or terminal state"
+      ],
+      "conflict_tombstone_fields": [
+        "lineage, epoch, occupied sequence and common predecessor",
+        "accepted and competing eligible audience-neutral lineage-state commitments",
+        "accepted and competing issuer-assertion-body and signature-envelope commitments",
+        "accepted and competing verifier-decision commitments under the selected ordering-only eligibility",
+        "policy, issuer-key position and conflict-lock status"
+      ],
+      "storage_fault_latch_fields": [
+        "lineage and epoch",
+        "last authenticated immutable head commitment, or the exact fixed uninitialized/genesis predecessor when no accepted head exists",
+        "attempted transaction commitment when durably available",
+        "fault-locked status"
+      ],
+      "excluded_from_persistence": [
+        "raw issuer-assertion bodies and signatures",
+        "D3 JSON, CBOR, SQLite, graph or evidence preimages",
+        "raw protected payload",
+        "rejected or ineligible candidate bodies",
+        "complete detailed rejection errors",
+        "diagnostics, precise timestamps, request cadence and performance data",
+        "account, endpoint, host, session, source, build, commit, tree or environment identifiers unless a later separately reviewed assurance policy adds them",
+        "admission receipts",
+        "general logs, telemetry, crash reports, support bundles, backups and replicas"
+      ]
+    },
+    "requester_output": {
+      "successful_or_current_assertion": "One bounded authenticated outcome or receipt joined to the exact submitted assertion, decision commitment and resulting authenticated high-water commitment.",
+      "allowed_authenticated_classes": [
+        "ASSERTION_ACCEPTED",
+        "ASSERTION_READ_ONLY_CURRENT",
+        "INSPECTION_REQUIRED",
+        "ASSERTION_REJECTED",
+        "UNAVAILABLE_OR_AMBIGUOUS"
+      ],
+      "rejection": "Malformed, pre-authentication, wrong-context, stale, gap and unsupported-assurance results collapse to the generic non-enumerating ASSERTION_REJECTED class. An authenticated wrapper variant or durably recorded eligible conflict may return only INSPECTION_REQUIRED, and an unavailable or unprovable mutation may return only UNAVAILABLE_OR_AMBIGUOUS. No competing commitment, raw head, sequence or detailed typed classification is automatically returned.",
+      "authority_limit": "The output proves only this verifier's past bounded decision. It is not a current-head read, host attestation, execution proof, H4 entry or Gate-E receipt."
+    },
+    "excluded_input_and_output": [
+      "user text, consumer payload, credentials, secrets and unrestricted paths",
+      "D3 canonical stream or evidence preimages",
+      "source files, repository history and Prime Git identity",
+      "host, VM, session, environment and local-clock identity",
+      "unrestricted diagnostic or error text",
+      "private keys, recovery secrets and raw entropy",
+      "public/shared publication"
+    ],
+    "low_entropy_rule": "Lineage and epoch identifiers must be high entropy and purpose scoped. Enumerated product, roadmap, stage, schema and policy values remain visible structural context inside the private verifier domain; no secrecy claim attaches to them. A digest or commitment to low-entropy or enumerable D3, representation, graph, predicate or evidence material is not hiding and is not declassified merely because its preimage is withheld. Before any such commitment is emitted, the later exact-byte freeze must either select and separately justify a hiding construction with its randomness, domain and custody rules or explicitly classify and authorize the resulting offline-dictionary and membership inference as an accepted disclosure; unresolved cases remain blocked from emission.",
+    "semantic_limit": "Because hidden D3 and evidence preimages are excluded, a later need for independent D3 semantic reconstruction is a new positive disclosure and requires a separate privacy and declassification review."
+  },
+  "verifier_lifecycle": {
+    "authoritative_states": [
+      "UNPROVISIONED",
+      "UNINITIALIZED_FOR_TRUSTED_GENESIS",
+      "ACTIVE",
+      "CONFLICT_REQUIRES_INSPECTION",
+      "STORAGE_FAULT_LOCKED",
+      "TERMINAL"
+    ],
+    "client_observation_states": [
+      "UNAVAILABLE",
+      "UPDATE_AMBIGUOUS_REQUIRES_FRESH_EXACT_ASSERTION_RESOLUTION",
+      "IDENTITY_CHANGED_OR_UNTRUSTED"
+    ],
+    "transitions": [
+      {
+        "from": "UNPROVISIONED",
+        "to": "UNINITIALIZED_FOR_TRUSTED_GENESIS",
+        "rule": "Before candidate input is accepted, a device-local user-custodian ceremony fixes the exact verifier identity, trusted genesis and fixed-genesis predecessor, policy, algorithm suite, issuer and key authorization, key position and an authenticated uninitialized replay-state cell. These values are immutable for the epoch. Candidate input cannot perform this transition."
+      },
+      {
+        "from": "UNINITIALIZED_FOR_TRUSTED_GENESIS",
+        "to": "ACTIVE",
+        "rule": "One exact assertion eligible for the selected ordering-only claim, with sequence exactly zero and predecessor lineage-state commitment exactly equal to the independently provisioned fixed-genesis predecessor, atomically appends the first high-water record. Ineligible, nonzero-sequence or predecessor-mismatched input cannot initialize or poison. Simultaneous eligible bootstraps serialize; after one wins, a different eligible lineage state at the occupied initial position follows the ACTIVE conflict rule."
+      },
+      {
+        "from": "UNINITIALIZED_FOR_TRUSTED_GENESIS",
+        "to": "STORAGE_FAULT_LOCKED",
+        "rule": "If the bootstrap append cannot be proven atomically complete, the verifier durably records a fail-closed latch against the exact fixed uninitialized/genesis predecessor or remains physically unavailable. It cannot retry initialization or serve as uninitialized from an unproven outcome."
+      },
+      {
+        "from": "ACTIVE",
+        "to": "ACTIVE",
+        "rule": "An exact already-admitted assertion-body commitment is ASSERTION_ORDERING_CURRENT_READ_ONLY and appends nothing. A different valid signature-envelope encoding over that same exact body is audit variance only and also appends nothing. One exact successor eligible for the selected ordering-only claim, with sequence exactly authenticated high-water sequence plus one and predecessor lineage-state commitment exactly equal to the authenticated current head, atomically appends one new immutable high-water record."
+      },
+      {
+        "from": "ACTIVE",
+        "to": "CONFLICT_REQUIRES_INSPECTION",
+        "rule": "Only a different audience-neutral lineage-state commitment independently eligible for the selected ordering-only claim at an occupied position, or a different independently eligible child lineage-state commitment of the same parent, atomically appends a minimal conflict tombstone and permanently denies automatic advancement pending a separately frozen resolution."
+      },
+      {
+        "from": "ACTIVE",
+        "to": "ACTIVE",
+        "rule": "A different issuer-assertion-body commitment over the same audience-neutral lineage state is ASSERTION_ORDERING_WRAPPER_VARIANT_REQUIRES_INSPECTION. It does not advance the head, append an accepted record or create lineage-conflict state; a different valid signature envelope over the exact same body is only nonpersistent audit variance."
+      },
+      {
+        "from": "ACTIVE",
+        "to": "STORAGE_FAULT_LOCKED",
+        "rule": "If an accepted-head, eligible-conflict or terminal append cannot be proven atomically complete, the verifier durably enters a fail-closed storage-fault state or remains physically unavailable. It cannot restart as ACTIVE from an unproven outcome."
+      },
+      {
+        "from": "ACTIVE",
+        "to": "TERMINAL",
+        "rule": "A planned authenticated device-local closure appends a terminal record. No later assertion advances that epoch."
+      },
+      {
+        "from": "CONFLICT_REQUIRES_INSPECTION",
+        "to": "TERMINAL",
+        "rule": "The initial architecture permits explicit terminal closure only. Selecting a surviving fork or resuming the same epoch requires a separate resolution freeze."
+      },
+      {
+        "from": "CONFLICT_REQUIRES_INSPECTION",
+        "to": "STORAGE_FAULT_LOCKED",
+        "rule": "If an authenticated device-local terminal append from conflict state cannot be proven atomically complete, the verifier durably enters STORAGE_FAULT_LOCKED or remains physically unavailable. It cannot resume conflict service or ACTIVE from the unproven outcome."
+      },
+      {
+        "from": "STORAGE_FAULT_LOCKED",
+        "to": "TERMINAL",
+        "rule": "The initial architecture permits only device-local authenticated terminal closure after exact inspection. If that terminal append cannot be proven atomically complete, the verifier remains STORAGE_FAULT_LOCKED or physically unavailable. The evaluated Mac cannot clear the latch, restore ACTIVE or select a head."
+      }
+    ],
+    "unavailability": "Absence, power-off, unreadable state or failed authentication is an external observation, not a new accepted state. It denies new admission and does not authorize local fallback.",
+    "identity_change": "A reset, factory rebaseline, replacement device or unknown verifier identity cannot inherit the old lineage. It is untrusted until a new independent provisioning ceremony creates an explicitly distinct lineage or epoch."
+  },
+  "atomicity_concurrency_and_acknowledgment": {
+    "single_writer": "The physical verifier is the sole serializer of its accepted state. The evaluated Mac never writes authority bytes directly.",
+    "update_semantics": "One device-owned atomic compare-and-append changes the exact authenticated prior head by adding one immutable record binding the eligible successor and decision. An implementation may append that immutable record and atomically compare-and-set only a head pointer; no compare-and-set may overwrite, truncate, compact, delete or reuse an accepted, conflict, storage-fault or terminal record.",
+    "concurrent_successors": "At most one exact eligible audience-neutral lineage-state successor advances the head. A different independently eligible lineage-state loser becomes conflict evidence. The same assertion body is idempotent, a valid signature-envelope difference over that body is audit variance, a different body over the same lineage state requires inspection without mutation, and an ineligible loser rejects without poisoning state.",
+    "duplicate": "An exact issuer-assertion-body commitment at the current position is idempotent read-only and creates no second transition. A repeated or different valid signature-envelope encoding over that exact body does not create a lineage fork, second logical assertion or persistent transition.",
+    "wrapper_variant": "A different eligible issuer-assertion body carrying the same audience-neutral lineage-state commitment cannot advance and cannot create conflict state. The selected v1 returns minimized INSPECTION_REQUIRED and retains no wrapper-variant body by default.",
+    "conflict_commit_rule": "An eligible lineage conflict becomes an authoritative observation only through the atomic append of its immutable conflict tombstone. The device emits no conflict result before that append is authenticated durable.",
+    "reserved_fault_capacity": "From provisioning of each authenticated uninitialized lineage cell through authenticated durability of its terminal record, the qualifying store must continuously reserve independently protected capacity sufficient for a conflict tombstone, a terminal record and a persistent storage-fault latch. Bootstrap and ordinary accepted transitions cannot consume that reserve.",
+    "conflict_write_failure": "After classifying an eligible lineage conflict, the device allows no later head advance until the conflict tombstone is durably authenticated. If that append is failed or unprovable, a separate durable fail-closed latch records STORAGE_FAULT_LOCKED; if neither tombstone nor latch durability can be established, the device is unqualified and must remain offline rather than restart ACTIVE.",
+    "ambiguous_acknowledgment": "If the requester cannot authenticate whether a bootstrap, successor or conflict-tombstone mutation completed, local adoption remains denied and it resubmits or queries only the same exact authenticated assertion under the later fresh protocol. The device resolves to read-only current if that exact body advanced, INSPECTION_REQUIRED if a conflict tombstone exists, ASSERTION_REJECTED for another non-admitting assertion result, or UNAVAILABLE_OR_AMBIGUOUS if a pending or storage-fault latch remains; it never assumes the pre-attempt head. Ambiguous terminal append is resolved only by an authenticated recovery scan or the same exact authenticated device-local terminal-transition request, never by an assertion query.",
+    "cached_response": "A cached receipt or host-supplied high-water response cannot establish current device state.",
+    "recovery_scan": "Before serving after any interrupted mutation, the device authenticates the immutable log, head pointer, reserved tombstones and storage-fault latch. Missing, divergent or ambiguous state remains locked or unavailable.",
+    "capacity_or_io_failure": "The qualifying implementation must preserve every prior immutable record and either authenticate the new append or retain a durable fail-closed latch. Exact capacity, ENOSPC, EIO, torn-write, latch and power-loss behavior require later hardware-specific evidence.",
+    "claim_state": "NORMATIVE_UNIMPLEMENTED"
+  },
+  "retention_deletion_and_recovery": {
+    "retained_for_active_epoch": [
+      "trusted genesis, verifier identity, policy and key-position records",
+      "minimal append-only accepted high-water transition records",
+      "current head",
+      "minimal eligible-fork, storage-fault, compromise and terminal tombstones"
+    ],
+    "not_retained_by_default": [
+      "raw assertions, signatures, D3 streams, evidence or protected payload",
+      "invalid or rejected request bodies",
+      "complete rejection detail after the transaction",
+      "receipts",
+      "timestamps, cadence, performance data and general diagnostics",
+      "logs, telemetry, backups, replicas and exports"
+    ],
+    "lifetime": "Authoritative minimal immutable records persist for the complete active epoch and through planned terminal state or device retirement. No automatic compaction, truncation, overwrite or deletion is selected for v1.",
+    "boundedness_requirement": "The later format and hardware qualification must define maximum lineages, records and bytes and reserve durable conflict, terminal and fault capacity. Exhaustion fails closed and cannot silently discard old head, accepted history, conflict state or fault state.",
+    "transient_input_disposal": "The device releases transaction buffers after the decision under its later implementation. This is a logical lifetime rule, not proof of zeroization, allocator overwrite, flash erasure or absence from firmware diagnostics.",
+    "authority_backup": "NONE",
+    "continuity_replica": "NONE",
+    "ordinary_local_copy": "A receipt or structural mirror stored in D3, local Git or the Prime Git VM remains historical non-authoritative evidence and cannot restore or rebaseline the verifier.",
+    "planned_migration": "While the old device remains available, a separately frozen authenticated terminal-to-new-genesis migration may preserve continuity. No migration protocol is selected here.",
+    "unplanned_loss": "Device loss, destruction, unreadable state or unavailable identity permanently denies further current-head claims for the old lineage. Replacement requires a new independently provisioned lineage or epoch with explicit non-continuation.",
+    "key_and_policy_lifecycle": "No in-epoch issuer-key, verifier-key, algorithm or policy rotation is selected. Any required change or suspected compromise denies advancement and uses device-local terminal handling followed by separately frozen old-terminal-to-new-genesis migration while available, or an explicitly discontinuous new lineage or epoch.",
+    "compromise": "Suspected device, issuer-key, verifier-key, algorithm or policy compromise denies automatic advancement and requires terminal or new-lineage handling. Candidate or same-Mac recovery is forbidden.",
+    "deletion": "Append-only accepted state is not deleted during the selected epoch. Future device retirement or disposal requires a separate physical and cryptographic erasure claim; none is made here."
+  },
+  "availability_policy": {
+    "service_model": "USER_PRESENT_OR_USER_AVAILABLE_PHYSICAL_VERIFIER_NO_SLA",
+    "offline": "The verifier may remain offline and physically separate when not in use. Offline means unavailable for new admission, not permission to accept locally.",
+    "outage": "Local synthetic development and non-authoritative inspection may continue, but candidates remain unadmitted and cannot be called current under the selected verifier.",
+    "queue": "The evaluated Mac may not treat a locally queued candidate as reserved, admitted or guaranteed. Re-evaluate against fresh device state when the verifier returns.",
+    "rto_or_rpo": "UNSELECTED_NO_AVAILABILITY_PROMISE",
+    "permanent_loss": "Explicit lineage discontinuity; no continuity reconstruction from local state.",
+    "tradeoff": "This fail-closed no-backup choice minimizes recipients, externality and cost while accepting manual availability and single-device loss."
+  },
+  "prime_git_vm_disposition": {
+    "reported_topology": "ON_THE_EVALUATED_MAC_USER_DECLARED_NOT_OBSERVED",
+    "independent_anchor_eligibility": false,
+    "reason": "The evaluated Mac can control or replace the VM process, configuration, virtual disk, snapshots and same-Mac backing storage; coherent Mac rollback can include its state.",
+    "permitted_future_roles": [
+      "non-authoritative local development view",
+      "pure fabricated verifier test environment under a separate scope",
+      "ordinary local history or receipt mirror",
+      "staging area for a separately authenticated transfer"
+    ],
+    "forbidden_roles": [
+      "trusted genesis or verifier-identity authority",
+      "authoritative high-water, conflict or terminal state",
+      "continuity recovery or rollback witness",
+      "proof of external retention, freshness or independent custody"
+    ],
+    "current_effect": "NONE; the VM is not inventoried, launched, mounted, read, written, copied, flushed, stopped or deleted.",
+    "future_independence": "A future VM could qualify only after migration to separately administered compute and backing storage beyond evaluated-Mac replacement authority, with a new exact topology, custody and live qualification review."
+  },
+  "architecture_specific_privacy_delta": {
+    "claim_state": "NORMATIVE",
+    "design_boundary_status": "CLOSED_FOR_SELECTED_ARCHITECTURE",
+    "live_device_and_transport_status": "OPEN_UNTIL_EXACT_HARDWARE_TRANSPORT_AND_IMPLEMENTATION_REVIEW",
+    "DeltaDataVisible": {
+      "delta": "Positive but bounded: the private physical verifier transiently receives one structural canonical assertion and detached signature.",
+      "included": "Protocol context, high-entropy lineage/order identifiers, commitments/counts, bounded predicate inventory/result claims, issuer/key/algorithm identity and signature bytes.",
+      "excluded": "D3/evidence preimages, protected payload, paths, credentials, source history, host/session/environment identity and unrestricted diagnostics.",
+      "residual": "The device proves authentication and ordering of claims, not the hidden data or execution truth."
+    },
+    "DeltaFieldsVisible": {
+      "delta": "The exact semantic field classes in selected_disclosure_boundary become visible only inside one private verifier domain.",
+      "minimization": "Every selected field prevents cross-domain replay, authenticates the issuer or reconstructs the commitment/order relation. Optional source, host, timing and operational fields are absent.",
+      "future_gate": "Exact encodings, sizes and any field addition require the later byte-format freeze and a new delta when disclosure grows."
+    },
+    "DeltaRetention": {
+      "delta": "Positive: minimal genesis/policy/key-position, append-only high-water and conflict/terminal state persist on the device for the epoch.",
+      "excluded": "Raw assertions/signatures/evidence, rejected requests, detailed errors, receipts, logs, telemetry, backups and replicas.",
+      "residual": "Accepted structural history remains until retirement; no physical erasure or forgetting claim."
+    },
+    "DeltaRecipients": {
+      "delta": "One physical verifier policy engine and one user-custodian are the only selected external roles; the evaluated Mac receives a minimized outcome.",
+      "absent": "No provider, remote operator, network intermediary, backup controller, public reader, auditor, relying party or second witness.",
+      "residual": "The user-custodian can physically observe administrative state and is trusted rather than protected against."
+    },
+    "DeltaLinkability": {
+      "delta": "Stable purpose-scoped lineage, epoch, sequence, issuer, policy and commitment values intentionally link records within the one device and epoch.",
+      "boundary": "No cross-recipient or public sharing is selected. Receipts do not expose arbitrary head/history enumeration.",
+      "residual": "The device and custodian can correlate the lineage's accepted activity; purpose-scoped wrapping does not make the core fork key unlinkable inside that domain."
+    },
+    "DeltaPersistence": {
+      "delta": "The sole selected authority persists on physically separate device-owned storage.",
+      "separation": "D3, local Git and the Prime Git VM may retain non-authoritative local material but never restore or override device state.",
+      "residual": "Device atomicity and rollback resistance remain unverified until exact hardware and implementation evidence."
+    },
+    "DeltaInferenceSurface": {
+      "delta": "The device and custodian can infer lineage existence, order, policy membership, accepted activity, conflict and terminal state.",
+      "oracle_control": "No host list/head/history API; one authenticated exact-assertion request receives only a minimized outcome, and detailed rejection reasons remain transient or device-internal.",
+      "dictionary_control": "Commitments over low-entropy or enumerable D3, representation, graph, predicate or evidence material are not treated as hiding. The exact-byte freeze must select and justify a hiding construction or explicitly authorize offline-dictionary and protected-membership inference before emission; otherwise the field is prohibited.",
+      "residual": "Message presence, size and timing may remain observable to the future physical transport and device implementation. Even inside this one private verifier domain, an emitted deterministic commitment may permit offline guessing or protected-set membership tests unless the separately frozen hiding control is effective."
+    },
+    "DeltaLeakage": {
+      "delta": "No provider, network, telemetry, backup or public-log channel is selected.",
+      "control": "No payload duplication, assertion logging, secret export or general diagnostics; future device display, firmware, transport, crash, update and physical channels require separate review.",
+      "residual": "Actual hardware may create channels not knowable from this design freeze; live privacy remains UNKNOWN until qualified."
+    }
+  },
+  "manifest_entitlement_and_externality_review": {
+    "current_result": "NO_CHANGE_REQUIRED_FOR_CONTROL_ONLY_ARCHITECTURE_FREEZE",
+    "hypervisor_entitlement": "PRESENT_AND_UNCHANGED",
+    "network_entitlement": "ABSENT_NO_NETWORK_SELECTED",
+    "user_selected_read_write_entitlement": "ABSENT_NO_EXTERNAL_VOLUME_WRITE_SELECTED",
+    "privacy_manifest": "UNCHANGED; current no-tracking and no-collected-data declarations are not a live-device proof",
+    "future_transport": "The exact direct physical transport may require entitlement, framework, driver, file, USB, Bluetooth, NFC or Accessibility review. None is selected or authorized here. Adding any network transport is a change to the selected no-network v1 architecture and requires a new user decision and privacy/externality review.",
+    "future_device_data_classification": "Evaluate the exact shipped data flow, device logs, diagnostics, support path and current Apple requirements before live implementation.",
+    "app_archive": "No linked framework, resource, signing, sandbox or archive change follows from this design selection."
+  },
+  "trusted_computing_base": {
+    "selected_components": [
+      "user physical custody and device-local administration",
+      "physical verifier hardware, boot chain, firmware or operating runtime",
+      "verifier parser, canonical codec, policy engine and state machine",
+      "cryptographic implementation, entropy and nonce/challenge anti-reuse state",
+      "device trust-root, key and policy storage",
+      "immutable append-only high-water and tombstone storage, reserved fault capacity, persistent fail-closed latch and atomic head update mechanism",
+      "device display or local administration interface when relied upon",
+      "future transport framing and endpoint authentication"
+    ],
+    "evaluated_mac_role": "Untrusted for freshness and authority state; may later supply assertion bytes and relay messages. Its local D3 verifier and issuer behavior affect claim content but do not become independent replay-state authority.",
+    "not_in_selected_authority_tcb": [
+      "local Git",
+      "Prime Git UI",
+      "the same-Mac Prime Git VM",
+      "APFS snapshots or local backups",
+      "network provider or remote service",
+      "public log or second witness"
+    ],
+    "qualification_rule": "Every selected component needs exact identity, limits, negative tests and retained evidence before a live claim. Unknown firmware, update, reset, storage or transport behavior remains UNKNOWN and blocks live use."
+  },
+  "residual_risks": [
+    "One witness cannot establish global newest state, reveal a successor withheld from it or compare split views.",
+    "A malicious or compromised user-custodian can defeat the selected single-user trust assumption.",
+    "Verifier hardware, firmware, storage, cryptography or administration compromise can forge, leak, erase or roll back state.",
+    "Device theft, destruction or failure permanently ends continuity because no authoritative backup exists.",
+    "The evaluated Mac can withhold messages, deny service, lie in issuer-authenticated content or ignore a verifier response; the device protects only its own accepted history.",
+    "Commitment-only D3 and evidence fields do not prove hidden semantics, evidence or execution true.",
+    "A host or physical transport may expose size, timing, device-presence and access-pattern metadata.",
+    "Logical buffer release is not secure erasure, flash overwrite or absence from firmware diagnostics.",
+    "A future migration, backup, second witness or remote verifier changes recipients, linkability, recovery and threat assumptions and requires a new architecture-specific delta.",
+    "No actual device currently proves the selected independence, immutable append, reserved fault capacity, persistent latch, recovery scan, power-loss, key-custody or parser properties."
+  ],
+  "deferred_gates": {
+    "before_byte_format_freeze": [
+      "No additional user architecture choice is required for the selected v1 boundary.",
+      "The next freeze must preserve the selected commitment-only disclosure inventory, narrower assertion-ordering eligibility and outcomes, noncircular record order, minimized requester result, immutable append-only history, reserved conflict/fault handling and no-backup recovery policy.",
+      "For every D3, representation, graph, predicate and evidence commitment, classify preimage entropy and enumerability and either freeze a justified hiding construction with exact randomness, domain and custody rules or record explicit authorization of offline-dictionary and protected-membership inference. Unresolved commitment fields cannot be emitted."
+    ],
+    "before_pure_implementation": [
+      "freeze canonical trusted-genesis, uninitialized-state, bootstrap-transition, lineage-state, assertion-body, signature-envelope, verifier-decision, high-water, wrapper-variant, conflict, storage-fault, terminal, migration and receipt bytes",
+      "freeze domain separators, algorithm suite, signature coverage, sizes and bounds",
+      "freeze exact abstract append-only atomicity, reserved fault capacity, recovery scan and ambiguous-ack state machine",
+      "freeze the initial no-in-epoch key, algorithm or policy rotation rule and terminal-to-new-genesis or discontinuous replacement semantics",
+      "prove that unsupported evidence-preimage or D3-semantic assurance rejects before sequence or conflict classification"
+    ],
+    "before_live_device_work": [
+      "select and identify exact physical hardware",
+      "prove the Mac cannot mount, reset, restore, replace or administer authority state",
+      "review device firmware, boot, update, recovery, display, diagnostics and storage behavior",
+      "select and provision exact verifier, issuer and policy key material under a separate authorization",
+      "select and review exact transport, freshness challenge and authenticated readback",
+      "prove device storage concurrency, capacity, torn-write, power-loss and rollback behavior",
+      "repeat the privacy, entitlement, manifest, archive and TCB review against the exact implementation"
+    ],
+    "before_any_backup_or_multi_witness": [
+      "new recipient, retention, correlation, quorum, recovery and split-view freeze",
+      "new architecture-specific privacy delta"
+    ],
+    "before_high_value_ingress_or_trusted_egress": [
+      "independent host evidence and operation/session binding",
+      "one-use grant consumption",
+      "independent result verification for trusted egress",
+      "separate authorization under the host-integrity boundary"
+    ]
+  },
+  "successor_sequence": [
+    {
+      "order": 1,
+      "action": "Freeze transport-agnostic canonical trusted-genesis, bootstrap, commitment, assertion, signature-envelope, verifier-decision, immutable high-water, wrapper-variant, conflict, storage-fault, terminal, migration and receipt bytes plus the cryptographic suite, no-in-epoch-rotation rule and abstract append-only atomicity state machine for the selected private physical verifier.",
+      "authorization": "RECOMMENDED_NEXT_CONTROL_ONLY_SLICE"
+    },
+    {
+      "order": 2,
+      "action": "Implement a pure in-memory verifier and fabricated adversarial vectors against an abstract device-state store with no external I/O.",
+      "authorization": "SEPARATE_IMPLEMENTATION_SLICE_AFTER_FORMAT_FREEZE"
+    },
+    {
+      "order": 3,
+      "action": "Run focused Debug, focused Release and full local suites for the pure implementation.",
+      "authorization": "SEPARATE_TEST_SLICE_JOINED_TO_IMPLEMENTATION"
+    },
+    {
+      "order": 4,
+      "action": "Select, qualify and separately authorize exact physical hardware, transport, keys and device storage behavior.",
+      "authorization": "LIVE_DEVICE_SELECTION_AND_PERMISSION_REQUIRED"
+    },
+    {
+      "order": 5,
+      "action": "Only after live qualification, evaluate the bounded physical verifier integration and later constrained-I/O or power-loss campaigns.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS ARTIFACT"
+    }
+  ],
+  "implementation_boundary": {
+    "implementation_allowlist": [],
+    "source_change_allowed": false,
+    "test_change_allowed": false,
+    "project_change_allowed": false,
+    "entitlement_or_manifest_change_allowed": false,
+    "durable_format_change_allowed": false,
+    "runtime_execution_allowed": false,
+    "only_added_path": "Control/hypervisor-local-v1/h4-private-physical-verifier-architecture-custody-freeze-2026-09-04.v1.json",
+    "future_parent_rule": "The canonical-byte and atomicity freeze must cite the committed exact bytes of this artifact and cannot broaden assurance, recipients, correlation, retention, recovery or live effects without another explicit review."
+  },
+  "authorization_boundary": {
+    "architecture_selection_freeze_validation_and_local_commit": "AUTHORIZED_BY_USER_DIRECTION_AND_RECOMMENDATION_ON_2026-09-04",
+    "prime_git_vm_observation_or_operation": false,
+    "physical_device_identification_or_operation": false,
+    "external_key_creation_or_import": false,
+    "keychain_or_secure_enclave_mutation": false,
+    "network_or_remote_service": false,
+    "external_device_or_volume_read_or_write": false,
+    "vm_launch_or_guest_mutation": false,
+    "product_application_test_or_helper_process_launch_or_control": false,
+    "signal": false,
+    "application_launch": false,
+    "xctest_execution": false,
+    "durable_representation_mutation": false,
+    "production_authority": false,
+    "github": false,
+    "installation": false,
+    "local_git_commit_effect": "one control-only commit may create the required Git blob/tree/commit objects and advance local main plus its reflog; no remote operation"
+  },
+  "effects": {
+    "control_artifact_added": true,
+    "production_source_changed": false,
+    "test_source_changed": false,
+    "project_configuration_changed": false,
+    "entitlement_or_privacy_manifest_changed": false,
+    "existing_tracked_worktree_files_modified": false,
+    "existing_dirty_files_preserved": true,
+    "runtime_file_or_database_mutation": false,
+    "prime_git_vm_or_external_device_effect": false,
+    "product_application_test_helper_or_vm_effect": false,
+    "local_git_commit_object_ref_and_reflog_mutation": true,
+    "network_effect": false,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "preserved_paths": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1"
+    },
+    "rule": "These pre-existing tracked modifications remain outside this freeze, unstaged and byte-identical. Untracked and ignored evidence is not cleaned, moved, copied, flushed or pruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "architecture_selected_as_normative_design": true,
+    "custody_selected_as_normative_design": true,
+    "assurance_target_selected_as_normative_design": true,
+    "live_verifier_qualified": false,
+    "external_commitment_established": false,
+    "issuer_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "rollback_resistance_established": false,
+    "fork_exclusion_established": false,
+    "host_integrity_established": false,
+    "trusted_ingress_or_egress": false,
+    "power_loss_evaluated": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "verification": {
+    "required_before_commit": [
+      "jq parses the artifact",
+      "the direct predecessor commit and tree plus privacy-review blob and SHA-256 join exactly",
+      "all governing-control blobs and SHA-256 values join exactly",
+      "the staged delta contains only this one new architecture-and-custody artifact",
+      "both pre-existing tracked dirty paths retain their recorded SHA-256 values and remain unstaged",
+      "no source, test, project, entitlement, manifest, runtime, VM, network, device, key, build-cache or retained-evidence mutation occurs",
+      "independent reviews find no claim that the same-Mac Prime Git VM is independent, that commitment-only verification proves hidden semantics, or that a design selection establishes live freshness or authority",
+      "independent reviews confirm the no-backup loss rule, exact rollback boundary, minimized disclosure, one-domain correlation and non-enumerating requester interface are coherent",
+      "independent review confirms that low-entropy commitment preimages are not treated as hidden or declassified and that unresolved dictionary-inference risk blocks emission until the byte-format freeze resolves it"
+    ],
+    "xcode_build_or_test_required": false,
+    "reason_no_xcode_run": "This freeze adds one control JSON artifact and changes no compiled input, format, entitlement, manifest or runtime behavior. Xcode execution would not test the architecture semantics."
+  },
+  "nonclaims": [
+    "This artifact selects a normative architecture and custody class; it does not identify, purchase, qualify, provision, launch, mount, connect, read, write, reset or test a physical verifier.",
+    "The user statement about the Prime Git VM is not independently observed. Its reported same-Mac location is sufficient to classify it as non-independent under the frozen rollback rule.",
+    "Prime Git, its same-Mac VM, local Git, D3 SQLite, APFS snapshots, removable host-writable storage and local backups are not authoritative replay or recovery state.",
+    "No canonical bytes, cryptographic algorithm, key, transport, device storage mechanism, capacity, firmware or power-loss behavior is selected or implemented.",
+    "The selected device sees authenticated commitments and predicate claims, not D3 or evidence preimages, and therefore does not prove hidden semantics, evidence or execution true.",
+    "Withholding a low-entropy or enumerable preimage does not make its digest or commitment hiding; offline-dictionary and protected-membership inference remain possible until a separately frozen hiding construction or explicit disclosure authorization resolves the field.",
+    "One private witness establishes order only relative to its retained state; it does not prove a global newest state, reveal withheld successors or exclude split views.",
+    "No backup means loss fails closed and continuity ends unless the still-available old device participates in a separately frozen authenticated migration.",
+    "A physical device is not independent merely because it is removable; host-writable or host-resettable authority state is disallowed.",
+    "The selected issuer-assertion anti-replay architecture does not satisfy the governing full-D3 VALID_CURRENT_READ_ONLY or VALID_EXACT_SUCCESSOR predicates and is not host attestation, honest-computation proof, high-value ingress authorization, trusted-egress verification, H4 entry, Gate-E authority or scientific authority.",
+    "No existing H3 or H4 result is reclassified, no D3d, D4 or higher ordinal is assigned and no roadmap stage advances."
+  ],
+  "next_recommendation": "Create a control-only freeze for canonical trusted-genesis, bootstrap, commitment, assertion, signature-envelope, verifier-decision, immutable high-water, wrapper-variant, conflict, storage-fault, terminal, migration and receipt bytes plus the cryptographic suite, no-in-epoch-rotation rule and abstract append-only atomicity state machine. Keep the outcomes explicitly limited to issuer-assertion ordering, transport-agnostic and commitment-only; do not inspect or operate the Prime Git VM or any physical device."
+}

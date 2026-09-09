@@ -1,0 +1,111 @@
+{
+  "schema": "com.ergentics.provenance.local-archive-receipt.v1",
+  "recorded_at_utc": "2026-09-01T04:10:52Z",
+  "status": "LOCAL_SIGNED_ARCHIVE_AUDITED",
+  "source": {
+    "commit": "2eab0918b2bc01e2b2f4775e282af00f01cc5dca",
+    "tree": "25547ef9ef6bb0c8ba29ea7ce4e80a8dc44cbe4b",
+    "tracked_worktree_clean_before_test_and_archive": true,
+    "untracked_control_material_excluded": true
+  },
+  "xcode_test": {
+    "result": "Passed",
+    "total": 399,
+    "passed": 399,
+    "failed": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "configuration": "Release",
+    "architecture": "arm64",
+    "platform": "macOS",
+    "macos_version": "26.5.2",
+    "macos_build": "25F84",
+    "started_at_utc": "2026-09-01T04:06:16.588Z",
+    "finished_at_utc": "2026-09-01T04:06:45.890Z",
+    "result_bundle": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-1.0.4-tests.xcresult",
+    "result_bundle_info_plist_sha256": "18dc64842e6adf4ff4b0a150479221360190a3133df07de0a904d0733ebdc434",
+    "result_bundle_database_sha256": "bb96f17415a83d31e848ec4bede577ce582e8e0f6282946404a5cf9bbbce7528"
+  },
+  "archive": {
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/Ergentics Provenance 1.0 (4).xcarchive",
+    "created_at_utc": "2026-09-01T04:07:38Z",
+    "application": "Ergentics Provenance.app",
+    "bundle_identifier": "com.ergentics.provenance",
+    "marketing_version": "1.0",
+    "build_number": "4",
+    "minimum_macos_version": "26.0",
+    "sdk": "macosx26.5",
+    "archive_info_plist_sha256": "6845cbb45a29c44d6fca3eaf2e143d75ea29ba98eb1a12b87f15f1a51d281105",
+    "application_info_plist_sha256": "9f1eb1d193a04c01465b599ce99e0ff4a8b2b7b16ab53b95fde013294e49994a",
+    "architecture": "arm64",
+    "macho_uuid": "468B0D86-5776-3FA9-9E5B-ACF3807DCB09",
+    "binary_sha256": "002d744d3c600b4a3dc1059cb33bf56a63859b97682532265629886aae3de6d2",
+    "dsym_macho_uuid": "468B0D86-5776-3FA9-9E5B-ACF3807DCB09",
+    "dsym_uuid_matches_binary": true,
+    "dsym_dwarf_sha256": "3241cca3e23be01f3b4705fa569e0670e77bfe0e814070aab39245f6f139747a",
+    "cdhash_sha256_truncated_20_bytes": "cfd2183b45cdfff58c3dff7dc9d5a8101bf646c1",
+    "code_directory_candidate_sha256_full": "cfd2183b45cdfff58c3dff7dc9d5a8101bf646c153b9219cc69729bde63b4911",
+    "signing_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "team_identifier": "ZCQ435U8JP",
+    "hardened_runtime": true,
+    "strict_signature_verification": "PASS_WITH_HOST_KEYCHAIN_ACCESS",
+    "embedded_provisioning_profile": "ABSENT",
+    "entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": true,
+      "com.apple.security.hypervisor": true,
+      "network_client_present": false,
+      "network_server_present": false,
+      "unexpected_keys": []
+    },
+    "production_surface": {
+      "xctest_linked": false,
+      "process_launch_undefined_symbols": [],
+      "system_sqlite_linked": "/usr/lib/libsqlite3.dylib"
+    }
+  },
+  "embedded_records": {
+    "license": {
+      "path": "Contents/Resources/LICENSE",
+      "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8",
+      "byte_equal_to_source": true
+    },
+    "spdx": {
+      "path": "Contents/Resources/ERGENTICS.spdx.json",
+      "sha256": "b77640573207c20580efe349647395a210b62268385b0b6bbaa461f99958729d",
+      "byte_equal_to_source": true,
+      "spdx_version": "SPDX-2.3",
+      "document_namespace": "urn:uuid:e6330353-9e10-40ce-b65d-4f90161268fe",
+      "package_version": "1.0 (4)",
+      "analyzed_files": 61,
+      "package_verification_code": "0c2e6b14e3169868bbf406a655473aa2c33fff53"
+    },
+    "third_party_notices": {
+      "path": "Contents/Resources/THIRD_PARTY_NOTICES.md",
+      "sha256": "80acba3f9e986d09384b4e5615d400207795fc39a6545452c1ebc3411c19a675",
+      "byte_equal_to_source": true
+    },
+    "privacy_manifest": {
+      "path": "Contents/Resources/PrivacyInfo.xcprivacy",
+      "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+      "byte_equal_to_source": true,
+      "plist_validation": "PASS"
+    },
+    "all_four_byte_equal_to_source": true
+  },
+  "claim_boundary": {
+    "xcode_release_test_action_passed": true,
+    "local_signed_archive_created_and_audited": true,
+    "application_launched_during_this_checkpoint": false,
+    "virtual_machine_launched_during_this_checkpoint": false,
+    "archive_exported_during_this_checkpoint": false,
+    "app_store_connect_validation_performed_during_this_checkpoint": false,
+    "app_store_connect_upload_performed_during_this_checkpoint": false,
+    "testflight_availability_checked_for_build_4": false,
+    "testflight_build_4_status": "NOT_CHECKED",
+    "delivered_signature_inspected_for_build_4": false,
+    "distribution_signature_admission_closed": false,
+    "gate_e_outcome": "ABSTAIN",
+    "gate_e_authority_vector": "00000000"
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "build": "1.0 (19)",
+  "source_commit": "24190735733bc12f653a6d54ebe41490fb652b45",
+  "recorded_at_utc": "2026-09-06T04:23:26Z",
+  "archive_path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Ergentics Provenance 1.0 (19).xcarchive",
+  "standalone_app": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build19/Ergentics Provenance.app",
+  "fix": "Replace three titled SwiftUI GroupBox containers in PrimeGitView with accessible stacked panels, retaining all original title/body builders, actions and explicit accessibility values.",
+  "diagnosis": {
+    "method": "Standalone sandboxed SwiftUI diagnostic with constant presentation and no-op actions, selected and read through the native computer-use API. Automatic 12-second return to baseline permits recovery after reader failure.",
+    "failure": "Sky Computer Use native pipe closed before response",
+    "cases": {
+      "text_titled_GroupBox_with_Text": "FAIL, twice with a working full-page alternative between attempts",
+      "Label_titled_GroupBox_with_Button": "FAIL",
+      "Label_titled_GroupBox_with_Text_and_accessibility_contain": "FAIL",
+      "untitled_GroupBox_with_Text": "PASS; Diagnostic body readable",
+      "original_scope_Grid_without_GroupBox": "PASS; all four scope rows readable",
+      "full_initial_page_using_stacked_panels": "PASS, twice; titles, four scope rows, seven unavailable labels, header/footer, chips and both import buttons readable"
+    },
+    "confirmed_trigger": "A titled SwiftUI GroupBox is sufficient to reproduce the reader failure in this diagnostic environment; no Prime model, Git, imported data, Grid, custom label or network operation is required.",
+    "working_change": "Ordinary VStack panels retaining the visible title and original body as accessible children.",
+    "limitation": "This isolates a reproducible UI trigger. It does not identify the reader's internal invalid array index or establish behavior for every OS/reader version or every GroupBox.",
+    "diagnostic_closed": "Normal Quit through computer-use API after successful full-page read",
+    "source": "probe/",
+    "diagnostic_app": "Prime AX Probe.app"
+  },
+  "tests": {
+    "release_passed": 977,
+    "failures": 0,
+    "test_execution_seconds": 56.478,
+    "owner_seconds": 169.833009,
+    "owner_reaped": true,
+    "timeout": false,
+    "first_restricted_attempt": "Compilation completed, but testmanagerd connection failed; rerun with macOS test-service access passed. Both logs retained.",
+    "debug": "Not rerun for this UI-only change."
+  },
+  "independent_source_review": {
+    "schema": "independent-build19-source-review-v1",
+    "reviewer": "/root/h2_qualification",
+    "baseline_commit": "eb84a65cdf461f75f1cb9ff038816af469d07d3d",
+    "source_root": "work/prime-accessibility-fix",
+    "verdict": "No blocking issue found in the bounded source delta.",
+    "changed_files": [
+      {
+        "path": "ERGENTICS.spdx.json",
+        "bytes": 89911,
+        "sha256": "555e46e2b1362defc7da47490354a8e4cd385e6231981dad02e4191d873274be"
+      },
+      {
+        "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+        "bytes": 89149,
+        "sha256": "b30d10cf4d16357fac17e94bc19a604ced13f9c2017a01c3f079f01ac45e1ea9"
+      },
+      {
+        "path": "Sources/PrimeGitView.swift",
+        "bytes": 20961,
+        "sha256": "c51e7d8d729a92b6be5268806b8790e7aa4458e1ecde99b6ccae6076cf1c8a4a"
+      }
+    ],
+    "view_review": {
+      "titled_group_boxes_replaced": 3,
+      "helper": "VStack containing existing label then content, with padding, width and rounded background.",
+      "removing_helper_and_reversing_three_replacements_reconstructs_baseline_bytes": true,
+      "all_source_string_literals_unchanged": true,
+      "string_literal_tokens": 155,
+      "all_explicit_accessibility_modifier_lines_unchanged": true,
+      "accessibility_modifier_lines": 15,
+      "action_closures_bindings_disabled_guards_and_identifiers_unchanged": true,
+      "added_actions_or_backends": false
+    },
+    "project_review": {
+      "only_changes": "CURRENT_PROJECT_VERSION 18 to 19 in Debug and Release",
+      "signing_entitlements_target_membership_and_deployment_settings_unchanged": true
+    },
+    "spdx_review": {
+      "version": "SPDX-2.3",
+      "file_records": 102,
+      "checksums_verified": 204,
+      "all_source_files_covered": 75,
+      "complete_declared_inventory_verified": true,
+      "package_version": "1.0 (19)",
+      "package_verification_code": "e5fe3309f0783b41fe1cbf210d09e94b13041ee0",
+      "baseline_to_current_changes_only": [
+        "Creation timestamp",
+        "Document namespace",
+        "Build name/version",
+        "Project and PrimeGitView checksums",
+        "Derived package verification code"
+      ],
+      "checksum_changed_paths": [
+        "./ErgenticsProvenance.xcodeproj/project.pbxproj",
+        "./Sources/PrimeGitView.swift"
+      ]
+    },
+    "limits": [
+      "GroupBox implicit container semantics and layout intentionally change; preserved explicit modifiers do not prove an identical runtime accessibility tree.",
+      "Source review does not independently establish the claimed UI-reader failure cause or successful reader recovery.",
+      "No app launch, UI control, compilation or tests performed by reviewer. Root owns build and live acceptance."
+    ],
+    "source_modified_by_reviewer": false
+  },
+  "packaging_review": {
+    "status": "PASS",
+    "source_commit": "24190735733bc12f653a6d54ebe41490fb652b45",
+    "source_clean": true,
+    "source_records": 102,
+    "checksums_verified": 204,
+    "signature": "PASS: independent strict/deep verification with macOS trust-service access",
+    "team": "ZCQ435U8JP",
+    "version": "1.0 (19)",
+    "hardened_runtime": true,
+    "exact_signed_capabilities": {
+      "com.apple.security.files.user-selected.read-write": true,
+      "com.apple.security.hypervisor": true,
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.virtualization": true
+    },
+    "uuids": {
+      "executable": [
+        [
+          "D791ED70-2690-3FFC-8323-8C6585AF34FF",
+          "arm64"
+        ]
+      ],
+      "dsym": [
+        [
+          "D791ED70-2690-3FFC-8323-8C6585AF34FF",
+          "arm64"
+        ]
+      ]
+    },
+    "copy_comparisons": {
+      "saved_archive": true,
+      "saved_standalone_app": true,
+      "extracted_zip_app": true
+    },
+    "archive_regular_files": 14,
+    "app_regular_files": 10,
+    "zip_raw_entries": 35,
+    "zip_payload_files": 10,
+    "zip_appledouble_metadata_files": 14,
+    "source_bundle": {
+      "status": "PASS",
+      "source_commit": "24190735733bc12f653a6d54ebe41490fb652b45",
+      "source_head": "24190735733bc12f653a6d54ebe41490fb652b45",
+      "restored_head": "24190735733bc12f653a6d54ebe41490fb652b45",
+      "source_tree": "b4379f3de930bcd9cad7f43657125c3dc4af6626",
+      "restored_tree": "b4379f3de930bcd9cad7f43657125c3dc4af6626",
+      "complete_history": true,
+      "git_fsck_exit_code": 0,
+      "bundle": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Ergentics-Provenance-Build19-Source.bundle",
+        "bytes": 3054704,
+        "sha256": "c698d480b19c77e5401068b562f81ec79001663f9b89eff4e6e5a45debfe337e"
+      },
+      "source_records": 102,
+      "checksums_verified": 204,
+      "issues": [
+
+      ]
+    },
+    "verifier_history": "The initial copied verifier assumed inline AppleDouble metadata. Build 19 uses the standard __MACOSX namespace; exact payload and extracted inventories already matched. The reviewer now accepts only app paths plus explicit AppleDouble metadata paths, validates each sidecar header and app sibling, and still requires exact payload identity. Initial failing result and log are preserved; this was a verifier layout assumption, not an app packaging defect.",
+    "evidence": {
+      "records-verification.json": {
+        "bytes": 1791,
+        "sha256": "499890b32fbdade5d24f1410745590755db5174afab9e1bb97005428d73f4baf"
+      },
+      "records-verification.log": {
+        "bytes": 1791,
+        "sha256": "499890b32fbdade5d24f1410745590755db5174afab9e1bb97005428d73f4baf"
+      },
+      "package-verification.json": {
+        "bytes": 15093,
+        "sha256": "beced64a73ada220398bd0bc3f157680617f5a1b82e66bfb41b4998279f3331c"
+      },
+      "package-verification.log": {
+        "bytes": 784,
+        "sha256": "a2915d06a9cd5f5277a5446933bd4d5e584776ada908edc1c66e3664a35caff6"
+      },
+      "package-verification-before-appledouble-layout-support.json": {
+        "bytes": 16240,
+        "sha256": "dc9e9487073871aa0debb93d12547222e059dfc16fde146f47dfc7da1f05ef53"
+      },
+      "package-verification-before-appledouble-layout-support.log": {
+        "bytes": 1921,
+        "sha256": "217507e2cab8da43dc1d17d0c564673c4e976c90ab160979a3e0a7c6f49718fb"
+      },
+      "bundle-verification.json": {
+        "bytes": 21643,
+        "sha256": "220a8700627f693c1af77b68ed1113b665f3624f0bd321b8f29f450b9581a2cc"
+      },
+      "bundle-verification.log": {
+        "bytes": 295,
+        "sha256": "762c515c8e6d810e1e48821a1733a293283e18b583a06004cd342cc60e4cef7c"
+      },
+      "bundle-check.log": {
+        "bytes": 898,
+        "sha256": "5a11a0fa6f4de8018aec10751f995ac85ab3054d9c3cf7d128c46c27cffca9d0"
+      },
+      "bundle-fsck.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "signature-attempts.json": {
+        "bytes": 965,
+        "sha256": "48b99ca0c8dbc245098aff5acf5b03bce93c0fc1322c17942b0ff2c67eacd29a"
+      },
+      "strict-system-trust.log": {
+        "bytes": 213,
+        "sha256": "c79aa22e1ad0046ac87e405ec0bddf689400b4ce7fe90f8c11572b5e14bebe25"
+      },
+      "signature-metadata.log": {
+        "bytes": 1235,
+        "sha256": "1c4b94d0c91072bda3bd268bb12eadb3128ce61b2e94aa8db6a2c84fc1e9c350"
+      },
+      "signed-entitlements.plist": {
+        "bytes": 397,
+        "sha256": "3dcef7488051314e0a34532cca348246c40726399ea372bee82e6c0912d8a910"
+      },
+      "entitlements-display.log": {
+        "bytes": 294,
+        "sha256": "9ce50bdbc4431779fe2ed1ca6f578fe1294653afe9512dc32bae91f7cecc7ac6"
+      },
+      "check-records.rb": {
+        "bytes": 5301,
+        "sha256": "90c6a94c55413dd1657336278fb59e87c430700b331aa64b9ce26006582564ca"
+      },
+      "check-package.rb": {
+        "bytes": 8172,
+        "sha256": "2e92448929ec1283614be17da3c08bcc185040b1df1829cd06b5256cea52075b"
+      },
+      "check-bundle.rb": {
+        "bytes": 3578,
+        "sha256": "b22c797a70d84a7e5045f919130c00da24976207ffe29333abdc175113fc2765"
+      },
+      "finalize-review.rb": {
+        "bytes": 3578,
+        "sha256": "d14dfb44afb06ee8f21cbf10d4fa0234e28278aa7ff6b33023dad3099345f59d"
+      }
+    },
+    "issues": [
+
+    ],
+    "scope": "Independent packaging review only. No production files or output copies changed and no app/workload launch by reviewer. Copy identity includes bytes, modes, symlinks and directory inventory, not every filesystem extended attribute. Parent live UI checks and 977 Release tests are separate evidence, not independently rerun here."
+  },
+  "live": {
+    "recorded_at_utc": "2026-09-06T04:18:20Z",
+    "build": "1.0 (19)",
+    "source_commit": "24190735733bc12f653a6d54ebe41490fb652b45",
+    "app": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build19/Ergentics Provenance.app",
+    "executable_sha256": "1c4a8f081d1dc780b60f08f7ae4f2bea73d1d02ad7cd16c7f4e144aea3086e57",
+    "method": "Actual saved signed app controlled through native computer-use API. Accessibility text is the live observation; process path and exit checked separately.",
+    "first_process_id": 48557,
+    "status": "PASS_FOR_LISTED_WORKFLOW",
+    "events": [
+      "First launch opened directly on Prime Git; complete initial page readable with no user sidebar intervention.",
+      "Header import button opened the system snapshot picker. Cancel returned to unchanged idle empty presentation.",
+      "Selected build19-prime-snapshot.json through the system picker; preview matched the synthetic fixture before Import read-only.",
+      "Import settled to idle Overview: producer-reported unborn branch, unchecked consistency, no remote entries, comparison not recorded. Synthetic private path and branch name absent from the product tree.",
+      "Privacy tab readable: title, all six privacy rows and AI/candidate explanation retained; no reader disconnect.",
+      "Changes tab readable with expected producer counts 0 and 2 and unknown untracked count.",
+      "Navigate to Git workspace and back: imported presentation retained, inspector returns to Overview.",
+      "Clear presentation returned to idle No imported snapshot and No minimized presentation.",
+      "Normal Quit exited exact process 48557.",
+      "Second launch again opened directly on Prime Git with complete readable empty presentation. App left running there."
+    ],
+    "snapshot": {
+      "file": "build19-prime-snapshot.json",
+      "sha256": "46c0509fbc3f72938c382781c4e855ad2f509343810c054d2de8e24b9664b468",
+      "synthetic": true
+    },
+    "limits": [
+      "Screenshot capture returned blank, so no pixel-level or narrow/wide visual acceptance is claimed. Window sharing preference was not changed.",
+      "System picker previews the explicitly selected raw file; product minimization assertions apply after import, not to the system picker.",
+      "Busy assessment cancellation was not observed; the tiny import completed before a useful busy-state interaction.",
+      "No new Git repository operation, VM workload, model inference, Gate E completion or independent OS attestation."
+    ],
+    "second_process_id": 49377
+  },
+  "artifacts": {
+    "Ergentics-Provenance-1.0-19.zip": {
+      "bytes": 2384194,
+      "sha256": "7bd761178507387d8e790a6857ed77e84576c9b3188646f65ea140f6267e8eb5"
+    },
+    "Ergentics-Provenance-Build19-Source.bundle": {
+      "bytes": 3054704,
+      "sha256": "c698d480b19c77e5401068b562f81ec79001663f9b89eff4e6e5a45debfe337e"
+    }
+  },
+  "prime_gate_e": "OPEN; latest 99-test source checkpoint remains separate in Prime-Gate-E-Call-Results.",
+  "real_guest_vm_acceptance": "OPEN; no ARM64 UEFI installer selected or booted.",
+  "earlier_live_evidence": "Build18 Git acceptance and Build16 H1-H8 acceptance retain their original binary scope.",
+  "upload": false,
+  "host_os_installation": false,
+  "independent_os_attestation": "PARKED_BY_USER"
+}

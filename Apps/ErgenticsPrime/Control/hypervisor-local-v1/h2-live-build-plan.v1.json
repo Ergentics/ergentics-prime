@@ -1,0 +1,1952 @@
+{
+  "schema": "ergentics.provenance.hypervisor-stage.h2-live.build-plan.v1",
+  "architecture": "arm64",
+  "deployment_target": "arm64-apple-macosx26.0",
+  "repository_root": "/Users/ergentics/Developer/ErgenticsProvenance",
+  "toolchain": {
+    "clang": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+    "swift_driver_logical_argv0": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+    "swift_driver_physical_image": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+    "xcodebuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+    "codesign": "/usr/bin/codesign",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "login_keychain": "/Users/ergentics/Library/Keychains/login.keychain-db",
+    "process_query_linkage": "proc_pidinfo proc_pidpath and proc_regionfilename resolve through the default libSystem link in the admitted macOS 26.5 SDK; libproc.tbd and libSystem.B.tbd share install-name /usr/lib/libSystem.B.dylib so no redundant -lproc argv entry is frozen"
+  },
+  "token_grammar": {
+    "allowed": [
+      "${REPOSITORY_ROOT}",
+      "${SOURCE_ROOT}",
+      "${PRODUCER_PREP_A}",
+      "${PRODUCER_PREP_B}",
+      "${PREDECESSOR_A}",
+      "${PREDECESSOR_B}",
+      "${BOOTSTRAP_A}",
+      "${BOOTSTRAP_B}",
+      "${PRODUCT_A}",
+      "${PRODUCT_B}",
+      "${ACTION_ROOT}",
+      "${SELECTED_AUDITOR}",
+      "${UNSIGNED_WORKER}",
+      "${SIGNED_WORKER}"
+    ],
+    "substitution": "one-pass exact token replacement from descriptor-admitted roots and internally joined products; unresolved, repeated, nested, relative, NUL, dot-dot, or symlink-resolving values reject"
+  },
+  "token_values": {
+    "REPOSITORY_ROOT": "descriptor-admitted implementation root used only by P00 to hold the exact producer source, by the separately committed predecessor-tools build envelope, and by B00 source-view construction; never a compiler cwd and never inspected by a runtime Git process",
+    "SOURCE_ROOT": "P01.source_view_root; the sole compilation and test source tree",
+    "PRODUCER_PREP_A": "P00.root_A.path; first fresh non-authoritative predecessor-producer preparation root",
+    "PRODUCER_PREP_B": "P00.root_B.path; second fresh non-authoritative predecessor-producer preparation root",
+    "PREDECESSOR_A": "T00.root_A.path; first fresh predecessor-tools build-only root",
+    "PREDECESSOR_B": "T00.root_B.path; second fresh predecessor-tools build-only root",
+    "BOOTSTRAP_A": "P01.bootstrap_A_root",
+    "BOOTSTRAP_B": "P01.bootstrap_B_root",
+    "PRODUCT_A": "P01.product_A_root",
+    "PRODUCT_B": "P01.product_B_root",
+    "SELECTED_AUDITOR": "exact A or B auditor path only after raw-size-UUID-load-command equality",
+    "UNSIGNED_WORKER": "${PRODUCT_A}/products/worker-release/ErgenticsProvenanceH2LiveWorker after exact A/B release equality",
+    "SIGNED_WORKER": "${PRODUCT_A}/products/signed-worker/ErgenticsProvenanceH2LiveWorker",
+    "ACTION_ROOT_BY_ROLE": {
+      "predecessor_capture_launcher_A": "${PREDECESSOR_A}",
+      "predecessor_capture_launcher_B": "${PREDECESSOR_B}",
+      "predecessor_bootstrap_supervisor_A": "${PREDECESSOR_A}",
+      "predecessor_bootstrap_supervisor_B": "${PREDECESSOR_B}",
+      "signed_worker_auditor_A": "${PRODUCT_A}",
+      "signed_worker_auditor_B": "${PRODUCT_B}",
+      "worker_debug_A": "${PRODUCT_A}",
+      "worker_debug_B": "${PRODUCT_B}",
+      "worker_release_A": "${PRODUCT_A}",
+      "worker_release_B": "${PRODUCT_B}",
+      "worker_codesign": "${PRODUCT_A}",
+      "worker_static_code_audit": "${PRODUCT_A}",
+      "controller_release_A": "${PRODUCT_A}",
+      "controller_release_B": "${PRODUCT_B}",
+      "verifier_release_A": "${PRODUCT_A}",
+      "verifier_release_B": "${PRODUCT_B}",
+      "xctest_debug": "${PRODUCT_A}",
+      "xctest_release": "${PRODUCT_A}",
+      "build_controller_c_A": "${BOOTSTRAP_A}",
+      "build_controller_swift_A": "${BOOTSTRAP_A}",
+      "build_controller_c_B": "${BOOTSTRAP_B}",
+      "build_controller_swift_B": "${BOOTSTRAP_B}",
+      "build_launcher_A": "${BOOTSTRAP_A}",
+      "build_launcher_B": "${BOOTSTRAP_B}"
+    }
+  },
+  "replacement_environment": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "TZ": "UTC",
+    "HOME": "${ACTION_ROOT}/home",
+    "TMPDIR": "${ACTION_ROOT}/tmp",
+    "CLANG_MODULE_CACHE_PATH": "${ACTION_ROOT}/module-cache/clang",
+    "SWIFTPM_MODULECACHE_OVERRIDE": "${ACTION_ROOT}/module-cache/swift",
+    "XDG_CACHE_HOME": "${ACTION_ROOT}/cache"
+  },
+  "predecessor_producer_preparation_root_layout": {
+    "mode": "0700",
+    "owner": "effective_uid",
+    "roots_exact": 2,
+    "pairwise_disjoint": true,
+    "entries_exact_pre_actions": ["cache", "captures", "home", "module-cache", "tmp"],
+    "entries_exact_each": ["ErgenticsProvenanceH2LivePredecessorToolsBuilder", "cache", "captures", "home", "module-cache", "tmp"],
+    "module_cache_entries_exact": ["clang", "swift"],
+    "recursive_directories_exact_on_pass": {
+      "cache": [],
+      "captures": [],
+      "home": [],
+      "module-cache": ["clang", "swift"],
+      "module-cache/clang": [],
+      "module-cache/swift": [],
+      "tmp": []
+    },
+    "construction_sequence": "explicit admitted bootstrap boundary exclusively creates two empty 0700 descriptor-held roots; records exact empty initial inventories; arms and drains root-identity plus held-parent entry watches before any entry creation; creates only the fixed pre-action entries and module-cache children by descriptor-rooted no-follow fixed-arity operations; descriptor-reconstructs both pre-action inventories; holds exact producer source bytes from the committed implementation and sends those same bytes to each compiler stdin then EOF; keeps roots and output descriptors held through pair comparison result encoding and final revalidation; any deviation is retained P00 failure",
+    "source_transport": "exact held Tools/H2LivePredecessorToolsBuilder/main.c bytes on compiler stdin with -x c -; stdin byte count SHA256 and EOF are process-derived and must equal P00.producer_source",
+    "limits": { "recursive_entry_count_max": 64, "source_bytes_max": 67108864, "output_file_bytes_max": 134217728, "aggregate_logical_bytes_max": 268435456, "aggregate_allocated_bytes_max": 536870912 },
+    "output_leaf_mode": "0700",
+    "output_leaf_nlink": 1,
+    "symlinks_or_special_files": 0,
+    "retained_without_cleanup": true
+  },
+  "predecessor_producer_preparation_environment": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "TZ": "UTC",
+    "HOME": "${ACTION_ROOT}/home",
+    "TMPDIR": "${ACTION_ROOT}/tmp",
+    "CLANG_MODULE_CACHE_PATH": "${ACTION_ROOT}/module-cache/clang",
+    "SWIFTPM_MODULECACHE_OVERRIDE": "${ACTION_ROOT}/module-cache/swift",
+    "XDG_CACHE_HOME": "${ACTION_ROOT}/cache"
+  },
+  "predecessor_producer_preparation_actions": [
+    {
+      "position": 0,
+      "role": "predecessor_tools_builder_A",
+      "actuator": "explicit_non_authoritative_local_bootstrap_boundary",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PRODUCER_PREP_A}",
+      "deadline_seconds": 300,
+      "environment": "exact predecessor_producer_preparation_environment with ACTION_ROOT=${PRODUCER_PREP_A}",
+      "stdin": "exact held Tools/H2LivePredecessorToolsBuilder/main.c bytes then EOF",
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target", "arm64-apple-macosx26.0",
+        "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps",
+        "-ffile-prefix-map=${PRODUCER_PREP_A}=/__EPR_BUILD_ROOT__",
+        "-fdebug-prefix-map=${PRODUCER_PREP_A}=/__EPR_BUILD_ROOT__",
+        "-x", "c", "-",
+        "-framework", "CoreFoundation", "-framework", "Security",
+        "-o", "${PRODUCER_PREP_A}/ErgenticsProvenanceH2LivePredecessorToolsBuilder"
+      ]
+    },
+    {
+      "position": 1,
+      "role": "predecessor_tools_builder_B",
+      "actuator": "explicit_non_authoritative_local_bootstrap_boundary",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PRODUCER_PREP_B}",
+      "deadline_seconds": 300,
+      "environment": "exact predecessor_producer_preparation_environment with ACTION_ROOT=${PRODUCER_PREP_B}",
+      "stdin": "exact held Tools/H2LivePredecessorToolsBuilder/main.c bytes then EOF",
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target", "arm64-apple-macosx26.0",
+        "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps",
+        "-ffile-prefix-map=${PRODUCER_PREP_B}=/__EPR_BUILD_ROOT__",
+        "-fdebug-prefix-map=${PRODUCER_PREP_B}=/__EPR_BUILD_ROOT__",
+        "-x", "c", "-",
+        "-framework", "CoreFoundation", "-framework", "Security",
+        "-o", "${PRODUCER_PREP_B}/ErgenticsProvenanceH2LivePredecessorToolsBuilder"
+      ]
+    }
+  ],
+  "predecessor_tools_root_layout": {
+    "mode": "0700",
+    "owner": "effective_uid",
+    "roots_exact": 2,
+    "pairwise_disjoint": true,
+    "entries_exact_pre_actions": ["cache", "captures", "home", "inputs", "module-cache", "tmp"],
+    "entries_exact_each": ["ErgenticsProvenanceH2LiveBootstrapCaptureLauncher", "ErgenticsProvenanceH2LiveBuildBootstrapSupervisor", "cache", "captures", "home", "inputs", "module-cache", "tmp"],
+    "input_directories_exact": ["H2LiveBootstrapCaptureLauncher", "H2LiveBuildBootstrapSupervisor"],
+    "input_leaf_exact_each": "main.c",
+    "input_leaf_mode": "0400",
+    "module_cache_entries_exact": ["clang", "swift"],
+    "recursive_directories_exact_on_pass": {
+      "cache": [],
+      "captures": [],
+      "home": [],
+      "inputs": ["H2LiveBootstrapCaptureLauncher", "H2LiveBuildBootstrapSupervisor"],
+      "inputs/H2LiveBootstrapCaptureLauncher": ["main.c"],
+      "inputs/H2LiveBuildBootstrapSupervisor": ["main.c"],
+      "module-cache": ["clang", "swift"],
+      "module-cache/clang": [],
+      "module-cache/swift": [],
+      "tmp": []
+    },
+    "construction_sequence": "exclusive_no_replace_create_root_A_then_root_B; descriptor-reconstruct each exact empty inventory; arm and drain both root-identity and held-parent entry watches; create only entries_exact_pre_actions with descriptor-rooted fixed-arity no-follow operations; create only module_cache_entries_exact and input_directories_exact; copy the two descriptor-held implementation source byte strings into each exact input leaf using exclusive fixed-arity descriptor-rooted writes, fsync, chmod 0400, reopen O_NOFOLLOW, arm file and held-input-parent watches, drain, and revalidate device inode bytes SHA256 Git-blob nlink owner mode; descriptor-reconstruct root_A_pre_actions and root_B_pre_actions; drain all root parent input-file and input-parent watches again; any deviation is retained failure and no action enters",
+    "symlinks_or_special_files": 0,
+    "retained_without_cleanup": true
+  },
+  "bootstrap_root_layout": {
+    "mode": "0700",
+    "owner": "effective_uid",
+    "entries_exact_after_bootstrap": {
+      "bootstrap_A": ["ErgenticsProvenanceH2LiveBuildController", "ErgenticsProvenanceH2LiveBuildLauncher", "H2LiveBuildControl.o", "cache", "captures", "home", "module-cache", "source-view", "tmp"],
+      "bootstrap_B": ["ErgenticsProvenanceH2LiveBuildController", "ErgenticsProvenanceH2LiveBuildLauncher", "H2LiveBuildControl.o", "cache", "captures", "home", "module-cache", "tmp"]
+    },
+    "module_cache_entries_exact": ["clang", "swift"],
+    "symlinks_or_special_files": 0
+  },
+  "product_root_layout": {
+    "mode": "0700",
+    "owner": "effective_uid",
+    "entries_exact": [
+      "DerivedData-test-Debug",
+      "DerivedData-test-Release",
+      "cache",
+      "captures",
+      "dst",
+      "generated",
+      "home",
+      "module-cache",
+      "obj",
+      "products",
+      "sym",
+      "tmp"
+    ],
+    "module_cache_entries_exact": [
+      "clang",
+      "swift"
+    ],
+    "symlinks_or_special_files": 0
+  },
+  "source_manifest": {
+    "schema": "ergentics.provenance.hypervisor-stage.h2-live.build-input-manifest.v1",
+    "authority_frame": "EPRH2B00.ordered_source_files_IS_THE_COMPLETE_TRACKED_IMPLEMENTATION_TREE_AND_SOLE_RUNTIME_SOURCE_IDENTITY_INPUT; NO_GIT_PROCESS_OR_WORKTREE_CLEANLINESS_OBSERVATION_IS_ADMITTED",
+    "ordered_source_files_scope": "EVERY_AND_ONLY_REGULAR_BLOB_ENTRY_IN_THE_COMPLETE_TREE_OF_EPRH2B00.implementation_commit_RECURSIVELY_INCLUDING_NONCOMPILATION_CONTROL_DISTRIBUTION_DOCUMENTATION_EXAMPLE_AND_HIDDEN_PATHS; SYMLINKS_GITLINKS_SUBMODULES_AND_NONREGULAR_ENTRIES_REJECT_THE_SLICE",
+    "compilation_input_membership_roots_exact": [
+      "Assets.xcassets",
+      "Control/capability-flow-independent-verifier-2026-08-31/CapabilityFlowReceiptVerifier",
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.sha256",
+      "Entitlements.plist",
+      "ErgenticsProvenance.xcodeproj",
+      "ERGENTICS.spdx.json",
+      "Guest",
+      "Info.plist",
+      "LICENSE",
+      "PrivacyInfo.xcprivacy",
+      "Sources",
+      "Tests",
+      "THIRD_PARTY_NOTICES.md",
+      "Tools/H2LivePredecessorToolsBuilder",
+      "Tools/H2LiveBootstrapCaptureLauncher",
+      "Tools/H2LiveBuildBootstrapSupervisor",
+      "Tools/H2LiveBuildController",
+      "Tools/H2LiveBuildLauncher",
+      "Tools/H2LiveController",
+      "Tools/H2LiveVerifier",
+      "Tools/H2LiveWorker"
+    ],
+    "compilation_input_membership_rule": "EVERY_SOURCE_PROJECT_ENTITLEMENT_ASSET_TEST_AND_PREBUILT_TOOL_PATH_NAMED_BY_BOOTSTRAP_ACTIONS_CONTROLLER_ACTIONS_OR_NATIVE_OPERATIONS_MUST_BE_AN_EXACT_MEMBER_OR_DESCENDANT_OF_ONE_compilation_input_membership_roots_exact_ENTRY; THIS SUBSET_DOES_NOT_DEFINE_SOURCE_AUTHORITY_OR_GIT_TREE_IDENTITY",
+    "complete_tree_limits": {
+      "regular_blob_entries_max": 4096,
+      "aggregate_regular_file_bytes_max": 536870912,
+      "per_file_bytes_max": 67108864,
+      "path_bytes_max": 4096
+    },
+    "git_object_reconstruction": {
+      "blob_object_id": "SHA1_ASCII_blob_space_decimal_byte_count_NUL_exact_file_bytes",
+      "tree_entry_frame": "ASCII_octal_mode_space || raw_leaf_name_bytes || NUL || 20_byte_binary_blob_or_subtree_object_id",
+      "tree_order": "Git_unsigned_byte_order_with_directory_names_compared_as_if_suffixed_by_slash",
+      "tree_object_id": "SHA1_ASCII_tree_space_decimal_payload_length_NUL_exact_concatenated_tree_entries",
+      "nested_tree_rule": "reconstruct_every_directory_bottom_up_from_the_complete_ordered_tracked_tree_entries; an implementation tree containing any entry not represented by ordered_source_files is a hard failure",
+      "root_predicate": "reconstructed_root_tree_object_id_equals_EPRH2B00.implementation_tree",
+      "commit_lineage": "the_separate_committed_bootstrap_launch_envelope_must_bind_EPRH2B00.implementation_commit_to_the_control_predecessor_and_its_tree_to_EPRH2B00.implementation_tree_without_a_runtime_Git_process"
+    },
+    "entry_schema": {
+      "keys_exact": [
+        "path",
+        "mode",
+        "byte_count",
+        "sha256",
+        "git_blob"
+      ],
+      "allowed_modes": [
+        "100644",
+        "100755"
+      ],
+      "path_order": "raw UTF-8 lexicographic ascending",
+      "file_type": "regular_file_only_no_symlink_gitlink_or_submodule"
+    },
+    "merkle": {
+      "digest": "SHA256",
+      "schema_leaf": {
+        "label": "schema",
+        "payload": "ergentics.provenance.hypervisor-stage.h2-live.build-input-manifest.v1"
+      },
+      "file_leaf_label": "file/<exact-path>",
+      "file_leaf_payload": "canonical sorted-key JSON of the exact entry map",
+      "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+      "pair_frame": "0x01 || left_digest || right_digest",
+      "odd_frame": "0x03 || left_digest",
+      "root_frame": "0x02 || leaf_count_u64be || top_digest"
+    }
+  },
+  "source_continuity": {
+    "source_view_materialization": "the bootstrap supervisor decodes and exactly reencodes EPRH2B00, descriptor-holds every B00 ordered source file O_NOFOLLOW, recomputes exact bytes SHA256 Git blob IDs every nested Git tree and the manifest root, then exclusively materializes exactly those regular files and containing directories beneath ${BOOTSTRAP_A}/source-view; no .git, untracked, ignored, symlink, gitlink, special, hardlink, or extra entry is admitted",
+    "repository_status_scope": "UNASSESSED_AND_NONAUTHORITATIVE; no Git process is launched and repository untracked ignored or dirty state cannot enter the B00-defined source view",
+    "source_view_root": "${BOOTSTRAP_A}/source-view",
+    "descriptor_inventory": "hold every materialized source-view file and every containing directory from source-view root through leaf; reject symlink, special file, path escape, duplicate vnode, count overflow, mode/blob/hash mismatch, or extra entry",
+    "descriptor_file_count_max": 4096,
+    "descriptor_directory_count_max": 4096,
+    "per_file_bytes_max": 67108864,
+    "aggregate_regular_file_bytes_max": 536870912,
+    "watch_primitive": {
+      "filter": "EVFILT_VNODE",
+      "flags": ["EV_ADD", "EV_ENABLE", "EV_CLEAR"],
+      "events": ["NOTE_WRITE", "NOTE_EXTEND", "NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"]
+    },
+    "root_identity_continuity": "hold the source-view root and its bootstrap-A parent; watch identity events on the root and entry changes on the parent; require named-pre descriptor named-post device/inode joins and zero identity events in P01 and B01",
+    "arm_gap_closure": "register every held file and directory, drain once, recompute every descriptor hash/git blob/named vnode and source manifest, then drain again; either drain nonempty rejects before first action",
+    "during_actions": "continuously drain; any event permanently poisons the build result",
+    "final_join": "first drain, recompute every descriptor hash/git blob/named vnode and source manifest, then final drain; either drain nonempty rejects"
+  },
+  "resource_bounds": {
+    "source_view": {
+      "regular_file_count_max": 4096,
+      "directory_count_max": 4096,
+      "per_regular_file_bytes_max": 134217728,
+      "aggregate_regular_file_bytes_max": 2147483648
+    },
+    "each_bootstrap_or_product_root": {
+      "entry_count_max": 200000,
+      "aggregate_allocated_bytes_max": 8589934592,
+      "aggregate_logical_bytes_max": 8589934592,
+      "entry_count_metric": "count every descriptor-rooted descendant directory entry excluding the root itself; do not follow symlinks; an unreadable, raced, symlink, or special entry rejects",
+      "aggregate_allocated_bytes_metric": "sum UInt64(st_blocks) multiplied by 512 for every counted entry using its no-follow stat result; a hard-linked duplicate vnode is counted for the sample and then rejects the inventory; integer overflow rejects",
+      "aggregate_logical_bytes_metric": "sum UInt64(st_size) for every regular file using the same no-follow inventory; integer overflow or any observation above the ceiling rejects"
+    },
+    "enforcement": "measure descriptor-rooted inventory before each action, sample every 100 milliseconds while an action is unreaped, and remeasure after exact reap; record timebase first/last/sample count/maximum gap/maximum scan duration and require coverage of the full unreaped interval; an incomplete or late scan or measured excess permanently rejects the build slice and enters only the already-frozen containment path",
+    "sampling_interval_milliseconds": 100,
+    "scan_deadline_milliseconds": 100,
+    "cadence_predicate": "first_sample_ticks_lte_unreaped_interval_start_ticks AND last_sample_ticks_gte_unreaped_interval_end_ticks AND sample_count_gte_2 AND max_inter_sample_gap_ticks*timebase_numer/timebase_denom_lte_100000000ns AND max_scan_duration_ticks*timebase_numer/timebase_denom_lte_100000000ns",
+    "sampling_overshoot_residual": "writes completed between samples can temporarily exceed a ceiling; final inventory is still mandatory and no PASS is available after any observed excess"
+  },
+  "root_inventory_merkle": {
+    "scope": "descriptor-rooted complete descendant topology without following symlinks; root entry itself is excluded from leaves and is joined separately by path device inode owner and mode",
+    "entry_order": "raw UTF-8 relative-path bytes lexicographic ascending unique nonempty no leading slash dot or dot-dot component",
+    "regular_file_fields_exact": ["path", "type", "mode", "owner", "group", "nlink", "device", "inode", "byte_count", "allocated_bytes", "sha256"],
+    "directory_fields_exact": ["path", "type", "mode", "owner", "group", "nlink", "device", "inode", "allocated_bytes"],
+    "allocated_bytes": "UInt64(st_blocks) multiplied by 512 with checked arithmetic",
+    "aggregate_logical_bytes": "checked sum of regular-file byte_count fields; directories contribute zero",
+    "leaf_label": "entry/<exact-relative-path>",
+    "leaf_payload": "canonical sorted-key JSON encoding of the exact typed entry map",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "rejection": "symlink special unreadable raced path duplicate relative path duplicate vnode arithmetic overflow or count/byte ceiling breach"
+  },
+  "action_transport": {
+    "scope": "the common success observation shape applies to all six P01 bootstrap actions and all fourteen B01 build actions; P01 actions are actuated only by the separately enveloped bootstrap supervisor and B01 actions are actuated only by the outer build launcher",
+    "spawn": "the owning supervisor or launcher posix_spawns the held physical executable image suspended with explicit replacement environment, descriptor cwd, CLOEXEC default, fixed logical argv[0], and one private action process group; the B01 controller has zero spawn sites and may request only the next frozen ordinal",
+    "image_join_before_resume": "hold the physical executable O_NOFOLLOW; require named/descriptor SHA256 UUID device inode equality; double-snapshot direct child generation; join mapped main image device/inode to held physical descriptor; then one positive-PID SIGCONT",
+    "pipes": "independent nonblocking stdout and stderr drains start before resume; parent write ends close immediately; each stream retains at most 16777216 bytes then discards to EOF while setting overflow; PASS requires both EOF and no overflow",
+    "resource_observation": "every action record carries timebase first/last/sample-count/max-gap/max-scan-duration full-interval coverage allocated-and-logical byte ceilings observed peaks post-reap values and an exceeded flag for that role's ACTION_ROOT; action PASS requires cadence and every ceiling predicate",
+    "root_identity_continuity": "before resume and after reap the actuator joins ACTION_ROOT named and held device/inode, holds its parent, drains the schema-frozen masks for root identity and parent entry watches, and records descriptor-rooted inventories; root NOTE_WRITE and NOTE_EXTEND are deliberately excluded from the identity mask because expected child content changes are measured by descriptor inventories and resource samples",
+    "wait": "the owning actuator performs exact direct-child waitpid and two signal-zero ESRCH observations for the action PGID; ordinary action deadline is followed by at most 30 seconds for containment and exact reap, after which only a bounded incomplete outer receipt is permitted",
+    "post_deadline_containment_and_reap_horizon_seconds": 30,
+    "failure_closure": "close every created descriptor on every pre-spawn, pre-resume, and post-spawn failure path",
+    "pre_resume_reject": "after successful spawn but before full generation/image join, the owning actuator may enter at most one positive-PID SIGKILL against only the exact unreaped PID returned by its own spawn; exact waitpid is mandatory and no identity claim follows",
+    "timeout": "the controller enters no signal; the launcher is already the parent and owner of every B01 action from posix_spawn return; immediately before any negative-PGID SIGKILL it performs two fresh matching generation snapshots and a bounded membership census, otherwise enters no signal and retains INCOMPLETE; every request, signal status, reap, drain, and ESRCH result is included in EPRH2O01"
+  },
+  "outer_selected_controller_launch": {
+    "required_before_any_controller_entry": true,
+    "ACTION_ROOT": "${PRODUCT_A}",
+    "launch_envelope": "separate committed record pins P01 frame SHA256, selected controller SHA256 UUID device inode, source-view root device inode, this plan SHA256, and replacement_environment after ACTION_ROOT=${PRODUCT_A} expansion",
+    "spawn": "launcher owns the controller and every requested build action posix_spawn from syscall return; all children begin suspended in private PGIDs with descriptor cwd explicit replacement environment and bounded independent drains",
+    "actuation_channel": {
+      "primitive": "socketpair_AF_UNIX_SOCK_SEQPACKET_CLOEXEC_with_only_the_controller_endpoint_dup2_to_fd3",
+      "controller_action_request_frame": {
+        "magic": "EPRH2Q01",
+        "encoding": "magic || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+        "maximum_bytes": 256,
+        "fields_exact": ["schema", "next_action_position"],
+        "position_rule": "must_equal_the_next_unentered_ordinal_in_controller_actions_and_cannot_supply_path_argv_environment_cwd_deadline_or_role"
+      },
+      "launcher_action_terminal_frame": {
+        "magic": "EPRH2A02",
+        "encoding": "magic || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+        "maximum_bytes": 1048576,
+        "payload": "one_complete_action_record_from_the_build_wire_schema_plus_request_frame_sha256_and_terminal_classification"
+      },
+      "controller_process_spawn_or_signal_calls": 0,
+      "action_containment_request_frame": {
+        "magic": "EPRH2K01",
+        "encoding": "magic || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+        "maximum_bytes": 4096,
+        "fields_exact": ["schema", "action_position", "pid", "parent_pid", "session_id", "start_seconds", "start_microseconds", "pgid", "physical_image_device", "physical_image_inode", "physical_image_sha256", "physical_image_uuid"]
+      },
+      "launcher_signal_receipt_frame": {
+        "magic": "EPRH2S01",
+        "encoding": "magic || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+        "maximum_bytes": 4096,
+        "fields_exact": ["schema", "action_position", "pid", "start_seconds", "start_microseconds", "pgid", "signal", "entered_count", "status"],
+        "signal": "SIGKILL",
+        "entered_count_max": 1
+      },
+      "one_ordinal_request_one_terminal_action_frame_and_at_most_one_containment_request_per_action": true,
+      "compiler_or_test_child_inherits_fd3": false
+    },
+    "mapped_join_before_resume": "double-snapshot generation plus selected descriptor/named/mapped SHA256 UUID device inode equality",
+    "controller_internal_deadline_seconds": 3300,
+    "launcher_outer_deadline_seconds": 3600,
+    "containment_margin_seconds": 300,
+    "launcher_post_kill_reap_horizon_seconds": 30,
+    "launcher_absolute_exit_horizon_seconds": 3660,
+    "pre_signal_rejoin": "immediately before each negative-PGID signal entry take two libproc snapshots and require exact pid start-time session parent pgid mapped-image identity equality plus a bounded group-membership census proving every observed member descends from the launcher-owned action or controller generation; mismatch means zero signal and INCOMPLETE",
+    "entered_signal_limits": { "launcher_SIGCONT_positive_pid_after_join_per_spawn_max": 1, "launcher_SIGKILL_positive_pid_before_join_per_spawn_max": 1, "active_action_group_SIGKILL_negative_pgid_after_fresh_rejoin_max": 1, "controller_group_SIGKILL_negative_pgid_after_fresh_rejoin_max": 1, "total_SIGKILL_negative_pgid_after_join_max": 2, "all_other_signals": 0 },
+    "timeout_order": "if an action group is active, freshly rejoin and contain that exact group first, reap and prove two ESRCH observations; then freshly rejoin and contain the controller group, reap, drain, and classify outer INCOMPLETE",
+    "outer_receipt": "the launcher emits exactly one canonical EPRH2O01 terminal receipt binding B00/O00/P01/plan hashes launcher and controller named-descriptor-mapped identities every Q01/K01/A02/S01 frame object and digest every fresh pre-signal snapshot and membership census failed action signals exact reaps pipe EOFs group probes and the exact B01 frame hash or absence",
+    "terminal": "exact controller reap, both pipe EOFs, no active action generation, and two controller-PGID ESRCH observations; timeout or invalid/missing EPRH2B01 yields bounded EPRH2O01 INCOMPLETE and never a B01 PASS; at the absolute horizon close captures emit the retained bounded receipt and exit without retry or further signal",
+    "residuals": [
+      "descendants that independently leave the inherited private PGID are not kernel-confined or claimed absent",
+      "a SIGKILL-entered exact process or group that remains observable at the finite absolute horizon is retained as INCOMPLETE and is not waited on indefinitely by the launcher"
+    ]
+  },
+  "predecessor_tools_build_actions": [
+    {
+      "position": 0,
+      "role": "predecessor_capture_launcher_A",
+      "actuator": "separately_committed_predecessor_tools_build_envelope",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PREDECESSOR_A}",
+      "deadline_seconds": 300,
+      "environment": "exact replacement_environment with ACTION_ROOT=${PREDECESSOR_A}",
+      "argv": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-target", "arm64-apple-macosx26.0", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps", "-ffile-prefix-map=${PREDECESSOR_A}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${PREDECESSOR_A}=/__EPR_BUILD_ROOT__", "${PREDECESSOR_A}/inputs/H2LiveBootstrapCaptureLauncher/main.c", "-framework", "CoreFoundation", "-framework", "Security", "-o", "${PREDECESSOR_A}/ErgenticsProvenanceH2LiveBootstrapCaptureLauncher"]
+    },
+    {
+      "position": 1,
+      "role": "predecessor_capture_launcher_B",
+      "actuator": "separately_committed_predecessor_tools_build_envelope",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PREDECESSOR_B}",
+      "deadline_seconds": 300,
+      "environment": "exact replacement_environment with ACTION_ROOT=${PREDECESSOR_B}",
+      "argv": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-target", "arm64-apple-macosx26.0", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps", "-ffile-prefix-map=${PREDECESSOR_B}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${PREDECESSOR_B}=/__EPR_BUILD_ROOT__", "${PREDECESSOR_B}/inputs/H2LiveBootstrapCaptureLauncher/main.c", "-framework", "CoreFoundation", "-framework", "Security", "-o", "${PREDECESSOR_B}/ErgenticsProvenanceH2LiveBootstrapCaptureLauncher"]
+    },
+    {
+      "position": 2,
+      "role": "predecessor_bootstrap_supervisor_A",
+      "actuator": "separately_committed_predecessor_tools_build_envelope",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PREDECESSOR_A}",
+      "deadline_seconds": 300,
+      "environment": "exact replacement_environment with ACTION_ROOT=${PREDECESSOR_A}",
+      "argv": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-target", "arm64-apple-macosx26.0", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps", "-ffile-prefix-map=${PREDECESSOR_A}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${PREDECESSOR_A}=/__EPR_BUILD_ROOT__", "${PREDECESSOR_A}/inputs/H2LiveBuildBootstrapSupervisor/main.c", "-framework", "CoreFoundation", "-framework", "Security", "-o", "${PREDECESSOR_A}/ErgenticsProvenanceH2LiveBuildBootstrapSupervisor"]
+    },
+    {
+      "position": 3,
+      "role": "predecessor_bootstrap_supervisor_B",
+      "actuator": "separately_committed_predecessor_tools_build_envelope",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${PREDECESSOR_B}",
+      "deadline_seconds": 300,
+      "environment": "exact replacement_environment with ACTION_ROOT=${PREDECESSOR_B}",
+      "argv": ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang", "-target", "arm64-apple-macosx26.0", "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden", "-fno-modules", "-fno-implicit-modules", "-fno-implicit-module-maps", "-ffile-prefix-map=${PREDECESSOR_B}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${PREDECESSOR_B}=/__EPR_BUILD_ROOT__", "${PREDECESSOR_B}/inputs/H2LiveBuildBootstrapSupervisor/main.c", "-framework", "CoreFoundation", "-framework", "Security", "-o", "${PREDECESSOR_B}/ErgenticsProvenanceH2LiveBuildBootstrapSupervisor"]
+    }
+  ],
+  "bootstrap_actions": [
+    {
+      "position": 0,
+      "role": "build_controller_c_A",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target",
+        "arm64-apple-macosx26.0",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fno-common",
+        "-fvisibility=hidden",
+        "-ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-ffile-prefix-map=${BOOTSTRAP_A}=/__EPR_BUILD_ROOT__",
+        "-fdebug-prefix-map=${BOOTSTRAP_A}=/__EPR_BUILD_ROOT__",
+        "-c",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildController/H2LiveBuildControl.c",
+        "-o",
+        "${BOOTSTRAP_A}/H2LiveBuildControl.o"
+      ]
+    },
+    {
+      "position": 1,
+      "role": "build_controller_swift_A",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target",
+        "arm64-apple-macosx26.0",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library",
+        "-O",
+        "-whole-module-optimization",
+        "-warnings-as-errors",
+        "-debug-prefix-map",
+        "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-debug-prefix-map",
+        "${BOOTSTRAP_A}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildController/main.swift",
+        "${BOOTSTRAP_A}/H2LiveBuildControl.o",
+        "-framework",
+        "CoreFoundation",
+        "-framework",
+        "CryptoKit",
+        "-framework",
+        "Security",
+        "-o",
+        "${BOOTSTRAP_A}/ErgenticsProvenanceH2LiveBuildController"
+      ]
+    },
+    {
+      "position": 2,
+      "role": "build_controller_c_B",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target",
+        "arm64-apple-macosx26.0",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fno-common",
+        "-fvisibility=hidden",
+        "-ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-ffile-prefix-map=${BOOTSTRAP_B}=/__EPR_BUILD_ROOT__",
+        "-fdebug-prefix-map=${BOOTSTRAP_B}=/__EPR_BUILD_ROOT__",
+        "-c",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildController/H2LiveBuildControl.c",
+        "-o",
+        "${BOOTSTRAP_B}/H2LiveBuildControl.o"
+      ]
+    },
+    {
+      "position": 3,
+      "role": "build_controller_swift_B",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target",
+        "arm64-apple-macosx26.0",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library",
+        "-O",
+        "-whole-module-optimization",
+        "-warnings-as-errors",
+        "-debug-prefix-map",
+        "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-debug-prefix-map",
+        "${BOOTSTRAP_B}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildController/main.swift",
+        "${BOOTSTRAP_B}/H2LiveBuildControl.o",
+        "-framework",
+        "CoreFoundation",
+        "-framework",
+        "CryptoKit",
+        "-framework",
+        "Security",
+        "-o",
+        "${BOOTSTRAP_B}/ErgenticsProvenanceH2LiveBuildController"
+      ]
+    },
+    {
+      "position": 4,
+      "role": "build_launcher_A",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target", "arm64-apple-macosx26.0",
+        "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden",
+        "-ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-ffile-prefix-map=${BOOTSTRAP_A}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${BOOTSTRAP_A}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildLauncher/main.c",
+        "-framework", "CoreFoundation", "-framework", "Security",
+        "-o", "${BOOTSTRAP_A}/ErgenticsProvenanceH2LiveBuildLauncher"
+      ]
+    },
+    {
+      "position": 5,
+      "role": "build_launcher_B",
+      "actuator": "bootstrap_supervisor",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target", "arm64-apple-macosx26.0",
+        "-isysroot", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", "-fno-common", "-fvisibility=hidden",
+        "-ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__",
+        "-ffile-prefix-map=${BOOTSTRAP_B}=/__EPR_BUILD_ROOT__", "-fdebug-prefix-map=${BOOTSTRAP_B}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveBuildLauncher/main.c",
+        "-framework", "CoreFoundation", "-framework", "Security",
+        "-o", "${BOOTSTRAP_B}/ErgenticsProvenanceH2LiveBuildLauncher"
+      ]
+    }
+  ],
+  "controller_actions": [
+    {
+      "position": 0,
+      "role": "signed_worker_auditor_A",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target", "arm64-apple-macosx26.0",
+        "-sdk", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library", "-O", "-whole-module-optimization", "-warnings-as-errors",
+        "-debug-prefix-map", "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-debug-prefix-map", "${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift",
+        "-framework", "Foundation", "-framework", "CryptoKit", "-framework", "Security",
+        "-o", "${PRODUCT_A}/products/ErgenticsProvenanceH2LiveSignedWorkerAudit"
+      ]
+    },
+    {
+      "position": 1,
+      "role": "signed_worker_auditor_B",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target", "arm64-apple-macosx26.0",
+        "-sdk", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library", "-O", "-whole-module-optimization", "-warnings-as-errors",
+        "-debug-prefix-map", "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-debug-prefix-map", "${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift",
+        "-framework", "Foundation", "-framework", "CryptoKit", "-framework", "Security",
+        "-o", "${PRODUCT_B}/products/ErgenticsProvenanceH2LiveSignedWorkerAudit"
+      ]
+    },
+    {
+      "position": 2,
+      "role": "worker_debug_A",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveWorker", "-configuration", "Debug", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_A}/obj", "SYMROOT=${PRODUCT_A}/sym", "DSTROOT=${PRODUCT_A}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_A}/products/worker-debug",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_A}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/swift", "build"
+      ]
+    },
+    {
+      "position": 3,
+      "role": "worker_debug_B",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveWorker", "-configuration", "Debug", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_B}/obj", "SYMROOT=${PRODUCT_B}/sym", "DSTROOT=${PRODUCT_B}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_B}/products/worker-debug",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_B}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/swift", "build"
+      ]
+    },
+    {
+      "position": 4,
+      "role": "worker_release_A",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveWorker", "-configuration", "Release", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_A}/obj", "SYMROOT=${PRODUCT_A}/sym", "DSTROOT=${PRODUCT_A}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_A}/products/worker-release",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_A}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/swift", "build"
+      ]
+    },
+    {
+      "position": 5,
+      "role": "worker_release_B",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveWorker", "-configuration", "Release", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_B}/obj", "SYMROOT=${PRODUCT_B}/sym", "DSTROOT=${PRODUCT_B}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_B}/products/worker-release",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_B}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/swift", "build"
+      ]
+    },
+    {
+      "position": 6,
+      "role": "worker_codesign",
+      "actuator": "outer_build_launcher",
+      "executable": "/usr/bin/codesign",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 60,
+      "argv": [
+        "/usr/bin/codesign", "--force", "--sign", "Apple Development: Ashton Wilson (43KWC8944S)",
+        "--keychain", "/Users/ergentics/Library/Keychains/login.keychain-db",
+        "--identifier", "com.ergentics.provenance", "--options", "runtime", "--timestamp=none",
+        "--entitlements", "${SOURCE_ROOT}/Entitlements.plist", "${SIGNED_WORKER}"
+      ]
+    },
+    {
+      "position": 7,
+      "role": "worker_static_code_audit",
+      "actuator": "outer_build_launcher",
+      "executable": "${SELECTED_AUDITOR}",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 60,
+      "argv": ["${SELECTED_AUDITOR}", "${SIGNED_WORKER}"]
+    },
+    {
+      "position": 8,
+      "role": "controller_release_A",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveController", "-configuration", "Release", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_A}/obj", "SYMROOT=${PRODUCT_A}/sym", "DSTROOT=${PRODUCT_A}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_A}/products/controller-release",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_A}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/swift", "HEADER_SEARCH_PATHS=${PRODUCT_A}/generated", "build"
+      ]
+    },
+    {
+      "position": 9,
+      "role": "controller_release_B",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj",
+        "-target", "ErgenticsProvenanceH2LiveController", "-configuration", "Release", "-sdk", "macosx",
+        "ARCHS=arm64", "ONLY_ACTIVE_ARCH=YES", "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+        "OTHER_CFLAGS=$(inherited) -ffile-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -fdebug-prefix-map=${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -ffile-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__ -fdebug-prefix-map=${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OTHER_SWIFT_FLAGS=$(inherited) -debug-prefix-map ${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__ -debug-prefix-map ${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "OBJROOT=${PRODUCT_B}/obj", "SYMROOT=${PRODUCT_B}/sym", "DSTROOT=${PRODUCT_B}/dst",
+        "CONFIGURATION_BUILD_DIR=${PRODUCT_B}/products/controller-release",
+        "SHARED_PRECOMPS_DIR=${PRODUCT_B}/module-cache/clang", "CLANG_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/clang",
+        "SWIFT_MODULE_CACHE_PATH=${PRODUCT_B}/module-cache/swift", "HEADER_SEARCH_PATHS=${PRODUCT_B}/generated", "build"
+      ]
+    },
+    {
+      "position": 10,
+      "role": "verifier_release_A",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target", "arm64-apple-macosx26.0", "-sdk", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library", "-O", "-whole-module-optimization", "-warnings-as-errors",
+        "-debug-prefix-map", "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-debug-prefix-map", "${PRODUCT_A}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Sources/GuestCapabilityWitness.swift", "${SOURCE_ROOT}/Sources/GuestContract.swift", "${SOURCE_ROOT}/Sources/MerkleGenesis.swift",
+        "${SOURCE_ROOT}/Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift", "${SOURCE_ROOT}/Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift", "${SOURCE_ROOT}/Tools/H2LiveVerifier/main.swift",
+        "-framework", "Foundation", "-framework", "CryptoKit",
+        "-o", "${PRODUCT_A}/products/ErgenticsProvenanceH2LiveVerifier"
+      ]
+    },
+    {
+      "position": 11,
+      "role": "verifier_release_B",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 300,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-target", "arm64-apple-macosx26.0", "-sdk", "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-parse-as-library", "-O", "-whole-module-optimization", "-warnings-as-errors",
+        "-debug-prefix-map", "${SOURCE_ROOT}=/__EPR_SOURCE_ROOT__", "-debug-prefix-map", "${PRODUCT_B}=/__EPR_BUILD_ROOT__",
+        "${SOURCE_ROOT}/Sources/GuestCapabilityWitness.swift", "${SOURCE_ROOT}/Sources/GuestContract.swift", "${SOURCE_ROOT}/Sources/MerkleGenesis.swift",
+        "${SOURCE_ROOT}/Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift", "${SOURCE_ROOT}/Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift", "${SOURCE_ROOT}/Tools/H2LiveVerifier/main.swift",
+        "-framework", "Foundation", "-framework", "CryptoKit",
+        "-o", "${PRODUCT_B}/products/ErgenticsProvenanceH2LiveVerifier"
+      ]
+    },
+    {
+      "position": 12,
+      "role": "xctest_debug",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance",
+        "-configuration", "Debug", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "${PRODUCT_A}/DerivedData-test-Debug",
+        "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO", "CLANG_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/clang", "SWIFT_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/swift"
+      ]
+    },
+    {
+      "position": 13,
+      "role": "xctest_release",
+      "actuator": "outer_build_launcher",
+      "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "cwd": "${SOURCE_ROOT}",
+      "deadline_seconds": 900,
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild", "test", "-project", "${SOURCE_ROOT}/ErgenticsProvenance.xcodeproj", "-scheme", "ErgenticsProvenance",
+        "-configuration", "Release", "-destination", "platform=macOS,arch=arm64", "-derivedDataPath", "${PRODUCT_A}/DerivedData-test-Release",
+        "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO", "CLANG_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/clang", "SWIFT_MODULE_CACHE_PATH=${PRODUCT_A}/module-cache/swift"
+      ]
+    }
+  ],
+  "native_operations_in_order": [
+    {
+      "before_action_position": 0,
+      "operation": "revalidate_P01_bootstrap_pair_selected_launcher_and_selected_controller_images",
+      "predicates_exact": ["raw_bytes_equal", "file_size_equal", "macho_uuid_equal", "ordered_load_commands_equal", "selected_path_is_A_or_B", "selected_descriptor_device_inode_sha256_uuid_mapped_image_join"]
+    },
+    {
+      "after_action_position": 1,
+      "operation": "admit_auditor_pair",
+      "predicates_exact": ["raw_bytes_equal", "file_size_equal", "macho_uuid_equal", "ordered_load_commands_equal"]
+    },
+    {
+      "after_action_position": 5,
+      "operation": "admit_worker_pairs_and_copy_selected_release",
+      "source": "exact release A or B after pair equality",
+      "destination": "${SIGNED_WORKER}",
+      "copy_primitive": "descriptor_read_and_exclusive_openat_write_no_symlink_then_fsync_close_reopen_rehash",
+      "predicates_exact": ["debug_pair_equal", "release_pair_equal", "source_tree_unchanged", "destination_new_regular_file_mode_0700_nlink_1", "copied_bytes_equal_selected_release"]
+    },
+    {
+      "after_action_position": 7,
+      "operation": "admit_signed_worker_and_generate_identity_headers",
+      "destinations_exact": ["${PRODUCT_A}/generated/H2LiveWorkerIdentity.h", "${PRODUCT_B}/generated/H2LiveWorkerIdentity.h"],
+      "write_primitive": "exclusive_openat_regular_file_write_fsync_close_reopen_rehash",
+      "predicates_exact": ["signed_audit_admitted", "audit_identity_equals_signed_worker", "headers_raw_equal", "headers_derive_only_from_template_and_signed_identity"]
+    },
+    {
+      "after_action_position": 11,
+      "operation": "admit_controller_and_verifier_pairs",
+      "predicates_exact": ["controller_pair_equal", "verifier_pair_equal", "embedded_worker_identity_equals_signed_worker", "source_tree_unchanged"]
+    },
+    {
+      "after_action_position": 13,
+      "operation": "final_source_root_action_root_and_effect_revalidation",
+      "predicates_exact": ["source_manifest_unchanged", "source_vnode_watches_empty_after_final_drain", "all_direct_children_reaped", "all_private_groups_conserved", "predecessor_tools_builder_selected_P00_SHA256_UUID_absent_from_complete_canonical_PBX_application_target_copy_files_resources_and_XPC_helper_inventory", "accepted_archive_export_TestFlight_and_App_Store_payloads_are_explicitly_NOT_PRODUCED_IN_H2_with_null_occurrence_counts_and_exclusion_deferred_to_a_later_archive_gate", "no_live_effects_exact", "four_current_roots_and_four_predecessor_roots_retained_eight_total"]
+    }
+  ],
+  "build_result_section_merkle": {
+    "semantic_fields_in_order": [
+      "schema",
+      "status",
+      "failure",
+      "source_freeze",
+      "producer",
+      "source_identity",
+      "source_continuity",
+      "build_roots",
+      "actions",
+      "products",
+      "signing",
+      "static_code_audit",
+      "tests",
+      "binary_audits",
+      "effects"
+    ],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "section_merkle_root"
+  },
+  "predecessor_producer_preparation_result_merkle": {
+    "semantic_fields_in_order": ["schema", "status", "failure", "preparation_envelope_commit", "preparation_envelope_tree", "preparation_envelope_file_sha256", "operator_effective_uid", "outer_capture_transport", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "build_plan_sha256", "xcode_version", "xcode_build", "sdk_path", "sdk_version", "sdk_contents", "trust_boundary", "producer_source", "build_actions_sha256", "root_A_initial", "root_B_initial", "root_A_pre_actions", "root_B_pre_actions", "root_A", "root_B", "root_A_continuity", "root_B_continuity", "roots_pairwise_disjoint", "roots_retained", "build_observations", "failed_build", "signals_entered", "absolute_horizon_seconds", "producer_A", "producer_B", "producer_pair", "selected_producer", "producer_images_terminal_revalidation_complete", "h2_live_controller_launches", "worker_launches", "semantic_verifier_launches", "vm_creations", "guest_entries"],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "result_root"
+  },
+  "predecessor_tools_build_result_merkle": {
+    "semantic_fields_in_order": ["schema", "status", "failure", "build_envelope_commit", "build_envelope_tree", "build_envelope_file_sha256", "producer_preparation_frame_sha256", "producer", "producer_generation", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "build_plan_sha256", "repository_root_path", "repository_root_device", "repository_root_inode", "capture_launcher_source_sha256", "bootstrap_supervisor_source_sha256", "source_copies_A", "source_copies_B", "root_A_initial", "root_B_initial", "root_A_pre_actions", "root_B_pre_actions", "root_A", "root_B", "root_A_continuity", "root_B_continuity", "roots_pairwise_disjoint", "roots_retained", "build_actions_sha256", "actions", "failed_action", "entered_compiler_driver_actions", "all_entered_direct_children_exactly_reaped", "signals_entered", "absolute_horizon_seconds", "capture_launcher_A", "capture_launcher_B", "capture_launcher_pair", "bootstrap_supervisor_A", "bootstrap_supervisor_B", "bootstrap_supervisor_pair", "selected_capture_launcher", "selected_bootstrap_supervisor", "h2_live_controller_launches", "worker_launches", "semantic_verifier_launches", "vm_creations", "guest_entries"],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "result_root"
+  },
+  "bootstrap_launch_merkle": {
+    "semantic_fields_in_order": ["schema", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "predecessor_tools_build_result_frame_sha256", "build_plan_sha256", "bootstrap_supervisor_path", "bootstrap_supervisor_device", "bootstrap_supervisor_inode", "bootstrap_supervisor_sha256", "bootstrap_supervisor_uuid", "repository_root_path", "repository_root_device", "repository_root_inode", "ordered_source_files", "source_manifest_root", "bootstrap_A_initial", "bootstrap_B_initial", "product_A_initial", "product_B_initial", "source_view_path", "bootstrap_actions_sha256", "replacement_environment_sha256", "transport", "horizons_seconds"],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "bootstrap_launch_root"
+  },
+  "bootstrap_outer_receipt_merkle": {
+    "semantic_fields_in_order": ["schema", "status", "failure_code", "launch_envelope_commit", "launch_envelope_tree", "launch_envelope_file_sha256", "predecessor_tools_build_result_frame_sha256", "b00_frame_sha256", "capturer", "capturer_generation", "capturer_binary_audits", "supervisor", "supervisor_generation", "supervisor_stdout_bytes", "supervisor_stdout_sha256", "supervisor_stdout_prefix_hex", "supervisor_stdout_eof", "supervisor_stdout_overflow", "supervisor_stderr_bytes", "supervisor_stderr_sha256", "supervisor_stderr_prefix_hex", "supervisor_stderr_eof", "supervisor_stderr_overflow", "supervisor_wait", "supervisor_signal_receipt", "supervisor_group_absence_zero_probe_statuses", "bootstrap_failure_frame_hex", "bootstrap_failure_frame_sha256", "bootstrap_failure", "p01_frame_hex", "p01_frame_sha256", "absolute_horizon_seconds"],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "outer_receipt_root"
+  },
+  "outer_launcher_receipt_merkle": {
+    "semantic_fields_in_order": ["schema", "status", "failure_code", "build_launch_envelope_commit", "build_launch_envelope_tree", "build_launch_envelope_file_sha256", "b00_frame_sha256", "o00_frame_sha256", "p01_frame_sha256", "build_plan_sha256", "launcher", "launcher_generation", "controller", "controller_generation", "action_transcript", "failed_action", "controller_stdout_bytes", "controller_stdout_sha256", "controller_stdout_prefix_hex", "controller_stdout_eof", "controller_stdout_overflow", "controller_stderr_bytes", "controller_stderr_sha256", "controller_stderr_prefix_hex", "controller_stderr_eof", "controller_stderr_overflow", "controller_wait", "controller_signal_receipt", "controller_group_absence_zero_probe_statuses", "b01_frame_hex", "b01_frame_sha256"],
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256",
+    "excluded_field_exact": "outer_receipt_root"
+  },
+  "bootstrap_receipt_merkle": {
+    "semantic_fields_in_order": [
+      "schema",
+      "bootstrap_producer",
+      "bootstrap_launch_frame_sha256",
+      "predecessor_tools_build_result_frame_sha256",
+      "bootstrap_binary_audits",
+      "source_freeze_commit",
+      "source_freeze_tree",
+      "source_freeze_file_sha256",
+      "implementation_commit",
+      "implementation_tree",
+      "build_plan_sha256",
+      "repository_root_path",
+      "repository_root_device",
+      "repository_root_inode",
+      "bootstrap_source_manifest_root",
+      "b00_manifest_and_tree_reconstructed_exact",
+      "source_view_matches_B00_before_after",
+      "source_view_root",
+      "source_view_device",
+      "source_view_inode",
+      "source_view_inventory_root",
+      "source_view_root_observation",
+      "bootstrap_source_continuity",
+      "bootstrap_actions",
+      "bootstrap_A_root",
+      "bootstrap_A_root_device",
+      "bootstrap_A_root_inode",
+      "bootstrap_A_root_inventory",
+      "bootstrap_A_root_observation",
+      "bootstrap_A_path",
+      "bootstrap_A_device",
+      "bootstrap_A_inode",
+      "bootstrap_A_byte_count",
+      "bootstrap_A_sha256",
+      "bootstrap_A_uuid",
+      "bootstrap_B_root",
+      "bootstrap_B_root_device",
+      "bootstrap_B_root_inode",
+      "bootstrap_B_root_inventory",
+      "bootstrap_B_root_observation",
+      "bootstrap_B_path",
+      "bootstrap_B_device",
+      "bootstrap_B_inode",
+      "bootstrap_B_byte_count",
+      "bootstrap_B_sha256",
+      "bootstrap_B_uuid",
+      "bootstrap_pair_raw_equal",
+      "bootstrap_pair_load_commands_sha256",
+      "bootstrap_pair_codedirectory_sha256",
+      "selected_path",
+      "selected_device",
+      "selected_inode",
+      "selected_byte_count",
+      "selected_sha256",
+      "selected_uuid",
+      "launcher_A_path",
+      "launcher_A_device",
+      "launcher_A_inode",
+      "launcher_A_byte_count",
+      "launcher_A_sha256",
+      "launcher_A_uuid",
+      "launcher_B_path",
+      "launcher_B_device",
+      "launcher_B_inode",
+      "launcher_B_byte_count",
+      "launcher_B_sha256",
+      "launcher_B_uuid",
+      "launcher_pair_raw_equal",
+      "launcher_pair_load_commands_sha256",
+      "launcher_pair_codedirectory_sha256",
+      "selected_launcher_path",
+      "selected_launcher_device",
+      "selected_launcher_inode",
+      "selected_launcher_byte_count",
+      "selected_launcher_sha256",
+      "selected_launcher_uuid",
+      "product_A_root",
+      "product_A_device",
+      "product_A_inode",
+      "product_A_root_observation",
+      "product_B_root",
+      "product_B_device",
+      "product_B_inode",
+      "product_B_root_observation"
+    ],
+    "excluded_field_exact": "bootstrap_receipt_root",
+    "leaf_label": "exact semantic field name",
+    "leaf_payload": "canonical sorted-key JSON encoding of that field value",
+    "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+    "pair_frame": "0x01 || left_digest || right_digest",
+    "odd_frame": "0x03 || left_digest",
+    "root_frame": "0x02 || leaf_count_u64be || top_digest",
+    "digest": "SHA256"
+  },
+  "join_language": {
+    "pointer_operand": { "document_enum": ["P00", "T00", "B00", "O00", "P01", "B01", "O01", "PLAN"], "pointer": "RFC6901_JSON_POINTER_WITHOUT_WILDCARDS" },
+    "derived_operand_enum": ["SHA256_EXACT_PLAN_BYTES", "SHA256_EXACT_P00_FRAME", "SHA256_EXACT_T00_FRAME", "SHA256_EXACT_B00_FRAME", "SHA256_EXACT_O00_FRAME", "SHA256_EXACT_P01_FRAME", "SHA256_CANONICAL_PLAN_PREDECESSOR_PRODUCER_ACTIONS", "SHA256_CANONICAL_PLAN_PREDECESSOR_TOOL_ACTIONS", "SHA256_CANONICAL_PLAN_BOOTSTRAP_ACTIONS", "SHA256_CANONICAL_PLAN_REPLACEMENT_ENVIRONMENT", "RECONSTRUCT_P00_MERKLE", "RECONSTRUCT_T00_MERKLE", "RECONSTRUCT_B00_MERKLE", "RECONSTRUCT_O00_MERKLE", "RECONSTRUCT_P01_MERKLE", "RECONSTRUCT_B01_MERKLE", "RECONSTRUCT_O01_MERKLE"],
+    "operator_enum": ["equals", "equals_all", "tuple_equals_one_of", "canonical_paths_have_no_equality_or_ancestry", "device_inode_tuples_pairwise_distinct", "sha256_hex_decoded_equals", "framed_payload_equals_canonical_object", "equals_each_named_field", "equals_each_RFC6901_value", "equals_each_RFC6901_value_after_exact_token_expansion", "equals_each_named_field_within_group", "evaluate_exact_predecessor_producer_preparation_result", "evaluate_exact_predecessor_producer_build_observation", "evaluate_exact_predecessor_producer_source_membership", "evaluate_exact_predecessor_producer_distribution_exclusion", "evaluate_exact_predecessor_tools_build_result", "evaluate_exact_ordered_source_manifest_predicates", "reconstruct_descriptor_rooted_inventory_and_equals_each_observed_field", "evaluate_exact_root_layout_from_descriptor_inventory", "tuple_equals_named_observation_fields", "equals_each_pair_field_and_constant", "evaluate_exact_signed_audit_frame_vnode_identity_and_outer_joins", "evaluate_exact_source_root_identity_watch_and_manifest_continuity", "evaluate_exact_predecessor_root_identity_and_inventory_continuity", "evaluate_exact_predecessor_source_copy_continuity", "equals_each_action_root_field_to_role_root_after_exact_token_expansion", "evaluate_exact_per_root_action_inventory_chain", "evaluate_exact_action_timing_and_resource_cadence", "evaluate_exact_bootstrap_outer_capture_and_cross_frame_joins", "evaluate_exact_outer_launcher_transcript_and_cross_frame_joins", "validate_exact_predecessor_producer_preparation_failure_availability", "validate_exact_predecessor_tools_failure_availability", "validate_exact_predecessor_failed_action_phase_availability", "validate_exact_failed_action_phase_availability", "select_exact_bootstrap_failure_prefix_and_validate_phase_count_availability", "select_exact_failure_prefix_row_and_validate_phase_count_availability", "evaluate_exact_bootstrap_unstructured_failure_channel", "evaluate_exact_initial_empty_root_and_absent_source_view"],
+    "operator_semantics": {
+      "canonical_paths_have_no_equality_or_ancestry": "each UTF-8 absolute path must equal descriptor-rooted realpath bytes, contain no empty dot or dot-dot component and no trailing slash, then every unordered pair must differ and neither canonical component sequence may be a prefix of the other",
+      "device_inode_tuples_pairwise_distinct": "each operand is exactly a two-element decimal-string tuple [device,inode] already joined to its held root observation; every unordered tuple pair must differ"
+    },
+    "missing_or_type_mismatch": "FAIL_CURRENT_BUILD_SLICE",
+    "array_projection": "ONLY_indexed_joins_BELOW; NO_WILDCARD_OR_IMPLICIT_FIELD_SELECTION"
+  },
+  "always_joins": [
+    { "left": { "document": "P00", "pointer": "/result_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_P00_MERKLE" } },
+    { "left": { "document": "P00", "pointer": "/build_plan_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_PLAN_BYTES" } },
+    { "left": { "document": "P00", "pointer": "/build_actions_sha256" }, "operator": "equals", "right": { "derived": "SHA256_CANONICAL_PLAN_PREDECESSOR_PRODUCER_ACTIONS" } },
+    { "left": { "document": "P00", "pointer": "/source_freeze_commit" }, "operator": "equals", "right": { "document": "T00", "pointer": "/source_freeze_commit" } },
+    { "left": { "document": "P00", "pointer": "/source_freeze_tree" }, "operator": "equals", "right": { "document": "T00", "pointer": "/source_freeze_tree" } },
+    { "left": { "document": "P00", "pointer": "/source_freeze_file_sha256" }, "operator": "equals", "right": { "document": "T00", "pointer": "/source_freeze_file_sha256" } },
+    { "left": { "document": "P00", "pointer": "/implementation_commit" }, "operator": "equals", "right": { "document": "T00", "pointer": "/implementation_commit" } },
+    { "left": { "document": "P00", "pointer": "/implementation_tree" }, "operator": "equals", "right": { "document": "T00", "pointer": "/implementation_tree" } },
+    { "left": { "document": "T00", "pointer": "/producer_preparation_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_P00_FRAME" } },
+    { "left": { "document": "T00", "pointer": "/producer/path" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/path" } },
+    { "left": { "document": "T00", "pointer": "/producer/named_device" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/device" } },
+    { "left": { "document": "T00", "pointer": "/producer/named_inode" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/inode" } },
+    { "left": { "document": "T00", "pointer": "/producer/sha256" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/sha256" } },
+    { "left": { "document": "T00", "pointer": "/producer/uuid" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/uuid" } },
+    { "left": { "document": "B01", "pointer": "/binary_audits/predecessor_producer_distribution_exclusion/excluded_sha256" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/sha256" } },
+    { "left": { "document": "B01", "pointer": "/binary_audits/predecessor_producer_distribution_exclusion/excluded_uuid" }, "operator": "equals", "right": { "document": "P00", "pointer": "/selected_producer/uuid" } },
+    { "left": { "document": "T00", "pointer": "/result_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_T00_MERKLE" } },
+    { "left": { "document": "T00", "pointer": "/build_plan_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_PLAN_BYTES" } },
+    { "left": { "document": "T00", "pointer": "/build_actions_sha256" }, "operator": "equals", "right": { "derived": "SHA256_CANONICAL_PLAN_PREDECESSOR_TOOL_ACTIONS" } },
+    { "left": { "document": "T00", "pointer": "/source_freeze_commit" }, "operator": "equals", "right": { "document": "B00", "pointer": "/source_freeze_commit" } },
+    { "left": { "document": "T00", "pointer": "/source_freeze_tree" }, "operator": "equals", "right": { "document": "B00", "pointer": "/source_freeze_tree" } },
+    { "left": { "document": "T00", "pointer": "/source_freeze_file_sha256" }, "operator": "equals", "right": { "document": "B00", "pointer": "/source_freeze_file_sha256" } },
+    { "left": { "document": "T00", "pointer": "/implementation_commit" }, "operator": "equals", "right": { "document": "B00", "pointer": "/implementation_commit" } },
+    { "left": { "document": "T00", "pointer": "/implementation_tree" }, "operator": "equals", "right": { "document": "B00", "pointer": "/implementation_tree" } },
+    { "left": { "document": "T00", "pointer": "/repository_root_path" }, "operator": "equals", "right": { "document": "B00", "pointer": "/repository_root_path" } },
+    { "left": { "document": "T00", "pointer": "/repository_root_device" }, "operator": "equals", "right": { "document": "B00", "pointer": "/repository_root_device" } },
+    { "left": { "document": "T00", "pointer": "/repository_root_inode" }, "operator": "equals", "right": { "document": "B00", "pointer": "/repository_root_inode" } },
+    { "left": { "document": "T00", "pointer": "/producer/named_device" }, "operator": "equals_all", "right": [{ "document": "T00", "pointer": "/producer/descriptor_device" }, { "document": "T00", "pointer": "/producer/mapped_device" }, { "document": "T00", "pointer": "/producer_generation/mapped_image_device" }] },
+    { "left": { "document": "T00", "pointer": "/producer/named_inode" }, "operator": "equals_all", "right": [{ "document": "T00", "pointer": "/producer/descriptor_inode" }, { "document": "T00", "pointer": "/producer/mapped_inode" }, { "document": "T00", "pointer": "/producer_generation/mapped_image_inode" }] },
+    { "left": { "document": "T00", "pointer": "/producer/sha256" }, "operator": "equals", "right": { "document": "T00", "pointer": "/producer_generation/mapped_image_sha256" } },
+    { "left": { "document": "T00", "pointer": "/producer/uuid" }, "operator": "equals", "right": { "document": "T00", "pointer": "/producer_generation/mapped_image_uuid" } },
+    { "left": { "document": "B00", "pointer": "/predecessor_tools_build_result_frame_sha256" }, "operator": "equals_all", "right": [{ "derived": "SHA256_EXACT_T00_FRAME" }, { "document": "O00", "pointer": "/predecessor_tools_build_result_frame_sha256" }, { "document": "P01", "pointer": "/predecessor_tools_build_result_frame_sha256" }, { "document": "B01", "pointer": "/producer/predecessor_tools_build_result_frame_sha256" }] },
+    { "left": { "document": "T00", "pointer": "/selected_bootstrap_supervisor/path" }, "operator": "equals", "right": { "document": "B00", "pointer": "/bootstrap_supervisor_path" } },
+    { "left": { "document": "T00", "pointer": "/selected_bootstrap_supervisor/device" }, "operator": "equals", "right": { "document": "B00", "pointer": "/bootstrap_supervisor_device" } },
+    { "left": { "document": "T00", "pointer": "/selected_bootstrap_supervisor/inode" }, "operator": "equals", "right": { "document": "B00", "pointer": "/bootstrap_supervisor_inode" } },
+    { "left": { "document": "T00", "pointer": "/selected_bootstrap_supervisor/sha256" }, "operator": "equals", "right": { "document": "B00", "pointer": "/bootstrap_supervisor_sha256" } },
+    { "left": { "document": "T00", "pointer": "/selected_bootstrap_supervisor/uuid" }, "operator": "equals", "right": { "document": "B00", "pointer": "/bootstrap_supervisor_uuid" } },
+    { "left": { "document": "T00", "pointer": "/selected_capture_launcher/path" }, "operator": "equals", "right": { "document": "O00", "pointer": "/capturer/path" } },
+    { "left": { "document": "T00", "pointer": "/selected_capture_launcher/device" }, "operator": "equals", "right": { "document": "O00", "pointer": "/capturer/named_device" } },
+    { "left": { "document": "T00", "pointer": "/selected_capture_launcher/inode" }, "operator": "equals", "right": { "document": "O00", "pointer": "/capturer/named_inode" } },
+    { "left": { "document": "T00", "pointer": "/selected_capture_launcher/sha256" }, "operator": "equals", "right": { "document": "O00", "pointer": "/capturer/sha256" } },
+    { "left": { "document": "T00", "pointer": "/selected_capture_launcher/uuid" }, "operator": "equals", "right": { "document": "O00", "pointer": "/capturer/uuid" } },
+    { "left": { "document": "B00", "pointer": "/bootstrap_launch_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_B00_MERKLE" } },
+    { "left": { "document": "O00", "pointer": "/outer_receipt_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_O00_MERKLE" } },
+    { "left": { "document": "O00", "pointer": "/b00_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_B00_FRAME" } },
+    { "left": { "document": "B01", "pointer": "/producer/bootstrap_outer_receipt_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_O00_FRAME" } },
+    { "left": { "document": "O01", "pointer": "/o00_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_O00_FRAME" } },
+    { "left": { "document": "B00", "pointer": "/bootstrap_actions_sha256" }, "operator": "equals", "right": { "derived": "SHA256_CANONICAL_PLAN_BOOTSTRAP_ACTIONS" } },
+    { "left": { "document": "B00", "pointer": "/replacement_environment_sha256" }, "operator": "equals", "right": { "derived": "SHA256_CANONICAL_PLAN_REPLACEMENT_ENVIRONMENT" } },
+    { "left": { "document": "B00", "pointer": "/build_plan_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_PLAN_BYTES" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_launch_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_B00_FRAME" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_producer/launch_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_B00_FRAME" } },
+    { "left": { "document": "B01", "pointer": "/source_identity/b00_launch_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_B00_FRAME" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_receipt_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_P01_MERKLE" } },
+    { "left": { "document": "B01", "pointer": "/section_merkle_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_B01_MERKLE" } },
+    { "left": { "document": "O01", "pointer": "/outer_receipt_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_O01_MERKLE" } },
+    { "left": { "document": "B00", "pointer": "/source_freeze_commit" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/source_freeze_commit" }, { "document": "B01", "pointer": "/source_freeze/commit" }] },
+    { "left": { "document": "B00", "pointer": "/source_freeze_tree" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/source_freeze_tree" }, { "document": "B01", "pointer": "/source_freeze/tree" }] },
+    { "left": { "document": "B00", "pointer": "/source_freeze_file_sha256" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/source_freeze_file_sha256" }, { "document": "B01", "pointer": "/source_freeze/file_sha256" }] },
+    { "left": { "document": "B00", "pointer": "/implementation_commit" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/implementation_commit" }, { "document": "B01", "pointer": "/source_identity/implementation_commit" }] },
+    { "left": { "document": "B00", "pointer": "/implementation_tree" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/implementation_tree" }, { "document": "B01", "pointer": "/source_identity/implementation_tree" }] },
+    { "left": { "document": "B00", "pointer": "/source_manifest_root" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_source_manifest_root" }, { "document": "B01", "pointer": "/producer/source_manifest_root" }, { "document": "B01", "pointer": "/source_identity/manifest_root" }] }
+    ,{ "left": { "document": "B00", "pointer": "/bootstrap_supervisor_path" }, "operator": "equals_all", "right": [{ "document": "O00", "pointer": "/supervisor/path" }, { "document": "P01", "pointer": "/bootstrap_producer/supervisor_path" }] }
+    ,{ "left": { "document": "B00", "pointer": "/bootstrap_supervisor_device" }, "operator": "equals_all", "right": [{ "document": "O00", "pointer": "/supervisor/named_device" }, { "document": "P01", "pointer": "/bootstrap_producer/named_device" }] }
+    ,{ "left": { "document": "B00", "pointer": "/bootstrap_supervisor_inode" }, "operator": "equals_all", "right": [{ "document": "O00", "pointer": "/supervisor/named_inode" }, { "document": "P01", "pointer": "/bootstrap_producer/named_inode" }] }
+    ,{ "left": { "document": "B00", "pointer": "/bootstrap_supervisor_sha256" }, "operator": "equals_all", "right": [{ "document": "O00", "pointer": "/supervisor/sha256" }, { "document": "P01", "pointer": "/bootstrap_producer/sha256" }] }
+    ,{ "left": { "document": "B00", "pointer": "/bootstrap_supervisor_uuid" }, "operator": "equals_all", "right": [{ "document": "O00", "pointer": "/supervisor/uuid" }, { "document": "P01", "pointer": "/bootstrap_producer/uuid" }] }
+    ,{ "left": { "document": "B00", "pointer": "/repository_root_path" }, "operator": "equals", "right": { "document": "P01", "pointer": "/repository_root_path" } }
+    ,{ "left": { "document": "B00", "pointer": "/repository_root_device" }, "operator": "equals", "right": { "document": "P01", "pointer": "/repository_root_device" } }
+    ,{ "left": { "document": "B00", "pointer": "/repository_root_inode" }, "operator": "equals", "right": { "document": "P01", "pointer": "/repository_root_inode" } }
+    ,{ "left": { "document": "B00", "pointer": "/source_view_path" }, "operator": "equals", "right": { "document": "P01", "pointer": "/source_view_root" } }
+  ],
+  "pass_joins": [
+    { "left": [{ "document": "P00", "pointer": "/selected_producer/path" }, { "document": "P00", "pointer": "/selected_producer/device" }, { "document": "P00", "pointer": "/selected_producer/inode" }, { "document": "P00", "pointer": "/selected_producer/byte_count" }, { "document": "P00", "pointer": "/selected_producer/sha256" }, { "document": "P00", "pointer": "/selected_producer/uuid" }, { "document": "P00", "pointer": "/selected_producer/load_commands_sha256" }, { "document": "P00", "pointer": "/selected_producer/codedirectory_sha256" }, { "document": "P00", "pointer": "/selected_producer/expanded_build_settings_sha256" }], "operator": "tuple_equals_one_of", "right": [[{ "document": "P00", "pointer": "/producer_A/path" }, { "document": "P00", "pointer": "/producer_A/device" }, { "document": "P00", "pointer": "/producer_A/inode" }, { "document": "P00", "pointer": "/producer_A/byte_count" }, { "document": "P00", "pointer": "/producer_A/sha256" }, { "document": "P00", "pointer": "/producer_A/uuid" }, { "document": "P00", "pointer": "/producer_A/load_commands_sha256" }, { "document": "P00", "pointer": "/producer_A/codedirectory_sha256" }, { "document": "P00", "pointer": "/producer_A/expanded_build_settings_sha256" }], [{ "document": "P00", "pointer": "/producer_B/path" }, { "document": "P00", "pointer": "/producer_B/device" }, { "document": "P00", "pointer": "/producer_B/inode" }, { "document": "P00", "pointer": "/producer_B/byte_count" }, { "document": "P00", "pointer": "/producer_B/sha256" }, { "document": "P00", "pointer": "/producer_B/uuid" }, { "document": "P00", "pointer": "/producer_B/load_commands_sha256" }, { "document": "P00", "pointer": "/producer_B/codedirectory_sha256" }, { "document": "P00", "pointer": "/producer_B/expanded_build_settings_sha256" }]] },
+    { "left": { "document": "O00", "pointer": "/p01_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_P01_FRAME" } },
+    { "left": { "document": "O00", "pointer": "/p01_frame_hex" }, "operator": "sha256_hex_decoded_equals", "right": { "document": "O00", "pointer": "/p01_frame_sha256" } },
+    { "left": { "document": "O00", "pointer": "/p01_frame_hex" }, "operator": "framed_payload_equals_canonical_object", "right": { "document": "P01", "pointer": "" } },
+    { "left": { "document": "B00", "pointer": "/source_manifest_root" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_source_manifest_root" }, { "document": "B01", "pointer": "/source_identity/manifest_root" }] },
+    { "left": { "document": "P01", "pointer": "/build_plan_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_PLAN_BYTES" } },
+    { "left": { "document": "P01", "pointer": "/repository_root_path" }, "operator": "equals", "right": { "document": "PLAN", "pointer": "/repository_root" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_producer/named_device" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_producer/descriptor_device" }, { "document": "P01", "pointer": "/bootstrap_producer/mapped_device" }] },
+    { "left": { "document": "P01", "pointer": "/bootstrap_producer/named_inode" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_producer/descriptor_inode" }, { "document": "P01", "pointer": "/bootstrap_producer/mapped_inode" }] },
+    { "left": { "document": "P01", "pointer": "/bootstrap_receipt_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_P01_MERKLE" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_source_manifest_root" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_source_continuity/pre_arm_manifest_root" }, { "document": "P01", "pointer": "/bootstrap_source_continuity/post_arm_manifest_root" }, { "document": "P01", "pointer": "/bootstrap_source_continuity/final_manifest_root" }, { "document": "B01", "pointer": "/producer/source_manifest_root" }, { "document": "B01", "pointer": "/source_identity/manifest_root" }, { "document": "B01", "pointer": "/source_continuity/pre_arm_manifest_root" }, { "document": "B01", "pointer": "/source_continuity/post_arm_manifest_root" }, { "document": "B01", "pointer": "/source_continuity/final_manifest_root" }] },
+    { "left": { "document": "P01", "pointer": "/bootstrap_source_continuity/descriptor_file_count" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_continuity/descriptor_file_count" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_source_continuity/descriptor_directory_count" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_continuity/descriptor_directory_count" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_source_continuity/per_file_bytes_max_observed" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_continuity/per_file_bytes_max_observed" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_source_continuity/aggregate_regular_file_bytes" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_continuity/aggregate_regular_file_bytes" } },
+    { "left": { "document": "P01", "pointer": "/source_view_inventory_root" }, "operator": "equals", "right": { "document": "B01", "pointer": "/build_roots/source_view/inventory_root" } },
+    { "left": { "document": "P01", "pointer": "/source_freeze_commit" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_freeze/commit" } },
+    { "left": { "document": "P01", "pointer": "/source_freeze_tree" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_freeze/tree" } },
+    { "left": { "document": "P01", "pointer": "/source_freeze_file_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_freeze/file_sha256" } },
+    { "left": { "document": "P01", "pointer": "/implementation_commit" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_identity/implementation_commit" } },
+    { "left": { "document": "P01", "pointer": "/implementation_tree" }, "operator": "equals", "right": { "document": "B01", "pointer": "/source_identity/implementation_tree" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_A_sha256" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/bootstrap_B_sha256" }, { "document": "B01", "pointer": "/producer/bootstrap_A_sha256" }, { "document": "B01", "pointer": "/producer/bootstrap_B_sha256" }] },
+    { "left": { "document": "P01", "pointer": "/bootstrap_A_byte_count" }, "operator": "equals", "right": { "document": "P01", "pointer": "/bootstrap_B_byte_count" } },
+    { "left": { "document": "P01", "pointer": "/bootstrap_A_uuid" }, "operator": "equals", "right": { "document": "P01", "pointer": "/bootstrap_B_uuid" } },
+    { "left": [{ "document": "P01", "pointer": "/selected_path" }, { "document": "P01", "pointer": "/selected_device" }, { "document": "P01", "pointer": "/selected_inode" }, { "document": "P01", "pointer": "/selected_byte_count" }, { "document": "P01", "pointer": "/selected_sha256" }, { "document": "P01", "pointer": "/selected_uuid" }], "operator": "tuple_equals_one_of", "right": [[{ "document": "P01", "pointer": "/bootstrap_A_path" }, { "document": "P01", "pointer": "/bootstrap_A_device" }, { "document": "P01", "pointer": "/bootstrap_A_inode" }, { "document": "P01", "pointer": "/bootstrap_A_byte_count" }, { "document": "P01", "pointer": "/bootstrap_A_sha256" }, { "document": "P01", "pointer": "/bootstrap_A_uuid" }], [{ "document": "P01", "pointer": "/bootstrap_B_path" }, { "document": "P01", "pointer": "/bootstrap_B_device" }, { "document": "P01", "pointer": "/bootstrap_B_inode" }, { "document": "P01", "pointer": "/bootstrap_B_byte_count" }, { "document": "P01", "pointer": "/bootstrap_B_sha256" }, { "document": "P01", "pointer": "/bootstrap_B_uuid" }]] },
+    { "left": { "document": "P01", "pointer": "/launcher_A_sha256" }, "operator": "equals_all", "right": [{ "document": "P01", "pointer": "/launcher_B_sha256" }, { "document": "B01", "pointer": "/producer/launcher_A_sha256" }, { "document": "B01", "pointer": "/producer/launcher_B_sha256" }] },
+    { "left": { "document": "P01", "pointer": "/launcher_A_byte_count" }, "operator": "equals", "right": { "document": "P01", "pointer": "/launcher_B_byte_count" } },
+    { "left": { "document": "P01", "pointer": "/launcher_A_uuid" }, "operator": "equals", "right": { "document": "P01", "pointer": "/launcher_B_uuid" } },
+    { "left": [{ "document": "P01", "pointer": "/selected_launcher_path" }, { "document": "P01", "pointer": "/selected_launcher_device" }, { "document": "P01", "pointer": "/selected_launcher_inode" }, { "document": "P01", "pointer": "/selected_launcher_byte_count" }, { "document": "P01", "pointer": "/selected_launcher_sha256" }, { "document": "P01", "pointer": "/selected_launcher_uuid" }], "operator": "tuple_equals_one_of", "right": [[{ "document": "P01", "pointer": "/launcher_A_path" }, { "document": "P01", "pointer": "/launcher_A_device" }, { "document": "P01", "pointer": "/launcher_A_inode" }, { "document": "P01", "pointer": "/launcher_A_byte_count" }, { "document": "P01", "pointer": "/launcher_A_sha256" }, { "document": "P01", "pointer": "/launcher_A_uuid" }], [{ "document": "P01", "pointer": "/launcher_B_path" }, { "document": "P01", "pointer": "/launcher_B_device" }, { "document": "P01", "pointer": "/launcher_B_inode" }, { "document": "P01", "pointer": "/launcher_B_byte_count" }, { "document": "P01", "pointer": "/launcher_B_sha256" }, { "document": "P01", "pointer": "/launcher_B_uuid" }]] },
+    { "left": [{ "document": "P00", "pointer": "/root_A/path" }, { "document": "P00", "pointer": "/root_B/path" }, { "document": "T00", "pointer": "/root_A/path" }, { "document": "T00", "pointer": "/root_B/path" }, { "document": "P01", "pointer": "/bootstrap_A_root" }, { "document": "P01", "pointer": "/bootstrap_B_root" }, { "document": "P01", "pointer": "/product_A_root" }, { "document": "P01", "pointer": "/product_B_root" }], "operator": "canonical_paths_have_no_equality_or_ancestry", "right": true },
+    { "left": [[{ "document": "P00", "pointer": "/root_A/device" }, { "document": "P00", "pointer": "/root_A/inode" }], [{ "document": "P00", "pointer": "/root_B/device" }, { "document": "P00", "pointer": "/root_B/inode" }], [{ "document": "T00", "pointer": "/root_A/device" }, { "document": "T00", "pointer": "/root_A/inode" }], [{ "document": "T00", "pointer": "/root_B/device" }, { "document": "T00", "pointer": "/root_B/inode" }], [{ "document": "P01", "pointer": "/bootstrap_A_root_device" }, { "document": "P01", "pointer": "/bootstrap_A_root_inode" }], [{ "document": "P01", "pointer": "/bootstrap_B_root_device" }, { "document": "P01", "pointer": "/bootstrap_B_root_inode" }], [{ "document": "P01", "pointer": "/product_A_device" }, { "document": "P01", "pointer": "/product_A_inode" }], [{ "document": "P01", "pointer": "/product_B_device" }, { "document": "P01", "pointer": "/product_B_inode" }]], "operator": "device_inode_tuples_pairwise_distinct", "right": true },
+    { "left": { "document": "P01", "pointer": "/build_plan_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/build_plan_sha256" } },
+    { "left": { "derived": "SHA256_EXACT_P01_FRAME" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/bootstrap_manifest_sha256" } },
+    { "left": { "document": "P01", "pointer": "/selected_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/selected_sha256" } },
+    { "left": { "document": "P01", "pointer": "/selected_uuid" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/uuid" } },
+    { "left": { "document": "P01", "pointer": "/selected_launcher_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/selected_launcher_sha256" } },
+    { "left": { "document": "P01", "pointer": "/selected_launcher_uuid" }, "operator": "equals", "right": { "document": "B01", "pointer": "/producer/launcher_uuid" } },
+    { "left": { "document": "B01", "pointer": "/source_identity/generated_header_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/products/generated_worker_identity_header_sha256" } },
+    { "left": [{ "document": "B01", "pointer": "/actions/7/executable_sha256" }, { "document": "B01", "pointer": "/actions/7/executable_uuid" }], "operator": "tuple_equals_one_of", "right": [[{ "document": "B01", "pointer": "/products/signed_worker_auditor/A_sha256" }, { "document": "B01", "pointer": "/products/signed_worker_auditor/A_uuid" }], [{ "document": "B01", "pointer": "/products/signed_worker_auditor/B_sha256" }, { "document": "B01", "pointer": "/products/signed_worker_auditor/B_uuid" }]] },
+    { "left": { "document": "B01", "pointer": "/signing/selected_unsigned_worker_sha256" }, "operator": "equals_all", "right": [{ "document": "B01", "pointer": "/products/release_unsigned_worker/A_sha256" }, { "document": "B01", "pointer": "/products/release_unsigned_worker/B_sha256" }] },
+    { "left": { "document": "B01", "pointer": "/signing/signed_worker_sha256" }, "operator": "equals", "right": { "document": "B01", "pointer": "/products/signed_worker/sha256" } },
+    { "left": { "document": "B01", "pointer": "/static_code_audit/receipt_frame_hex" }, "operator": "sha256_hex_decoded_equals", "right": { "document": "B01", "pointer": "/static_code_audit/receipt_frame_sha256" } },
+    { "left": { "document": "B01", "pointer": "/static_code_audit/receipt_frame_hex" }, "operator": "framed_payload_equals_canonical_object", "right": { "document": "B01", "pointer": "/static_code_audit/receipt" } },
+    { "left": { "document": "B01", "pointer": "/section_merkle_root" }, "operator": "equals", "right": { "derived": "RECONSTRUCT_B01_MERKLE" } }
+  ],
+  "signed_audit_identity_join_fields": ["sha256", "uuid", "full_codedirectory_hash", "cdhash", "identifier", "team", "certificate_sha256", "requirement_sha256", "entitlements_sha256"],
+  "indexed_joins": [
+    {
+      "left_document": "P00",
+      "left_array_pointer": "/build_observations",
+      "right_document": "PLAN",
+      "right_array_pointer": "/predecessor_producer_preparation_actions",
+      "required_count_on_pass": 2,
+      "required_count_on_fail": "P00.failure.completed_build_count",
+      "fail_array_must_equal_exact_plan_prefix": true,
+      "fields": { "position": "position", "role": "role", "actuator": "actuator", "compiler_path": "executable", "argv": "argv", "cwd_path": "cwd", "deadline_seconds": "deadline_seconds" },
+      "right_token_expansion": "token_grammar_plus_token_values",
+      "left_environment_equals": "predecessor_producer_preparation_environment_after_ACTION_ROOT_equals_the_action_root",
+      "stdin_join": "stdin_byte_count_and_stdin_SHA256_equal_P00.producer_source.byte_count_and_sha256_and_stdin_eof_sent_is_true"
+    },
+    {
+      "left_document": "T00",
+      "left_array_pointer": "/actions",
+      "right_document": "PLAN",
+      "right_array_pointer": "/predecessor_tools_build_actions",
+      "required_count_on_pass": 4,
+      "required_count_on_fail": "T00.failure.completed_action_count",
+      "fail_array_must_equal_exact_plan_prefix": true,
+      "fields": { "position": "position", "role": "role", "actuator": "actuator", "executable_path": "executable", "logical_argv0": "argv/0", "argv": "argv", "cwd_path": "cwd", "deadline_seconds": "deadline_seconds" },
+      "right_token_expansion": "token_grammar_plus_token_values_plus_ACTION_ROOT_BY_ROLE",
+      "left_environment_equals": "replacement_environment_after_same_expansion"
+    },
+    {
+      "left_document": "P01",
+      "left_array_pointer": "/bootstrap_actions",
+      "right_document": "PLAN",
+      "right_array_pointer": "/bootstrap_actions",
+      "required_count": 6,
+      "fields": { "position": "position", "role": "role", "actuator": "actuator", "executable_path": "executable", "logical_argv0": "argv/0", "argv": "argv", "cwd_path": "cwd", "deadline_seconds": "deadline_seconds" },
+      "right_token_expansion": "token_grammar_plus_token_values_plus_ACTION_ROOT_BY_ROLE",
+      "left_environment_equals": "replacement_environment_after_same_expansion"
+    },
+    {
+      "left_document": "B01",
+      "left_array_pointer": "/actions",
+      "right_document": "PLAN",
+      "right_array_pointer": "/controller_actions",
+      "required_count_on_pass": 14,
+      "required_count_on_fail": "B01.failure.completed_action_count",
+      "fail_array_must_equal_exact_plan_prefix": true,
+      "fields": { "position": "position", "role": "role", "actuator": "actuator", "executable_path": "executable", "logical_argv0": "argv/0", "argv": "argv", "cwd_path": "cwd", "deadline_seconds": "deadline_seconds" },
+      "right_token_expansion": "token_grammar_plus_token_values_plus_ACTION_ROOT_BY_ROLE",
+      "left_environment_equals": "replacement_environment_after_same_expansion"
+    },
+    {
+      "left_document": "B01",
+      "left_object_pointer": "/static_code_audit/receipt",
+      "right_document": "B01",
+      "right_object_pointer": "/products/signed_worker",
+      "field_names_from": "/signed_audit_identity_join_fields",
+      "operator": "equals_each_named_field"
+    }
+  ],
+  "action_internal_join_table": {
+    "arrays": [
+      { "document": "T00", "pointer": "/actions", "required_count_on_pass": 4, "required_count_on_fail": "T00.failure.completed_action_count", "required_actuator": "separately_committed_predecessor_tools_build_envelope" },
+      { "document": "P01", "pointer": "/bootstrap_actions", "required_count": 6, "required_actuator": "bootstrap_supervisor" },
+      { "document": "B01", "pointer": "/actions", "required_count_on_pass": 14, "required_actuator": "outer_build_launcher" }
+    ],
+    "equals_groups_per_action": [
+      ["executable_named_device", "executable_descriptor_device", "executable_mapped_device"],
+      ["executable_named_inode", "executable_descriptor_inode", "executable_mapped_inode"],
+      ["action_root_continuity/named_pre_device", "action_root_continuity/descriptor_device", "action_root_continuity/named_post_device"],
+      ["action_root_continuity/named_pre_inode", "action_root_continuity/descriptor_inode", "action_root_continuity/named_post_inode"]
+    ],
+    "field_paths_are_relative_RFC6901_without_leading_slash": true,
+    "required_true_per_completed_action": ["executable_all_joins", "pgid_equals_pid", "pid_double_snapshot_equal", "descriptor_cwd_join", "action_root_continuity/root_identity_watch_armed", "action_root_continuity/parent_entry_watch_armed", "action_root_continuity/all_identity_joins", "posix_spawn_cloexec_default", "parent_child_fd_copies_closed", "resource_observation/full_unreaped_interval_covered", "exact_reap", "process_group_observed_empty"],
+    "required_constants_per_completed_action": { "exit_status": 0, "stdin_source": "/dev/null", "stdin_reads_expected": 0, "inherited_fds": ["stdin_dev_null", "stdout_pipe", "stderr_pipe"], "sigcont_count": 1, "sigcont_status": 0, "launcher_pre_join_positive_pid_kill_entries": 0, "launcher_post_join_group_kill_receipt_entries": 0, "launcher_signal_receipt": null, "stdout_eof": true, "stdout_overflow": false, "stderr_bytes": 0, "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_eof": true, "stderr_overflow": false, "group_absence_zero_probes": 2, "group_absence_zero_probe_statuses": ["ESRCH", "ESRCH"], "action_root_continuity/root_identity_events": 0, "action_root_continuity/parent_entry_events": 0, "resource_observation/ceiling_exceeded_observed": false }
+  },
+  "action_cwd_join_table": {
+    "fields": { "cwd_path": "path", "cwd_device": "device", "cwd_inode": "inode" },
+    "entries": [
+      { "document": "T00", "array_pointer": "/actions", "positions": [0, 2], "root_document": "T00", "root_pointers": { "path": "/root_A/path", "device": "/root_A/device", "inode": "/root_A/inode" } },
+      { "document": "T00", "array_pointer": "/actions", "positions": [1, 3], "root_document": "T00", "root_pointers": { "path": "/root_B/path", "device": "/root_B/device", "inode": "/root_B/inode" } },
+      { "document": "P01", "array_pointer": "/bootstrap_actions", "positions": [0, 1, 2, 3, 4, 5], "root_document": "P01", "root_pointers": { "path": "/source_view_root", "device": "/source_view_device", "inode": "/source_view_inode" } },
+      { "document": "B01", "array_pointer": "/actions", "positions": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "root_document": "P01", "root_pointers": { "path": "/source_view_root", "device": "/source_view_device", "inode": "/source_view_inode" } }
+    ],
+    "operator": "equals_each_RFC6901_value_after_exact_token_expansion"
+  },
+  "action_executable_equivalence_groups": {
+    "fields": ["executable_sha256", "executable_uuid", "executable_named_device", "executable_named_inode"],
+    "groups": [
+      { "document": "T00", "array_pointer": "/actions", "positions": [0, 1, 2, 3], "physical_image": "clang" },
+      { "document": "P01", "array_pointer": "/bootstrap_actions", "positions": [0, 2, 4, 5], "physical_image": "clang" },
+      { "document": "P01", "array_pointer": "/bootstrap_actions", "positions": [1, 3], "physical_image": "swift-frontend" },
+      { "document": "B01", "array_pointer": "/actions", "positions": [0, 1, 10, 11], "physical_image": "swift-frontend" },
+      { "document": "B01", "array_pointer": "/actions", "positions": [2, 3, 4, 5, 8, 9, 12, 13], "physical_image": "xcodebuild" }
+    ],
+    "operator": "equals_each_named_field_within_group"
+  },
+  "predecessor_producer_preparation_result_join_table": {
+    "documents": ["P00", "T00", "PLAN"],
+    "pass_predicates_in_order": [
+      "P00_schema_frame_magic_EPRH2P00_length_canonical_payload_SHA256_and_RECONSTRUCT_P00_MERKLE_are_exact",
+      "P00_status_equals_PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY_failure_and_failed_build_are_null",
+      "preparation_envelope_commit_tree_file_SHA256_operator_effective_UID_and_outer_capture_transport_equal_the_separately_committed_non_authoritative_P00_control",
+      "source_freeze_implementation_and_build_plan_identities_equal_the_separately_committed_envelope_inputs_and_T00",
+      "producer_source_is_the_exact_Tools/H2LivePredecessorToolsBuilder/main.c_complete_tree_entry_and_its_path_mode_byte_count_SHA256_and_Git_blob_equal_the_held_bytes_sent_to_both_compiler_stdins",
+      "Xcode_version_26.6_build_17F113_SDK_path_and_version_26.5_are_exact_while_SDK_contents_remain_explicitly_admitted_unmeasured_bootstrap_trust",
+      "root_A_initial_and_root_B_initial_are_exclusively_created_fresh_descriptor_held_0700_same_owner_exact_empty_inventories_and_root_identity_plus_held_parent_watches_arm_before_layout",
+      "root_A_pre_actions_and_root_B_pre_actions_reconstruct_only_the_fixed_pre_action_layout_and_both_root_continuity_records_join_initial_pre_action_and_final_path_device_inode_owner_mode_inventory_with_zero_watch_events",
+      "the_two_exact_plan_actions_run_in_A_then_B_order_with_exact_compiler_named_descriptor_mapped_SHA256_UUID_joins_double_generation_snapshots_descriptor_cwd_exact_argv_empty_replacement_environment_300_second_deadline_monotonic_order_exact_source_stdin_count_SHA256_EOF_empty_complete_output_captures_normal_exit_exact_wait_reap_and_no_manual_intervention",
+      "process_containment_remains_UNPROVEN_BOOTSTRAP_TRUST_BOUNDARY_and_no_descendant_absence_or_private_group_conservation_claim_is_created",
+      "signals_entered_equals_0_absolute_horizon_seconds_equals_660_and_manual_host_process_management_is_permitted_after_that_horizon_without_result_reinterpretation_or_authority",
+      "producer_A_and_B_are_exact_held_output_children_of_their_roots_with_device_inode_bytes_size_SHA256_UUID_load_commands_CodeDirectory_and_build_settings_revalidated_after_each build_and_again_after_pair_comparison",
+      "producer_pair_fields_equal_A_B_and_raw_bytes_size_SHA256_UUID_load_commands_CodeDirectory_and_build_settings_are_equal",
+      "selected_producer_exactly_equals_either_A_or_B_and_both_images_are_descriptor_held_with_output_file_watches_armed_zero_events_and_terminal_named_descriptor_byte_count_SHA256_UUID_joins_immediately_before_payload_encoding",
+      "P00_claims_only_that_terminal_pre_encoding_point_in_time_image_observation_T00_must_independently_reopen_rehash_and_join_the_selected_named_descriptor_mapped_image_before_any_action",
+      "both_final_root_inventories_reconstruct_the_exact_recursive_fixed_final_layout_with_empty_helper_directories_roots_are_retained_and_their_canonical_paths_have_no_equality_or_ancestry_and_device_inode_tuples_are_distinct",
+      "h2_live_controller_worker_semantic_verifier_VM_and_guest_counts_are_all_zero",
+      "P00_result_root_equals_RECONSTRUCT_P00_MERKLE_and_T00_producer_preparation_frame_SHA256_equals_SHA256_EXACT_P00_FRAME",
+      "T00_producer_path_named_descriptor_mapped_device_inode_SHA256_UUID_and_generation_mapped_image_exactly_join_P00_selected_producer"
+    ],
+    "failure_disposition": "FAIL_PREDECESSOR_PRODUCER_PREPARATION_RETAINED_uses_the_exact_phase_count_availability_table_cannot_enter_T00_and_does_not_forbid_operator_host_process_management_after_the_finite_capture_horizon",
+    "publication_eligibility": "P00_is_not_a_downstream_input_until_its_exact_canonical_payload_and_sidecar_are_exclusively_created_fsynced_closed_reopened_rehashed_parent_directory_fsynced_and_committed_by_a_separate_control_only_commit; that later commit identity is the durable noncircular publication receipt and cannot alter P00 bytes",
+    "operator": "evaluate_exact_predecessor_producer_preparation_result"
+  },
+  "predecessor_producer_build_observation_table": {
+    "document": "P00",
+    "array_pointer": "/build_observations",
+    "plan_pointer": "/predecessor_producer_preparation_actions",
+    "pass_count": 2,
+    "recipe_join": "each observation position role actuator compiler_path argv cwd deadline and exact replacement environment equal the same-index plan action after exact token expansion",
+    "compiler_image_join": "compiler_named_device equals descriptor_device equals nonnull mapped_device; compiler_named_inode equals descriptor_inode equals nonnull mapped_inode; compiler_all_joins true; compiler SHA256 and UUID equal the descriptor and mapped image; both observations use the same physical compiler SHA256 UUID and vnode",
+    "generation_observation": "spawn_status is retained and equals zero; spawn_returned_pid is retained; generation_snapshot_A and generation_snapshot_B are both retained complete raw processGenerationSnapshot objects; generation_snapshots_equal and pid_double_snapshot_equal are true only when the two objects compare field-for-field equal; flattened pid parent_pid session_id start_seconds start_microseconds pgid equal both raw snapshots; both mapped image identities equal the held compiler named descriptor SHA256 UUID vnode; parent_pid remains observational because P00 outer capture owns no process authority",
+    "stdin_join": "stdin_byte_count equals producer_source.byte_count; stdin_sha256 equals producer_source.sha256; exactly those held bytes are written once then stdin_eof_sent true; argv contains the exact adjacent -x c - triple and no source path argument",
+    "time_join": "start_continuous_ticks is strictly less than or equal to end_continuous_ticks and deadline_continuous_ticks equals start plus the mach-timebase conversion of exactly 300 seconds; action B does not enter before action A end and exact reap",
+    "wait_join": "wait_target_pid equals spawn_returned_pid equals flattened pid equals both generation snapshot pids; wait_returned_pid equals wait_target_pid; wait_errno equals zero; wait_status is the raw waitpid status word and exit_status is exact WIFEXITED/WEXITSTATUS decoding equal zero; exact_reap true; no absence of descendants or process-group conservation is inferred",
+    "capture_join": "stdout_prefix_hex and stderr_prefix_hex hex-decode to their recorded byte counts and exact SHA256 values; on pass both are empty with EOF true overflow false and outer_capture_complete true",
+    "manual_boundary": "manual_intervention_entered false on pass; signals_entered is globally zero; CPU RSS FD process-count and energy remain UNMEASURED_BOOTSTRAP_TRUST_BOUNDARY while descriptor-rooted inventories are exact; descendant containment remains unproven even when the direct compiler is exactly reaped",
+    "output_join": "after exact direct-child reap each output is opened O_NOFOLLOW and held and an output-vnode watch is armed; expected root child path device inode named-post device inode owner mode 0700 nlink1 descriptor-held byte count allocated bytes SHA256 UUID load commands CodeDirectory and expanded settings are recorded in producer_A_or_B; immediately before payload encoding the watch is drained with zero events and named path plus held descriptor are rejoined while terminal byte_count SHA256 UUID equal the recorded image; this is a point-in-time pre-encoding observation only and T00 performs independent named descriptor mapped re-admission",
+    "operator": "evaluate_exact_predecessor_producer_build_observation"
+  },
+  "predecessor_producer_source_membership_join_table": {
+    "producer_source": { "document": "P00", "pointer": "/producer_source" },
+    "complete_tree": { "document": "B00", "pointer": "/ordered_source_files" },
+    "path_exact": "Tools/H2LivePredecessorToolsBuilder/main.c",
+    "fields_equal_exact": ["path", "mode", "byte_count", "sha256", "git_blob"],
+    "membership_rule": "exactly one B00 ordered_source_files member has path_exact and every named field equals P00.producer_source; B00 implementation_commit and implementation_tree equal P00; B00 complete nested Git tree reconstruction therefore closes the later full-tree membership join without a runtime Git process during P00",
+    "operator": "evaluate_exact_predecessor_producer_source_membership"
+  },
+  "predecessor_producer_preparation_failure_availability_table": {
+    "prefix_fields": {
+      "source_admitted": ["producer_source"],
+      "initial_root_count": ["root_A_initial", "root_B_initial"],
+      "armed_root_continuity_count": ["root_A_continuity", "root_B_continuity"],
+      "pre_action_root_count": ["root_A_pre_actions", "root_B_pre_actions"],
+      "observed_image_count": ["producer_A", "producer_B"],
+      "final_root_count": ["root_A", "root_B"]
+    },
+    "prefix_rule": "each count denotes an exact nonnull A_then_B prefix and every remaining nullable field is null; build_observations length equals completed_build_count and is the exact A_then_B recipe prefix; last_completed_position is null iff completed_build_count is zero and otherwise equals completed_build_count minus one",
+    "failed_build_rule": "failed_build is nonnull exactly when failed_build_entered and has position equal completed_build_count with the exact next recipe; it is a predecessorProducerFailedBuildTranscript governed by failed_build_subphase_availability and cannot coexist with completed_build_count two",
+    "failed_build_subphase_availability": {
+      "common": "spawn_status is the raw posix_spawn return code and spawn_entered is true exactly when spawn_status is zero and spawn_returned_pid is nonnull; generation_snapshot_count equals the exact nonnull A-then-B prefix length; generation_snapshots_equal is null until count two and thereafter equals the field-for-field raw comparison; every positive wait target or returned pid equals spawn_returned_pid; stdout and stderr prefix hex byte counts SHA256 EOF and overflow describe only bytes actually captured",
+      "available_prefix_hash": "available_prefix_sha256 equals SHA256 of the canonical sorted-key JSON encoding of every predecessorProducerFailedBuildTranscript field except available_prefix_sha256 itself in exact schema field spelling while retaining every explicit null; no self-hash placeholder omission or prose-derived field is allowed",
+      "empty_unstarted_capture": { "capture_started": false, "stdout_prefix_hex": "", "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stdout_eof": null, "stdout_overflow": false, "stderr_prefix_hex": "", "stderr_bytes": 0, "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_eof": null, "stderr_overflow": false },
+      "wait_outcomes_exact": {
+        "not_entered": { "wait_target_pid": null, "wait_returned_pid": null, "wait_errno": null, "wait_status": null },
+        "syscall_failed": { "wait_target_pid": "nonnull_equals_spawn_returned_pid", "wait_returned_pid": -1, "wait_errno": "positive_raw_errno", "wait_status": null },
+        "exact_reap_transitions_to_capture": { "wait_target_pid": "nonnull_equals_spawn_returned_pid", "wait_returned_pid": "nonnull_equals_wait_target_pid", "wait_errno": 0, "wait_status": "nonnull_raw_wait_status", "required_failure_subphase": "capture" }
+      },
+      "rows": {
+        "pre_spawn": { "spawn_entered": false, "spawn_status": [null, "positive_raw_posix_spawn_status"], "compiler_identity": [null, "nonnull_joined_or_rejecting_observation"], "spawn_returned_pid": null, "generation_snapshot_count": 0, "generation_snapshot_A": null, "generation_snapshot_B": null, "generation_snapshots_equal": null, "stdin_bytes_written": 0, "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture": "empty_unstarted_capture" },
+        "post_spawn_pre_snapshot_A": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 0, "generation_snapshot_A": null, "generation_snapshot_B": null, "generation_snapshots_equal": null, "stdin_bytes_written": 0, "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture_started": true },
+        "post_snapshot_A_pre_snapshot_B": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 1, "generation_snapshot_A": "nonnull", "generation_snapshot_B": null, "generation_snapshots_equal": null, "stdin_bytes_written": 0, "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture_started": true },
+        "generation_or_image_join": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshot_A": "nonnull", "generation_snapshot_B": "nonnull", "generation_snapshots_equal": [false, true], "stdin_bytes_written": 0, "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture_started": true },
+        "stdin_write": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshots_equal": true, "stdin_bytes_written": "zero_through_producer_source_byte_count_minus_one", "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture_started": true },
+        "stdin_eof": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshots_equal": true, "stdin_bytes_written": "equals_producer_source_byte_count", "stdin_eof_sent": false, "wait_outcome": "not_entered", "capture_started": true },
+        "running": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshots_equal": true, "stdin_bytes_written": "equals_producer_source_byte_count", "stdin_eof_sent": true, "wait_outcome": "not_entered", "capture_started": true },
+        "wait": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshots_equal": true, "stdin_bytes_written": "equals_producer_source_byte_count", "stdin_eof_sent": true, "wait_outcome": ["not_entered", "syscall_failed"], "capture_started": true },
+        "capture": { "spawn_entered": true, "spawn_status": 0, "compiler_identity": "nonnull_all_named_descriptor_joins_true", "spawn_returned_pid": "nonnull", "generation_snapshot_count": 2, "generation_snapshots_equal": true, "stdin_bytes_written": "equals_producer_source_byte_count", "stdin_eof_sent": true, "wait_outcome": "exact_reap_transitions_to_capture", "capture_started": true }
+      },
+      "operator": "validate_exact_predecessor_producer_preparation_failure_availability"
+    },
+    "phase_count_constraints": {
+      "envelope_admission": { "source_admitted": [0], "initial_root_count": [0], "armed_root_continuity_count": [0], "pre_action_root_count": [0], "completed_build_count": [0], "failed_build_entered": false, "observed_image_count": [0], "pair_available": false, "final_root_count": [0] },
+      "source_admission": { "source_admitted": [0, 1], "initial_root_count": [0], "armed_root_continuity_count": [0], "pre_action_root_count": [0], "completed_build_count": [0], "failed_build_entered": false, "observed_image_count": [0], "pair_available": false, "final_root_count": [0] },
+      "root_admission": { "source_admitted": [1], "initial_root_count": [0, 1, 2], "armed_root_continuity_count": [0], "pre_action_root_count": [0], "completed_build_count": [0], "failed_build_entered": false, "observed_image_count": [0], "pair_available": false, "final_root_count": [0] },
+      "watch_arm": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [0, 1, 2], "pre_action_root_count": [0], "completed_build_count": [0], "failed_build_entered": false, "observed_image_count": [0], "pair_available": false, "final_root_count": [0] },
+      "layout_admission": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [0, 1, 2], "completed_build_count": [0], "failed_build_entered": false, "observed_image_count": [0], "pair_available": false, "final_root_count": [0] },
+      "build": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [2], "completed_build_count": [0, 1], "failed_build_entered": true, "observed_image_count_equals": "completed_build_count", "pair_available": false, "final_root_count": [0] },
+      "image_admission": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [2], "completed_build_count": [1, 2], "failed_build_entered": false, "observed_image_count_equals": "completed_build_count_minus_one", "pair_available": false, "final_root_count": [0] },
+      "pair_comparison": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [2], "completed_build_count": [2], "failed_build_entered": false, "observed_image_count": [2], "pair_available": true, "final_root_count": [0] },
+      "final_revalidation": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [2], "completed_build_count": [2], "failed_build_entered": false, "observed_image_count": [2], "pair_available": true, "final_root_count": [0, 1, 2] },
+      "result_encoding": { "source_admitted": [1], "initial_root_count": [2], "armed_root_continuity_count": [2], "pre_action_root_count": [2], "completed_build_count": [2], "failed_build_entered": false, "observed_image_count": [2], "pair_available": true, "final_root_count": [2] }
+    },
+    "pair_and_selection_rule": "producer_pair is nonnull exactly when pair_available; selected_producer is nonnull exactly when producer_pair satisfies pairIdentityPass; mismatching pair evidence is retained with null selection",
+    "image_hold_rule": "producer_images_terminal_revalidation_complete is true exactly when both producer_A and producer_B are nonnull their output file watches are armed with zero events and their terminal named descriptor byte-count SHA256 UUID joins pass immediately before payload encoding; P00 makes no post-encoding byte-continuity claim and T00 independently reopens rehashes and joins the selected named descriptor mapped image before any action",
+    "root_retention_rule": "roots_retained is true exactly when initial_root_count is nonzero and every created root remains; roots_pairwise_disjoint is nonnull only after both initial roots are observed and true only after canonical no-ancestry plus vnode-distinct joins",
+    "horizon_rule": "signals_entered is always zero; outer capture stops waiting and returns retained failure by 660 seconds; because descendant containment is explicitly unproven any surviving host process is managed outside P00 and cannot make the result pass or be reinterpreted",
+    "operator": "validate_exact_predecessor_producer_preparation_failure_availability"
+  },
+  "predecessor_producer_root_continuity_join_table": {
+    "roots": [
+      { "name": "P00_A", "initial": { "document": "P00", "pointer": "/root_A_initial" }, "pre_actions": { "document": "P00", "pointer": "/root_A_pre_actions" }, "continuity": { "document": "P00", "pointer": "/root_A_continuity" }, "final": { "document": "P00", "pointer": "/root_A" } },
+      { "name": "P00_B", "initial": { "document": "P00", "pointer": "/root_B_initial" }, "pre_actions": { "document": "P00", "pointer": "/root_B_pre_actions" }, "continuity": { "document": "P00", "pointer": "/root_B_continuity" }, "final": { "document": "P00", "pointer": "/root_B" } }
+    ],
+    "identity_equals_groups": [["initial/device", "pre_actions/device", "continuity/named_pre_device", "continuity/descriptor_device", "continuity/named_post_device", "final/device"], ["initial/inode", "pre_actions/inode", "continuity/named_pre_inode", "continuity/descriptor_inode", "continuity/named_post_inode", "final/inode"], ["initial/path", "pre_actions/path", "continuity/path", "final/path"], ["initial/owner", "pre_actions/owner", "continuity/owner", "final/owner"], ["initial/mode", "pre_actions/mode", "continuity/mode", "final/mode"]],
+    "inventory_joins": { "continuity/inventory_before_sha256": "initial/inventory_root", "continuity/entry_count_before": "initial/entry_count", "continuity/aggregate_allocated_bytes_before": "initial/aggregate_allocated_bytes", "continuity/aggregate_logical_bytes_before": "initial/aggregate_logical_bytes", "continuity/inventory_post_reap_sha256": "final/inventory_root", "continuity/entry_count_post_reap": "final/entry_count", "continuity/aggregate_allocated_bytes_post_reap": "final/aggregate_allocated_bytes", "continuity/aggregate_logical_bytes_post_reap": "final/aggregate_logical_bytes" },
+    "watch_lifetime": "root identity and held-parent entry watches arm after exact empty initial observation and before layout; remain armed through both compiler intervals pair audit selection result encoding and final revalidation",
+    "required_constants": { "root_identity_watch_armed": true, "parent_entry_watch_armed": true, "root_identity_events": 0, "parent_entry_events": 0, "all_identity_joins": true },
+    "operator": "evaluate_exact_predecessor_root_identity_and_inventory_continuity"
+  },
+  "predecessor_tools_build_result_join_table": {
+    "documents": ["P00", "T00", "B00", "PLAN"],
+    "pass_predicates_in_order": [
+      "T00_schema_frame_magic_EPRH2T00_length_canonical_payload_and_SHA256_are_exact",
+      "T00_status_equals_PASS_PREDECESSOR_TOOLS_BUILD_ONLY_failure_and_failed_action_are_null_and_actions_are_the_exact_four_element_pass_array",
+      "producer_preparation_frame_sha256_equals_the_exact_committed_PASS_P00_frame_and_T00_producer_path_named_descriptor_mapped_device_inode_SHA256_UUID_and_generation_mapped_image_exactly_join_P00_selected_producer",
+      "build_envelope_commit_tree_file_SHA256_equal_the_separately_committed_closed_native_predecessor_tools_build_envelope_that_pins_P00_and_producer_named_descriptor_mapped_image_generation_SHA256_UUID_all_join",
+      "T00_source_freeze_implementation_build_plan_and_repository_root_path_device_inode_identities_equal_the_separately_committed_envelope_inputs_and_B00",
+      "capture_launcher_source_sha256_and_bootstrap_supervisor_source_sha256_equal_the_exact_held_implementation_source_bytes_and_matching_B00_complete_tree_entries",
+      "root_A_initial_and_root_B_initial_are_exclusively_created_fresh_descriptor_held_0700_same_owner_exact_empty_inventories_and_their_canonical_paths_have_neither_equality_nor_ancestry",
+      "root_A_continuity_and_root_B_continuity_arm_root_identity_and_held_parent_entry_watches_before_layout_creation_keep_them_armed_across_all_four_actions_and_pair_audits_and_join_initial_pre_action_and_final_device_inode_identity_with_zero_events",
+      "source_copies_A_and_B_are_exclusive_descriptor_rooted_0400_nlink1_copies_of_the_two_exact_held_implementation_source_byte_strings_with_B00_SHA256_Git_blob_joins_and_file_plus_input_parent_watches_armed_before_any_compiler_until_final_revalidation",
+      "root_A_pre_actions_and_root_B_pre_actions_reconstruct_exact_recursive_fixed_layout_without_outputs_after_watch_arm_and_before_first_action_on_each_root_with_cache_captures_home_tmp_module_cache_clang_and_module_cache_swift_empty_and_inputs_containing_only_the_two_exact_0400_held_main_c_leaves",
+      "build_actions_sha256_equals_SHA256_of_canonical_PLAN_predecessor_tools_build_actions_after_exact_token_expansion",
+      "actions_equal_the_exact_four_plan_recipes_and_each_records_named_descriptor_mapped_compiler_identity_process_generation_private_group_argv_empty_replacement_environment_repository_cwd_deadline_drains_wait_exact_reap_group_absence_and_per_action_root_resource_continuity",
+      "every_action_parent_pid_equals_T00_producer_generation_pid_actions_are_strictly_sequential_and_each_action_stdout_and_stderr_are_exactly_empty_complete_and_unoverflowed",
+      "entered_compiler_driver_actions_equals_4_all_entered_direct_children_exactly_reaped_true_signals_entered_equals_0_and_absolute_horizon_seconds_equals_1320",
+      "capture_launcher_A_and_B_paths_are_exact_children_of_their_named_roots_and_device_inode_bytes_sha256_uuid_load_commands_codedirectory_build_settings_join_the_held_outputs_with_output_file_watches_armed_zero_events_and_terminal_named_descriptor_byte_count_SHA256_UUID_joins",
+      "bootstrap_supervisor_A_and_B_paths_are_exact_children_of_their_named_roots_and_device_inode_bytes_sha256_uuid_load_commands_codedirectory_build_settings_join_the_held_outputs_with_output_file_watches_armed_zero_events_and_terminal_named_descriptor_byte_count_SHA256_UUID_joins",
+      "capture_launcher_pair_fields_equal_the_corresponding_A_B_image_fields_and_raw_size_uuid_load_commands_codedirectory_build_settings_are_equal",
+      "bootstrap_supervisor_pair_fields_equal_the_corresponding_A_B_image_fields_and_raw_size_uuid_load_commands_codedirectory_build_settings_are_equal",
+      "selected_capture_launcher_exactly_equals_either_capture_launcher_A_or_capture_launcher_B",
+      "selected_bootstrap_supervisor_exactly_equals_either_bootstrap_supervisor_A_or_bootstrap_supervisor_B",
+      "both_predecessor_roots_final_inventories_reconstruct_exact_recursive_final_layout_with_only_two_output_executables_two_held_input_leaves_and_empty_helper_directories_join_each_per_root_action_chain_and_are_retained_without_cleanup",
+      "h2_live_controller_worker_semantic_verifier_VM_and_guest_counts_are_all_zero",
+      "T00_result_root_equals_RECONSTRUCT_T00_MERKLE"
+    ],
+    "failure_disposition": "FAIL_PREDECESSOR_TOOLS_BUILD_RETAINED_uses_the_exact_phase_count_availability_and_action_prefix_tables_is_permanently_retained_but_cannot_enter_B00_or_any_capture_build_readiness_or_live_successor",
+    "operator": "evaluate_exact_predecessor_tools_build_result"
+  },
+  "predecessor_tools_action_prefix_table": {
+    "roles_in_order": ["predecessor_capture_launcher_A", "predecessor_capture_launcher_B", "predecessor_bootstrap_supervisor_A", "predecessor_bootstrap_supervisor_B"],
+    "actuator_exact": "separately_committed_predecessor_tools_build_envelope",
+    "pass_count": 4,
+    "failure_prefix_rule": "T00.actions length equals failure.completed_action_count and is the exact actionPass prefix at positions zero through count-minus-one; last_completed_position is null exactly when count is zero and otherwise equals count-minus-one",
+    "failed_action_rule": "failed_action is nonnull exactly for failure.phase action, its action_position and role equal the next plan position and failure.failed_action_position, and completed_action_count is 0 through 3; all other phases require both failed_action and failed_action_position null",
+    "parent_and_sequence_rule": "each entered compiler driver's parent_pid equals T00.producer_generation.pid; every completed action is a double-snapshotted generation-joined direct child in a private pgid-equals-pid group; the partial failed action claims only the ownership fields made available by predecessor_failed_action_phase_availability_table; no action n+1 enters before action n exact reap and two ESRCH group probes",
+    "operator": "validate_exact_predecessor_failed_action_phase_availability"
+  },
+  "predecessor_failed_action_phase_availability_table": {
+    "transcript": { "document": "T00", "pointer": "/failed_action" },
+    "availability_equivalences": {
+      "executable_available": "available_observation.executable_is_nonnull",
+      "generation_snapshot_count": "exact_A_then_B_nonnull_prefix_length_of_available_observation.generation_snapshot_A_and_generation_snapshot_B",
+      "action_root_continuity_available": "available_observation.action_root_continuity_is_nonnull",
+      "resource_observation_available": "available_observation.resource_observation_is_nonnull",
+      "wait_available": "available_observation.wait_is_nonnull",
+      "signal_receipt_available": "signal_receipt_is_nonnull",
+      "action_available": "action_is_nonnull"
+    },
+    "phase_rows": {
+      "pre_spawn": { "spawn_entered": false, "executable_available": [false, true], "generation_snapshot_count": [0], "pgid_joined": null, "action_root_continuity_available": true, "resource_observation_available": false, "wait_available": false, "signal_receipt_available": false, "action_available": false, "absolute_horizon_reached": false, "raw_pipes_exact_empty_unresumed": true },
+      "post_spawn_pre_join": { "spawn_entered": true, "executable_available": [true], "generation_snapshot_count": [0, 1, 2], "pgid_joined": [null, false], "action_root_continuity_available": true, "resource_observation_available": false, "wait_available": false, "signal_receipt_available": false, "action_available": false, "absolute_horizon_reached": false, "raw_pipes_exact_empty_unresumed": true },
+      "running": { "spawn_entered": true, "executable_available": [true], "generation_snapshot_count": [2], "pgid_joined": [true], "action_root_continuity_available": true, "resource_observation_available": [false, true], "wait_available": false, "signal_receipt_available": false, "action_available": false, "absolute_horizon_reached": false },
+      "containment": { "spawn_entered": true, "executable_available": [true], "generation_snapshot_count": [0, 1, 2], "pgid_joined_rule": "null_or_false_when_generation_snapshot_count_is_below_2; false_or_true_when_count_is_2", "action_root_continuity_available": true, "resource_observation_available": [false, true], "wait_available": [false, true], "signal_receipt_available": true, "action_available": false, "absolute_horizon_reached": [false, true] },
+      "reap_capture": { "spawn_entered": true, "executable_available": [true], "generation_snapshot_count": [0, 1, 2], "pgid_joined_rule": "null_or_false_when_generation_snapshot_count_is_below_2; false_or_true_when_count_is_2", "action_root_continuity_available": true, "resource_observation_available": [false, true], "wait_available": true, "signal_receipt_available": [false, true], "action_available": [false, true], "absolute_horizon_reached": [false, true] }
+    },
+    "generation_join_rule": "when generation_snapshot_count is two, A and B either compare byte-for-byte equal and pgid_joined may be true only after direct-child pid parent session start-time pgid and mapped-image joins, or mismatch and pgid_joined is false; fewer than two observations can never claim a generation or group join",
+    "pipe_prefix_rule": "stdout_prefix_hex and stderr_prefix_hex decode to the recorded byte counts, their SHA256 values hash exactly those bytes, overflow booleans are exact, and EOF is nullable until observed; raw_pipes_exact_empty_unresumed means zero bytes empty SHA256 empty hex EOF null and overflow false",
+    "signal_rule": "exactly one receipt may exist: before a certified group join it is positivePidKillReceipt against only the returned direct-child pid with no generation/group authority claim; after a certified private group join it is launcherSignalReceipt against only that group; no signal availability fabricates delivery or absence",
+    "action_rule": "a nonnull action is permitted only in reap_capture and every field equals the corresponding available observation and exact plan position; it need not satisfy actionPass and cannot enter T00.actions",
+    "prefix_hash_rule": "available_prefix_sha256 equals SHA256 of canonical sorted-key JSON of every predecessorFailedActionTranscript field except available_prefix_sha256, retaining explicit nulls and booleans",
+    "operator": "validate_exact_predecessor_failed_action_phase_availability"
+  },
+  "predecessor_tools_action_pass_table": {
+    "document": "T00",
+    "array_pointer": "/actions",
+    "plan_pointer": "/predecessor_tools_build_actions",
+    "required_constants_per_completed_action": { "parent_pid": "T00.producer_generation.pid", "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stdout_eof": true, "stdout_overflow": false, "stderr_bytes": 0, "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stderr_eof": true, "stderr_overflow": false },
+    "image_by_position": { "0": "/capture_launcher_A", "1": "/capture_launcher_B", "2": "/bootstrap_supervisor_A", "3": "/bootstrap_supervisor_B" },
+    "output_join_rule": "after each exact-reap action and before any later action, descriptor-open the exact output O_NOFOLLOW and record its device inode named-post device inode owner mode 0700 nlink1 descriptor-held byte count allocated bytes SHA256 UUID load-command CodeDirectory and expanded-build-settings hashes; device equals named-post device and inode equals named-post inode; that observation is the next member of the built-image prefix",
+    "operator": "evaluate_exact_action_timing_and_resource_cadence"
+  },
+  "predecessor_tools_failure_availability_table": {
+    "prefix_fields": {
+      "available_source_hash_count": ["capture_launcher_source_sha256", "bootstrap_supervisor_source_sha256"],
+      "initial_root_count": ["root_A_initial", "root_B_initial"],
+      "armed_root_continuity_count": ["root_A_continuity", "root_B_continuity"],
+      "source_copy_count": ["source_copies_A/0", "source_copies_A/1", "source_copies_B/0", "source_copies_B/1"],
+      "pre_action_root_count": ["root_A_pre_actions", "root_B_pre_actions"],
+      "final_root_count": ["root_A", "root_B"],
+      "built_image_count": ["capture_launcher_A", "capture_launcher_B", "bootstrap_supervisor_A", "bootstrap_supervisor_B"]
+    },
+    "prefix_rule": "for every named count except source_copy_count the first count fields are nonnull exact observations and every remaining field is null; source_copy_count is the flattened A0 A1 B0 B1 prefix length, source_copies_A length equals min(count,2), source_copies_B length equals max(count-2,0), and no array hole exists; actions and last_completed_position obey predecessor_tools_action_prefix_table",
+    "phase_count_constraints": {
+      "envelope_admission": { "available_source_hash_count": [0], "initial_root_count": [0], "armed_root_continuity_count": [0], "source_copy_count": [0], "pre_action_root_count": [0], "completed_action_count": [0], "built_image_count": [0], "capture_pair_available": false, "supervisor_pair_available": false },
+      "source_admission": { "available_source_hash_count": [0, 1], "initial_root_count": [0], "armed_root_continuity_count": [0], "source_copy_count": [0], "pre_action_root_count": [0], "completed_action_count": [0], "built_image_count": [0], "capture_pair_available": false, "supervisor_pair_available": false },
+      "root_admission": { "available_source_hash_count": [2], "initial_root_count": [0, 1, 2], "armed_root_continuity_count": [0], "source_copy_count": [0], "pre_action_root_count": [0], "completed_action_count": [0], "built_image_count": [0], "capture_pair_available": false, "supervisor_pair_available": false },
+      "watch_arm": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [0, 1, 2], "source_copy_count": [0], "pre_action_root_count": [0], "completed_action_count": [0], "built_image_count": [0], "capture_pair_available": false, "supervisor_pair_available": false },
+      "source_materialization": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [0, 1, 2, 3, 4], "pre_action_root_count_by_source_copy_count": { "0": [0], "1": [0], "2": [0, 1], "3": [0, 1], "4": [0, 1, 2] }, "completed_action_count": [0], "built_image_count": [0], "capture_pair_available": false, "supervisor_pair_available": false },
+      "action": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [0, 1, 2, 3], "built_image_count_equals": "completed_action_count", "failed_action_position_equals": "completed_action_count", "capture_pair_available_exact": "completed_action_count>=2", "supervisor_pair_available": false },
+      "image_admission": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [1, 2, 3, 4], "built_image_count_equals": "completed_action_count-1", "capture_pair_available_exact": "completed_action_count>=3", "supervisor_pair_available": false },
+      "capture_pair_comparison": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [2], "built_image_count": [2], "capture_pair_available": true, "supervisor_pair_available": false },
+      "supervisor_pair_comparison": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [4], "built_image_count": [4], "capture_pair_available": true, "supervisor_pair_available": true },
+      "final_revalidation": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [4], "built_image_count": [4], "capture_pair_available": true, "supervisor_pair_available": true },
+      "result_encoding": { "available_source_hash_count": [2], "initial_root_count": [2], "armed_root_continuity_count": [2], "source_copy_count": [4], "pre_action_root_count": [2], "completed_action_count": [4], "built_image_count": [4], "capture_pair_available": true, "supervisor_pair_available": true }
+    },
+    "pair_and_selection_rule": "capture_launcher_pair is nonnull exactly when capture_pair_available; selected_capture_launcher is nonnull exactly when that pair is available and is pairIdentityPass; bootstrap_supervisor_pair and selected_bootstrap_supervisor follow the same rule; a mismatching available pair is retained with raw_equal false and has null selection",
+    "final_root_rule": "final_root_count may be zero through initial_root_count after any failure and is an exact A-then-B prefix captured after containment; roots_retained is true exactly when initial_root_count is nonzero and every created root is left in place, otherwise false",
+    "containment_rule": "entered_compiler_driver_actions equals completed_action_count plus one exactly when failed_action.available_observation.spawn_entered; signals_entered equals the count of entered nonnull failed-action signal receipts and is at most one; all_entered_direct_children_exactly_reaped reflects exact observations and may be false only with a retained finite-horizon failure, never a fabricated absence",
+    "operator": "validate_exact_predecessor_tools_failure_availability"
+  },
+  "source_identity_join_table": {
+    "ordered_files": [
+      { "document": "B00", "pointer": "/ordered_source_files" },
+      { "document": "B01", "pointer": "/source_identity/ordered_files" }
+    ],
+    "predicates_in_order": [
+      "B00_and_B01_ordered_source_file_arrays_are_byte_for_byte_equal_canonical_JSON_values",
+      "ordered_source_files_contains_every_and_only_regular_blob_entry_in_the_complete_EPRH2B00_implementation_tree",
+      "ordered_source_files_count_is_at_most_4096_and_equals_both_source_continuity_descriptor_file_counts",
+      "paths_are_unique_raw_UTF8_lexicographic_ascending",
+      "every_path_UTF8_byte_count_is_at_most_4096_using_checked_arithmetic",
+      "every_entry_has_only_the_source_manifest_entry_schema_keys",
+      "every_entry_byte_count_is_at_most_67108864",
+      "checked_sum_of_all_entry_byte_counts_is_at_most_536870912",
+      "every_sha256_equals_the_exact_held_source_bytes",
+      "every_git_blob_equals_SHA1_of_blob_header_and_exact_bytes",
+      "reconstruct_every_nested_Git_tree_from_raw_names_modes_and_binary_object_ids",
+      "reconstructed_root_Git_tree_equals_B00_implementation_tree",
+      "every_build_or_test_input_path_is_an_exact_member_or_descendant_of_one_PLAN_compilation_input_membership_roots_exact_entry",
+      "entry_count_equals_B01_source_continuity_descriptor_file_count",
+      "entry_count_equals_P01_bootstrap_source_continuity_descriptor_file_count",
+      "maximum_byte_count_equals_B01_source_continuity_per_file_bytes_max_observed",
+      "sum_byte_count_equals_B01_source_continuity_aggregate_regular_file_bytes",
+      "P01_and_B01_per_file_bytes_ceiling_equal_67108864_and_aggregate_regular_file_bytes_ceiling_equal_536870912",
+      "reconstructed_source_manifest_root_equals_B00_source_manifest_root",
+      "reconstructed_source_manifest_root_equals_B01_source_identity_manifest_root",
+      "reconstructed_source_manifest_root_equals_P01_bootstrap_source_manifest_root",
+      "SHA256_exact_B00_frame_equals_P01_bootstrap_launch_frame_sha256_and_B01_source_identity_b00_launch_frame_sha256"
+    ],
+    "arithmetic": "unsigned_checked_integer_arithmetic_reject_on_overflow",
+    "operator": "evaluate_exact_ordered_source_manifest_predicates"
+  },
+  "root_join_table": {
+    "fields_exact": ["path", "device", "inode", "owner", "mode"],
+    "entries": [
+      { "role": "bootstrap_A", "p01": { "path": "/bootstrap_A_root_observation/path", "device": "/bootstrap_A_root_observation/device", "inode": "/bootstrap_A_root_observation/inode", "owner": "/bootstrap_A_root_observation/owner", "mode": "/bootstrap_A_root_observation/mode" }, "b01": "/build_roots/bootstrap_A" },
+      { "role": "bootstrap_B", "p01": { "path": "/bootstrap_B_root_observation/path", "device": "/bootstrap_B_root_observation/device", "inode": "/bootstrap_B_root_observation/inode", "owner": "/bootstrap_B_root_observation/owner", "mode": "/bootstrap_B_root_observation/mode" }, "b01": "/build_roots/bootstrap_B" },
+      { "role": "product_A", "p01": { "path": "/product_A_root_observation/path", "device": "/product_A_root_observation/device", "inode": "/product_A_root_observation/inode", "owner": "/product_A_root_observation/owner", "mode": "/product_A_root_observation/mode" }, "b01": "/build_roots/product_A" },
+      { "role": "product_B", "p01": { "path": "/product_B_root_observation/path", "device": "/product_B_root_observation/device", "inode": "/product_B_root_observation/inode", "owner": "/product_B_root_observation/owner", "mode": "/product_B_root_observation/mode" }, "b01": "/build_roots/product_B" },
+      { "role": "source_view", "p01": { "path": "/source_view_root_observation/path", "device": "/source_view_root_observation/device", "inode": "/source_view_root_observation/inode", "owner": "/source_view_root_observation/owner", "mode": "/source_view_root_observation/mode" }, "b01": "/build_roots/source_view" }
+    ],
+    "operator": "equals_each_RFC6901_value"
+  },
+  "root_inventory_reconstruction_table": {
+    "algorithm": "/root_inventory_merkle",
+    "observations": [
+      { "document": "P00", "pointer": "/root_A_initial" },
+      { "document": "P00", "pointer": "/root_B_initial" },
+      { "document": "P00", "pointer": "/root_A_pre_actions" },
+      { "document": "P00", "pointer": "/root_B_pre_actions" },
+      { "document": "P00", "pointer": "/root_A" },
+      { "document": "P00", "pointer": "/root_B" },
+      { "document": "T00", "pointer": "/root_A_initial" },
+      { "document": "T00", "pointer": "/root_B_initial" },
+      { "document": "T00", "pointer": "/root_A_pre_actions" },
+      { "document": "T00", "pointer": "/root_B_pre_actions" },
+      { "document": "T00", "pointer": "/root_A" },
+      { "document": "T00", "pointer": "/root_B" },
+      { "document": "B00", "pointer": "/bootstrap_A_initial" },
+      { "document": "B00", "pointer": "/bootstrap_B_initial" },
+      { "document": "B00", "pointer": "/product_A_initial" },
+      { "document": "B00", "pointer": "/product_B_initial" },
+      { "document": "P01", "pointer": "/bootstrap_A_root_observation" },
+      { "document": "P01", "pointer": "/bootstrap_B_root_observation" },
+      { "document": "P01", "pointer": "/product_A_root_observation" },
+      { "document": "P01", "pointer": "/product_B_root_observation" },
+      { "document": "P01", "pointer": "/source_view_root_observation" },
+      { "document": "B01", "pointer": "/build_roots/bootstrap_A" },
+      { "document": "B01", "pointer": "/build_roots/bootstrap_B" },
+      { "document": "B01", "pointer": "/build_roots/product_A" },
+      { "document": "B01", "pointer": "/build_roots/product_B" },
+      { "document": "B01", "pointer": "/build_roots/source_view" }
+    ],
+    "reconstructed_fields_exact": ["path", "device", "inode", "owner", "mode", "entry_count", "aggregate_allocated_bytes", "aggregate_logical_bytes", "inventory_root"],
+    "operator": "reconstruct_descriptor_rooted_inventory_and_equals_each_observed_field"
+  },
+  "root_layout_admission_table": {
+    "producer_preparation_A_pre_actions": { "layout": "/predecessor_producer_preparation_root_layout/entries_exact_pre_actions", "observations": [{ "document": "P00", "pointer": "/root_A_pre_actions" }] },
+    "producer_preparation_B_pre_actions": { "layout": "/predecessor_producer_preparation_root_layout/entries_exact_pre_actions", "observations": [{ "document": "P00", "pointer": "/root_B_pre_actions" }] },
+    "producer_preparation_A_final": { "layout": "/predecessor_producer_preparation_root_layout/entries_exact_each", "observations": [{ "document": "P00", "pointer": "/root_A" }] },
+    "producer_preparation_B_final": { "layout": "/predecessor_producer_preparation_root_layout/entries_exact_each", "observations": [{ "document": "P00", "pointer": "/root_B" }] },
+    "predecessor_A_pre_actions": { "layout": "/predecessor_tools_root_layout/entries_exact_pre_actions", "observations": [{ "document": "T00", "pointer": "/root_A_pre_actions" }] },
+    "predecessor_B_pre_actions": { "layout": "/predecessor_tools_root_layout/entries_exact_pre_actions", "observations": [{ "document": "T00", "pointer": "/root_B_pre_actions" }] },
+    "predecessor_A_final": { "layout": "/predecessor_tools_root_layout/entries_exact_each", "observations": [{ "document": "T00", "pointer": "/root_A" }] },
+    "predecessor_B_final": { "layout": "/predecessor_tools_root_layout/entries_exact_each", "observations": [{ "document": "T00", "pointer": "/root_B" }] },
+    "bootstrap_A": { "layout": "/bootstrap_root_layout/entries_exact_after_bootstrap/bootstrap_A", "observations": [{ "document": "P01", "pointer": "/bootstrap_A_root_observation" }, { "document": "B01", "pointer": "/build_roots/bootstrap_A" }] },
+    "bootstrap_B": { "layout": "/bootstrap_root_layout/entries_exact_after_bootstrap/bootstrap_B", "observations": [{ "document": "P01", "pointer": "/bootstrap_B_root_observation" }, { "document": "B01", "pointer": "/build_roots/bootstrap_B" }] },
+    "product_A": { "layout": "/product_root_layout/entries_exact", "observations": [{ "document": "P01", "pointer": "/product_A_root_observation" }, { "document": "B01", "pointer": "/build_roots/product_A" }] },
+    "product_B": { "layout": "/product_root_layout/entries_exact", "observations": [{ "document": "P01", "pointer": "/product_B_root_observation" }, { "document": "B01", "pointer": "/build_roots/product_B" }] },
+    "recursive_pass_topology": {
+      "P00": "/predecessor_producer_preparation_root_layout/recursive_directories_exact_on_pass",
+      "T00": "/predecessor_tools_root_layout/recursive_directories_exact_on_pass",
+      "P00_pre_action_regular_files_exact": [],
+      "P00_final_regular_files_exact": ["ErgenticsProvenanceH2LivePredecessorToolsBuilder"],
+      "T00_pre_action_regular_files_exact": ["inputs/H2LiveBootstrapCaptureLauncher/main.c", "inputs/H2LiveBuildBootstrapSupervisor/main.c"],
+      "T00_final_regular_files_exact": ["ErgenticsProvenanceH2LiveBootstrapCaptureLauncher", "ErgenticsProvenanceH2LiveBuildBootstrapSupervisor", "inputs/H2LiveBootstrapCaptureLauncher/main.c", "inputs/H2LiveBuildBootstrapSupervisor/main.c"]
+    },
+    "predicates_in_order": ["descriptor_root_top_level_entry_names_equal_the_selected_layout_exactly", "each_layout_entry_is_a_held_non_symlink_directory_except_the_named_regular_files_in_that_selected_stage_layout", "every_named_output_file_is_nlink_1_owner_effective_uid_and_mode_0700_and_each_T00_input_source_is_nlink_1_owner_effective_uid_mode_0400", "every_recursive_directory_path_and_its_immediate_sorted_UTF8_entry_names_equal_recursive_directories_exact_on_pass", "select_the_exact_regular_file_set_by_table_row_so_P00_pre_action_is_empty_P00_final_has_only_producer_T00_pre_action_has_only_two_inputs_and_T00_final_has_two_inputs_plus_two_outputs", "cache_captures_home_tmp_module_cache_clang_and_module_cache_swift_are_recursively_empty_on_PASS", "T00_inputs_contains_exactly_two_named_source_directories_each_with_exactly_one_held_main_c_source_leaf_and_no_other_descendant", "no_unlisted_descendant_is_absorbed_into_an_inventory_or_rebaseline"],
+    "operator": "evaluate_exact_root_layout_from_descriptor_inventory"
+  },
+  "p01_root_scalar_observation_join_table": {
+    "entries": [
+      { "scalars": ["/bootstrap_A_root", "/bootstrap_A_root_device", "/bootstrap_A_root_inode", "/bootstrap_A_root_inventory"], "observation": "/bootstrap_A_root_observation", "fields": ["path", "device", "inode", "inventory_root"] },
+      { "scalars": ["/bootstrap_B_root", "/bootstrap_B_root_device", "/bootstrap_B_root_inode", "/bootstrap_B_root_inventory"], "observation": "/bootstrap_B_root_observation", "fields": ["path", "device", "inode", "inventory_root"] },
+      { "scalars": ["/product_A_root", "/product_A_device", "/product_A_inode"], "observation": "/product_A_root_observation", "fields": ["path", "device", "inode"] },
+      { "scalars": ["/product_B_root", "/product_B_device", "/product_B_inode"], "observation": "/product_B_root_observation", "fields": ["path", "device", "inode"] },
+      { "scalars": ["/source_view_root", "/source_view_device", "/source_view_inode", "/source_view_inventory_root"], "observation": "/source_view_root_observation", "fields": ["path", "device", "inode", "inventory_root"] }
+    ],
+    "operator": "tuple_equals_named_observation_fields"
+  },
+  "b00_initial_root_identity_join_table": {
+    "fields_exact": ["path", "device", "inode", "owner", "mode"],
+    "entries": [
+      { "b00": "/bootstrap_A_initial", "p01": "/bootstrap_A_root_observation" },
+      { "b00": "/bootstrap_B_initial", "p01": "/bootstrap_B_root_observation" },
+      { "b00": "/product_A_initial", "p01": "/product_A_root_observation" },
+      { "b00": "/product_B_initial", "p01": "/product_B_root_observation" }
+    ],
+    "operator": "equals_each_RFC6901_value"
+  },
+  "b00_initial_root_empty_table": {
+    "observations": [{ "document": "P00", "pointer": "/root_A_initial" }, { "document": "P00", "pointer": "/root_B_initial" }, { "document": "T00", "pointer": "/root_A_initial" }, { "document": "T00", "pointer": "/root_B_initial" }, { "document": "B00", "pointer": "/bootstrap_A_initial" }, { "document": "B00", "pointer": "/bootstrap_B_initial" }, { "document": "B00", "pointer": "/product_A_initial" }, { "document": "B00", "pointer": "/product_B_initial" }],
+    "required_constants": { "entry_count": 0, "aggregate_allocated_bytes": 0, "aggregate_logical_bytes": 0 },
+    "inventory_root": "reconstruct_exact_empty_descriptor_rooted_inventory_root",
+    "source_view_path_initially_absent_by_openat_fstatat_AT_SYMLINK_NOFOLLOW": true,
+    "operator": "evaluate_exact_initial_empty_root_and_absent_source_view"
+  },
+  "product_pair_equality_table": {
+    "pairs": [
+      "/products/signed_worker_auditor",
+      "/products/debug_worker",
+      "/products/release_unsigned_worker",
+      "/products/controller",
+      "/products/offline_verifier"
+    ],
+    "equals_pairs_exact": [
+      ["A_byte_count", "B_byte_count"],
+      ["A_sha256", "B_sha256"],
+      ["A_uuid", "B_uuid"],
+      ["A_load_commands_sha256", "B_load_commands_sha256"],
+      ["A_codedirectory_sha256", "B_codedirectory_sha256"],
+      ["A_expanded_build_settings_sha256", "B_expanded_build_settings_sha256"]
+    ],
+    "required_constants": { "raw_equal": true },
+    "operator": "equals_each_pair_field_and_constant"
+  },
+  "predecessor_producer_distribution_exclusion_table": {
+    "document": "B01",
+    "pointer": "/binary_audits/predecessor_producer_distribution_exclusion",
+    "source_join": "pbx_project_path equals ErgenticsProvenance.xcodeproj/project.pbxproj and exactly one B00.ordered_source_files member at that path has pbx_project_sha256 and pbx_project_git_blob equal to its SHA256 and Git blob while B01 source continuity proves the held source bytes unchanged",
+    "algorithm": {
+      "id": "H2_PBX_COMPLETE_REACHABILITY_INVENTORY_V1",
+      "input": "exact held project.pbxproj bytes joined to B00",
+      "parser": "closed non-importing OpenStep ASCII property-list parser rejects duplicate object identifiers duplicate dictionary keys malformed comments escapes strings arrays dictionaries or trailing bytes",
+      "unsupported_constructs": "fail closed before inventory PASS if any PBXFileSystemSynchronizedRootGroup PBXFileSystemSynchronizedBuildFileExceptionSet PBXShellScriptBuildPhase PBXBuildRule or other executable or implicit-membership construct is present; extending support requires a successor protocol freeze",
+      "reachability": "enumerate every PBX object; for each application target traverse buildPhases files fileRef productReference dependencies packageProductDependencies and target-linked helper or XPC relationships; also enumerate every object whose path name productName or productReference contains the excluded filename even when unreachable",
+      "entry_encoding": "canonical sorted-key JSON object with exactly ordinal object_id isa scope owning_target_id owning_target_name path_or_name source_tree excluded_filename_match and no trailing LF",
+      "ordering": "strict ascending unsigned UTF8 byte order by scope then owning_target_id_or_empty then object_id then path_or_name; ordinal is the zero-based array index; duplicate tuples reject",
+      "leaf_frame": "0x00 || ordinal_u64be || payload_length_u64be || canonical_entry_bytes",
+      "pair_frame": "0x01 || left_digest || right_digest",
+      "odd_frame": "0x03 || left_digest",
+      "root_frame": "0x02 || entry_count_u64be || top_digest",
+      "digest": "SHA256"
+    },
+    "pass_predicates_in_order": [
+      "pbx_inventory_entries_is_the_complete_reconstruction_under_algorithm_id_and_entry_count_equals_array_length",
+      "pbx_inventory_root_reconstructs_from_every_ordered_entry_without_omission",
+      "every_excluded_filename_match_is_false",
+      "the_four_PBX_scope_counts_equal_the_number_of_matching_entries_and_each_equals_zero",
+      "excluded_sha256_and_excluded_uuid_equal_P00_selected_producer",
+      "accepted_archive_status_exported_app_status_testflight_payload_status_and_app_store_payload_status_equal_NOT_PRODUCED_IN_H2",
+      "accepted_archive_app_bundle_occurrence_count_and_exported_app_occurrence_count_are_null_not_zero",
+      "archive_exclusion_deferred_to_later_archive_gate_is_true_and_no_H2_PASS_claims_archive_export_TestFlight_or_App_Store_absence"
+    ],
+    "operator": "evaluate_exact_predecessor_producer_distribution_exclusion"
+  },
+  "signed_audit_join_table": {
+    "receipt": { "document": "B01", "pointer": "/static_code_audit/receipt" },
+    "vnode_device_equals_group": ["pre_device", "descriptor_device", "post_device"],
+    "vnode_inode_equals_group": ["pre_inode", "descriptor_inode", "post_inode"],
+    "identity_fields_equal_signed_product": ["sha256", "uuid", "full_codedirectory_hash", "cdhash", "identifier", "team", "certificate_sha256", "requirement_sha256", "entitlements_sha256"],
+    "outer_fields_equal_receipt": ["SecStaticCode_status", "strict_no_network", "admitted"],
+    "worker_path_equals": "${SIGNED_WORKER}",
+    "auditor_hashes_equal_product_pair": true,
+    "frame": "decode EPRH2A01 magic and 8-lowercase-hex length, require exact payload length, canonical JSON exact reencode, no trailing bytes, SHA256 exact frame bytes",
+    "operator": "evaluate_exact_signed_audit_frame_vnode_identity_and_outer_joins"
+  },
+  "source_root_continuity_join_table": {
+    "documents": [
+      { "document": "P01", "pointer": "/bootstrap_source_continuity" },
+      { "document": "B01", "pointer": "/source_continuity" }
+    ],
+    "equals_groups_per_observation": [
+      ["root_named_pre_device", "root_descriptor_device", "root_named_post_device"],
+      ["root_named_pre_inode", "root_descriptor_inode", "root_named_post_inode"]
+    ],
+    "root_path_equals": { "document": "P01", "pointer": "/source_view_root" },
+    "parent_equals": { "document": "P01", "pointer": "/bootstrap_A_root" },
+    "parent_entry_name": "source-view",
+    "manifest_roots_equal_all": ["pre_arm_manifest_root", "post_arm_manifest_root", "final_manifest_root"],
+    "cross_document_fields_equal": ["root_path", "root_descriptor_device", "root_descriptor_inode", "parent_path", "parent_device", "parent_inode", "parent_entry_name", "descriptor_file_count", "descriptor_directory_count", "aggregate_regular_file_bytes", "final_manifest_root"],
+    "operator": "evaluate_exact_source_root_identity_watch_and_manifest_continuity"
+  },
+  "predecessor_root_continuity_join_table": {
+    "roots": [
+      { "name": "A", "initial": { "document": "T00", "pointer": "/root_A_initial" }, "pre_actions": { "document": "T00", "pointer": "/root_A_pre_actions" }, "continuity": { "document": "T00", "pointer": "/root_A_continuity" }, "final": { "document": "T00", "pointer": "/root_A" } },
+      { "name": "B", "initial": { "document": "T00", "pointer": "/root_B_initial" }, "pre_actions": { "document": "T00", "pointer": "/root_B_pre_actions" }, "continuity": { "document": "T00", "pointer": "/root_B_continuity" }, "final": { "document": "T00", "pointer": "/root_B" } }
+    ],
+    "identity_equals_groups": [
+      ["initial/device", "pre_actions/device", "continuity/named_pre_device", "continuity/descriptor_device", "continuity/named_post_device", "final/device"],
+      ["initial/inode", "pre_actions/inode", "continuity/named_pre_inode", "continuity/descriptor_inode", "continuity/named_post_inode", "final/inode"],
+      ["initial/path", "pre_actions/path", "continuity/path", "final/path"],
+      ["initial/owner", "pre_actions/owner", "continuity/owner", "final/owner"],
+      ["initial/mode", "pre_actions/mode", "continuity/mode", "final/mode"]
+    ],
+    "inventory_joins": { "continuity/inventory_before_sha256": "initial/inventory_root", "continuity/entry_count_before": "initial/entry_count", "continuity/aggregate_allocated_bytes_before": "initial/aggregate_allocated_bytes", "continuity/aggregate_logical_bytes_before": "initial/aggregate_logical_bytes", "continuity/inventory_post_reap_sha256": "final/inventory_root", "continuity/entry_count_post_reap": "final/entry_count", "continuity/aggregate_allocated_bytes_post_reap": "final/aggregate_allocated_bytes", "continuity/aggregate_logical_bytes_post_reap": "final/aggregate_logical_bytes" },
+    "watch_lifetime": "both root identity and held-parent entry watches arm after exact empty initial observations and before any layout child creation; remain armed across deterministic layout construction, all four action intervals, pair audits, selection, and final descriptor/named revalidation",
+    "required_constants": { "root_identity_watch_armed": true, "parent_entry_watch_armed": true, "root_identity_events": 0, "parent_entry_events": 0, "all_identity_joins": true },
+    "operator": "evaluate_exact_predecessor_root_identity_and_inventory_continuity"
+  },
+  "predecessor_source_copy_continuity_join_table": {
+    "copies": [
+      { "document": "T00", "pointer": "/source_copies_A/0", "root": "A", "implementation_path": "Tools/H2LiveBootstrapCaptureLauncher/main.c", "exact_path": "${PREDECESSOR_A}/inputs/H2LiveBootstrapCaptureLauncher/main.c" },
+      { "document": "T00", "pointer": "/source_copies_A/1", "root": "A", "implementation_path": "Tools/H2LiveBuildBootstrapSupervisor/main.c", "exact_path": "${PREDECESSOR_A}/inputs/H2LiveBuildBootstrapSupervisor/main.c" },
+      { "document": "T00", "pointer": "/source_copies_B/0", "root": "B", "implementation_path": "Tools/H2LiveBootstrapCaptureLauncher/main.c", "exact_path": "${PREDECESSOR_B}/inputs/H2LiveBootstrapCaptureLauncher/main.c" },
+      { "document": "T00", "pointer": "/source_copies_B/1", "root": "B", "implementation_path": "Tools/H2LiveBuildBootstrapSupervisor/main.c", "exact_path": "${PREDECESSOR_B}/inputs/H2LiveBuildBootstrapSupervisor/main.c" }
+    ],
+    "identity_equals_groups_per_copy": [["named_pre_device", "descriptor_device", "named_post_device"], ["named_pre_inode", "descriptor_inode", "named_post_inode"]],
+    "source_joins": "each implementation_path selects exactly one B00 ordered_source_files entry; byte_count SHA256 and git_blob equal that entry; capture copies SHA256 equal T00.capture_launcher_source_sha256; supervisor copies SHA256 equal T00.bootstrap_supervisor_source_sha256; corresponding A and B source-copy byte_count SHA256 and git_blob values equal",
+    "root_and_parent_joins": "each path is the exact descriptor-rooted child sequence beneath its named predecessor root; parent_path is its exact held input directory and parent device inode join; all four copied-source vnodes are pairwise distinct and none equals a root vnode",
+    "watch_lifetime": "each file and held input-parent entry watch arms after exclusive copy fsync chmod reopen and before pre-action inventory; all remain armed and continuously drained across all four compiler actions pair audits selection and final revalidation",
+    "required_constants": { "owner": "effective_uid", "mode": "0400", "nlink": 1, "file_watch_armed": true, "parent_entry_watch_armed": true, "file_events": 0, "parent_entry_events": 0, "all_identity_joins": true },
+    "compiler_input_rule": "the four predecessor compiler argv source operands are exactly these held copied-source paths; no compiler action names or opens the implementation repository source paths",
+    "operator": "evaluate_exact_predecessor_source_copy_continuity"
+  },
+  "action_root_join_table": {
+    "action_fields": { "path": "action_root_continuity/path", "device": "action_root_continuity/descriptor_device", "inode": "action_root_continuity/descriptor_inode", "owner": "action_root_continuity/owner", "mode": "action_root_continuity/mode" },
+    "identity_equals_groups_per_action": [["named_pre_device", "descriptor_device", "named_post_device"], ["named_pre_inode", "descriptor_inode", "named_post_inode"]],
+    "parent_predicates_per_action": ["parent_path_is_exact_lexical_and_real_descriptor_parent_of_path", "parent_entry_name_is_exact_final_component_of_path", "parent_device_inode_equal_the_held_O_DIRECTORY_O_NOFOLLOW_parent", "root_identity_watch_event_mask_and_parent_entry_watch_event_mask_equal_the_schema_constants"],
+    "groups": [
+      { "document": "T00", "positions": [0, 2], "root_document": "T00", "root_pointer": "/root_A" },
+      { "document": "T00", "positions": [1, 3], "root_document": "T00", "root_pointer": "/root_B" },
+      { "document": "P01", "positions": [0, 1, 4], "root_document": "P01", "root_pointer": "/bootstrap_A_root_observation" },
+      { "document": "P01", "positions": [2, 3, 5], "root_document": "P01", "root_pointer": "/bootstrap_B_root_observation" },
+      { "document": "B01", "positions": [0, 2, 4, 6, 7, 8, 10, 12, 13], "root_document": "B01", "root_pointer": "/build_roots/product_A" },
+      { "document": "B01", "positions": [1, 3, 5, 9, 11], "root_document": "B01", "root_pointer": "/build_roots/product_B" }
+    ],
+    "operator": "equals_each_action_root_field_to_role_root_after_exact_token_expansion"
+  },
+  "action_root_sequence_join_table": {
+    "fields_exact": ["inventory_sha256", "entry_count", "aggregate_allocated_bytes", "aggregate_logical_bytes"],
+    "chains": [
+      { "document": "T00", "positions": [0, 2], "initial": { "document": "T00", "pointer": "/root_A_pre_actions" }, "terminal": { "document": "T00", "pointer": "/root_A" } },
+      { "document": "T00", "positions": [1, 3], "initial": { "document": "T00", "pointer": "/root_B_pre_actions" }, "terminal": { "document": "T00", "pointer": "/root_B" } },
+      { "document": "P01", "positions": [0, 1, 4], "initial": { "document": "B00", "pointer": "/bootstrap_A_initial" }, "terminal": { "document": "P01", "pointer": "/bootstrap_A_root_observation" } },
+      { "document": "P01", "positions": [2, 3, 5], "initial": { "document": "B00", "pointer": "/bootstrap_B_initial" }, "terminal": { "document": "P01", "pointer": "/bootstrap_B_root_observation" } },
+      { "document": "B01", "positions": [0, 2, 4, 6, 7, 8, 10, 12, 13], "initial": { "document": "P01", "pointer": "/product_A_root_observation" }, "terminal": { "document": "B01", "pointer": "/build_roots/product_A" } },
+      { "document": "B01", "positions": [1, 3, 5, 9, 11], "initial": { "document": "P01", "pointer": "/product_B_root_observation" }, "terminal": { "document": "B01", "pointer": "/build_roots/product_B" } }
+    ],
+    "step_rule": "initial observation equals first action_root_continuity before fields; every prior post-reap equals next before; final post-reap equals terminal observation",
+    "operator": "evaluate_exact_per_root_action_inventory_chain"
+  },
+  "action_resource_cadence_table": {
+    "applies_to": ["T00/actions", "P01/bootstrap_actions", "B01/actions", "O01/action_transcript/action"],
+    "predicates_in_order": [
+      "start_continuous_ticks_lte_end_continuous_ticks_lte_deadline_continuous_ticks",
+      "first_sample_ticks_lte_unreaped_interval_start_ticks",
+      "last_sample_ticks_gte_unreaped_interval_end_ticks",
+      "unreaped_interval_start_ticks_lte_unreaped_interval_end_ticks",
+      "sample_count_gte_2",
+      "max_inter_sample_gap_ticks_times_timebase_numer_div_timebase_denom_lte_100000000_nanoseconds",
+      "max_scan_duration_ticks_times_timebase_numer_div_timebase_denom_lte_100000000_nanoseconds",
+      "peak_and_post_entry_allocated_and_logical_values_lte_frozen_ceilings",
+      "action_root_pre_and_post_inventory_roots_counts_and_allocated_bytes_equal_the_corresponding_resource_observation_samples"
+    ],
+    "arithmetic": "unsigned_checked_rational_arithmetic_reject_on_overflow_or_remainder_ambiguity",
+    "operator": "evaluate_exact_action_timing_and_resource_cadence"
+  },
+  "bootstrap_outer_receipt_join_table": {
+    "documents": ["T00", "B00", "O00", "P01", "PLAN"],
+    "always_predicates_in_order": [
+      "O00_outer_receipt_root_equals_RECONSTRUCT_O00_MERKLE",
+      "O00_b00_frame_sha256_equals_SHA256_EXACT_B00_FRAME",
+      "O00_predecessor_tools_build_result_frame_sha256_equals_B00_and_P01_value_and_SHA256_EXACT_T00_FRAME",
+      "O00_absolute_horizon_seconds_equals_B00_horizons_seconds_absolute_exit",
+      "O00_launch_envelope_commit_tree_file_sha256_equal_the_separately_committed_native_capture_launch_envelope",
+      "O00_capturer_named_descriptor_mapped_device_inode_sha256_uuid_all_join_and_generation_mapped_identity_equals_capturer",
+      "O00_capturer_identity_equals_the_selected_native_capture_launcher_pinned_by_the_launch_envelope",
+      "O00_capturer_binary_audits_equal_the_static_audit_pinned_by_the_launch_envelope",
+      "O00_stdout_and_stderr_prefix_hex_decode_lengths_equal_recorded_bytes_and_hashes_equal_recorded_sha256_values",
+      "O00_bootstrap_failure_frame_hex_hash_and_canonical_object_are_all_null_or_all_exactly_present",
+      "O00_incomplete_retains_exact_bounded_capture_wait_signal_probe_and_structured_failure_prefix_without_fabricating_unavailable_fields"
+    ],
+    "pass_predicates_in_order": [
+      "O00_status_equals_PASS_BOOTSTRAP_CAPTURE_ONLY",
+      "O00_supervisor_path_sha256_uuid_device_inode_equals_B00_selected_supervisor_tuple",
+      "O00_supervisor_named_descriptor_mapped_device_inode_are_equal_and_all_joins_true",
+      "O00_supervisor_generation_mapped_image_device_inode_sha256_uuid_equals_O00_supervisor",
+      "O00_supervisor_stdout_is_one_exact_EPRH2P01_frame_then_EOF_without_overflow",
+      "O00_supervisor_stdout_prefix_hex_equals_O00_p01_frame_hex_and_bootstrap_failure_fields_are_null",
+      "O00_p01_frame_hex_decodes_to_exact_canonical_P01_frame_and_hash",
+      "O00_p01_frame_sha256_equals_SHA256_EXACT_P01_FRAME",
+      "P01_bootstrap_producer_path_sha256_uuid_device_inode_equals_O00_supervisor",
+      "P01_bootstrap_producer_generation_equals_O00_supervisor_generation",
+      "O00_supervisor_stderr_is_empty_then_EOF_without_overflow",
+      "O00_supervisor_wait_is_exact_Darwin_normal_exit_zero",
+      "O00_supervisor_signal_receipt_is_null_and_post_reap_signal_zero_statuses_are_exactly_ESRCH_ESRCH"
+    ],
+    "operator": "evaluate_exact_bootstrap_outer_capture_and_cross_frame_joins"
+  },
+  "outer_launcher_receipt_join_table": {
+    "documents": ["T00", "B00", "O00", "P01", "B01", "O01", "PLAN"],
+    "pass_predicates_in_order": [
+      "O00_status_equals_PASS_BOOTSTRAP_CAPTURE_ONLY_and_O01_status_equals_PASS_OUTER_BUILD_CAPTURE_ONLY",
+      "O01_build_launch_envelope_commit_tree_file_sha256_equal_the_separately_committed_build_launch_envelope",
+      "O01_b00_frame_sha256_equals_SHA256_EXACT_B00_FRAME",
+      "O01_o00_frame_sha256_equals_SHA256_EXACT_O00_FRAME_and_B01_producer_bootstrap_outer_receipt_sha256",
+      "O01_p01_frame_sha256_equals_SHA256_EXACT_P01_FRAME",
+      "O01_build_plan_sha256_equals_SHA256_EXACT_PLAN_BYTES",
+      "O01_launcher_sha256_uuid_device_inode_equals_P01_selected_launcher_tuple",
+      "O01_controller_sha256_uuid_device_inode_equals_P01_selected_controller_tuple",
+      "O01_controller_generation_parent_pid_equals_O01_launcher_generation_pid",
+      "O01_controller_stdout_and_stderr_prefix_hex_decode_lengths_equal_recorded_bytes_and_hashes_equal_recorded_sha256_values",
+      "O01_action_transcript_has_exact_14_positions_roles_and_outer_build_launcher_actuator",
+      "each_Q01_and_A02_frame_magic_length_payload_canonical_reencode_and_sha256_is_exact",
+      "each_O01_action_object_equals_the_same_index_B01_action_object",
+      "each_action_parent_pid_equals_O01_launcher_generation_pid",
+      "every_containment_request_and_signal_receipt_is_null_on_PASS",
+      "O01_controller_wait_is_exact_Darwin_normal_exit_zero",
+      "O01_controller_stdout_prefix_hex_equals_O01_b01_frame_hex_and_controller_stderr_prefix_hex_is_empty",
+      "O01_b01_frame_hex_decodes_to_exact_canonical_B01_frame_and_hash",
+      "O01_outer_receipt_root_equals_RECONSTRUCT_O01_MERKLE"
+    ],
+    "incomplete_predicates": "controller and controller_generation are null until observed; completed action_transcript entries remain complete; failed_action records exact next Q01 and phase with nullable A02 action K01 and S01 fields plus available-prefix hash; retain bounded raw controller stdout/stderr prefixes every entered frame/digest fresh pre-signal snapshots membership census signal status reap/drain/probe observations and exact B01 frame hash or null; OBSERVED post-signal probes remain INCOMPLETE at the finite absolute horizon and are never reinterpreted as conservation or B01",
+    "operator": "evaluate_exact_outer_launcher_transcript_and_cross_frame_joins"
+  },
+  "failed_action_availability_table": {
+    "applies_when": { "document": "O01", "pointer": "/failed_action", "is_nonnull": true },
+    "always_predicates_in_order": ["request_frame_magic_length_canonical_reencode_and_sha256_are_exact", "stdout_and_stderr_prefix_hex_decode_lengths_equal_available_observation_byte_counts_and_hashes", "available_prefix_sha256_equals_SHA256_of_canonical_failed_action_fields_excluding_available_prefix_sha256", "terminal_frame_hex_and_sha256_are_both_null_or_both_exact", "containment_request_frame_hex_and_sha256_are_both_null_or_both_exact"],
+    "phase_rules": {
+      "request": ["spawn_entered_false", "generation_snapshots_pgid_action_resource_wait_action_containment_and_signal_are_null"],
+      "pre_spawn": ["spawn_entered_false", "generation_snapshots_pgid_action_resource_wait_action_containment_and_signal_are_null", "executable_may_be_null_or_fully_joined"],
+      "post_spawn_pre_join": ["spawn_entered_true", "action_is_null", "pgid_joined_is_false_or_null", "containment_request_is_null", "signal_is_null_or_positivePidKillReceipt", "generation_snapshots_preserve_exact_available_values_without_equality_claim"],
+      "running": ["spawn_entered_true", "executable_and_both_equal_generation_snapshots_are_present", "pgid_joined_true", "action_may_be_null_until_terminal_A02_exists", "signal_is_null_or_launcherSignalReceipt"],
+      "containment": ["spawn_entered_true", "signal_receipt_is_present", "positivePidKillReceipt_requires_pgid_joined_not_true_and_group_receipt_requires_pgid_joined_true", "every_observed_reap_probe_status_is_retained"],
+      "reap_capture": ["spawn_entered_true", "wait_is_present_or_absolute_horizon_reached_true", "action_is_present_only_if_every_action_field_was_observed", "OBSERVED_absence_probe_forbids_conservation_or_PASS"]
+    },
+    "operator": "validate_exact_failed_action_phase_availability"
+  },
+  "bootstrap_failure_prefix_applicability": {
+    "applies_when": { "document": "O00", "pointer": "/bootstrap_failure", "is_nonnull": true },
+    "select_row_by": { "document": "O00", "pointer": "/bootstrap_failure/completed_action_count" },
+    "predicates_in_order": ["bootstrap_failure_frame_magic_is_EPRH2F00_with_8_lowercase_hex_length_exact_payload_canonical_reencode_and_no_trailing_bytes", "bootstrap_failure_frame_hex_decoded_sha256_equals_bootstrap_failure_frame_sha256", "bootstrap_failure_frame_payload_equals_bootstrap_failure", "O00_p01_frame_hex_and_p01_frame_sha256_are_null", "O00_supervisor_stdout_prefix_hex_equals_O00_bootstrap_failure_frame_hex", "hex_decoded_supervisor_stdout_prefix_length_equals_supervisor_stdout_bytes_and_SHA256_equals_supervisor_stdout_sha256", "O00_supervisor_stdout_eof_is_true_and_overflow_is_false", "last_completed_position_equals_selected_row_last_completed_position", "ordered_completed_roles_equal_selected_row_roles", "all_three_bootstrap_failure_fields_are_present_together"],
+    "phase_completed_count_matrix": { "input_admission": [0], "self_admission": [0], "root_admission": [0], "source_manifest": [0], "source_materialization": [0], "watch_arm": [0], "action": [0, 1, 2, 3, 4, 5], "final_revalidation": [6], "frame_encoding": [6] },
+    "operator": "select_exact_bootstrap_failure_prefix_and_validate_phase_count_availability"
+  },
+  "bootstrap_failure_prefix_table": [
+    { "completed_action_count": 0, "last_completed_position": null, "roles": [] },
+    { "completed_action_count": 1, "last_completed_position": 0, "roles": ["build_controller_c_A"] },
+    { "completed_action_count": 2, "last_completed_position": 1, "roles": ["build_controller_c_A", "build_controller_swift_A"] },
+    { "completed_action_count": 3, "last_completed_position": 2, "roles": ["build_controller_c_A", "build_controller_swift_A", "build_controller_c_B"] },
+    { "completed_action_count": 4, "last_completed_position": 3, "roles": ["build_controller_c_A", "build_controller_swift_A", "build_controller_c_B", "build_controller_swift_B"] },
+    { "completed_action_count": 5, "last_completed_position": 4, "roles": ["build_controller_c_A", "build_controller_swift_A", "build_controller_c_B", "build_controller_swift_B", "build_launcher_A"] },
+    { "completed_action_count": 6, "last_completed_position": 5, "roles": ["build_controller_c_A", "build_controller_swift_A", "build_controller_c_B", "build_controller_swift_B", "build_launcher_A", "build_launcher_B"] }
+  ],
+  "bootstrap_unstructured_failure_channel": {
+    "applies_when": "O00.status_is_INCOMPLETE_BOOTSTRAP_CAPTURE_NO_RETRY_and_bootstrap_failure_frame_hex_bootstrap_failure_frame_sha256_bootstrap_failure_are_all_null",
+    "predicates_in_order": ["retain_the_exact_bounded_supervisor_stdout_and_stderr_prefix_hex_bytes_counts_hashes_eof_and_overflow_without_reencoding", "malformed_truncated_noncanonical_or_overflowed_supervisor_stdout_never_creates_EPRH2F00_or_EPRH2P01_authority", "O00_remains_incomplete_and_no_readiness_successor_is_permitted"],
+    "operator": "evaluate_exact_bootstrap_unstructured_failure_channel"
+  },
+  "failure_action_prefix_applicability": {
+    "applies_when": { "document": "B01", "pointer": "/status", "equals": "FAIL_BUILD_AUDIT_RETAINED" },
+    "select_row_by": { "document": "B01", "pointer": "/failure/completed_action_count" },
+    "predicates_in_order": [
+      "B01_actions_length_equals_selected_row_completed_action_count",
+      "B01_failure_last_completed_position_equals_selected_row_last_completed_position",
+      "each_action_position_equals_its_array_index",
+      "ordered_action_roles_equal_selected_row_roles",
+      "every_completed_action_validates_actionPass_and_all_action_predicate_tables",
+      "O01_failed_action_is_the_next_position_or_null_only_for_post_action_native_or_final_failure"
+    ],
+    "phase_completed_count_matrix": {
+      "action": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      "native_operation": [0, 2, 6, 8, 12],
+      "final_revalidation": [14]
+    },
+    "operator": "select_exact_failure_prefix_row_and_validate_phase_count_availability"
+  },
+  "failure_action_prefix_table": [
+    { "completed_action_count": 0, "last_completed_position": null, "roles": [] },
+    { "completed_action_count": 1, "last_completed_position": 0, "roles": ["signed_worker_auditor_A"] },
+    { "completed_action_count": 2, "last_completed_position": 1, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B"] },
+    { "completed_action_count": 3, "last_completed_position": 2, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A"] },
+    { "completed_action_count": 4, "last_completed_position": 3, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B"] },
+    { "completed_action_count": 5, "last_completed_position": 4, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A"] },
+    { "completed_action_count": 6, "last_completed_position": 5, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B"] },
+    { "completed_action_count": 7, "last_completed_position": 6, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign"] },
+    { "completed_action_count": 8, "last_completed_position": 7, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit"] },
+    { "completed_action_count": 9, "last_completed_position": 8, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A"] },
+    { "completed_action_count": 10, "last_completed_position": 9, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A", "controller_release_B"] },
+    { "completed_action_count": 11, "last_completed_position": 10, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A", "controller_release_B", "verifier_release_A"] },
+    { "completed_action_count": 12, "last_completed_position": 11, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A", "controller_release_B", "verifier_release_A", "verifier_release_B"] },
+    { "completed_action_count": 13, "last_completed_position": 12, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A", "controller_release_B", "verifier_release_A", "verifier_release_B", "xctest_debug"] },
+    { "completed_action_count": 14, "last_completed_position": 13, "roles": ["signed_worker_auditor_A", "signed_worker_auditor_B", "worker_debug_A", "worker_debug_B", "worker_release_A", "worker_release_B", "worker_codesign", "worker_static_code_audit", "controller_release_A", "controller_release_B", "verifier_release_A", "verifier_release_B", "xctest_debug", "xctest_release"] }
+  ],
+  "no_live_effects": {
+    "scope": "OUTER_LAUNCHER_ACTIONS_STATIC_PRODUCT_AUDITS_AND_EXACT_LAUNCHER_SIGNAL_RECEIPTS_ONLY_NOT_GLOBAL_HOST_ABSENCE",
+    "measurement_basis": "DIRECT_ACTION_ROLE_ENTRIES_STATIC_IMPORT_AUDITS_AND_EXACT_SIGNAL_RECEIPTS_NOT_KERNEL_WIDE_EFFECT_AUDIT",
+    "app_launches": 0,
+    "h2_live_controller_launches": 0,
+    "worker_launches": 0,
+    "semantic_verifier_launches": 0,
+    "vm_creations": 0,
+    "guest_entries": 0,
+    "launcher_pre_join_positive_pid_SIGKILL_entries": 0,
+    "launcher_timeout_group_SIGKILL_receipt_entries": 0,
+    "other_signals": 0,
+    "product_archives": 0,
+    "network_actions_authorized_or_entered": 0,
+    "ambient_network_observation": "UNASSESSED",
+    "provisioning_updates": 0,
+    "codesign_identity_operations": 1,
+    "static_auditor_launches": 1
+  }
+}

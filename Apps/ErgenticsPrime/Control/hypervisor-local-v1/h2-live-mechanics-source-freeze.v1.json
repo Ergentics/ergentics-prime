@@ -1,0 +1,1790 @@
+{
+  "authority_ceiling": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "high_value_ingress": "DENIED",
+    "h2_live_invocation_authorized_by_this_freeze": false,
+    "scientific_authority": false,
+    "trusted_egress": "DENIED"
+  },
+  "build_only_verification": {
+    "allowed": false,
+    "disposition": "PROTOCOL_ONLY_IN_THIS_CONTROL_SLICE; IMPLEMENTATION_AND_EVERY_BUILD_BOOTSTRAP_COMPILER_LINKER_TEST_CODESIGN_AUDIT_OR_CONTROLLER_PROCESS_REQUIRE_A_SEPARATE_COMMITTED_SUCCESSOR_HANDOFF",
+    "architecture": "arm64",
+    "bootstrap_predecessor_producer_preparation_contract": {
+      "separate_successor_envelope_required": true,
+      "trust_boundary": "LOCAL_HOST_KERNEL_FILESYSTEM_XCODE_PATH_VERSION_COMPILER_IMAGE_AND_UNMEASURED_SDK_CONTENTS_WITH_EXPLICIT_OPERATOR_OUTER_CAPTURE",
+      "scientific_authority": false,
+      "authority_vector": "00000000",
+      "gate_e": "ABSTAIN",
+      "fresh_disjoint_roots": 2,
+      "product_exact": "ErgenticsProvenanceH2LivePredecessorToolsBuilder",
+      "source_exact": "Tools/H2LivePredecessorToolsBuilder/main.c",
+      "builds_exact": 2,
+      "actions_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_preparation_actions",
+      "result_contract": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json#/$defs/predecessorProducerPreparationResult",
+      "result_frame": "EPRH2P00",
+      "comparisons_exact": ["raw_bytes_equal", "file_size_equal", "sha256_equal", "macho_uuid_equal", "ordered_load_commands_equal", "linker_codedirectory_equal", "expanded_build_settings_equal"],
+      "compiler_and_source_admission": "EACH_ACTION_RECORDS_EXACT_XCODE_VERSION_BUILD_SDK_PATH_VERSION_COMPILER_NAMED_DESCRIPTOR_MAPPED_VNODE_SHA256_UUID_DOUBLE_GENERATION_WAIT_REAP_AND_EXACT_HELD_SOURCE_STDIN_BYTE_COUNT_SHA256_EOF; SDK_CONTENTS_REMAIN_EXPLICITLY_ADMITTED_UNMEASURED",
+      "process_boundary": "DIRECT_COMPILER_GENERATION_WAIT_AND_EXACT_REAP_ARE_OBSERVED; DESCENDANT_CONFINEMENT_REMAINS_UNPROVEN; ZERO_SIGNALS; OUTER_CAPTURE_STOPS_WAITING_BY_660_SECONDS; OPERATOR_HOST_PROCESS_MANAGEMENT_IS_PERMITTED_AFTER_THE_HORIZON_AND_CANNOT_CREATE_PASS_OR_REINTERPRET_EVIDENCE",
+      "persistence_boundary": "EXACT_EPRH2P00_CANONICAL_PAYLOAD_AND_SIDECAR_MUST_BE_EXCLUSIVELY_CREATED_FSYNCED_CLOSED_REOPENED_REHASHED_AND_PARENT_DIRECTORY_FSYNCED_THEN_COMMITTED_UNCHANGED_BY_A_SEPARATE_CONTROL_ONLY_COMMIT_BEFORE_T00_ENVELOPE_CONSTRUCTION",
+      "distribution_exclusion": "DEVELOPMENT_CONTROL_PRODUCT_ONLY; H2 MUST DATA-PROVE ABSENCE FROM COMPLETE PBX APPLICATION_TARGET_COPY_FILES_RESOURCES_AND_XPC_HELPER INVENTORY; ARCHIVE_EXPORT_TESTFLIGHT_AND_APP_STORE ARE NOT PRODUCED IN H2 AND REMAIN A REQUIRED LATER ARCHIVE-GATE EXCLUSION",
+      "successor_requires": "COMMITTED_PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY_WITH_EXACT_P00_FRAME_MERKLE_SELECTED_PRODUCER_AND_DURABLE_PUBLICATION_RECEIPT"
+    },
+    "bootstrap_predecessor_tools_build_contract": {
+      "separate_successor_envelope_required": true,
+      "fresh_disjoint_roots": 2,
+      "products_exact": ["ErgenticsProvenanceH2LiveBootstrapCaptureLauncher", "ErgenticsProvenanceH2LiveBuildBootstrapSupervisor"],
+      "sources_exact": ["Tools/H2LiveBootstrapCaptureLauncher/main.c", "Tools/H2LiveBuildBootstrapSupervisor/main.c"],
+      "builds_per_product": 2,
+      "comparisons_per_product": ["raw_bytes_equal", "file_size_equal", "macho_uuid_equal", "ordered_load_commands_equal", "linker_codedirectory_equal"],
+      "actions_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_build_actions",
+      "result_contract": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json#/$defs/predecessorToolsBuildResult",
+      "result_frame": "EPRH2T00",
+      "producer_contract": "THE_SEPARATELY_COMMITTED_T00_ENVELOPE_PINS_EXACT_COMMITTED_PASS_P00_AND_ITS_SELECTED_CLOSED_NATIVE_EXECUTABLE; T00 BINDS_THAT_SELECTED_PRODUCER_NAMED_DESCRIPTOR_MAPPED_IMAGE_AND_PROCESS_GENERATION_AND_EACH_COMPILER_DRIVER_AS_ITS_GENERATION_JOINED_DIRECT_CHILD",
+      "finite_absolute_horizon_seconds": 1320,
+      "failure_containment": "EACH_ENTERED_COMPILER_DRIVER_HAS_A_300_SECOND_DEADLINE; AT_MOST_ONE_CONTAINMENT_KILL_PER_EXACT_DIRECT_CHILD_OR_JOINED_PRIVATE_GROUP; THE_ENVELOPE_EXITS_BY_1320_SECONDS_AND_RETAINS NONREAP_OR_NONCONSERVATION_AS_FAIL_WITHOUT_RETRY_OR_INDEFINITE_WAIT",
+      "successor_requires": "COMMITTED_PASS_PREDECESSOR_TOOLS_BUILD_ONLY_WITH_EXACT_RESULT_MERKLE_AND_BUILD_ENVELOPE_IDENTITY",
+      "selected_capture_launcher_and_supervisor_images_must_be_descriptor_held_and_pinned_by_the_later_launch_envelope": true,
+      "built_product_execution_during_build_envelope": false
+    },
+    "build_matrix_in_order": [
+      "PREDECESSOR_TOOLS_BUILDER_PREPARATION_A_UNSIGNED_NONAUTHORITATIVE",
+      "PREDECESSOR_TOOLS_BUILDER_PREPARATION_B_UNSIGNED_NONAUTHORITATIVE",
+      "PREDECESSOR_CAPTURE_LAUNCHER_A_UNSIGNED",
+      "PREDECESSOR_CAPTURE_LAUNCHER_B_UNSIGNED",
+      "PREDECESSOR_BOOTSTRAP_SUPERVISOR_A_UNSIGNED",
+      "PREDECESSOR_BOOTSTRAP_SUPERVISOR_B_UNSIGNED",
+      "BUILD_CONTROLLER_BOOTSTRAP_A_UNSIGNED",
+      "BUILD_CONTROLLER_BOOTSTRAP_B_UNSIGNED",
+      "BUILD_LAUNCHER_BOOTSTRAP_A_UNSIGNED",
+      "BUILD_LAUNCHER_BOOTSTRAP_B_UNSIGNED",
+      "BUILD_LAUNCHER_SINGLE_BOUNDED_INVOCATION_OF_SELECTED_CONTROLLER",
+      "SIGNED_WORKER_AUDITOR_A_UNSIGNED",
+      "SIGNED_WORKER_AUDITOR_B_UNSIGNED",
+      "DEBUG_A_UNSIGNED",
+      "DEBUG_B_UNSIGNED",
+      "RELEASE_A_UNSIGNED",
+      "RELEASE_B_UNSIGNED",
+      "RELEASE_SELECTED_SIGNED_ONCE",
+      "SIGNED_WORKER_STATIC_CODE_AUDIT",
+      "CONTROLLER_A_AFTER_WORKER_IDENTITY_BIND",
+      "CONTROLLER_B_AFTER_WORKER_IDENTITY_BIND",
+      "OFFLINE_VERIFIER_A",
+      "OFFLINE_VERIFIER_B"
+    ],
+    "build_roots": {
+      "bootstrap_predecessor_producer_preparation": "TWO_FRESH_DISJOINT_BUILD_ONLY_ROOTS_FOR_PREDECESSOR_TOOLS_BUILDER_A_B_RETAINED_BY_THE_EXPLICIT_NONAUTHORITATIVE_P00_PREPARATION_ENVELOPE",
+      "bootstrap_predecessor_tools": "TWO_FRESH_DISJOINT_BUILD_ONLY_ROOTS_FOR_CAPTURE_LAUNCHER_A_B_AND_BOOTSTRAP_SUPERVISOR_A_B_RETAINED_BY_THE_SEPARATE_PREDECESSOR_TOOLS_BUILD_ENVELOPE",
+      "bootstrap": "TWO_FRESH_DISJOINT_ROOTS_USED_ONLY_FOR_BUILD_CONTROLLER_A_B_BUILD_LAUNCHER_A_B_AND_THE_NESTED_SOURCE_VIEW",
+      "product_A_B": "TWO_ADDITIONAL_FRESH_DISJOINT_GLOBAL_ROOTS_A_AND_B_REUSED_BY_CONFIGURATION_FOR_AUDITOR_WORKER_CONTROLLER_AND_VERIFIER",
+      "source_view": "ONE_EXACT_DESCRIPTOR_MATERIALIZED_COMPLETE_TRACKED_IMPLEMENTATION_TREE_AT_BOOTSTRAP_A/source-view; IT_IS NESTED WITHIN BOOTSTRAP_A BUT DISJOINT FROM ALL BUILD OUTPUT SUBTREES AND IS THE ONLY COMPILATION OR TEST SOURCE TREE; THE SEPARATE PLAN COMPILATION MEMBERSHIP SET DOES NOT DEFINE SOURCE AUTHORITY",
+      "retention": "THE_TWO_P00_PREPARATION_ROOTS_THE_TWO_T00_PREDECESSOR_TOOL_ROOTS_AND_THE_FOUR_LATER_BOOTSTRAP_PRODUCT_ROOTS_REMAIN_RECORDED_AND_RETAINED_WITHOUT_CLEANUP_THROUGH_READINESS_DISPOSITION",
+      "predecessor_producer_preparation_roots_exact": 2,
+      "predecessor_tool_roots_exact": 2,
+      "later_bootstrap_and_product_roots_exact": 4,
+      "cumulative_retained_roots_through_readiness_exact": 8
+    },
+    "controller_binary_execution": false,
+    "disjoint_build_roots_required": {
+      "predecessor_producer_preparation_envelope": 2,
+      "predecessor_tools_envelope": 2,
+      "later_bootstrap_and_product_chain": 4,
+      "cumulative_through_readiness": 8
+    },
+    "path_normalization": {
+      "c_flags": [
+        "-ffile-prefix-map=ACTUAL_BUILD_ROOT=/__EPR_BUILD_ROOT__",
+        "-fdebug-prefix-map=ACTUAL_BUILD_ROOT=/__EPR_BUILD_ROOT__"
+      ],
+      "swift_flags": [
+        "-debug-prefix-map",
+        "ACTUAL_BUILD_ROOT=/__EPR_BUILD_ROOT__"
+      ],
+      "rule": "EACH_ACTUAL_ROOT_IS_REPLACED_BY_THE_SAME_VIRTUAL_ROOT; EXPANDED_COMMANDS_AND_ACTUAL_ROOTS_ARE_RECORDED"
+    },
+    "unsigned_reproducibility": {
+      "comparisons": [
+        "PREDECESSOR_TOOLS_BUILDER_PREPARATION_A_EQUALS_PREDECESSOR_TOOLS_BUILDER_PREPARATION_B",
+        "PREDECESSOR_CAPTURE_LAUNCHER_A_EQUALS_PREDECESSOR_CAPTURE_LAUNCHER_B",
+        "PREDECESSOR_BOOTSTRAP_SUPERVISOR_A_EQUALS_PREDECESSOR_BOOTSTRAP_SUPERVISOR_B",
+        "BUILD_CONTROLLER_BOOTSTRAP_A_EQUALS_BUILD_CONTROLLER_BOOTSTRAP_B",
+        "BUILD_LAUNCHER_BOOTSTRAP_A_EQUALS_BUILD_LAUNCHER_BOOTSTRAP_B",
+        "SIGNED_WORKER_AUDITOR_A_EQUALS_SIGNED_WORKER_AUDITOR_B",
+        "DEBUG_A_EQUALS_DEBUG_B",
+        "RELEASE_A_EQUALS_RELEASE_B",
+        "CONTROLLER_A_EQUALS_CONTROLLER_B",
+        "OFFLINE_VERIFIER_A_EQUALS_OFFLINE_VERIFIER_B"
+      ],
+      "cross_configuration_comparison": false,
+      "predicates_per_pair": [
+        "raw_bytes_equal",
+        "file_size_equal",
+        "macho_uuid_equal",
+        "ordered_load_commands_equal"
+      ],
+      "predecessor_tools_additional_predicates": ["linker_codedirectory_equal", "expanded_build_settings_equal", "selected_member_exactly_A_or_B"],
+      "apple_identity_or_cms_signing_present_during_comparison": false,
+      "linker_adhoc_code_signature": "ALLOWED_FOR_ARM64_EXECUTABILITY_MUST_BE_PRESENT_OR_ABSENT_IDENTICALLY_AND_IS_INCLUDED_IN_RAW_BYTE_LOAD_COMMAND_AND_CODEDIRECTORY_COMPARISON",
+      "mismatch_disposition": "STOP_BUILD_SLICE_AND_RECORD_VARIABILITY_NO_READINESS_FREEZE"
+    },
+    "runtime_bundle_preparation": {
+      "directory_entries_exact": [
+        "ErgenticsProvenanceH2LiveController",
+        "ErgenticsProvenanceH2LiveWorker"
+      ],
+      "leaf_mode": "0700",
+      "leaf_nlink": 1,
+      "leaf_owner": "EFFECTIVE_UID",
+      "root_mode": "0700",
+      "root_owner": "EFFECTIVE_UID",
+      "root_path": "FRESH_DISJOINT_PATH_PINNED_BY_SUCCESSOR_READINESS",
+      "symlinks_or_special_files": 0,
+      "materialized_by_this_source_freeze": false,
+      "materialization_policy": "DEFERRED_TO_SEPARATE_EXACT_BINARY_READINESS_FREEZE"
+    },
+    "signed_worker_audit": {
+      "compiler_and_linker_requirements": [
+        "-O2",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-fvisibility=hidden",
+        "DEAD_CODE_STRIPPING=YES",
+        "SWIFT_WHOLE_MODULE_OPTIMIZATION",
+        "STRIP_INSTALLED_PRODUCT=YES"
+      ],
+      "embedded_entitlement_policy": {
+        "allowed_automatic_exact_values": {
+          "application-identifier": "ZCQ435U8JP.com.ergentics.provenance",
+          "com.apple.application-identifier": "ZCQ435U8JP.com.ergentics.provenance",
+          "com.apple.developer.team-identifier": "ZCQ435U8JP"
+        },
+        "required_true": {
+          "com.apple.security.app-sandbox": true,
+          "com.apple.security.files.user-selected.read-only": true,
+          "com.apple.security.hypervisor": true
+        },
+        "unexpected_keys": "REJECT"
+      },
+      "hardened_runtime": true,
+      "identifier": "com.ergentics.provenance",
+      "identifier_residual": "NATIVE_EPR_ADMIT_SIGNING_REQUIRES_THE_EXISTING_APPLICATION_IDENTIFIER; WORKER_ROLE_IDENTITY_IS_SEPARATELY_CLOSED_BY_CONTROLLER_HELD_SHA256_UUID_CDHASH_AND_VNODE_JOINS",
+      "local_offline_signing": {
+        "allowed_invocations_by_this_freeze": 0,
+        "successor_envelope_invocation_max": 1,
+        "certificate_sha256": "PINNED_BY_BUILD_RESULT",
+        "cms_raw_byte_reproducibility_claim": false,
+        "codesign_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+        "keychain_private_key_access": "LOCAL_SIGNING_ONLY",
+        "network": false,
+        "options": "runtime",
+        "provisioning_profile_install_or_update": false,
+        "timestamp": "none"
+      },
+      "network_entitlement": false,
+      "offline_static_code_admission": {
+        "api": "SecStaticCodeCheckValidityWithErrors",
+        "flags": [
+          "kSecCSStrictValidate",
+          "kSecCSNoNetworkAccess"
+        ],
+        "requirement": "anchor apple generic and identifier \"com.ergentics.provenance\" and certificate leaf[subject.OU] = \"ZCQ435U8JP\"",
+        "required_result": "errSecSuccess",
+        "same_trust_error_as_accepted_archive": "STOP_BEFORE_READINESS_FREEZE",
+        "static_code_vnode_sha256_uuid_join_before_and_after": "REQUIRED"
+      },
+      "runtime_entitlement_effect_before_worker_execution": "NOT_ESTABLISHED",
+      "team_identifier": "ZCQ435U8JP"
+    },
+    "signing_and_identity_binding": {
+      "binding_order": [
+        "BUILD_AND_COMPARE_UNSIGNED_WORKER_A_B",
+        "SIGN_ONE_EXACT_RELEASE_WORKER_ONCE_OFFLINE",
+        "AUDIT_SIGNED_WORKER_TRUST_REQUIREMENT_CERTIFICATE_CODEDIRECTORY_ENTITLEMENTS",
+        "GENERATE_IMMUTABLE_WORKER_IDENTITY_HEADER_FROM_EXACT_SIGNED_WORKER",
+        "BUILD_AND_COMPARE_CONTROLLER_A_B_WITH_IDENTITY_HEADER",
+        "REVALIDATE_FINAL_SOURCE_MANIFEST_AND_UNSIGNED_RELEASE_WORKER_DESCRIPTORS",
+        "PIN_SELECTED_SIGNED_WORKER_AND_CONTROLLER_IDENTITIES_IN_BUILD_RESULT"
+      ],
+      "controller_identity_source": "GENERATED_IDENTICAL_A_B_BUILD_INPUT_H2LiveWorkerIdentity.h_FROM_TRACKED_Tools/H2LiveController/H2LiveWorkerIdentityTemplate.h",
+      "controller_rebuild_after_identity_binding": true,
+      "controller_runtime_comparand": "COMPILED_EXACT_SIGNED_WORKER_SHA256_UUID_FULL_CODEDIRECTORY_HASH_CDHASH_IDENTIFIER_TEAM_CERTIFICATE_SHA256_REQUIREMENT_SHA256_ENTITLEMENTS_SHA256",
+      "debug_worker_signing": false,
+      "final_source_manifest_and_unsigned_release_descriptor_revalidation_required": true,
+      "release_worker_signing": {
+        "entitlements": "Entitlements.plist",
+        "identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+        "identifier": "com.ergentics.provenance",
+        "options": "runtime",
+        "selected_input": "EXACT_UNSIGNED_RELEASE_A_EQUALS_RELEASE_B",
+        "timestamp": "none"
+      },
+      "signed_cms_variability": "NOT_USED_AS_REPRODUCIBILITY_PREDICATE; EXACT_SELECTED_SIGNED_FILE_SHA256_IS_STILL_PINNED_FOR_READINESS",
+      "worker_identity_header_in_worker_target": false
+    },
+    "symbol_and_load_command_audit": {
+      "controller_hypervisor_symbols": 0,
+      "live_controller_process_spawn_sites": 1,
+      "live_controller_signal_sites_bounded": true,
+      "build_controller_process_spawn_or_signal_sites": 0,
+      "build_launcher_is_sole_B01_action_spawn_and_signal_owner": true,
+      "worker_exported_epr_lifecycle_symbols": 0,
+      "worker_forbidden_file_database_ui_network_imports": 0,
+      "worker_hypervisor_framework_linked": true,
+      "worker_security_framework_linked": true,
+      "worker_referenced_native_lifecycle_api_set": [
+        "epr_guest_reservation_copy_capability_witness",
+        "epr_guest_reservation_release",
+        "epr_guest_reserve",
+        "epr_guest_run_reserved"
+      ],
+      "worker_rust_legacy_or_cancel_call_sites": 0
+    },
+    "source_only_tests": {
+      "may_execute_xctest": false,
+      "new_h2_verifier_sources_native_lifecycle_symbol_references": 0,
+      "test_target_hypervisor_framework_link": false,
+      "vm_or_guest_entry": false
+    },
+    "worker_binary_execution": false
+  },
+  "build_toolchain": {
+    "clang": "Apple_clang_2100.1.1.101",
+    "minimum_macos": "26.0",
+    "sdk": "macosx26.5",
+    "swift": "6.3.3",
+    "xcode": "26.6",
+    "xcode_build": "17F113"
+  },
+  "machine_contracts": {
+    "authority_rule": "THE_PINNED_MACHINE_FILES_OWN_SHAPE_ORDER_JOINS_AND_MERKLE_FRAMING; THIS_FREEZE_OWNS_ELIGIBILITY_AND_SEQUENCE; PROSE_IS_NONAUTHORITATIVE_WHERE_A_MACHINE_CONTRACT_EXISTS",
+    "build_plan": {
+      "path": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "sha256": "d7503908ea6719fe3e024b5e47d9b5e4d8a686ceaf52c3985cf0636510b29102"
+    },
+    "build_wire_schema": {
+      "path": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "sha256": "095ba62a7520f9425d3901015ff5a13f873b0e4dbe77afc38b6c1caff5cd25e7"
+    },
+    "execution_wire_schema": {
+      "path": "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "sha256": "a9a9d6aa1f641c55aee2c0ef54ce21eb0dad2a12430061c157735f0432800e59"
+    },
+    "runtime_validation": "IMPLEMENTATIONS_MUST_VALIDATE_THE_PINNED_SCHEMA_VARIANT_AND_ALL_CUSTOM_JOIN_PREDICATES_WITHOUT_LOADING_AN_UNPINNED_PUBLIC_SCHEMA_OR_CODEC_DEPENDENCY"
+  },
+  "build_result_contract": {
+    "authority": "SOLE_NATIVE_BUILD_GATE_OBSERVATION_NOT_SCIENTIFIC_OR_GATE_E_AUTHORITY",
+    "predecessor_producer_preparation_result_contract": {
+      "authority": "EXPLICIT_NONAUTHORITATIVE_BOOTSTRAP_BUILD_IDENTITY_RECEIPT_NOT_RUNTIME_SCIENTIFIC_OR_GATE_E_AUTHORITY",
+      "frame": "ASCII_EPRH2P00 || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+      "maximum_bytes": 1048576,
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/predecessorProducerPreparationResult",
+      "merkle_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_preparation_result_merkle",
+      "actions_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_preparation_actions",
+      "required_evidence": "SEPARATELY_COMMITTED_P00_PREPARATION_ENVELOPE_OPERATOR_EFFECTIVE_UID_OUTER_CAPTURE_TRANSPORT_SOURCE_FREEZE_IMPLEMENTATION_PLAN_AND_EXACT_PRODUCER_SOURCE_IDENTITIES_WITH_LATER_B00_COMPLETE_TREE_MEMBERSHIP_JOIN_EXACT_XCODE_VERSION_BUILD_SDK_PATH_VERSION_WITH_SDK_CONTENTS_ADMITTED_UNMEASURED_TWO_EXCLUSIVELY_CREATED_EMPTY_DESCRIPTOR_HELD_DISJOINT_RETAINED_ROOTS_ROOT_AND_PARENT_WATCH_CONTINUITY_TWO_EXACT_COMPILER_GENERATION_STDIN_DEADLINE_WAIT_REAP_AND_CAPTURE_OBSERVATIONS_ZERO_SIGNALS_EXACT_HELD_A_B_OUTPUT_VNODE_RAW_SIZE_SHA256_UUID_LOAD_COMMAND_CODEDIRECTORY_BUILD_SETTINGS_EQUALITY_SELECTED_MEMBER_FINAL_REVALIDATION_TYPED_FAILURE_AVAILABILITY_AND_ZERO_LIVE_COUNTS",
+      "pass": "PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY_IS_REQUIRED_BEFORE_T00_ENVELOPE_CONSTRUCTION; FAIL_IS_RETAINED_AND_HAS_NO_SUCCESSOR",
+      "persistence": ["Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.json", "Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.sha256"],
+      "durable_publication": "P00_IS_ELIGIBLE_ONLY_AFTER_EXCLUSIVE_NO_REPLACE_PAYLOAD_AND_SIDECAR_CREATION_FILE_FSYNC_CLOSE_REOPEN_NOFOLLOW_REHASH_PARENT_DIRECTORY_FSYNC_AND_A_SEPARATE_CONTROL_ONLY_COMMIT_BINDING_THE_UNCHANGED_BYTES"
+    },
+    "predecessor_tools_build_result_contract": {
+      "authority": "COMMITTED_BUILD_ONLY_A_B_IDENTITY_AND_ROOT_EVIDENCE_NOT_RUNTIME_OR_GATE_E_AUTHORITY",
+      "frame": "ASCII_EPRH2T00 || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+      "maximum_bytes": 1048576,
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/predecessorToolsBuildResult",
+      "merkle_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_build_result_merkle",
+      "actions_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_build_actions",
+      "required_evidence": "EXACT_COMMITTED_PASS_EPRH2P00_FRAME_AND_SELECTED_PRODUCER_JOIN_SEPARATELY_COMMITTED_CLOSED_NATIVE_PREDECESSOR_TOOLS_BUILD_ENVELOPE_IDENTITY_AND_PRODUCER_NAMED_DESCRIPTOR_MAPPED_IMAGE_GENERATION_SOURCE_FREEZE_IMPLEMENTATION_PLAN_AND_REPOSITORY_ROOT_IDENTITIES_TWO_EXCLUSIVELY_CREATED_EMPTY_DESCRIPTOR_HELD_DISJOINT_RETAINED_ROOTS_ROOT_AND_PARENT_WATCH_CONTINUITY_FOUR_EXACT_0400_DESCRIPTOR_COPIES_OF_THE_TWO_HELD_IMPLEMENTATION_SOURCE_BYTE_STRINGS_WITH_FILE_AND_PARENT_WATCHES_PRE_ACTION_AND_FINAL_INVENTORIES_FOUR_EXACT_PROCESS_DERIVED_COMPILER_DRIVER_ACTION_TRANSCRIPTS_EXACT_REAP_ZERO_SIGNALS_CAPTURE_LAUNCHER_A_B_AND_BOOTSTRAP_SUPERVISOR_A_B_RAW_SIZE_UUID_LOAD_COMMAND_CODEDIRECTORY_BUILD_SETTINGS_EQUALITY_SELECTED_MEMBER_JOINS_PHASE_COUNT_TYPED_FAILURE_AVAILABILITY_AND_ZERO_LIVE_COUNTS",
+      "pass": "PASS_PREDECESSOR_TOOLS_BUILD_ONLY_IS_REQUIRED_BEFORE_B00; FAIL_IS_RETAINED_AND_HAS_NO_SUCCESSOR",
+      "persistence": ["Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.json", "Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.sha256"]
+    },
+    "canonical_payload": {
+      "additional_top_level_keys": false,
+      "encoding": "CANONICAL_SORTED_KEYS_JSON_NO_TRAILING_LF",
+      "exact_top_level_fields": [
+        "schema",
+        "status",
+        "failure",
+        "source_freeze",
+        "producer",
+        "source_identity",
+        "source_continuity",
+        "build_roots",
+        "actions",
+        "products",
+        "signing",
+        "static_code_audit",
+        "tests",
+        "binary_audits",
+        "effects",
+        "section_merkle_root"
+      ],
+      "frame_layout": "ASCII_EPRH2B01 || json_length_8_lowercase_hex_ascii || canonical_json",
+      "frame_magic": "EPRH2B01",
+      "maximum_bytes": 2097152,
+      "schema": "ergentics.provenance.hypervisor-stage.h2-live.build-result.v1"
+    },
+    "bootstrap_launch_contract": {
+      "authority": "SOLE_CANONICAL_RUNTIME_SOURCE_IDENTITY_AND_BOOTSTRAP_RECIPE_INPUT_NOT_GATE_E_AUTHORITY",
+      "frame": "ASCII_EPRH2B00 || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/bootstrapLaunchFrame",
+      "merkle_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_launch_merkle",
+      "source_identity": "COMPLETE_ORDERED_PATH_MODE_BYTE_COUNT_SHA256_GIT_BLOB_MANIFEST; SUPERVISOR_RECOMPUTES_EVERY_BLOB_AND_NESTED_GIT_TREE_FROM_HELD_BYTES_AND_REQUIRES_ROOT_EQUAL_IMPLEMENTATION_TREE; NO_RUNTIME_GIT_PROCESS_OR_WORKTREE_CLEANLINESS_CLAIM",
+      "transport": "SELECTED_NATIVE_BOOTSTRAP_CAPTURE_LAUNCHER_ZERO_ARGV_EMPTY_ENV_DESCRIPTOR_CWD_OWNS_ONE_SELECTED_HELD_SUPERVISOR_SPAWN_ONE_EXACT_B00_STDIN_FRAME_THEN_EOF_BOUNDED_RAW_P01_STDOUT_AND_STDERR_CAPTURE_AND_ONE_O00_OUTPUT_FRAME",
+      "finite_horizons_seconds": { "supervisor_internal": 2100, "outer": 2160, "post_kill_reap": 30, "absolute_exit": 2220 },
+      "failure": "BOUNDED_OUTER_RESULT_RETAINED_NO_P01_NO_RETRY_NO_INDEFINITE_WAIT"
+    },
+    "bootstrap_outer_receipt_contract": {
+      "frame": "ASCII_EPRH2O00 || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/bootstrapOuterReceipt",
+      "merkle_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_outer_receipt_merkle",
+      "structured_failure_frame": "ASCII_EPRH2F00 || json_length_8_lowercase_hex_ascii || canonical_bootstrapFailureObservation_JSON_no_trailing_bytes; OPTIONAL_ONLY_WHEN_INCOMPLETE_AND_BOUND_BY_THE_BOOTSTRAP_FAILURE_PREFIX_TABLE",
+      "required_evidence": "SEPARATELY_COMMITTED_PREDECESSOR_TOOLS_BUILD_RESULT_HASH_AND_CAPTURE_LAUNCH_ENVELOPE_IDENTITY_EXACT_B00_HASH_NATIVE_CAPTURER_SELF_NAMED_DESCRIPTOR_MAPPED_IMAGE_AND_GENERATION_SUPERVISOR_NAMED_DESCRIPTOR_MAPPED_IMAGE_AND_GENERATION_BOUNDED_RAW_STDOUT_STDERR_PREFIXES_STRUCTURED_BOOTSTRAP_FAILURE_IF_AVAILABLE_EXACT_WAIT_REAP_OPTIONAL_CONTAINMENT_RECEIPT_POST_REAP_SIGNAL_ZERO_PROBES_AND_EXACT_P01_FRAME_OR_ABSENCE",
+      "causal_boundary": "P01_ATTESTS_ONLY_SUPERVISOR_INTERNAL_FACTS_AVAILABLE_BEFORE_ITS_EXIT; O00_ALONE_ATTESTS_THE_PRECEDING_LAUNCH_ENVELOPE_OUTER_CAPTURE_EOF_WAIT_REAP_AND_POST_REAP_CONSERVATION",
+      "pass": "ONE_EXACT_CANONICAL_P01_FRAME_EMPTY_STDERR_NORMAL_EXIT_ZERO_EXACT_REAP_NO_SIGNAL_AND_TWO_POST_REAP_ESRCH_OBSERVATIONS",
+      "incomplete": "RETAIN_EXACT_BOUNDED_RAW_PREFIX_HASHES_AND_BYTES_STRUCTURED_BOOTSTRAP_FAILURE_IF_EMITTED_AND_NULL_UNAVAILABLE_PROCESS_FIELDS_NO_RETRY_REPAIR_REINTERPRETATION_OR_READINESS"
+    },
+    "closed_producer": {
+      "arguments": "ZERO_ARGUMENTS",
+      "binary": "ErgenticsProvenanceH2LiveBuildController",
+      "process_spawn_or_signal_sites": 0,
+      "actuation": "SENDS_ONLY_NEXT_FROZEN_ACTION_ORDINAL_OVER_FD3; OUTER_BUILD_LAUNCHER_OWNS_EVERY_ACTION_POSIX_SPAWN_FROM_SYSCALL_RETURN_AND_RETURNS_EPRH2A02_TERMINAL_ACTION_RECORDS",
+      "bootstrap_admission": "CONTROLLER_A_B_AND_BUILD_LAUNCHER_A_B_MUST_EACH_MATCH_RAW_BYTES_SIZE_UUID_LOAD_COMMANDS_AND_LINKER_CODEDIRECTORY; ONLY_THE_SELECTED_LAUNCHER_RUNS_AND_IT_SELF_ADMITS_BEFORE_SPAWNING_THE_SELECTED_CONTROLLER",
+      "bootstrap_manifest_input": {
+        "bootstrap_action_and_continuity_observations": "STRUCTURED_BOOTSTRAP_EVIDENCE_COMMITTED_BY_EPRH2P01_BUT_NOT_SUFFICIENT_ALONE; THE_SELECTED_BUILD_LAUNCHER_AND_CONTROLLER_MUST_REVERIFY_EVERY_SOURCE_ROOT_BINARY_AND_LIVE_PROCESS_PREDICATE_THEMSELVES",
+        "bootstrap_producer_binding": "EPRH2P01_RECORDS_ONLY_THE_EXACT_B00_HASH_AND_NATIVE_SUPERVISOR_SELF_NAMED_DESCRIPTOR_MAPPED_IMAGE_AND_GENERATION_JOINS_AVAILABLE_BEFORE_EXIT; EPRH2O00_SEPARATELY_NAMES_THE_PRECEDING_COMMITTED_LAUNCH_ENVELOPE_AND_RECORDS_OUTER_CAPTURE_WAIT_REAP_AND_CONSERVATION",
+        "B00_binding": "P01_BOOTSTRAP_LAUNCH_FRAME_SHA256_AND_BOOTSTRAP_PRODUCER_LAUNCH_FRAME_SHA256_MUST_EQUAL_THE_EXACT_COMMITTED_EPRH2B00_FRAME",
+        "frame_layout": "ASCII_EPRH2P01 || json_length_8_lowercase_hex_ascii || canonical_json",
+        "outer_launch": "A_SEPARATE_BUILD_LAUNCHER_ENVELOPE_COMMIT_PINS_THE_EXACT_O00_AND_P01_FRAME_SHA256_VALUES_AND_DESCRIPTOR_HOLDS_CONTROLLER_A_B_LAUNCHER_A_B_AND_THE_SELECTED_LAUNCHER_IMAGE",
+        "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+        "schema_pointer": "#/$defs/bootstrapManifest",
+        "stdin": "EXACTLY_ONE_EPRH2P01_FRAME_THEN_EOF"
+      },
+      "cwd": "P01.source_view_root_OPENED_O_DIRECTORY_O_NOFOLLOW_DESCRIPTOR_HELD_AND_JOINED_TO_P01_SOURCE_VIEW_DEVICE_INODE_INVENTORY",
+      "execution_admission": "DECODE_AND_EXACT_REENCODE_P01; OPEN_AND_REHASH_BOOTSTRAP_A_B_AND_REQUIRE_RAW_UUID_LOAD_COMMAND_EQUALITY; REQUIRE_SELECTED_EQUALS_A_OR_B; JOIN_SELECTED_SHA256_UUID_DEVICE_INODE_TO_PROC_REGIONFILENAME_VNODE_FOR_THIS_MAPPED_MAIN_IMAGE_BEFORE_BUILD_ACTIONS",
+      "horizons_seconds": {
+        "build_controller_internal": 3300,
+        "build_launcher_outer": 3600,
+        "outer_containment_margin": 300,
+        "post_kill_reap": 30,
+        "build_launcher_absolute_exit": 3660,
+        "codesign_or_static_audit": 60,
+        "direct_swiftc": 300,
+        "xcodebuild_action": 900
+      },
+      "timeout_containment": "THE_BUILD_PLAN_OWNS_PRE_RESUME_POSITIVE_PID_AND_POST_JOIN_PRIVATE_PGID_KILL_LIMITS; EVERY_ENTERED_KILL_REQUIRES_EXACT_REAP_AND_TWO_GROUP_ESRCH_PROBES_WHERE_A_GROUP_WAS_JOINED; NO_STOP_OR_UNBOUNDED_WAIT",
+      "environment_exact": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/replacement_environment",
+      "forbidden_transports": [
+        "shell",
+        "ruby",
+        "python",
+        "network",
+        "SwiftPM",
+        "Git"
+      ],
+      "direct_spawn_targets_exact": "OUTER_BUILD_LAUNCHER_ONLY_FROM_Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/controller_actions; CONTROLLER_SUPPLIES_ONLY_EXACT_NEXT_ORDINAL",
+      "xcodebuild_descendants": "ONLY_THE_DIRECT_CHILD_AND_ITS_OBSERVED_INHERITED_PRIVATE_PGID_ARE_RECORDED; INDEPENDENTLY_DETACHED_DESCENDANTS_ARE_NOT_KERNEL_CONFINED_OR_CLAIMED_ABSENT; STATIC_PRODUCT_AND_TEST_MEMBERSHIP_FORBIDS_APP_WORKER_LIVE_CONTROLLER_OR_STANDALONE_VERIFIER_ENTRY",
+      "stdout": "ONE_EPRH2B01_FRAME_AND_EOF",
+      "stderr": "BOUNDED_DIAGNOSTICS_CAPTURED_IN_ACTION_RECORDS_EMPTY_ON_PASS",
+      "spawn_environment": "EVERY_DIRECT_SPAWN_USES_THE_EXACT_REPLACEMENT_ENVIRONMENT_AND_TOKEN_EXPANSION_IN_THE_BUILD_PLAN; NO_AMBIENT_NAME_IS_FORWARDED",
+      "source_continuity": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/source_continuity",
+      "outer_selected_controller_launch": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/outer_selected_controller_launch"
+    },
+    "outer_launcher_receipt_contract": {
+      "frame": "ASCII_EPRH2O01 || json_length_8_lowercase_hex_ascii || canonical_sorted_key_JSON_no_trailing_LF",
+      "maximum_bytes": 100663296,
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/outerLauncherReceipt",
+      "merkle_contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/outer_launcher_receipt_merkle",
+      "required_evidence": "SEPARATELY_COMMITTED_BUILD_LAUNCH_ENVELOPE_COMMIT_TREE_FILE_SHA256_T00_B00_O00_P01_PLAN_HASHES_LAUNCHER_AND_CONTROLLER_NAMED_DESCRIPTOR_MAPPED_GENERATIONS_ALL_Q01_K01_A02_S01_OBJECTS_AND_DIGESTS_FRESH_PRE_SIGNAL_DOUBLE_SNAPSHOTS_BOUNDED_GROUP_MEMBERSHIP_FAILED_ACTION_SIGNAL_STATUSES_EXACT_REAPS_DRAINS_ESRCH_PROBES_AND_EXACT_B01_FRAME_OR_ABSENCE",
+      "pass": "EXACTLY_14_TERMINAL_ACTION_RECORDS_EQUAL_B01_ACTIONS_ZERO_SIGNAL_RECEIPTS_CONTROLLER_NORMAL_EXIT_ZERO_BOTH_EOF_AND_EXACT_CANONICAL_B01_FRAME",
+      "incomplete": "RETAIN_EXACT_BOUNDED_RAW_CONTROLLER_PREFIXES_COMPLETED_ACTIONS_AND_PHASE_TYPED_NULLABLE_FAILED_ACTION_PREFIX_WITHOUT_RETRY_REPAIR_REINTERPRETATION_OR_READINESS"
+    },
+    "machine_contract": {
+      "build_plan": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "schema_pointer": "#/$defs/buildResult",
+      "predecessor_producer_preparation_schema_pointer": "#/$defs/predecessorProducerPreparationResult",
+      "predecessor_tools_schema_pointer": "#/$defs/predecessorToolsBuildResult",
+      "predicate_tables_exact": [
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/always_joins",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/pass_joins",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/indexed_joins",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_internal_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_cwd_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_executable_equivalence_groups",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/source_identity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/root_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/root_inventory_reconstruction_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/root_layout_admission_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/p01_root_scalar_observation_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/b00_initial_root_identity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/b00_initial_root_empty_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/product_pair_equality_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_distribution_exclusion_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/signed_audit_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/source_root_continuity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_preparation_result_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_build_observation_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_source_membership_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_preparation_failure_availability_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_producer_root_continuity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_root_continuity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_source_copy_continuity_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_root_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_root_sequence_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/action_resource_cadence_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_build_result_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_action_prefix_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_failed_action_phase_availability_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_action_pass_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/predecessor_tools_failure_availability_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_outer_receipt_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/outer_launcher_receipt_join_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/failed_action_availability_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_failure_prefix_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_failure_prefix_applicability",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/bootstrap_unstructured_failure_channel",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/failure_action_prefix_table",
+        "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/failure_action_prefix_applicability"
+      ]
+    },
+    "result_persistence": {
+      "predecessor_producer_preparation_json_path": "Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.json",
+      "predecessor_producer_preparation_sha256_path": "Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.sha256",
+      "predecessor_producer_preparation_persistence_rule": "PERSIST_EXACT_EPRH2P00_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_FOR_PASS_OR_RETAINED_FAILURE",
+      "bootstrap_outer_json_path": "Control/hypervisor-local-v1/h2-live-bootstrap-outer-receipt.v1.json",
+      "bootstrap_outer_sha256_path": "Control/hypervisor-local-v1/h2-live-bootstrap-outer-receipt.v1.sha256",
+      "bootstrap_outer_persistence_rule": "PERSIST_EXACT_EPRH2O00_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_FOR_PASS_OR_INCOMPLETE",
+      "predecessor_tools_build_json_path": "Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.json",
+      "predecessor_tools_build_sha256_path": "Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.sha256",
+      "predecessor_tools_build_persistence_rule": "PERSIST_EXACT_EPRH2T00_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_FOR_PASS_OR_RETAINED_FAILURE",
+      "bootstrap_launch_json_path": "Control/hypervisor-local-v1/h2-live-bootstrap-launch.v1.json",
+      "bootstrap_launch_sha256_path": "Control/hypervisor-local-v1/h2-live-bootstrap-launch.v1.sha256",
+      "bootstrap_launch_persistence_rule": "PERSIST_EXACT_EPRH2B00_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_AND_COMMIT_UNCHANGED_BEFORE_THE_BOOTSTRAP_CAPTURE_LAUNCH_ENVELOPE",
+      "build_bootstrap_manifest_json_path": "Control/hypervisor-local-v1/h2-live-build-bootstrap-manifest.v1.json",
+      "build_bootstrap_manifest_sha256_path": "Control/hypervisor-local-v1/h2-live-build-bootstrap-manifest.v1.sha256",
+      "build_bootstrap_manifest_persistence_rule": "PERSIST_EXACT_CAPTURED_EPRH2P01_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_AND_COMMIT_UNCHANGED_SEPARATELY_FROM_EPRH2O00_BEFORE_THE_BUILD_LAUNCH_ENVELOPE",
+      "incomplete_bootstrap_capture": "MISSING_TRUNCATED_OR_INVALID_EPRH2P01_IS_RECORDED_IN_EXACT_EPRH2O00_AS_INCOMPLETE_NO_READINESS; IT_IS_NOT_REENCODED_AS_A_BOOTSTRAP_MANIFEST_AND_THE_CONSUMED_CAPTURE_IS_NOT_RETRIED",
+      "incomplete_outer_capture": "MISSING_TRUNCATED_OR_INVALID_EPRH2B01_IS_RECORDED_IN_EXACT_EPRH2O01_AS_INCOMPLETE_NO_READINESS; IT_IS_NOT_REENCODED_AS_A_BUILD_RESULT_AND_THE_CONSUMED_CHAIN_IS_NOT_RETRIED",
+      "json_path": "Control/hypervisor-local-v1/h2-live-mechanics-build-result.v1.json",
+      "persistence_rule": "PERSIST_EXACT_EPRH2B01_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING",
+      "sha256_path": "Control/hypervisor-local-v1/h2-live-mechanics-build-result.v1.sha256",
+      "outer_launcher_json_path": "Control/hypervisor-local-v1/h2-live-mechanics-outer-launcher-receipt.v1.json",
+      "outer_launcher_sha256_path": "Control/hypervisor-local-v1/h2-live-mechanics-outer-launcher-receipt.v1.sha256",
+      "outer_launcher_persistence_rule": "PERSIST_EXACT_EPRH2O01_JSON_PAYLOAD_BYTES_WITHOUT_REENCODING_FOR_PASS_OR_INCOMPLETE",
+      "sidecar_rule": "SHA256_EXACT_JSON_PAYLOAD_BYTES_TWO_SPACES_FILENAME_LF",
+      "durable_publication_rule": "EACH_LISTED_P00_T00_B00_O00_P01_B01_OR_O01_PAYLOAD_AND_SIDECAR_IS_EXCLUSIVE_NO_REPLACE_CREATED_FSYNCED_CLOSED_REOPENED_O_NOFOLLOW_REHASHED_AND_ITS_HELD_PARENT_DIRECTORY_FSYNCED_BEFORE_A_SEPARATE_CONTROL_ONLY_COMMIT; THE_COMMIT_TREE_FILE_SHA256_IS_THE_NONCIRCULAR_TERMINAL_PUBLICATION_RECEIPT_AND_DOWNSTREAM INPUT; NO LISTED FRAME MAY EXIST_ONLY_INSIDE_AN_OUTER_RECEIPT_OR_PROCESS_MEMORY"
+    },
+    "section_merkle": {
+      "contract": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json#/build_result_section_merkle",
+      "coverage": "EVERY_TOP_LEVEL_SEMANTIC_FIELD_EXCEPT_section_merkle_root"
+    },
+    "status_variants": {
+      "PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY": "P00_PROVES_TWO_BUILD_IDENTITY_AND_DIRECT_COMPILER_OBSERVATIONS_ONLY_UNDER_THE_EXPLICIT_NONAUTHORITATIVE_BOOTSTRAP_TRUST_ROOT; IT_MAY_ENTER_ONLY_A_SEPARATE_T00_ENVELOPE",
+      "FAIL_PREDECESSOR_PRODUCER_PREPARATION_RETAINED": "P00_RETAINS_EXACT_PHASE_COUNT_PARTIAL_EVIDENCE_AND_HAS_NO_T00_OR_LATER_SUCCESSOR",
+      "PASS_PREDECESSOR_TOOLS_BUILD_ONLY": "T00_PROVES_THE_P00_SELECTED_PRODUCER_BIND_AND_TWO_ROOT_FOUR_ACTION_PREDECESSOR_TOOL_BUILD_IDENTITY_ONLY; IT_MAY_ENTER_B00",
+      "FAIL_PREDECESSOR_TOOLS_BUILD_RETAINED": "T00_RETAINS_EXACT_PHASE_COUNT_AND_FAILED_ACTION_PREFIX_WITH_NO_B00_OR_LATER_SUCCESSOR",
+      "PASS_BOOTSTRAP_CAPTURE_ONLY": "O00_PROVES_EXACT_B00_BOUND_SUPERVISOR_IDENTITY_P01_CAPTURE_EOF_NORMAL_EXIT_REAP_AND_POST_REAP_CONSERVATION; IT_DOES_NOT_PROVE_BUILD_OR_LIVE_MECHANICS",
+      "INCOMPLETE_BOOTSTRAP_CAPTURE_NO_RETRY": "O00_RETAINS_THE_EXACT_AVAILABLE_OUTER_PREFIX_WITH_NULL_UNAVAILABLE_FIELDS_AND_NO_READINESS_ELIGIBILITY",
+      "PASS_OUTER_BUILD_CAPTURE_ONLY": "O01_PROVES_EXACT_BUILD_LAUNCH_ENVELOPE_LAUNCHER_CONTROLLER_ACTION_TRANSCRIPT_B01_CAPTURE_REAP_AND_CONSERVATION; IT_DOES_NOT_BY_ITSELF_PROVE_B01_SEMANTICS_OR_LIVE_MECHANICS",
+      "INCOMPLETE_OUTER_BUILD_CAPTURE_NO_RETRY": "O01_RETAINS_THE_EXACT_AVAILABLE_OUTER_PREFIX_WITH_NULL_UNAVAILABLE_CONTROLLER_OR_ACTION_FIELDS_AND_NO_READINESS_ELIGIBILITY",
+      "FAIL_BUILD_AUDIT_RETAINED": "EMITTED_ONLY_AFTER_SELF_SOURCE_ROOT_AND_WATCH_ADMISSION; EXACT_COMPLETED_ACTION_PREFIX_AND_NULL_NOT_ENTERED_FIELDS; NO_READINESS_ELIGIBILITY",
+      "INCOMPLETE_BUILD_CONTROLLER": "OUTER_CAPTURE_ONLY_FOR_P01_SELF_SOURCE_OR_WATCH_ADMISSION_FAILURE_OR_WHEN_NO_VALID_EPRH2B01_EXISTS_INCLUDING_RESULT_ENCODING_FAILURE; NO_READINESS_ELIGIBILITY_AND_NO_RETRY",
+      "PASS_BUILD_AUDIT_ONLY": "ALL_PAIR_SIGNING_STATIC_CODE_TEST_BINARY_AND_ZERO_LIVE_EFFECT_PREDICATES_SATISFIED; ALLOWS_ONLY_READINESS_FREEZE_RECOMMENDATION"
+    }
+  },
+  "controller_contract": {
+    "arguments": "ZERO_ARGUMENTS",
+    "child_argv": [
+      "ErgenticsProvenanceH2LiveWorker"
+    ],
+    "child_cwd": "DESCRIPTOR_HELD_PRIVATE_TWO_LEAF_RUNTIME_ROOT_VIA_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR_NP",
+    "child_environment": "EMPTY_REPLACEMENT",
+    "child_stdin": "/dev/null",
+    "child_stderr": {
+      "cap_bytes": 65536,
+      "pass_bytes": 0,
+      "policy": "INDEPENDENT_NONBLOCKING_DRAIN_STARTED_BEFORE_WAIT_OR_RESUME_AND_CONTINUED_TO_EOF"
+    },
+    "child_stdout": {
+      "cap_bytes": 1144,
+      "pass_frame": "EXACTLY_ONE_EPRH2L01_FRAME_AND_EOF",
+      "policy": "INDEPENDENT_NONBLOCKING_DRAIN_STARTED_BEFORE_WAIT_OR_RESUME_AND_CONTINUED_TO_EOF"
+    },
+    "controller_inputs": "SELF_IMAGE_AND_FIXED_SIBLING_LEAF_ONLY",
+    "controller_environment": "MUST_BE_EMPTY",
+    "controller_output": {
+      "encoding": "CANONICAL_SORTED_KEYS_JSON_NO_TRAILING_LF",
+      "frame_layout": "ASCII_EPRH2C01 || json_length_8_lowercase_hex_ascii || json",
+      "frame_magic": "EPRH2C01",
+      "maximum_bytes": 524288,
+      "ownership": "CONTROLLER_TRANSPORT_AND_CONTAINMENT_FACTS_ONLY; WORKER_SEMANTICS_ARE_OPAQUE",
+      "semantic_decode_or_pass_derivation": false,
+      "wire_schema_catalog": "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "wire_schema_pointer": "#/$defs/controllerObservation"
+    },
+    "controller_self_admission": [
+      "derive_named_path_from_NSGetExecutablePath_then_realpath_once",
+      "open_self_leaf_O_RDONLY_O_NOFOLLOW_and_hold_descriptor",
+      "fstat_mode_owner_nlink_device_inode_exact",
+      "parse_macho_uuid_and_hash_all_descriptor_bytes",
+      "join_held_device_inode_to_proc_regionfilename_vnode_for_the_mapped_main_macho_header",
+      "require_readiness_launcher_to_have_independently_pinned_and_joined_controller_sha256_uuid_before_entry",
+      "revalidate_named_path_root_inventory_and_self_vnode_after_reap"
+    ],
+    "continuity_watches": {
+      "arm_gap_closure": "AFTER_INITIAL_ADMISSION_REGISTER_ALL_THREE_WATCHES_THEN_REPEAT_CONTROLLER_AND_WORKER_DESCRIPTOR_HASH_UUID_NAMED_VNODE_JOINS_AND_ROOT_INVENTORY; ONLY_THE_SECOND_JOINED_SNAPSHOT_IS_THE_SPAWN_BASELINE",
+      "descriptors_held_through_post_reap": [
+        "runtime_root",
+        "controller_leaf",
+        "worker_leaf"
+      ],
+      "event_disposition": "ANY_EVENT_BEFORE_POST_REAP_REVALIDATION_PERMANENTLY_POISONS_THIS_INVOCATION_AND_FORBIDS_PASS_EVEN_IF_BYTES_OR_NAMES_ARE_RESTORED",
+      "live_event_action": "AN_EVENT_OBSERVED_WHILE_THE_CHILD_IS_UNREAPED_IMMEDIATELY_ENTERS_THE_FROZEN_POSITIVE_PID_CONTAINMENT_KILL_PATH",
+      "events": [
+        "NOTE_WRITE",
+        "NOTE_EXTEND",
+        "NOTE_ATTRIB",
+        "NOTE_DELETE",
+        "NOTE_RENAME",
+        "NOTE_REVOKE",
+        "NOTE_LINK"
+      ],
+      "filter": "EVFILT_VNODE",
+      "flags": [
+        "EV_ADD",
+        "EV_ENABLE",
+        "EV_CLEAR"
+      ],
+      "post_reap": "FIRST_DRAIN_KQUEUE_THEN_REHASH_BOTH_HELD_LEAF_DESCRIPTORS_AND_REJOIN_NAMED_VNODES_ROOT_INVENTORY_AND_CONTROLLER_MAPPED_IMAGE_THEN_FINAL_DRAIN_KQUEUE; EITHER_DRAIN_NONEMPTY_REJECTS",
+      "primitive": "KQUEUE_KEVENT"
+    },
+    "debugger_attached_child_eligible": false,
+    "fd_policy": {
+      "close_ambient_fds": "POSIX_SPAWN_CLOEXEC_DEFAULT",
+      "parent_closure_after_successful_spawn": "IMMEDIATELY_CLOSE_PARENT_COPIES_OF_CHILD_STDOUT_AND_STDERR_WRITE_ENDS_AND_THE_CHILD_DEV_NULL_DESCRIPTOR_AFTER_FILE_ACTION_DUPLICATION",
+      "preflight_or_spawn_failure_closure": "CLOSE_EVERY_CREATED_PIPE_END_DEV_NULL_DESCRIPTOR_KQUEUE_AND_HELD_DESCRIPTOR_BEFORE_BOUNDED_EXIT",
+      "inherited_fds": [
+        "stdin_dev_null",
+        "stdout_pipe",
+        "stderr_pipe"
+      ]
+    },
+    "image_admission_before_resume": [
+      "private_two_leaf_runtime_root_mode_0700_owner_exact",
+      "runtime_root_O_DIRECTORY_O_NOFOLLOW_descriptor_held",
+      "root_inventory_exactly_controller_and_worker_regular_files",
+      "controller_and_worker_named_paths_realpath_and_parent_vnode_exact",
+      "worker_openat_rootfd_O_RDONLY_O_NOFOLLOW_descriptor_held",
+      "worker_mode_owner_nlink_exact",
+      "worker_descriptor_sha256_uuid_full_codedirectory_cdhash_identifier_team_certificate_requirement_entitlements_exact",
+      "worker_security_static_code_check_kSecCSStrictValidate_kSecCSNoNetworkAccess_satisfied",
+      "spawned_pid_generation_joined",
+      "spawned_mapped_image_device_inode_joined_by_libproc_region_query",
+      "spawned_mapped_image_vnode_joined_to_held_descriptor_with_exact_sha256_uuid"
+    ],
+    "lifecycle": [
+      "self_admit_and_hold_private_runtime_root",
+      "open_and_admit_fixed_sibling_worker_with_embedded_identity",
+      "create_bounded_pipes",
+      "arm_runtime_root_controller_and_worker_vnode_watches_and_repeat_full_admission_snapshot",
+      "start_independent_nonblocking_stdout_and_stderr_drains",
+      "posix_spawn_once_suspended_with_descriptor_cwd",
+      "close_parent_write_ends_and_child_dev_null_descriptor",
+      "join_pid_generation_and_mapped_image_and_revalidate_before_resume",
+      "positive_pid_SIGCONT_once_only_after_full_join",
+      "bounded_wait_and_concurrent_drains",
+      "waitpid_exact_child_and_require_normal_exit_zero_for_transport_complete",
+      "drain_both_pipes_to_exact_EOF",
+      "validate_worker_frame_framing_length_payload_hash_only",
+      "drain_watch_events_and_rehash_revalidate_root_inventory_named_paths_held_vnodes_and_controller_self_join",
+      "emit_one_controller_transport_frame"
+    ],
+    "outer_horizon_seconds": 30,
+    "overflow_or_invalid_frame_disposition": "ENTER_AT_MOST_ONE_CONTAINMENT_KILL_IF_CHILD_STILL_UNREAPED_THEN_DRAIN_TO_EOF_AND_REAP",
+    "post_kill_reap_horizon_seconds": 5,
+    "signals": {
+      "containment_kill_rule": "AFTER_WAITPID_EXACT_CHILD_WNOHANG_RETURNS_ZERO, AT_MOST_ONE_POSITIVE_PID_SIGKILL_MAY_TARGET_ONLY_THE_SOLE_DIRECT_CHILD_RETURNED_BY_THE_SINGLE_POSIX_SPAWN; THIS RULE_REMAINS_AVAILABLE_IF_GENERATION_OR_IMAGE_JOIN_FAILED_BEFORE_RESUME",
+      "group_signals": 0,
+      "negative_pid_signals": 0,
+      "positive_pid_SIGCONT_max": 1,
+      "positive_pid_SIGKILL_max": 1,
+      "sigcont_pass_status": 0,
+      "sigkill_pass_count": 0,
+      "sigkill_target_generation_join_required": false,
+      "sigcont_target_requires_double_snapshot_pid_start_time_session_parent_and_mapped_image_join": true
+    },
+    "spawn_count_max": 1,
+    "spawn_transport": "POSIX_SPAWN_START_SUSPENDED",
+    "terminal_classification": {
+      "rejected_before_spawn_with_no_pid_image_signal_or_wait_observation": "FAIL_REJECTED_BEFORE_SPAWN",
+      "controller_kill_exact_reap_and_pipe_eof": "FAIL_CONTAINED_AFTER_SPAWN",
+      "exact_normal_exit_zero_valid_frame_and_pipe_eof": "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION",
+      "missing_or_invalid_frame_after_spawn_and_exact_reap": "FAIL_CONTAINED_AFTER_SPAWN",
+      "not_reaped_by_post_kill_horizon": "CLOSE_CAPTURE_FDS_EMIT_NULLABLE_NOT_OBSERVED_EXIT_REAP_EOF_FIELDS_AND_RETURN_INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY"
+    }
+  },
+  "offline_verifier_contract": {
+    "arguments": "ZERO_ARGUMENTS",
+    "authority_role": "SOLE_H2_LIVE_SEMANTIC_CLASSIFIER_AND_GRAPH_PROJECTOR",
+    "controller_or_worker_shared_authority_codec": false,
+    "environment": "MUST_BE_EMPTY",
+    "execution_admission": {
+      "launcher_requirement": "LATER_READINESS_ORCHESTRATION_MUST_OPEN_O_NOFOLLOW_AND_HOLD_THE_EXACT_VERIFIER_DESCRIPTOR_HASH_ALL_BYTES_PARSE_UUID_AND_JOIN_THE_EXECUTED_PID_GENERATION_AND_MAPPED_MAIN_IMAGE_DEVICE_INODE_TO_THAT_DESCRIPTOR",
+      "named_path_revalidation": "REQUIRED_AFTER_VERIFIER_EXIT",
+      "readiness_pins": [
+        "verifier_sha256",
+        "verifier_uuid",
+        "verifier_device_inode_at_launch",
+        "verifier_source_manifest_root"
+      ],
+      "source_freeze_execution_authorized": false
+    },
+    "input": {
+      "encoding": "EPRH2R01_READINESS_MANIFEST_FRAME_IMMEDIATELY_FOLLOWED_BY_EPRH2C01_CONTROLLER_FRAME_THEN_EOF",
+      "frame_count": 2,
+      "maximum_bytes": 1048576,
+      "readiness_manifest": {
+        "frame_layout": "ASCII_EPRH2R01 || json_length_8_lowercase_hex_ascii || canonical_json",
+        "manifest_sha256": "SHA256_EXACT_FRAME_BYTES_PINNED_BY_A_SEPARATE_SUCCESSOR_INVOCATION_CONTROL_RECORD; THE_DIGEST_IS_NOT_A_FIELD_INSIDE_THIS_MANIFEST",
+        "outer_delivery": "READINESS_ORCHESTRATION_DESCRIPTOR_HOLDS_AND_HASHES_THE_EXACT_MANIFEST_FILE_THEN_WRITES_ITS_EXACT_FRAME_BYTES_TO_VERIFIER_STDIN",
+        "wire_schema_catalog": "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+        "wire_schema_pointer": "#/$defs/readinessManifest"
+      },
+      "trailing_or_missing_reordered_or_duplicate_frames": "REJECT"
+    },
+    "independent_decode_sequence": [
+      "decode_validate_and_exact_reencode_readiness_manifest_canonical_json",
+      "decode_and_exact_reencode_controller_canonical_json",
+      "enforce_exact_readiness_external_commit_joins",
+      "enforce_exact_x-frame-joins-by-controller-status_table_before_worker_semantics",
+      "enforce_exact_runtime_root_reconstruction_and_Darwin_wait_status_derivation",
+      "enforce_exact_controller_failure_availability_and_failed_predicate_map",
+      "enforce_exact_x-verifier-outcome-by-controller-status_table",
+      "validate_controller_transport_and_containment_fields",
+      "decode_worker_frame_magic_version_length_and_payload_sha256",
+      "independently_decode_every_fixed_big_endian_worker_scalar_and_array_in_frozen_order",
+      "decode_EPRCAP01_with_pinned_GuestCapabilityWitness_source",
+      "evaluate_all_live_pass_predicates_without_calling_worker_or_controller_code",
+      "construct_ordered_witness_state_transition_bipartite_graph",
+      "encode_independent_canonical_json_and_deterministic_cbor_streams",
+      "decode_both_streams_to_one_semantic_model_and_exactly_reencode_each",
+      "reconstruct_every_node_root_transition_ancestry_and_outer_receipt_root",
+      "enforce_exact_V01_to_R01_C01_L01_projection_witness_and_Merkle_output_joins",
+      "emit_one_verifier_receipt_frame"
+    ],
+    "output": {
+      "encoding": "CANONICAL_SORTED_KEYS_JSON_NO_TRAILING_LF",
+      "frame_layout": "ASCII_EPRH2V01 || json_length_8_lowercase_hex_ascii || json",
+      "frame_magic": "EPRH2V01",
+      "maximum_bytes": 1048576,
+      "wire_schema_catalog": "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "wire_schema_pointer": "#/$defs/verifierReceipt"
+    },
+    "semantic_failure": {
+      "exit": 65,
+      "scope": "MALFORMED_NONCANONICAL_UNJOINED_OR_UNBOUNDED_INPUT_ONLY",
+      "stderr": "ONE_BOUNDED_CANONICAL_DIAGNOSTIC_JSON_NO_LIVE_CLASSIFICATION",
+      "stdout_bytes": 0
+    },
+    "valid_observation_classification_exit": 0,
+    "side_effects": {
+      "file_or_database_write": false,
+      "hypervisor_or_guest_call": false,
+      "network": false,
+      "process_launch_or_signal": false,
+      "sqlite_or_journal_open": false,
+      "ui": false
+    },
+    "tests_required": [
+      "every_scalar_field_mutation_rejects_or_changes_named_predicate",
+      "worker_field_order_and_endianness_mutations_reject",
+      "worker_length_hash_trailing_and_truncation_mutations_reject",
+      "controller_transport_fact_mutations_reject",
+      "json_cbor_semantic_divergence_rejects",
+      "noncanonical_json_and_cbor_reject_even_if_semantically_equivalent",
+      "projection_round_trip_and_independent_merkle_reconstruction_exact",
+      "PASS_cannot_be_loaded_from_worker_or_controller_text"
+    ]
+  },
+  "effects_authorized_by_this_freeze": {
+    "app_launch": false,
+    "build_processes": false,
+    "build_launcher_launch_max": 0,
+    "build_controller_launch_max": 0,
+    "compiler_processes": false,
+    "controller_launch": false,
+    "debugger": false,
+    "file_writes": "ONLY_THE_FIVE_CONTROL_PROTOCOL_FILES_IN_THIS_SLICE; IMPLEMENTATION_AND_BUILD_OUTPUT_WRITES_REQUIRE_SEPARATE_COMMITTED_SUCCESSOR_HANDOFFS; NO_RUNTIME_BUNDLE_OR_LIVE_RESULT_ROOT",
+    "guest_entry": false,
+    "hypervisor_call": false,
+    "keychain_private_key_access": false,
+    "local_codesign_process": false,
+    "network": false,
+    "process_signal": false,
+    "product_archive": false,
+    "provisioning_install_or_update": false,
+    "security_static_code_audit_process": false,
+    "test_processes_without_native_lifecycle_symbols": false,
+    "vm_launch": false,
+    "worker_launch": false
+  },
+  "frozen_at_utc": "2026-09-01T09:47:28Z",
+  "hard_stops": [
+    "NO_LIVE_ACTION_UNDER_H2_STATIC_FREEZE_OR_THIS_SOURCE_FREEZE",
+    "NO_P00_PREPARATION_COMPILER_OR_PREDECESSOR_TOOLS_BUILDER_EXECUTION_UNDER_THIS_PROTOCOL_FREEZE",
+    "NO_BOOTSTRAP_COMPILER_LINKER_BUILD_LAUNCHER_BUILD_CONTROLLER_CODESIGN_STATIC_AUDITOR_XCTEST_APP_VM_GUEST_CONTROLLER_WORKER_OR_VERIFIER_EXECUTION_UNDER_THIS_PROTOCOL_FREEZE",
+    "NO_IMPLEMENTATION_SOURCE_WRITE_UNDER_THIS_PROTOCOL_FREEZE; IMPLEMENTATION_REQUIRES_THE_NEXT_COMMITTED_HANDOFF",
+    "NO_H2_LIVE_WORKER_H2_LIVE_CONTROLLER_OR_STANDALONE_SEMANTIC_VERIFIER_EXECUTION_BEFORE_EXACT_BINARY_READINESS_FREEZE",
+    "NO_RUNTIME_BUNDLE_OR_LIVE_RESULT_ROOT_MATERIALIZATION_UNDER_THIS_SOURCE_FREEZE",
+    "NO_APP_UI_XCTEST_SWIFTPM_OR_PRODUCT_ARCHIVE_AS_LIVE_H2_EXECUTOR",
+    "NO_PREDECESSOR_TOOLS_BUILDER_IN_COMPLETE_PBX_APPLICATION_TARGET_COPY_FILES_RESOURCES_OR_XPC_HELPER_INVENTORY; NO_ARCHIVE_EXPORT_TESTFLIGHT_OR_APP_STORE_ABSENCE_CLAIM_UNTIL_A_LATER_ARCHIVE_GATE_PRODUCES_THOSE_INVENTORIES",
+    "NO_RUNTIME_GIT_PROCESS_OR_WORKTREE_CLEANLINESS_AUTHORITY; B00_HELD_BYTES_BLOB_TREE_AND_MANIFEST_RECONSTRUCTION_ONLY",
+    "NO_AMBIENT_SHELL_CODEX_XCODE_OR_MANUAL_HARNESS_AS_BOOTSTRAP_CAPTURE_AUTHORITY; ONLY_THE_SEPARATELY_BUILT_PINNED_NATIVE_CAPTURE_LAUNCHER_MAY_PRODUCE_O00",
+    "NO_RUST_GUEST_PROFILE",
+    "NO_LEGACY_EPR_GUEST_RUN",
+    "NO_RETAIN_CANCEL_ISCANCELLED_OR_SECOND_RESERVATION_CALL",
+    "NO_CALLER_PATH_ARGV_ENV_CWD_REQUEST_IMAGE_PLAN_ROLE_OR_DEADLINE_INPUT",
+    "NO_JOURNAL_SQLITE_PERSISTENCE_FILE_WRITE_NETWORK_OR_UI_IN_WORKER",
+    "NO_SECOND_VM_ENTRY_OR_H3_CURSOR",
+    "NO_PROCESS_SIGNAL_GUARDIAN_OR_INDEFINITE_WAIT_UNDER_THIS_PROTOCOL_FREEZE",
+    "NO_READINESS_FREEZE_AFTER_FAILED_OFFLINE_STATIC_CODE_TRUST_ADMISSION",
+    "NO_PASS_AFTER_CONTROLLER_SIGKILL_ABNORMAL_EXIT_MISSING_FRAME_WITNESS_ABSENCE_OR_NONCONSERVATION",
+    "NO_RETRY_OF_A_CONSUMED_LIVE_INVOCATION",
+    "NO_GATE_E_AUTHORITY_OR_TRUSTED_INGRESS_EGRESS_CLAIM"
+  ],
+  "implementation_scope": {
+    "allowed_paths": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Tools/H2LivePredecessorToolsBuilder/main.c",
+      "Tools/H2LiveBootstrapCaptureLauncher/main.c",
+      "Tools/H2LiveBuildBootstrapSupervisor/main.c",
+      "Tools/H2LiveBuildLauncher/main.c",
+      "Tools/H2LiveBuildController/main.swift",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.c",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.h",
+      "Tools/H2LiveWorker/main.swift",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.c",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.h",
+      "Tools/H2LiveController/main.swift",
+      "Tools/H2LiveController/H2LiveControl.c",
+      "Tools/H2LiveController/H2LiveControl.h",
+      "Tools/H2LiveController/H2LiveWorkerIdentityTemplate.h",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+      "Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift",
+      "Tools/H2LiveVerifier/main.swift",
+      "Tests/HypervisorStageH2LiveVerifierTests.swift"
+    ],
+    "future_build_result_persistence_paths_not_implementation_inputs": [
+      "Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.json",
+      "Control/hypervisor-local-v1/h2-live-predecessor-producer-preparation-result.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.json",
+      "Control/hypervisor-local-v1/h2-live-predecessor-tools-build-result.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-bootstrap-launch.v1.json",
+      "Control/hypervisor-local-v1/h2-live-bootstrap-launch.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-bootstrap-outer-receipt.v1.json",
+      "Control/hypervisor-local-v1/h2-live-bootstrap-outer-receipt.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-build-bootstrap-manifest.v1.json",
+      "Control/hypervisor-local-v1/h2-live-build-bootstrap-manifest.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-mechanics-build-result.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-build-result.v1.sha256",
+      "Control/hypervisor-local-v1/h2-live-mechanics-outer-launcher-receipt.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-outer-launcher-receipt.v1.sha256"
+    ],
+    "app_product_source_membership_changes": false,
+    "distributed_app_exclusion": {
+      "product": "ErgenticsProvenanceH2LivePredecessorToolsBuilder",
+      "H2_proves_absent_from": ["complete canonical PBX application-target membership", "complete canonical PBX Copy Files build phases", "complete canonical PBX resources", "complete canonical PBX XPC/helper reachability"],
+      "H2_machine_proof": "B01 RETAINS THE EXACT B00-JOINED PROJECT.PBXPROJ IDENTITY EVERY ORDERED CANONICAL INVENTORY ENTRY ENTRY COUNT AND RECONSTRUCTIBLE MERKLE ROOT; EVERY BUILDER FILENAME MATCH AND ALL FOUR DERIVED COUNTS ARE ZERO; POLICY PROSE OR AN OPAQUE DIGEST ALONE IS INSUFFICIENT",
+      "not_produced_in_H2": ["accepted archive application bundle", "exported app", "TestFlight payload", "App Store payload"],
+      "deferred_proof": "ARCHIVE EXPORT TESTFLIGHT AND APP_STORE OCCURRENCE COUNTS ARE NULL NOT ZERO AND THEIR EXCLUSION MUST BE PROVEN BY A LATER SEPARATELY FROZEN ARCHIVE DISTRIBUTION GATE"
+    },
+    "app_target_membership": [],
+    "controller_target": {
+      "compiled_sources_exact": [
+        "Tools/H2LiveController/main.swift",
+        "Tools/H2LiveController/H2LiveControl.c"
+      ],
+      "header_inputs_exact": [
+        "Tools/H2LiveController/H2LiveControl.h",
+        "Tools/H2LiveController/H2LiveWorkerIdentityTemplate.h",
+        "GENERATED_BUILD_ROOT/H2LiveWorkerIdentity.h"
+      ],
+      "hypervisor_framework_linked": false,
+      "product": "ErgenticsProvenanceH2LiveController",
+      "required_frameworks_exact": [
+        "CoreFoundation.framework",
+        "Security.framework"
+      ],
+      "security_framework_linked": true,
+      "settings_exact": {
+        "CODE_SIGNING_ALLOWED": "NO",
+        "DEAD_CODE_STRIPPING": "YES",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "ENABLE_APP_SANDBOX": "NO",
+        "ENABLE_HARDENED_RUNTIME": "NO",
+        "EXECUTABLE_PREFIX": "",
+        "GCC_C_LANGUAGE_STANDARD": "c11",
+        "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+        "MACH_O_TYPE": "mh_execute",
+        "OTHER_CFLAGS": [
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-fno-common",
+          "-fvisibility=hidden"
+        ],
+        "OTHER_SWIFT_FLAGS": [
+          "-warnings-as-errors"
+        ],
+        "SWIFT_OPTIMIZATION_LEVELS": {
+          "Debug": "-Onone",
+          "Release": "-O"
+        },
+        "SWIFT_STRICT_CONCURRENCY": "complete"
+      },
+      "settings_seal": "FULL_SORTED_EXPANDED_XCODEBUILD_SETTINGS_SHA256_RECORDED_FOR_A_AND_B_AND_REQUIRED_EQUAL_AFTER_BUILD_ROOT_NORMALIZATION"
+    },
+    "entitlement_changes": false,
+    "existing_product_source_bytes_unchanged": true,
+    "new_non_app_xcode_targets": [
+      "ErgenticsProvenanceH2LiveWorker",
+      "ErgenticsProvenanceH2LiveController"
+    ],
+    "new_public_api": false,
+    "offline_tools": {
+      "predecessor_tools_builder": {
+        "arguments": "ZERO_ARGUMENTS_FOR_T00_EXECUTION; P00_COMPILES_ITS_EXACT_SOURCE_OVER_STDIN_WITH_FIXED_CLANG_ARGUMENTS",
+        "compiled_sources_exact": ["Tools/H2LivePredecessorToolsBuilder/main.c"],
+        "execution_authorized_by_this_freeze": false,
+        "product": "ErgenticsProvenanceH2LivePredecessorToolsBuilder",
+        "role": "DEVELOPMENT_ONLY_CLOSED_NATIVE_OWNER_OF_THE_FOUR_EXACT_T00_COMPILER_ACTIONS_ROOT_SOURCE_IMAGE_CONTINUITY_FINITE_CONTAINMENT_REAP_AND_EPRH2T00_OUTPUT",
+        "P00_preparation": "TWO_DIRECT_FIXED_CLANG_BUILDS_UNDER_THE_EXPLICIT_NONAUTHORITATIVE_BOOTSTRAP_BOUNDARY_WITH_EXACT_SOURCE_STDIN_AND_A_B_IMAGE_EQUALITY",
+        "T00_self_admission": "EXACT_COMMITTED_PASS_P00_FRAME_AND_SELECTED_IMAGE_PATH_NAMED_DESCRIPTOR_MAPPED_DEVICE_INODE_SHA256_UUID_AND_PROCESS_GENERATION_JOIN_BEFORE_ANY_T00_ACTION",
+        "distribution": "ABSENT_FROM_COMPLETE_CANONICAL_PBX_APPLICATION_TARGET_COPY_FILES_RESOURCES_AND_XPC_HELPER_INVENTORY; ARCHIVE_EXPORT_TESTFLIGHT_AND_APP_STORE_NOT_PRODUCED_IN_H2_AND_EXCLUSION_DEFERRED_TO_A_LATER_ARCHIVE_GATE",
+        "h2_build_live_worker_controller_verifier_or_vm_execution": false
+      },
+      "bootstrap_capture_launcher": {
+        "arguments": "ZERO_ARGUMENTS",
+        "compiled_sources_exact": ["Tools/H2LiveBootstrapCaptureLauncher/main.c"],
+        "execution_authorized_by_this_freeze": false,
+        "product": "ErgenticsProvenanceH2LiveBootstrapCaptureLauncher",
+        "role": "SEPARATELY_BUILT_PINNED_NATIVE_OWNER_OF_THE_ONE_B00_BOUND_SUPERVISOR_SPAWN_CAPTURE_FINITE_CONTAINMENT_REAP_AND_EPRH2O00_PUBLICATION",
+        "self_admission": "NAMED_DESCRIPTOR_MAPPED_SHA256_UUID_DEVICE_INODE_AND_GENERATION_JOIN_BEFORE_SUPERVISOR_SPAWN",
+        "transport": "ZERO_ARGV_EMPTY_ENV_DESCRIPTOR_CWD_ONE_FIXED_HELD_SUPERVISOR_IMAGE_ONE_EXACT_B00_STDIN_FRAME_BINDING_COMMITTED_PASS_T00_BOUNDED_NONBLOCKING_STDOUT_STDERR_DRAINS",
+        "containment": "SUPERVISOR_STARTS_SUSPENDED_IN_PRIVATE_GROUP; POSITIVE_PID_KILL_ONLY_BEFORE_FULL_JOIN; AFTER_FRESH_DOUBLE_GENERATION_AND_MEMBERSHIP_REJOIN_AT_MOST_ONE_NEGATIVE_PGID_KILL; FINITE_2220_SECOND_ABSOLUTE_EXIT_WITH_OBSERVED_NONCONSERVATION_RETAINED_AS_INCOMPLETE",
+        "output": "ONE_EXACT_EPRH2O00_FRAME_ON_STDOUT_WITH_BOUND_RAW_SUPERVISOR_CAPTURE_PREFIXES_AND_EMPTY_OWN_STDERR_ON_PASS; OUTER_TRANSPORT_MAY_ONLY_PERSIST_THE_EXACT_FRAME_BYTES_WITHOUT_REENCODING",
+        "h2_build_live_worker_controller_verifier_or_vm_execution": false
+      },
+      "bootstrap_supervisor": {
+        "arguments": "ZERO_ARGUMENTS",
+        "compiled_sources_exact": [
+          "Tools/H2LiveBuildBootstrapSupervisor/main.c"
+        ],
+        "execution_authorized_by_this_freeze": false,
+        "product": "ErgenticsProvenanceH2LiveBuildBootstrapSupervisor",
+        "input": "ONE_EXACT_EPRH2B00_FRAME_ON_STDIN_THEN_EOF_ZERO_ARGV_EMPTY_ENV_DESCRIPTOR_CWD",
+        "output": "ON_PASS_ONE_EXACT_EPRH2P01_FRAME_ON_STDOUT_THEN_EOF_AND_EMPTY_STDERR; ON_STRUCTURED_FAILURE_ONE_EXACT_EPRH2F00_FRAME_ON_STDOUT_THEN_EOF_WITH_BOUNDED_STDERR_DIAGNOSTICS; MALFORMED_TRUNCATED_NONCANONICAL_OR_OVERFLOWED_OUTPUT_IS_RETAINED_ONLY_AS_RAW_O00_PREFIX_EVIDENCE_WITH_ALL_F00_FIELDS_NULL",
+        "finite_absolute_horizon_seconds": 2220,
+        "role": "SEPARATELY_ENVELOPED_NATIVE_B00_VERIFIER_SOURCE_VIEW_MATERIALIZER_AND_PRODUCER_OF_EPRH2P01_WITH_FULL_ACTION_CONTINUITY_RESOURCE_AND_MERKLE_OBSERVATIONS"
+      },
+      "build_launcher": {
+        "arguments": "ZERO_ARGUMENTS",
+        "compiled_sources_exact": [
+          "Tools/H2LiveBuildLauncher/main.c"
+        ],
+        "invocation_count_max_in_separately_committed_successor_envelope": 1,
+        "product": "ErgenticsProvenanceH2LiveBuildLauncher",
+        "role": "BOUNDED_SOLE_OWNER_OF_CONTROLLER_AND_ALL_FOURTEEN_BUILD_ACTION_SPAWNS_SIGNALS_REAPS_DRAINS_AND_EPRH2O01",
+        "h2_live_worker_controller_verifier_or_vm_execution": false
+      },
+      "build_controller": {
+        "arguments": "ZERO_ARGUMENTS",
+        "compiled_sources_exact": [
+          "Tools/H2LiveBuildController/main.swift",
+          "Tools/H2LiveBuildController/H2LiveBuildControl.c"
+        ],
+        "header_inputs_exact": [
+          "Tools/H2LiveBuildController/H2LiveBuildControl.h"
+        ],
+        "invocation_count_max_in_separately_committed_successor_envelope": 1,
+        "product": "ErgenticsProvenanceH2LiveBuildController",
+        "process_spawn_or_signal_sites": 0,
+        "role": "SOLE_CLOSED_PRODUCER_OF_EPRH2B01_BUILD_OBSERVATION_FRAME_USING_ONLY_NEXT_ORDINAL_REQUESTS_AND_LAUNCHER_ACTION_RECEIPTS",
+        "worker_controller_semantic_verifier_execution": false
+      },
+      "signed_worker_audit": {
+        "binary_build": "TWO_DISJOINT_UNSIGNED_BUILDS_A_B_MUST_MATCH_RAW_BYTES_SIZE_UUID_LOAD_COMMANDS_AND_LINKER_CODEDIRECTORY_BEFORE_ONE_SELECTED_BINARY_MAY_RUN_ONCE",
+        "compiled_sources_exact": [
+          "Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift"
+        ],
+        "execution_authorized_by_this_freeze": false,
+        "successor_build_audit_invocation_max": 1,
+        "frameworks_exact": [
+          "Foundation.framework",
+          "Security.framework"
+        ],
+        "input": "EXACTLY_ONE_CANONICAL_ABSOLUTE_SIGNED_WORKER_PATH_FIXED_BY_BUILD_ORCHESTRATION",
+        "output": "ONE_EPRH2A01_FRAME_CONTAINING_CANONICAL_JSON_STATIC_CODE_AUDIT_AND_EMPTY_STDERR",
+        "output_contract": {
+          "schema_catalog": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+          "schema_pointer": "#/$defs/signedWorkerAudit"
+        },
+        "output_frame": "ASCII_EPRH2A01 || json_length_8_lowercase_hex_ascii || canonical_json",
+        "selected_binary_sha256_uuid": "PINNED_IN_BUILD_RESULT",
+        "side_effects": "READ_ONLY_NO_NETWORK_KSecCSNoNetworkAccess"
+      },
+      "semantic_verifier": {
+        "compiled_sources_exact": [
+          "Sources/GuestCapabilityWitness.swift",
+          "Sources/GuestContract.swift",
+          "Sources/MerkleGenesis.swift",
+          "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+          "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+          "Tools/H2LiveVerifier/main.swift"
+        ],
+        "product": "ErgenticsProvenanceH2LiveVerifier",
+        "xcode_target": false
+      }
+    },
+    "app_bundle_resource_changes": false,
+    "run_script_changes": false,
+    "preexisting_test_target_membership_and_build_file_settings": "MUST_REMAIN_BYTE_FOR_BYTE_UNCHANGED_EXCEPT_FOR_THE_EXACT_NEW_MEMBERSHIPS_LISTED_NEXT",
+    "test_target_new_membership_exact": [
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+      "Tests/HypervisorStageH2LiveVerifierTests.swift"
+    ],
+    "ui_changes": false,
+    "worker_target": {
+      "compiled_sources_exact": [
+        "Tools/H2LiveWorker/main.swift",
+        "Tools/H2LiveWorker/H2LiveWorkerControl.c",
+        "Sources/HypervisorGuest.c",
+        "Sources/ProvenanceReadOnly.c"
+      ],
+      "entitlements_file": "Entitlements.plist",
+      "header_inputs_exact": [
+        "Tools/H2LiveWorker/H2LiveWorkerControl.h",
+        "Sources/HypervisorGuest.h",
+        "Sources/ProvenanceReadOnly.h",
+        "Sources/GuestCapabilityPlan.h",
+        "Sources/RustBootstrapImage.h"
+      ],
+      "identifier": "com.ergentics.provenance",
+      "product": "ErgenticsProvenanceH2LiveWorker",
+      "profile": "BASELINE_ASSEMBLY_92",
+      "required_frameworks_exact": [
+        "CoreFoundation.framework",
+        "Hypervisor.framework",
+        "Security.framework"
+      ],
+      "settings_exact": {
+        "CODE_SIGNING_ALLOWED": "NO",
+        "CODE_SIGN_INJECT_BASE_ENTITLEMENTS": "NO",
+        "DEAD_CODE_STRIPPING": "YES",
+        "DEBUG_INFORMATION_FORMAT": "dwarf",
+        "EPR_GUEST_LIFECYCLE_TESTS": "MUST_NOT_BE_DEFINED",
+        "ENABLE_APP_SANDBOX": "NO",
+        "ENABLE_HARDENED_RUNTIME": "NO",
+        "EXECUTABLE_PREFIX": "",
+        "GCC_C_LANGUAGE_STANDARD": "c11",
+        "GCC_SYMBOLS_PRIVATE_EXTERN": "YES",
+        "MACH_O_TYPE": "mh_execute",
+        "OTHER_CFLAGS": [
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-fno-common",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fvisibility=hidden"
+        ],
+        "OTHER_SWIFT_FLAGS": [
+          "-warnings-as-errors"
+        ],
+        "STRIP_INSTALLED_PRODUCT": "YES",
+        "SWIFT_OPTIMIZATION_LEVELS": {
+          "Debug": "-Onone",
+          "Release": "-O"
+        },
+        "SWIFT_STRICT_CONCURRENCY": "complete",
+        "SWIFT_WHOLE_MODULE_OPTIMIZATION_RELEASE": "YES"
+      },
+      "settings_seal": "FULL_SORTED_EXPANDED_XCODEBUILD_SETTINGS_SHA256_RECORDED_FOR_A_AND_B_AND_REQUIRED_EQUAL_AFTER_BUILD_ROOT_NORMALIZATION",
+      "signing": "ONE_OFFLINE_APPLE_DEVELOPMENT_HARDENED_RUNTIME_SIGNATURE_AFTER_UNSIGNED_REPRODUCIBILITY"
+    }
+  },
+  "live_pass_contract": {
+    "capability_witness": {
+      "byte_count": 680,
+      "conserved": true,
+      "generation": 1,
+      "magic": "EPRCAP01",
+      "map_count": 3,
+      "poisoned": false,
+      "profile": 1,
+      "run_entries": 1,
+      "semantic_decode": "INDEPENDENT_EXACT"
+    },
+    "fixed_result": {
+      "abi_version": 1,
+      "cancellation_calls": 0,
+      "cancellation_requested": 0,
+      "code_unchanged": 1,
+      "execution_pass": 1,
+      "exception_reason": 1,
+      "failure_stage": 0,
+      "fault_ipa": "0x1000c000",
+      "fault_virtual_address": "0x1000c000",
+      "first_error": 0,
+      "mappings_entered": 3,
+      "outcome": 1,
+      "pc": "0x10000050",
+      "read_register_calls": 4,
+      "register_calls": 36,
+      "reply_valid": 1,
+      "request_unchanged": 1,
+      "resources_quarantined": 0,
+      "run_entries": 1,
+      "signing_admitted": 1,
+      "snapshot_sealed": 1,
+      "syndrome_masked_values_allowed": [
+        "0x93840044",
+        "0x93840045",
+        "0x93840046",
+        "0x93840047"
+      ],
+      "teardown_pass": 1,
+      "trap_valid": 1,
+      "vcpu_created": 1,
+      "watchdog_fired": 0,
+      "x4": 1
+    },
+    "fixed_snapshot": {
+      "guest_image_sha256": "67290a73b53047374096142356a35338f6722d724586cc10373dfecab9a4cc44",
+      "reply_words_u64": [
+        1,
+        1,
+        42,
+        0
+      ],
+      "request_words_u64": [
+        1,
+        1,
+        19,
+        23
+      ],
+      "snapshot_merkle_root": "37b6aa19da562bf99810c8169e091357bc4e789a82b50366e0752ffb1a9d89df"
+    },
+    "native_statuses": {
+      "cancellation": -2147483648,
+      "host_unmap": [
+        0,
+        0,
+        0
+      ],
+      "map": [
+        0,
+        0,
+        0
+      ],
+      "read_register": 0,
+      "register": 0,
+      "run": 0,
+      "signing": 0,
+      "unmap": [
+        0,
+        0,
+        0
+      ],
+      "vcpu_create": 0,
+      "vcpu_destroy": 0,
+      "vm_create": 0,
+      "vm_destroy": 0,
+      "watchdog_create": 0,
+      "watchdog_join": 0,
+      "watchdog_wait_allowed": [
+        -2147483648,
+        0
+      ]
+    },
+    "outer": {
+      "exact_reap": true,
+      "exit_status": 0,
+      "frame_count": 1,
+      "SIGCONT_count": 1,
+      "SIGCONT_status": 0,
+      "SIGKILL_count": 0,
+      "stderr_bytes": 0,
+      "stderr_eof": true,
+      "stdout_bytes": 1144,
+      "stdout_eof": true,
+      "worker_process_count": 1
+    },
+    "timing_predicates": [
+      "timebase_numer_nonzero",
+      "timebase_denom_nonzero",
+      "start_ticks_nonzero",
+      "entry_ticks_nonzero",
+      "exit_ticks_nonzero",
+      "snapshot_ticks_nonzero",
+      "end_ticks_nonzero",
+      "deadline_ticks_nonzero",
+      "start_ticks_less_than_or_equal_entry_ticks",
+      "entry_ticks_less_than_or_equal_exit_ticks",
+      "exit_ticks_less_than_or_equal_snapshot_ticks",
+      "snapshot_ticks_less_than_or_equal_end_ticks",
+      "exit_ticks_less_than_or_equal_deadline_ticks",
+      "deadline_ticks_greater_than_entry_ticks",
+      "source_pinned_native_two_second_deadline_formula_exact"
+    ]
+  },
+  "native_worker_contract": {
+    "arguments": "ARGC_EXACTLY_ONE_NO_ARGUMENT_PARSE",
+    "raw_observation_frame": {
+      "byte_arrays_in_order": [
+        "request[32]",
+        "reply[32]",
+        "snapshot_merkle[32]",
+        "capability_witness[680]"
+      ],
+      "frame_bytes": 1144,
+      "frame_layout": "magic[8] || version_u32be || payload_length_u32be || payload_sha256[32] || payload[1096]",
+      "frame_magic": "EPRH2L01",
+      "frame_version": 1,
+      "guest_i32be_fields_in_order": [
+        "failure_stage",
+        "first_error",
+        "signing_error",
+        "vm_create_status",
+        "map_status[0]",
+        "map_status[1]",
+        "map_status[2]",
+        "vcpu_create_status",
+        "register_status",
+        "run_status",
+        "read_register_status",
+        "vcpu_destroy_status",
+        "unmap_status[0]",
+        "unmap_status[1]",
+        "unmap_status[2]",
+        "vm_destroy_status",
+        "cancellation_status",
+        "watchdog_create_status",
+        "watchdog_join_status",
+        "watchdog_wait_status",
+        "host_unmap_status[0]",
+        "host_unmap_status[1]",
+        "host_unmap_status[2]"
+      ],
+      "guest_u32be_fields_in_order": [
+        "abi_version",
+        "outcome",
+        "execution_pass",
+        "teardown_pass",
+        "signing_admitted",
+        "run_entries",
+        "vcpu_created",
+        "mappings_entered",
+        "register_calls",
+        "read_register_calls",
+        "cancellation_requested",
+        "cancellation_calls",
+        "watchdog_fired",
+        "resources_quarantined",
+        "request_unchanged",
+        "reply_valid",
+        "code_unchanged",
+        "trap_valid",
+        "snapshot_sealed",
+        "exception_reason",
+        "timebase_numer",
+        "timebase_denom"
+      ],
+      "guest_u64be_fields_in_order": [
+        "start_ticks",
+        "entry_ticks",
+        "exit_ticks",
+        "end_ticks",
+        "deadline_ticks",
+        "snapshot_ticks",
+        "syndrome",
+        "pc",
+        "fault_ipa",
+        "fault_virtual_address",
+        "x4",
+        "sctlr_el1",
+        "cpsr"
+      ],
+      "payload_bytes": 1096,
+      "payload_hash": "SHA256_EXACT_PAYLOAD_BYTES",
+      "raw_c_struct_or_padding_serialization": false,
+      "trailing_bytes": "REJECT",
+      "witness_byte_count_field": "u32be_exactly_680",
+      "worker_preamble_fields_in_order": [
+        "argc_u32be",
+        "environment_count_u32be",
+        "debugger_attached_u32be",
+        "pthread_create_status_i32be",
+        "pthread_join_status_i32be",
+        "reserve_error_i32be",
+        "witness_copy_error_i32be",
+        "release_error_i32be"
+      ]
+    },
+    "semantic_outcome_derivation": "NONE_ENCODER_ONLY",
+    "worker_exit_policy": {
+      "frame_emitted_with_valid_internal_hash": 0,
+      "frame_or_encoder_failure": 70,
+      "native_PASS_or_FAIL_does_not_select_worker_exit": true
+    },
+    "debugger_attached_eligible": false,
+    "environment": "MUST_BE_EMPTY_BEFORE_RESERVATION",
+    "native_call_sequence": [
+      {
+        "call": "epr_guest_reserve",
+        "count": 1,
+        "owner": "SINGLE_DEDICATED_PTHREAD"
+      },
+      {
+        "call": "epr_guest_run_reserved",
+        "count": 1,
+        "profile": "BASELINE_ABI1"
+      },
+      {
+        "call": "epr_guest_reservation_copy_capability_witness",
+        "count": 1,
+        "when": "AFTER_NATIVE_RETURN_BEFORE_RELEASE"
+      },
+      {
+        "call": "epr_guest_reservation_release",
+        "count": 1,
+        "required_return": 0
+      }
+    ],
+    "native_owner_thread_count": 1,
+    "stdin_reads": 0,
+    "worker_process_spawn_or_signal_calls": 0
+  },
+  "pinned_existing_sources": [
+    {
+      "path": "Sources/HypervisorGuest.c",
+      "sha256": "e5374a2afd7467332abef6303f0ddd85fd800d86baac42d82c10c6c8f3803547"
+    },
+    {
+      "path": "Sources/HypervisorGuest.h",
+      "sha256": "e19229d2faa27274b1a8b86464a60cc082caedef379139d98f738c9bf59fdf3a"
+    },
+    {
+      "path": "Sources/GuestCapabilityPlan.h",
+      "sha256": "5d4ee247d70fb3a6708ed6f04dac6ad81b0ce936bdbcae66e56864b89670ab70"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.c",
+      "sha256": "78c4d4e2e8e4b50ee81b5a671b127dfb2fdad2ec812b67314bf6553af37fd0c6"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.h",
+      "sha256": "cbc28fb9d69547fe354c425535d90938697ffed71e3e2217b1fabfe4573e63d6"
+    },
+    {
+      "path": "Guest/doorbell.S",
+      "sha256": "60ae1941fd43a5d3410fdedefe2ecb99adad0d2bcfdfd429b75c35fb59a409fd"
+    },
+    {
+      "path": "Sources/GuestContract.swift",
+      "sha256": "0a60872f4edb891888598442681b8b720ecda38b4b3d6a0ced09d1ce775627f7"
+    },
+    {
+      "path": "Sources/GuestCapabilityWitness.swift",
+      "sha256": "eb60116c87ab02c2f406891ae680936f01bce27d19842275f14a849de9ff809e"
+    },
+    {
+      "path": "Sources/MerkleGenesis.swift",
+      "sha256": "6d6a47252e498ca3c6ce27d4d4405e2201bf3b6b296fd2a6d4d035de83c730c3"
+    },
+    {
+      "path": "Sources/RustBootstrapImage.h",
+      "sha256": "676d0fb8f53a83c25bef454e3906d86069d63c5d924878995683fe2cf627b955"
+    },
+    {
+      "path": "Entitlements.plist",
+      "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2"
+    }
+  ],
+  "predecessor": {
+    "h2_static_implementation": {
+      "commit": "d1507c5f16d4da9f4cb31c13f9948f26ea3191c9",
+      "tree": "d39cdc97bf26546417041e63d2229a9d3b47555c"
+    },
+    "h2_static_result": {
+      "commit": "eafa7be6fd2e7e7349fd688df884d999feace5ae",
+      "file": "Control/hypervisor-local-v1/h2-static-admission-result.v1.json",
+      "outcome": "PASS_H2_STATIC_ADMISSION_ONLY",
+      "output_state_root": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66",
+      "receipt_root": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca",
+      "sha256": "b3693a405a382bd33f8762c08147afd13669533a525856cabb7b954238853855",
+      "tree": "e5accd4ac939169dd02769097281040855f5cade"
+    },
+    "local_package_observation": {
+      "archive_executable_sha256": "da7f3166198eb5ecfa3b90b55e7a50faf148d99b5081eff47bdd083772991bef",
+      "archive_macho_uuid": "FF851FAB-D8AA-3318-81A1-360FF58BCB6E",
+      "package_admission": "ABSTAIN",
+      "status": "PASS_LOCAL_DEVELOPMENT_ARCHIVE_OBSERVED",
+      "strict_signature_trust": "NOT_ESTABLISHED_IN_THIS_OBSERVATION"
+    }
+  },
+  "result_graph_contract": {
+    "canonical_stream_policy": {
+      "cbor": "RFC8949_DETERMINISTIC_SUBSET_SHORTEST_INTEGER_AND_LENGTH_ENCODINGS_DEFINITE_ONLY_MAP_KEYS_SORTED_BY_ENCODED_LENGTH_THEN_LEXICOGRAPHIC_BYTES_NO_FLOAT_TAG_OR_INDEFINITE_VALUES",
+      "exact_reencode_required": true,
+      "json": "UTF8_SORTED_MAP_KEYS_BY_RAW_UTF8_NO_WHITESPACE_NO_TRAILING_LF_MINIMAL_BASE10_INTEGERS_STANDARD_LOWERCASE_CONTROL_ESCAPES_NO_FLOATS",
+      "maximum_projection_stream_bytes": 65536,
+      "semantic_join": "JSON_DECODE_EQUALS_CBOR_DECODE_AND_EACH_DECODED_VALUE_REENCODES_BYTE_FOR_BYTE_TO_ITS_INPUT",
+      "supported_values": [
+        "map_with_unique_utf8_text_keys",
+        "ordered_array",
+        "utf8_text",
+        "unsigned_integer",
+        "negative_integer",
+        "boolean",
+        "null"
+      ]
+    },
+    "graph_shape": {
+      "acyclic": true,
+      "edge_count": 14,
+      "edges_in_order": [
+        "input_state_root_TO_transition_root_BY_transition_input_state",
+        "witness_root_00_THROUGH_11_TO_transition_root_BY_transition_witness_position",
+        "transition_root_TO_output_state_root_BY_output_transition"
+      ],
+      "fact_partition": [
+        "h2_static_input_state",
+        "h2_live_witness_00_THROUGH_11",
+        "h2_live_output_state"
+      ],
+      "derivation_partition": [
+        "h2_live_transition"
+      ],
+      "partition_rule": "EVERY_EDGE_CROSSES_FACT_AND_DERIVATION_PARTITIONS",
+      "state_ancestry_rule": "OUTPUT_SEMANTIC_COMMITS_INPUT_ROOT_IN_PARENT_STATE_ROOTS_AND_H2_STATIC_RECEIPT_IN_PARENT_RECEIPT_ROOT",
+      "node_counts": {
+        "state": 2,
+        "total": 15,
+        "transition": 1,
+        "witness": 12
+      }
+    },
+    "hash_construction": {
+      "digest": "SHA256",
+      "leaf_frame": "0x00 || label_length_u32be || label_utf8 || payload_length_u64be || payload",
+      "leaf_order": "LABEL_UTF8_LEXICOGRAPHIC_ASCENDING_UNIQUE_NONEMPTY",
+      "odd_node_frame": "0x03 || left_digest",
+      "pair_frame": "0x01 || left_digest || right_digest",
+      "projection_node_leaves": [
+        "schema",
+        "ROLE.json",
+        "ROLE.cbor"
+      ],
+      "projection_roles": {
+        "state": [
+          "schema",
+          "state.json",
+          "state.cbor"
+        ],
+        "transition": [
+          "schema",
+          "transition.json",
+          "transition.cbor"
+        ],
+        "witness": [
+          "schema",
+          "witness.json",
+          "witness.cbor"
+        ]
+      },
+      "root_frame": "0x02 || leaf_count_u64be || top_digest"
+    },
+    "input_receipt_root": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca",
+    "input_state_root": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66",
+    "input_state_reconstruction": "RECONSTRUCT_EXACT_H2_STATIC_OUTPUT_SEMANTIC_AND_JSON_CBOR_PROJECTION_FROM_PINNED_RESULT_CONSTANTS_AND_REQUIRE_ROOT_EQUAL_INPUT_STATE_ROOT",
+    "output_state_exact_fields_on_pass": {
+      "architectural_channels": "UNASSESSED",
+      "authority_delta": "00000000",
+      "authority_vector": "00000000",
+      "execution_disposition": "EXACTLY_ONE_BASELINE_GUEST_ENTRY_COMPLETE",
+      "gate_e": "ABSTAIN",
+      "stage_complete": true,
+      "h3_freeze_recommendation_eligible": true,
+      "high_value_ingress": "DENIED",
+      "next_stage": "NONE",
+      "parent_receipt_root": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca",
+      "parent_state_roots": [
+        "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66"
+      ],
+      "process_disposition": "REAPED",
+      "product_id": "com.ergentics.provenance",
+      "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+      "resources_disposition": "CONSERVED",
+      "schema": "ergentics.provenance.hypervisor-stage.h2-live.state.v1",
+      "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+      "status": "PASS_H2_LIVE_MECHANICS_ONLY",
+      "successor_authorized": false,
+      "trusted_egress": "DENIED",
+      "transition_root": "DERIVED_EXACT_H2_LIVE_TRANSITION_PROJECTION_ROOT",
+      "vm_disposition": "DESTROYED",
+      "vm_entry_count": "1"
+    },
+    "outer_receipt_leaf_labels": [
+      "schema",
+      "state.json",
+      "state.cbor",
+      "transition.json",
+      "transition.cbor",
+      "witnesses.json",
+      "witnesses.cbor"
+    ],
+    "schemas": {
+      "output_state": "ergentics.provenance.hypervisor-stage.h2-live.state.v1",
+      "receipt": "ergentics.provenance.hypervisor-stage.h2-live.receipt.v1",
+      "transition": "ergentics.provenance.hypervisor-stage.h2-live.transition.v1",
+      "witness": "ergentics.provenance.hypervisor-stage.h2-live.witness.v1"
+    },
+    "transition_exact_fields": {
+      "authority_delta": "00000000",
+      "combiner": "ALL_OF",
+      "derived_outcome": "PASS_H2_LIVE_MECHANICS_ONLY",
+      "gate_e": "ABSTAIN",
+      "input_receipt_root": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca",
+      "input_stage": "H2_STATIC",
+      "input_state_root": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66",
+      "output_stage": "hypervisor_tiny_fixed_guest_mechanics_v1",
+      "predicates": "ORDERED_ARRAY_OF_12_EXACT_POSITION_PREDICATE_ID_WITNESS_ROOT_OUTCOME_SATISFIED_MAPS",
+      "process_disposition": "REAPED",
+      "resources_disposition": "CONSERVED",
+      "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+      "schema": "ergentics.provenance.hypervisor-stage.h2-live.transition.v1",
+      "successor_authorized": false,
+      "vm_disposition": "DESTROYED"
+    },
+    "witness_common_fields": [
+      "schema",
+      "position",
+      "predicate_id",
+      "outcome",
+      "evidence"
+    ],
+    "witness_common_values": {
+      "outcome": "SATISFIED",
+      "position": "UNSIGNED_INTEGER_EQUAL_TO_ORDERED_ARRAY_INDEX",
+      "schema": "ergentics.provenance.hypervisor-stage.h2-live.witness.v1"
+    },
+    "witness_inventory_in_order": [
+      {
+        "evidence_fields": [
+          "h2_static_result_commit",
+          "h2_static_result_tree",
+          "h2_static_result_file_sha256",
+          "input_receipt_root",
+          "input_state_root",
+          "h2_static_outcome"
+        ],
+        "position": 0,
+        "predicate_id": "h2_static_predecessor_exact"
+      },
+      {
+        "evidence_fields": [
+          "source_freeze_commit",
+          "source_freeze_tree",
+          "source_freeze_file_sha256",
+          "implementation_commit",
+          "implementation_tree",
+          "pinned_source_manifest_root",
+          "committed_build_chain",
+          "build_result_schema",
+          "build_result_status",
+          "build_result_commit",
+          "build_result_tree",
+          "build_result_file_sha256",
+          "build_result_section_merkle_root",
+          "binary_readiness_checkpoint_commit",
+          "binary_readiness_checkpoint_tree",
+          "binary_readiness_checkpoint_file_sha256",
+          "readiness_manifest_sha256",
+          "worker_sha256",
+          "worker_uuid",
+          "worker_full_codedirectory_hash",
+          "worker_cdhash",
+          "worker_identifier",
+          "worker_team",
+          "certificate_sha256",
+          "requirement_sha256",
+          "entitlements_sha256",
+          "worker_identity_header_sha256"
+        ],
+        "position": 1,
+        "predicate_id": "signed_worker_and_source_identity_exact"
+      },
+      {
+        "evidence_fields": [
+          "argc",
+          "environment_count",
+          "stdin_reads",
+          "fixed_argv0",
+          "descriptor_cwd_join",
+          "inherited_fd_inventory",
+          "caller_path_inputs",
+          "caller_role_or_request_inputs",
+          "architectural_channels"
+        ],
+        "position": 2,
+        "predicate_id": "closed_worker_caller_input_surface_exact"
+      },
+      {
+        "evidence_fields": [
+          "owner_pthread_count",
+          "pthread_create_status",
+          "pthread_join_status",
+          "reservation_generation",
+          "reserve_count_and_error",
+          "run_reserved_count",
+          "witness_copy_count_and_error",
+          "release_count_and_error",
+          "retain_cancel_is_cancelled_legacy_counts"
+        ],
+        "position": 3,
+        "predicate_id": "single_native_owner_generation_exact"
+      },
+      {
+        "evidence_fields": [
+          "guest_image_sha256",
+          "guest_image_size",
+          "request_bytes",
+          "reply_bytes",
+          "snapshot_merkle_root",
+          "request_reply_code_unchanged_flags"
+        ],
+        "position": 4,
+        "predicate_id": "fixed_image_request_reply_snapshot_exact"
+      },
+      {
+        "evidence_fields": [
+          "run_entries",
+          "vcpu_created",
+          "mapping_register_read_counts",
+          "exception_reason",
+          "syndrome_masked",
+          "pc",
+          "fault_ipa",
+          "fault_virtual_address",
+          "x4",
+          "sctlr_el1",
+          "cpsr"
+        ],
+        "position": 5,
+        "predicate_id": "single_vm_entry_and_trap_exact"
+      },
+      {
+        "evidence_fields": [
+          "timebase_numer_denom",
+          "start_entry_exit_snapshot_end_deadline_ticks",
+          "native_deadline_formula",
+          "watchdog_create_join_wait_statuses",
+          "watchdog_fired",
+          "cancellation_counts_and_status"
+        ],
+        "position": 6,
+        "predicate_id": "native_deadline_and_watchdog_exact"
+      },
+      {
+        "evidence_fields": [
+          "map_statuses",
+          "vcpu_destroy_status",
+          "unmap_statuses",
+          "vm_destroy_status",
+          "host_unmap_statuses",
+          "teardown_pass",
+          "resources_quarantined"
+        ],
+        "position": 7,
+        "predicate_id": "native_teardown_and_memory_conservation_exact"
+      },
+      {
+        "evidence_fields": [
+          "witness_sha256",
+          "magic_version_profile_generation",
+          "map_plan_and_trace",
+          "terminal_trace",
+          "conservation_reported",
+          "architectural_channels_raw_zero_unassessed",
+          "independent_decoder_source_sha256"
+        ],
+        "position": 8,
+        "predicate_id": "capability_witness_decode_exact"
+      },
+      {
+        "evidence_fields": [
+          "controller_self_descriptor_mapped_join",
+          "runtime_root_inventory_before_after",
+          "runtime_controller_worker_watch_arm_and_event_counts",
+          "post_arm_and_post_reap_descriptor_rehashes",
+          "worker_named_descriptor_mapped_join",
+          "worker_static_code_admission",
+          "pid_generation_join",
+          "SIGCONT_count_status",
+          "SIGKILL_count_status"
+        ],
+        "position": 9,
+        "predicate_id": "outer_image_join_and_containment_exact"
+      },
+      {
+        "evidence_fields": [
+          "worker_frame_sha256",
+          "stdout_byte_count_and_eof",
+          "stderr_byte_count_and_eof",
+          "wait_status_raw",
+          "wifexited_and_exit_status",
+          "exact_reap",
+          "controller_frame_sha256"
+        ],
+        "position": 10,
+        "predicate_id": "outer_exact_reap_and_frame_exact"
+      },
+      {
+        "evidence_fields": [
+          "application_journal_opens",
+          "sqlite_opens",
+          "output_file_writes",
+          "ui_entries",
+          "network_calls",
+          "successor_actions",
+          "authority_delta",
+          "ambient_os_channels_disposition"
+        ],
+        "position": 11,
+        "predicate_id": "no_application_journal_sqlite_or_output_file_effects"
+      }
+    ]
+  },
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "disposition": "UNASSESSED_NOT_ABSENT",
+      "predicate": "dyld_system_framework_security_service_kernel_sandbox_container_logging_and_cache_channels_are_not_closed_or_measured_by_H2_live"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "CLOSED_ONLY_FOR_CALLER_CONTROLLED_INPUTS",
+      "predicate": "zero_argv_empty_env_descriptor_cwd_and_fd_closure_do_not_establish_a_globally_capability_closed_namespace"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "BOUNDED_BY_DESCRIPTOR_VNODE_AND_PRE_POST_REVALIDATION_NOT_ELIMINATED",
+      "predicate": "controller_self_named_path_and_Security_URL_resolution_have_userspace_TOCTOU_windows"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "BUILD_HARD_STOP_BEFORE_READINESS_ON_ANY_FAILURE",
+      "predicate": "accepted_H2_application_archive_had_CSSMERR_TP_NOT_TRUSTED_and_does_not_establish_worker_static_code_trust"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "IDENTITY_ROLE_CLOSED_BY_SHA256_UUID_CDHASH_VNODE_NOT_BY_IDENTIFIER",
+      "predicate": "worker_reuses_com_ergentics_provenance_because_existing_native_signing_admission_hardcodes_that_identifier"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "UNASSESSED_NOT_ABSENT_AND_NEVER_A_PASS_PREDICATE",
+      "predicate": "xcodebuild_codesign_Security_dyld_and_system_helpers_may_touch_ambient_cache_or_service_state_outside_the_four_intended_build_roots"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "BOUNDED_BY_100_MILLISECOND_DESCRIPTOR_ROOTED_SAMPLING_AND_FINAL_INVENTORY_NOT_KERNEL_QUOTA_CONFINED",
+      "predicate": "a_build_action_can_temporarily_overshoot_a_frozen_root_byte_or_entry_ceiling_between_resource_samples"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "FINITE_LAUNCHER_EXIT_WITH_OUTER_INCOMPLETE_NO_RETRY_AND_NO_ABSENCE_CLAIM",
+      "predicate": "a_SIGKILL_entered_exact_build_process_or_group_can_remain_observable_beyond_the_3660_second_absolute_launcher_horizon"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "UNASSESSED_NOT_CLAIMED_ABSENT",
+      "predicate": "a_descendant_that_independently_leaves_the_launcher_owned_private_process_group_is_not_kernel_confined_by_H2_build"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "EXPLICIT_NONAUTHORITATIVE_BOOTSTRAP_TRUST_ROOT_NEVER_A_PASS_PREDICATE",
+      "predicate": "P00_SDK_contents_and_operator_outer_capture_implementation_are_admitted_but_not_content_manifested_or_scientifically_authoritative"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "FINITE_CAPTURE_HORIZON_WITH_ZERO_SIGNALS_AND_EXPLICIT_OPERATOR_HOST_PROCESS_MANAGEMENT_PERMITTED_AFTER_HORIZON",
+      "predicate": "P00_observes_direct_compiler_generation_wait_and_reap_but_does_not_claim_descendant_process_confinement_or_global_host_absence"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NARROWED_BY_ROOT_AND_PARENT_ENTRY_WATCHES_AND_IMMEDIATE_PRE_RESUME_POST_REAP_JOINS_NOT_ELIMINATED",
+      "predicate": "same_UID_userspace_path_mutation_windows_remain_between_individual_syscalls"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "UNMEASURED_AND_NOT_A_PASS_PREDICATE",
+      "predicate": "CPU_RSS_process_count_FD_count_and_energy_use_are_not_bounded_or_measured_by_this_H2_build_protocol"
+    }
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-h2-live-mechanics-source-freeze.v1",
+  "slice": "H2_LIVE_SOURCE_AND_BUILD_PROTOCOL_ONLY",
+  "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+  "stage_ordinal": 2,
+  "status": "FROZEN_SOURCE_AND_BUILD_PROTOCOL_NO_IMPLEMENTATION_BUILD_OR_LIVE_INVOCATION_AUTHORIZED",
+  "successor_policy": {
+    "build_audit_pass_allows_only": "SEPARATE_EXACT_BINARY_H2_LIVE_READINESS_FREEZE_RECOMMENDATION",
+    "ordered_control_chain": [
+      "COMMIT_THIS_SOURCE_AND_BUILD_FREEZE_WITH_MACHINE_CONTRACT_HASHES",
+      "COMMIT_A_SEPARATE_H2_IMPLEMENTATION_HANDOFF_THEN_IMPLEMENT_ONLY_THE_ALLOWLIST_AND_COMMIT_THE_IMPLEMENTATION_TREE",
+      "COMMIT_A_SEPARATE_NONAUTHORITATIVE_P00_PREPARATION_ENVELOPE_THEN_RUN_EXACTLY_TWO_FIXED_DIRECT_CLANG_BUILDS_IN_DISJOINT_RETAINED_ROOTS_AND_COMMIT_THE_EXACT_EPRH2P00_PASS_OR_RETAINED_FAILURE_WITHOUT_RUNNING_THE_RESULTING_PRODUCER",
+      "IF_AND_ONLY_IF_P00_IS_PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY_AND_DURABLY_PUBLISHED_COMMIT_A_SEPARATE_H2_BOOTSTRAP_PREDECESSOR_TOOLS_BUILD_ENVELOPE_PINNING_THE_EXACT_P00_FRAME_AND_SELECTED_PRODUCER_THEN_INVOKE_THAT_PRODUCER_ONCE_TO_BUILD_COMPARE_AND_COMMIT_EXACT_PASS_EPRH2T00_WITH_TWO_ADDITIONAL_DISJOINT_RETAINED_ROOTS_CAPTURE_LAUNCHER_A_B_AND_SUPERVISOR_A_B_RESULTS_WITHOUT_RUNNING_EITHER_PRODUCT",
+      "CONSTRUCT_EXCLUSIVELY_PUBLISH_AND_COMMIT_UNCHANGED_ONE_EXACT_EPRH2B00_FRAME_AND_SIDECAR_BINDING_EXACT_EPRH2T00_WITH_COMPLETE_SOURCE_MANIFEST_RECONSTRUCTED_GIT_TREE_EMPTY_ROOT_IDENTITIES_FIXED_ENVIRONMENT_FDS_SIX_ACTION_RECIPES_AND_FINITE_HORIZONS_BEFORE_THE_CAPTURE_LAUNCH_ENVELOPE",
+      "COMMIT_A_SEPARATE_H2_BOOTSTRAP_CAPTURE_LAUNCH_ENVELOPE_PINNING_THE_PREDECESSOR_TOOLS_BUILD_ENVELOPE_EXACT_EPRH2T00_ONE_EXACT_SELECTED_NATIVE_CAPTURE_LAUNCHER_ONE_EXACT_SELECTED_SUPERVISOR_IMAGE_AND_EXACT_EPRH2B00_FRAME_SHA256",
+      "EXPLICITLY_APPROVE_AT_MOST_ONE_SELECTED_NATIVE_BOOTSTRAP_CAPTURE_LAUNCHER_TO_OWN_AT_MOST_ONE_SELECTED_SUPERVISOR_AND_EMIT_EXACT_EPRH2O00_WITH_EXACT_EPRH2P01_OR_RETAINED_ABSENCE",
+      "EXCLUSIVELY_PUBLISH_AND_COMMIT_UNCHANGED_EPRH2O00_AND_SEPARATELY_EXCLUSIVELY_PUBLISH_AND_COMMIT_UNCHANGED_THE_EXACT_CAPTURED_EPRH2P01; IF_AND_ONLY_IF_O00_IS_PASS_BOOTSTRAP_CAPTURE_ONLY_AND_BOTH_COMMITS_EXIST_THEN_COMMIT_A_SEPARATE_BUILD_LAUNCH_ENVELOPE_PINNING_THE_EXACT_O00_AND_P01_FRAMES_AND_SELECTED_BUILD_LAUNCHER_AND_CONTROLLER_IMAGES",
+      "EXPLICITLY_APPROVE_AND_RUN_AT_MOST_ONE_BOUNDED_BUILD_LAUNCHER_OWNED_SELECTED_CONTROLLER_AND_FOURTEEN_ACTION_CHAIN",
+      "COMMIT_THE_EXACT_EPRH2O01_OUTER_RECEIPT_AND_IF_PRESENT_THE_EXACT_EPRH2B01_BUILD_RESULT",
+      "IF_AND_ONLY_IF_O01_IS_PASS_OUTER_BUILD_CAPTURE_ONLY_AND_B01_IS_PASS_BUILD_AUDIT_ONLY_COMMIT_EXACT_BINARY_READINESS_AND_RUNTIME_ROOT_CONSTRUCTION_FREEZE",
+      "DERIVE_EPRH2R01_FROM_THAT_COMMITTED_READINESS",
+      "COMMIT_A_SEPARATE_LIVE_LAUNCH_ENVELOPE_PINNING_THE_EXACT_EPRH2R01_FRAME_AND_LAUNCHER_IMAGES",
+      "REQUIRE_NEW_EXPLICIT_USER_APPROVAL_BEFORE_ONE_LIVE_H2_INVOCATION"
+    ],
+    "exact_binary_readiness_freeze_must_pin": [
+      "implementation_commit_and_tree",
+      "producer_preparation_predecessor_tools_build_bootstrap_capture_and_build_launch_envelope_commit_tree_file_SHA256_identities",
+      "P00_T00_B00_O00_P01_B01_and_O01_exact_frame_hashes_and_Merkle_roots_with_P00_T00_O00_B01_and_O01_PASS_statuses",
+      "P00_selected_producer_to_T00_named_descriptor_mapped_image_and_generation_join_and_all_eight_retained_root_path_vnode_disjointness",
+      "worker_sha256_uuid_full_codedirectory_cdhash_identifier_team_certificate_requirement_entitlements",
+      "worker_offline_static_code_admission_receipt",
+      "controller_sha256_uuid_and_outer_launcher_descriptor_mapped_join",
+      "offline_verifier_sha256_uuid_and_outer_launcher_descriptor_mapped_join",
+      "controller_to_worker_sibling_join",
+      "private_runtime_root_exact_path_mode_owner_inventory_and_constructor",
+      "exact_controller_and_verifier_invocation_frames_sha256",
+      "preflight_libproc_and_spawn_primitives",
+      "one_shot_consumption_boundary"
+    ],
+    "h2_live_result_pass_allows_only": "SEPARATE_H3_EXPLICIT_STATE_CURSOR_FREEZE_RECOMMENDATION",
+    "live_invocation_requires_new_explicit_user_approval": true,
+    "may_close_gate_e": false,
+    "may_mint_execution_authority": false
+  }
+}

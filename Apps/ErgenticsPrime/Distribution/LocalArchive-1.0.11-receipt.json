@@ -1,0 +1,86 @@
+{
+  "schema": "com.ergentics.provenance.local-archive-result.v1",
+  "status": "PASS_LOCAL_DEVELOPMENT_SIGNED_RELEASE_ARCHIVE_AND_HOSTLESS_TESTS",
+  "archive_created_at_utc": "2026-09-05T20:12:38Z",
+  "scope": "User selected local archive; TestFlight installation/upload and independent OS attestation deferred.",
+  "source": {
+    "commit": "b200f066ba176ed4614ce1621123852b81e53298",
+    "tree": "f2d66e1ef1dc32ebd34a6c0808cff017016bba8a",
+    "functional_predecessor": "4e0c98e56ed61e78a8c32a675e332177e6d90d11",
+    "compiled_source_changed": false,
+    "delta": ["Both project build numbers changed from 10 to 11", "Regenerated the SPDX source package"],
+    "preserved_unrelated_dirty_files": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1",
+      "ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes/ErgenticsProvenanceH3Qualification.xcscheme": "c6066553064cff3bcef0921526a827587f7f7b4296cdb6e4d10f3268964fbd90"
+    }
+  },
+  "archive": {
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-05/Ergentics Provenance 1.0 (11) pre-distribution-candidate.xcarchive",
+    "scheme": "ErgenticsProvenance",
+    "configuration": "Release",
+    "bundle_identifier": "com.ergentics.provenance",
+    "version": "1.0",
+    "build": "11",
+    "architecture": "arm64",
+    "minimum_macos": "26.0",
+    "toolchain": "Xcode 26.6 (17F113), macOS SDK 26.5 (25F70)",
+    "app_and_dsym_uuid": "171F463E-364B-38CD-BDA9-77BDCE727FDC",
+    "executable_sha256": "7d4ab0f5490f6d574dfce5cd25c6634f6dd25f5664cb5979bed53eb896504b5b",
+    "dsym_dwarf_sha256": "39b7e095cdb8fdf361605d06e153bf4eda75d530a9dcdc044ef6c79e3e7d7567",
+    "regular_file_count": 14,
+    "app_regular_file_count": 10,
+    "symlink_or_special_file_count": 0,
+    "helper_test_control_python_or_bundled_dependency_files": false,
+    "four_embedded_resources_match_source": true,
+    "archive_inventory_sha256": "c02376361427132729ae400bd8cf9b522abc6c89e760f23ad6efb85125b3eaf9"
+  },
+  "signing": {
+    "identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "team_identifier": "ZCQ435U8JP",
+    "strict_deep_signature_and_designated_requirement": "PASS",
+    "hardened_runtime": true,
+    "signed_entitlements": {"com.apple.security.app-sandbox": true, "com.apple.security.files.user-selected.read-only": true, "com.apple.security.hypervisor": true},
+    "observation": "Signed bundle inspected; exact archived app not launched for a live SecTask observation.",
+    "admission_source_changed": false,
+    "delivered_testflight_admission": "NOT_EVALUATED"
+  },
+  "spdx": {
+    "sha256": "084655449fb90a96d6ebf4fd3683b249a385bef09f6698e21583b5d30366382e",
+    "source_file_count": 92,
+    "independently_verified_checksum_count": 184,
+    "inventory_relationships_and_license_verified": true,
+    "two_generated_outputs_byte_identical": true,
+    "package_verification_code": "181f86803eeb471797200aae84aa51d6a98fb78f",
+    "created": "2026-09-05T20:07:50Z",
+    "namespace": "urn:uuid:7bfd9ddb-abad-4305-9808-3aa6ad5eff41"
+  },
+  "checks": {
+    "archive_exit_status": 0,
+    "archive_elapsed_seconds": 29.880448,
+    "full_release_tests": 869,
+    "full_release_failures": 0,
+    "full_release_xcode_elapsed_seconds": 147.888047,
+    "test_suite_elapsed_seconds": 41.552,
+    "test_scope": "HOSTLESS_FABRICATED_INPUTS_AND_PRIVATE_LOCAL_STORAGE_FIXTURES",
+    "debug_suite": "NOT_RERUN_FOR_PACKAGING_ONLY_DELTA; functional predecessor passed 916 Debug tests",
+    "both_bounded_commands_reaped": true,
+    "timeout_or_signal_used": false,
+    "independent_signing_review": "COMPLETED; TestFlight compatibility work is separate from local archive acceptance",
+    "independent_exact_archive_packaging_review": "PASS",
+    "warning_free_claim": false,
+    "archive_warnings": ["Unused index in H3QualificationProtocol.swift:4779", "Non-Sendable DispatchWorkItem capture and related Dispatch import guidance in HypervisorModel.swift:507", "AppIntents metadata extraction skipped; no AppIntents.framework dependency"]
+  },
+  "retained_evidence": {
+    "directory": "/Users/ergentics/Documents/Codex/2026-09-02/resume-the-existing-uncommitted-h4-d3/testflight-2026-09-05.TgFNIN",
+    "archive_log_sha256": "412cadb1b129a4890aba87d45ca31728e928d01125dc41370c36c03392d548d3",
+    "release_test_log_sha256": "82368f151c64eaa2254863bd1e7fb8ba7f83db48766b2afb44c63c29ea81fc67",
+    "source_tar_sha256": "f30082541403ed675a82983af338a4ed5e6378809c1a58470f62bd9d7b7b78f0",
+    "file_inventory_sha256": "b970fa79a5a56b3d95345fe2dcfe7884afcefdf210e7691b5f48a10b4ffb9122",
+    "xcresult_copies_compared_byte_equal": true,
+    "source_tar_scope": "Tracked source at b200f06, not full Git history or unrelated untracked evidence"
+  },
+  "not_performed": ["archived_application_launch", "new_guest_execution", "archive_export", "App_Store_Connect_validation_or_upload", "TestFlight_installation", "distribution_signature_policy_change", "independent_OS_attestation", "Git_push_or_remote_configuration", "Prime_Git_VM_operation", "deletion_or_cleanup"],
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000"
+}

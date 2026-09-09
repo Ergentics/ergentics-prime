@@ -1,0 +1,307 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d2c-checkpoint.v1",
+  "checkpoint": "H4-D2C_V2_RETAINED_IMAGE_INSPECTION",
+  "recorded_at_utc": "2026-09-02T04:44:34Z",
+  "result": "PASS_H4D2C_V2_INSPECTION_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "retained_v2_adopted": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "object_binding": {
+    "implementation_commit": "76569fa2dc819a8ca36cb2e5a2c9b7fd1c4d2256",
+    "implementation_tree": "4730555b82c4ecd6ab439200b9aa98705e07c070",
+    "implementation_parent": "40e2b29a8c34c5dac01245e05c510b304dffebcc",
+    "implementation_paths": [
+      "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "Sources/HypervisorStageH4Persistence.swift",
+      "Sources/ProvenanceReadOnly.h",
+      "Tests/HypervisorStageH4PersistenceTests.swift"
+    ],
+    "delta_equals_freeze_allowlist": true,
+    "diff_check": "PASS",
+    "worktree_implementation_bytes_equal_head": true
+  },
+  "control_binding": {
+    "freeze_commit": "40e2b29a8c34c5dac01245e05c510b304dffebcc",
+    "freeze_tree": "cd5e7c9360413d2b69f4857d43693717eb57c2a1",
+    "freeze_path": "Control/hypervisor-local-v1/h4d2c-v2-retained-image-inspection-freeze-2026-09-01.v1.json",
+    "freeze_blob_at_implementation_parent": "00a9aa094e44d7679b975237bbe9e1436cbc9345",
+    "freeze_sha256": "a150ac9b674ffdde296433226d2b5604b72ce95a0142f56a2a2c05b35b86de62",
+    "build_10_archive_checkpoint": {
+      "commit": "b2377a00411078e33ebdccff7600c8afe8ef26b6",
+      "tree": "6c5b0fda6ae0a3c771db1b3ade5f79b1cc426cc8"
+    }
+  },
+  "retained_format_fact": {
+    "sqlite_image": "VALID",
+    "canonical_cbor": "PRESENT_AND_EXACT",
+    "indexed_scalars": "PRESENT_AND_EXACT",
+    "independent_json": "MISSING",
+    "classification": "VALID_V2_CBOR_ONLY_JSON_MISSING",
+    "dual_stream_join": false,
+    "admitted": false
+  },
+  "closed_mechanics": {
+    "operation_arguments": 0,
+    "production_factory": "ABSENT",
+    "test_factory": "EPR_H4_PRIVACY_TESTS_ONLY",
+    "root": {
+      "canonical_absolute": true,
+      "mode": "0700",
+      "owner": "effective_uid",
+      "descriptor_flags": "O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC",
+      "lock": "nonblocking_shared_flock",
+      "named_held_rejoin": [
+        "admission",
+        "post-inventory",
+        "post-reconstruction",
+        "post-final-close"
+      ]
+    },
+    "final": {
+      "leaf": "h4d2b-receipt.sqlite",
+      "descriptor_flags": "O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC",
+      "required_mode": "0400",
+      "required_owner": "effective_uid",
+      "required_nlink": 1,
+      "minimum_bytes": 100,
+      "maximum_bytes": 262144,
+      "alignment_bytes": 4096,
+      "join_fields": [
+        "device",
+        "inode",
+        "mode",
+        "uid",
+        "gid",
+        "nlink",
+        "size",
+        "flags",
+        "mtime",
+        "ctime"
+      ],
+      "bounded_pread": true,
+      "eof_required": true,
+      "terminal_named_opened_vnode_join": true
+    },
+    "sqlite": {
+      "filesystem_path_connections": 0,
+      "database": ":memory:",
+      "deserialize": "SQLITE_DESERIALIZE_READONLY_WITH_SQLITE_OWNED_COPY",
+      "query_only": true,
+      "defensive": true,
+      "trusted_schema": false,
+      "dqs_ddl": false,
+      "dqs_dml": false,
+      "authorizer": "SELECT_AND_READ_ONLY",
+      "integrity_check": "ok",
+      "schema_exact": true,
+      "table_xinfo_exact": true,
+      "row_count": 1,
+      "storage_classes_exact": true,
+      "statement_finalized_before_close": true
+    },
+    "canonical_cbor": {
+      "strict_decode": true,
+      "identical_reencode": true,
+      "indexed_scalar_semantic_join": true,
+      "json_synthesized": false
+    },
+    "one_shot": {
+      "state_order": [
+        "ready",
+        "claimed",
+        "finished"
+      ],
+      "one_winner": true,
+      "concurrent_loser": "inProgress",
+      "terminal_replay": "alreadyConsumed",
+      "retry": false,
+      "cleanup": false,
+      "repair": false
+    }
+  },
+  "verification": {
+    "tests": {
+      "focused_debug": {
+        "result": "Passed",
+        "executed": 26,
+        "passed": 26,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2c-diagnostic-r4/FocusedCoverageClosure2.xcresult"
+      },
+      "full_debug": {
+        "result": "Passed",
+        "executed": 651,
+        "passed": 651,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2c-full-debug-r1/FullDebugCoverageClosure.xcresult"
+      },
+      "full_release": {
+        "result": "Passed",
+        "executed": 604,
+        "passed": 604,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/epr-h4d2c-full-release-r1/FullReleaseCoverageClosure.xcresult"
+      }
+    },
+    "required_race_and_state_cases": {
+      "regular_to_fifo_rebound_reaches_nonblocking_open": true,
+      "forced_concurrent_in_progress_losers": 31,
+      "invalid_terminal_replay_already_consumed": true,
+      "same_bytes_new_inode_post_read_rejected": true,
+      "parent_rebound_post_read_rejected": true,
+      "parent_rebound_post_final_close_rejected": true,
+      "nonfinal_terminal_inventory_and_root_rejoin": true
+    },
+    "production_builds": {
+      "debug": {
+        "result": "PASS",
+        "configuration": "Debug",
+        "architecture": "arm64",
+        "errors": 0,
+        "warnings": 0,
+        "analyzer_warnings": 0,
+        "binary_sha256": "fb07b9f01f581c5907279f3fc7b863d3de2e12dee12b0a9859ce43ebf3746e0f",
+        "binary_uuid": "CBAB9E9D-8292-385F-92B2-2C5DAB23906C",
+        "binary_size_bytes": 9237216,
+        "candidate_cdhash_full_sha256": "e3019c0672aa0f18e47b59faa8c94864b5b3e507706602037991a5604ae82c6d",
+        "xcresult": "/private/tmp/epr-h4d2c-production-debug-r1/ProductionDebugCoverageClosure.xcresult"
+      },
+      "release": {
+        "result": "PASS",
+        "configuration": "Release",
+        "architecture": "arm64",
+        "errors": 0,
+        "warnings": 0,
+        "analyzer_warnings": 0,
+        "binary_sha256": "33c24240130e17d93f64adc3de40dfc258293e898bcf93effc1be56f9c878367",
+        "binary_uuid": "4228BC5B-1893-3822-8E16-C308519EBCBE",
+        "binary_size_bytes": 3530016,
+        "candidate_cdhash_full_sha256": "da1504afe3f8b37c2120e0e330fe529eea774ef4d289c908c9fcb388596c08c7",
+        "xcresult": "/private/tmp/epr-h4d2c-production-release-r1/ProductionReleaseCoverageClosure.xcresult"
+      },
+      "signing": {
+        "identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+        "team_identifier": "ZCQ435U8JP",
+        "identifier": "com.ergentics.provenance",
+        "hardened_runtime": true,
+        "debug_valid_on_disk": true,
+        "debug_designated_requirement_satisfied": true,
+        "release_valid_on_disk": true,
+        "release_designated_requirement_satisfied": true,
+        "verification_context": "outside_sandbox_with_user_keychain_visibility",
+        "entitlements": {
+          "com.apple.security.app-sandbox": true,
+          "com.apple.security.files.user-selected.read-only": true,
+          "com.apple.security.hypervisor": true
+        }
+      }
+    },
+    "production_binary_surface": {
+      "pattern_regex": "EPR_H4_PRIVACY_TESTS|makeTestRetainedV2Inspector|RetainedV2Inspector|afterInitialInventoryForTest|afterNamedFinalForTest|afterReadForTest|beforeTerminalRootForTest|epr_h4d2c_open_final|H4D2C-DIAGNOSTIC|epr-h4d2c",
+      "scan_commands": [
+        "strings -a <binary> | grep -Ec <pattern_regex>",
+        "nm -gjU <binary> | grep -Ec <pattern_regex>"
+      ],
+      "scan_count_semantics": "grep prints zero and exits 1 when no line matches",
+      "ordinary_nm_a_excluded": "OSO debug build-root paths contain epr-h4d2c and are not symbols exported by the production binary",
+      "debug_strings_matches": 0,
+      "debug_nm_matches": 0,
+      "release_strings_matches": 0,
+      "release_nm_matches": 0,
+      "focused_test_binary_strings_positive_control": 11,
+      "focused_test_binary_nm_positive_control": 11,
+      "debug_fixed_receipt_classification_string_present": true,
+      "debug_fixed_receipt_classification_is_path_bearing": false,
+      "release_fixed_receipt_classification_string_present": false
+    },
+    "static": {
+      "forbidden_added_source_surface_matches": 0,
+      "forbidden_added_source_surface_pattern": "posix_spawn|CommandLine|Process\\b|getenv\\(|URLSession|NWConnection|hv_vm|system\\(|popen\\(|fork\\(|execv|kill\\(|signal\\(",
+      "freeze_json": "PASS",
+      "checkpoint_json": "PASS",
+      "diff_check": "PASS"
+    },
+    "independent_reviews": [
+      {
+        "review": "descriptor, state-machine, production API and four-file allowlist audit",
+        "object": "76569fa2dc819a8ca36cb2e5a2c9b7fd1c4d2256/4730555b82c4ecd6ab439200b9aa98705e07c070",
+        "result": "PASS"
+      },
+      {
+        "review": "TOCTOU, SQLite, CBOR, authority and failure-closure audit",
+        "object": "76569fa2dc819a8ca36cb2e5a2c9b7fd1c4d2256/4730555b82c4ecd6ab439200b9aa98705e07c070",
+        "result": "PASS"
+      },
+      {
+        "review": "test-evidence and fresh production-binary exclusion audit",
+        "object": "76569fa2dc819a8ca36cb2e5a2c9b7fd1c4d2256/4730555b82c4ecd6ab439200b9aa98705e07c070",
+        "result": "PASS"
+      }
+    ]
+  },
+  "source_commitments": [
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "sha256": "8217ae01bb7fcc9fdecbe1f352218b4f6d3c1f820da06431e211b3d952c5c7e8"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Persistence.swift",
+      "sha256": "c06dcc9807772718df66b97e3bfff99ef2854a21dcb7e5519363cec012dd7096"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.h",
+      "sha256": "fa0fa3a607d9ec454c30c14ddf9b411234b77ae860d7d5d6878b628b1a40352a"
+    },
+    {
+      "path": "Tests/HypervisorStageH4PersistenceTests.swift",
+      "sha256": "e5cfae205867865b4cb344befa3788f9b8c329642741bbdac61d76f9d7ed5f82"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d2c-v2-retained-image-inspection-freeze-2026-09-01.v1.json",
+      "sha256": "a150ac9b674ffdde296433226d2b5604b72ce95a0142f56a2a2c05b35b86de62"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "macos": "26.5.2",
+    "host_build": "25F84",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "swift": "6.3.3",
+    "swift_target": "arm64-apple-macosx26.0",
+    "sdk": "macOS 26.5"
+  },
+  "residuals": [
+    "A new XCTest object is not a genuinely fresh operating-system process.",
+    "Descriptor and named-path joins prove the inspected interval, not continuity to D2b publication before inspector admission.",
+    "Advisory flock does not exclude same-euid, root or Full-Disk-Access mutation.",
+    "Read-only calls may cause filesystem-managed access-time bookkeeping.",
+    "Filesystem and lock calls have no independent constrained-I/O deadline.",
+    "No authenticity, anti-replay, rollback resistance, crash or power-loss recovery, encryption, snapshot exclusion or secure deletion is proven."
+  ],
+  "nonclaims": [
+    "This PASS is retained-v2 inspection mechanics only.",
+    "The missing independent JSON stream is not reconstructed, synthesized or inferred.",
+    "No H4 entry, Gate-E transition, candidate evaluation, scientific conclusion, process, VM, network or authority-bearing action occurred.",
+    "No successor stage or authority-bearing launch is authorized by this checkpoint."
+  ],
+  "next_recommendation": {
+    "stage": "H4-D3",
+    "action": "Freeze a disjoint publisher that retains independently canonical JSON and CBOR streams plus indexed scalars, followed by an independently frozen D3b restart reader and exact three-way semantic join.",
+    "authorized_by_this_checkpoint": false
+  }
+}

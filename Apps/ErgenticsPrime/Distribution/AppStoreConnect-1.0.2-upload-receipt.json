@@ -1,0 +1,77 @@
+{
+  "schema": "com.ergentics.provenance.app-store-connect-upload-receipt.v1",
+  "recorded_at_utc": "2026-09-01T02:22:06Z",
+  "status": "UPLOAD_SUCCEEDED_PROCESSING",
+  "app_store_connect": {
+    "app_name": "Hyper-Visor",
+    "apple_app_id": "6807235450",
+    "bundle_identifier": "com.ergentics.provenance",
+    "destination": "internal_testflight",
+    "uploaded_version": "1.0",
+    "uploaded_build": "2"
+  },
+  "source": {
+    "commit": "7d11a8a0fde6135a6eade198f85a8a28b29b8534",
+    "tree": "f2d35f9561344be9cca04df6137429def198947a",
+    "tracked_worktree_clean_before_archive_and_upload": true
+  },
+  "xcode_test": {
+    "result": "Passed",
+    "total": 379,
+    "passed": 379,
+    "failed": 0,
+    "skipped": 0,
+    "configuration": "Release",
+    "architecture": "arm64",
+    "macos_version": "26.5.2",
+    "macos_build": "25F84",
+    "result_bundle": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-1.0.2-tests.xcresult"
+  },
+  "archive": {
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/Ergentics Provenance 1.0 (2).xcarchive",
+    "application": "Ergentics Provenance.app",
+    "architecture": "arm64",
+    "macho_uuid": "A9F1FB11-DEED-3B56-A3E4-2CEA1570BD38",
+    "binary_sha256": "40b6e556433e8e0c5939ba13a50049199c8acc37ad54749ac63380d6c8c828ed",
+    "dsym_dwarf_sha256": "06c0416bc8f41789051b8305d2af9293c893113fdb5cdf085e531bec0374f060",
+    "pre_distribution_cdhash_sha256": "54a4d3453aac7ec96dd4d584f24d8d6c69026cca",
+    "pre_distribution_signing_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "pre_distribution_team_identifier": "ZCQ435U8JP",
+    "strict_signature_verification": "PASS_WITH_FULL_KEYCHAIN_ACCESS"
+  },
+  "shipped_ergentics_records": {
+    "license": {
+      "path": "Contents/Resources/LICENSE",
+      "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8"
+    },
+    "spdx": {
+      "path": "Contents/Resources/ERGENTICS.spdx.json",
+      "sha256": "0529d6783a2289d33a2e408afd8b3bff8453cdbdcbc9bc1f58275e1ddddad9a9",
+      "version": "SPDX-2.3",
+      "license_id": "LicenseRef-Ergentics-Proprietary",
+      "analyzed_files": 61,
+      "package_verification_code": "92d4422ec4e353bc38e701d3605f14080ef71066"
+    },
+    "third_party_notices": {
+      "path": "Contents/Resources/THIRD_PARTY_NOTICES.md",
+      "sha256": "80acba3f9e986d09384b4e5615d400207795fc39a6545452c1ebc3411c19a675"
+    },
+    "archive_resources_byte_equal_to_source": true
+  },
+  "upload": {
+    "tool": "xcodebuild -exportArchive",
+    "upload_completed_at_local": "2026-08-31T19:21:41-07:00",
+    "result": "EXPORT_SUCCEEDED",
+    "message": "Upload succeeded; uploaded package is processing.",
+    "distribution_log": "/var/folders/zv/5q6zw2k57698hn8q5hfy0wtm0000gn/T/ErgenticsProvenance_2026-08-31_19-20-20.014.xcdistributionlogs",
+    "distribution_log_handling": "LOCAL_SENSITIVE_DO_NOT_PUBLISH_OR_COMMIT; may contain Xcode account session material"
+  },
+  "claim_boundary": {
+    "app_store_connect_upload_accepted": true,
+    "app_store_processing_complete": false,
+    "testflight_build_available": false,
+    "external_beta_review_submitted": false,
+    "app_review_submitted": false,
+    "app_review_approved": false
+  }
+}

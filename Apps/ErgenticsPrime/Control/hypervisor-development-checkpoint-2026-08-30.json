@@ -1,0 +1,136 @@
+{
+  "schema": "ergentics.provenance.hypervisor-development-checkpoint.v1",
+  "date": "2026-08-30",
+  "implementation_commit": "e89ea6b534882ca66e88dcabd02cdeed804ab293",
+  "implementation_tree": "d12dc520e265eb30ece03705907a09485b21d8de",
+  "scope": "Actual native SwiftUI macOS application, local development Hypervisor lab; not Prime source admission or TestFlight delivery",
+  "verification": {
+    "pure_tests": {
+      "executed": 84,
+      "failures": 0,
+      "suites": {
+        "journal": 19,
+        "semantic_reconstruction": 22,
+        "fixed_guest_contract": 14,
+        "Merkle": 16,
+        "historical_verifier": 13
+      },
+      "log": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-hypervisor-build.9EmYqq/tests-final-84.log"
+    },
+    "independent_source_reviews": 3,
+    "guest_assembly_bytes": 92,
+    "guest_sha256": "67290a73b53047374096142356a35338f6722d724586cc10373dfecab9a4cc44",
+    "guest_assembly_matches_embedded": true,
+    "guest_doorbell_offset": 80,
+    "host_os": "macOS 26.5.2 / 25F84",
+    "deployment_target": "macOS 14.0 arm64",
+    "macos_14_or_15_runtime_tested": false,
+    "debug_signed_build": "PASS",
+    "release_development_archive": "PASS"
+  },
+  "debug_launch": {
+    "requests": 1,
+    "preflight": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-hypervisor-build.9EmYqq/preflight.json",
+    "app_sha256": "75b878497450011c0b35904c594275c6a0c3a543cefda01d5326a30d176dbd83",
+    "app_uuid": "7BE31E10-A9AA-3CCD-A00B-566C057CB8B5",
+    "transport": "open -n exact DeveloperSignedFinal app --args --run-fixed-guest-once",
+    "launcher_exit": 0,
+    "observed_vcpu_entries": null,
+    "guest_outcome": "UNVERIFIED",
+    "teardown_outcome": "UNVERIFIED",
+    "reason": "External readonly sqlite3 was denied access to the app container; no alternate content-read route or runtime PASS inference used.",
+    "database_metadata": {
+      "path": "/Users/ergentics/Library/Containers/com.ergentics.provenance/Data/Library/Application Support/ErgenticsProvenance/HypervisorLab/guest-events.sqlite3",
+      "size": 16384,
+      "uid": 501,
+      "mode": "0600",
+      "interpretation": "File presence only, not verified event/terminal contents"
+    },
+    "readonly_reader_exit": 1,
+    "readonly_reader_error": "authorization denied",
+    "point_in_time_process_observation": {
+      "pid": 36512,
+      "state": "S",
+      "cpu_percent": "0.0",
+      "rss_kib": 108272,
+      "elapsed": "13:08",
+      "interpretation": "Single ps observation; not teardown, guest status, energy, or a time-series measurement"
+    }
+  },
+  "archive": {
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-hypervisor-build.9EmYqq/ErgenticsProvenance-Development.xcarchive",
+    "app_sha256": "f565525066c931b57f966d5b50c463b7420838e0a2977660399bec6067789d5e",
+    "app_uuid": "340DE475-945E-3758-90D3-6CB852785B3C",
+    "signature": "Apple Development; valid on disk; designated requirement satisfied",
+    "team": "ZCQ435U8JP",
+    "bundle": "com.ergentics.provenance",
+    "version": "1.0",
+    "build": "1",
+    "privacy_manifest_bundled_and_plist_valid": true,
+    "app_icon_bundled": true,
+    "export_attempted": false,
+    "upload_attempted": false,
+    "launched": false
+  },
+  "capabilities": {
+    "entitlements": [
+      "com.apple.security.app-sandbox",
+      "com.apple.security.files.user-selected.read-only",
+      "com.apple.security.hypervisor"
+    ],
+    "network_entitlements": [],
+    "virtual_nics": 0,
+    "idle_watchdog_design": 0,
+    "guest_devices": "Only three memory slots and one intercepted MMIO doorbell; no disk, NIC, GPU, guest OS or host mounts"
+  },
+  "testflight": {
+    "status": "PACKAGING_PREPARED_NOT_DISTRIBUTION_READY",
+    "local_valid_signing_identities": [
+      "Apple Development: Ashton Wilson (43KWC8944S)"
+    ],
+    "distribution_identity_or_profile_used": false,
+    "app_store_connect_record_verified": false,
+    "remaining": [
+      "Review delivered/distribution signature fixture and implement narrowly scoped compatible self-admission; development OU rule currently unchanged",
+      "Confirm matching App ID, App Store Connect record, Mac distribution identity/profile and next build number",
+      "Resolve local runtime-result verification and then verify delivered TestFlight runtime",
+      "Explicitly authorize export/upload and beta/compliance metadata"
+    ],
+    "export_template": "Distribution/ExportOptions-TestFlight.plist; manual/local export/internal-only; no automatic account mutation"
+  },
+  "diagnostics": [
+    {
+      "failure": "Initial Swift build",
+      "cause": "Throwing short-circuit expression needed outer try/separate guard",
+      "resolved": true
+    },
+    {
+      "failure": "Journal synthetic tests on /var alias",
+      "code": "SQLITE_CANTOPEN_SYMLINK / extended1550",
+      "cause": "Foundation path normalization preserved/rewrote aliases; physical POSIX realpath was required",
+      "resolved": true,
+      "correction": "Exact physical-parent admission; NOFOLLOW retained; append/reopen and all84tests pass"
+    },
+    {
+      "failure": "Window screenshot",
+      "cause": "Screen capture could not create image from scoped app window",
+      "resolved": false,
+      "scope": "Visual capture unavailable; no broad desktop capture attempted"
+    },
+    {
+      "warning": "String(validatingUTF8:) deprecation",
+      "resolved": false,
+      "scope": "Non-fatal compile warning; UTF8 rejection preserved"
+    }
+  ],
+  "unchanged": [
+    "Historical R18/R19 processes and evidence",
+    "Prime/Driver V2 source authority and candidate state",
+    "Unrelated dirty work",
+    "Excluded Sources/GuestStorage.swift draft"
+  ],
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "energy_ergs": "UNMEASURED",
+  "durability": "Source checkpoints and local retained build/archive artifacts; no off-device archival or distribution claimed"
+}

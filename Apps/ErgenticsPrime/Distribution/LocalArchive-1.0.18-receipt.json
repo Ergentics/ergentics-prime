@@ -1,0 +1,213 @@
+{
+  "build": "1.0 (18)",
+  "source_commit": "b7af73ba0980320d78d085c5ea5fde8b433df4d9",
+  "recorded_at_utc": "2026-09-06T03:33:38Z",
+  "archive_path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Ergentics Provenance 1.0 (18).xcarchive",
+  "standalone_app": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build18/Ergentics Provenance.app",
+  "packaging_review": {
+    "status": "PASS",
+    "source_commit": "b7af73ba0980320d78d085c5ea5fde8b433df4d9",
+    "source_clean": true,
+    "source_records": 102,
+    "checksums_verified": 204,
+    "signature": "PASS with macOS trust-service access; initial sandbox trust failure retained",
+    "team": "ZCQ435U8JP",
+    "version": "1.0 (18)",
+    "hardened_runtime": true,
+    "exact_signed_capabilities": {
+      "com.apple.security.files.user-selected.read-write": true,
+      "com.apple.security.hypervisor": true,
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.virtualization": true
+    },
+    "uuids": {
+      "executable": [
+        [
+          "AF8B4360-8A11-3072-BFAE-81B89254E272",
+          "arm64"
+        ]
+      ],
+      "dsym": [
+        [
+          "AF8B4360-8A11-3072-BFAE-81B89254E272",
+          "arm64"
+        ]
+      ]
+    },
+    "copy_comparisons": {
+      "saved_archive": true,
+      "saved_standalone_app": true,
+      "extracted_zip_app": true
+    },
+    "archive_regular_files": 14,
+    "app_regular_files": 10,
+    "zip_payload_files": 10,
+    "zip_appledouble_metadata_files": 14,
+    "evidence": {
+      "records-verification.json": {
+        "bytes": 1791,
+        "sha256": "b611bc40b633b3380eded7a72b054c0d6ca805e277432996b774e8cfbc916668"
+      },
+      "package-verification.json": {
+        "bytes": 14122,
+        "sha256": "547162846602d266fcdbe641677a752193df00228e4335818695a58eb8f02512"
+      },
+      "signature-attempts.json": {
+        "bytes": 1343,
+        "sha256": "a9b84867df64c18204270a55b7ac66758071f11a0afa32945a1918d025135f64"
+      },
+      "strict-system-trust.log": {
+        "bytes": 213,
+        "sha256": "c9d13fa7e6e0e8443eae7e1b82ce9b3172299162f391c1e8a9b57c35f60460f6"
+      },
+      "signature-metadata.log": {
+        "bytes": 1235,
+        "sha256": "c058baa9af77d0f883e5b2b1527f9bc44ee5c23c157faa5a24de8d3df1a448d0"
+      },
+      "signed-entitlements.plist": {
+        "bytes": 397,
+        "sha256": "3dcef7488051314e0a34532cca348246c40726399ea372bee82e6c0912d8a910"
+      },
+      "check-records.rb": {
+        "bytes": 5269,
+        "sha256": "3102125d6fc9d911fb700c06da0fcb7ccf73708c697e02ebeb463c71322ac2ba"
+      },
+      "check-package.rb": {
+        "bytes": 7978,
+        "sha256": "8709d5b53e48b9fcc22c5c67255fd6ae22ab6acab94b30467f5f76b2ce36d212"
+      }
+    },
+    "issues": [
+
+    ],
+    "scope": "Independent packaging review only. No production files or output copies changed and no app/workload launch by reviewer; parent live checks are separate."
+  },
+  "source_record_review": {
+    "status": "PASS",
+    "source_commit": "b7af73ba0980320d78d085c5ea5fde8b433df4d9",
+    "source_clean": true,
+    "spdx_version": "SPDX-2.3",
+    "source_records": 102,
+    "source_directory_files": 75,
+    "package_coverage_files": 102,
+    "checksums_verified": 204,
+    "source_bytes": 3765007,
+    "package_verification_code": "7ea4c5b2ac7566f0d032e831ecbdab1f8b75824f",
+    "embedded_records": {
+      "ERGENTICS.spdx.json": {
+        "bytes": 89911,
+        "sha256": "4beb0654d11dc64395f72542a14c310ad3b15ad741e3a1e4081004c843e84a56",
+        "matches_source": true
+      },
+      "LICENSE": {
+        "bytes": 579,
+        "sha256": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8",
+        "matches_source": true
+      },
+      "THIRD_PARTY_NOTICES.md": {
+        "bytes": 656,
+        "sha256": "80acba3f9e986d09384b4e5615d400207795fc39a6545452c1ebc3411c19a675",
+        "matches_source": true
+      },
+      "PrivacyInfo.xcprivacy": {
+        "bytes": 854,
+        "sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+        "matches_source": true
+      }
+    },
+    "artifact_hashes": {
+      "executable": {
+        "bytes": 2382640,
+        "sha256": "5051ef8a76caf9b65aa994615dc7835d00188f445e9dbf868fab4eb09a8fb575"
+      },
+      "dsym": {
+        "bytes": 12362452,
+        "sha256": "bd99f02bdd62203b30a187960e78269189c761130e8ab769d73b0b5a2199e722"
+      },
+      "info_plist": {
+        "bytes": 1899,
+        "sha256": "30b6811b56e848d143e68225ed4350b3c5b207bcd976f783c19e45df4ed1f6f2"
+      },
+      "code_resources": {
+        "bytes": 3634,
+        "sha256": "503f45c07833767e7e722a3135784d555a44f81a0d6aec513dc1471c8a466d2d"
+      }
+    },
+    "issues": [
+
+    ],
+    "scope": "Independent read-only file/package verification. Signature metadata and UUIDs are recorded separately; this verifier did not launch the app."
+  },
+  "tests": {
+    "full_release": {
+      "passed": 977,
+      "failed": 0
+    },
+    "focused_git_release": {
+      "passed": 23,
+      "failed": 0
+    },
+    "debug": "Not rerun for Build18; prior Build17 results retain their own source scope."
+  },
+  "app_zip_sha256": "145db359e16dfc1f2a94fa68b4d7f1c3f01a5e78263ea8513cde964d7b0e5294",
+  "source_bundle_sha256": "48ef3e73a5e345f0427b8032ab49dde7bea5e2e30e1fe81b9041832d2669d9c0",
+  "git_dependency": "Existing Apple-signed Git in standard Xcode or Command Line Tools installation, validated offline for each command and launched directly. Git is not bundled; no tools were installed.",
+  "live": {
+    "recorded_at_utc": "2026-09-06T03:33:38Z",
+    "build": "1.0 (18)",
+    "source_commit": "b7af73ba0980320d78d085c5ea5fde8b433df4d9",
+    "app_path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build18/Ergentics Provenance.app",
+    "process_id": 45635,
+    "executable_sha256": "5051ef8a76caf9b65aa994615dc7835d00188f445e9dbf868fab4eb09a8fb575",
+    "observation_method": "Native app UI and system pickers through the computer-use bridge; exact running path and normal exit checked separately with macOS process inspection.",
+    "initial_page_reader": "Prime Git page inspection disconnected the UI reader. The app stayed running. User selected Git workspace; the reader then worked. Root cause of that page-specific reader failure is not established.",
+    "git": {
+      "status": "PASS_FOR_LISTED_WORKFLOW",
+      "fixture": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/live-workspace-acceptance/git-fixture-20260905-36892-1e0lhs9",
+      "baseline": "65ba92c02354d6ab7d19a0ab7eb43d235261b17f",
+      "events": [
+        "Open repository through the app and system directory picker: main, baseline HEAD, two changed files and fixture author visible.",
+        "README unstaged patch displayed Status: baseline to Status: app review; Stage enabled and Unstage disabled.",
+        "Stage README, reselect: Staged selected, exact patch retained, Unstage enabled.",
+        "Unstage README, reselect: Unstaged selected, exact patch retained; stage again.",
+        "Enter Accept README in app and Commit staged: HEAD 3712bb2484, only notes.txt remains changed, message cleared.",
+        "History lists Accept README in app and Acceptance baseline; selected README commit displays the expected one-file patch.",
+        "Select notes.txt: the two expected plain-text lines appear; stage and enter Accept notes in app.",
+        "Commit staged: HEAD b5b5cc856e, Working tree clean, zero changed files, cleared message and disabled Commit staged.",
+        "History displays both app commits and the baseline; the selected notes commit shows only the expected two-line new file.",
+        "Navigate to Virtual machines and back: repository, HEAD, clean state and author retained. The list tab returns to Changes.",
+        "Refresh preserves the clean state; History still lists all three commits."
+      ],
+      "readme_commit": "3712bb2484a456677a3df323b25639c82637528d",
+      "notes_commit": "b5b5cc856e474cf1b90e907843f5339eb5dfc1fa",
+      "independent_postflight": "PASS; exact parent chain, authors/committers, expected file changes, modes, blob/worktree bytes and clean main. See git-independent-postflight.json.",
+      "busy_cancel_and_quit": "NOT_OBSERVED_IN_UI; operations finished before a useful busy-state interaction. Hostless cancellation/process-cleanup tests passed separately."
+    },
+    "vm": {
+      "setup_and_cancel": "PASS",
+      "events": [
+        "Virtual machines page displayed No VMs yet and Create a Linux VM; name Linux VM, 2 CPUs, 4 GB memory, 64 GB maximum disk.",
+        "Choose installer and create opened the system ISO picker; no ISO selected and Create VM disabled.",
+        "Cancel returned to unchanged setup and No VMs yet."
+      ],
+      "installer_selected": false,
+      "created": false,
+      "started": false,
+      "import_boot_pause_resume_suspend_restore": "NOT_RUN: no real ARM64 UEFI installer selected.",
+      "guest_mutual_admission": "NOT_OBSERVED_LIVE"
+    },
+    "normal_idle_quit": {
+      "action": "Normal Quit in the app",
+      "process_exit_observed": true,
+      "process_id": 45635
+    },
+    "upload": false,
+    "host_os_installation": false,
+    "independent_os_attestation": "PARKED_BY_USER",
+    "scope": "Git app workflow and VM setup/cancel only. No Prime model execution or gate completion, real guest boot, busy-state UI cancellation, or general system attestation is claimed."
+  },
+  "prime_gate_e": "OPEN; current95-test source checkpoint saved separately in Prime-Gate-E-Current.",
+  "previous_h1_h8_live_checkpoint": "Build16; unchanged original binary scope.",
+  "uploaded": false,
+  "independent_os_attestation": "PARKED_BY_USER"
+}

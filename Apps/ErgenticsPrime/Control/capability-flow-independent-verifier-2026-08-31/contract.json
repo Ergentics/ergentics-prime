@@ -1,0 +1,117 @@
+{
+  "schema": "ergentics.capability-flow-independent-verifier.contract.v1",
+  "date": "2026-08-31",
+  "predecessor": {
+    "contract": "Control/capability-flow-closure-2026-08-31/contract.json",
+    "result": "Control/capability-flow-closure-2026-08-31/result.json",
+    "resultSHA256": "44036f316ee83da0ee001da5a2823b367180667a80b24f637793eae4d15fd07a",
+    "productionSourceSHA256": "5c35220167cb89fa96fb1ddac446e1b45e8ab68e204eee6c0cc3b2c9bb459c97"
+  },
+  "claims": {
+    "receiptRepresentation": "INDEPENDENT_RUST_PROCESS",
+    "merkleIntegrity": "INDEPENDENT_RUST_PROCESS",
+    "riemannDenyOnlyPredicate": "INDEPENDENT_RUST_PROCESS",
+    "declaredTraceCoverage": "OFFLINE_DECIDABLE",
+    "runtimeAttemptCompleteness": "UNASSESSED",
+    "hostileRuntimeNoninterference": "UNASSESSED",
+    "architecturalChannelClosure": "UNASSESSED",
+    "formalRiemannProof": "NOT_CLAIMED",
+    "gateE": "ABSTAIN",
+    "authorityVector": "00000000",
+    "changeIndexDelta": 0
+  },
+  "toolchain": {
+    "version": "1.98.0",
+    "commit": "88d9e12ae178fab0fb5cc050a94da85685d449ea",
+    "host": "aarch64-apple-darwin",
+    "compilerArchiveSHA256": "287edbc2e285b9c23ef7b085413b90cb8539909eda9c4b49f2a55ec0b52819d4",
+    "hostStandardLibraryArchive": "rust-std-1.98.0-aarch64-apple-darwin.tar.xz",
+    "hostStandardLibraryArchiveSHA256": "48c05269ed36fb5f0a8438065156891fe59fcb868d90cfed9b7209540d54b2ce",
+    "sourceManifest": "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/downloads/channel-rust-1.98.0.toml",
+    "newDisjointPrefix": "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-capability-receipt-verifier/prefix",
+    "cargo": false,
+    "registry": false,
+    "systemInstall": false,
+    "profileOrPATHMutation": false
+  },
+  "verifierProcess": {
+    "additionalArguments": 0,
+    "environmentReads": 0,
+    "fileReads": 0,
+    "fileWrites": 0,
+    "networkOperations": 0,
+    "childProcesses": 0,
+    "stdoutBytesOnEveryTerminal": 0,
+    "stderrBytesOnEveryTerminal": 0,
+    "successExit": 0,
+    "allRejectOrInternalExit": 70,
+    "stdin": "one exact frame then EOF",
+    "deadlineOwner": "hostless Swift test harness",
+    "deadlineSeconds": 5,
+    "timeoutActuation": "at most one SIGKILL against the exact direct child PID followed by exact reap",
+    "indefiniteWait": false
+  },
+  "frame": {
+    "magicASCII": "ERGRHV01",
+    "versionU16BE": 1,
+    "flagsU16BE": 0,
+    "scenarioLengthU32BE": true,
+    "resultLengthU32BE": true,
+    "root": "64 lowercase ASCII hexadecimal bytes",
+    "payloadOrder": ["scenarioCBOR", "resultCBOR"],
+    "trailingBytes": "REJECT",
+    "maximumScenarioBytes": 1048576,
+    "maximumResultBytes": 1048576,
+    "maximumAggregateLeafLabelAndPayloadBytes": 1048576
+  },
+  "cbor": {
+    "subset": ["unsigned", "byte_string", "utf8_text", "array", "text_key_map", "bool"],
+    "maximumDepth": 16,
+    "maximumCollectionCount": 256,
+    "maximumNodes": 8192,
+    "mapKeys": "ASCII text only and strictly increasing by encoded key bytes",
+    "canonicalRoundTripRequired": true,
+    "unknownOrUnsupported": "REJECT"
+  },
+  "merkle": {
+    "algorithm": "fixed in-tree FIPS-180-4 SHA-256",
+    "leafLabelsInByteOrder": ["result", "scenario", "schema"],
+    "schemaPayload": "ergentics.capability-flow-closure.report.v1",
+    "leafDomain": "0x00",
+    "pairDomain": "0x01",
+    "rootDomain": "0x02",
+    "oddNodeDomain": "0x03",
+    "leafCount": 3
+  },
+  "declaredTraceCoverage": {
+    "statusOnPass": "DECLARED_TRACE_COVERED_RUNTIME_UNASSESSED",
+    "accessEvidenceBijection": true,
+    "exactExecutionGenerationTransitionObjectJoins": true,
+    "exactCapabilityJoinWhenPresent": true,
+    "unknownEnumOrOptionalIdentityAlias": "REJECT",
+    "runtimeAttemptCompleteness": "UNASSESSED",
+    "excludedCaptureDomains": [
+      "host syscalls",
+      "guest operations",
+      "network and support services",
+      "parser side effects",
+      "cross-run external state",
+      "timing cache register and power"
+    ]
+  },
+  "allowedPaths": [
+    "Tools/CapabilityFlowRustReceiptVerifier/**",
+    "Tests/CapabilityFlowRustReceiptVerifierTests.swift",
+    "ErgenticsProvenance.xcodeproj/project.pbxproj",
+    "Control/capability-flow-independent-verifier-2026-08-31/**"
+  ],
+  "hardStops": [
+    "no application or guest launch",
+    "no app-target dependency or Xcode shell-script build phase",
+    "no package registry Cargo rustup Homebrew or system-prefix installation",
+    "no caller-selected algorithm schema leaf labels paths role IDs or theorem IDs",
+    "no claim that caller-declared events exhaust runtime activity",
+    "no GUI journal SQLite authority or Change Index write",
+    "no Gate-E promotion"
+  ]
+}

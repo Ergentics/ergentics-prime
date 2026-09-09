@@ -1,0 +1,30 @@
+{
+  "schema": "com.ergentics.provenance.source-origin.v1",
+  "date": "2026-08-30",
+  "app_home": "/Users/ergentics/Developer/ErgenticsProvenance",
+  "source_repository_family": "Ergentics/ergentics-prime",
+  "source_checkout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+  "source_commit": "05e81739cbe5a985809fb4b83ce3d8cadc48d301",
+  "source_subdirectory": "Observability/ErgenticsProvenance",
+  "source_subtree_git_sha1": "3d3236ab4317780e5edc7bf5b6323bf342d04a48",
+  "initial_copy": {
+    "method": "Git archive of the exact committed subtree; no working-directory draft export",
+    "regular_files": 48,
+    "each_file_git_blob_identity_checked": true,
+    "staged_import_tree_equals_source_subtree": true,
+    "import_tree_git_sha1": "3d3236ab4317780e5edc7bf5b6323bf342d04a48",
+    "scope": "Initial copy only; subsequent uncommitted Prime Git UI/import changes are not claimed byte-identical to the origin"
+  },
+  "historical_app_commit_references": [
+    "a208e0843f3a3df364713d72830832896511e000",
+    "e89ea6b534882ca66e88dcabd02cdeed804ab293",
+    "05e81739cbe5a985809fb4b83ce3d8cadc48d301"
+  ],
+  "history": "Original Git history remains in its original repository. This external copy does not contain rewritten app-only commits or claim to carry the full Prime history.",
+  "new_commits": 0,
+  "remote_publication": false,
+  "original_checkout_mutated": false,
+  "app_data_migrated": false,
+  "excluded_draft": "Sources/GuestStorage.swift",
+  "historical_records": "Retained unmodified; embedded original paths continue to describe historical observations, not a new execution at this location."
+}
