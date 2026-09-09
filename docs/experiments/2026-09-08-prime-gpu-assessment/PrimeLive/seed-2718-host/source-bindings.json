@@ -1,0 +1,30 @@
+[
+  {
+    "caseIndex": 0,
+    "sourceRequest": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Requests/seed-2718/host/batch-000.json",
+    "sourceRequestSHA256": "dfefd61582d56cee703531a37a81820d38cba4f2dadbd6f9db91a59fb96daf84",
+    "sourceCaseIndex": 0,
+    "predecessorResultDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Results/seed-2718-host-batch-000/native"
+  },
+  {
+    "caseIndex": 1,
+    "sourceRequest": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Requests/seed-2718/host/batch-000.json",
+    "sourceRequestSHA256": "dfefd61582d56cee703531a37a81820d38cba4f2dadbd6f9db91a59fb96daf84",
+    "sourceCaseIndex": 1,
+    "predecessorResultDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Results/seed-2718-host-batch-000/native"
+  },
+  {
+    "caseIndex": 2,
+    "sourceRequest": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Requests/seed-2718/host/batch-058.json",
+    "sourceRequestSHA256": "ccc88d57bb9c44c3c7f772ae922858e734b57cdf941f5cfd6c7eb1df9bece5ba",
+    "sourceCaseIndex": 0,
+    "predecessorResultDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Results/seed-2718-host-batch-058/native"
+  },
+  {
+    "caseIndex": 3,
+    "sourceRequest": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Requests/seed-2718/host/batch-058.json",
+    "sourceRequestSHA256": "ccc88d57bb9c44c3c7f772ae922858e734b57cdf941f5cfd6c7eb1df9bece5ba",
+    "sourceCaseIndex": 1,
+    "predecessorResultDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/Results/seed-2718-host-batch-058/native"
+  }
+]

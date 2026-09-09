@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""Retain the completed detour without creating a misleading runtime build."""
+import hashlib, json, shutil, subprocess
+from pathlib import Path
+w=Path(__file__).resolve().parent
+c=w.parents[1]/'outputs/Prime-Experiment-Builds'
+out=c/'Prime-GPU-Assessment-05'
+build=c/'0014-prime-model-gpu-timing'
+def write(p,x): p.write_text(json.dumps(x,indent=2)+'\n')
+def pin(p,b): return {'path':str(p.relative_to(b)),'byteCount':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+assert not out.exists() and not build.exists()
+index=json.loads((c/'BUILD-INDEX.json').read_bytes())
+prior=index['builds'].copy()
+assert len(prior)==13
+for e in prior:
+    assert pin(c/e['directory']/e['fileManifest']['path'],c/e['directory'])==e['fileManifest']
+assert json.loads((w/'NovelRequest/ModelProposal/BUILD-RESULT.json').read_bytes())['status']=='compile_failed'
+assert json.loads((w/'PrimeLive/COMPLETE.json').read_bytes())['modelForwards']==96
+assert (w/'PrimeLiveReview/REVIEW.json').exists()
+build.mkdir();(build/'Runtime').mkdir()
+for n in ('PrimeVCPUInference','mlx.metallib'):
+    shutil.copy2(w/'PrimeIntegration/build02'/n,build/'Runtime'/n)
+shutil.copytree(w/'PrimeIntegration',build/'Source',ignore=shutil.ignore_patterns('module-cache','cache','__pycache__'))
+meta={'buildID':'EPM-20260908-0014-prime-model-gpu-timing','kind':'runtime_not_model_checkpoint','status':'live_verified','selectedCompilation':'build02','signingIdentifier':'com.ergentics.prime.vcpu-inference','signingTeam':'ZCQ435U8JP','binary':pin(build/'Runtime/PrimeVCPUInference',build),'predecessorRuntime':'0009-prime-domain-feedback-runtime','operation':'Prime_domain_model_guest_controlled_host_MLX_GPU','timing':'synchronized_host_intervals_not_GPU_command_timestamps','newTraining':False,'changedModelMath':False,'results':str(out)}
+write(build/'BUILD.json',meta)
+(build/'README.md').write_text('Signed Prime model runtime with explicit GPU stream and separated synchronized host timing. Existing ABI2 guest/model math/weights preserved. See ../Prime-GPU-Assessment-05/README.md. Runtime requires caller-selected retained Prime weights and request; no English text model is substituted.\n')
+out.mkdir()
+for name in ('NovelRequest','LogicReview','CEOReview','PrimeLive','PrimeLiveReview'):
+    if (w/name).exists():
+        shutil.copytree(w/name,out/name,ignore=shutil.ignore_patterns('cache','__pycache__'))
+shutil.copytree(w/'PrimeIntegration',out/'PrimeIntegration',ignore=shutil.ignore_patterns('build01','build02','module-cache','cache','__pycache__'))
+shutil.copy2(w/'README.md',out/'README.md')
+(out/'Runtime').mkdir()
+shutil.copy2(c/'Prime-vCPU-02/Runtime/verify_snapshot.py',out/'Runtime/verify_snapshot.py')
+shutil.copy2(c/'Prime-vCPU-02/Runtime/controller.rb',out/'Runtime/controller.rb')
+shutil.copy2(w/'replay_prime.py',out/'Runtime/replay_prime.py')
+write(out/'REPLAY-CONFIG.json',{'executable':str(build/'Runtime/PrimeVCPUInference'),'sha256':pin(build/'Runtime/PrimeVCPUInference',build)['sha256']})
+snapshots=[]
+for base,name in ((build,'file-manifest.json'),(out,'FILE-MANIFEST.json')):
+    files=[]
+    for p in sorted(base.rglob('*')):
+        assert not p.is_symlink()
+        if p.is_file(): files.append(pin(p,base))
+    write(base/name,{'schema':'prime_saved_files_v1','files':files})
+    snapshots.append({'directory':'.' if base==out else '../'+base.name,'manifest':pin(base/name,base),'fileCount':len(files),'byteCount':sum(x['byteCount'] for x in files)})
+write(out/'SNAPSHOT-INDEX.json',{'snapshots':snapshots, 'excludedUnsealedAdministrativeFiles':['SNAPSHOT-INDEX.json','VERIFICATION.json','SOURCE-INTEGRATION.json','prime-gpu-assessment-source.bundle']})
+verified=subprocess.run(['/usr/bin/python3',str(out/'Runtime/verify_snapshot.py')],capture_output=True,text=True,check=True)
+write(out/'VERIFICATION.json',json.loads(verified.stdout))
+shutil.copy2(c/'BUILD-INDEX.json',c/'BUILD-INDEX.before-gpu-assessment.json')
+index['gpuAssessment']={'directory':out.name,'snapshotIndex':pin(out/'SNAPSHOT-INDEX.json',c),'kind':'assessment_with_additive_Prime_runtime','runtime':build.name,'primeModelForwards':96,'textModelRuns':7,'generatedCodeBuild':'compile_failed','primeIntegrationPriority':True,'OSSelection':'parked_by_user'}
+assert index['builds']==prior
+index['builds'].append({'directory':build.name,'buildID':meta['buildID'],'kind':meta['kind'],'fileManifest':snapshots[0]['manifest'],'fileCount':snapshots[0]['fileCount'],'bytes':snapshots[0]['byteCount']})
+write(c/'BUILD-INDEX.json',index)
+with (c/'README.md').open('a') as f:
+    f.write('\n[Prime model GPU timing and retained text-model detour](Prime-GPU-Assessment-05/README.md). Runtime0014 adds measurement to the existing Prime model route; failed generated C remains evidence only. OS selection is parked.\n')
+print(verified.stdout.strip())

@@ -11,3 +11,5 @@ Earlier completed experiment source remains in NativeSwift/ and [VCPU](VCPU/READ
 The code establishes inference and feedback behavior. It does not make the finite domain-policy checkpoint a prose chatbot, move model weights into a guest, or change formal gate authority.
 
 [GPUOffload](GPUOffload/README.md) now adds a measured, real guest-to-Metal geometry operation with floating-point return values and guest checksum. Its runtime0013 and source stay in this same project; the domain/model comparison remains in Domain/.
+
+[Prime GPU timing and reconciliation](PrimeGPUTiming/README.md) keeps learned Prime inference as the active target. The separate geometry vector service remains in GPUOffload/.

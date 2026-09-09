@@ -1,0 +1,63 @@
+{
+  "status": "COMPILED_MEASUREMENT_VARIANT_NOT_EXECUTED",
+  "scope": "Timing-only additive0009 variant with explicit MLX GPU stream; original model math, loader and ABI2 preserved.",
+  "modelConstructionByteUnchanged": true,
+  "checkpointLoadAndVerificationByteUnchanged": true,
+  "argmaxProbability": "Original finite full16384-vector scoring unchanged; only surrounding clock boundaries added.",
+  "priorSource": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/main.before-measurement.swift",
+    "byteCount": 25969,
+    "sha256": "d0b99c19f29b89586aaae1201fb6524802ea3dc838e3002767ea0f80d05cf5eb"
+  },
+  "source": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/main.swift",
+    "byteCount": 28707,
+    "sha256": "9ec16afe817d8e65c4098808faa5ca1f3aa6f9c7c5f226ff3a691abf2e6f6fe5"
+  },
+  "patch": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/measurement.patch",
+    "byteCount": 6302,
+    "sha256": "3109c86e8ed186a9b50bf04c6784df437c7536426357be1c11069dcea254ec93"
+  },
+  "buildHelper": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build.py",
+    "byteCount": 9657,
+    "sha256": "1a26d7f869cd4317480b2d6c66b4d7f97f65d553efda1dace7b8e0b3a4891539"
+  },
+  "buildReceipt": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/result.json",
+    "byteCount": 1193,
+    "sha256": "d142d1e537a6de87b155f1266b669edcfe226b9f6b5dcb8b220ff224fb72233d"
+  },
+  "compileInputs": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/compile-inputs.json",
+    "byteCount": 169930,
+    "sha256": "46d9e7610ae06d777d8fe91c7e9cd235586405da06c856d502b4af89963b87e9"
+  },
+  "binaryBeforeRootSigning": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference",
+    "byteCount": 30152048,
+    "sha256": "757ef46fb0e8f3d22c6b1d53afb0b30234d37f0f63d5668f725effb59c87bbc6"
+  },
+  "compilerExitCode": 0,
+  "compilerElapsedNanoseconds": 4619449166,
+  "allRetainedCompileInputsUnchanged": true,
+  "previousFailure": {
+    "receipt": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build01/result.json",
+      "byteCount": 900,
+      "sha256": "83905c3abe3a3418a5e42eb27a6f1e5cd3967f8d16192b0e52140f0caa5b8d9d"
+    },
+    "source": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build01/main.swift",
+      "byteCount": 28699,
+      "sha256": "a636fca357f82e946950e6cd6ee1f7954affce3e7380be89edbdfb69413a3e11"
+    },
+    "cause": "Foundation.Stream versus MLX.Stream ambiguous type lookup; fixed by explicit MLX qualification."
+  },
+  "hardwareGPUTimingAvailable": false,
+  "timingCaution": "Synchronized host intervals include scheduling/API overhead. forwardHost is graph+eval aggregate, not an additional interval. GPU trace/debug dependencies were not rebuilt or enabled.",
+  "modelRunsByImplementer": 0,
+  "VMRunsByImplementer": 0,
+  "signingByImplementer": false
+}

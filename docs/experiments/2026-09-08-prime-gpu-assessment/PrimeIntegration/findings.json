@@ -1,0 +1,120 @@
+{
+  "status": "READ_ONLY_FINDINGS_COMPLETE",
+  "mainFinding": "Prime learned inference already executes through guest HVC -> Swift MLX/Metal. A new bridge or older text-model code-generation experiment is unnecessary for that capability.",
+  "routes": {
+    "0009": {
+      "learnedComputation": "Actual74-F32-tensor,10227968-parameter Prime domain-policy checkpoint; full16384-logit prediction, task summaries and final choice with actual earlier prediction feedback. The implementation type LlamaModel denotes the retained architecture, not imported older3B weights.",
+      "sourceLocations": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/guest.S",
+          "lines": "25-57",
+          "meaning": "Guest reads own prior outputs, issuesHVC0x41, and commits actual returned prediction."
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/PrimeGuestBridge.c",
+          "lines": "291-355",
+          "meaning": "Validate exact guest page/registers, call real host callback, return unrestricted prediction viaX0."
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Native/main.swift",
+          "lines": "311-356",
+          "meaning": "Join actual source predictions, execute model, eval and F32readback, save full logits, unrestricted argmax."
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Native/main.swift",
+          "lines": "400-410",
+          "meaning": "Hash exact checkpoint,74F32/parameter checks,verify:.all,evaluation mode."
+        }
+      ],
+      "computeAlreadyGPU": {
+        "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/Device.swift",
+        "lines": "101-121",
+        "fact": "Pinned MLX defaults toGPU; an explicit scopedGPU selection is available."
+      }
+    },
+    "0013": {
+      "learnedModel": false,
+      "operation": "Deterministic geometry potential/gradient on host Metal with float reply readback by guest.",
+      "sourceLocations": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/Source/NativeGPU/main.swift",
+          "lines": "42-59,119-140,158-164",
+          "meaning": "ActualMetalcallback,pairedhost/guestvectors; explicitlyno learnedmodel."
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/Source/NativeGPU/MetalFieldEvaluator.swift",
+          "lines": "120-127",
+          "meaning": "Completed ownedMTLCommandBuffer gives actualGPUstart/end timestamps."
+        }
+      ]
+    }
+  },
+  "missingMeasurement": "0009 CaseResult elapsedNanoseconds covers input preparation, forward/eval, host readback/scoring, logits hash and fsync. It does not isolate GPU device execution time.",
+  "smallestNextStep": "Add timing-only derivative of0009. Keep exact guest ABI, checkpoint loader, model body and unrestricted argmax. Explicitly scopeGPU and oneMLXGPUstream; synchronize that exact stream and record separate host preparation,graphconstruction,evaluation,readback,scoring,encoding/hash,andlogits persistence intervals. Compare unchanged full-logit outputs across matched host/guest runs.",
+  "notRequired": [
+    "New guest ABI",
+    "Geometry service substitution for learned model",
+    "Older text-model-generated Metal source",
+    "New model training or checkpoint",
+    "Full virtualGPU/guest graphics driver"
+  ],
+  "pureGPUTimeLimit": {
+    "fact": "Geometry command-buffer timestamps cannot measure MLX model work. Pinned SwiftMLX exposes no per-forward command-buffer timestamp return. GPU.startCapture requires MLX_METAL_DEBUG and MTL_CAPTURE_ENABLED; no suchdefine was found in retained release.yaml/Package.swift, so do not silently activate it or call host timingsGPU-only.",
+    "source": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/GPU.swift",
+    "lines": "367-386"
+  },
+  "modelRunsByReviewer": 0,
+  "sourceWrites": false,
+  "files": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/BUILD.json",
+      "byteCount": 690,
+      "sha256": "08177596d766d8ed1b6f4e09e6e517a80b6ef64f8e8ed0911ddd5eae76ec94c1"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Native/main.swift",
+      "byteCount": 25969,
+      "sha256": "d0b99c19f29b89586aaae1201fb6524802ea3dc838e3002767ea0f80d05cf5eb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/BUILD.json",
+      "byteCount": 744,
+      "sha256": "65173fd45dec8bfe1ba521cfbad1fa3b58050fcfae9ea2bf45a0b4231c2cb39b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/Source/NativeGPU/main.swift",
+      "byteCount": 12583,
+      "sha256": "6c9710f44b91b2e46b9286220cc3f97c2485ce179d63979d73481fd94d29f546"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/Source/NativeGPU/MetalFieldEvaluator.swift",
+      "byteCount": 8322,
+      "sha256": "ac4df9254d566e22e623b63e864e3cda14f4f4ab50ee8ed785b9a3ba02a7d3bd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/Device.swift",
+      "byteCount": 5524,
+      "sha256": "c357704669f8094bad35f1ea70920f9ce9a058256f776f593dbd81b1bb3e41ce"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/Stream.swift",
+      "byteCount": 4560,
+      "sha256": "9647201e46b7d688e707ffcc4fcc4d662257ee72eb0f7c38a8cd5e33f1084557"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/GPU.swift",
+      "byteCount": 15656,
+      "sha256": "a21756d781dbd18a0db12bb3cc2f64531baaee7500d0b50b91deb5b3b180d0a8"
+    }
+  ]
+}

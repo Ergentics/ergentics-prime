@@ -1,0 +1,296 @@
+{
+  "status": "READ_ONLY_LOGIC_AND_GPU_REQUEST_AUDIT_COMPLETE",
+  "repo": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+    "revision": "97be84b2790b79ce79558d6bade846a532226540",
+    "clean": true,
+    "scope": "Current task-owned sparse checkout; not an inventory of every machine or historical commit."
+  },
+  "execution": {
+    "modelRuns": 0,
+    "GPUOrVMRuns": 0,
+    "builds": 0,
+    "networkCalls": 0,
+    "originalSourceMutations": 0
+  },
+  "sourceBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/CLAUDE.md",
+      "bytes": 2892,
+      "sha256": "b71c5b45f594c5cd370efc0ced175345cafbece23f52d20aa322150acfe62823"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/ModelKit/model.py",
+      "bytes": 7189,
+      "sha256": "8e28d1e19b5aea4504af62d5ff11b8d318d77c3e232670b9d8751b0996e264a2"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/ModelKit/generate.py",
+      "bytes": 3254,
+      "sha256": "e1f1b23b494682f815091a5a353414b70c5156feca0acb138d29af089cc6fe37"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/Tokenizer/bpe.py",
+      "bytes": 14408,
+      "sha256": "6bf594503fc9822f4c2c6d8f59fc32093036f5fc4bbbd4290f4ee4a2f80120bd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/Engine/cli.py",
+      "bytes": 5985,
+      "sha256": "1bc232d5a0844bc83a1487649c427b0d88bea7bc42b97be59399f336e1f087ca"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/Engine/oracle_engine.py",
+      "bytes": 6992,
+      "sha256": "c05868083c8cd613b783bfce70690cc6b31c927db68620cafa5edae01d36b92a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/Sources/TrainKit/train.py",
+      "bytes": 18455,
+      "sha256": "fc9e42e9d0b8053c741ee0549a2e38740eb2a1ff94edd59fe176977ef1b23294"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/tools/hardware_oracle_harvest.py",
+      "bytes": 75518,
+      "sha256": "310545283abc7d171cc12bccc35313f8a2630448f65a3bd61ec1515bdcc811bc"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/tools/coreml_deep_harvest_mirror.py",
+      "bytes": 6411,
+      "sha256": "0daeaa7225f4f8bcb666d00f80ab46f985c20d3c652a80b311e310cdf1e03dfd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/tools/split_by_family.py",
+      "bytes": 11641,
+      "sha256": "50a0f780d7c0bb3dea28585d614e5a34dd5a366ad7aa449a4e5b354c4712551b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/tools/exemplars_to_text.py",
+      "bytes": 4927,
+      "sha256": "f4d2ab3d62b0d1cf5e65ce4a20fc73d5823eea886a7afb024353706d759d72c0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/GATE-STATUS.md",
+      "bytes": 66052,
+      "sha256": "5efd01ea205b13076cd5a71f47cafb007dac12c21214ac32c6b61db9cf73158f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/docs/LOGIC-CORPUS-SCHEMA.md",
+      "bytes": 9334,
+      "sha256": "ecca11fcdd2aa9a8e6f30ada99ce9e654efb7e4c529c1b1f814f06df1657dc7f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/run.rb",
+      "bytes": 2760,
+      "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/native-main.swift",
+      "bytes": 15133,
+      "sha256": "d11eaae5ffbe1ce1ec8d3f28af68d495b01b7a45485a39af87b2c357e16dcd59"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/REVISION.json",
+      "bytes": 2776,
+      "sha256": "1504a0919f2c1ee81ca5dd56f1f31b8514ef44dcc01975f1be5cde61f19bf554"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/BUILD.json",
+      "bytes": 744,
+      "sha256": "65173fd45dec8bfe1ba521cfbad1fa3b58050fcfae9ea2bf45a0b4231c2cb39b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/main.swift",
+      "bytes": 12583,
+      "sha256": "6c9710f44b91b2e46b9286220cc3f97c2485ce179d63979d73481fd94d29f546"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "bytes": 3903,
+      "sha256": "d2ae546092a1c728697883e663b07cf13eccd67795e8c1e7e9aa19a48760ab97"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/result.json",
+      "bytes": 35083,
+      "sha256": "844c6b8fc8139fc0f6197e96622e604de5950b732ebe7f193ee8d7a4b409ddf1"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/specification.json",
+      "bytes": 801,
+      "sha256": "0c909e9cd06b53b218059bea5f220cf70b2809314ddcf6d1b0c1ead6e2db6efa"
+    }
+  ],
+  "gpuImplementation": {
+    "customMetalShaderOrHypervisorDeviceFound": false,
+    "actualComputeBackend": "Sources/ModelKit/model.py and Sources/TrainKit/train.py use MLX tensor/nn/optimizer APIs. These are real model/training implementations using MLX, not a custom virtual GPU device or direct geometry/Ur GPU service.",
+    "otherGPUHits": "LegalKit taxonomy and MBE generation classify hardware/GPU topics; these are content labels/patterns. tools/hardware_oracle_harvest.py implements pure Python Boolean logic and integer arithmetic, not GPU design, deployment or runtime measurement.",
+    "coreMLMirror": "tools/coreml_deep_harvest_mirror.py imports companion harvest records and enriches metadata; it does not compile or execute CoreML. Two current records are imported corpus evidence."
+  },
+  "corpusAndSidecar": {
+    "exemplarFiles": 47,
+    "rows": 6945,
+    "polarity": {
+      "positive": 3292,
+      "negative": 3653
+    },
+    "selectedGPUAndLogicRecords": [
+      {
+        "binding": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/exemplars/renderkit.metal.jsonl",
+          "bytes": 2616,
+          "sha256": "97e6b0d42b5f544fab70bbfe54e78486fef469248e3e0157548e8dfac6227a5d"
+        },
+        "rows": 1,
+        "families": {
+          "render.metal.projection_matrix": 1
+        },
+        "polarity": {
+          "negative": 1
+        }
+      },
+      {
+        "binding": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/exemplars/renderkit.metal.coverage.jsonl",
+          "bytes": 8940,
+          "sha256": "0c6c3b704d0194c6bcd491871d95f7db58d2fa35115083d497b02a990a04795b"
+        },
+        "rows": 2,
+        "families": {
+          "renderkit.metal.coverage": 2
+        },
+        "polarity": {
+          "positive": 1,
+          "negative": 1
+        }
+      },
+      {
+        "binding": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/exemplars/logic.parsing.jsonl",
+          "bytes": 172717,
+          "sha256": "0e4925428774d7f16159508cbc9d397199d9f20c2e9e0a7bef7d6845cc506837"
+        },
+        "rows": 43,
+        "families": {
+          "logic.parsing.membership": 20,
+          "logic.parsing.expr": 23
+        },
+        "polarity": {
+          "positive": 38,
+          "negative": 5
+        }
+      },
+      {
+        "binding": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/exemplars/ergentics.coreml.deep.v1.jsonl",
+          "bytes": 5040,
+          "sha256": "7801d8e5a8fa62d81c73b40492bb5faa4730dbee924058052601d0d91b9c6861"
+        },
+        "rows": 2,
+        "families": {
+          "ergentics.coreml.deep": 2
+        },
+        "polarity": {
+          "positive": 2
+        }
+      },
+      {
+        "binding": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/corpus/exemplars/logic.hardware.jsonl",
+          "bytes": 135645,
+          "sha256": "762346a54dabf69d76d6dd5b543eeb68b3ff0338a2d80f8d3272df3b2387baa5"
+        },
+        "rows": 42,
+        "families": {
+          "logic.hardware.boolean": 19,
+          "logic.hardware.arithmetic": 23
+        },
+        "polarity": {
+          "positive": 36,
+          "negative": 6
+        }
+      }
+    ],
+    "sidecarMeaning": "Corpus rendering and family-split scripts write provenance/manifests and train/eval text. They do not load inference weights, train implicitly or bind a runtime tool.",
+    "ledgerLimit": "GATE-STATUS demotes Ur URRenderKit settle/Metal parity to QA when oracle independence is insufficient; do not promote GPU parity into a third independent oracle. Preserve original schema/labels, imported sidecars, and quarantined/provenance boundaries.",
+    "trainingLink": "TrainKit consumes explicitly supplied corpus/tokenizer to run next-token training. It does not automatically consume corpus audit sidecars or copied connected-candidate files."
+  },
+  "learnedModelInterfaces": {
+    "model": "ErgeticsLogicModel (exact source spelling) and ModelConfig implement an independent decoder; poc_10m uses vocab16384,width256,8layers,4heads,ffn640; phase1 uses vocab32768,width1024,21layers,16heads,ffn2752. No inference that these weights are the same as the other16384-vocabulary Prime symbolic model.",
+    "tokenizer": "Own clean-room byte-level BPE, base256. BPETokenizer.load reads merges.json and reconstructs the vocabulary. Distinct from PMHNP SentencePiece8192 and Prime byte512.",
+    "generation": "Sources/ModelKit/generate.py reads --checkpoint/weights.npz and --tokenizer/merges.json, encodes literal prompt, evaluates last-position logits, samples or greedy argmax, then decodes newly generated IDs. Uses last512 context tokens. No GPU tool parser or HVC callback binding.",
+    "localRequiredAssetsPresent": false,
+    "localModelTokenizerGPUAssetMatches": [],
+    "missingPaths": [
+      "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/checkpoints",
+      "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic/data/tokenizer"
+    ],
+    "practicalBlocks": [
+      "No saved model weights or trained BPE tokenizer in this checkout. Source availability alone is not a runnable learned model.",
+      "Both generation entry points construct default PoC10M config rather than reading checkpoint config; phase1 weights require matching config before load.",
+      "Engine/cli.py:45 formats tok.vocab_size with numeric comma formatting, but Tokenizer/bpe.py:288 defines a method rather than a property. This is a static pre-generation error. The separate ModelKit/generate.py entry point avoids that particular display line."
+    ],
+    "notDone": "No default model construction or training was executed during audit; missing assets were not replaced by freshly initialized weights."
+  },
+  "current0013QuestionAudit": {
+    "buildID": "EPM-20260908-0013-prime-guest-gpu-runtime",
+    "kind": "runtime_not_model_checkpoint",
+    "learnedModelInvoked": false,
+    "trainingPerformed": false,
+    "GPUDesignQuestionSentToLearnedModel": false,
+    "evidence": "Build metadata modelRuns0; live result learnedModelInvokedfalse; NativeGPU/main.swift takes only --output-directory, builds numeric fixed point/node/sigma arrays, and calls typed guest HVC operation1. There is no string question, tokenizer, model load, generation, generated-tool selection or learned answer in this path.",
+    "whatWasActuallySent": "Three numeric field sample sizes1/32/200 with12 nodes andsigma0.42. Real ARM guest requested a host Metal field computation, received3*pointCount F32 values, and read/checksummed all reply words.",
+    "noveltyLimit": "This was new executed transport code written by the assistant using existing geometry formula/kernel. The learned Prime model did not derive that bridge or invent a GPU.",
+    "scopeLimit": "This conclusion is about current0013 and its exact live receipts, not all historical conversations."
+  },
+  "bestExistingQuestionAdapter": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/run.rb",
+    "invocationShape": [
+      "/usr/bin/ruby",
+      "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/run.rb",
+      "--prompt",
+      "LITERAL_GPU_DESIGN_QUESTION",
+      "--output",
+      "FRESH_ABSOLUTE_OUTPUT_DIRECTORY"
+    ],
+    "checkpointFamily": "ergentics_native_compositional_v2",
+    "role": "Existing first-party English native language experiment, not ergentics-logic weights and not the symbolic10M model used in domain vCPU runs.",
+    "tokenizer": "prime_native_byte_v1 / ergentics_prime_nfc_utf8_byte_v1; NFC literal question plus LF Answer: LF then original BOS/byte512",
+    "actualGeneration": "Existing compiled NativeTinyDecoder loads retainedweights; full vocabulary greedy output, emits raw IDs and decoded text, postchecks tokenizer/weights, no injected reference answer.",
+    "bounds": "Requested512new tokens, actual min(512,512-promptTokens), no input truncation; native alarm120s and bounded external controller.",
+    "runtimeBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Revisions/expanded-01/Runtime/PrimeNativeCheckpointExperiment",
+      "bytes": 48767968,
+      "sha256": "523e190b9d1b1c8db5292bc8762f5d5e5d94940a38197b12e837ffcfe8ec803b"
+    },
+    "trainingMetadata": {
+      "byte_tokenizer_manifest_sha256": "ec546cc58dd65bfada4afa52455f5d7c420d089a97f7f97acf4f86bc2f086c4d",
+      "corpus_manifest_sha256": "45e9864ec5f7e9da3f6fe51af87522bc26bd208899174b327c62722c6d5d361b",
+      "cumulative_optimizer_steps": 55218,
+      "d_ff": 2048,
+      "d_model": 512,
+      "ergentics_mlx_revision": "d37885a278f1c37484a94d0f401a418735e66519",
+      "final_loss": 0.5625068545341492,
+      "learning_rate": 0.0003000000142492354,
+      "loss_log": "/Users/ergentics/ergentics-mlx-lab/models/ergentics_native_compositional_v2/train_loss.jsonl",
+      "model_family_id": "ergentics_native_compositional_v2",
+      "n_heads": 8,
+      "n_layers": 8,
+      "optimizer_steps": 55218,
+      "schedule": "epochs:2",
+      "schema_version": "2",
+      "seed": 42,
+      "spm_sha256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+      "tokenizer_id": "ergentics_prime_nfc_utf8_byte_v1",
+      "train_corpus": "/Users/ergentics/ergentics-mlx-lab/corpus/en/native/compositional-train.txt",
+      "train_objective": "completion_masked_v1",
+      "train_profile": "compositional_v2",
+      "vocab_size": 512,
+      "weights_fingerprint": "601094f61b9720e67da0b03499fad892b0bf626a1d8ad8ee91d041532bf5ca89"
+    },
+    "qualityLimit": "Sending a real novel English GPU design question is possible now but engineering-quality output is not established by retained checkpoint tests. No weights were trained on newly connected corpus just by staging it.",
+    "alternativePMHNP": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Revisions/expanded-01/run.rb",
+    "alternativePMHNPLimit": "Original learned SentencePiece and clinical checkpoint; explicitly label that separate lineage.",
+    "symbolicPrimeLimit": "Saved10M domain/symbolic models have fixed symbol input tasks, not a trained arbitrary-English tokenizer interface. Do not substitute byte512/SP tokens by matching integer range.",
+    "toolBindingLimit": "These question adapters generate text only. No existing mechanism lets the generated model response safely choose/build/execute GPU or HVC tools. Any subsequent engineering execution must remain separately attributed and reviewed."
+  }
+}

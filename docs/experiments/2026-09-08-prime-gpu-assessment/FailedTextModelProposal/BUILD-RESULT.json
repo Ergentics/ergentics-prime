@@ -1,0 +1,25 @@
+{
+  "status": "compile_failed",
+  "argv": [
+    "/usr/bin/xcrun",
+    "clang",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-ferror-limit=12",
+    "-c",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c",
+    "-o",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.o"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 0.023310208,
+  "sourceSHA256": "99343f4ac16e2294b142db0f88811e5753a51777ab03b0bcea52fef89eaa13cb",
+  "verbatimModelFence": true,
+  "sourceEdited": false,
+  "modelOutputExecuted": false,
+  "model": "older_Ergentics_Llama_fine_tune",
+  "outputTokenCount": 1749,
+  "modelStopReason": "endOfSequence",
+  "objectExists": false
+}

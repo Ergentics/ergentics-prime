@@ -1,0 +1,264 @@
+{
+  "cases": [
+    {
+      "allowedValueCount": 16384,
+      "allowedValueMinimum": 0,
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "jobs": [
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            64,
+            80,
+            96,
+            6,
+            68,
+            80,
+            96,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            5,
+            64,
+            80,
+            96,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            5,
+            68,
+            80,
+            96,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [
+            {
+              "inputOffset": 2,
+              "sourceJobIndex": 1
+            },
+            {
+              "inputOffset": 3,
+              "sourceJobIndex": 2
+            }
+          ],
+          "inputTokenIDs": [
+            1,
+            7,
+            0,
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "allowedValueCount": 16384,
+      "allowedValueMinimum": 0,
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "jobs": [
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            64,
+            80,
+            96,
+            6,
+            68,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            5,
+            64,
+            80,
+            96,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            5,
+            68,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [
+            {
+              "inputOffset": 2,
+              "sourceJobIndex": 1
+            },
+            {
+              "inputOffset": 3,
+              "sourceJobIndex": 2
+            }
+          ],
+          "inputTokenIDs": [
+            1,
+            7,
+            0,
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "allowedValueCount": 16384,
+      "allowedValueMinimum": 0,
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "jobs": [
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            68,
+            82,
+            225,
+            6,
+            64,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            5,
+            68,
+            82,
+            225,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            5,
+            64,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [
+            {
+              "inputOffset": 3,
+              "sourceJobIndex": 1
+            },
+            {
+              "inputOffset": 4,
+              "sourceJobIndex": 2
+            }
+          ],
+          "inputTokenIDs": [
+            1,
+            4,
+            7,
+            0,
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "allowedValueCount": 16384,
+      "allowedValueMinimum": 0,
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "jobs": [
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            68,
+            82,
+            97,
+            6,
+            225,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            5,
+            68,
+            82,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [],
+          "inputTokenIDs": [
+            1,
+            4,
+            5,
+            225,
+            80,
+            97,
+            3
+          ]
+        },
+        {
+          "feedbackBindings": [
+            {
+              "inputOffset": 3,
+              "sourceJobIndex": 1
+            },
+            {
+              "inputOffset": 4,
+              "sourceJobIndex": 2
+            }
+          ],
+          "inputTokenIDs": [
+            1,
+            4,
+            7,
+            0,
+            0,
+            3
+          ]
+        }
+      ]
+    }
+  ],
+  "execution": "guest",
+  "schema": "prime_10m_feedback_inference_request_v2",
+  "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0010-prime-domain-seed1618/Runtime/prime-domain-trace.safetensors",
+  "weightsSHA256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+}

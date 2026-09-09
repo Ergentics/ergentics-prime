@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "models": 3,
+  "question": "Design a GPU interface for an ARM64 virtual machine. Give a minimal guest request, host implementation approach, and a way to verify returned numeric results.",
+  "questionSHA256": "c99715ef754b1b5602edc1714cbeda42f6d10d2b9f94d8cab22bdc50ccd2392d",
+  "newTraining": false,
+  "modelOutputUsedAsImplementation": false
+}

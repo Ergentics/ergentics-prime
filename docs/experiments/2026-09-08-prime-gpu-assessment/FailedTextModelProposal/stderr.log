@@ -1,0 +1,50 @@
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:3:24: error: field has incomplete type 'enum OperationType'
+    3 |     enum OperationType operation;
+      |                        ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:3:10: note: forward declaration of 'enum OperationType'
+    3 |     enum OperationType operation;
+      |          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:21:5: error: unknown type name 'GPUCommandBuffer'
+   21 |     GPUCommandBuffer commandBuffer;
+      |     ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:22:5: error: unknown type name 'CPUInstructionDecoder'
+   22 |     CPUInstructionDecoder decoder;
+      |     ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:23:5: error: unknown type name 'CPUExecutionUnit'
+   23 |     CPUExecutionUnit executionUnit;
+      |     ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:34:24: error: field has incomplete type 'enum OperationType'
+   34 |     enum OperationType operation;
+      |                        ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:3:10: note: forward declaration of 'enum OperationType'
+    3 |     enum OperationType operation;
+      |          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:52:26: error: field has incomplete type 'enum InstructionType'
+   52 |     enum InstructionType instruction;
+      |                          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:52:10: note: forward declaration of 'enum InstructionType'
+   52 |     enum InstructionType instruction;
+      |          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:58:26: error: field has incomplete type 'enum InstructionType'
+   58 |     enum InstructionType instruction;
+      |                          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:52:10: note: forward declaration of 'enum InstructionType'
+   52 |     enum InstructionType instruction;
+      |          ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:65:14: error: use of undeclared identifier 'Draw'
+   65 |         case Draw:
+      |              ^~~~
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:79:30: error: no member named 'pixel' in 'union (unnamed at /Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:4:5)'
+   79 |             if (request.data.pixel.x == 0 || request.data.pixel.y == 0) {
+      |                 ~~~~~~~~~~~~ ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:79:59: error: no member named 'pixel' in 'union (unnamed at /Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:4:5)'
+   79 |             if (request.data.pixel.x == 0 || request.data.pixel.y == 0) {
+      |                                              ~~~~~~~~~~~~ ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:85:32: error: no member named 'x' in 'union (unnamed at /Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:12:5)'
+   85 |             if (request.result.x == 0 || request.result.y == 0) {
+      |                 ~~~~~~~~~~~~~~ ^
+/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:85:57: error: no member named 'y' in 'union (unnamed at /Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c:12:5)'
+   85 |             if (request.result.x == 0 || request.result.y == 0) {
+      |                                          ~~~~~~~~~~~~~~ ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+13 errors generated.

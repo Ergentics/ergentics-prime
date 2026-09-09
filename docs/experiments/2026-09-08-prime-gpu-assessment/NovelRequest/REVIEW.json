@@ -1,0 +1,497 @@
+{
+  "status": "INDEPENDENT_SEVEN_RUN_READBACK_PASSED",
+  "question": "Design a GPU interface for an ARM64 virtual machine. Give a minimal guest request, host implementation approach, and a way to verify returned numeric results.",
+  "questionSHA256": "c99715ef754b1b5602edc1714cbeda42f6d10d2b9f94d8cab22bdc50ccd2392d",
+  "runs": [
+    {
+      "name": "0001-pmhnp-native",
+      "profile": "pmhnp",
+      "controllerPID": 28429,
+      "elapsedSeconds": 1.9094620000105351,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0001-pmhnp-native/request.json",
+        "bytes": 444,
+        "sha256": "857ceaeb3ab2905a6a184553516842d82612014495ef8f799dfcd421eee08588"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0001-pmhnp-native/controller/stdout.bin",
+        "bytes": 163951,
+        "sha256": "8f7f74fe026a8727e7e67a082ea6af4930698a35058e20e57855d13712e18b23"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0001-pmhnp-native/raw-result.json",
+        "bytes": 5205,
+        "sha256": "ddc85573938d178ca9bbf89062fd39b2c16bd8c0fb016d74f4c70b77d5c3ab25"
+      },
+      "identity": {
+        "modelFamilyID": "ergentics_native_lab_v2",
+        "weightsSHA256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28",
+        "tokenizer": {
+          "id": "prime_native_bpe_v1",
+          "manifestSHA256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+          "modelSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+          "specialTokenIDs": {
+            "bos": 1,
+            "eos": 2,
+            "pad": -1,
+            "unk": 0
+          }
+        }
+      },
+      "questionTokenCount": 48,
+      "requestedMaximumNewTokens": 256,
+      "effectiveMaximumNewTokens": 256,
+      "actualGeneratedTokenCount": 256,
+      "stopReason": "tokenLimit",
+      "rawOutputUTF8SHA256": "a8158c5a55d40dcdf3ececc5cc15caeb00fd0ad35d189a228bda4dbac3c26d6d",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS"
+    },
+    {
+      "name": "0003-native-llm-english",
+      "profile": "compositional_v2",
+      "controllerPID": 28444,
+      "elapsedSeconds": 0.6199899999774061,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0003-native-llm-english/request.json",
+        "bytes": 461,
+        "sha256": "5fc5f8349ae7a0cde044eb107080723254436ab0ce371cd05643057ecd54e11e"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0003-native-llm-english/controller/stdout.bin",
+        "bytes": 2053,
+        "sha256": "29dc31c9b24dd1a44d6f35575232948ed83c3c03b5dc5fd3d627f13af5a90179"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0003-native-llm-english/raw-result.json",
+        "bytes": 2824,
+        "sha256": "3ddaa3f7d1fa5e887d2b4df01477decb4c17718e47d746e7fd9a0d2ed50dfcbb"
+      },
+      "identity": {
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c",
+        "tokenizer": {
+          "byteTokenBase": 256,
+          "id": "ergentics_prime_nfc_utf8_byte_v1",
+          "manifestSHA256": "ec546cc58dd65bfada4afa52455f5d7c420d089a97f7f97acf4f86bc2f086c4d",
+          "specialTokenIDs": {
+            "beginning_of_sequence": 1,
+            "completion_abstain": 2,
+            "completion_result": 3,
+            "end_of_sequence": 70,
+            "pad": 0
+          }
+        }
+      },
+      "questionTokenCount": 159,
+      "requestedMaximumNewTokens": 256,
+      "effectiveMaximumNewTokens": 256,
+      "actualGeneratedTokenCount": 3,
+      "stopReason": "endOfSequence",
+      "rawOutputUTF8SHA256": "3f630efda350a226dba974004992e8b538d8cda29333fe7899cc1c224d77f5d9",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "NFC_then_BOS_byte512"
+    },
+    {
+      "name": "0002-older-llama",
+      "profile": "older_llama",
+      "controllerPID": 28448,
+      "elapsedSeconds": 9.062029000022449,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0002-older-llama/request.json",
+        "bytes": 234,
+        "sha256": "a362f9112508743a24859348772988b82de5d43f9c664b6d7a06cb1fb4533976"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0002-older-llama/controller/stdout.bin",
+        "bytes": 29550,
+        "sha256": "87097357caa29fc0fb4811f45b9bb53571429217d2135721da8ecd8e17957f22"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/0002-older-llama/raw-result.json",
+        "bytes": 6464,
+        "sha256": "38dc58ea04f0b63134b4d34cab0f6459ddf77b45e056eac007ab3092be6e27e9"
+      },
+      "identity": {
+        "model": "older Llama3.2-derived3B retained quantized model",
+        "modelFiles": [
+          {
+            "path": "README.md",
+            "byteCount": 15516,
+            "sha256": "c1d69f6519370e59818d6d8e3242dcd45c183410f0bf7a36ae7adb999f7c5ae9"
+          },
+          {
+            "path": "chat_template.jinja",
+            "byteCount": 3827,
+            "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4"
+          },
+          {
+            "path": "config.json",
+            "byteCount": 1122,
+            "sha256": "c546925585e48f43890d9dc5150df4fec73dd3780d92961c5ace451934cc4cd6"
+          },
+          {
+            "path": "model.safetensors",
+            "byteCount": 1807496278,
+            "sha256": "c9661f6b390552c011bf0e827d61b0339bc3030c6ffbc78afc68d31ecfbdb42c"
+          },
+          {
+            "path": "model.safetensors.index.json",
+            "byteCount": 45760,
+            "sha256": "ae531298ce4a2160df907d7da67ed845f4d05048d4ac26a0f44748e792c754b9"
+          },
+          {
+            "path": "special_tokens_map.json",
+            "byteCount": 296,
+            "sha256": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+          },
+          {
+            "path": "tokenizer.json",
+            "byteCount": 17209920,
+            "sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "byteCount": 50525,
+            "sha256": "941290c40ad93f86d5b8d07bbc08dd59881da5ba683e533885b523c9ba184b94"
+          }
+        ]
+      },
+      "questionTokenCount": 65,
+      "requestedMaximumNewTokens": 256,
+      "effectiveMaximumNewTokens": 256,
+      "actualGeneratedTokenCount": 256,
+      "stopReason": "tokenLimit",
+      "rawOutputUTF8SHA256": "e974ee0e2f4deac9b2e978e094c19663abeb466ec41b29225b549caa439491c5",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "original_saved_chat_template_single_user_add_generation_prompt"
+    },
+    {
+      "name": "canonical-0001-pmhnp-native",
+      "profile": "pmhnp",
+      "controllerPID": 28517,
+      "elapsedSeconds": 2.7836029999889433,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0001-pmhnp-native/request.json",
+        "bytes": 444,
+        "sha256": "0375e98f3268a0aeff337726eb441d382e909f91a63faf289a6a4edc50525d96"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0001-pmhnp-native/controller/stdout.bin",
+        "bytes": 394105,
+        "sha256": "76d8384213129025c4fbea71008a30e2aca639be3df369aec3b6b42ddfa3a609"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0001-pmhnp-native/raw-result.json",
+        "bytes": 7495,
+        "sha256": "56abc3caec0143007689499e3ab9ffacc24981d898e69e109aa5984e3d3ae0f7"
+      },
+      "identity": {
+        "modelFamilyID": "ergentics_native_lab_v2",
+        "weightsSHA256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28",
+        "tokenizer": {
+          "id": "prime_native_bpe_v1",
+          "manifestSHA256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+          "modelSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+          "specialTokenIDs": {
+            "bos": 1,
+            "eos": 2,
+            "pad": -1,
+            "unk": 0
+          }
+        }
+      },
+      "questionTokenCount": 48,
+      "requestedMaximumNewTokens": 512,
+      "effectiveMaximumNewTokens": 464,
+      "actualGeneratedTokenCount": 464,
+      "stopReason": "contextLimit",
+      "rawOutputUTF8SHA256": "2011ff7ad79ef81278a5efda2871d601aab972bf15425f9eae9d1b6f19e948c4",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS"
+    },
+    {
+      "name": "canonical-0003-native-llm-english",
+      "profile": "compositional_v2",
+      "controllerPID": 28528,
+      "elapsedSeconds": 0.21957200003089383,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0003-native-llm-english/request.json",
+        "bytes": 460,
+        "sha256": "ac574cbfdf398bee27a3d5d58cd1786d17cec42295b1acec22ace19187b15133"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0003-native-llm-english/controller/stdout.bin",
+        "bytes": 2432,
+        "sha256": "c7c88822f01d675f883282f54627b6ac967197fc1d2dc5063d0f6634e56606fc"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0003-native-llm-english/raw-result.json",
+        "bytes": 2969,
+        "sha256": "ca24c369b7ccdb255e43ba2ab445d6ae3f4a4dab24d77f19c1077f8f9f04b343"
+      },
+      "identity": {
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c",
+        "tokenizer": {
+          "byteTokenBase": 256,
+          "id": "ergentics_prime_nfc_utf8_byte_v1",
+          "manifestSHA256": "ec546cc58dd65bfada4afa52455f5d7c420d089a97f7f97acf4f86bc2f086c4d",
+          "specialTokenIDs": {
+            "beginning_of_sequence": 1,
+            "completion_abstain": 2,
+            "completion_result": 3,
+            "end_of_sequence": 70,
+            "pad": 0
+          }
+        }
+      },
+      "questionTokenCount": 168,
+      "requestedMaximumNewTokens": 512,
+      "effectiveMaximumNewTokens": 344,
+      "actualGeneratedTokenCount": 7,
+      "stopReason": "endOfSequence",
+      "rawOutputUTF8SHA256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "NFC_append_LF_Answer_colon_LF_then_BOS_byte512"
+    },
+    {
+      "name": "canonical-0002-older-llama",
+      "profile": "older_llama",
+      "controllerPID": 28532,
+      "elapsedSeconds": 8.594386999960989,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0002-older-llama/request.json",
+        "bytes": 234,
+        "sha256": "933f732a07f892178c25e5a7c6b686066bf8f39a6b1fafdd3d474435069d1a47"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0002-older-llama/controller/stdout.bin",
+        "bytes": 56880,
+        "sha256": "67a08fe838abf2610d6371e29724166f1440d971b27b7e559aa1dcc450903eb4"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/canonical-0002-older-llama/raw-result.json",
+        "bytes": 10145,
+        "sha256": "28b485c6bea0ed34732585224035504eceae50e596eccfaf228f26f85a55785b"
+      },
+      "identity": {
+        "model": "older Llama3.2-derived3B retained quantized model",
+        "modelFiles": [
+          {
+            "path": "README.md",
+            "byteCount": 15516,
+            "sha256": "c1d69f6519370e59818d6d8e3242dcd45c183410f0bf7a36ae7adb999f7c5ae9"
+          },
+          {
+            "path": "chat_template.jinja",
+            "byteCount": 3827,
+            "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4"
+          },
+          {
+            "path": "config.json",
+            "byteCount": 1122,
+            "sha256": "c546925585e48f43890d9dc5150df4fec73dd3780d92961c5ace451934cc4cd6"
+          },
+          {
+            "path": "model.safetensors",
+            "byteCount": 1807496278,
+            "sha256": "c9661f6b390552c011bf0e827d61b0339bc3030c6ffbc78afc68d31ecfbdb42c"
+          },
+          {
+            "path": "model.safetensors.index.json",
+            "byteCount": 45760,
+            "sha256": "ae531298ce4a2160df907d7da67ed845f4d05048d4ac26a0f44748e792c754b9"
+          },
+          {
+            "path": "special_tokens_map.json",
+            "byteCount": 296,
+            "sha256": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+          },
+          {
+            "path": "tokenizer.json",
+            "byteCount": 17209920,
+            "sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "byteCount": 50525,
+            "sha256": "941290c40ad93f86d5b8d07bbc08dd59881da5ba683e533885b523c9ba184b94"
+          }
+        ]
+      },
+      "questionTokenCount": 65,
+      "requestedMaximumNewTokens": 512,
+      "effectiveMaximumNewTokens": 512,
+      "actualGeneratedTokenCount": 512,
+      "stopReason": "tokenLimit",
+      "rawOutputUTF8SHA256": "039ec907597ed0613778ed0ff32716a6bccba73c9aceeccb1bbb9d4e9a9eb117",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "original_saved_chat_template_single_user_add_generation_prompt"
+    },
+    {
+      "name": "llama-complete-attempt",
+      "profile": "older_llama",
+      "controllerPID": 28585,
+      "elapsedSeconds": 14.858116000017617,
+      "controllerNormal0ExactReapEOFEmptyGroup": true,
+      "requestBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/llama-complete-attempt/request.json",
+        "bytes": 235,
+        "sha256": "2ff1a752a899c56667e5661edc02ae850a2def03ddeaf56470c16b84bc77cb9d"
+      },
+      "outputBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/llama-complete-attempt/controller/stdout.bin",
+        "bytes": 189699,
+        "sha256": "1ac66cb625feb38e19db99bc003f636f79d62403cbe19fc65cce05393780a083"
+      },
+      "rawResultBinding": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/llama-complete-attempt/raw-result.json",
+        "bytes": 27937,
+        "sha256": "11712bbc2fb812166a172651af9e824881f1dfe72f93121dcbbbddce96dbdc1b"
+      },
+      "identity": {
+        "model": "older Llama3.2-derived3B retained quantized model",
+        "modelFiles": [
+          {
+            "path": "README.md",
+            "byteCount": 15516,
+            "sha256": "c1d69f6519370e59818d6d8e3242dcd45c183410f0bf7a36ae7adb999f7c5ae9"
+          },
+          {
+            "path": "chat_template.jinja",
+            "byteCount": 3827,
+            "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4"
+          },
+          {
+            "path": "config.json",
+            "byteCount": 1122,
+            "sha256": "c546925585e48f43890d9dc5150df4fec73dd3780d92961c5ace451934cc4cd6"
+          },
+          {
+            "path": "model.safetensors",
+            "byteCount": 1807496278,
+            "sha256": "c9661f6b390552c011bf0e827d61b0339bc3030c6ffbc78afc68d31ecfbdb42c"
+          },
+          {
+            "path": "model.safetensors.index.json",
+            "byteCount": 45760,
+            "sha256": "ae531298ce4a2160df907d7da67ed845f4d05048d4ac26a0f44748e792c754b9"
+          },
+          {
+            "path": "special_tokens_map.json",
+            "byteCount": 296,
+            "sha256": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+          },
+          {
+            "path": "tokenizer.json",
+            "byteCount": 17209920,
+            "sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "byteCount": 50525,
+            "sha256": "941290c40ad93f86d5b8d07bbc08dd59881da5ba683e533885b523c9ba184b94"
+          }
+        ]
+      },
+      "questionTokenCount": 65,
+      "requestedMaximumNewTokens": 2048,
+      "effectiveMaximumNewTokens": 2048,
+      "actualGeneratedTokenCount": 1749,
+      "stopReason": "endOfSequence",
+      "rawOutputUTF8SHA256": "a1bc035f8bd0c3b32731bead3c7824e24f34029f4ae1124b23c936cf070c31aa",
+      "rawIDsAndAllEmittedTextVerified": true,
+      "inputTransform": "original_saved_chat_template_single_user_add_generation_prompt"
+    }
+  ],
+  "allSevenRawQuestionsIdentical": true,
+  "retainedModelAndTokenizerFilesCurrentlyHashVerified": true,
+  "allNativeTokenAndFullTextReconstructionVerified": true,
+  "llamaByteLevelTextReconstructionVerified": true,
+  "initialCanonicalAndLongContinuationPrefixChecksPassed": true,
+  "modelResultNotes": {
+    "pmhnp": "Clinical-style fragments and repetitive r output unrelated to GPU design;256-token diagnostic hit token limit, canonical464-token generation exhausted remaining512 context. No EOS or usable GPU interface.",
+    "nativeEnglish": "Raw diagnostic emitted LF ABSTAIN LF then EOS (IDs266,2,70). Canonical training Answer framing emitted Result: -1. LF then EOS (IDs3,288,301,305,302,266,70). Neither is an engineering response; canonical run stopped by model EOS, not output cutoff.",
+    "olderLlama": "On-topic outline followed by illustrative C. Initial256 and canonical512 outputs hit caps. Final same-weight greedy attempt reached actual EOS after1749 tokens with previous512-token prefix unchanged. Completion remains non-executable/incomplete as written.",
+    "llamaConcreteCodeProblems": [
+      "Undeclared OperationType, GPUCommandBuffer and CPUInstructionDecoder types.",
+      "Request union defines vertex/color but generated validation uses undefined data.pixel, data.clear and data.copy; result union has pixel but accesses result.x/y.",
+      "ValidationResult is passed by value and never returned; caller later prints uninitialized local results.",
+      "Zero-value checks assign both expected/actual zero without computing an independent numeric reference. No GPU API dispatch, guest communication or actual comparison is implemented."
+    ],
+    "attribution": "This text experiment invoked PMHNP-native, native English compositional and older Llama checkpoints. The fixed-symbol Prime10M model received no English GPU design question. No new training, oracle-answer substitution, generated-code execution or tool binding occurred."
+  },
+  "sourceReviewBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/run.py",
+      "bytes": 2827,
+      "sha256": "93571df5e2f9347dfcb38645444cbc12400ea9bbcb0ffd6580222aeff2e30bcb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/run_canonical.py",
+      "bytes": 1558,
+      "sha256": "f1434d91ee2c02eee2a2821ead829491ef97e866e139f71bb04ce5fef768069f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/llama-long.py",
+      "bytes": 3524,
+      "sha256": "fd1665a22ea699bbfc5eeea4b68f6471e57d0df4e34003a9f71c1d1cc2d424ca"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/review.py",
+      "bytes": 13673,
+      "sha256": "ee7aaa723b289f7e070ae0815a75b9e5511ec9527447e29e04f070421b03fe2e"
+    }
+  ],
+  "limitations": [
+    "Review used only saved files and CPU codec/math operations; no additional inference, model import, build or generated code execution.",
+    "Exact output retention and valid execution do not establish GPU design competence. One common question is not a broad model-quality benchmark.",
+    "Models have different tokenizers and context limits. EOS, context exhaustion and imposed token limits are reported separately.",
+    "SentencePiece output and prompt round-trip decoded directly from saved protobuf pieces; this readback does not independently recompute its optimal encoding segmentation.",
+    "No formal authority or product promotion follows. The already-built0013 custom GPU service was assistant-authored, not derived from these model outputs."
+  ],
+  "exactModelCCompileVerification": {
+    "status": "ACTUAL_COMPILE_FAILURE_VERIFIED",
+    "priorReviewSHA256": "2325c625f8d7759bf1343253968acd2c492b60d452d17abc70f6cbe9c24fe627",
+    "fenceCount": 1,
+    "sourceByteIdenticalToCompleteModelFence": true,
+    "sourceBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/gpu-proposal.c",
+      "bytes": 4126,
+      "sha256": "99343f4ac16e2294b142db0f88811e5753a51777ab03b0bcea52fef89eaa13cb"
+    },
+    "modelOutputBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/llama-complete-attempt/raw-result.json",
+      "bytes": 27937,
+      "sha256": "11712bbc2fb812166a172651af9e824881f1dfe72f93121dcbbbddce96dbdc1b"
+    },
+    "compilerReceiptBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/BUILD-RESULT.json",
+      "bytes": 850,
+      "sha256": "d9e4f84c048ff37d786afa92a0931fca0856b1a127d1973012b1aa707a9ad76d"
+    },
+    "stdoutBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderrBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/NovelRequest/ModelProposal/stderr.log",
+      "bytes": 5385,
+      "sha256": "fcd3b2d8ee9e89b1c24772ef501f11bf7cd3e7d69149954295bfe944951dfffe"
+    },
+    "exitCode": 1,
+    "objectExists": false,
+    "generatedCodeExecuted": false,
+    "sourceEdited": false,
+    "diagnostics": "Clang rejected incomplete/unknown types and invalid union members; stopped at declared12-error limit, reporting13 errors including final fatal diagnostic.",
+    "reviewScope": "Read-only byte/fence/log/receipt check; compiler was invoked earlier by parent, no new compile or model run by reviewer."
+  }
+}

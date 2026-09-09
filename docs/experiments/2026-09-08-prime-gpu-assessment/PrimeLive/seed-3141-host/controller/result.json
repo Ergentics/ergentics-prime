@@ -1,0 +1,34 @@
+{
+  "started_at_utc": "2026-09-09T00:48:27.669468Z",
+  "elapsed_seconds": 0.1189260000246577,
+  "pid": 29013,
+  "requested_wait_pid": 29013,
+  "returned_wait_pid": 29013,
+  "exact_reap_count": 1,
+  "raw_wait_status": 0,
+  "exit_status": 0,
+  "termination_signal": null,
+  "reason": null,
+  "runner_error": null,
+  "signals": [
+
+  ],
+  "process_group_members_after_reap": [
+
+  ],
+  "streams": {
+    "stdout": {
+      "total_bytes": 15531,
+      "eof": true,
+      "captured_bytes": 15531,
+      "sha256": "00f94c15e45ac5a532f543a026f57b71e6e8c002fe17f4ee264519249fa63ef4"
+    },
+    "stderr": {
+      "total_bytes": 0,
+      "eof": true,
+      "captured_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "passed": true
+}
