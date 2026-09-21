@@ -89,13 +89,18 @@ fi
 [[ "$#" == "0" ]] || exit 2
 
 readonly expected_prime_head="${ERGENTICS_EXACT_REVISION:?ERGENTICS_EXACT_REVISION is required}"
+# The current restoration is a new exact-five successor. Timing-repair
+# evidence remains bound to the original immutable merge, never to new HEAD.
+readonly restore_base_revision="a6f76bd3f246a443ef96e21fa4c769499a62b875"
+readonly restore_source_relative_path="Sources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2RestoreOnlyAuthority.swift"
+readonly restore_test_relative_path="Tests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2RestoreOnlyAuthorityTests.swift"
 readonly expected_mlx_origin="https://github.com/Ergentics/ergentics-mlx-swift"
 readonly root_mlx_revision="d37885a278f1c37484a94d0f401a418735e66519"
 readonly typed_mlx_revision="68904d54b72871f26968261ae05d4fbb7c5e3142"
 readonly numerics_origin="https://github.com/apple/swift-numerics"
 readonly numerics_revision="0c0290ff6b24942dadb83a929ffaaa1481df04a2"
 readonly numerics_version="1.1.1"
-readonly workflow_path="$prime_root/.github/workflows/prime-active-root-quarantine.yml"
+readonly current_workflow_path="$prime_root/.github/workflows/prime-active-root-quarantine.yml"
 readonly decoder_metal_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-metal.sh"
 readonly decoder_runtime_closure_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-runtime-closure.sh"
 readonly decoder_tokenizer_compatibility_gate_path="$prime_root/.github/scripts/prime-ci-native-decoder-tokenizer-compatibility.sh"
@@ -230,6 +235,16 @@ prime_gate_admit_private_root_capture_v1 stat_metadata \
 [[ "${PRIME_GATE_ROOT_CAPTURE_ACCEPTED:-}" == "accepted" \
     && "$PRIME_GATE_ROOT_CAPTURE_PARSED_VALUE" == "$EUID:40700:Directory" ]] ||
     die "exact-revision topology gate-root stat observation failed"
+
+# A content-verified historical projection is used ONLY by the inherited
+# timing-phase workflow audits. The actual current workflow is separately
+# pinned and checked by restoration admission below.
+readonly workflow_path="$exact_revision_topology_gate_private_root/timing-repair-workflow.yml"
+git -C "$prime_root" cat-file blob c4a53f9d4731bb0ca470d5d2c534d8a2a7ec6cef > "$workflow_path" ||
+    die "could not materialize immutable timing-repair workflow evidence"
+[[ "$(shasum -a 256 "$workflow_path" | awk '{print $1}')" == "d3d97ee47e8ddcabc67c9c5fe8b77ab8051a508bd3c7090737acaed88ba5ec2f" ]] ||
+    die "immutable timing-repair workflow evidence changed"
+
 export PRIME_EXACT_REVISION_TOPOLOGY_ADMITTED_RUNNER_TEMP_V1="$exact_revision_topology_admitted_runner_temp"
 unset RUNNER_TEMP
 
@@ -632,7 +647,9 @@ readonly observed_exact_revision_topology_verifier_authority_preserved_index_sha
         "$exact_revision_topology_verifier_authority_historical_pr_head" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -733,7 +750,9 @@ readonly observed_exact_revision_topology_relation_amendment_authority_preserved
         "$exact_revision_topology_relation_amendment_authority_merge_revision" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -847,7 +866,9 @@ readonly observed_exact_revision_topology_relation_timeout_repair_authority_pres
         "$exact_revision_topology_relation_timeout_repair_authority_merge_revision" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -948,7 +969,9 @@ readonly observed_exact_revision_topology_verifier_implementation_preserved_inde
         "$exact_revision_topology_verifier_implementation_merge_revision" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/scripts/PrimeExactRevisionTopologyClassifier.swift' \
@@ -999,7 +1022,9 @@ readonly observed_secure_child_validation_fixture_identity_measurement_v2_author
         "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -1022,22 +1047,83 @@ readonly observed_secure_child_validation_fixture_identity_measurement_v2_author
         == "$expected_secure_child_validation_fixture_identity_measurement_v2_authority_preserved_index_sha256" ]] ||
     die "validation-fixture identity-measurement V2 historical authority changed a path outside its exact-five closure"
 
+prime_restore_historical_index() {
+    git -C "$prime_root" ls-tree -r "$restore_base_revision" |
+        awk -F '\t' '{ split($1, m, " "); printf "%s %s 0\t%s\n", m[1], m[3], $2 }'
+}
+
+assert_restore_predecessor_file_identity() {
+    [[ "$#" == "6" ]] || return 1
+    local relative_path="$1" expected_mode="$2" expected_blob="$3"
+    local expected_bytes="$4" expected_lf_count="$5" expected_sha256="$6"
+    [[ "$(git -C "$prime_root" ls-tree "$restore_base_revision" -- "$relative_path" | awk '{print $1, $3}')" == "$expected_mode $expected_blob" \
+        && "$(git -C "$prime_root" cat-file -s "$expected_blob")" == "$expected_bytes" \
+        && "$(git -C "$prime_root" cat-file blob "$expected_blob" | wc -l | awk '{print $1}')" == "$expected_lf_count" \
+        && "$(git -C "$prime_root" cat-file blob "$expected_blob" | shasum -a 256 | awk '{print $1}')" == "$expected_sha256" ]]
+}
+
+# BEGIN CURRENT RESTORE-ONLY ADMISSION V1
+# This check advances the existing phase; it does not change the historical
+# timing repair's parent, path closure, signature evidence, or outcome.
+[[ "$(exact_commit_tree "$restore_base_revision")" == "f4f826e42f928f17cc4854a183b912b56f265e0c" \
+    && "$(exact_commit_parent_lines "$restore_base_revision")" == $'3f69d6e911ca48c39edc55508e93fed64fc48732\nf5f1fbf824c1140f43a31215b3b7ce064795b968' ]] ||
+    die "restore-only immutable timing-repair predecessor changed"
+readonly restore_parent_lines="$(exact_commit_parent_lines HEAD)"
+case "${GITHUB_EVENT_NAME:-}" in
+    pull_request)
+        [[ "$restore_parent_lines" == "$restore_base_revision" ]] ||
+            die "restore-only PR is not one direct child of the timing-repair merge"
+        ;;
+    push)
+        readonly restore_parent_count="$(awk 'NF {n++} END {print n+0}' <<< "$restore_parent_lines")"
+        readonly restore_parent1="$(head -n 1 <<< "$restore_parent_lines")"
+        readonly restore_parent2="$(tail -n 1 <<< "$restore_parent_lines")"
+        [[ "$restore_parent_count" == "2" \
+            && "$restore_parent1" == "$restore_base_revision" \
+            && "$(exact_commit_parent_lines "$restore_parent2")" == "$restore_base_revision" \
+            && "$(exact_commit_tree HEAD)" == "$(exact_commit_tree "$restore_parent2")" \
+            && "$(exact_commit_header HEAD | awk '$1 == "gpgsig" {n++} END {print n+0}')" == "1" ]] ||
+            die "restore-only main merge topology or signature-header evidence changed"
+        ;;
+    *) die "restore-only event is unauthorized" ;;
+esac
+readonly expected_restore_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2RestoreOnlyAuthority.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2RestoreOnlyAuthorityTests.swift'
+[[ "$(git -C "$prime_root" diff --name-status --no-renames "$restore_base_revision" HEAD)" == "$expected_restore_status" ]] ||
+    die "restore-only transition is not the exact ordered five paths"
+for restore_entry in \
+    '100755 .github/scripts/prime-ci-active-root-quarantine.sh' \
+    '100644 .github/workflows/prime-active-root-quarantine.yml' \
+    '100644 Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' \
+    "100644 $restore_source_relative_path" \
+    "100644 $restore_test_relative_path"; do
+    restore_mode="${restore_entry%% *}"
+    restore_path="${restore_entry#* }"
+    [[ -f "$prime_root/$restore_path" && ! -L "$prime_root/$restore_path" \
+        && "$(stat -f %l "$prime_root/$restore_path")" == "1" \
+        && "$(git -C "$prime_root" ls-files -s -- "$restore_path" | awk '{print $1}')" == "$restore_mode" ]] ||
+        die "restore-only path mode or regular-file identity changed: $restore_path"
+done
+readonly expected_restore_workflow_sha256="4239f81fd60cfc0f63894943a3525bdf6d2b0f60d1a307be360c8420c0bbf7f3"
+readonly expected_restore_source_sha256="abe90a24c5789e0234584daedfb47fc333be2ecaa6dae1f435f1b2fade6137cc"
+readonly expected_restore_test_sha256="918f458ccd8e82ec1c67fb4ebe7d876a2c09cea717eafbfc5c2649275bd7432c"
+readonly expected_restore_embedded_source_identity_sha256="c7d11f0e422deb6d2ed8fc86fe305b642527a586ee2fc00bab14d02f292e35e6"
+[[ "$(shasum -a 256 "$current_workflow_path" | awk '{print $1}')" == "$expected_restore_workflow_sha256" \
+    && "$(shasum -a 256 "$prime_root/$restore_source_relative_path" | awk '{print $1}')" == "$expected_restore_source_sha256" \
+    && "$(shasum -a 256 "$prime_root/$restore_test_relative_path" | awk '{print $1}')" == "$expected_restore_test_sha256" ]] ||
+    die "restore-only current workflow or authority/test bytes changed"
+[[ "$(awk '/^  active-root:/ {inside=1} /^  trusted-main-compile:/ {inside=0} inside && /^    timeout-minutes:/ {print $2}' "$current_workflow_path")" == "45" \
+    && "$(awk '/^  trusted-main-compile:/ {inside=1} inside && /^    timeout-minutes:/ {print $2}' "$current_workflow_path")" == "90" ]] ||
+    die "restore-only timeout must restore reviewed main to 90 and preserve active at 45"
+# END CURRENT RESTORE-ONLY ADMISSION V1
+
 readonly secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_lines="$(
-    exact_commit_parent_lines HEAD
+    exact_commit_parent_lines "$restore_base_revision"
 )"
 readonly secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_count="$(
     awk 'NF { count += 1 } END { print count + 0 }' \
         <<< "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_lines"
 )"
-case "${GITHUB_EVENT_NAME:-}" in
-    pull_request)
-        [[ "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_count" \
-                == "1" \
-            && "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_lines" \
-                == "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision" ]] ||
-            die "validation-fixture identity-measurement V2 timing/base-continuity authority is not a direct pull-request child of exact main run 174"
-        ;;
-    push)
+# The retained timing repair was a push-main merge at restore_base_revision.
         readonly secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_merge_first_parent="$(
             head -n 1 \
                 <<< "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_parent_lines"
@@ -1050,21 +1136,16 @@ case "${GITHUB_EVENT_NAME:-}" in
                 == "2" \
             && "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_merge_first_parent" \
                 == "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision" \
-            && "$(exact_commit_tree HEAD)" \
+            && "$(exact_commit_tree "$restore_base_revision")" \
                 == "$(exact_commit_tree \
                     "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_merge_second_parent")" \
-            && "$(exact_commit_header HEAD | \
+            && "$(exact_commit_header "$restore_base_revision" | \
                 awk '$1 == "gpgsig" { count += 1 } END { print count + 0 }')" \
                 == "1" ]] ||
             die "validation-fixture identity-measurement V2 timing/base-continuity authority signed-main event shape changed"
-        ;;
-    *)
-        die "validation-fixture identity-measurement V2 timing/base-continuity authority event is unauthorized"
-        ;;
-esac
 readonly expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_status=$'M\t.github/scripts/prime-ci-active-root-quarantine.sh\nM\t.github/workflows/prime-active-root-quarantine.yml\nM\tSources/PrimeCore/PrimeEmbeddedBuildProvenance.swift\nA\tSources/PrimeCore/PrimeSecureChildValidationFixtureIdentityMeasurementV2TimingRepairAuthority.swift\nA\tTests/PrimeCoreTests/PrimeSecureChildValidationFixtureIdentityMeasurementV2TimingRepairAuthorityTests.swift'
 [[ "$(git -C "$prime_root" diff --name-status --no-renames \
-        "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision" HEAD)" \
+        "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision" "$restore_base_revision")" \
         == "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_status" ]] ||
     die "validation-fixture identity-measurement V2 timing/base-continuity authority is not the exact ordered five paths"
 for secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path_and_mode in \
@@ -1077,17 +1158,19 @@ for secure_child_validation_fixture_identity_measurement_v2_timing_base_continui
     secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path="${secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path_and_mode#* }"
     [[ -f "$prime_root/$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path" \
         && ! -L "$prime_root/$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path" \
-        && "$(git -C "$prime_root" ls-files -s -- \
+        && "$(git -C "$prime_root" ls-tree "$restore_base_revision" -- \
             "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path" | \
             awk '{print $1}')" \
             == "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_mode" ]] ||
         die "validation-fixture identity-measurement V2 timing/base-continuity authority path is missing or has the wrong mode: $secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_path"
 done
 readonly observed_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_preserved_index_sha256="$({
-    git -C "$prime_root" ls-files -s |
+    prime_restore_historical_index |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -1242,7 +1325,7 @@ case "${GITHUB_EVENT_NAME:-}" in
             "$prime_root" "3"
             "current_exact_revision" "$expected_prime_head"
             "$exact_revision_topology_gate_index_tree" "1"
-            "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision"
+            "$restore_base_revision"
             "verified_v2_authority_base"
             "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision"
             "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_tree" "2"
@@ -1272,7 +1355,7 @@ case "${GITHUB_EVENT_NAME:-}" in
             "--ordered-merge-child-relation"
             "current_exact_revision" "$expected_prime_head"
             "$exact_revision_topology_gate_index_tree"
-            "$secure_child_validation_fixture_identity_measurement_v2_authority_merge_revision"
+            "$restore_base_revision"
             "current_reviewed_child"
         )
         ;;
@@ -1335,7 +1418,9 @@ readonly observed_secure_child_validation_fixture_identity_measurement_mechanics
         "$secure_child_validation_fixture_identity_measurement_mechanics_closure_revision" |
         while IFS= read -r tree_record; do
             relative_path="${tree_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -1359,7 +1444,9 @@ readonly observed_secure_child_validation_fixture_identity_measurement_outcome_o
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -2378,7 +2465,9 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
     git -C "$prime_root" ls-files -s |
         while IFS= read -r index_record; do
             relative_path="${index_record#*$'\t'}"
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -2390,7 +2479,9 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                     == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" ]]; then
                 continue
             fi
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path" \
                 || "$relative_path" \
                     == "$secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_source_relative_path" \
@@ -2398,7 +2489,9 @@ readonly observed_secure_child_process_evidence_closed_fixture_canary_authority_
                     == "$secure_child_process_evidence_closed_fixture_canary_pin_mismatch_execution_observation_test_relative_path" ]]; then
                 continue
             fi
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == "$neutral_resource_lease_generalization_authority_source_relative_path" \
                 || "$relative_path" \
                     == "$neutral_resource_lease_generalization_authority_test_relative_path" \
@@ -2521,6 +2614,8 @@ secure_child_process_evidence_layer_a_path_is_excluded() {
         "$secure_child_validation_fixture_identity_measurement_v2_authority_test_relative_path"|\
         "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_source_relative_path"|\
         "$secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_test_relative_path"|\
+        "$restore_source_relative_path"|\
+        "$restore_test_relative_path"|\
         "$secure_child_process_evidence_closed_fixture_canary_launcher_relative_path")
             return 0
             ;;
@@ -2554,7 +2649,9 @@ readonly observed_secure_child_process_evidence_layer_a_status="$(git -C "$prime
     diff --name-status --no-renames \
     "$secure_child_process_evidence_layer_a_predecessor_revision" HEAD | \
     while IFS=$'\t' read -r change relative_path; do
-        if [[ "$relative_path" \
+        if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_authority_source_relative_path" \
             || "$relative_path" \
                 == "$secure_child_process_evidence_closed_fixture_canary_authority_test_relative_path" \
@@ -2704,7 +2801,9 @@ readonly observed_secure_child_process_evidence_implementation_authority_preserv
                 "$relative_path"; then
                 continue
             fi
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -2782,7 +2881,9 @@ readonly observed_secure_child_process_evidence_design_authority_preserved_index
                 "$relative_path"; then
                 continue
             fi
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -2862,7 +2963,9 @@ readonly observed_native300m_trajectory_checkpoint_execution_retirement_preserve
                 "$relative_path"; then
                 continue
             fi
-            if [[ "$relative_path" \
+            if [[ "$relative_path" == "$restore_source_relative_path" \
+                || "$relative_path" == "$restore_test_relative_path" \
+                || "$relative_path" \
                     == '.github/scripts/prime-ci-active-root-quarantine.sh' \
                 || "$relative_path" \
                     == '.github/workflows/prime-active-root-quarantine.yml' \
@@ -14792,8 +14895,8 @@ while IFS= read -r relative_path; do
         '{relative_path: $relative_path, sha256: $sha256, byte_count: $byte_count}'
 done | jq -jcsS '.' | shasum -a 256 | awk '{print $1}')"
 [[ "$expected_embedded_source_identity_sha256" \
-        == "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_embedded_source_identity_sha256" \
-    && "$recomputed_embedded_source_identity_record_count" == "534" \
+        == "$expected_restore_embedded_source_identity_sha256" \
+    && "$recomputed_embedded_source_identity_record_count" == "536" \
     && "$recomputed_embedded_source_identity_sha256" \
         == "$expected_embedded_source_identity_sha256" ]] ||
     die "embedded Prime source provenance does not recompute exactly"
@@ -23434,14 +23537,14 @@ assert_secure_child_validation_fixture_identity_measurement_v2_timing_base_conti
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_test_lf_count" \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_test_sha256" ||
     die "validation-fixture identity-measurement V2 timing/base-continuity authority test identity changed"
-assert_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_identity \
+assert_restore_predecessor_file_identity \
     'Sources/PrimeCore/PrimeEmbeddedBuildProvenance.swift' 100644 \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_provenance_blob" \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_provenance_bytes" \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_provenance_lf_count" \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_provenance_sha256" ||
     die "validation-fixture identity-measurement V2 timing/base-continuity authority provenance identity changed"
-assert_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_identity \
+assert_restore_predecessor_file_identity \
     '.github/workflows/prime-active-root-quarantine.yml' 100644 \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_workflow_blob" \
     "$expected_secure_child_validation_fixture_identity_measurement_v2_timing_base_continuity_authority_workflow_bytes" \
