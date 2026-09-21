@@ -258,6 +258,19 @@
 		B20000000000000000000271 = {isa = PBXBuildFile; fileRef = B10000000000000000000258; };
 		B20000000000000000000272 = {isa = PBXBuildFile; fileRef = B10000000000000000000259; };
 		B20000000000000000000273 = {isa = PBXBuildFile; fileRef = B10000000000000000000260; };
+		2B4F4F833FD56A4CBDE7AD66 /* ErgenticsAgentsModel.swift */ = {isa = PBXBuildFile; fileRef = EC28968F63849845610A78E6; };
+		DC307F4AD0B25880235252E2 /* ErgenticsAgentsView.swift */ = {isa = PBXBuildFile; fileRef = D7559C602BA2B078957BA239; };
+		F162786779CC421B278B3F80 /* ErgenticsAgentCatalogIdentity.swift */ = {isa = PBXBuildFile; fileRef = 4DEC6F19832F143A28926566; };
+		965734237A58D03A48D64DC1 /* ErgenticsAgentLibrary.swift */ = {isa = PBXBuildFile; fileRef = 8BCCBFBAC5551FA775C68754; };
+		8B4CBB27C8C3FD4CEE9C6046 /* ErgenticsAgentLibrary.swift */ = {isa = PBXBuildFile; fileRef = 8BCCBFBAC5551FA775C68754; };
+		2C7383D6A76895188D2665A6 /* ErgenticsAgentTaskStore.swift */ = {isa = PBXBuildFile; fileRef = 5153356D2509BC0FFAD1935F; };
+		2E6850A339B20432B3294874 /* ErgenticsAgentTaskStore.swift */ = {isa = PBXBuildFile; fileRef = 5153356D2509BC0FFAD1935F; };
+		FF3BB65AC8D90A319D482AAE /* ErgenticsAgentLibraryTests.swift */ = {isa = PBXBuildFile; fileRef = 0D451655B82170F8C509B67B; };
+		191A5AA2F561602FDED8A81C /* ErgenticsAgentTaskStoreTests.swift */ = {isa = PBXBuildFile; fileRef = 570F132211B2B54FA4FEF639; };
+		B6E7D00384C07EB04F8754DE /* ErgenticsAgents */ = {isa = PBXBuildFile; fileRef = 3F6B2668168B1E0FA24012D6; };
+		84F82924DFC9D095733F9329 /* ErgenticsAgentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC28968F63849845610A78E6; };
+		92EAD0ED0C4C689B7A397DC9 /* ErgenticsAgentCatalogIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6F19832F143A28926566; };
+		11FE6D8FEEE4245198786499 /* ErgenticsAgentsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9996E1ED19291727C7E6D043; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -428,6 +441,15 @@
 		B10000000000000000000258 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormat.swift; sourceTree = "<group>"; };
 		B10000000000000000000259 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierTests.swift; sourceTree = "<group>"; };
 		B10000000000000000000260 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormatTests.swift; sourceTree = "<group>"; };
+		EC28968F63849845610A78E6 /* ErgenticsAgentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsModel.swift; sourceTree = "<group>"; };
+		D7559C602BA2B078957BA239 /* ErgenticsAgentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsView.swift; sourceTree = "<group>"; };
+		4DEC6F19832F143A28926566 /* ErgenticsAgentCatalogIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentCatalogIdentity.swift; sourceTree = "<group>"; };
+		8BCCBFBAC5551FA775C68754 /* ErgenticsAgentLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentLibrary.swift; sourceTree = "<group>"; };
+		5153356D2509BC0FFAD1935F /* ErgenticsAgentTaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentTaskStore.swift; sourceTree = "<group>"; };
+		0D451655B82170F8C509B67B /* ErgenticsAgentLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentLibraryTests.swift; sourceTree = "<group>"; };
+		570F132211B2B54FA4FEF639 /* ErgenticsAgentTaskStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentTaskStoreTests.swift; sourceTree = "<group>"; };
+		3F6B2668168B1E0FA24012D6 /* ErgenticsAgents */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/ErgenticsAgents; sourceTree = "<group>"; };
+		9996E1ED19291727C7E6D043 /* ErgenticsAgentsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,7 +498,8 @@
 		D33000000000000000000001 = {isa = PBXGroup; children = (D31000000000000000000003, D31000000000000000000004, D31000000000000000000005, D31000000000000000000006, D31000000000000000000007,); path = Tools/H3QualificationController; sourceTree = "<group>"; };
 		B30000000000000000000001 = {
 			isa = PBXGroup;
-			children = (8BF038B4C2EC9A7018A9A130,E56D9568DDD2C63985D25A04,DC0DFF32BA6E642650F7E97A,D21EEC852BDB48BE190E741A,6DC226390B43075B9FA6277F,6ED8ACC281C01FB9894C6922,BF0953F2622DF135DE2DD822,ACDA0D64943F0D30A2F2509CBF395F6A,4404E38C4452D430EF4A3EA5D0BB8082,
+			children = (
+				3F6B2668168B1E0FA24012D6,8BF038B4C2EC9A7018A9A130,E56D9568DDD2C63985D25A04,DC0DFF32BA6E642650F7E97A,D21EEC852BDB48BE190E741A,6DC226390B43075B9FA6277F,6ED8ACC281C01FB9894C6922,BF0953F2622DF135DE2DD822,ACDA0D64943F0D30A2F2509CBF395F6A,4404E38C4452D430EF4A3EA5D0BB8082,
 				B30000000000000000000002 /* Sources */,
 				B30000000000000000000003 /* Tests */,
 				B30000000000000000000004 /* Control */,
@@ -496,6 +519,11 @@
 		B30000000000000000000002 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EC28968F63849845610A78E6,
+				D7559C602BA2B078957BA239,
+				4DEC6F19832F143A28926566,
+				8BCCBFBAC5551FA775C68754,
+				5153356D2509BC0FFAD1935F,
 				74546EB8FA58615FDDB2AA6E,
 
 				7035CB47D33F677B088725E7,
@@ -585,6 +613,9 @@
 		B30000000000000000000003 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				9996E1ED19291727C7E6D043,
+				0D451655B82170F8C509B67B,
+				570F132211B2B54FA4FEF639,
 				EA551D1F447A02D45063ABC4,
 
 				F7A0EBF7A1B6F751BFFA008B,
@@ -779,7 +810,8 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B50000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B20000000000000000000070, B20000000000000000000071, B20000000000000000000160 /* LICENSE in Resources */, B20000000000000000000161 /* ERGENTICS.spdx.json in Resources */, B20000000000000000000162 /* THIRD_PARTY_NOTICES.md in Resources */); runOnlyForDeploymentPostprocessing = 0; };
+		B50000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+				B6E7D00384C07EB04F8754DE,B20000000000000000000070, B20000000000000000000071, B20000000000000000000160 /* LICENSE in Resources */, B20000000000000000000161 /* ERGENTICS.spdx.json in Resources */, B20000000000000000000162 /* THIRD_PARTY_NOTICES.md in Resources */); runOnlyForDeploymentPostprocessing = 0; };
 		B50000000000000000000006 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B20000000000000000000141 /* CapabilityFlowReceiptVerifier in Resources */,); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
@@ -788,7 +820,12 @@
 		B50000000000000000000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (D97A4A880C287EBBB8657C47,C0769CF08CB4DD6FF3D6F7E7,7CBF71D2732CAC4116A17F84,8D8A616B125F6A6F92877384,90FC11B2AD9FDEECE6BD7D2C,
+			files = (
+				2B4F4F833FD56A4CBDE7AD66,
+				DC307F4AD0B25880235252E2,
+				F162786779CC421B278B3F80,
+				965734237A58D03A48D64DC1,
+				2C7383D6A76895188D2665A6,D97A4A880C287EBBB8657C47,C0769CF08CB4DD6FF3D6F7E7,7CBF71D2732CAC4116A17F84,8D8A616B125F6A6F92877384,90FC11B2AD9FDEECE6BD7D2C,
 				3CB284E53FD026BA798DD7C7,
 				D2B7235EA637F2E9C0EBF90C,
 				060C4536396DDDD92587EF73,
@@ -874,7 +911,14 @@
 		B50000000000000000000004 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (205A0A0A4C21326BD8646FE5,78D16C4A34176E7EC3FEEADF,1FDE79134C5D3363640525FF,4478D8584520F3FF28C7A6BC,EA2200000000000000000002, 0B1FFF55B5E663AF8A90A5E99DDE3EB0,
+			files = (
+				84F82924DFC9D095733F9329,
+				92EAD0ED0C4C689B7A397DC9,
+				11FE6D8FEEE4245198786499,
+				8B4CBB27C8C3FD4CEE9C6046,
+				2E6850A339B20432B3294874,
+				FF3BB65AC8D90A319D482AAE,
+				191A5AA2F561602FDED8A81C,205A0A0A4C21326BD8646FE5,78D16C4A34176E7EC3FEEADF,1FDE79134C5D3363640525FF,4478D8584520F3FF28C7A6BC,EA2200000000000000000002, 0B1FFF55B5E663AF8A90A5E99DDE3EB0,
 				24AA445B9D32381DEC926A9B,
 				DD0259569C2B152C9E586514,
 				F6D247D1C921B9BE4C7CAF1514F9967E,
@@ -1088,7 +1132,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = ZCQ435U8JP;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_DEBUG_DYLIB = NO;
@@ -1118,7 +1162,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = ZCQ435U8JP;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_DEBUG_DYLIB = NO;

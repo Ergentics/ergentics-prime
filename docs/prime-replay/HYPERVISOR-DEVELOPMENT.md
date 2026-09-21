@@ -1,6 +1,6 @@
 # Prime / HyperVisor development flow
 
-Version: **0.2.0** · Owner: **Ergentics, LLC** · Updated: **2026-09-21**
+Version: **0.2.1** · Owner: **Ergentics, LLC** · Updated: **2026-09-21**
 
 This is the continuation path for the maintained Hyper-Visor app in
 `Apps/ErgenticsPrime`. It connects source custody, the two external Ergentics
@@ -91,6 +91,27 @@ remote ref, rewrite lineage or substitute an API-created commit and claim the
 same Git identity. A different publication method must explicitly preserve or
 account for changed identity.
 
+## Native Agents candidate and the existing Actions path
+
+Build24 adds the app's text workspace and a pinned native catalog containing
+the two profiles, Prime custody method and eight reviewed lessons. Read the
+[native contract](../../Apps/ErgenticsPrime/NATIVE-AGENTS.md) and
+[source review](../../Apps/ErgenticsPrime/Distribution/Build24-source-review.json).
+The catalog installs definitions and supports explicit task preparation. Its
+local Prime experiment consumes the current message only; it does not ingest
+the profiles or shared corpus. Hosted profile loading, native resource loading,
+prepared exports and model execution remain separately evidenced.
+
+Publish the reviewed feature commit without force and carry it into the existing
+lineage branch only as a verified fast-forward. PR139 then supplies the ordinary
+`pull_request` / `synchronize` event against main through
+`.github/workflows/prime-active-root-quarantine.yml`. Do not create an alternate
+workflow or use Codespaces for this app change. Read back the branch SHA and the
+actual Actions outcome. The inherited V2 metadata admission remains unresolved;
+source publication and GitHub mergeability do not clear that gate. This workflow
+does not currently build the Xcode app. Keep local source tests, signed Release
+build, installation and native interaction separate.
+
 ## Output, corpus and extension
 
 Use the selected [shared corpus v0.1.0](../ergentics/corpus/0.1.0/README.md)
@@ -144,6 +165,9 @@ programs, shared-corpus retrieval or trusted cross-Agent egress.
 
 ## Change record
 
+- **0.2.1 — 2026-09-21:** bind the native Agents Build24 source candidate,
+  profile/corpus boundaries and the existing PR139 synchronization trigger.
+  No new CI workflow, gate amendment or installation result.
 - **0.2.0 — 2026-09-21:** add Prime gate custody, reviewed corpus contribution,
   per-profile positive/golden-negative evidence and compatible helper repair.
   Record PR #138 merge and PR #139 admission failure; no gate or native authority changed.

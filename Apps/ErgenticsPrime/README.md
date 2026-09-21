@@ -1,4 +1,19 @@
-# Current Prime app: Build 23
+# Current Prime app source: Build 24 candidate
+
+The new **Agents** workspace adds saved text conversations, the two verified
+Ergentics profiles, Prime custody method and eight reviewed corpus entries.
+Its composer connects to the existing Ergentics Prime local checkpoint
+experiment with real progress, stop and failure states. Profile/corpus task
+exports remain distinct from the experimental model's input. See
+[the native workspace contract](NATIVE-AGENTS.md).
+
+Build 24 is under validation; source availability is not an installed-app or
+native execution claim. This change follows ergentics-prime's existing
+`prime-active-root-quarantine.yml` Actions route and repository admission.
+The retained V2 phase transition remains a separate prerequisite for main
+integration. No alternate workflow or Codespaces route is introduced.
+
+## Build 23 checkpoint (historical)
 
 The Prime page now runs the retained learned domain model and editable geometry inputs through bundled native services. Guest mode uses real ARM guest requests and host Metal; host mode is also available. The app saves inputs and raw outputs locally. The old Native-300M mechanics checkpoint is named “Stage 7 checkpoint experiment” in the Prime menu and is no longer the default interface.
 
@@ -14,7 +29,7 @@ Current app features, verification status and next work: see [ROADMAP.md](ROADMA
 
 One native Mac app brings together the Git workspace, virtual machines, Prime runtime and saved evidence. Open the `ErgenticsPrime` scheme in `ErgenticsProvenance.xcodeproj`; it builds the full existing application. The separate runtime-only prototype has been absorbed. The technical bundle ID and executable remain `com.ergentics.provenance` and `Ergentics Provenance` so existing signing and VM integration retain their identity.
 
-Start on **Workspace**, open a repository, and use **Git workspace**, **Virtual machines**, and **Prime** from the same window. The selected repository and runtime status are shared with Home. The Prime page loads three retained learned domain checkpoints and saves each run locally. VM selection is still independent; associating a repository, an OS guest and a compatible checkpoint remains open.
+Build 24 starts on **Agents** for text tasks and the local Prime checkpoint experiment. Use **Workspace** to open a repository, and **Git workspace**, **Virtual machines**, and **Prime** from the same window. The selected repository and runtime status are shared with Home. The separate Prime page loads three retained learned domain checkpoints and saves each run locally. VM selection is still independent; associating a repository, an OS guest and a compatible checkpoint remains open.
 
 The current app's Git operations and Prime check run locally; they do not implement remote authentication or uploads. This is not a credential vault: selected file previews, patches and local Git history can contain secrets and are not automatically redacted. Visible text is readable by authorized accessibility tools and may be captured onscreen. Apple's legacy `NSWindow.SharingType.none` setting is not evidence of capture prevention; [Apple now describes it as a legacy constant macOS no longer uses](https://developer.apple.com/documentation/appkit/nswindow/sharingtype-swift.enum). Signed code and completed validation gates do not establish end-to-end secret containment.
 

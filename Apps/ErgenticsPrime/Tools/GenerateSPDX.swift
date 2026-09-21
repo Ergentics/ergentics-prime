@@ -140,6 +140,7 @@ private func generate(repositoryRoot: URL, outputURL: URL,
         "LICENSE",
         "PrivacyInfo.xcprivacy",
         "THIRD_PARTY_NOTICES.md",
+        "NATIVE-AGENTS.md",
         "Packages/PrimeNativeRuntime/Package.swift",
         "Packages/PrimeNativeRuntime/LICENSE",
         "Packages/PrimeNativeRuntime/README.md",
@@ -149,6 +150,7 @@ private func generate(repositoryRoot: URL, outputURL: URL,
         + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Assets.xcassets")
         + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Guest")
         + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Sources")
+        + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Resources/ErgenticsAgents")
         + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Tools/PrimeRuntime")
         + recursivelyEnumeratedFiles(root: repositoryRoot, relativeDirectory: "Packages/PrimeNativeRuntime/Sources")
     ).sorted()

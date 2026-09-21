@@ -17,10 +17,11 @@ struct ProvenanceView: View {
 
     @State private var selection: Destination =
         DevelopmentLaunch.deltaPUReadinessRequested ? .deltaPU :
-        (DevelopmentLaunch.processMode == .primeGitReadiness ? .primeGit : .prime)
+        (DevelopmentLaunch.processMode == .primeGitReadiness ? .primeGit : .agents)
     private let accent = Color.teal
 
     private enum Destination: CaseIterable, Hashable, Identifiable {
+        case agents
         case workspace
         case prime
         case virtualMachines
@@ -36,6 +37,7 @@ struct ProvenanceView: View {
         var id: Self { self }
         var title: String {
             switch self {
+            case .agents: "Agents"
             case .workspace: "Workspace"
             case .prime: "Prime"
             case .virtualMachines: "Virtual machines"
@@ -51,6 +53,7 @@ struct ProvenanceView: View {
         }
         var symbol: String {
             switch self {
+            case .agents: "text.bubble"
             case .workspace: "square.grid.2x2"
             case .prime: "sparkles"
             case .virtualMachines: "desktopcomputer"
@@ -70,7 +73,7 @@ struct ProvenanceView: View {
         NavigationSplitView {
             List(selection: $selection) {
                 Section("Work") {
-                    ForEach([Destination.workspace, .gitWorkspace, .virtualMachines, .prime]) { destination in
+                    ForEach([Destination.agents, .workspace, .gitWorkspace, .virtualMachines, .prime]) { destination in
                         Label(destination.title, systemImage: destination.symbol).tag(destination)
                     }
                 }
@@ -126,6 +129,8 @@ struct ProvenanceView: View {
     @ViewBuilder
     private var detail: some View {
         switch selection {
+        case .agents:
+            ErgenticsAgentsView(model: ErgenticsAgentsWorkspace.model)
         case .workspace:
             workspaceHome
         case .virtualMachines:
@@ -199,7 +204,7 @@ struct ProvenanceView: View {
                 case .vmAndRepository:
                     vmPanel
                     repositoryPanel
-                case .workspace, .prime, .virtualMachines, .gitWorkspace, .primeGit, .deltaPU:
+                case .agents, .workspace, .prime, .virtualMachines, .gitWorkspace, .primeGit, .deltaPU:
                     EmptyView()
                 }
                 if selection != .hypervisorLab {

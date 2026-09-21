@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ergentics Agent durable task state",
+  "type": "object",
+  "required": [
+    "schema",
+    "agent_id",
+    "agent_version",
+    "run_id",
+    "objective",
+    "working_root",
+    "output_root",
+    "authority_basis",
+    "phase",
+    "load_receipt",
+    "evidence",
+    "failures",
+    "remaining_limits",
+    "resume_point",
+    "next_action",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ergentics.agent-run.v1"
+    },
+    "agent_id": {
+      "type": "string",
+      "enum": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ]
+    },
+    "agent_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "working_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_basis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase": {
+      "enum": [
+        "prepared",
+        "loaded",
+        "working",
+        "paused",
+        "completed",
+        "failed"
+      ]
+    },
+    "load_receipt": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "remaining_limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resume_point": {
+      "type": "string",
+      "minLength": 1
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Use within existing task notes where possible. State does not prove a live process, grant authority, or revive a previous attempt. Role definitions remain immutable; task state is separate."
+}

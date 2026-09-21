@@ -1,7 +1,16 @@
 # Ergentics Prime — current roadmap
 
-Updated September 20, 2026 for the Prime/HyperVisor source closeout. Build23 and
+Updated September 21, 2026 for the Build24 native Agents source candidate. Build23 and
 the native checkpoint observations below retain their September 8 scope.
+
+**Current candidate: Build24.** The Agents destination adds persistent text
+tasks and responses through the existing local Prime experiment, with explicit
+model selection, Send/Stop, reviewed profile/corpus inspection and prepared-task
+export. Its pinned native catalog contains two profiles and eight reviewed
+lessons. See [NATIVE-AGENTS.md](NATIVE-AGENTS.md) for versions and boundaries.
+Source checks and native installation are separate; the current signed build
+and installed execution remain unverified. Publication follows the existing
+Prime integration PR and Actions route. The V2 phase admission hold remains.
 
 **Current source closeout:** the reviewed lifecycle/intake repairs, obsolete
 entrypoint guards, Rust evidence custody and Prime assessment v0.3.0 are joined
@@ -18,7 +27,7 @@ protocol/toolchain amendment was performed in the closeout.
 
 **Product:** `com.ergentics.provenance`. The existing TestFlight app is **Hyper-Visor**, App Store Connect ID **6807235450**. Build 2 was observed ready for internal testing and build 3 was also uploaded. This is an update to that app.
 
-**Current integration: Build 23.** The maintained app source is `Apps/ErgenticsPrime` in this Prime repository, opened through the `ErgenticsPrime` scheme. The Prime controls run three retained learned domain checkpoints and editable geometry inputs through bundled native services. Host mode and real ARM guest request mode both use host Metal; inputs and raw results are saved locally. The legacy Native-300M interface is retained as “Stage 7 checkpoint experiment” in the Prime menu.
+**Previous integration: Build 23.** The maintained app source is `Apps/ErgenticsPrime` in this Prime repository, opened through the `ErgenticsPrime` scheme. The Prime controls run three retained learned domain checkpoints and editable geometry inputs through bundled native services. Host mode and real ARM guest request mode both use host Metal; inputs and raw results are saved locally. The legacy Native-300M interface is retained as “Stage 7 checkpoint experiment” in the Prime menu.
 
 The signed Release app passed all 16 bounded service requests: 48 learned model forwards and four geometry dispatches. These calls use the same actions as the controls; visual UI acceptance remains with the user. No training, new dependency installation, general English capability, model Stage 7–8 completion, bootable OS acceptance or new TestFlight upload is claimed. See the README for the canonical Xcode build and its existing ignored local assets.
 

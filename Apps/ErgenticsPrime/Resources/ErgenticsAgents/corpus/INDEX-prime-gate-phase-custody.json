@@ -1,0 +1,64 @@
+{
+  "schema": "ergentics.corpus-index.v1",
+  "id": "ergentics-prime-custody-contribution",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "entries": [
+    {
+      "id": "prime-gate-phase-custody",
+      "version": "0.1.0",
+      "path": "entries/prime-gate-phase-custody.md",
+      "bytes": 3071,
+      "sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+      "kind": "lesson",
+      "material_class": "authored_method",
+      "attribution": "Ergentics, LLC; originating method and current task authored derivation, with attributed hosted profile review.",
+      "origin": "Prime PR139/run178 and sealed trigger011 packet; two current-profile review responses retained in custody-harvest-012.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Ten hosted case responses manually reviewed against pre-dispatch criteria; original responses, actual load observations and exact candidate pins retained. Not native qualification."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+        "ergentics.promotion": {
+          "request_sha256": "ccbc07d88f14a6f98cb8ea615ad2a817ce6ab4ebfab2ef4b19d2eed0c724b9ce",
+          "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source/prime-gate-phase-custody.md",
+          "source_relative_path": "prime-gate-phase-custody.md",
+          "source_locator_meaning": "Historical evidence locator only; never automatically opened by a receiving packet load.",
+          "source_sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+          "reviewer": "Current task author/integrator",
+          "review_evidence": {
+            "positive_evidence": {
+              "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/positive_evidence.json",
+              "sha256": "465b058aec2df64cf0487ca79fe25981d523ee797ce1acc9a8332fa3895d5f9d"
+            },
+            "golden_negative_evidence": {
+              "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/golden_negative_evidence.json",
+              "sha256": "94ecb4c3baea91fce66477f9fe81416f511fa4e077d69f48313369755d5e5e5e"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+  }
+}

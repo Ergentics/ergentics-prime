@@ -1,6 +1,6 @@
 {
   "creationInfo" : {
-    "created" : "2026-09-06T23:17:56Z",
+    "created" : "2026-09-21T19:33:21Z",
     "creators" : [
       "Organization: Ergentics, LLC",
       "Tool: Ergentics GenerateSPDX.swift/4"
@@ -10,7 +10,7 @@
   "documentDescribes" : [
     "SPDXRef-Package-ErgenticsProvenance"
   ],
-  "documentNamespace" : "urn:uuid:c1cda866-f0cb-4de8-abce-31cd9bb3a59e",
+  "documentNamespace" : "urn:uuid:a1f6b360-64a1-405b-98c7-e3f88622f478",
   "files" : [
     {
       "checksums" : [
@@ -302,11 +302,11 @@
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "9a437701ef3b462f06e64aa39d08d64a91e2ca54"
+          "checksumValue" : "34c76063e8b7a8c23fe2a679ddcbfdee628c30c3"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "620db8ce829afdd296e678755f5a512e64601724c721dd526d247171afd37a6f"
+          "checksumValue" : "b0fd197cd0dcfe5835a82f82546ec4b0d52fb963efd72b9b08333b7286042d48"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -324,11 +324,11 @@
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "2a5e7ccdef9f8cf1b49a5fdecfc0e91e837bd1fd"
+          "checksumValue" : "cda8f1ea41c96368341244841897822b63f4f3c5"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "68026bc8782209160efc3cd8c2f6bca3cbe7a6aa931660390e55ee9555797c5f"
+          "checksumValue" : "82df406c222c3b5f7d7e7f36a3dcee948a5dbd96fa2160ca78dd6125c1ab94ed"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -522,11 +522,11 @@
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "5cbfdf51c40835563343c7696eaaf26f4e0d6617"
+          "checksumValue" : "43c8641be326cfa10d31c3c672e7e0cf1df2dd2f"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "8fa1573cbf25de90f7720c0d1fa24e29df86fbcf704e51e6c1d0ad5222ecf8db"
+          "checksumValue" : "4d0cd808afea2026b3b58ae0a426c771f770d6a493e03e0c0b4d837b62d7cc91"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -566,6 +566,28 @@
       "checksums" : [
         {
           "algorithm" : "SHA1",
+          "checksumValue" : "986f2b57cdb0f7a2586fe59a9897f506de368deb"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "ff68db535fcb19952a8e32440f31cb7e4778ef06bf8973ed5e3ce740f57f6392"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./NATIVE-AGENTS.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0026"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
           "checksumValue" : "a32a67f54be193c1f530bab8fa3c35965079d0b2"
         },
         {
@@ -582,17 +604,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0026"
+      "SPDXID" : "SPDXRef-File-0027"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "f48b490ce67a4465acee0ff5f07e37ced45ebbde"
+          "checksumValue" : "ea02b8f3e20163f1ae6fcea218129245eb60c400"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "9a6d74f72fb97b6076c6c61e310b24fa7d363b6819897379661e3c311c5facd1"
+          "checksumValue" : "acf43cc6f40a7a6eccff22ada098959efe611dad58ee4d3ed662c527172e4be1"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -604,7 +626,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0027"
+      "SPDXID" : "SPDXRef-File-0028"
     },
     {
       "checksums" : [
@@ -626,7 +648,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0028"
+      "SPDXID" : "SPDXRef-File-0029"
     },
     {
       "checksums" : [
@@ -648,7 +670,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0029"
+      "SPDXID" : "SPDXRef-File-0030"
     },
     {
       "checksums" : [
@@ -670,7 +692,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0030"
+      "SPDXID" : "SPDXRef-File-0031"
     },
     {
       "checksums" : [
@@ -692,7 +714,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0031"
+      "SPDXID" : "SPDXRef-File-0032"
     },
     {
       "checksums" : [
@@ -714,7 +736,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0032"
+      "SPDXID" : "SPDXRef-File-0033"
     },
     {
       "checksums" : [
@@ -736,7 +758,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0033"
+      "SPDXID" : "SPDXRef-File-0034"
     },
     {
       "checksums" : [
@@ -758,7 +780,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0034"
+      "SPDXID" : "SPDXRef-File-0035"
     },
     {
       "checksums" : [
@@ -780,7 +802,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0035"
+      "SPDXID" : "SPDXRef-File-0036"
     },
     {
       "checksums" : [
@@ -802,7 +824,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0036"
+      "SPDXID" : "SPDXRef-File-0037"
     },
     {
       "checksums" : [
@@ -824,7 +846,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0037"
+      "SPDXID" : "SPDXRef-File-0038"
     },
     {
       "checksums" : [
@@ -846,17 +868,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0038"
+      "SPDXID" : "SPDXRef-File-0039"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "5153a450c5dc69b983aaf42d4de6ac5eadeb4722"
+          "checksumValue" : "a180b449659e318599e373499b66e1f3b0d7f1df"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "edef702776fec36788ebc190d1dc877d13012fda8d1a80ebfdbca32acb998657"
+          "checksumValue" : "c0e343024182e0be4a1006996ef0abfb18e724e7ee556b90e3892c26cb315e05"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -868,7 +890,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0039"
+      "SPDXID" : "SPDXRef-File-0040"
     },
     {
       "checksums" : [
@@ -890,7 +912,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0040"
+      "SPDXID" : "SPDXRef-File-0041"
     },
     {
       "checksums" : [
@@ -912,7 +934,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0041"
+      "SPDXID" : "SPDXRef-File-0042"
     },
     {
       "checksums" : [
@@ -934,7 +956,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0042"
+      "SPDXID" : "SPDXRef-File-0043"
     },
     {
       "checksums" : [
@@ -956,7 +978,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0043"
+      "SPDXID" : "SPDXRef-File-0044"
     },
     {
       "checksums" : [
@@ -978,7 +1000,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0044"
+      "SPDXID" : "SPDXRef-File-0045"
     },
     {
       "checksums" : [
@@ -1000,7 +1022,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0045"
+      "SPDXID" : "SPDXRef-File-0046"
     },
     {
       "checksums" : [
@@ -1022,7 +1044,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0046"
+      "SPDXID" : "SPDXRef-File-0047"
     },
     {
       "checksums" : [
@@ -1044,7 +1066,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0047"
+      "SPDXID" : "SPDXRef-File-0048"
     },
     {
       "checksums" : [
@@ -1066,7 +1088,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0048"
+      "SPDXID" : "SPDXRef-File-0049"
     },
     {
       "checksums" : [
@@ -1088,7 +1110,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0049"
+      "SPDXID" : "SPDXRef-File-0050"
     },
     {
       "checksums" : [
@@ -1110,7 +1132,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0050"
+      "SPDXID" : "SPDXRef-File-0051"
     },
     {
       "checksums" : [
@@ -1132,7 +1154,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0051"
+      "SPDXID" : "SPDXRef-File-0052"
     },
     {
       "checksums" : [
@@ -1154,7 +1176,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0052"
+      "SPDXID" : "SPDXRef-File-0053"
     },
     {
       "checksums" : [
@@ -1176,7 +1198,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0053"
+      "SPDXID" : "SPDXRef-File-0054"
     },
     {
       "checksums" : [
@@ -1198,7 +1220,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0054"
+      "SPDXID" : "SPDXRef-File-0055"
     },
     {
       "checksums" : [
@@ -1220,7 +1242,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0055"
+      "SPDXID" : "SPDXRef-File-0056"
     },
     {
       "checksums" : [
@@ -1242,7 +1264,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0056"
+      "SPDXID" : "SPDXRef-File-0057"
     },
     {
       "checksums" : [
@@ -1264,7 +1286,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0057"
+      "SPDXID" : "SPDXRef-File-0058"
     },
     {
       "checksums" : [
@@ -1286,7 +1308,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0058"
+      "SPDXID" : "SPDXRef-File-0059"
     },
     {
       "checksums" : [
@@ -1308,7 +1330,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0059"
+      "SPDXID" : "SPDXRef-File-0060"
     },
     {
       "checksums" : [
@@ -1330,7 +1352,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0060"
+      "SPDXID" : "SPDXRef-File-0061"
     },
     {
       "checksums" : [
@@ -1352,7 +1374,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0061"
+      "SPDXID" : "SPDXRef-File-0062"
     },
     {
       "checksums" : [
@@ -1374,7 +1396,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0062"
+      "SPDXID" : "SPDXRef-File-0063"
     },
     {
       "checksums" : [
@@ -1396,7 +1418,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0063"
+      "SPDXID" : "SPDXRef-File-0064"
     },
     {
       "checksums" : [
@@ -1418,7 +1440,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0064"
+      "SPDXID" : "SPDXRef-File-0065"
     },
     {
       "checksums" : [
@@ -1440,7 +1462,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0065"
+      "SPDXID" : "SPDXRef-File-0066"
     },
     {
       "checksums" : [
@@ -1462,7 +1484,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0066"
+      "SPDXID" : "SPDXRef-File-0067"
     },
     {
       "checksums" : [
@@ -1484,7 +1506,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0067"
+      "SPDXID" : "SPDXRef-File-0068"
     },
     {
       "checksums" : [
@@ -1506,7 +1528,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0068"
+      "SPDXID" : "SPDXRef-File-0069"
     },
     {
       "checksums" : [
@@ -1528,7 +1550,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0069"
+      "SPDXID" : "SPDXRef-File-0070"
     },
     {
       "checksums" : [
@@ -1550,7 +1572,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0070"
+      "SPDXID" : "SPDXRef-File-0071"
     },
     {
       "checksums" : [
@@ -1572,7 +1594,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0071"
+      "SPDXID" : "SPDXRef-File-0072"
     },
     {
       "checksums" : [
@@ -1594,7 +1616,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0072"
+      "SPDXID" : "SPDXRef-File-0073"
     },
     {
       "checksums" : [
@@ -1616,7 +1638,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0073"
+      "SPDXID" : "SPDXRef-File-0074"
     },
     {
       "checksums" : [
@@ -1638,7 +1660,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0074"
+      "SPDXID" : "SPDXRef-File-0075"
     },
     {
       "checksums" : [
@@ -1660,7 +1682,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0075"
+      "SPDXID" : "SPDXRef-File-0076"
     },
     {
       "checksums" : [
@@ -1682,7 +1704,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0076"
+      "SPDXID" : "SPDXRef-File-0077"
     },
     {
       "checksums" : [
@@ -1704,7 +1726,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0077"
+      "SPDXID" : "SPDXRef-File-0078"
     },
     {
       "checksums" : [
@@ -1726,7 +1748,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0078"
+      "SPDXID" : "SPDXRef-File-0079"
     },
     {
       "checksums" : [
@@ -1748,7 +1770,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0079"
+      "SPDXID" : "SPDXRef-File-0080"
     },
     {
       "checksums" : [
@@ -1770,7 +1792,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0080"
+      "SPDXID" : "SPDXRef-File-0081"
     },
     {
       "checksums" : [
@@ -1792,7 +1814,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0081"
+      "SPDXID" : "SPDXRef-File-0082"
     },
     {
       "checksums" : [
@@ -1814,7 +1836,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0082"
+      "SPDXID" : "SPDXRef-File-0083"
     },
     {
       "checksums" : [
@@ -1836,7 +1858,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0083"
+      "SPDXID" : "SPDXRef-File-0084"
     },
     {
       "checksums" : [
@@ -1858,7 +1880,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0084"
+      "SPDXID" : "SPDXRef-File-0085"
     },
     {
       "checksums" : [
@@ -1880,7 +1902,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0085"
+      "SPDXID" : "SPDXRef-File-0086"
     },
     {
       "checksums" : [
@@ -1902,7 +1924,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0086"
+      "SPDXID" : "SPDXRef-File-0087"
     },
     {
       "checksums" : [
@@ -1924,7 +1946,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0087"
+      "SPDXID" : "SPDXRef-File-0088"
     },
     {
       "checksums" : [
@@ -1946,7 +1968,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0088"
+      "SPDXID" : "SPDXRef-File-0089"
     },
     {
       "checksums" : [
@@ -1968,7 +1990,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0089"
+      "SPDXID" : "SPDXRef-File-0090"
     },
     {
       "checksums" : [
@@ -1990,7 +2012,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0090"
+      "SPDXID" : "SPDXRef-File-0091"
     },
     {
       "checksums" : [
@@ -2012,7 +2034,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0091"
+      "SPDXID" : "SPDXRef-File-0092"
     },
     {
       "checksums" : [
@@ -2034,7 +2056,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0092"
+      "SPDXID" : "SPDXRef-File-0093"
     },
     {
       "checksums" : [
@@ -2056,7 +2078,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0093"
+      "SPDXID" : "SPDXRef-File-0094"
     },
     {
       "checksums" : [
@@ -2078,7 +2100,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0094"
+      "SPDXID" : "SPDXRef-File-0095"
     },
     {
       "checksums" : [
@@ -2100,7 +2122,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0095"
+      "SPDXID" : "SPDXRef-File-0096"
     },
     {
       "checksums" : [
@@ -2122,7 +2144,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0096"
+      "SPDXID" : "SPDXRef-File-0097"
     },
     {
       "checksums" : [
@@ -2144,7 +2166,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0097"
+      "SPDXID" : "SPDXRef-File-0098"
     },
     {
       "checksums" : [
@@ -2166,7 +2188,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0098"
+      "SPDXID" : "SPDXRef-File-0099"
     },
     {
       "checksums" : [
@@ -2188,7 +2210,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0099"
+      "SPDXID" : "SPDXRef-File-0100"
     },
     {
       "checksums" : [
@@ -2210,7 +2232,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0100"
+      "SPDXID" : "SPDXRef-File-0101"
     },
     {
       "checksums" : [
@@ -2232,7 +2254,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0101"
+      "SPDXID" : "SPDXRef-File-0102"
     },
     {
       "checksums" : [
@@ -2254,7 +2276,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0102"
+      "SPDXID" : "SPDXRef-File-0103"
     },
     {
       "checksums" : [
@@ -2276,17 +2298,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0103"
+      "SPDXID" : "SPDXRef-File-0104"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "e0e6b41efe5981cb1039385d66ba995c4f7630c7"
+          "checksumValue" : "8a353665debb82e1b74ce9b976d51a9f5ff09c65"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "985e56877ec5a66865b46186615a57d28a1475aa5d6f5d06fbfa92b05745d702"
+          "checksumValue" : "88384b2e71e9684b68e06d2e55d98b55dc0fe9610157567594bb3b52ab4d1973"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -2298,7 +2320,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0104"
+      "SPDXID" : "SPDXRef-File-0105"
     },
     {
       "checksums" : [
@@ -2320,7 +2342,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0105"
+      "SPDXID" : "SPDXRef-File-0106"
     },
     {
       "checksums" : [
@@ -2342,7 +2364,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0106"
+      "SPDXID" : "SPDXRef-File-0107"
     },
     {
       "checksums" : [
@@ -2364,7 +2386,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0107"
+      "SPDXID" : "SPDXRef-File-0108"
     },
     {
       "checksums" : [
@@ -2386,7 +2408,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0108"
+      "SPDXID" : "SPDXRef-File-0109"
     },
     {
       "checksums" : [
@@ -2408,7 +2430,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0109"
+      "SPDXID" : "SPDXRef-File-0110"
     },
     {
       "checksums" : [
@@ -2430,7 +2452,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0110"
+      "SPDXID" : "SPDXRef-File-0111"
     },
     {
       "checksums" : [
@@ -2452,7 +2474,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0111"
+      "SPDXID" : "SPDXRef-File-0112"
     },
     {
       "checksums" : [
@@ -2474,7 +2496,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0112"
+      "SPDXID" : "SPDXRef-File-0113"
     },
     {
       "checksums" : [
@@ -2496,7 +2518,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0113"
+      "SPDXID" : "SPDXRef-File-0114"
     },
     {
       "checksums" : [
@@ -2518,7 +2540,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0114"
+      "SPDXID" : "SPDXRef-File-0115"
     },
     {
       "checksums" : [
@@ -2540,7 +2562,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0115"
+      "SPDXID" : "SPDXRef-File-0116"
     },
     {
       "checksums" : [
@@ -2562,7 +2584,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0116"
+      "SPDXID" : "SPDXRef-File-0117"
     },
     {
       "checksums" : [
@@ -2584,7 +2606,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0117"
+      "SPDXID" : "SPDXRef-File-0118"
     },
     {
       "checksums" : [
@@ -2606,7 +2628,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0118"
+      "SPDXID" : "SPDXRef-File-0119"
     },
     {
       "checksums" : [
@@ -2628,7 +2650,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0119"
+      "SPDXID" : "SPDXRef-File-0120"
     },
     {
       "checksums" : [
@@ -2650,7 +2672,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0120"
+      "SPDXID" : "SPDXRef-File-0121"
     },
     {
       "checksums" : [
@@ -2672,7 +2694,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0121"
+      "SPDXID" : "SPDXRef-File-0122"
     },
     {
       "checksums" : [
@@ -2694,7 +2716,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0122"
+      "SPDXID" : "SPDXRef-File-0123"
     },
     {
       "checksums" : [
@@ -2716,7 +2738,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0123"
+      "SPDXID" : "SPDXRef-File-0124"
     },
     {
       "checksums" : [
@@ -2738,7 +2760,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0124"
+      "SPDXID" : "SPDXRef-File-0125"
     },
     {
       "checksums" : [
@@ -2760,7 +2782,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0125"
+      "SPDXID" : "SPDXRef-File-0126"
     },
     {
       "checksums" : [
@@ -2782,7 +2804,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0126"
+      "SPDXID" : "SPDXRef-File-0127"
     },
     {
       "checksums" : [
@@ -2804,7 +2826,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0127"
+      "SPDXID" : "SPDXRef-File-0128"
     },
     {
       "checksums" : [
@@ -2826,7 +2848,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0128"
+      "SPDXID" : "SPDXRef-File-0129"
     },
     {
       "checksums" : [
@@ -2848,7 +2870,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0129"
+      "SPDXID" : "SPDXRef-File-0130"
     },
     {
       "checksums" : [
@@ -2870,7 +2892,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0130"
+      "SPDXID" : "SPDXRef-File-0131"
     },
     {
       "checksums" : [
@@ -2892,7 +2914,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0131"
+      "SPDXID" : "SPDXRef-File-0132"
     },
     {
       "checksums" : [
@@ -2914,7 +2936,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0132"
+      "SPDXID" : "SPDXRef-File-0133"
     },
     {
       "checksums" : [
@@ -2936,7 +2958,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0133"
+      "SPDXID" : "SPDXRef-File-0134"
     },
     {
       "checksums" : [
@@ -2958,7 +2980,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0134"
+      "SPDXID" : "SPDXRef-File-0135"
     },
     {
       "checksums" : [
@@ -2980,7 +3002,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0135"
+      "SPDXID" : "SPDXRef-File-0136"
     },
     {
       "checksums" : [
@@ -3002,7 +3024,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0136"
+      "SPDXID" : "SPDXRef-File-0137"
     },
     {
       "checksums" : [
@@ -3024,17 +3046,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0137"
+      "SPDXID" : "SPDXRef-File-0138"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "b930c68e57fcc8d92a2aecd8af6d1f02440b1fbc"
+          "checksumValue" : "c40814325e967902b6a0af41e6f4fff212666a97"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "74a1424605c45a3547da25e62cf2c100d8087d7f5857671debd38a1650fbf23c"
+          "checksumValue" : "a18419472029457725b4719cb65badc88db0146add185612cda668fec102d7c5"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3046,7 +3068,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0138"
+      "SPDXID" : "SPDXRef-File-0139"
     },
     {
       "checksums" : [
@@ -3068,7 +3090,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0139"
+      "SPDXID" : "SPDXRef-File-0140"
     },
     {
       "checksums" : [
@@ -3090,7 +3112,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0140"
+      "SPDXID" : "SPDXRef-File-0141"
     },
     {
       "checksums" : [
@@ -3112,17 +3134,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0141"
+      "SPDXID" : "SPDXRef-File-0142"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "17353d24319dfa7533a449ee24d864ebb18afc7e"
+          "checksumValue" : "2a904307eca67db7bac8f8a5fdd36f0c696bc473"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "1ed890d017b67c97a0d980d58cb7614bb71362091c02b03d26a26222b24d5fcd"
+          "checksumValue" : "bffde821550882fdc5e69c98946d58e33ee5dd7a3f9a9510dffa3c746c91508b"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3134,7 +3156,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0142"
+      "SPDXID" : "SPDXRef-File-0143"
     },
     {
       "checksums" : [
@@ -3156,7 +3178,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0143"
+      "SPDXID" : "SPDXRef-File-0144"
     },
     {
       "checksums" : [
@@ -3178,7 +3200,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0144"
+      "SPDXID" : "SPDXRef-File-0145"
     },
     {
       "checksums" : [
@@ -3200,7 +3222,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0145"
+      "SPDXID" : "SPDXRef-File-0146"
     },
     {
       "checksums" : [
@@ -3222,7 +3244,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0146"
+      "SPDXID" : "SPDXRef-File-0147"
     },
     {
       "checksums" : [
@@ -3244,7 +3266,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0147"
+      "SPDXID" : "SPDXRef-File-0148"
     },
     {
       "checksums" : [
@@ -3266,7 +3288,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0148"
+      "SPDXID" : "SPDXRef-File-0149"
     },
     {
       "checksums" : [
@@ -3288,7 +3310,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0149"
+      "SPDXID" : "SPDXRef-File-0150"
     },
     {
       "checksums" : [
@@ -3310,7 +3332,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0150"
+      "SPDXID" : "SPDXRef-File-0151"
     },
     {
       "checksums" : [
@@ -3332,7 +3354,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0151"
+      "SPDXID" : "SPDXRef-File-0152"
     },
     {
       "checksums" : [
@@ -3354,7 +3376,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0152"
+      "SPDXID" : "SPDXRef-File-0153"
     },
     {
       "checksums" : [
@@ -3376,7 +3398,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0153"
+      "SPDXID" : "SPDXRef-File-0154"
     },
     {
       "checksums" : [
@@ -3398,17 +3420,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0154"
+      "SPDXID" : "SPDXRef-File-0155"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "26a5e4bb24a9cc8968f9a58d9845405d963a7557"
+          "checksumValue" : "f51e95e9d49be33b0d872e5109468321da4e743d"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "43bfd71e7b7e3fc0b9d64a43becb7195b87aa1650b9189f61d5c7d561e90e4a8"
+          "checksumValue" : "90fc0e2e7cd582ad65c0e015c0f6fc1f0509be04946fc6d8a16c156652c40d0d"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3420,7 +3442,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0155"
+      "SPDXID" : "SPDXRef-File-0156"
     },
     {
       "checksums" : [
@@ -3442,7 +3464,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0156"
+      "SPDXID" : "SPDXRef-File-0157"
     },
     {
       "checksums" : [
@@ -3464,7 +3486,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0157"
+      "SPDXID" : "SPDXRef-File-0158"
     },
     {
       "checksums" : [
@@ -3486,7 +3508,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0158"
+      "SPDXID" : "SPDXRef-File-0159"
     },
     {
       "checksums" : [
@@ -3508,7 +3530,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0159"
+      "SPDXID" : "SPDXRef-File-0160"
     },
     {
       "checksums" : [
@@ -3530,7 +3552,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0160"
+      "SPDXID" : "SPDXRef-File-0161"
     },
     {
       "checksums" : [
@@ -3552,7 +3574,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0161"
+      "SPDXID" : "SPDXRef-File-0162"
     },
     {
       "checksums" : [
@@ -3574,17 +3596,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0162"
+      "SPDXID" : "SPDXRef-File-0163"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "7d549c0210d769b79ba07727607ffbdf71932a60"
+          "checksumValue" : "5fcafde60b13148e2358ff5aba7131a46b2cd280"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "0d66fdbf33e4d3f8efbb654a503b406a3bef85c578515f2afba48c2182252824"
+          "checksumValue" : "901569ef0e9f68f9b063fd84ec5cb1b73311c1c584bfabd6276581184bd1e7fb"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3596,17 +3618,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0163"
+      "SPDXID" : "SPDXRef-File-0164"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "4f67db3983f540b4741ec30626148b4e491ed2b9"
+          "checksumValue" : "e7f19c987827be01dd9640549cf39b1e3b362979"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "2a8b9c7c05500325ad5a866eade1085e34561f0f41a7c6c041a43baf1bdcf205"
+          "checksumValue" : "c6e145eb6d2f047ea5418c8173cab6067eb73e349b2670fc2cd4986870dad294"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3618,7 +3640,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0164"
+      "SPDXID" : "SPDXRef-File-0165"
     },
     {
       "checksums" : [
@@ -3640,7 +3662,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0165"
+      "SPDXID" : "SPDXRef-File-0166"
     },
     {
       "checksums" : [
@@ -3662,7 +3684,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0166"
+      "SPDXID" : "SPDXRef-File-0167"
     },
     {
       "checksums" : [
@@ -3684,7 +3706,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0167"
+      "SPDXID" : "SPDXRef-File-0168"
     },
     {
       "checksums" : [
@@ -3706,7 +3728,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0168"
+      "SPDXID" : "SPDXRef-File-0169"
     },
     {
       "checksums" : [
@@ -3728,7 +3750,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0169"
+      "SPDXID" : "SPDXRef-File-0170"
     },
     {
       "checksums" : [
@@ -3750,7 +3772,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0170"
+      "SPDXID" : "SPDXRef-File-0171"
     },
     {
       "checksums" : [
@@ -3772,7 +3794,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0171"
+      "SPDXID" : "SPDXRef-File-0172"
     },
     {
       "checksums" : [
@@ -3794,7 +3816,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0172"
+      "SPDXID" : "SPDXRef-File-0173"
     },
     {
       "checksums" : [
@@ -3816,7 +3838,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0173"
+      "SPDXID" : "SPDXRef-File-0174"
     },
     {
       "checksums" : [
@@ -3838,7 +3860,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0174"
+      "SPDXID" : "SPDXRef-File-0175"
     },
     {
       "checksums" : [
@@ -3860,7 +3882,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0175"
+      "SPDXID" : "SPDXRef-File-0176"
     },
     {
       "checksums" : [
@@ -3882,17 +3904,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0176"
+      "SPDXID" : "SPDXRef-File-0177"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "b9f903b9a969d4c87ffeec1b8d583466a29d255a"
+          "checksumValue" : "7ab9b63137b8ec22c0c7086bdceb3859a34d9f92"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "71d312d03f81509ece6234067a8b5f43c410ca2941da658134921141037fa981"
+          "checksumValue" : "6ecda8bf218109e9deb2eb09f678a606c91ac6c9df04ab46f22671b09086cb85"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -3904,7 +3926,29 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0177"
+      "SPDXID" : "SPDXRef-File-0178"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "b69790848652bc09112736a207a82ce5f554cc97"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "2252f18c8089e8af35c36d63f54c534a7fdd7bd9cbdd043483a7390989c07518"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Packages/PrimeNativeRuntime/Sources/PrimeNativeGeneration/PrimeNativeDecoderCurrentLocalGeneration.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0179"
     },
     {
       "checksums" : [
@@ -3926,7 +3970,689 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0178"
+      "SPDXID" : "SPDXRef-File-0180"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "efa4212fc5dc39115faa847d83a2fee69cc17953"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "736e94eeade61db1c9b3691370ae12bed9a9545438af85c5f8eac1573fca4731"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/SOURCE-SELECTION.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0181"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "1e839905a87aa58bdda9f40cd2d35691b2b33815"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "c25453b511b63a42b5cd95a304f28ad4501d9024e1163f973ba239526b27d8ee"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/agents/ergentics_cpp/AGENT.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0182"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "fc9d2ae36314844e77f5a99237ed41a856fded5c"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "23ee293cce8efef7306bf95a55cb41beb7adb96169969ac716ca86109954f647"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/agents/ergentics_cpp/agent.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0183"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "0129bc25341fcf5f8bd390f84d675da649173eb6"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "0b906b5f4ce7032895dd5d80a095bccc1738e5817bae6a0bff2259951068879c"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/agents/ergentics_swift_c/AGENT.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0184"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "6384af7bb18423544e8d611c4ff7d44c731c8325"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "efd243cd5c1c41e7b4d5dc538e9169a617829a848309da8693261426b7d1e930"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/agents/ergentics_swift_c/agent.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0185"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "430ebed2a2a74a4c5d075e90b5b6669eaea2eca1"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/contracts/run-record.schema.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0186"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "ef3ca665c8541e2b2712560b4aeda1d4094d58ce"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "23d723bbae17fbefc32a7633053716945872956a8655dd1926a7d59406545da5"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/references/lineage.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0187"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "c260e365d45bfb8829ea77c51d513449d4374299"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/agents/shared/OPERATING-CONTRACT.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0188"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "ab609343e129234315884d6585fa611c22015130"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "43f14b0a0a6c6b846563ceb0c078d09965e933e5293a38b8bf571b2b6b963f85"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/catalog.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0189"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "c8de948fd21114c2ec01b12e6f598516c3bac8df"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "9fb0ca3b3991074b5c573ffe89757cfd200723c837048ab716521a0da82368b5"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/INDEX-0.1.0.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0190"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "eb45891e6007e65a1743944fab487684940e4db7"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "d08e0c5b1e49258e63a7078fc8c0afeffd6ebbcb7e7ff3b9a553db057c3957d0"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/INDEX-prime-gate-phase-custody.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0191"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "0979c7fcca73f6927a15c904973072b67a74fc5c"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/bounded-polling-control.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0192"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "927d206a6afc1ddce917eef5bc26e38d30a63f5e"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/bounded-supervision.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0193"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "b050c8e5356eb2d45172e05215e4fd61ff7f754e"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/cpp-file-identity.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0194"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "efe4477bab9d435d1eb7e0c03f36775a2ddb46c3"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/evidence-stages.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0195"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "97f9219339e782e93f2803461cb16312e96dea5c"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/phase-scoped-observations.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0196"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "774b57aae60ac15c8866e7fd3c686c16e4e64725"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/prime-gate-phase-custody.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0197"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "f5fc6bc798d96e6b966f852ee4895dcac65990b4"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/sharing-and-processing.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0198"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "9d4d6291ee0a4f1d635a9625fd1927c751fe63f7"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/corpus/entries/swift-c-boundary.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0199"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "4e8d9ce3e3f8ee7716b69133196fa35a8f91b1db"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/policy/EA-POLICY-001-v0.4.1.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0200"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "d9b0af353e50a321d72cbc2f3c87068f2a37b19a"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "d3c1d8e714c851da69eed3170f3473943b18997bb7cf857a06642895486d9b10"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/profiles/CONTRACTS.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0201"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "295a6937e378d4c0c791173f604f26f6a11fcbcd"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "81c55b449dd1371d858ae34fb6e00c12a7b1b512ece972fb47fdbf523dab055e"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/profiles/CORPUS.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0202"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "18f24cde33b19ba0a9f8c68fcc89cc9b2224e6ed"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "1118b4d730068c56cce46d7064546e50a57786b2e76df2e9d1b2fcf237ec7df3"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/profiles/LOAD.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0203"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "fa90831e65eda59275666f0baf36f1a2161a2488"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "65d7b7684d4ac0238c48bbd677f01f11aeb5fb4f2d95ac9c36e3de7fed5784b2"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/profiles/ergentics_cpp.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0204"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "a5b35c402b9e9176b5c78ae7cdec6783b68e42f2"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/profiles/ergentics_swift_c.json",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0205"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "b304d3640e63aa4c0bcb9b1afa56e3e3ec4a3f54"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "550461810acce7ee01f8c4926b613337e1ff4448082f29df53877bedb284f96f"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/SKILL.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0206"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "b05f14001a63385e019133cefbcb0ef65422b67b"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "3a425ac3886e6fd65fcc7b65cc121d531221c773310bdf6b3aada5a05e24bd40"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/agents/openai.yaml",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0207"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "6952cd35793022ce93381d9128df11855f4f5c9c"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "5543d64a7baf60b4cbfcf0af50eda9c96573672203f16a121277d04f921b596d"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/references/gate-record.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0208"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "7452825f4ca0ae16e944ddce15955cb232c9cd1b"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "0cd3cb1dd9cb6bcdec26fb5b59ec03de84b8dcaa33d56d6ee93addda988a38a7"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/references/lineage-and-extension.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0209"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "d88635ae649f10e12c7d488905b71940f69a7b75"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/references/metadata-validation.md",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0210"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "e6efbec8f3fd33e50b1da32f699d8998b987d606"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "c9e3d5b71ce6e54e3c1cd3e97da9a4682811879f2ed85455982ccb9a035fd158"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Resources/ErgenticsAgents/skills/ergentics-prime-custody/scripts/requirements-validation.txt",
+      "fileTypes" : [
+        "TEXT"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0211"
     },
     {
       "checksums" : [
@@ -3948,7 +4674,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0179"
+      "SPDXID" : "SPDXRef-File-0212"
     },
     {
       "checksums" : [
@@ -3970,7 +4696,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0180"
+      "SPDXID" : "SPDXRef-File-0213"
     },
     {
       "checksums" : [
@@ -3992,7 +4718,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0181"
+      "SPDXID" : "SPDXRef-File-0214"
     },
     {
       "checksums" : [
@@ -4014,7 +4740,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0182"
+      "SPDXID" : "SPDXRef-File-0215"
     },
     {
       "checksums" : [
@@ -4036,7 +4762,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0183"
+      "SPDXID" : "SPDXRef-File-0216"
     },
     {
       "checksums" : [
@@ -4058,7 +4784,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0184"
+      "SPDXID" : "SPDXRef-File-0217"
     },
     {
       "checksums" : [
@@ -4080,7 +4806,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0185"
+      "SPDXID" : "SPDXRef-File-0218"
     },
     {
       "checksums" : [
@@ -4102,7 +4828,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0186"
+      "SPDXID" : "SPDXRef-File-0219"
     },
     {
       "checksums" : [
@@ -4124,7 +4850,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0187"
+      "SPDXID" : "SPDXRef-File-0220"
     },
     {
       "checksums" : [
@@ -4146,7 +4872,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0188"
+      "SPDXID" : "SPDXRef-File-0221"
     },
     {
       "checksums" : [
@@ -4168,7 +4894,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0189"
+      "SPDXID" : "SPDXRef-File-0222"
     },
     {
       "checksums" : [
@@ -4190,7 +4916,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0190"
+      "SPDXID" : "SPDXRef-File-0223"
     },
     {
       "checksums" : [
@@ -4212,17 +4938,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0191"
+      "SPDXID" : "SPDXRef-File-0224"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "068a1d3a06d88458ab2552648578237ca661f45b"
+          "checksumValue" : "cb124a9ac972ec9b1b7bf982e655ed510c2a0ae2"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "bfc829e92a207112af91c3076946ec0921a76a7a213210e94fd594d2efb53f3f"
+          "checksumValue" : "acb6d14c316ed1600fe881d53bc041e191df4af2f381e6902612aab4bb3f75b3"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -4234,7 +4960,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0192"
+      "SPDXID" : "SPDXRef-File-0225"
     },
     {
       "checksums" : [
@@ -4256,7 +4982,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0193"
+      "SPDXID" : "SPDXRef-File-0226"
     },
     {
       "checksums" : [
@@ -4278,7 +5004,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0194"
+      "SPDXID" : "SPDXRef-File-0227"
     },
     {
       "checksums" : [
@@ -4300,7 +5026,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0195"
+      "SPDXID" : "SPDXRef-File-0228"
     },
     {
       "checksums" : [
@@ -4322,7 +5048,117 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0196"
+      "SPDXID" : "SPDXRef-File-0229"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "2d39bb0bec9cf2fab633e7912785918aa841e732"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "06ebb60c7f14092b0c9226f5e7354b5358a1e09380fb06f7cdf27af5a121936c"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/ErgenticsAgentCatalogIdentity.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0230"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "2d06971b7571e9221c5922c85c1a77b2e9396047"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "60b925a428c273bd246a62ab4c16b88df372ec5c35915d7a06969914efdf3da6"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/ErgenticsAgentLibrary.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0231"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "8ed1a2840a1f6c1cb306446bf2935ec50c150984"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "3068dbe750da7a77ab9074d4ace4fe990e94df7dfb48c1221ca2df54cbce12cd"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/ErgenticsAgentTaskStore.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0232"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "5e8f27e7362f709687905d0c0a216fb7c0fd6fe9"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "ff425ced33760a86be131d1fc7d3701a754c5965c5451ab558c295598e4fb57e"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/ErgenticsAgentsModel.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0233"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "ff48a2acc6e64f8c78ed682f8bafb9d54b5bef8c"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "65c7b5c4f804d09a7b86f30a24aead4d16ad8bd5cdf8a58eb22b67749ec9084c"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/ErgenticsAgentsView.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0234"
     },
     {
       "checksums" : [
@@ -4344,17 +5180,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0197"
+      "SPDXID" : "SPDXRef-File-0235"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "5a352d5dc7411ef7a0ea0a37d1b5c074b57b41aa"
+          "checksumValue" : "a9f17ca39d6960ce0fb5dc926cb71e2ebf239630"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "20b9d70fd5200430600c2d50e69d90818330e4e6a9654b327fc150bf7495930e"
+          "checksumValue" : "a1e38518e42e875e9043ecb2bc7bad35600a446a2bf82978f646beb60f407c39"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -4366,7 +5202,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0198"
+      "SPDXID" : "SPDXRef-File-0236"
     },
     {
       "checksums" : [
@@ -4388,7 +5224,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0199"
+      "SPDXID" : "SPDXRef-File-0237"
     },
     {
       "checksums" : [
@@ -4410,7 +5246,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0200"
+      "SPDXID" : "SPDXRef-File-0238"
     },
     {
       "checksums" : [
@@ -4432,7 +5268,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0201"
+      "SPDXID" : "SPDXRef-File-0239"
     },
     {
       "checksums" : [
@@ -4454,7 +5290,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0202"
+      "SPDXID" : "SPDXRef-File-0240"
     },
     {
       "checksums" : [
@@ -4476,7 +5312,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0203"
+      "SPDXID" : "SPDXRef-File-0241"
     },
     {
       "checksums" : [
@@ -4498,7 +5334,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0204"
+      "SPDXID" : "SPDXRef-File-0242"
     },
     {
       "checksums" : [
@@ -4520,7 +5356,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0205"
+      "SPDXID" : "SPDXRef-File-0243"
     },
     {
       "checksums" : [
@@ -4542,7 +5378,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0206"
+      "SPDXID" : "SPDXRef-File-0244"
     },
     {
       "checksums" : [
@@ -4564,7 +5400,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0207"
+      "SPDXID" : "SPDXRef-File-0245"
     },
     {
       "checksums" : [
@@ -4586,7 +5422,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0208"
+      "SPDXID" : "SPDXRef-File-0246"
     },
     {
       "checksums" : [
@@ -4608,7 +5444,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0209"
+      "SPDXID" : "SPDXRef-File-0247"
     },
     {
       "checksums" : [
@@ -4630,7 +5466,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0210"
+      "SPDXID" : "SPDXRef-File-0248"
     },
     {
       "checksums" : [
@@ -4652,7 +5488,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0211"
+      "SPDXID" : "SPDXRef-File-0249"
     },
     {
       "checksums" : [
@@ -4674,7 +5510,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0212"
+      "SPDXID" : "SPDXRef-File-0250"
     },
     {
       "checksums" : [
@@ -4696,7 +5532,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0213"
+      "SPDXID" : "SPDXRef-File-0251"
     },
     {
       "checksums" : [
@@ -4718,7 +5554,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0214"
+      "SPDXID" : "SPDXRef-File-0252"
     },
     {
       "checksums" : [
@@ -4740,7 +5576,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0215"
+      "SPDXID" : "SPDXRef-File-0253"
     },
     {
       "checksums" : [
@@ -4762,7 +5598,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0216"
+      "SPDXID" : "SPDXRef-File-0254"
     },
     {
       "checksums" : [
@@ -4784,7 +5620,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0217"
+      "SPDXID" : "SPDXRef-File-0255"
     },
     {
       "checksums" : [
@@ -4806,7 +5642,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0218"
+      "SPDXID" : "SPDXRef-File-0256"
     },
     {
       "checksums" : [
@@ -4828,7 +5664,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0219"
+      "SPDXID" : "SPDXRef-File-0257"
     },
     {
       "checksums" : [
@@ -4850,7 +5686,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0220"
+      "SPDXID" : "SPDXRef-File-0258"
     },
     {
       "checksums" : [
@@ -4872,7 +5708,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0221"
+      "SPDXID" : "SPDXRef-File-0259"
     },
     {
       "checksums" : [
@@ -4894,7 +5730,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0222"
+      "SPDXID" : "SPDXRef-File-0260"
     },
     {
       "checksums" : [
@@ -4916,7 +5752,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0223"
+      "SPDXID" : "SPDXRef-File-0261"
     },
     {
       "checksums" : [
@@ -4938,7 +5774,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0224"
+      "SPDXID" : "SPDXRef-File-0262"
     },
     {
       "checksums" : [
@@ -4960,7 +5796,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0225"
+      "SPDXID" : "SPDXRef-File-0263"
     },
     {
       "checksums" : [
@@ -4982,7 +5818,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0226"
+      "SPDXID" : "SPDXRef-File-0264"
     },
     {
       "checksums" : [
@@ -5004,7 +5840,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0227"
+      "SPDXID" : "SPDXRef-File-0265"
     },
     {
       "checksums" : [
@@ -5026,7 +5862,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0228"
+      "SPDXID" : "SPDXRef-File-0266"
     },
     {
       "checksums" : [
@@ -5048,7 +5884,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0229"
+      "SPDXID" : "SPDXRef-File-0267"
     },
     {
       "checksums" : [
@@ -5070,7 +5906,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0230"
+      "SPDXID" : "SPDXRef-File-0268"
     },
     {
       "checksums" : [
@@ -5092,7 +5928,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0231"
+      "SPDXID" : "SPDXRef-File-0269"
     },
     {
       "checksums" : [
@@ -5114,7 +5950,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0232"
+      "SPDXID" : "SPDXRef-File-0270"
     },
     {
       "checksums" : [
@@ -5136,7 +5972,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0233"
+      "SPDXID" : "SPDXRef-File-0271"
     },
     {
       "checksums" : [
@@ -5158,7 +5994,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0234"
+      "SPDXID" : "SPDXRef-File-0272"
     },
     {
       "checksums" : [
@@ -5180,7 +6016,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0235"
+      "SPDXID" : "SPDXRef-File-0273"
     },
     {
       "checksums" : [
@@ -5202,7 +6038,95 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0236"
+      "SPDXID" : "SPDXRef-File-0274"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "22497b89024a059b607f9d26164c85319eade661"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "62b04e0dea743d53f4b38fb45242c7dbe5adc05fca4086b7275177c56a62edbd"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimeComputeBackend.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0275"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "728425423352462b59b586c5499694a0c4461f0d"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "03af8b447bc45a485b1a027c29804d043103851ed461a31fe266847c1fc88847"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimeComputeCheck.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0276"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "57c11fe21c861a9955668c88d526db1cb0cfc9b9"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "abb83a7983e19e3b5843e9892a3b6370c38f9062232b17388c4375bf55514751"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimeComputeModel.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0277"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "3eee8d92eef04f80b733ba5da502aa43a2f13d76"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "057b0416bdd0d8b855c1ab60abd9973737a8c6f53f4450837fc2605bc0765bb8"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimeComputeView.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0278"
     },
     {
       "checksums" : [
@@ -5224,7 +6148,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0237"
+      "SPDXID" : "SPDXRef-File-0279"
     },
     {
       "checksums" : [
@@ -5246,7 +6170,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0238"
+      "SPDXID" : "SPDXRef-File-0280"
     },
     {
       "checksums" : [
@@ -5268,17 +6192,83 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0239"
+      "SPDXID" : "SPDXRef-File-0281"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "f2ec8870578d7b6d85999c00ddeef24615c46b7a"
+          "checksumValue" : "abb832f6c85b3ab2d0e1a4cf7965416ce4b71d0c"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "3ca8bce522bae1b8c6dbca37539c61088a3db558cc8b00fa9b65c6ceff847280"
+          "checksumValue" : "8b895c4ae75face98f6d2cc97737b134607baf42efa4fe5c12f8dfcc62982e58"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimePromptBackend.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0282"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "e75b46a1fe6f9db0d0a9d353a7fea7f2c26c77c4"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "f2d845cb43014223be0a44cb23df6b2a239d630719186bc112aac1d6701de8ed"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimePromptModel.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0283"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "9f1ded5600558666151842073ab34bbc38124881"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "55e61c974cecfe334585b8ebd1c1b4aaba71fd15b8f0350cdd1c61a85abb8a5f"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimePromptView.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0284"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "70e4555660d5555239dcf6e5091c15309742973e"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "24b3e2cc11c3f8845b28b411aaf04f2b30558d539914c80697063f347c30f091"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5290,17 +6280,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0240"
+      "SPDXID" : "SPDXRef-File-0285"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "1536fc19f5275e7d052d7b52fc36ed96fb71c218"
+          "checksumValue" : "d1f5c025b85316c6295ce7e825b88a7fd8524879"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "d470f4394e5fb047136911c95ec172b2349e30846db6faeb2690b25fdd001c5d"
+          "checksumValue" : "1fc56ce0e07ae599826c181f47cf3153ea7f776766074c4966a78c7ecc663a9d"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5312,17 +6302,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0241"
+      "SPDXID" : "SPDXRef-File-0286"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "d94e2e30b593230fe29bec2c02c6048ad254b3bb"
+          "checksumValue" : "3a2650f1862e5e2937e7e0d39c5bca5bd86f1608"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "c42b4cf61ab0eb629176360eb5fb014906875512fa5cdfb8a432a3e65c81e9f1"
+          "checksumValue" : "de283d3d8cb27ceba524ed1f5b9014aeb009e39aeee7c149108f3d4c63d93904"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5334,17 +6324,39 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0242"
+      "SPDXID" : "SPDXRef-File-0287"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "6be6f5c1a542395929e6829f914c06c2d0e01431"
+          "checksumValue" : "f8a3903a122b1e8ef8e5b99dea630a627031eb37"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "5d45a6f4b349a93771ac4815d67bdbe2cff3e29a498996008b82b9a20fe921b7"
+          "checksumValue" : "7baa6ac0247beef54eb1855c41d6fc6dc61ab7a2a52efc4c6ecbefabca41e698"
+        }
+      ],
+      "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
+      "fileName" : "./Sources/PrimeStudyInput.swift",
+      "fileTypes" : [
+        "SOURCE"
+      ],
+      "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
+      "licenseInfoInFiles" : [
+        "NONE"
+      ],
+      "SPDXID" : "SPDXRef-File-0288"
+    },
+    {
+      "checksums" : [
+        {
+          "algorithm" : "SHA1",
+          "checksumValue" : "8e643dabea0d5526a40421195ea275de31894261"
+        },
+        {
+          "algorithm" : "SHA256",
+          "checksumValue" : "6651a0ee3056e14bc23ce7e04717520aaa35862dd2c375730965bb8cee534896"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5356,7 +6368,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0243"
+      "SPDXID" : "SPDXRef-File-0289"
     },
     {
       "checksums" : [
@@ -5378,7 +6390,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0244"
+      "SPDXID" : "SPDXRef-File-0290"
     },
     {
       "checksums" : [
@@ -5400,7 +6412,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0245"
+      "SPDXID" : "SPDXRef-File-0291"
     },
     {
       "checksums" : [
@@ -5422,17 +6434,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0246"
+      "SPDXID" : "SPDXRef-File-0292"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "27c50889cd4a7516346c7d6cd567a2a2c019a1c0"
+          "checksumValue" : "928d21203d77d1291f1832a5849a48b36afb9aa9"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "441fd942e6b3409e40de73383b7ab7da4bfb0fa7fc88141688317e3dbbbbe5d8"
+          "checksumValue" : "6f784a1bd78f32ab19a6a9801f2f3a09dcea0f438311a5540eba6359ff46267a"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5444,7 +6456,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0247"
+      "SPDXID" : "SPDXRef-File-0293"
     },
     {
       "checksums" : [
@@ -5466,7 +6478,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0248"
+      "SPDXID" : "SPDXRef-File-0294"
     },
     {
       "checksums" : [
@@ -5488,7 +6500,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0249"
+      "SPDXID" : "SPDXRef-File-0295"
     },
     {
       "checksums" : [
@@ -5510,7 +6522,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0250"
+      "SPDXID" : "SPDXRef-File-0296"
     },
     {
       "checksums" : [
@@ -5532,7 +6544,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0251"
+      "SPDXID" : "SPDXRef-File-0297"
     },
     {
       "checksums" : [
@@ -5554,7 +6566,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0252"
+      "SPDXID" : "SPDXRef-File-0298"
     },
     {
       "checksums" : [
@@ -5576,7 +6588,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0253"
+      "SPDXID" : "SPDXRef-File-0299"
     },
     {
       "checksums" : [
@@ -5598,7 +6610,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0254"
+      "SPDXID" : "SPDXRef-File-0300"
     },
     {
       "checksums" : [
@@ -5620,7 +6632,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0255"
+      "SPDXID" : "SPDXRef-File-0301"
     },
     {
       "checksums" : [
@@ -5642,7 +6654,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0256"
+      "SPDXID" : "SPDXRef-File-0302"
     },
     {
       "checksums" : [
@@ -5664,7 +6676,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0257"
+      "SPDXID" : "SPDXRef-File-0303"
     },
     {
       "checksums" : [
@@ -5686,17 +6698,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0258"
+      "SPDXID" : "SPDXRef-File-0304"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "97cdce8d718ec2c5c07a87d5d36b56068ea0b0e0"
+          "checksumValue" : "aaf802611d09ed09440fb3c9e02db219cbfa6251"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "07e027b182a397b7ce01eee28b9af260aa2316246b3565839a812e3d07987df2"
+          "checksumValue" : "5a95d8e1ac8fee50b9dfd998dab4a0f8dc48c4f4e51b52cac32d79d7889d5bca"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5708,17 +6720,17 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0259"
+      "SPDXID" : "SPDXRef-File-0305"
     },
     {
       "checksums" : [
         {
           "algorithm" : "SHA1",
-          "checksumValue" : "b026aaf428eda772ed1e82dea823a7c34bc79459"
+          "checksumValue" : "c9d45429ff281f06d474613f2c407c9b1d8324c1"
         },
         {
           "algorithm" : "SHA256",
-          "checksumValue" : "a74bb5f624b2a74a4124f11b86bb1299cd303b3b82a41f38d229860422a670db"
+          "checksumValue" : "aac67c832ed06faba13be1ae3bff9401faa34c78057dac2e8909a2f923a46135"
         }
       ],
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -5730,7 +6742,7 @@
       "licenseInfoInFiles" : [
         "NONE"
       ],
-      "SPDXID" : "SPDXRef-File-0260"
+      "SPDXID" : "SPDXRef-File-0306"
     }
   ],
   "hasExtractedLicensingInfos" : [
@@ -5741,7 +6753,7 @@
       "name" : "Ergentics Proprietary License"
     }
   ],
-  "name" : "Ergentics Provenance 1.0 build 20 source package",
+  "name" : "Ergentics Provenance 1.0 build 24 source package",
   "packages" : [
     {
       "copyrightText" : "Copyright (c) 2026 Ergentics, LLC. All rights reserved.",
@@ -6007,7 +7019,53 @@
         "SPDXRef-File-0257",
         "SPDXRef-File-0258",
         "SPDXRef-File-0259",
-        "SPDXRef-File-0260"
+        "SPDXRef-File-0260",
+        "SPDXRef-File-0261",
+        "SPDXRef-File-0262",
+        "SPDXRef-File-0263",
+        "SPDXRef-File-0264",
+        "SPDXRef-File-0265",
+        "SPDXRef-File-0266",
+        "SPDXRef-File-0267",
+        "SPDXRef-File-0268",
+        "SPDXRef-File-0269",
+        "SPDXRef-File-0270",
+        "SPDXRef-File-0271",
+        "SPDXRef-File-0272",
+        "SPDXRef-File-0273",
+        "SPDXRef-File-0274",
+        "SPDXRef-File-0275",
+        "SPDXRef-File-0276",
+        "SPDXRef-File-0277",
+        "SPDXRef-File-0278",
+        "SPDXRef-File-0279",
+        "SPDXRef-File-0280",
+        "SPDXRef-File-0281",
+        "SPDXRef-File-0282",
+        "SPDXRef-File-0283",
+        "SPDXRef-File-0284",
+        "SPDXRef-File-0285",
+        "SPDXRef-File-0286",
+        "SPDXRef-File-0287",
+        "SPDXRef-File-0288",
+        "SPDXRef-File-0289",
+        "SPDXRef-File-0290",
+        "SPDXRef-File-0291",
+        "SPDXRef-File-0292",
+        "SPDXRef-File-0293",
+        "SPDXRef-File-0294",
+        "SPDXRef-File-0295",
+        "SPDXRef-File-0296",
+        "SPDXRef-File-0297",
+        "SPDXRef-File-0298",
+        "SPDXRef-File-0299",
+        "SPDXRef-File-0300",
+        "SPDXRef-File-0301",
+        "SPDXRef-File-0302",
+        "SPDXRef-File-0303",
+        "SPDXRef-File-0304",
+        "SPDXRef-File-0305",
+        "SPDXRef-File-0306"
       ],
       "licenseConcluded" : "LicenseRef-Ergentics-Proprietary",
       "licenseDeclared" : "LicenseRef-Ergentics-Proprietary",
@@ -6020,13 +7078,13 @@
         "packageVerificationCodeExcludedFiles" : [
           "./ERGENTICS.spdx.json"
         ],
-        "packageVerificationCodeValue" : "48d3a8ab86f116eaf3bc73ace98abde229c76bcb"
+        "packageVerificationCodeValue" : "c83279a8b4208b1ebf1047297d9f7d490acea02b"
       },
       "primaryPackagePurpose" : "APPLICATION",
       "SPDXID" : "SPDXRef-Package-ErgenticsProvenance",
       "summary" : "The Ergentics macOS app, embedded Hypervisor fixtures, and app-owned native Prime runtime helper. Vendored dependencies are separately identified by their pinned revisions and licenses.",
       "supplier" : "Organization: Ergentics, LLC",
-      "versionInfo" : "1.0 (20)"
+      "versionInfo" : "1.0 (24)"
     },
     {
       "copyrightText" : "NOASSERTION",
@@ -7416,6 +8474,236 @@
     },
     {
       "relatedSpdxElement" : "SPDXRef-File-0260",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0261",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0262",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0263",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0264",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0265",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0266",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0267",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0268",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0269",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0270",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0271",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0272",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0273",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0274",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0275",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0276",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0277",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0278",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0279",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0280",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0281",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0282",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0283",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0284",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0285",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0286",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0287",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0288",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0289",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0290",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0291",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0292",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0293",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0294",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0295",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0296",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0297",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0298",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0299",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0300",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0301",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0302",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0303",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0304",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0305",
+      "relationshipType" : "CONTAINS",
+      "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
+    },
+    {
+      "relatedSpdxElement" : "SPDXRef-File-0306",
       "relationshipType" : "CONTAINS",
       "spdxElementId" : "SPDXRef-Package-ErgenticsProvenance"
     },
