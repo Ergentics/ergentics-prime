@@ -1,6 +1,24 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
 
+# Retired 2026-09-20: this historical r18-process-actuation-canary helper has
+# failure paths that can remain active indefinitely. Reject all roles before
+# bootstrap intake, library loading, process inspection, or child creation.
+# The historical body below is unchanged; its original Git blob is
+# 4aa4afa7a236661dd8842e4991a48b5cc2524300. Existing live instances are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r18-process-actuation-canary-retirement/v1\"," \
+    "\"status\":\"R18_PROCESS_ACTUATION_CANARY_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 # R18 is a disposable process-actuation composition canary. It does not invoke
 # Swift, the supervisor, the guardian, Git, a shell, or any mechanics harness.
 # Its only signal target is the private session/process group of its exact

@@ -1,5 +1,22 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this frozen prefix harness has blocking intake and
+# failure reporting before exit. Reject before source loading or evaluation.
+# The historical body below is unchanged; its original Git blob is
+# b9db5bc6594143df2f9118ad4b7814b42e988deb. Retained copies remain separate.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r19-retirement/v1\"," \
+    "\"status\":\"R19_C2_PREFIX_HARNESS_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 # Exact, non-consuming C2 prefix harness. It evaluates the closed controller
 # only through the complete bootstrap_preflight definition and never evaluates
 # the controller bottom that constructs state, journal, or build namespaces.

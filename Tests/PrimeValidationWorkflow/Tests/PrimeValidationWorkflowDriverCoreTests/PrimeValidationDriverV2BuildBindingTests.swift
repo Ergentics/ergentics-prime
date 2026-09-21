@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Ergentics, LLC
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
+import Darwin
 import Foundation
 @_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
@@ -199,7 +200,7 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         let start: UInt64 = 1_000
         func check(_ gate: PrimeValidationDriverV2TerminalGate, duration: UInt64,
                    waitOffset: UInt64, expected: String,
-                   started: UInt64 = 1_000) throws {
+                   started: UInt64 = 1_000, waitOptions: Int32 = WNOHANG) throws {
             let expectation = PrimeValidationDriverV2FixedProbeJournalReceiptExpectationV2(
                 intent: intent, repositoryCommit: String(repeating: "a", count: 40),
                 sourceIdentitySHA256: String(repeating: "b", count: 64),
@@ -220,7 +221,7 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
                 terminalGate: gate)
             let witness = PrimeValidationDriverV2FixedProbeSupervisorExitWitnessV2(
                 requestedProcessIdentifier: 99, returnedProcessIdentifier: 99,
-                waitOptions: 0, rawWaitStatus: 0,
+                waitOptions: waitOptions, rawWaitStatus: 0,
                 returnedAtUptimeNanoseconds: started.addingReportingOverflow(waitOffset).partialValue,
                 exitedNormally: true, exitStatus: 0, terminationSignal: 0, coreDumped: false)
             XCTAssertThrowsError(try PrimeValidationDriverV2FixedProbeDurableJournalValidatorV2.validate(
@@ -234,6 +235,10 @@ final class PrimeValidationDriverV2BuildBindingTests: XCTestCase {
         // leaf_order proves the actual preceding expectation guard accepted;
         // none of these cases claims a complete journal or native run.
         try check(.gateE, duration: 60_000_000_000, waitOffset: 1, expected: "leaf_order")
+        try check(.gateE, duration: 60_000_000_000, waitOffset: 1,
+                  expected: "expectation_or_exit", waitOptions: 0)
+        try check(.gateE, duration: 60_000_000_000, waitOffset: 1,
+                  expected: "expectation_or_exit", waitOptions: WNOHANG | WUNTRACED)
         try check(.gateF, duration: 960_000_000_000, waitOffset: 60_000_000_001, expected: "leaf_order")
         try check(.gateE, duration: 960_000_000_000, waitOffset: 1, expected: "expectation_or_exit")
         try check(.gateF, duration: 60_000_000_000, waitOffset: 1, expected: "expectation_or_exit")

@@ -1,0 +1,8 @@
+{
+  "result": "BUILD_AND_STATIC_LAYOUT_PASS_PENDING_INSTRUCTION_REVIEW",
+  "source_unchanged": true,
+  "guest_executions": 0,
+  "resulting_host_binary_executions": 0,
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000"
+}

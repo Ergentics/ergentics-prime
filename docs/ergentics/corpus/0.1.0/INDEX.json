@@ -1,0 +1,287 @@
+{
+  "schema": "ergentics.corpus-index.v1",
+  "id": "ergentics-profile-corpus",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "entries": [
+    {
+      "id": "evidence-stages",
+      "version": "0.1.0",
+      "path": "entries/evidence-stages.md",
+      "bytes": 538,
+      "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06",
+      "kind": "lesson",
+      "material_class": "authored_method",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "bounded-supervision",
+      "version": "0.1.0",
+      "path": "entries/bounded-supervision.md",
+      "bytes": 420,
+      "sha256": "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73",
+      "kind": "lesson",
+      "material_class": "authored_method",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "bounded-polling-control",
+      "version": "0.1.0",
+      "path": "entries/bounded-polling-control.md",
+      "bytes": 481,
+      "sha256": "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48",
+      "kind": "golden_negative",
+      "material_class": "synthetic",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "sharing-and-processing",
+      "version": "0.1.0",
+      "path": "entries/sharing-and-processing.md",
+      "bytes": 705,
+      "sha256": "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0",
+      "kind": "lesson",
+      "material_class": "authored_method",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "swift-c-boundary",
+      "version": "0.1.0",
+      "path": "entries/swift-c-boundary.md",
+      "bytes": 405,
+      "sha256": "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669",
+      "kind": "positive_control",
+      "material_class": "synthetic",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_swift_c"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "cpp-file-identity",
+      "version": "0.1.0",
+      "path": "entries/cpp-file-identity.md",
+      "bytes": 499,
+      "sha256": "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4",
+      "kind": "positive_control",
+      "material_class": "synthetic",
+      "attribution": "Ergentics, LLC; current-task authored method/control, with original Agent lineage retained.",
+      "origin": "Ergentics Agents v0.1.0 manifest d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596; profile preparation and selected design reviews in this task.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Selected v0.1.0 common/role instructions and disclosed corpus design review; content reviewed as method guidance, not a native runtime result."
+      },
+      "profile_ids": [
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+      }
+    },
+    {
+      "id": "phase-scoped-observations",
+      "version": "0.1.0",
+      "path": "entries/phase-scoped-observations.md",
+      "bytes": 1836,
+      "sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346",
+      "kind": "lesson",
+      "material_class": "authored_method",
+      "attribution": "Ergentics, LLC; current task author/integrator, derived from attributed hosted profile-load observations and corrections.",
+      "origin": "Current task profile-load-002-swift and profile-load-002-cpp; original results and additive CLARIFICATION-001 records preserved in the profile evidence bundle.",
+      "review": {
+        "status": "accepted",
+        "reviewer": "Current task author/integrator",
+        "evidence": "Content-bound positive and golden-negative manual review records accompany the promotion request; no blind or native test claim."
+      },
+      "profile_ids": [
+        "ergentics_swift_c",
+        "ergentics_cpp"
+      ],
+      "purposes": [
+        "profile_validation",
+        "development_review"
+      ],
+      "routes": [
+        {
+          "recipient": "codex-task",
+          "processing": "hosted"
+        },
+        {
+          "recipient": "local-packet",
+          "processing": "local_preparation"
+        }
+      ],
+      "extensions": {
+        "ergentics.promotion": {
+          "request_sha256": "fc9094f45b6115cf6720a3a5016dfb3e76cc5c3645f184135b92ae58fb4a8674",
+          "source_locator": "/Users/ergentics/2026-09-20/er/work/ergentics-profiles-002/reviewed-lesson/source/phase-scoped-observations.md",
+          "source_relative_path": "phase-scoped-observations.md",
+          "source_locator_meaning": "Historical evidence locator only; never automatically opened by a receiving packet load.",
+          "source_sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346",
+          "reviewer": "Current task author/integrator",
+          "review_evidence": {
+            "positive_evidence": {
+              "path": "/Users/ergentics/2026-09-20/er/work/ergentics-profiles-002/reviewed-lesson/review/positive_evidence.json",
+              "sha256": "533e3029e74a0e0c24c7171d0f7baca058e0ae66a30b5f51ef1c6f0c07fe68ce"
+            },
+            "golden_negative_evidence": {
+              "path": "/Users/ergentics/2026-09-20/er/work/ergentics-profiles-002/reviewed-lesson/review/golden_negative_evidence.json",
+              "sha256": "0e98eee94410e41025b1111fa3841ecd74b2d3167d7b7a93728e61cc84399cc5"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "ergentics.release": {
+      "method": "Explicit first local shared release: unchanged six seed entries plus one reviewed contribution. No automatic collection, model-weight training or publication.",
+      "profile_package_manifest_sha256": "049117e198ebea67fa4aa38661d49c62d504692a837cee1fbdc661c7df8d58c6",
+      "seed_index_sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f",
+      "contribution_index_sha256": "03d6b7e4f7cce775016bfa6f71e7dfe7767ff63249573445a8ddfa4a95a7b63f",
+      "promotion_receipt_sha256": "213c7625b5ee1acfc395d7750c8642c388783026f4467e4f937e77d32c9ad5c4",
+      "evidence_bundle": "../ergentics-profiles-evidence-002",
+      "locator_meaning": "Historical absolute paths in contribution lineage are informational only. The selected evidence bundle maps retained source bytes to their original locations; hashes carry identity."
+    }
+  }
+}

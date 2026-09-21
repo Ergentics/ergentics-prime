@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "package": "ergentics-prime-assessment",
+  "package_version": "0.3.0",
+  "owner": "Ergentics, LLC",
+  "derivation": "Ergentics-authorized maintenance of selected reviewed task lessons; no independent third-party reuse grant.",
+  "sources": [
+    {
+      "id": "ASSESSMENT-001",
+      "record": "prime-v2-full-assessment.md",
+      "sha256": "f31e8c9c5776eb1aa3c3a23cbf4774fbba4053310fe15bc22ffeb8fc728512d6",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "FORWARD-001",
+      "record": "forward-test-review.md",
+      "sha256": "486a8080dfda780978ae0865509aed167853a5f29b98c5dbe00adb9c66df2411",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "RUNTIME-004",
+      "record": "current-runtime-review-coverage-04.md",
+      "sha256": "40b1285a50d8e9430af1f902a439090bf65a890d414146219d129f4e393231c3",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "ORIGINAL-SKILL-001",
+      "record": "SKILL.md",
+      "sha256": "a182ec4a890ebba5fe79e7551bed16a8e753a71292d04473af709942a90aeb75",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "CURRENT_USER_SCOPE",
+      "kind": "ATTRIBUTED_USER_DIRECTION",
+      "record": "Current Prime skill-readiness request, 2026-09-20",
+      "runtime_dependency": false
+    },
+    {
+      "id": "ROOT-FLOW-001",
+      "record": "FLOW-REVIEW-SCORE-001.json",
+      "sha256": "e204c0b6d2eb32740781a94be53122aaa9131f280d358550272b266c79038abf",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "ROOT-RUST-001",
+      "record": "RUST-CUSTODY-REPAIR-001.json",
+      "sha256": "14c22c74e9143262d68af518228ff0d1c954c5e62e1aa816ff0b890caf77ae58",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "ROOT-SEMANTICS-001",
+      "record": "SEMANTIC-RECONCILIATION.md",
+      "sha256": "0b60dc17f251eae6493f47effb2d3f3d6a1254d2422348e46e882b7a72e6be05",
+      "kind": "REVIEWED_LOCAL_EVIDENCE",
+      "runtime_dependency": false
+    }
+  ],
+  "lessons": [
+    {
+      "id": "PRIME-LESSON-01",
+      "origin": [
+        "ASSESSMENT-001"
+      ],
+      "observation": "Stored paths, content versions, launch routes and running instances support different claims.",
+      "decision": "Maintain these identities separately; select required surfaces for the current user question.",
+      "limits": "A source-only result does not certify live processes. Unknown runtime counts need not block skill-readiness work.",
+      "golden_cases": [
+        "GN-02",
+        "GN-07",
+        "IGN-01",
+        "IGN-04"
+      ]
+    },
+    {
+      "id": "PRIME-LESSON-02",
+      "origin": [
+        "FORWARD-001"
+      ],
+      "observation": "Independent fixtures demonstrated stale current-check hashes and ancestor replacement escaping an earlier validator. Both were corrected and retested.",
+      "decision": "Bind current checks to current bytes and rejoin the absolute named path after held reads.",
+      "limits": "This is a named-file consistency utility; it does not discover scope or authenticate evidence.",
+      "golden_cases": [
+        "GN-04",
+        "GN-08",
+        "GN-11",
+        "IP-01"
+      ]
+    },
+    {
+      "id": "PRIME-LESSON-03",
+      "origin": [
+        "RUNTIME-004"
+      ],
+      "observation": "A prior deadline check could not bound an entered blocking wait; current exact reap and evidence semantics changed.",
+      "decision": "Keep repaired source, executed checks, historical gate records and unchanged native images distinct.",
+      "limits": "Pure checks do not establish OS cleanup, hard real-time progress or inherited gate clearance.",
+      "golden_cases": [
+        "GN-03",
+        "GP-02"
+      ]
+    },
+    {
+      "id": "PRIME-LESSON-04",
+      "origin": [
+        "ORIGINAL-SKILL-001",
+        "ASSESSMENT-001"
+      ],
+      "observation": "The original candidate and assessment retain a commit hold and incomplete official metadata validation.",
+      "decision": "Preserve issued versions and failures; report local packaging, metadata, installation, discovery and publication independently.",
+      "limits": "Prior CI and an archive identity do not validate a new candidate or authorize installation.",
+      "golden_cases": [
+        "GN-05",
+        "GN-09",
+        "GP-04",
+        "IGN-02",
+        "IGN-03",
+        "IP-02"
+      ]
+    },
+    {
+      "id": "PRIME-LESSON-05",
+      "origin": [
+        "CURRENT_USER_SCOPE"
+      ],
+      "observation": "The user requests installation readiness, versioned extensibility, Auto Harvest and golden negatives, then will determine the next action.",
+      "decision": "Prepare a bounded local revision and reviewable readiness result; retain installation and commit decisions.",
+      "limits": "The request does not ask for a whole-process census or continuous harvesting.",
+      "golden_cases": [
+        "GN-10",
+        "GP-03",
+        "IGN-04",
+        "IP-02"
+      ]
+    },
+    {
+      "id": "PRIME-LESSON-06",
+      "origin": [
+        "ROOT-FLOW-001",
+        "ROOT-RUST-001",
+        "ROOT-SEMANTICS-001"
+      ],
+      "observation": "Root Analysis separated distinct qualification families, recovered original Rust custody and local-only drafts, and exposed premature semantic-review handoffs.",
+      "decision": "Follow original locators, preserve local variants, finish bounded semantic comparison, and bind readiness to each actual candidate/family.",
+      "limits": "Source preservation and bounded independent interpretation do not establish current native execution, full historical content review or new repository publication.",
+      "golden_cases": [
+        "RA-N01",
+        "RA-P02",
+        "RA-P03",
+        "RA-P04",
+        "RA-N05",
+        "RA-P06",
+        "RA-N07",
+        "RA-P08"
+      ]
+    }
+  ],
+  "evidence_note": "Evidence references identify lineage only. The installed skill is self-contained for this method; source evidence need not be present merely to load it."
+}

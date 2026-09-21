@@ -4,10 +4,12 @@
 require "json"
 require "digest"
 require "base64"
+require_relative "control-file"
 
 abort("usage: #{$PROGRAM_NAME} CONTROL.json") unless ARGV.length == 1
 PATHNAME = ARGV.fetch(0)
-J = JSON.parse(File.binread(PATHNAME))
+CONTROL_INPUT = V12ControlFile.capture(PATHNAME)
+J = JSON.parse(CONTROL_INPUT.bytes)
 X = J.fetch("exact_record_schema_v12")
 R = X.fetch("reusable_objects")
 S = X.fetch("state_constraint_registry_v12")
@@ -1544,5 +1546,5 @@ raise "observation mechanics projection count" unless mechanics_expected.values.
 raise "status projection count" unless observation.fetch("status_selection_expected_result_rows").length == 109
 
 if ENV["V12_FINAL_WRITE"] == "1"
-  File.binwrite(PATHNAME, JSON.pretty_generate(J) + "\n")
+  V12ControlFile.overwrite_scratch(CONTROL_INPUT, JSON.pretty_generate(J) + "\n")
 end

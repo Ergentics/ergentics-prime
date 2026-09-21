@@ -1,6 +1,20 @@
 # Ergentics Prime — current roadmap
 
-Updated September 8, 2026. Use this as the current work index; older receipts retain their original scope.
+Updated September 20, 2026 for the Prime/HyperVisor source closeout. Build23 and
+the native checkpoint observations below retain their September 8 scope.
+
+**Current source closeout:** the reviewed lifecycle/intake repairs, obsolete
+entrypoint guards, Rust evidence custody and Prime assessment v0.3.0 are joined
+with the unchanged durable Ergentics Agent/profile/corpus definitions and loader.
+See [the closeout and source selection](../../docs/prime-replay/root-analysis-closeout-v1/README.md).
+Continue through the [versioned HyperVisor development flow](../../docs/prime-replay/HYPERVISOR-DEVELOPMENT.md)
+for source publication, scoped profile work, review and qualification handoff.
+The user selected this Prime/HyperVisor commit; Surface has separate work time.
+The profiles support external development/review. General in-app Agent execution
+and protected cross-Agent output are not admitted by the existing H7/H8 routes.
+Current repaired-source native qualification remains open; the historical PASS
+records below do not qualify the new source. No new app/guest/gate launch or
+protocol/toolchain amendment was performed in the closeout.
 
 **Product:** `com.ergentics.provenance`. The existing TestFlight app is **Hyper-Visor**, App Store Connect ID **6807235450**. Build 2 was observed ready for internal testing and build 3 was also uploaded. This is an update to that app.
 

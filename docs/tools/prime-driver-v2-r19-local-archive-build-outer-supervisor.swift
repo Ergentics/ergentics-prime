@@ -3662,6 +3662,12 @@ private enum PrimeR19Supervisor {
 @main
 private struct PrimeDriverV2R19LocalArchiveBuildOuterSupervisor {
     static func main() {
+        // Retired 2026-09-20: this historical R19 helper can retain a failed
+        // process domain indefinitely. Reject before bootstrap intake or spawn.
+        // Exit without output so a closed/full pipe cannot delay rejection.
+        // Original Git blob: c10a40f91b916413b8208bbafa0ffccfeaa27752.
+        // Existing binaries and live instances are unaffected.
+        Darwin._exit(70)
         do {
             try PrimeR19Supervisor.run()
         } catch {

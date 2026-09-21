@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this frozen helper has unbounded process, pipe,
+# or recovery waits. Reject before bootstrap intake, file access, or signals.
+# Original Git blob: 95c9bc515a21088f889be494669d0c0274c3b8e4.
+# Existing live instances and historical copies are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-v2-historical-helper-retirement/v1\"," \
+    "\"helper\":\"prime-driver-v2-e13-readiness-holder.rb\"," \
+    "\"status\":\"RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostic failure or a full pipe must not delay retirement.
+ensure
+  Process.exit!(70)
+end
+
 HOLDER_ENV = {
   "LANG" => "C.UTF-8",
   "LC_ALL" => "C.UTF-8",

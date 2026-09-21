@@ -719,6 +719,10 @@ final class PrimeSecureChildSpawnHandle {
             return
         }
 
+        guard let timeline = try? PrimeSecureChildCleanupTimeline.suspended(
+            cleanupStartedAtUptimeNanoseconds: DispatchTime.now().uptimeNanoseconds)
+        else { Darwin._exit(70) }
+
         if maySignalDedicatedProcessGroup {
             _ = Darwin.kill(
                 -processIdentifier,
@@ -729,20 +733,17 @@ final class PrimeSecureChildSpawnHandle {
             processIdentifier,
             SIGKILL
         )
-        var status: Int32 = 0
-        var returned: Int32
-        repeat {
-            errno = 0
-            returned = Darwin.waitpid(
-                processIdentifier,
-                &status,
-                0
-            )
-        } while returned < 0 && errno == EINTR
-        guard returned == processIdentifier
-        else {
-            Darwin._exit(70)
-        }
+        let reaped = PrimeSecureChildEmergencyReap.attempt(
+            processIdentifier: processIdentifier, timeline: timeline,
+            now: { DispatchTime.now().uptimeNanoseconds }, wait: {
+                var status: Int32 = 0
+                errno = 0
+                let returned = Darwin.waitpid(self.processIdentifier, &status, WNOHANG)
+                if returned > 0 { return .reaped(returnedPID: returned, rawStatus: status) }
+                if returned == 0 { return .stillRunning }
+                return errno == EINTR ? .interrupted : .failed(errno)
+            }, advance: { _ = Darwin.usleep(10_000) })
+        guard reaped else { Darwin._exit(70) }
         guard maySignalDedicatedProcessGroup
         else {
             return
@@ -766,6 +767,33 @@ final class PrimeSecureChildSpawnHandle {
             failStopOwnedChildIfNeeded()
             Darwin._exit(70)
         }
+    }
+}
+
+/// Emergency abandonment only. The exact-PID nonblocking wait retains the
+/// existing cleanup endpoint and poll cap; no result authorizes normal work.
+enum PrimeSecureChildEmergencyReap {
+    static func attempt(processIdentifier: Int32, timeline: PrimeSecureChildCleanupTimeline,
+        now: () -> UInt64, wait: () -> PrimeSecureChildWaitResult, advance: () -> Void) -> Bool {
+        guard processIdentifier > 0 else { return false }
+        var previous = timeline.cleanupStartedAtUptimeNanoseconds
+        for _ in 0..<PrimeSecureChildLifecycle.maximumContainmentPollCount {
+            let observed = now()
+            guard observed >= previous,
+                  observed < timeline.containmentDeadline.expiresAtUptimeNanoseconds else { return false }
+            previous = observed
+            switch wait() {
+            case let .reaped(returnedPID, _):
+                let completed = now()
+                return returnedPID == processIdentifier && completed >= observed
+                    && completed < timeline.containmentDeadline.expiresAtUptimeNanoseconds
+            case .stillRunning, .interrupted:
+                advance()
+            case .failed:
+                return false
+            }
+        }
+        return false
     }
 }
 

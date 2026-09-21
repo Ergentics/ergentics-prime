@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: the one-use R19 attempt was consumed and its recovery
+# can remain nonterminal indefinitely. Reject direct execution and Ruby load
+# before bootstrap intake, library loading, process inspection, or child spawn.
+# The historical body below is unchanged; its original Git blob is
+# e24ef87d9db8be272a23c6fc8f847045e45d1875. This does not stop a live old instance.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r19-retirement/v1\"," \
+    "\"status\":\"R19_GUARDIAN_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 BOOTSTRAP_ENV = {
   "LANG" => "C.UTF-8",
   "LC_ALL" => "C.UTF-8",

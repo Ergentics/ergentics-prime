@@ -1,6 +1,24 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
 
+# Retired 2026-09-20: this historical r18-process-generation-canary helper has
+# failure paths that can remain active indefinitely. Reject all roles before
+# bootstrap intake, library loading, process inspection, or child creation.
+# The historical body below is unchanged; its original Git blob is
+# 4ac022622fc0d4faea55d4e80b9a6a3840785da5. Existing live instances are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r18-process-generation-canary-retirement/v1\"," \
+    "\"status\":\"R18_PROCESS_GENERATION_CANARY_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 # R18 is a disposable, process-only ABI canary.  It does not invoke the Swift
 # supervisor, the guardian, Git, a shell, or any mechanics harness.  Its fixed
 # marker directory is the durable one-shot witness; the directory is never a

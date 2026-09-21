@@ -3287,7 +3287,7 @@ private extension PrimeValidationDriverV2FixedProbeSemanticValidator {
                 == expectation.supervisorProcessIdentifier,
               supervisorExit.returnedProcessIdentifier
                 == expectation.supervisorProcessIdentifier,
-              supervisorExit.waitOptions == 0,
+              supervisorExit.waitOptions == WNOHANG,
               supervisorExit.rawWaitStatus == 0,
               supervisorExit.returnedAtUptimeNanoseconds
                 >= expectation.outerDeadlineStartedAtUptimeNanoseconds,

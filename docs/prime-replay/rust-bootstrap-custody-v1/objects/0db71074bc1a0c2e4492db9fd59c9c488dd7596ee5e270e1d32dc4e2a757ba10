@@ -1,0 +1,81 @@
+{
+  "schema": "ergentics.rust-bootstrap.static-checkpoint.v1",
+  "result": "BUILD_AND_STATIC_REVIEW_PASS",
+  "scope": "Two host cross-compiles and offline inspection; no resulting image executed.",
+  "raw_build_result": "result.json",
+  "raw_build_result_is_not_rewritten": true,
+  "guest_image": {
+    "bytes": 164,
+    "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+    "entry_hex": "0x10000000",
+    "doorbell_offset_bytes": 96,
+    "doorbell_pc_hex": "0x10000060",
+    "elf_bytes": 66576,
+    "elf_sha256": "402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+    "mach_o_uuid": null,
+    "uuid_note": "This is an ELF analysis container and raw AArch64 guest, not a Mach-O executable. The content hashes identify these artifacts."
+  },
+  "build_observations": {
+    "direct_rust_compiler_invocations": 2,
+    "normal_exits": [0, 0],
+    "compiler_stdout_bytes": [0, 0],
+    "compiler_stderr_bytes": [0, 0],
+    "all_seven_recorded_A_B_comparisons_equal": true,
+    "independent_Ruby_and_LLVM_extractions_equal": true,
+    "compile_time_semantic_assertions": 9,
+    "synthetic_inspector_tests": 12,
+    "synthetic_inspector_assertions": 46,
+    "synthetic_inspector_failures": 0,
+    "not_a_host_wide_process_census": true
+  },
+  "instruction_review": {
+    "instruction_words_reviewed": 41,
+    "direct_calls": 1,
+    "callee_hex": "0x1000007c",
+    "returns": 1,
+    "maximum_explicit_stack_bytes": 16,
+    "stack_written_range_hex": ["0x10013ff0", "0x10013fff"],
+    "stack_restored_before_return": true,
+    "request": "Four aligned u64 loads; LDAR sequence first; exact [1,1,19,23] validation.",
+    "rust_optimization": "The optimizer folded checked_add after exact input validation. Machine code compares the four u64 values and selects 42 or 0; no runtime ADD or overflow benchmark is claimed.",
+    "publication": "Only accepted 42 reaches reply body stores; STLR at +0x58, DSB SY at +0x5c, STR W4=1 to unmapped doorbell at +0x60.",
+    "failure_paths": "Reject BRK at +0x6c and returned-doorbell BRK at +0x64 each have a self-loop if incorrectly resumed. Named panic BRK +0x74 is retained; the unused Rust panic wrapper was removed by linker garbage collection.",
+    "isa": "Baseline integer, branch, load/store, acquire/release, barrier and trap instructions; no FP, SIMD, SVE, PAC or LSE instructions.",
+    "runtime_dependencies": "No helper call, OS call, recursion, dynamic dependency, unresolved symbol, TLS, mutable allocated section or relocation in the linked image.",
+    "limit": "Static analysis under the frozen future machine/mapping contract, not observed execution or malicious-host resistance."
+  },
+  "reviews": [
+    {"reviewer": "final_static_security", "result": "PASS_BUILD_STATIC_ONLY", "scope": "Rust/assembly memory and ABI safety; all 41 instruction words, exact stack/call/publication/trap paths."},
+    {"reviewer": "final_diff_identity", "result": "PASS_BUILD_STATIC_ONLY", "scope": "Actual A/B byte comparison; independent extraction; all six current source files and four unchanged baseline files."},
+    {"reviewer": "final_roadmap_review", "result": "PASS_BUILD_STATIC_ONLY", "scope": "Contract/result reconciliation and successor host-integration boundary; no runtime or authority promotion."}
+  ],
+  "source_scope": {
+    "all_six_current_files_equal_both_build_snapshots_at_final_check": true,
+    "all_four_baseline_files_match_prebuild_hashes": true,
+    "continuous_source_immutability_claimed": false,
+    "post_build_tooling_adjustment": "After the build helper completed its pre/post checks, an inspector stdout-format-only edit added a separate path/device/inode JSON line. It was restored to the exact captured A/B source before handoff. No guest source or parser rule changed and no additional compile was entered. Per-side cwd/argv retain input paths; stdout retains device/inode.",
+    "final_inspector_sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548"
+  },
+  "toolchain_setup": {
+    "version": "1.98.0",
+    "location": "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap",
+    "retained": "Official manifest, component archives, extracted payloads, assembled prefix and setup-record.json.",
+    "initial_preflight_failure": "The first LLVM analyzer --version lacked its companion libLLVM.dylib because only the bin payload had been copied. Completing the official component's lib directory resolved it before any guest compilation; no loader environment workaround was used.",
+    "shell_profiles_or_system_toolchain_changed": false,
+    "compiler_provenance_limit": "Official HTTPS and manifest SHA-256 consistency, not independent compiler reproduction or hardware attestation."
+  },
+  "runtime_status": {
+    "guest_executions": 0,
+    "resulting_host_test_binary_executions": 0,
+    "embedded_92_byte_baseline_replaced": false,
+    "production_host_or_xcode_project_modified": false,
+    "new_stack_mapping_created": false,
+    "guest_os_or_network_added": false,
+    "high_value_transfer_available": false,
+    "host_attestation_implemented": false,
+    "energy_ergs": "UNMEASURED",
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "next_scope": "Successor-specific host image/stack/trap/receipt integration and pure verifier tests. Preserve the assembly baseline; only afterward consider an explicit synthetic development run."
+}
