@@ -7,6 +7,8 @@ the native checkpoint observations below retain their September 8 scope.
 entrypoint guards, Rust evidence custody and Prime assessment v0.3.0 are joined
 with the unchanged durable Ergentics Agent/profile/corpus definitions and loader.
 See [the closeout and source selection](../../docs/prime-replay/root-analysis-closeout-v1/README.md).
+Continue through the [versioned HyperVisor development flow](../../docs/prime-replay/HYPERVISOR-DEVELOPMENT.md)
+for source publication, scoped profile work, review and qualification handoff.
 The user selected this Prime/HyperVisor commit; Surface has separate work time.
 The profiles support external development/review. General in-app Agent execution
 and protected cross-Agent output are not admitted by the existing H7/H8 routes.
