@@ -1,0 +1,68 @@
+{
+  "schema": "ergentics.profile-load-observation.v1",
+  "run_id": "prime-custody-012-accepted-011-swift",
+  "profile_id": "ergentics_swift_c",
+  "profile_version": "0.1.0",
+  "context_task_name": "prime-custody-harvest-012 accepted-load-011 Swift+C handoff",
+  "packet_receipt": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/RECEIPT.json",
+    "sha256": "6ad7454d8fa45d538f8260b74a186438a19e7dfb1ae14e8e7feedaa39f21846a"
+  },
+  "requested": {
+    "model": "gpt-5.6-terra",
+    "reasoning_effort": "high",
+    "context": {
+      "mode": "existing",
+      "inherited_context": "Same hosted role after candidate case review; new explicitly selected accepted corpus. Previous candidate and correction context is known. Not blind."
+    },
+    "tools": [
+      "Read exact selected files and verify SHA256",
+      "Write assigned bounded result and observation"
+    ]
+  },
+  "visible_model_label": "Codex (host-visible product label; not a verified serving-model build)",
+  "verified_serving_model_build": null,
+  "realized_reasoning_effort": null,
+  "observed": {
+    "preparation": "OBSERVED: the new packet receipt is prepared and matched its expected SHA-256. All nine declared staged members matched their declared bytes and SHA-256 values. The receipt's no-dispatch fields describe its local preparation phase.",
+    "hosted_read_and_response": "OBSERVED: this hosted task read the staged profile, Agent/common instruction, policy, selected accepted corpus entry, loader/template, pinned trigger result, and pinned repair/regression evidence, then wrote this handoff and observation.",
+    "additional_model_api_invocation": "NOT_OBSERVED: no additional model/API invocation was made by this task.",
+    "native_application_execution": "NOT_PERFORMED: no native application, CI, network, installation, or repository action was requested or performed."
+  },
+  "files_read": [
+    {"path":"/Users/ergentics/.codex/skills/ergentics-profile-loader/SKILL.md","bytes":5334,"sha256":"b72a165b11bac60e16bbe22501d2642bdd406fecb2c9117600afd3dc6b156089"},
+    {"path":"/Users/ergentics/.codex/skills/ergentics-profile-loader/assets/load-observation.json","bytes":1206,"sha256":"2242a694c354c4729cc17039acd297ccbc6249fe30e86b0781ed842b8b7c4ec9"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/READ-ME.md","bytes":1087,"sha256":"cd4f016026e3b2a7088d36630c5db11dcc4eee63f906f5f905893bb5c88bd0e0"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/RECEIPT.json","bytes":8542,"sha256":"6ad7454d8fa45d538f8260b74a186438a19e7dfb1ae14e8e7feedaa39f21846a"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/request.json","bytes":4620,"sha256":"5f06bc24b18cf97f3126fb3b0d97762c45ff56b5abe05ab6d0aded9c798a1f63"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/profile.json","bytes":2791,"sha256":"b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/policy.md","bytes":16917,"sha256":"c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/corpus.json","bytes":5834,"sha256":"924738d376a67cc8044771c9e12ce33dfd5cfd650a5292399dbd3700eced542b"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/agent/agents/ergentics_swift_c/agent.json","bytes":1120,"sha256":"efd243cd5c1c41e7b4d5dc538e9169a617829a848309da8693261426b7d1e930"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/agent/agents/ergentics_swift_c/AGENT.md","bytes":1972,"sha256":"0b906b5f4ce7032895dd5d80a095bccc1738e5817bae6a0bff2259951068879c"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/agent/shared/OPERATING-CONTRACT.md","bytes":5571,"sha256":"1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet/agent/contracts/run-record.schema.json","bytes":2888,"sha256":"c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RESULT.json","bytes":4633,"sha256":"12d8fcb387d867def3b681cc85548db4c16c4cea9d1753be038cecd9bcbaf1e2"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HELPER-REPAIR.json","bytes":865,"sha256":"0fa03aea81105fa1cae802856181b24674e72057cd525ed0ffd3f6b38ee8e7c4"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/RESULTS.json","bytes":51444,"sha256":"46b8b026ebe8fd3edee2b6c93d02923b52d37accbd3c02d8fada55bb65be934b"}
+  ],
+  "corpus_entries_read": [
+    {"id":"prime-gate-phase-custody","version":"0.1.0","sha256":"0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738","status":"accepted_selected"}
+  ],
+  "processing_route": "hosted / codex-task / OpenAI, as requested. Hosted instruction reading and response are observed; provider processing exclusivity and retention/training controls are not established.",
+  "provider_control_evidence": "Not independently verified by this task; no Ergentics-only processing or provider retention/training guarantee is established.",
+  "result": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/results/HANDOFF.md",
+    "sha256": "4d7729dc852aab11d28614bdd7b1383c823eca55043cf54780353645c2a4c475"
+  },
+  "blockers": [
+    "Native qualification and any CI/merge claim are blocked from completion by separate execution authority and evidence; no such operation was requested or performed."
+  ],
+  "limits": [
+    "The failed partial packet identified by the repair record is preserved historical failure and was not loaded.",
+    "The versioned candidate helper package v0.1.1 is not installed; the repair record says installed_changed=false. Logical profile and Agent versions remain 0.1.0.",
+    "Requested model/effort are not verified serving-model or realized-effort facts.",
+    "Packet preparation, this observed hosted read, accepted-contribution selection, installation, and native activation are separate facts."
+  ],
+  "extensions": {}
+}

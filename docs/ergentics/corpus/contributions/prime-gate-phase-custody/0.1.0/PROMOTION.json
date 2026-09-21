@@ -1,0 +1,52 @@
+{
+  "schema": "ergentics.corpus-promotion-receipt.v1",
+  "tool_version": "0.1.0",
+  "status": "prepared_reviewed_contribution",
+  "request_sha256": "ccbc07d88f14a6f98cb8ea615ad2a817ce6ab4ebfab2ef4b19d2eed0c724b9ce",
+  "candidate_sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+  "review_evidence": {
+    "positive_evidence": {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/positive_evidence.json",
+      "sha256": "465b058aec2df64cf0487ca79fe25981d523ee797ce1acc9a8332fa3895d5f9d"
+    },
+    "golden_negative_evidence": {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/golden_negative_evidence.json",
+      "sha256": "94ecb4c3baea91fce66477f9fe81416f511fa4e077d69f48313369755d5e5e5e"
+    }
+  },
+  "reads": [
+    {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/PROMOTION-REQUEST.json",
+      "kind": "promotion_binding",
+      "status": "verified",
+      "bytes_read": 2372,
+      "sha256": "ccbc07d88f14a6f98cb8ea615ad2a817ce6ab4ebfab2ef4b19d2eed0c724b9ce"
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/positive_evidence.json",
+      "kind": "positive_evidence",
+      "status": "verified",
+      "bytes_read": 1557,
+      "sha256": "465b058aec2df64cf0487ca79fe25981d523ee797ce1acc9a8332fa3895d5f9d"
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/golden_negative_evidence.json",
+      "kind": "golden_negative_evidence",
+      "status": "verified",
+      "bytes_read": 1538,
+      "sha256": "94ecb4c3baea91fce66477f9fe81416f511fa4e077d69f48313369755d5e5e5e"
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source/prime-gate-phase-custody.md",
+      "kind": "promotion_candidate",
+      "status": "verified",
+      "bytes_read": 3071,
+      "sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738"
+    }
+  ],
+  "limits": [
+    "Caller-supplied review evidence is content-bound, not independent signer authentication.",
+    "This creates a new contribution corpus; it does not overwrite or merge an existing corpus.",
+    "No automatic harvesting, model training, context dispatch or publication occurred."
+  ]
+}

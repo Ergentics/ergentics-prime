@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "archive": "/Users/ergentics/2026-09-20/er/outputs/prime-skill-harvest-store/PRIME-CUSTODY-010-012/ergentics-prime-custody.zip",
+  "archive_sha256": "bb04868a2934a2170a4df0131949119c20c3de2f308ce161799d883acc24339b",
+  "archive_bytes": 14602,
+  "exact_source_zip_equality": true,
+  "files": 6,
+  "helper_verify_exit_code": 0,
+  "receipt_sha256": "148e0675168b9b7d45e38d64fb3abdeeb957659609b2b1ac23e5e9e858f1fea9",
+  "control_enabled": false,
+  "store_releases": 5,
+  "store_bytes": 222235,
+  "remaining_releases": 3,
+  "remaining_bytes": 16554981,
+  "scope": "Fixed store only; no installation, native execution or background service."
+}

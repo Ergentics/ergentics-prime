@@ -1,0 +1,69 @@
+{
+  "schema": "ergentics.prime-custody-review.v1",
+  "run_id": "prime-custody-012-cpp",
+  "profile": {"id": "ergentics_cpp", "version": "0.1.0"},
+  "packet": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/RECEIPT.json",
+    "sha256": "a27a438ab0052c08b351c0101769c7e240227e52a2a38eeb1aece9818445f266",
+    "member_count": 9,
+    "membership_and_hashes": "verified"
+  },
+  "cases": [
+    {
+      "id": "C1",
+      "evidence": "The local helper receipt establishes successful bounded preparation and exact profile/corpus byte checks. Its NOT_PERFORMED dispatch field and the stated absence of a recipient read/response are retained.",
+      "decision": "Preparation is established. Profile instruction loading, hosted context ingestion, model response, native execution, candidate correctness, runtime readiness, and provider retention controls are not established. YAML metadata validation is only the reported validator result and does not qualify loading or execution.",
+      "next_action": "If authorized, dispatch the exact packet to the named recipient and record its actual reads and response in a separate observation; otherwise retain preparation-only status."
+    },
+    {
+      "id": "C2",
+      "evidence": "Exact commit bytes reached PUSHED and the remote branch SHA was verified; its PR merged into a lineage branch. The distinct main PR remains open and mergeable while CI rejected caller admission.",
+      "decision": "The source has REMOTE_SHA_VERIFIED durability for the named branch/commit and a lineage-branch merge. There is no main merge, successful caller admission, or native/source qualification for main. GitHub mergeability is not CI success; the teammate's merged-and-qualified label is inaccurate.",
+      "next_action": "Keep source durability and lineage-branch merge recorded, preserve the admission failure, and perform current main integration validation only under its own authority."
+    },
+    {
+      "id": "C3",
+      "evidence": "The requested work is C/C++ source analysis. Historical HyperVisor H8 and current Driver H are separate gate families despite the shared informal letter.",
+      "decision": "Proceed with authorized bounded source analysis. The historical HyperVisor H8 PASS applies only to that exact historical object, family, phase, and evidence; it neither satisfies Driver A-G nor authorizes the current Driver H. Current Driver execution/go-no-go is held because authorization is absent.",
+      "next_action": "Record the family distinction and historical scope, prepare analysis or evidence that does not require Driver execution, and await current Driver authority before any Driver gate action."
+    },
+    {
+      "id": "C4",
+      "evidence": "The proposed post-outcome patch changes the protected exact-parent admission rule and accepts arbitrary changed paths, without an authorized phase transition or amended acceptance contract.",
+      "decision": "This is a PROTOCOL_AMENDMENT because it changes protected admission/acceptance semantics after the known failure. It cannot be applied as an implementation fix or used to turn the failure green.",
+      "next_action": "Preserve the failed result, inspect the retained transition/restoration contract, and prepare the exact diff and documentation already authorized. Do not retry CI or launch a native attempt; seek the applicable Ergentics review before applying any protocol change."
+    },
+    {
+      "id": "C5",
+      "evidence": "The bounded local package used pinned candidate bytes, had fixed-store capacity, returned a matching archive receipt, and returned its control OFF. No installation, hosted load, scheduler, or Git push occurred.",
+      "decision": "The local packaging operation completed for the authorized lesson and both profile targets, subject to its archive receipt. It establishes neither installation, instruction loading, hosted execution, native readiness, nor publication. The separate native-launch hold does not block this independent package operation.",
+      "next_action": "Preserve the archive receipt and original candidate, leave the control OFF, and keep native launch held only for its own missing prerequisite."
+    }
+  ],
+  "candidate_review": {
+    "status": "review_input_only",
+    "finding": "The candidate has the right custody distinctions and its Prime example supports the stated golden negative and benign control. Two concrete corrections are needed before acceptance.",
+    "corrections": [
+      {
+        "severity": "scope",
+        "location": "SKILL.md:72-73",
+        "finding": "Auto Harvest is named as an authorized package build without stating that it is a logical capability and not proof of an installed package or permission to install/watch/publish.",
+        "action": "State explicitly that Auto Harvest availability, installation, scheduling, and publication remain separate and require their own current authority."
+      },
+      {
+        "severity": "evidence",
+        "location": "SKILL.md:74-77",
+        "finding": "The relative reference references/metadata-validation.md is not present in the candidate package, so the declared metadata procedure is not self-resolving from this candidate.",
+        "action": "Pin a valid installed/shared procedure path or include the required reference with its version and hash; do not rely on an unresolved relative link."
+      }
+    ],
+    "positive_control": "The candidate correctly separates trigger delivery, caller admission, executed/skipped checks, qualification, durability, merge destination, requested settings, and observed serving identity.",
+    "golden_negative": "A correctly triggered and mergeable PR can fail caller admission; neither mergeability nor a green source check establishes native qualification or main merge.",
+    "disposition": "Do not treat the candidate or lesson as accepted corpus or installed skill from this review."
+  },
+  "limits": [
+    "No CI, launch, install, network, repository mutation, or native execution was performed.",
+    "The requested model label is not a verified serving-build identity; realized reasoning effort is unknown.",
+    "The historical Prime result and receipt are task inputs and do not establish current integration readiness."
+  ]
+}

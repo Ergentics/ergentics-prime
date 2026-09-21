@@ -1,0 +1,39 @@
+{
+  "schema": "ergentics.profile-load-file-identities.v1",
+  "scope": "Additive actual-read identity metadata for prime-custody-012-swift; this file does not alter the original observation, case responses, candidate review, load state, or qualification claims.",
+  "original_load_observation": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/load-observation.json",
+    "sha256": "93ff5211b63c7856f4eb097ecd25e218b3c0c927f5aed7a7b537935dfe777478"
+  },
+  "reported_result": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+    "sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a"
+  },
+  "files_read": [
+    {"path":"/Users/ergentics/.codex/skills/ergentics-profile-loader/SKILL.md","bytes":5334,"sha256":"b72a165b11bac60e16bbe22501d2642bdd406fecb2c9117600afd3dc6b156089"},
+    {"path":"/Users/ergentics/.codex/skills/ergentics-profile-loader/assets/load-observation.json","bytes":1206,"sha256":"2242a694c354c4729cc17039acd297ccbc6249fe30e86b0781ed842b8b7c4ec9"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/READ-ME.md","bytes":1074,"sha256":"2851e2e18ca9b967e12aa4f951779bf4e6bc1ca26eb72e0a0cf952d3874be89f"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/RECEIPT.json","bytes":9321,"sha256":"538a57b71aafe67ee54ceb5bfdbb50e1a0041fea8444c4199c0018a7afaa5c93"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/request.json","bytes":5924,"sha256":"9ebc1898cbe280bc59ef372328db10148219e3bf61ddbe52c53f852896709350"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/profile.json","bytes":2791,"sha256":"b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/policy.md","bytes":16917,"sha256":"c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/corpus.json","bytes":6542,"sha256":"6e4631a3dfe9eefe37ee46b7c427c42d30908930f60881b3718d2c8783359f3f"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/agents/ergentics_swift_c/agent.json","bytes":1120,"sha256":"efd243cd5c1c41e7b4d5dc538e9169a617829a848309da8693261426b7d1e930"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/agents/ergentics_swift_c/AGENT.md","bytes":1972,"sha256":"0b906b5f4ce7032895dd5d80a095bccc1738e5817bae6a0bff2259951068879c"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/shared/OPERATING-CONTRACT.md","bytes":5571,"sha256":"1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/contracts/run-record.schema.json","bytes":2888,"sha256":"c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/SKILL.md","bytes":4350,"sha256":"550461810acce7ee01f8c4926b613337e1ff4448082f29df53877bedb284f96f"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/gate-record.md","bytes":1617,"sha256":"5543d64a7baf60b4cbfcf0af50eda9c96573672203f16a121277d04f921b596d"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/lineage-and-extension.md","bytes":2983,"sha256":"0cd3cb1dd9cb6bcdec26fb5b59ec03de84b8dcaa33d56d6ee93addda988a38a7"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source/prime-gate-phase-custody.md","bytes":3071,"sha256":"0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738"},
+    {"path":"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/CASES.json","bytes":2109,"sha256":"662236ab01188634e355ab5768f088b547bda4e165c28ba6859b0aae0129eafd"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RESULT.json","bytes":4633,"sha256":"12d8fcb387d867def3b681cc85548db4c16c4cea9d1753be038cecd9bcbaf1e2"},
+    {"path":"/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RECEIPT.json","bytes":2194,"sha256":"1efc925846e28a174c3e4618a8367a59a71ef9ca30770416f17b5891190d2bc3"},
+    {"path":"/Users/ergentics/.codex/skills/ergentics-research-custody/SKILL.md","bytes":3737,"sha256":"f047144f13745687cc27a6786d66736f8c7b1a6c3d6eb838935765858cef0cbc"}
+  ],
+  "limits": [
+    "Hashes identify the bytes re-read for this additive metadata correction; they do not establish a new load, profile activation, model-serving identity, CI/native execution, or qualification.",
+    "No files outside the original files_read list were added to the intake."
+  ],
+  "extensions": {}
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "ergentics.profile-load-observation.v1",
+  "run_id": "prime-custody-012-cpp",
+  "profile_id": "ergentics_cpp",
+  "profile_version": "0.1.0",
+  "context_task_name": "prime-custody-harvest-012-cpp",
+  "packet_receipt": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/RECEIPT.json",
+    "sha256": "a27a438ab0052c08b351c0101769c7e240227e52a2a38eeb1aece9818445f266"
+  },
+  "requested": {
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "high",
+    "context": {
+      "mode": "fresh",
+      "inherited_context": "No parent conversation fork requested. Shared filesystem and model prior knowledge remain; not enforced isolation or blinded testing."
+    },
+    "tools": [
+      "Read exact selected files and verify SHA256",
+      "Write assigned bounded result and observation"
+    ]
+  },
+  "visible_model_label": "unknown",
+  "verified_serving_model_build": null,
+  "realized_reasoning_effort": null,
+  "observed": {
+    "preparation": {
+      "status": "verified_prepared",
+      "receipt_status": "prepared",
+      "member_count": 9,
+      "exact_membership_and_hashes": true
+    },
+    "hosted_read_and_response": {
+      "status": "observed",
+      "details": "This hosted task read the packet, selected corpus, installed loader/template, pinned task inputs, and returned the bounded case review."
+    },
+    "additional_model_api_invocation": "not_performed",
+    "native_application_execution": "not_performed"
+  },
+  "files_read": [
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/READ-ME.md", "sha256": "2ceef7e883c1fdc5e7648e430192f0e22c9670136a9d760b7add649985adc671"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/RECEIPT.json", "sha256": "a27a438ab0052c08b351c0101769c7e240227e52a2a38eeb1aece9818445f266"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/request.json", "sha256": "25508dd4dba7e089871c4cd185243c14151052ddd9135c5e5c4118f7f82ced48"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/profile.json", "sha256": "65d7b7684d4ac0238c48bbd677f01f11aeb5fb4f2d95ac9c36e3de7fed5784b2"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/policy.md", "sha256": "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/corpus.json", "sha256": "6e4631a3dfe9eefe37ee46b7c427c42d30908930f60881b3718d2c8783359f3f"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/agent/agents/ergentics_cpp/agent.json", "sha256": "23ee293cce8efef7306bf95a55cb41beb7adb96169969ac716ca86109954f647"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/agent/agents/ergentics_cpp/AGENT.md", "sha256": "c25453b511b63a42b5cd95a304f28ad4501d9024e1163f973ba239526b27d8ee"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/agent/shared/OPERATING-CONTRACT.md", "sha256": "1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/packet/agent/contracts/run-record.schema.json", "sha256": "c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1"},
+    {"path": "/Users/ergentics/.codex/skills/ergentics-profile-loader/SKILL.md", "sha256": "b72a165b11bac60e16bbe22501d2642bdd406fecb2c9117600afd3dc6b156089"},
+    {"path": "/Users/ergentics/.codex/skills/ergentics-profile-loader/assets/load-observation.json", "sha256": "2242a694c354c4729cc17039acd297ccbc6249fe30e86b0781ed842b8b7c4ec9"},
+    {"path": "/Users/ergentics/.codex/skills/ergentics-profile-loader/references/installed-bindings.json", "sha256": "d43a8fd65560b24fd3d0e96f3af4c11e84f7def45eadccc7fd6f06c16cff0ca8"},
+    {"path": "/Users/ergentics/.codex/skills/ergentics-alignment/references/local-authority.json", "sha256": "055268a7f0c214cc32544b69e0ebae436a1604c25d1e3f034bbd79e000213ff6"},
+    {"path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-alignment/ERGENTICS-ALIGNMENT.md", "sha256": "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"},
+    {"path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json", "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"},
+    {"path": "/Users/ergentics/.codex/ergentics/profiles/0.1.0/MANIFEST.json", "sha256": "049117e198ebea67fa4aa38661d49c62d504692a837cee1fbdc661c7df8d58c6"},
+    {"path": "/Users/ergentics/.codex/ergentics/corpus/0.1.0/INDEX.json", "sha256": "9fb0ca3b3991074b5c573ffe89757cfd200723c837048ab716521a0da82368b5"},
+    {"path": "/Users/ergentics/.codex/ergentics/corpus/0.1.0/entries/evidence-stages.md", "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"},
+    {"path": "/Users/ergentics/.codex/ergentics/corpus/0.1.0/entries/phase-scoped-observations.md", "sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/SKILL.md", "sha256": "550461810acce7ee01f8c4926b613337e1ff4448082f29df53877bedb284f96f"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/gate-record.md", "sha256": "5543d64a7baf60b4cbfcf0af50eda9c96573672203f16a121277d04f921b596d"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/lineage-and-extension.md", "sha256": "0cd3cb1dd9cb6bcdec26fb5b59ec03de84b8dcaa33d56d6ee93addda988a38a7"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/metadata-validation.md", "sha256": "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source/prime-gate-phase-custody.md", "sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738"},
+    {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/CASES.json", "sha256": "a55376d52e5779be65275a15b8dfde2d229948e3d800085100197b9e3c3cc533"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RESULT.json", "sha256": "12d8fcb387d867def3b681cc85548db4c16c4cea9d1753be038cecd9bcbaf1e2"},
+    {"path": "/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RECEIPT.json", "sha256": "1efc925846e28a174c3e4618a8367a59ef9ca30770416f17b5891190d2bc3"},
+    {"path": "/Users/ergentics/.codex/skills/ergentics-research-custody/SKILL.md", "sha256": "f047144f13745687cc27a6786d66736f8c7b1a6c3d6eb838935765858cef0cbc"}
+  ],
+  "corpus_entries_read": [
+    {"id": "evidence-stages", "version": "0.1.0", "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"},
+    {"id": "phase-scoped-observations", "version": "0.1.0", "sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346"}
+  ],
+  "processing_route": "hosted / codex-task / OpenAI per request; provider retention and training controls are unverified",
+  "provider_control_evidence": "Not independently verified by this task; no Ergentics-only processing or retention guarantee.",
+  "result": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+    "sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8"
+  },
+  "blockers": [
+    "Candidate corpus promotion and installed-skill update are blocked by review-input-only status and absent promotion authority in this task.",
+    "Native application execution is blocked by explicit task authority forbidding launch/native execution."
+  ],
+  "limits": [
+    "The requested model and reasoning effort are requested settings only; no serving-build identity or realized effort was exposed.",
+    "Shared filesystem and hosted processing do not establish enforced blinding, isolation, retention, or training controls.",
+    "No CI, launch, install, network, repository mutation, or native execution occurred."
+  ],
+  "extensions": {
+    "candidate_status": "Review inputs only, not accepted corpus or installed skill.",
+    "auto_harvest_status": "Reviewed as a bounded logical capability; no Auto Harvest package, scheduler, install, or publication was run.",
+    "addendum": {"path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/ADDENDUM.md", "sha256": "753e10e625c8945ea6d4b7b925d60b7f1325dfad73772d82c8a0394986816b29", "status": "original findings reassessed; metadata-reference finding withdrawn and Auto Harvest wording change found unnecessary"},
+    "policy": {"id": "EA-POLICY-001", "version": "0.4.1", "sha256": "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"},
+    "packet_verification": {"expected_receipt_sha256": "a27a438ab0052c08b351c0101769c7e240227e52a2a38eeb1aece9818445f266", "declared_members": 9, "actual_members": 9, "exact_membership": true}
+  },
+  "template_note": "Unpopulated fields are unknown, not success. Preparation, hosted reading/response, model identity, native execution, and provider controls are reported separately."
+}

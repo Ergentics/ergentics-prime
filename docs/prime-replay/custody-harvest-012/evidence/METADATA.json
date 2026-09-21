@@ -1,0 +1,14 @@
+{
+  "interpreter": "/Users/ergentics/2026-09-20/er/work/ergentics-profile-install-003/metadata-venv/bin/python3",
+  "prefix": "/Users/ergentics/2026-09-20/er/work/ergentics-profile-install-003/metadata-venv",
+  "python_version": "3.9.6",
+  "pyyaml_version": "6.0.3",
+  "yaml_module": "/Users/ergentics/2026-09-20/er/work/ergentics-profile-install-003/metadata-venv/lib/python3.9/site-packages/yaml/__init__.py",
+  "validator": "/Users/ergentics/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+  "validator_sha256": "ee6dba90f44d37171c5a6edb8095979c54919ff6822c1a907afca2e78c48738c",
+  "candidate_manifest_sha256": "42b304d540564232ac42f391b8f2e58b939e0e21439b86ac7bb8fc9fb1860a48",
+  "exit_code": 0,
+  "stdout": "Skill is valid!\n",
+  "stderr": "",
+  "scope": "Skill metadata only; hosted behavior reviewed separately."
+}

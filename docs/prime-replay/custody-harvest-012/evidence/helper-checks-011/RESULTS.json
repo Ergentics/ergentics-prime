@@ -1,0 +1,1218 @@
+{
+  "schema": "ergentics.profile-helper-checks.v1",
+  "tool_version": "0.1.1",
+  "ruby": "ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin26]",
+  "helper_sha256": "05b78a96f41194abe00328375eb6084dc2ba24f5e3aa4ea09cd996d8bbba3f94",
+  "cases": [
+    {
+      "id": "accepted-shared-and-scoped-selection",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/accepted-shared-and-scoped-selection/packet",
+        "receipt_sha256": "92f9fe879ffe335e4bc09105c72f7cd491e79742fe6493d823d55d26ebb11a91",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23700,
+        "model_dispatch": "NOT_PERFORMED",
+        "no_unselected_read": true,
+        "observed_not_inferred": true
+      }
+    },
+    {
+      "id": "second-profile-shared-corpus",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/second-profile-shared-corpus/packet",
+        "receipt_sha256": "5831534d802bda157a8b014ebdd60a8fd2ea8909f0a4777e1a7606b5d1a33262",
+        "profile": "ergentics_cpp",
+        "entries": 3,
+        "context_bytes": 23996,
+        "model_dispatch": "NOT_PERFORMED"
+      }
+    },
+    {
+      "id": "review-candidate",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_not_reviewed",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-candidate/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2425,
+            "sha256": "9673177e8da0b94d794c28db63e9cca6545dbfffc849d976f877de0b85f6e241"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-candidate/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-candidate/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-candidate/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7858,
+            "sha256": "68038933b495ade68668bbed996390b68f30a4e5a2f8e6d0b046b9889ff3366e"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-withheld",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_not_reviewed",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-withheld/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2421,
+            "sha256": "ca70de08c89d49a0071e08f84d77c3ae00d649832a9988f272d7198496b97cca"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-withheld/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-withheld/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/review-withheld/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "a90069db6694aeff3c0fdf8f638f4880cbc044e5057dce7ebddb19c86bff3d79"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-profile-scope",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_profile_scope",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-profile-scope/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2437,
+            "sha256": "a2c6aca3bf912abf9c0d90882b0f90aea090888c03aa7049feed631cdabc2dd1"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-profile-scope/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-profile-scope/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-profile-scope/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7853,
+            "sha256": "543f6778301414df5a8c9109e456fb99f9a79797553fc2c5639c07aedc1edb64"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-purpose",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_purpose_scope",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-purpose/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2413,
+            "sha256": "06c3ee299eea79b4a28aa1e63663dc8ff9c4150ee55a0a086b852334521be48e"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-purpose/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-purpose/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-purpose/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7823,
+            "sha256": "a84226e5d12c033f09bbd691410aeeda3222e894cdd9fb249dbf525f6ce88876"
+          }
+        ]
+      }
+    },
+    {
+      "id": "local-only-to-hosted",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_processing_scope",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/local-only-to-hosted/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2441,
+            "sha256": "de80e5a0a2e49a93cbf5851655943878b51cd3aa6d7550c633eefc93268cc845"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/local-only-to-hosted/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/local-only-to-hosted/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/local-only-to-hosted/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7766,
+            "sha256": "ca6002bb57a586e5eee37044ee695b6996f7d5e1f24c739e0f9555a1bc876972"
+          }
+        ]
+      }
+    },
+    {
+      "id": "holdout-answer",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_kind_not_allowed",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/holdout-answer/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2417,
+            "sha256": "f993a6936f261027103e9650072cf8ac5edbbd8b6835a0c4b609843736e55c7a"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/holdout-answer/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/holdout-answer/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/holdout-answer/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7855,
+            "sha256": "f7b096d38aae50af583512782ffa72e38734209a6ebad50018d484b3506820fe"
+          }
+        ]
+      }
+    },
+    {
+      "id": "credential-class",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_material_not_allowed",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/credential-class/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2425,
+            "sha256": "3cd3cebbf54a471b2fa15d3b4273698b0f23777f1903802038f2bcf877fb62f4"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/credential-class/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/credential-class/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/credential-class/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7858,
+            "sha256": "681af91db4e536b100ac32845c9da9eecfe8e0e89233b711f4f33729961d3fc8"
+          }
+        ]
+      }
+    },
+    {
+      "id": "raw-history-class",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "entry_material_not_allowed",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/raw-history-class/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2429,
+            "sha256": "22122d7b2b76c1110fb8674004a0904a2d7c5268847d97865d194753619c59ab"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/raw-history-class/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/raw-history-class/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/raw-history-class/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7859,
+            "sha256": "011001c027b33f0b0dd2bebf8ef7d763257781f40bc83c63adfa8a363a7aa36d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unselected-withheld-payload-never-opened",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/unselected-withheld-payload-never-opened/packet",
+        "receipt_sha256": "004be674606f5400c9c594fad1af3757c1acadfbf3581226d2f8e9d8ecfdb0e0",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23720,
+        "model_dispatch": "NOT_PERFORMED"
+      }
+    },
+    {
+      "id": "selected-payload-hash-drift",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "content_hash_mismatch",
+        "corpus_reads": 1,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2469,
+            "sha256": "b284fb0f0ed4bfc478f621f72da983c37ffc89423a02d89531331298a8caa49f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-payload-hash-drift/corpus/entries/evidence-stages.md",
+            "kind": "corpus_payload",
+            "status": "rejected_after_read",
+            "bytes_read": 538,
+            "sha256": "08610bbb625f101a7a10dddca1e5096370225868dd89868ba24b05a63de1dfbd"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-policy-pin-before-corpus-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "content_hash_mismatch",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-policy-pin-before-corpus-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2501,
+            "sha256": "95c281080aaa4e8dfad86582762f69e1c6bfb56d51cb86b2ca1e6728ab280070"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-policy-pin-before-corpus-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-policy-pin-before-corpus-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-policy-pin-before-corpus-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/wrong-policy-pin-before-corpus-read/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "rejected_after_read",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wrong-external-request-pin",
+      "result": "PASS",
+      "observation": {
+        "request_reads": 1,
+        "other_reads": 0
+      }
+    },
+    {
+      "id": "relative-path-traversal",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "relative_path",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/relative-path-traversal/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2453,
+            "sha256": "9a4f171d106711af26d8e8809da11cf1a54a8d2fa1f347b27123fe0d3063f85f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/relative-path-traversal/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/relative-path-traversal/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/relative-path-traversal/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7845,
+            "sha256": "b89ef0d2f26f73afa9d2795f6582522ad988a49c0f8661783e94cce1d2863539"
+          }
+        ]
+      }
+    },
+    {
+      "id": "selected-symlink-before-payload-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "nonregular_or_link",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-symlink-before-payload-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2505,
+            "sha256": "b93aa89200847aaf70d5e4e808225867e1755be4abd516d69f7d191981d5be2a"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-symlink-before-payload-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-symlink-before-payload-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-symlink-before-payload-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/selected-symlink-before-payload-read/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fifo-rejected-without-blocking-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "nonregular_or_link",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/fifo-rejected-without-blocking-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2501,
+            "sha256": "0102d963bc2a116bce4186334daf426027f364c7845d31af010225541935dfcf"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/fifo-rejected-without-blocking-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/fifo-rejected-without-blocking-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/fifo-rejected-without-blocking-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/fifo-rejected-without-blocking-read/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          }
+        ]
+      }
+    },
+    {
+      "id": "named-file-replaced-during-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "changed_during_read",
+        "corpus_reads": 1,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2485,
+            "sha256": "d62ca298c0030dc12aa120a1aabd9a041d1132f908756485071684f000591017"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/named-file-replaced-during-read/corpus/entries/evidence-stages.md",
+            "kind": "corpus_payload",
+            "status": "rejected_after_read",
+            "bytes_read": 538,
+            "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+          }
+        ]
+      }
+    },
+    {
+      "id": "file-removed-during-read-preserves-ledger",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "missing_or_changed_path",
+        "corpus_reads": 1,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2525,
+            "sha256": "7f05991b7cc71e3b7205440598a37943df2fc7e4b0c0bbc6b21456000fae47b1"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/file-removed-during-read-preserves-ledger/corpus/entries/evidence-stages.md",
+            "kind": "corpus_payload",
+            "status": "rejected_after_read",
+            "bytes_read": 538,
+            "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ancestor-replaced-during-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "changed_during_read",
+        "corpus_reads": 1,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2477,
+            "sha256": "4417b4ba9973d48ebf1c7a756bbc2aee7d7a3d8a9158390ddd037625d842d5cf"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/synthetic-policy.txt",
+            "kind": "policy",
+            "status": "verified",
+            "bytes_read": 84,
+            "sha256": "120204b0548f9193985b285f34b5b020cb71ee5b30347d83855e96f3e9caf522"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/ancestor-replaced-during-read/corpus/entries/evidence-stages.md",
+            "kind": "corpus_payload",
+            "status": "rejected_after_read",
+            "bytes_read": 538,
+            "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+          }
+        ]
+      }
+    },
+    {
+      "id": "empty-eligible-content",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/empty-eligible-content/packet",
+        "receipt_sha256": "ab68a5cb5f1a3c819ce7d88dd2fae015792afbd0244ea73c82afa5b21fe9faf2",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23087,
+        "model_dispatch": "NOT_PERFORMED"
+      }
+    },
+    {
+      "id": "duplicate-json-keys",
+      "result": "PASS",
+      "observation": {
+        "rejection": "duplicate_json_key",
+        "reads": 1
+      }
+    },
+    {
+      "id": "manifest-array-shape",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "manifest_shape",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/manifest-array-shape/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2441,
+            "sha256": "a597e2adea7bdafb9caf649e9f11b8b64a36bc153ee039b4de7c7b4a56f4063c"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/manifest-array-shape/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 5,
+            "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "typed-request-identity",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "request_identity",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/typed-request-identity/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2427,
+            "sha256": "6547c3cd572142be5b3e1e5c1cd6073d977bcdf9ca3756e71215408827b67dd4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "typed-corpus-root",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "expected_string",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/typed-corpus-root/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2333,
+            "sha256": "3f0afac0874e053bd2b9858c09588a07f9c58d71ff587c8cb35ef0c53921d8bc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "typed-profile-version",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "profile_identity",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/typed-profile-version/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2445,
+            "sha256": "defe9a5332bc5cf403a2c9c57154c5ffa627264f5332284a444f694f3f5bb2be"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/typed-profile-version/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "65a3275543f97945787e7310899d1032dd7acdf185768590d5a7e6e8ac3b783f"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/typed-profile-version/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2790,
+            "sha256": "eeb0edf9c6f40f8b0315589067fa934d106d5ce0717c22f4cdfb2f1d84e1c901"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unknown-field-rejected",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "unknown_field",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/unknown-field-rejected/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2488,
+            "sha256": "46a161d79b07f4ead35c7c440eea9cbd6363ceb6d25a7de4ea4b49b401e6422b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "namespaced-extension-inert",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/namespaced-extension-inert/packet",
+        "receipt_sha256": "d0cda2acc306bc6b3775838d8161c30c21e50a89320a41c8490f7ecf3220a5a1",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23763,
+        "model_dispatch": "NOT_PERFORMED"
+      }
+    },
+    {
+      "id": "budget-rejected-before-corpus-read",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "context_byte_budget",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/budget-rejected-before-corpus-read/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2492,
+            "sha256": "34cda341fa53ba22facfaed807fb4b1928c83ead69a976e163a1b575afe19e92"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/budget-rejected-before-corpus-read/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/budget-rejected-before-corpus-read/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/budget-rejected-before-corpus-read/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 7857,
+            "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+          }
+        ]
+      }
+    },
+    {
+      "id": "duplicate-selection",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "duplicate_selection",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/duplicate-selection/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2590,
+            "sha256": "16d6b23c3cb9bc542b8609a1c93a8dafdc45462ac45790f8a89ba81cd174efd2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "duplicate-index-entry",
+      "result": "PASS",
+      "observation": {
+        "expected_rejection": "duplicate_corpus_entry",
+        "corpus_reads": 0,
+        "read_ledger": [
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/duplicate-index-entry/request.json",
+            "kind": "run_binding",
+            "status": "verified",
+            "bytes_read": 2445,
+            "sha256": "5441aa1b3726a30b65a656feb6342cffe4214edc45b4f78eb75e03c508fe2904"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/duplicate-index-entry/profiles/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 3012,
+            "sha256": "8da43c9107bdf8b4eef8b2fdc21e48c165e1c68cc96d6afb96b849375e20cfe7"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/duplicate-index-entry/profiles/profiles/ergentics_swift_c.json",
+            "kind": "profile",
+            "status": "verified",
+            "bytes_read": 2791,
+            "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+          },
+          {
+            "path": "/Users/ergentics/.codex/ergentics/agents/0.1.0/MANIFEST.json",
+            "kind": "metadata",
+            "status": "verified",
+            "bytes_read": 2808,
+            "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+          },
+          {
+            "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/duplicate-index-entry/corpus/INDEX.json",
+            "kind": "corpus_index",
+            "status": "verified",
+            "bytes_read": 9138,
+            "sha256": "a2eb8b63095f1194e3548dc322c780a0a64abb8078e42d17c94c362043a7b7dc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "local-preparation-no-inference-claim",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/local-preparation-no-inference-claim/packet",
+        "receipt_sha256": "edc8955b005ddc56a440765a79c750db1d178cd877a47759ea26b4ec5d89dbdf",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23722,
+        "model_dispatch": "NOT_PERFORMED"
+      }
+    },
+    {
+      "id": "relocated-roots-and-spaces",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/relocated-roots-and-spaces/packet",
+        "receipt_sha256": "290f03b0980002ed487ef55c3fc9e1c0c6583d05c556b5000a0e3f9ff52cfe96",
+        "profile": "ergentics_swift_c",
+        "entries": 3,
+        "context_bytes": 23791,
+        "model_dispatch": "NOT_PERFORMED",
+        "scope": "Filesystem relocation only; no other backend invoked"
+      }
+    },
+    {
+      "id": "collision-preserves-original",
+      "result": "PASS",
+      "observation": {
+        "original_unchanged": true,
+        "rejection": "output_exists"
+      }
+    },
+    {
+      "id": "partial-write-retains-incomplete",
+      "result": "PASS",
+      "observation": {
+        "incomplete_preserved": true,
+        "completed_receipt": false
+      }
+    },
+    {
+      "id": "directory-sealing-failure-restores-incomplete",
+      "result": "PASS",
+      "observation": {
+        "sealing_failure_rejected": true,
+        "incomplete_restored": true,
+        "receipt_alone_not_completion": true
+      }
+    },
+    {
+      "id": "reviewed-promotion-and-consumption",
+      "result": "PASS",
+      "observation": {
+        "promotion": {
+          "status": "prepared_reviewed_contribution",
+          "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/reviewed-promotion-and-consumption/contribution",
+          "index_sha256": "7133be2978dd03ef743930609b34c10401bf6ad1142d6cc8cc7ec00361001140",
+          "entries": 1
+        },
+        "receiving_packet": {
+          "status": "prepared",
+          "output": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/reviewed-promotion-and-consumption/packet",
+          "receipt_sha256": "fa3ffe4d65c8c6c8886b65ffb27b1f6ed09d9871b3a1e066a001470155264e50",
+          "profile": "ergentics_swift_c",
+          "entries": 1,
+          "context_bytes": 20504,
+          "model_dispatch": "NOT_PERFORMED"
+        },
+        "old_corpus_unchanged": true
+      }
+    },
+    {
+      "id": "promotion-reserved-lineage-before-read",
+      "result": "PASS",
+      "observation": {
+        "candidate_reads": 0,
+        "reserved_lineage_rejected": true
+      }
+    },
+    {
+      "id": "promotion-requires-review",
+      "result": "PASS",
+      "observation": {
+        "candidate_reads": 0
+      }
+    },
+    {
+      "id": "promotion-negative-evidence-identity",
+      "result": "PASS",
+      "observation": {
+        "candidate_reads": 0,
+        "rejection": "promotion_evidence_mismatch"
+      }
+    },
+    {
+      "id": "utf8-selected-payload-roundtrip",
+      "result": "PASS",
+      "observation": {
+        "status": "prepared",
+        "utf8_bytes": 35,
+        "roundtrip": "exact"
+      }
+    },
+    {
+      "id": "utf8-output-corruption-rejected",
+      "result": "PASS",
+      "observation": {
+        "rejection": "output_hash_mismatch",
+        "incomplete_retained": true
+      }
+    }
+  ],
+  "passed": 42,
+  "failed": 0,
+  "scope": "Owned local synthetic fixtures and selected Agent definitions. No model/native-app execution, provider-control verification, hostile-filesystem confinement proof or corpus sweep."
+}

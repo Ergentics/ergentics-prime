@@ -1,6 +1,6 @@
 # Prime / HyperVisor development flow
 
-Version: **0.1.0** · Owner: **Ergentics, LLC** · Established: **2026-09-20**
+Version: **0.2.0** · Owner: **Ergentics, LLC** · Updated: **2026-09-21**
 
 This is the continuation path for the maintained Hyper-Visor app in
 `Apps/ErgenticsPrime`. It connects source custody, the two external Ergentics
@@ -15,16 +15,17 @@ Repository: <https://github.com/Ergentics/ergentics-prime> (private).
 
 | Reference | Purpose |
 | --- | --- |
-| `codex/prime-hypervisor-lineage-2026-09-20` at `085d921114971f97c1600a460414426199f3c9c6` | Preserved lineage through the Build23 receipt; base for the focused closeout review |
+| `codex/prime-hypervisor-lineage-2026-09-20` at `ab4e7b8f17857c6249dcda7a3cf74df2e69319f7` | Preserved lineage and reviewed closeout merged by PR #138; the earlier closeout base `085d921` remains in history |
 | `999d9f00f1950d2510a8a770bd69f69710501729`, tree `161079c5cc66c3434958d0803c73e78007200941` | Reviewed 144-file repair, Rust custody, assessment and Agent/profile source closeout |
 | `codex/prime-hypervisor-closeout-2026-09-20` | Closeout review branch, including this later development-flow record |
 | `main` | Separate integration destination; publication of the above branches does not update or qualify it |
 
 At preparation, remote `main` was `a6f76bd3f246a443ef96e21fa4c769499a62b875`.
-The preserved baseline is 337 commits ahead of that observation. The focused
-closeout PR targets the lineage branch, so its diff does not conflate the
-earlier lineage with the selected repairs. Existing PRs #53–56 remain separate
-historical review work; their dispositions are not changed here.
+The current integration head is 340 commits ahead of that observation. The
+focused closeout PR #138 merged into the lineage branch. Integration PR #139
+targets main; its run 178 triggered but failed the inherited phase-specific
+direct-parent admission check. It remains a separate qualification boundary.
+Existing PRs #53–56 remain historical review work; their dispositions are unchanged.
 
 These are source bindings and the intended publication layout. The publication
 receipt must record successful pushes, fresh remote branch SHAs, commit/tree
@@ -99,8 +100,16 @@ role's attributed directory; synthesize into the current task record only after
 review. Output creation does not automatically add it to the corpus or grant
 another Agent access to protected H7/H8 data.
 
-Auto Harvest finished the earlier bounded Prime run and is OFF. For a future
-authorized harvest, select a reviewed lesson and its evidence, retain the
+Auto Harvest finished the bounded custody harvest 012 and is OFF (5/8 releases,
+222,235/16,777,216 bytes in its existing local store). See the
+[custody checkpoint](custody-harvest-012/README.md) for ten reviewed profile
+controls, preserved corrections and the new selected
+[contribution](../ergentics/corpus/contributions/prime-gate-phase-custody/0.1.0/INDEX.json).
+For Prime gate/phase work use [Prime custody v0.1.0](../skills/ergentics-prime-custody/SKILL.md).
+The candidate [profile package/helper v0.1.1](../ergentics/profiles/0.1.1/README.md)
+repairs UTF-8 byte verification and passed 42 regression cases; its explicit
+task use leaves installed packages and logical profile identities unchanged.
+For a future authorized harvest, select a reviewed lesson and its evidence, retain the
 failure and golden negative, enforce the declared store budget, and review the
 candidate before promotion. No watcher or automatic ingestion is established by
 this flow. The [Prime assessment v0.3.0](../skills/ergentics-prime-assessment/SKILL.md)
@@ -135,6 +144,9 @@ programs, shared-corpus retrieval or trusted cross-Agent egress.
 
 ## Change record
 
+- **0.2.0 — 2026-09-21:** add Prime gate custody, reviewed corpus contribution,
+  per-profile positive/golden-negative evidence and compatible helper repair.
+  Record PR #138 merge and PR #139 admission failure; no gate or native authority changed.
 - **0.1.0 — 2026-09-20:** source publication and bounded development handoff,
   preserving Root Analysis closeout, released profiles and existing native
   qualification boundaries. No executable helper or CI workflow added.

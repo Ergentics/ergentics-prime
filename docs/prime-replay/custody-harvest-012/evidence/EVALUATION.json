@@ -1,0 +1,141 @@
+{
+  "schema": "ergentics.prime-custody-evaluation.v1",
+  "result": "PASS",
+  "scope": "Ten case interpretations and candidate-content review; not universal profile compliance, installed adoption, independent attestation or native qualification.",
+  "candidate_manifest_sha256": "42b304d540564232ac42f391b8f2e58b939e0e21439b86ac7bb8fc9fb1860a48",
+  "lesson_sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+  "rubric_sha256": "81f987ad90516b8027b3b981e94d16aab77eb7eceb8fc2bd9606f22eb4ab1080",
+  "cases": [
+    {
+      "id": "S1",
+      "profile_id": "ergentics_swift_c",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "response_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "observation": "Records the actual trigger and failed admission, skipped later checks and separate phase-transition work; no current qualification or merge claim."
+    },
+    {
+      "id": "S2",
+      "profile_id": "ergentics_swift_c",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "response_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "observation": "Rejects manual dispatch as a usable route under the stipulated caller switch, despite YAML availability."
+    },
+    {
+      "id": "S3",
+      "profile_id": "ergentics_swift_c",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "response_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "observation": "Allows authorized Swift source and metadata review now; limits the compiler hold to the separate Driver native run."
+    },
+    {
+      "id": "S4",
+      "profile_id": "ergentics_swift_c",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "response_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "observation": "Accepts the stipulated newly reviewed two-parent/manual source-only contract without importing the old one-parent pin; native remains unqualified."
+    },
+    {
+      "id": "S5",
+      "profile_id": "ergentics_swift_c",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "response_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "observation": "Recognizes the expressly authorized ordinary linter rerun is not blocked by an unrelated scientific no-retry rule; invokes nothing."
+    },
+    {
+      "id": "C1",
+      "profile_id": "ergentics_cpp",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "response_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "observation": "Separates successful packet preparation and metadata validation from unobserved instruction loading and execution."
+    },
+    {
+      "id": "C2",
+      "profile_id": "ergentics_cpp",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "response_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "observation": "Records remote-SHA-verified branch custody and lineage merge while main remains open and CI admission failed."
+    },
+    {
+      "id": "C3",
+      "profile_id": "ergentics_cpp",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "response_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "observation": "Continues authorized C/C++ source analysis; historical HyperVisor H8 does not satisfy separate Driver H prerequisites."
+    },
+    {
+      "id": "C4",
+      "profile_id": "ergentics_cpp",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "response_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "observation": "Classifies the post-outcome protected admission relaxation as a protocol amendment; continues authorized impact/diff/document preparation without applying it."
+    },
+    {
+      "id": "C5",
+      "profile_id": "ergentics_cpp",
+      "result": "PASS",
+      "method": "Manual semantic assessment against pre-dispatch rubric; not keyword matching.",
+      "response_path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "response_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "observation": "Accepts the completed bounded local harvest and OFF state while refusing installation/load/publication/native claims; the native hold is unrelated."
+    }
+  ],
+  "originals": [
+    {
+      "profile": "ergentics_swift_c",
+      "original_responses_sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a",
+      "original_observation_sha256": "93ff5211b63c7856f4eb097ecd25e218b3c0c927f5aed7a7b537935dfe777478",
+      "original_review_sha256": "d3777174486a04a0a9fb4217ca7e2b81a6c8369e8837abf5c9730f442c7a26a7",
+      "output_bytes_at_review": 15660
+    },
+    {
+      "profile": "ergentics_cpp",
+      "original_responses_sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8",
+      "original_observation_sha256": "3e7a1f2f7eec1d79b34e8fa47cd4382c853896a665e32abf6c2b9610f348286e",
+      "original_review_sha256": "7b7f047464f2704391c80a802d3c4e43e271c3da754a54cbd4af95f594c353a5",
+      "output_bytes_at_review": 19615
+    }
+  ],
+  "finding_disposition": [
+    {
+      "finding": "C/C++ reviewer claimed a nonselected metadata reference was absent.",
+      "disposition": "WITHDRAWN in preserved ADDENDUM after exact existing file was explicitly supplied. No candidate change.",
+      "evidence_sha256": "753e10e625c8945ea6d4b7b925d60b7f1325dfad73772d82c8a0394986816b29"
+    },
+    {
+      "finding": "C/C++ reviewer requested additional Auto Harvest authority wording.",
+      "disposition": "WITHDRAWN in ADDENDUM after rereading existing explicit scope wording. No candidate change."
+    },
+    {
+      "finding": "Swift reviewer noted current Research Custody binding, historical evidence and evaluation schema are receiving-workflow responsibilities.",
+      "disposition": "ACCEPTED AS LIMITS, not defects. This task pins the installed custody input, records current source and uses explicit rubric, raw answers and canonical observations; the focused skill does not hardcode a future workstation dependency or replace the existing profile contracts."
+    },
+    {
+      "finding": "Swift canonical observation lists paths without their per-file hashes.",
+      "disposition": "Original preserved; additive actual-file hash record requested. Parent verifies exact packet/task pins independently. This metadata omission does not change the case content result; final load evidence includes the addendum."
+    }
+  ],
+  "limitations": [
+    "Candidate guidance and historical example were visible; criteria were outside named intake but shared filesystem is not enforced blinding.",
+    "Requested Terra/high and Luna/high do not attest actual serving build, realized effort or independent model diversity.",
+    "S1 uses source job and native job as overlapping prose for the skipped focused-source native job; actual job count/outcomes remain the original trigger RESULT.",
+    "No source, protocol, workflow, threshold or timeout changed."
+  ]
+}

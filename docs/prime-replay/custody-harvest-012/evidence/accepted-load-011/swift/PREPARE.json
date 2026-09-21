@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"status\":\"prepared\",\"output\":\"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/packet\",\"receipt_sha256\":\"6ad7454d8fa45d538f8260b74a186438a19e7dfb1ae14e8e7feedaa39f21846a\",\"profile\":\"ergentics_swift_c\",\"entries\":1,\"context_bytes\":42800,\"model_dispatch\":\"NOT_PERFORMED\"}\n",
+  "stderr": ""
+}

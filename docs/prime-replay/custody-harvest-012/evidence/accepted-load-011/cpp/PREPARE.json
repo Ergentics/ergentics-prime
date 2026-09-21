@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "stdout": "{\"status\":\"prepared\",\"output\":\"/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/packet\",\"receipt_sha256\":\"de522711aa31ebcec0855a1cc6429a6cae8f9f1ff32ecffbafb3c667d8c33a1d\",\"profile\":\"ergentics_cpp\",\"entries\":1,\"context_bytes\":43034,\"model_dispatch\":\"NOT_PERFORMED\"}\n",
+  "stderr": ""
+}

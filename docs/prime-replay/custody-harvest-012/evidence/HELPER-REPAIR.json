@@ -1,0 +1,13 @@
+{
+  "classification": "IMPLEMENTATION_FIX",
+  "protected_scientific_semantics_changed": false,
+  "old_helper_sha256": "63ed495b1b26732133141205074bc9321e7d431c9a25b87ad3e30380eb55e459",
+  "new_helper_sha256": "05b78a96f41194abe00328375eb6084dc2ba24f5e3aa4ea09cd996d8bbba3f94",
+  "new_manifest_sha256": "68235f1964e79404b1fd15781c3a987aa5f8a808cf9f48816a0ccbff72954edc",
+  "package_version": "0.1.1",
+  "logical_profile_versions": "0.1.0 unchanged",
+  "installed_changed": false,
+  "original_failure": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load/swift/PREPARE.json",
+  "original_failure_sha256": "7314150cd337f41b013090712d7ba9644db17f88da2c4a6242851ba8c196a6a9",
+  "reason": "Valid UTF-8 JSON was written as identical bytes but Ruby equality across ASCII-8BIT/UTF-8 labels rejected it. Binary equality preserves byte validation."
+}

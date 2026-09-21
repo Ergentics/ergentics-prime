@@ -1,0 +1,10 @@
+{
+  "expected_encoding": "UTF-8",
+  "readback_encoding": "ASCII-8BIT",
+  "text_equality": false,
+  "byte_equality": true,
+  "bytes": 5834,
+  "actual_sha256": "924738d376a67cc8044771c9e12ce33dfd5cfd650a5292399dbd3700eced542b",
+  "expected_sha256": "924738d376a67cc8044771c9e12ce33dfd5cfd650a5292399dbd3700eced542b",
+  "incomplete_retained": true
+}
