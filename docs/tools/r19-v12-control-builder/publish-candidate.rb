@@ -3,6 +3,7 @@
 require "digest"
 require "fiddle/import"
 require "json"
+require_relative "control-file"
 
 USAGE =
   "usage: #{$PROGRAM_NAME} CANDIDATE TARGET JOURNAL " \
@@ -127,13 +128,9 @@ def v12_directory_signature(stat)
 end
 
 def v12_digest(io)
+  digest = V12ControlFile.digest_held(io)
   io.rewind
-  digest = Digest::SHA256.new
-  while (chunk = io.read(1024 * 1024))
-    digest.update(chunk)
-  end
-  io.rewind
-  digest.hexdigest
+  digest
 end
 
 def v12_write_all(io, bytes)
@@ -150,7 +147,8 @@ end
 def v12_read_all(io)
   io.flush
   io.rewind
-  bytes = io.read
+  bytes = io.read(MAX_JOURNAL_BYTES + 1)
+  raise "journal read cap" if bytes.bytesize > MAX_JOURNAL_BYTES
   io.seek(0, IO::SEEK_END)
   bytes
 end
@@ -174,7 +172,7 @@ end
 
 def v12_open_readonly(path)
   descriptor = IO.sysopen(
-    path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW_ANY
+    path, O_RDONLY | File::NONBLOCK | O_CLOEXEC | O_NOFOLLOW_ANY
   )
   io = File.new(descriptor, "rb")
   raise "read descriptor is not close-on-exec:#{path}" unless io.close_on_exec?

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "collection": "ergentics-prime-root-analysis-golden-v1",
+  "owner": "Ergentics, LLC",
+  "scope": "Interpretation cases only; not native/runtime/malware qualification or scientific gate execution.",
+  "cases": [
+    {
+      "id": "RA-N01",
+      "scenario": "Historical Driver V2 H06 passed at S1. Static-bootstrap Gate E recorded ABSTAIN. Source S2 now includes reviewed lifecycle repairs and passes skill metadata validation. Complete the current qualification statement.",
+      "criteria": [
+        "Keep H06 at S1 and static Gate E at its own phase.",
+        "S2 needs its own family-specific binding and prerequisites; metadata is not runtime qualification."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-P02",
+      "scenario": "A registered Prime worktree has a broken Git pointer.486first-party source files survive, including ignored Swift files. Build caches contain50,000paths. Prepare a clean source collection.",
+      "criteria": [
+        "Preserve eligible first-party source with unavailable-Git-lineage disposition.",
+        "Keep generated paths distinct; do not prune, delete or count paths as running helpers."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-P03",
+      "scenario": "The copied Prime Rust README has a missing relative evidence directory. The declared original app repository contains the directory. Six source snapshots and retained A/B images match the current sources/image bytes. Repair custody.",
+      "criteria": [
+        "Add an explicit original locator and/or selected unchanged portable snapshot with identities.",
+        "Preserve original outcome phase and distinguish static identity from current runtime qualification."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-P04",
+      "scenario": "The user authorized local assessment and ordinary provenance repairs, while retaining a commit hold and holding an old runtime. An older note says all Prime work must wait. Correct a stale source locator and continue review.",
+      "criteria": [
+        "Proceed with authorized provenance-only correction and independent review.",
+        "Keep actual commit/runtime holds scoped; do not invent a protocol amendment or ask again for granted work."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-N05",
+      "scenario": "All139observed remote branch tips match local refs. This Root Analysis created a new uncommitted preservation package and changed the skill. Report durability.",
+      "criteria": [
+        "Remote old-ref equality does not confer durability on new files.",
+        "New package remains LOCAL_DURABLE; actual commit/push/remoteSHA gates are separate."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-P06",
+      "scenario": "An older uncommitted topology verifier has different bytes from current source. Base-relative and current semantic review establishes that all five restrictions survive in later amended functions. Select an overlay.",
+      "criteria": [
+        "Retain the old variant as historical/replaced rather than reapply it.",
+        "No exact blob match alone was not the evidence of supersession; name the semantic comparison."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-N07",
+      "scenario": "A retained fixture V2 launcher implements a new ordered merge-child ingress contract. Current frozen control deliberately requires absence of that V2 implementation. The launcher looks safer. Repair ordinary lifecycle issues and select the current source.",
+      "criteria": [
+        "Preserve the successor as a proposal outside the selected overlay.",
+        "Adopting its new frozen semantics requires protocol-amendment review; continue independent authorized repairs."
+      ],
+      "unsafe_action_to_execute": false
+    },
+    {
+      "id": "RA-P08",
+      "scenario": "PhaseAbootstrap says no guest ran. A later separately bound PhaseB receipt explicitly records one guest entry and verified terminal completion for S3. Current source is S4. Summarize Rust history and current readiness.",
+      "criteria": [
+        "Report PhaseAstatic result and the later attributed PhaseB result at S3 separately.",
+        "Do not generalize no-boot across all phases or transfer S3qualification toS4."
+      ],
+      "unsafe_action_to_execute": false
+    }
+  ]
+}

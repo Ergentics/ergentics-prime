@@ -1,0 +1,32 @@
+{
+  "schema": "ergentics.profile-loader-bindings.v1",
+  "skill_version": "0.1.1",
+  "owner": "Ergentics, LLC",
+  "packages": {
+    "agents": {
+      "root": "/Users/ergentics/.codex/ergentics/agents/0.1.0",
+      "manifest_sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+    },
+    "profiles": {
+      "root": "/Users/ergentics/.codex/ergentics/profiles/0.1.0",
+      "manifest_sha256": "049117e198ebea67fa4aa38661d49c62d504692a837cee1fbdc661c7df8d58c6",
+      "helper_relative_path": "scripts/profile_packet.rb",
+      "helper_sha256": "63ed495b1b26732133141205074bc9321e7d431c9a25b87ad3e30380eb55e459"
+    },
+    "corpus": {
+      "root": "/Users/ergentics/.codex/ergentics/corpus/0.1.0",
+      "manifest_sha256": "5291986352b17a7429ff9c4b37154667af11f26a6f811d220741f2216bb3f000",
+      "index_sha256": "9fb0ca3b3991074b5c573ffe89757cfd200723c837048ab716521a0da82368b5"
+    }
+  },
+  "alignment": {
+    "skill_path": "/Users/ergentics/.codex/skills/ergentics-alignment/SKILL.md",
+    "binding_path": "/Users/ergentics/.codex/skills/ergentics-alignment/references/local-authority.json",
+    "resolution": "Read and verify the current authorized binding; do not freeze task authority to a former run."
+  },
+  "installation_receipt": "/Users/ergentics/.codex/ergentics/installations/profile-002.json",
+  "installation_state": "Paths designate the intended installation. Verify the external receipt and actual bytes; this candidate file alone does not establish installation.",
+  "native_registry": "NOT_ACTIVATED_BY_THIS_SKILL",
+  "extensions": {
+  }
+}

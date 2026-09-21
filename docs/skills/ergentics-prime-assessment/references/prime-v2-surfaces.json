@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "profile": "prime-v2",
+  "owner": "Ergentics, LLC",
+  "surfaces": [
+    {"id": "maintained_source", "question": "Which maintained entrypoints, mirrors, callers and native bridges own intake, execution, capture, deadlines and cleanup?"},
+    {"id": "retained_sources", "question": "Which historical source copies and distinct versions remain, and which managed routes can still load them?"},
+    {"id": "retained_images", "question": "Which compiled helper, fixture and candidate images remain, with what identity and supported source/build binding?"},
+    {"id": "launch_routes", "question": "Which launchers, generators, wrappers, imports and publication paths can reach the helpers or old images?"},
+    {"id": "gate_evidence", "question": "What do the exact saved gate records establish, what failed, and which changed sources need new validation?"},
+    {"id": "startup", "question": "What relevant startup or scheduling entries are actually observable within the authorized scope?"},
+    {"id": "live_processes", "question": "Can current process/image ownership be observed through a permitted route, and what remains unknown?"}
+  ],
+  "discovery_notes": [
+    "Start from repository source and caller closure, not only keyword matches.",
+    "Retained .build product images may be relevant even when dependency checkouts and compiler caches are excluded.",
+    "Exclude credential paths before opening content; do not unpack archives by inference.",
+    "A source-only assessment may declare a narrower question, but must not relabel it as live-system clearance."
+  ]
+}

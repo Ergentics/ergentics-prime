@@ -405,13 +405,16 @@ package struct PrimeValidationDriverV2ShotCapsuleV1:
     }
 }
 
-private struct PrimeValidationDriverV2GovernorDeadline {
+struct PrimeValidationDriverV2GovernorDeadline {
     static let durationNanoseconds: UInt64 = 60_000_000_000
     let startedAt: UInt64
     let expiresAt: UInt64
 
-    init(durationNanoseconds: UInt64 = Self.durationNanoseconds) throws {
-        startedAt = DispatchTime.now().uptimeNanoseconds
+    init(
+        durationNanoseconds: UInt64 = Self.durationNanoseconds,
+        startedAt: UInt64 = DispatchTime.now().uptimeNanoseconds
+    ) throws {
+        self.startedAt = startedAt
         let value = startedAt.addingReportingOverflow(durationNanoseconds)
         guard !value.overflow else {
             throw governorRejected(
@@ -422,8 +425,11 @@ private struct PrimeValidationDriverV2GovernorDeadline {
         expiresAt = value.partialValue
     }
 
-    func requireTime(_ coordinate: String) throws {
-        guard DispatchTime.now().uptimeNanoseconds < expiresAt else {
+    func requireTime(
+        _ coordinate: String,
+        observedAt: UInt64 = DispatchTime.now().uptimeNanoseconds
+    ) throws {
+        guard observedAt >= startedAt, observedAt < expiresAt else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
                 coordinate
@@ -431,8 +437,84 @@ private struct PrimeValidationDriverV2GovernorDeadline {
         }
     }
 
+    /// The checkpoint can consume the last phase time. No spawn is admitted
+    /// from the observation made before it.
+    func afterCheckpointBeforeSpawn<Value>(
+        checkpoint: () throws -> Void,
+        now: () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
+        spawn: () throws -> Value
+    ) throws -> Value {
+        try requireTime("supervisor_spawn_deadline", observedAt: now())
+        try checkpoint()
+        try requireTime("supervisor_spawn_deadline", observedAt: now())
+        return try spawn()
+    }
+
     var dispatchDeadline: DispatchTime {
         DispatchTime(uptimeNanoseconds: expiresAt)
+    }
+}
+
+/// Rejection-only ownership of an already spawned child. Reuses the existing
+/// five-second containment reserve; it never authorizes phase work or resume.
+/// One instance retains one endpoint across reap, conservation, and both drains.
+struct PrimeValidationDriverV2GovernorCleanupBudget {
+    static let durationNanoseconds: UInt64 = 5_000_000_000
+    private var retained: PrimeValidationDriverV2GovernorDeadline?
+
+    mutating func deadline(
+        now: UInt64 = DispatchTime.now().uptimeNanoseconds
+    ) throws -> PrimeValidationDriverV2GovernorDeadline {
+        if let retained { return retained }
+        let created = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: Self.durationNanoseconds, startedAt: now
+        )
+        retained = created
+        return created
+    }
+}
+
+/// Exact owned-child reap only. Exit notification does not authorize a blocking
+/// wait. Both the caller's existing endpoint and the fixed attempt cap apply.
+/// The cap may reject before a longer caller deadline, including after an exit
+/// notification; it avoids relying on clock progress and cannot renew time.
+/// Its nominal polling interval is not an atomic wall-clock duration guarantee.
+enum PrimeValidationDriverV2GovernorExactReap {
+    static let pollIntervalMicroseconds: UInt32 = 1_000
+    static let maximumPollCount = Int(
+        PrimeValidationDriverV2GovernorCleanupBudget.durationNanoseconds / 1_000_000
+    )
+
+    static func wait(
+        supervisorPID: pid_t,
+        deadline: PrimeValidationDriverV2GovernorDeadline,
+        now: () -> UInt64 = { DispatchTime.now().uptimeNanoseconds },
+        poll: (pid_t, Int32) -> (returnedPID: pid_t, rawStatus: Int32, errorNumber: Int32),
+        advance: () -> Void = { _ = Darwin.usleep(pollIntervalMicroseconds) }
+    ) throws -> (rawStatus: Int32, returnedAt: UInt64) {
+        guard supervisorPID > 0 else {
+            throw governorRejected(70, "exact_supervisor_wait_pid")
+        }
+        for _ in 0..<maximumPollCount {
+            try deadline.requireTime("exact_supervisor_wait_deadline", observedAt: now())
+            let result = poll(supervisorPID, WNOHANG)
+            if result.returnedPID == supervisorPID {
+                let signal = result.rawStatus & 0x7f
+                guard result.rawStatus >= 0, result.rawStatus <= 0xffff,
+                      signal == 0 || (signal > 0 && signal < NSIG)
+                else { throw governorRejected(70, "exact_supervisor_wait_nonterminal") }
+                // Return the consumed terminal wait even after expiry. Callers
+                // acknowledge exact reap before their post-return deadline check.
+                return (result.rawStatus, now())
+            }
+            if result.returnedPID == 0
+                || (result.returnedPID == -1 && result.errorNumber == EINTR) {
+                advance()
+                continue
+            }
+            throw governorRejected(70, "exact_supervisor_wait_\(result.errorNumber)")
+        }
+        throw governorRejected(70, "exact_supervisor_wait_poll_limit")
     }
 }
 
@@ -1125,7 +1207,7 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
         absolutePath = canonicalAbsolutePath
         descriptor = Darwin.open(
             absolutePath,
-            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
+            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC | O_NONBLOCK
         )
         guard descriptor >= 3 else {
             if descriptor >= 0 { _ = Darwin.close(descriptor) }
@@ -1313,7 +1395,7 @@ private final class PrimeValidationDriverV2GovernorHeldExecutable {
             throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.admission,
                                    "swift_package_parent_metadata")
         }
-        let fd = openat(parent, "swift-package", O_RDONLY | O_NOFOLLOW | O_CLOEXEC)
+        let fd = openat(parent, "swift-package", O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK)
         guard fd >= 3 else {
             if fd >= 0 { close(fd) }
             throw governorRejected(PrimeValidationDriverV2ShotGovernorStatus.admission,
@@ -1647,7 +1729,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard rebound >= 3 else {
@@ -1753,7 +1835,7 @@ private final class PrimeValidationDriverV2GovernorJournal {
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard opened >= 3 else {
@@ -2553,7 +2635,7 @@ private final class PrimeValidationDriverV2GovernorInnerJournal {
                 openat(
                     descriptor,
                     $0,
-                    O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                    O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
                 )
             }
             guard opened >= 3 else {
@@ -2984,7 +3066,8 @@ private final class PrimeValidationDriverV2GovernorDeathWatcher:
         if hasObservedExit() { return true }
         // Keep a fixed interval inside the same outer deadline for exact reap
         // and retained session-conservation work.
-        let containmentReserve: UInt64 = 5_000_000_000
+        let containmentReserve =
+            PrimeValidationDriverV2GovernorCleanupBudget.durationNanoseconds
         let latestOrdinaryDeath = deadline.expiresAt > containmentReserve
             ? deadline.expiresAt - containmentReserve
             : deadline.startedAt
@@ -3762,25 +3845,22 @@ private enum PrimeValidationDriverV2GovernorSessionCensus {
                 "exact_supervisor_death_deadline"
             )
         }
-        while true {
-            try deadline.requireTime("exact_supervisor_wait_deadline")
-            var raw: Int32 = 0
-            errno = 0
-            let returned = Darwin.waitpid(supervisorPID, &raw, 0)
-            if returned == supervisorPID {
-                return .init(
-                    pid: supervisorPID,
-                    rawStatus: raw,
-                    waitOptions: 0,
-                    returnedAt: DispatchTime.now().uptimeNanoseconds
-                )
+        let result = try PrimeValidationDriverV2GovernorExactReap.wait(
+            supervisorPID: supervisorPID,
+            deadline: deadline,
+            poll: { pid, options in
+                var raw: Int32 = 0
+                errno = 0
+                let returned = Darwin.waitpid(pid, &raw, options)
+                return (returned, raw, errno)
             }
-            if returned < 0, errno == EINTR { continue }
-            throw governorRejected(
-                PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                "exact_supervisor_wait_\(errno)"
-            )
-        }
+        )
+        return .init(
+            pid: supervisorPID,
+            rawStatus: result.rawStatus,
+            waitOptions: WNOHANG,
+            returnedAt: result.returnedAt
+        )
     }
 
     private static func bsdInfoIfPresent(pid: pid_t) throws -> proc_bsdinfo? {
@@ -3865,6 +3945,7 @@ private struct PrimeValidationDriverV2GovernorSpawnedSupervisor {
     let deathWatcher: PrimeValidationDriverV2GovernorDeathWatcher
     let stdoutDrain: PrimeValidationDriverV2GovernorDrain
     let stderrDrain: PrimeValidationDriverV2GovernorDrain
+    let containmentGuard: PrimeValidationDriverV2GovernorSpawnContainmentGuard
 
     func finishBothDrains(
         deadline: PrimeValidationDriverV2GovernorDeadline
@@ -3885,80 +3966,90 @@ private struct PrimeValidationDriverV2GovernorSpawnedSupervisor {
     }
 }
 
-/// Ensures that every throw after `posix_spawn` is a contain-before-return
-/// transition. Failure to certify containment is the fixed exit-70 fail-stop.
-private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
-    private enum State {
-        case armed
-        case exactReapCompleted
-        case conservationCompleted
-        case drainsCompleted
-    }
-
-    private let spawned: PrimeValidationDriverV2GovernorSpawnedSupervisor
-    private let deadline: PrimeValidationDriverV2GovernorDeadline
+/// Pure ownership-transition coordinator. Cleanup cannot authorize a resume or
+/// spawn; its single endpoint and terminal result cannot be renewed by retry.
+final class PrimeValidationDriverV2GovernorCleanupTransition {
+    enum Disposition: Equatable { case contained, mustFailStop }
+    private enum State { case armed, exactReapCompleted, conservationCompleted, drainsCompleted, failed }
     private var state: State = .armed
+    private var budget = PrimeValidationDriverV2GovernorCleanupBudget()
+    private let contain: (PrimeValidationDriverV2GovernorDeadline, () -> Void) throws -> Void
+    private let conserve: (PrimeValidationDriverV2GovernorDeadline) throws -> Void
+    private let stdout: (PrimeValidationDriverV2GovernorDeadline) throws -> Void
+    private let stderr: (PrimeValidationDriverV2GovernorDeadline) throws -> Void
 
-    init(
-        spawned: PrimeValidationDriverV2GovernorSpawnedSupervisor,
-        deadline: PrimeValidationDriverV2GovernorDeadline
-    ) {
-        self.spawned = spawned
-        self.deadline = deadline
+    init(contain: @escaping (PrimeValidationDriverV2GovernorDeadline, () -> Void) throws -> Void,
+         conserve: @escaping (PrimeValidationDriverV2GovernorDeadline) throws -> Void,
+         stdout: @escaping (PrimeValidationDriverV2GovernorDeadline) throws -> Void,
+         stderr: @escaping (PrimeValidationDriverV2GovernorDeadline) throws -> Void) {
+        self.contain = contain; self.conserve = conserve
+        self.stdout = stdout; self.stderr = stderr
     }
+    func acceptExactReap() { if case .armed = state { state = .exactReapCompleted } }
+    func acceptConservation() { if case .exactReapCompleted = state { state = .conservationCompleted } }
+    func acceptFinishedDrains() { if case .conservationCompleted = state { state = .drainsCompleted } }
 
-    func acceptExactReap() { state = .exactReapCompleted }
-
-    func acceptConservation() { state = .conservationCompleted }
-
-    func acceptFinishedDrains() { state = .drainsCompleted }
-
-    deinit {
-        guard case .drainsCompleted = state else {
-            do {
-                if case .armed = state {
-                    do {
-                        _ = try PrimeValidationDriverV2GovernorSessionCensus
-                            .contain(
-                                lifecycleState: spawned.lifecycleState,
-                                deathWatcher: spawned.deathWatcher,
-                                deadline: deadline,
-                                onExactReap: acceptExactReap
-                            )
-                        state = .conservationCompleted
-                    } catch {
-                        guard case .exactReapCompleted = state else {
-                            throw error
-                        }
-                        _ = try PrimeValidationDriverV2GovernorSessionCensus
-                            .containSessionAfterSupervisorReaped(
-                                lifecycleState: spawned.lifecycleState,
-                                deadline: deadline
-                            )
-                        state = .conservationCompleted
+    func cleanup(now: UInt64 = DispatchTime.now().uptimeNanoseconds) -> Disposition {
+        if case .drainsCompleted = state { return .contained }
+        if case .failed = state { return .mustFailStop }
+        let deadline: PrimeValidationDriverV2GovernorDeadline
+        do { deadline = try budget.deadline(now: now) }
+        catch { state = .failed; return .mustFailStop }
+        let containment = Result<Void, Error> {
+            if case .armed = state {
+                do {
+                    try contain(deadline, acceptExactReap)
+                    // The operation must acknowledge its sole exact reap.
+                    guard case .exactReapCompleted = state else {
+                        throw governorRejected(70, "cleanup_exact_reap_unacknowledged")
                     }
-                } else if case .exactReapCompleted = state {
-                    _ = try PrimeValidationDriverV2GovernorSessionCensus
-                        .containSessionAfterSupervisorReaped(
-                            lifecycleState: spawned.lifecycleState,
-                            deadline: deadline
-                        )
+                    state = .conservationCompleted
+                } catch {
+                    guard case .exactReapCompleted = state else { throw error }
+                    try conserve(deadline)
                     state = .conservationCompleted
                 }
-                _ = try spawned.finishBothDrains(deadline: deadline)
-            } catch {
-                PrimeValidationDriverV2ShotGovernor.reportFailure(
-                    status: PrimeValidationDriverV2ShotGovernorStatus
-                        .containmentUncertain,
-                    coordinate: "spawn_containment_guard:"
-                        + String(reflecting: error)
-                )
-                Darwin._exit(
-                    PrimeValidationDriverV2ShotGovernorStatus
-                        .containmentUncertain
-                )
+            } else if case .exactReapCompleted = state {
+                try conserve(deadline)
+                state = .conservationCompleted
             }
-            return
+        }
+        // Request/finish both drains even if containment or the first fails.
+        let output = Result { try stdout(deadline) }
+        let error = Result { try stderr(deadline) }
+        guard case .success = containment, case .success = output, case .success = error else {
+            state = .failed; return .mustFailStop
+        }
+        state = .drainsCompleted
+        return .contained
+    }
+}
+
+/// Armed before fallible post-spawn proof, and transferred with the spawned
+/// value. A failed cleanup never escapes as an ordinary thrown rejection.
+private final class PrimeValidationDriverV2GovernorSpawnContainmentGuard {
+    private let transition: PrimeValidationDriverV2GovernorCleanupTransition
+    init(lifecycleState: PrimeValidationDriverV2GovernorSessionLifecycleState,
+         deathWatcher: PrimeValidationDriverV2GovernorDeathWatcher,
+         stdoutDrain: PrimeValidationDriverV2GovernorDrain,
+         stderrDrain: PrimeValidationDriverV2GovernorDrain) {
+        transition = .init(contain: { deadline, onReap in
+            _ = try PrimeValidationDriverV2GovernorSessionCensus.contain(
+                lifecycleState: lifecycleState, deathWatcher: deathWatcher,
+                deadline: deadline, onExactReap: onReap)
+        }, conserve: { deadline in
+            _ = try PrimeValidationDriverV2GovernorSessionCensus.containSessionAfterSupervisorReaped(
+                lifecycleState: lifecycleState, deadline: deadline)
+        }, stdout: { deadline in _ = try stdoutDrain.finish(deadline: deadline) },
+           stderr: { deadline in _ = try stderrDrain.finish(deadline: deadline) })
+    }
+    func acceptExactReap() { transition.acceptExactReap() }
+    func acceptConservation() { transition.acceptConservation() }
+    func acceptFinishedDrains() { transition.acceptFinishedDrains() }
+    deinit {
+        if transition.cleanup() == .mustFailStop {
+            // Containment is uncertain: diagnostics must not delay exit.
+            Darwin._exit(PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain)
         }
     }
 }
@@ -4125,18 +4216,21 @@ private enum PrimeValidationDriverV2GovernorSpawner {
         var arguments: [UnsafeMutablePointer<CChar>?] = [argumentZero, nil]
         var environment: [UnsafeMutablePointer<CChar>?] = [nil]
         var pid: pid_t = 0
-        try deadline.requireTime("supervisor_spawn_deadline")
-        try preSpawnContinuityCheckpoint()
-        let spawnResult = arguments.withUnsafeMutableBufferPointer { argv in
-            environment.withUnsafeMutableBufferPointer { envp in
-                posix_spawn(
-                    &pid,
-                    executable.absolutePath,
-                    &actions,
-                    &attributes,
-                    argv.baseAddress!,
-                    envp.baseAddress!
-                )
+        let spawnResult = try deadline.afterCheckpointBeforeSpawn(
+            checkpoint: preSpawnContinuityCheckpoint
+        ) {
+            try arguments.withUnsafeMutableBufferPointer { argv in
+                try environment.withUnsafeMutableBufferPointer { envp in
+                    try deadline.requireTime("supervisor_immediately_before_spawn")
+                    return posix_spawn(
+                        &pid,
+                        executable.absolutePath,
+                        &actions,
+                        &attributes,
+                        argv.baseAddress!,
+                        envp.baseAddress!
+                    )
+                }
             }
         }
         let spawnedAt = DispatchTime.now().uptimeNanoseconds
@@ -4168,6 +4262,9 @@ private enum PrimeValidationDriverV2GovernorSpawner {
             label: "prime.validation.driver-v2.governor.stderr"
         )
         parentDescriptors[2] = -1
+        let containmentGuard = PrimeValidationDriverV2GovernorSpawnContainmentGuard(
+            lifecycleState: lifecycleState, deathWatcher: deathWatcher,
+            stdoutDrain: stdoutDrain, stderrDrain: stderrDrain)
         stdoutDrain.start()
         stderrDrain.start()
         do {
@@ -4195,47 +4292,14 @@ private enum PrimeValidationDriverV2GovernorSpawner {
                 mappedImageProof: mapped,
                 deathWatcher: deathWatcher,
                 stdoutDrain: stdoutDrain,
-                stderrDrain: stderrDrain
+                stderrDrain: stderrDrain,
+                containmentGuard: containmentGuard
             )
         } catch {
-            let proofFailure = error
-            var suspendedJoinExactReaped = false
-            let containment: Result<Void, Error> = Result {
-                do {
-                    _ = try PrimeValidationDriverV2GovernorSessionCensus
-                        .contain(
-                            lifecycleState: lifecycleState,
-                            deathWatcher: deathWatcher,
-                            deadline: deadline,
-                            onExactReap: {
-                                suspendedJoinExactReaped = true
-                            }
-                        )
-                } catch {
-                    guard suspendedJoinExactReaped else { throw error }
-                    _ = try PrimeValidationDriverV2GovernorSessionCensus
-                        .containSessionAfterSupervisorReaped(
-                            lifecycleState: lifecycleState,
-                            deadline: deadline
-                        )
-                }
-            }
-            let stdoutFinished = Result {
-                try stdoutDrain.finish(deadline: deadline)
-            }
-            let stderrFinished = Result {
-                try stderrDrain.finish(deadline: deadline)
-            }
-            guard case .success = containment,
-                  case .success = stdoutFinished,
-                  case .success = stderrFinished
-            else {
-                throw governorRejected(
-                    PrimeValidationDriverV2ShotGovernorStatus.containmentUncertain,
-                    "pre_resume_containment_or_drains"
-                )
-            }
-            throw proofFailure
+            // Keeping the guard live through the initiating error preserves
+            // that error only if bounded cleanup certifies containment.
+            withExtendedLifetime(containmentGuard) {}
+            throw error
         }
     }
 }
@@ -4300,7 +4364,7 @@ private final class PrimeValidationDriverV2GovernorBuildSnapshot {
             guard !leaf.isEmpty, leaf != ".", leaf != "..",
                   !leaf.contains("/"), !leaf.utf8.contains(0)
             else { throw Self.rejected("leaf") }
-            let fd = openat(parent, leaf, O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+            let fd = openat(parent, leaf, O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
                 | (directory ? O_DIRECTORY : 0))
             guard fd >= 3 else {
                 if fd >= 0 { close(fd) }
@@ -5933,11 +5997,7 @@ package enum PrimeValidationDriverV2ShotGovernor {
                     try lockedDependencies?.checkpointMetadata()
                 }
             )
-        let containmentGuard =
-            PrimeValidationDriverV2GovernorSpawnContainmentGuard(
-                spawned: spawned,
-                deadline: deadline
-            )
+        let containmentGuard = spawned.containmentGuard
         // The finite request file is independently held by leaf 1; the
         // descriptor sharing the child's offset closes in the parent now.
         _ = Darwin.close(requestInput)
@@ -7890,9 +7950,10 @@ package extension PrimeValidationDriverV2ShotGovernor {
         ]
         var environment: [UnsafeMutablePointer<CChar>?] = [nil]
         var pid: pid_t = 0
-        let result = arguments.withUnsafeMutableBufferPointer { argv in
-            environment.withUnsafeMutableBufferPointer { envp in
-                posix_spawn(
+        let result = try arguments.withUnsafeMutableBufferPointer { argv in
+            try environment.withUnsafeMutableBufferPointer { envp in
+                try deadline.requireTime("session_fixture_immediately_before_spawn")
+                return posix_spawn(
                     &pid,
                     executable.absolutePath,
                     &actions,
@@ -7923,6 +7984,8 @@ package extension PrimeValidationDriverV2ShotGovernor {
         var deathWaitReturned = false
         defer {
             do {
+                var cleanupBudget = PrimeValidationDriverV2GovernorCleanupBudget()
+                let cleanupDeadline = try cleanupBudget.deadline()
                 switch containmentState {
                 case .armed:
                     do {
@@ -7930,7 +7993,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                             .contain(
                                 lifecycleState: lifecycleState,
                                 deathWatcher: deathWatcher,
-                                deadline: deadline,
+                                deadline: cleanupDeadline,
                                 onExactReap: {
                                     containmentState = .exactReaped
                                 }
@@ -7943,7 +8006,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                         _ = try PrimeValidationDriverV2GovernorSessionCensus
                             .containSessionAfterSupervisorReaped(
                                 lifecycleState: lifecycleState,
-                                deadline: deadline
+                                deadline: cleanupDeadline
                             )
                         containmentState = .conservationComplete
                     }
@@ -7951,7 +8014,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
                     _ = try PrimeValidationDriverV2GovernorSessionCensus
                         .containSessionAfterSupervisorReaped(
                             lifecycleState: lifecycleState,
-                            deadline: deadline
+                            deadline: cleanupDeadline
                         )
                     containmentState = .conservationComplete
                 case .conservationComplete:
@@ -8012,6 +8075,7 @@ package extension PrimeValidationDriverV2ShotGovernor {
             executable: executable
         )
         try executable.revalidate(coordinate: "session_fixture_image")
+        try deadline.requireTime("session_fixture_immediately_before_resume")
         guard Darwin.kill(pid, SIGCONT) == 0 else {
             throw governorRejected(
                 PrimeValidationDriverV2ShotGovernorStatus.suspendedJoin,

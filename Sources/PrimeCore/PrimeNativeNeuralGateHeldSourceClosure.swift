@@ -2477,6 +2477,7 @@ final class PrimeNativeNeuralGateHeldSourceClosure {
         }
         let flags =
             O_RDONLY
+            | O_NONBLOCK
             | O_NOFOLLOW_ANY
             | O_CLOEXEC
             | (

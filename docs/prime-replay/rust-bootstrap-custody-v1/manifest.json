@@ -1,0 +1,236 @@
+{
+  "schema": "ergentics.prime-retained-custody-snapshot.v1",
+  "owner": "Ergentics, LLC",
+  "created_at_utc": "2026-09-21T03:42:35.478525+00:00",
+  "change_class": "PROVENANCE_FIX",
+  "phase": "POST_HISTORICAL_OUTCOME",
+  "original_root": "/Users/ergentics/Developer/ErgenticsProvenance/Control/rust-guest-bootstrap-2026-08-30.YtXTfY",
+  "entries": [
+    {
+      "original_relative_path": "source-identities.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 743,
+      "sha256": "f766213202bdd5628ab639b5405a05cf8d289d4f49f3877f16f1ea4f2be635c5",
+      "object": "objects/f766213202bdd5628ab639b5405a05cf8d289d4f49f3877f16f1ea4f2be635c5"
+    },
+    {
+      "original_relative_path": "toolchain-identities.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 3493,
+      "sha256": "bcb3378254868b23f902cc761358de3365fd9306ce15b27ce2b2cb40534b655b",
+      "object": "objects/bcb3378254868b23f902cc761358de3365fd9306ce15b27ce2b2cb40534b655b"
+    },
+    {
+      "original_relative_path": "comparison.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 2016,
+      "sha256": "6e7543e83a095f190cc13310a5cb6d40fa72d3543cbf5998ff197c3cb2153bf5",
+      "object": "objects/6e7543e83a095f190cc13310a5cb6d40fa72d3543cbf5998ff197c3cb2153bf5"
+    },
+    {
+      "original_relative_path": "result.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 225,
+      "sha256": "6e6a6eadd10f454a462df3bb548b65f40f255fde94079828e8af6f58b729756b",
+      "object": "objects/6e6a6eadd10f454a462df3bb548b65f40f255fde94079828e8af6f58b729756b"
+    },
+    {
+      "original_relative_path": "checkpoint.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 5414,
+      "sha256": "0db71074bc1a0c2e4492db9fd59c9c488dd7596ee5e270e1d32dc4e2a757ba10",
+      "object": "objects/0db71074bc1a0c2e4492db9fd59c9c488dd7596ee5e270e1d32dc4e2a757ba10"
+    },
+    {
+      "original_relative_path": "build-contract.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 6701,
+      "sha256": "19059659922c59dea9b402b5a7708c84d632cf4f2f66186437e72801b5597b60",
+      "object": "objects/19059659922c59dea9b402b5a7708c84d632cf4f2f66186437e72801b5597b60"
+    },
+    {
+      "original_relative_path": "baseline-identities.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 568,
+      "sha256": "9e5b284e7479d9bd410fb48b26b4209d17f7dce3b0ee2d4e4d6128c4933877f1",
+      "object": "objects/9e5b284e7479d9bd410fb48b26b4209d17f7dce3b0ee2d4e4d6128c4933877f1"
+    },
+    {
+      "original_relative_path": "scope.json",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 225,
+      "sha256": "0d7b7edf135619140011fa9cd2a45bf4be3718940b6f8873080c19bd1d68379c",
+      "object": "objects/0d7b7edf135619140011fa9cd2a45bf4be3718940b6f8873080c19bd1d68379c"
+    },
+    {
+      "original_relative_path": "README.md",
+      "kind": "HISTORICAL_RECORD_UNCHANGED",
+      "bytes": 3366,
+      "sha256": "05c46045d9e9b7eeacb9a5306dff99fe7e16a769c5b69af1acf0d62f8a048573",
+      "object": "objects/05c46045d9e9b7eeacb9a5306dff99fe7e16a769c5b69af1acf0d62f8a048573"
+    },
+    {
+      "original_relative_path": "build-A/kernel.rs",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1381,
+      "sha256": "98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea",
+      "object": "objects/98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea"
+    },
+    {
+      "original_relative_path": "build-B/kernel.rs",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1381,
+      "sha256": "98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea",
+      "object": "objects/98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea"
+    },
+    {
+      "original_relative_path": "build-A/entry.S",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1343,
+      "sha256": "0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e",
+      "object": "objects/0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e"
+    },
+    {
+      "original_relative_path": "build-B/entry.S",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1343,
+      "sha256": "0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e",
+      "object": "objects/0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e"
+    },
+    {
+      "original_relative_path": "build-A/linker.ld",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1324,
+      "sha256": "f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014",
+      "object": "objects/f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014"
+    },
+    {
+      "original_relative_path": "build-B/linker.ld",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 1324,
+      "sha256": "f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014",
+      "object": "objects/f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014"
+    },
+    {
+      "original_relative_path": "build-A/inspect.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 18696,
+      "sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548",
+      "object": "objects/0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548"
+    },
+    {
+      "original_relative_path": "build-B/inspect.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 18696,
+      "sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548",
+      "object": "objects/0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548"
+    },
+    {
+      "original_relative_path": "build-A/inspector-tests.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 7668,
+      "sha256": "0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834",
+      "object": "objects/0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834"
+    },
+    {
+      "original_relative_path": "build-B/inspector-tests.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 7668,
+      "sha256": "0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834",
+      "object": "objects/0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834"
+    },
+    {
+      "original_relative_path": "build-A/build.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 8272,
+      "sha256": "67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311",
+      "object": "objects/67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311"
+    },
+    {
+      "original_relative_path": "build-B/build.rb",
+      "kind": "HISTORICAL_SOURCE_DATA_NOT_ACTIVE_ENTRYPOINT",
+      "bytes": 8272,
+      "sha256": "67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311",
+      "object": "objects/67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311"
+    },
+    {
+      "original_relative_path": "build-A/image.bin",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 164,
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "object": "objects/6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1"
+    },
+    {
+      "original_relative_path": "build-A/llvm-image.bin",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 164,
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "object": "objects/6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1"
+    },
+    {
+      "original_relative_path": "build-A/image.elf",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 66576,
+      "sha256": "402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+      "object": "objects/402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293"
+    },
+    {
+      "original_relative_path": "build-A/image.map",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 2026,
+      "sha256": "60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531",
+      "object": "objects/60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531"
+    },
+    {
+      "original_relative_path": "build-B/image.bin",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 164,
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "object": "objects/6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1"
+    },
+    {
+      "original_relative_path": "build-B/llvm-image.bin",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 164,
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "object": "objects/6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1"
+    },
+    {
+      "original_relative_path": "build-B/image.elf",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 66576,
+      "sha256": "402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+      "object": "objects/402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293"
+    },
+    {
+      "original_relative_path": "build-B/image.map",
+      "kind": "HISTORICAL_ARTIFACT_DATA_NOT_EXECUTED",
+      "bytes": 2026,
+      "sha256": "60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531",
+      "object": "objects/60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531"
+    }
+  ],
+  "path_count": 29,
+  "unique_objects": 18,
+  "review": {
+    "identity_checks_sha256": "fed52de6162ac839d51c3d1f2df0bcc0f6eea7c46b42cb5a5f39f463a987ba97",
+    "method": "Exact stable reads of selected previously reviewed source, records and artifacts; copied objects read back. Objects have no executable permission and are not active runtime inputs."
+  },
+  "recorded_outcome": {
+    "source_snapshots_equal": true,
+    "A_B_comparisons_equal": true,
+    "result_original": "BUILD_AND_STATIC_LAYOUT_PASS_PENDING_INSTRUCTION_REVIEW",
+    "checkpoint": "BUILD_AND_STATIC_REVIEW_PASS",
+    "guest_executions": 0,
+    "resulting_host_binary_executions": 0,
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "limits": [
+    "This snapshot relocates selected unchanged bytes explicitly. It does not recreate the full90-file custody directory.",
+    "No historical record, acceptance criterion or attempt was changed.",
+    "No new compiler, guest, host, native or scientific attempt ran.",
+    "Historical bootstrap no-guest and92-byte-baseline claims belong to that phase; later Rust/host history is separate.",
+    "Repository durability is LOCAL_DURABLE until commit, push and remote-SHA verification."
+  ]
+}

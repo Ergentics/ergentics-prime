@@ -1,5 +1,13 @@
 # Freestanding Rust guest bootstrap
 
+> Historical phase note: the build-only, unchanged 92-byte host-image and
+> no-guest-execution statements below describe the 2026-08-30 bootstrap phase.
+> Later host and Rust work has separate evidence. The original retained result
+> was located during Prime replay; see the
+> [custody locator](../../Control/rust-guest-bootstrap-custody-locator.v1.json)
+> for the original location and a portable snapshot of selected unchanged bytes.
+> This provenance repair does not run or qualify a new candidate.
+
 Build-only successor to `Guest/doorbell.S`, not a host Rust library or guest OS.
 The Swift/C app and its current 92-byte image remain unchanged.
 

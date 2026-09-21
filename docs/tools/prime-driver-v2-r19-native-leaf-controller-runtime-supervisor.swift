@@ -3086,6 +3086,12 @@ private enum PrimeR19ControllerSupervisor {
 @main
 private struct PrimeDriverV2R19NativeLeafControllerRuntimeSupervisor {
     static func main() {
+        // Retired 2026-09-20: this historical R19 helper can retain a failed
+        // process domain indefinitely. Reject before bootstrap intake or spawn.
+        // Exit without output so a closed/full pipe cannot delay rejection.
+        // Original Git blob: 18f6e775f11dd3d3f7260f97caf7f4e9979ae886.
+        // Existing binaries and live instances are unaffected.
+        Darwin._exit(70)
         do {
             let output = try PrimeR19ControllerSupervisor.run()
             guard fcntl(STDOUT_FILENO, F_SETNOSIGPIPE, 1) == 0 else {

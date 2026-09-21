@@ -825,6 +825,7 @@ struct PrimeSecureHeldWorkingTreeSnapshot:
                 directory,
                 $0,
                 O_RDONLY
+                    | O_NONBLOCK
                     | O_NOFOLLOW_ANY
                     | O_CLOEXEC
                     | (isDirectory ? O_DIRECTORY : 0)

@@ -7,7 +7,7 @@ import Foundation
 @_spi(PrimeValidationDriverV2RoleFacade) @testable import PrimeCore
 import PrimeValidationWorkflowContracts
 import PrimeValidationWorkflowDriverCore
-import PrimeValidationWorkflowDriverV2ShotGovernorCore
+@testable import PrimeValidationWorkflowDriverV2ShotGovernorCore
 import XCTest
 
 final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
@@ -4128,7 +4128,10 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 "var initiatingFailure: " +
                     "PrimeValidationDriverV2SessionFixtureInitiatingFailure?",
                 "var deathWaitReturned = false",
-                "defer { do { switch containmentState",
+                "defer { do {",
+                "var cleanupBudget = PrimeValidationDriverV2GovernorCleanupBudget()",
+                "let cleanupDeadline = try cleanupBudget.deadline()",
+                "switch containmentState",
                 "if let containmentFailure = error as? " +
                     "PrimeValidationDriverV2ShotGovernorFailure",
                 "failStopDiagnostic.publishBestEffort(",
@@ -4705,9 +4708,9 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         )
         XCTAssertEqual(
             containmentGuardSource.components(
-                separatedBy: "lifecycleState: spawned.lifecycleState"
+                separatedBy: "lifecycleState: lifecycleState"
             ).count - 1,
-            3
+            2
         )
 
         let spawnerSource = try slice(
@@ -4722,16 +4725,14 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
                 "guard spawnResult == 0, pid > 0 else",
                 "let lifecycleState =",
                 "PrimeValidationDriverV2GovernorSessionLifecycleState(",
+                "let containmentGuard = PrimeValidationDriverV2GovernorSpawnContainmentGuard(",
+                "lifecycleState: lifecycleState",
+                "stdoutDrain.start()",
+                "try deadline.requireTime(\"supervisor_spawn_return_deadline\")",
                 "return .init(",
-                "lifecycleState: lifecycleState",
-                "var suspendedJoinExactReaped = false",
-                ".contain(",
-                "lifecycleState: lifecycleState",
-                "onExactReap:",
-                "suspendedJoinExactReaped = true",
-                "guard suspendedJoinExactReaped else",
-                ".containSessionAfterSupervisorReaped(",
-                "lifecycleState: lifecycleState",
+                "containmentGuard: containmentGuard",
+                "withExtendedLifetime(containmentGuard)",
+                "throw error",
             ],
             in: spawnerSource,
             coordinate: "r13_suspended_join_retained_state_order"
@@ -4768,10 +4769,13 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
         XCTAssertEqual(
             exactWaitSource.components(
                 separatedBy:
-                    "Darwin.waitpid(supervisorPID, &raw, 0)"
+                    "Darwin.waitpid(pid, &raw, options)"
             ).count - 1,
             1
         )
+        XCTAssertTrue(exactWaitSource.contains("PrimeValidationDriverV2GovernorExactReap.wait("))
+        XCTAssertTrue(exactWaitSource.contains("waitOptions: WNOHANG"))
+        XCTAssertFalse(exactWaitSource.contains("Darwin.waitpid(supervisorPID, &raw, 0)"))
         XCTAssertFalse(
             exactWaitSource.contains(
                 "exact_supervisor_wait_return_deadline"
@@ -5018,7 +5022,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "static let pidCapacity = 131_072",
             "static let maximumScans = 256",
             "kernelStatus == 4 || kernelStatus == 5",
-            "Darwin.waitpid(supervisorPID, &raw, 0)",
+            "Darwin.waitpid(pid, &raw, options)",
             "PrimeValidationDriverV2GovernorSessionCensus.contain(",
             "containSessionAfterSupervisorReaped(",
             "case conservationCompleted",
@@ -5037,7 +5041,7 @@ final class PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests:
             "list_xctest",
             "list_swift_testing",
             "WUNTRACED",
-            "waitpid(supervisorPID, &raw, WNOHANG)",
+            "Darwin.waitpid(supervisorPID, &raw, 0)",
         ] {
             XCTAssertFalse(governor.contains(forbidden), forbidden)
         }
@@ -8061,5 +8065,312 @@ private final class Fixture {
             expectation: expectation
         )
         return expectation
+    }
+}
+
+/// Pure clock/callback tests. No child, census, gate, or native fixture runs.
+final class PrimeValidationDriverV2GovernorDeadlineTests: XCTestCase {
+    func testCheckpointCrossingDeadlineNeverSpawns() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: 10, startedAt: 100)
+        var now: UInt64 = 109
+        var spawns = 0
+        XCTAssertThrowsError(try phase.afterCheckpointBeforeSpawn(
+            checkpoint: { now = 110 }, now: { now }, spawn: { spawns += 1 }))
+        XCTAssertEqual(spawns, 0)
+    }
+
+    func testTimelyCheckpointSpawnsExactlyOnce() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: 10, startedAt: 100)
+        var now: UInt64 = 100
+        var spawns = 0
+        let result = try phase.afterCheckpointBeforeSpawn(
+            checkpoint: { now = 109 }, now: { now },
+            spawn: { spawns += 1; return 42 })
+        XCTAssertEqual(result, 42)
+        XCTAssertEqual(spawns, 1)
+    }
+
+    func testExpiredPhaseDoesNotRunCheckpointOrSpawn() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: 10, startedAt: 100)
+        var checkpoints = 0
+        var spawns = 0
+        XCTAssertThrowsError(try phase.afterCheckpointBeforeSpawn(
+            checkpoint: { checkpoints += 1 }, now: { 110 },
+            spawn: { spawns += 1 }))
+        XCTAssertEqual(checkpoints, 0)
+        XCTAssertEqual(spawns, 0)
+    }
+
+    func testCheckpointFailureNeverSpawns() throws {
+        enum Rejection: Error { case rejected }
+        let phase = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: 10, startedAt: 100)
+        var spawns = 0
+        XCTAssertThrowsError(try phase.afterCheckpointBeforeSpawn(
+            checkpoint: { throw Rejection.rejected }, now: { 101 },
+            spawn: { spawns += 1 }))
+        XCTAssertEqual(spawns, 0)
+    }
+
+    func testCleanupStartsAfterExpiredPhaseAndNeverRenewsAcrossStages() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(
+            durationNanoseconds: 10, startedAt: 100)
+        XCTAssertThrowsError(try phase.requireTime("phase", observedAt: 110))
+        var budget = PrimeValidationDriverV2GovernorCleanupBudget()
+        let containment = try budget.deadline(now: 111)
+        let reap = try budget.deadline(now: 112)
+        let stdout = try budget.deadline(now: 113)
+        let stderr = try budget.deadline(now: 114)
+        let expectedEnd = 111 + PrimeValidationDriverV2GovernorCleanupBudget.durationNanoseconds
+        for stage in [containment, reap, stdout, stderr] {
+            XCTAssertEqual(stage.startedAt, 111)
+            XCTAssertEqual(stage.expiresAt, expectedEnd)
+            XCTAssertNoThrow(try stage.requireTime("cleanup", observedAt: expectedEnd - 1))
+            XCTAssertThrowsError(try stage.requireTime("cleanup", observedAt: expectedEnd))
+        }
+        let retry = try budget.deadline(now: expectedEnd + 1)
+        XCTAssertEqual(retry.expiresAt, expectedEnd)
+        XCTAssertThrowsError(try retry.requireTime("cleanup", observedAt: expectedEnd + 1))
+        // Cleanup time never changes the rejected phase's endpoint.
+        XCTAssertEqual(phase.expiresAt, 110)
+        XCTAssertThrowsError(try phase.requireTime("phase", observedAt: 111))
+    }
+
+    func testCleanupEndpointOverflowRejects() {
+        var budget = PrimeValidationDriverV2GovernorCleanupBudget()
+        XCTAssertThrowsError(try budget.deadline(now: UInt64.max - 1))
+    }
+    func testClockRegressionRejects() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        XCTAssertThrowsError(try phase.requireTime("regression", observedAt: 99))
+    }
+
+    func testPostSpawnExpiryContainsBeforeReturningWithoutResume() throws {
+        let phase = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        var events: [String] = []
+        var deadlines: [UInt64] = []
+        let owner = PrimeValidationDriverV2GovernorCleanupTransition(contain: { deadline, reaped in
+            events.append("contain"); deadlines.append(deadline.expiresAt); reaped()
+        }, conserve: { _ in XCTFail("containment already conserves") }, stdout: { deadline in
+            events.append("stdout"); deadlines.append(deadline.expiresAt)
+        }, stderr: { deadline in
+            events.append("stderr"); deadlines.append(deadline.expiresAt)
+        })
+        // The syscall may return after its final pre-spawn clock sample.
+        XCTAssertThrowsError(try phase.requireTime("spawn_return", observedAt: 110))
+        XCTAssertEqual(owner.cleanup(now: 111), .contained)
+        XCTAssertEqual(events, ["contain", "stdout", "stderr"])
+        XCTAssertEqual(Set(deadlines), [111 + PrimeValidationDriverV2GovernorCleanupBudget.durationNanoseconds])
+        XCTAssertEqual(owner.cleanup(now: UInt64.max), .contained)
+        XCTAssertEqual(events.count, 3)
+    }
+
+    func testEachCleanupFailureRequiresFailStopAndStillAttemptsBothDrains() {
+        enum Rejection: Error { case injected }
+        for failure in ["contain", "stdout", "stderr"] {
+            var events: [String] = []
+            var deadlines: [UInt64] = []
+            let owner = PrimeValidationDriverV2GovernorCleanupTransition(contain: { deadline, reaped in
+                events.append("contain"); deadlines.append(deadline.expiresAt)
+                if failure == "contain" { throw Rejection.injected }
+                reaped()
+            }, conserve: { _ in XCTFail("no post-reap containment failure") }, stdout: { deadline in
+                events.append("stdout"); deadlines.append(deadline.expiresAt)
+                if failure == "stdout" { throw Rejection.injected }
+            }, stderr: { deadline in
+                events.append("stderr"); deadlines.append(deadline.expiresAt)
+                if failure == "stderr" { throw Rejection.injected }
+            })
+            XCTAssertEqual(owner.cleanup(now: 200), .mustFailStop, failure)
+            XCTAssertEqual(events, ["contain", "stdout", "stderr"], failure)
+            XCTAssertEqual(Set(deadlines).count, 1)
+            XCTAssertEqual(owner.cleanup(now: 300), .mustFailStop)
+            XCTAssertEqual(events.count, 3, "failure must not renew or retry cleanup")
+        }
+    }
+
+    func testCleanupFromPartialStatesNeverRepeatsExactReap() {
+        for partial in ["exact_reap", "conserved", "drains"] {
+            var events: [String] = []
+            let owner = PrimeValidationDriverV2GovernorCleanupTransition(contain: { _, _ in
+                XCTFail("exact reap was already acknowledged")
+            }, conserve: { _ in events.append("conserve") }, stdout: { _ in events.append("stdout") },
+               stderr: { _ in events.append("stderr") })
+            owner.acceptExactReap()
+            if partial != "exact_reap" { owner.acceptConservation() }
+            if partial == "drains" { owner.acceptFinishedDrains() }
+            XCTAssertEqual(owner.cleanup(now: 200), .contained)
+            XCTAssertEqual(events, partial == "exact_reap" ? ["conserve", "stdout", "stderr"]
+                : partial == "conserved" ? ["stdout", "stderr"] : [])
+        }
+    }
+
+    func testFailureAfterExactReapUsesSameBudgetForConservationAndDrains() {
+        enum Rejection: Error { case injected }
+        var events: [String] = []
+        var deadlines: [UInt64] = []
+        let owner = PrimeValidationDriverV2GovernorCleanupTransition(contain: { deadline, reaped in
+            events.append("reap"); deadlines.append(deadline.expiresAt); reaped()
+            throw Rejection.injected
+        }, conserve: { deadline in
+            events.append("conserve"); deadlines.append(deadline.expiresAt)
+        }, stdout: { deadline in
+            events.append("stdout"); deadlines.append(deadline.expiresAt)
+        }, stderr: { deadline in
+            events.append("stderr"); deadlines.append(deadline.expiresAt)
+        })
+        XCTAssertEqual(owner.cleanup(now: 200), .contained)
+        XCTAssertEqual(events, ["reap", "conserve", "stdout", "stderr"])
+        XCTAssertEqual(Set(deadlines).count, 1)
+    }
+
+    func testUnacknowledgedReapCannotCertifyContainment() {
+        var drains = 0
+        let owner = PrimeValidationDriverV2GovernorCleanupTransition(contain: { _, _ in },
+            conserve: { _ in XCTFail("no exact-reap authority") },
+            stdout: { _ in drains += 1 }, stderr: { _ in drains += 1 })
+        XCTAssertEqual(owner.cleanup(now: 200), .mustFailStop)
+        XCTAssertEqual(drains, 2)
+    }
+
+}
+
+/// Pure emergency polling tests; no spawn, signal, wait syscall, or census.
+final class PrimeSecureChildEmergencyReapTests: XCTestCase {
+    func testStillRunningAndInterruptedThenExactReap() throws {
+        let timeline = try PrimeSecureChildCleanupTimeline.suspended(cleanupStartedAtUptimeNanoseconds: 100)
+        var results: [PrimeSecureChildWaitResult] = [.stillRunning, .interrupted, .reaped(returnedPID: 42, rawStatus: 9)]
+        var pauses = 0
+        XCTAssertTrue(PrimeSecureChildEmergencyReap.attempt(processIdentifier: 42, timeline: timeline,
+            now: { 101 }, wait: { results.removeFirst() }, advance: { pauses += 1 }))
+        XCTAssertEqual(pauses, 2)
+        XCTAssertTrue(results.isEmpty)
+    }
+    func testUnresponsiveOrInterruptedWaitStopsAtFixedPollCap() throws {
+        let timeline = try PrimeSecureChildCleanupTimeline.suspended(cleanupStartedAtUptimeNanoseconds: 100)
+        for result in [PrimeSecureChildWaitResult.stillRunning, .interrupted] {
+            var polls = 0
+            XCTAssertFalse(PrimeSecureChildEmergencyReap.attempt(processIdentifier: 42, timeline: timeline,
+                now: { 101 }, wait: { polls += 1; return result }, advance: {}))
+            XCTAssertEqual(polls, PrimeSecureChildLifecycle.maximumContainmentPollCount)
+        }
+    }
+    func testWrongPIDAndWaitFailureRejectImmediately() throws {
+        let timeline = try PrimeSecureChildCleanupTimeline.suspended(cleanupStartedAtUptimeNanoseconds: 100)
+        for result in [PrimeSecureChildWaitResult.reaped(returnedPID: 43, rawStatus: 0), .failed(ECHILD)] {
+            var polls = 0
+            XCTAssertFalse(PrimeSecureChildEmergencyReap.attempt(processIdentifier: 42, timeline: timeline,
+                now: { 101 }, wait: { polls += 1; return result }, advance: { XCTFail("terminal rejection") }))
+            XCTAssertEqual(polls, 1)
+        }
+    }
+    func testExpiryAndClockRegressionNeverWait() throws {
+        let timeline = try PrimeSecureChildCleanupTimeline.suspended(cleanupStartedAtUptimeNanoseconds: 100)
+        for now in [UInt64(99), timeline.containmentDeadline.expiresAtUptimeNanoseconds] {
+            XCTAssertFalse(PrimeSecureChildEmergencyReap.attempt(processIdentifier: 42, timeline: timeline,
+                now: { now }, wait: { XCTFail("no wait authority"); return .stillRunning }, advance: {}))
+        }
+    }
+    func testExpiryOrRegressionAfterWaitCannotCertifyContainment() throws {
+        let timeline = try PrimeSecureChildCleanupTimeline.suspended(cleanupStartedAtUptimeNanoseconds: 100)
+        for completed in [UInt64(100), timeline.containmentDeadline.expiresAtUptimeNanoseconds] {
+            var samples = [UInt64(101), completed]
+            XCTAssertFalse(PrimeSecureChildEmergencyReap.attempt(processIdentifier: 42, timeline: timeline,
+                now: { samples.removeFirst() }, wait: { .reaped(returnedPID: 42, rawStatus: 9) }, advance: {}))
+        }
+    }
+}
+
+/// Pure exact-reap protocol checks; no process, wait syscall or census.
+final class PrimeValidationDriverV2GovernorExactReapTests: XCTestCase {
+    func testPendingAndInterruptedPollsRetainExactPIDOptionsAndDeadline() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        var time: UInt64 = 101
+        var results: [(pid_t, Int32, Int32)] = [(0, 0, 0), (-1, 0, EINTR), (42, 23 << 8, 0)]
+        let result = try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42, deadline: deadline,
+            now: { time }, poll: { pid, options in
+                XCTAssertEqual(pid, 42); XCTAssertEqual(options, WNOHANG)
+                return results.removeFirst()
+            }, advance: { time += 1 })
+        XCTAssertEqual(result.rawStatus, 23 << 8)
+        XCTAssertEqual(result.returnedAt, 103)
+        XCTAssertTrue(results.isEmpty)
+        XCTAssertEqual(deadline.expiresAt, 110)
+    }
+
+    func testNeverReadyAndRepeatedEINTRExpireWithoutRenewal() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 3, startedAt: 100)
+        for pending in [(pid_t(0), Int32(0), Int32(0)), (-1, 0, EINTR)] {
+            var time: UInt64 = 100
+            var polls = 0
+            XCTAssertThrowsError(try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42,
+                deadline: deadline, now: { time }, poll: { _, _ in polls += 1; return pending },
+                advance: { time += 1 }))
+            XCTAssertEqual(polls, 3)
+            XCTAssertEqual(time, deadline.expiresAt)
+        }
+    }
+
+    func testFixedPollCapRejectsWithoutClockProgress() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        var polls = 0
+        XCTAssertThrowsError(try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42,
+            deadline: deadline, now: { 101 }, poll: { _, _ in polls += 1; return (0, 0, 0) }, advance: {}))
+        XCTAssertEqual(polls, PrimeValidationDriverV2GovernorExactReap.maximumPollCount)
+    }
+
+    func testLastAllowedPollSucceedsWithoutAnExtraPoll() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        let cap = PrimeValidationDriverV2GovernorExactReap.maximumPollCount
+        var polls = 0
+        var advances = 0
+        let result = try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42,
+            deadline: deadline, now: { 101 }, poll: { pid, options in
+                XCTAssertEqual(pid, 42)
+                XCTAssertEqual(options, WNOHANG)
+                polls += 1
+                return polls == cap ? (42, 23 << 8, 0) : (0, 0, 0)
+            }, advance: { advances += 1 })
+        XCTAssertEqual(result.rawStatus, 23 << 8)
+        XCTAssertEqual(polls, cap)
+        XCTAssertEqual(advances, cap - 1)
+    }
+
+    func testInvalidPIDExpiryAndClockRegressionNeverPoll() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        for (pid, time) in [(pid_t(0), UInt64(101)), (-1, 101), (42, 99), (42, 110)] {
+            XCTAssertThrowsError(try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: pid,
+                deadline: deadline, now: { time }, poll: { _, _ in XCTFail("no wait authority"); return (0, 0, 0) },
+                advance: { XCTFail("no poll delay") }))
+        }
+    }
+
+    func testUnexpectedPIDNonterminalStatusAndWaitErrorsReject() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        for result in [(pid_t(43), Int32(0), Int32(0)), (42, (SIGSTOP << 8) | 0x7f, 0),
+                       (42, 0xffff, 0), (-1, 0, ECHILD), (-1, 0, EIO)] {
+            var polls = 0
+            XCTAssertThrowsError(try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42,
+                deadline: deadline, now: { 101 }, poll: { _, _ in polls += 1; return result },
+                advance: { XCTFail("terminal rejection cannot retry") }))
+            XCTAssertEqual(polls, 1)
+        }
+    }
+
+    func testTerminalReapIsAcknowledgedBeforeLateDeadlineRejection() throws {
+        let deadline = try PrimeValidationDriverV2GovernorDeadline(durationNanoseconds: 10, startedAt: 100)
+        var samples: [UInt64] = [109, 110]
+        var acknowledged = false
+        let result = try PrimeValidationDriverV2GovernorExactReap.wait(supervisorPID: 42,
+            deadline: deadline, now: { samples.removeFirst() }, poll: { _, _ in (42, SIGKILL, 0) },
+            advance: { XCTFail("terminal wait") })
+        acknowledged = true
+        XCTAssertThrowsError(try deadline.requireTime("after_ack", observedAt: result.returnedAt))
+        XCTAssertTrue(acknowledged)
+        XCTAssertEqual(result.rawStatus, SIGKILL)
+        XCTAssertTrue(samples.isEmpty)
     }
 }

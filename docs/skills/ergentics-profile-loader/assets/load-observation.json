@@ -1,0 +1,49 @@
+{
+  "schema": "ergentics.profile-load-observation.v1",
+  "run_id": null,
+  "profile_id": null,
+  "profile_version": null,
+  "context_task_name": null,
+  "packet_receipt": {
+    "path": null,
+    "sha256": null
+  },
+  "requested": {
+    "model": null,
+    "reasoning_effort": null,
+    "context": null,
+    "tools": [
+
+    ]
+  },
+  "visible_model_label": null,
+  "verified_serving_model_build": null,
+  "realized_reasoning_effort": null,
+  "observed": {
+    "preparation": null,
+    "hosted_read_and_response": null,
+    "additional_model_api_invocation": null,
+    "native_application_execution": null
+  },
+  "files_read": [
+
+  ],
+  "corpus_entries_read": [
+
+  ],
+  "processing_route": null,
+  "provider_control_evidence": null,
+  "result": {
+    "path": null,
+    "sha256": null
+  },
+  "blockers": [
+
+  ],
+  "limits": [
+
+  ],
+  "extensions": {
+  },
+  "template_note": "Unpopulated fields are unknown, not success. Keep this template out of corpus selection. A receipt hash binds bytes; facts require actual tool/read/response evidence. Each blocker must name the operation it blocks; do not list a future runtime/commit hold as a failure of a completed load or an independent authorized source review."
+}

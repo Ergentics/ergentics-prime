@@ -5,6 +5,13 @@ import CryptoKit
 import Darwin
 import Foundation
 
+// Retired 2026-09-20: this historical disposal helper can remain in
+// post-signal recovery indefinitely. Reject before target or file intake.
+// Original Git blob: 9bcd74e6392ff0efa7db98a5a5dd4d73b552e53a.
+// Existing binaries and live processes are unaffected.
+// No output operation may delay this rejection.
+Darwin._exit(70)
+
 @_silgen_name("_NSGetEnviron")
 private func disposalEnviron()
     -> UnsafeMutablePointer<UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>?>

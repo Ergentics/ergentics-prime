@@ -1,0 +1,8 @@
+{
+  "schema": "ergentics.rust-bootstrap.build-observation.v1",
+  "guest_executions": 0,
+  "resulting_host_binary_executions": 0,
+  "production_files_modified": false,
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000"
+}

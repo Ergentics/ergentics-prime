@@ -1,0 +1,8 @@
+# Merge example only. Rebase config_file paths relative to the receiving config file.
+[agents.ergentics_swift_c]
+description = "Implement and review native Swift work with explicit C boundaries, numerical semantics, build evidence and durable task state."
+config_file = "roles/ergentics_swift_c.toml"
+
+[agents.ergentics_cpp]
+description = "Implement and review native C/C++ work with explicit ownership, checked input and arithmetic, build evidence and durable task state."
+config_file = "roles/ergentics_cpp.toml"

@@ -1,0 +1,29 @@
+{
+  "schema": "ergentics.agent-definition.v1",
+  "id": "ergentics_cpp",
+  "name": "Ergentics C/C++ Agent",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "description": "Implement and review native C/C++ work with explicit ownership, checked input and arithmetic, build evidence and durable task state.",
+  "paths_relative_to": "bundle root",
+  "instructions": "agents/ergentics_cpp/AGENT.md",
+  "operating_contract": "shared/OPERATING-CONTRACT.md",
+  "load_instructions": "LOAD.md",
+  "lineage": "references/lineage.json",
+  "implementation_languages": [
+    "C17",
+    "C++20"
+  ],
+  "operator_binding": "Select and record actual hosted/operator configuration per authorized dispatch; no fixed model override.",
+  "capabilities": [
+    "task recovery",
+    "reasoning and implementation",
+    "bounded review",
+    "applicable build and behavior checks",
+    "versioned evidence and lesson capture",
+    "attributed post hoc synthesis"
+  ],
+  "default_activity": "No activity until a current assignment is dispatched",
+  "task_state": "Receiving task record outside this released bundle",
+  "extensions": {}
+}

@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this frozen helper has unbounded process, pipe,
+# or recovery waits. Reject before bootstrap intake, file access, or signals.
+# Original Git blob: 535ea01cf33df74b6d8f8adf465c50306431c273.
+# Existing live instances and historical copies are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-v2-historical-helper-retirement/v1\"," \
+    "\"helper\":\"ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v7.rb\"," \
+    "\"status\":\"RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostic failure or a full pipe must not delay retirement.
+ensure
+  Process.exit!(70)
+end
+
 require "digest"
 require "fiddle/import"
 require "json"

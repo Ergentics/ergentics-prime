@@ -3,6 +3,7 @@
 require "base64"
 require "digest"
 require "json"
+require_relative "control-file"
 
 abort("usage: #{$PROGRAM_NAME} CONTROL.json") unless ARGV.length == 1
 
@@ -38,7 +39,7 @@ def v12_audit_resolve(root, pointer)
 end
 
 path = ARGV.fetch(0)
-raw_control = File.binread(path)
+raw_control = V12ControlFile.capture(path).bytes
 j = v12_audit_parse(raw_control)
 x = j.fetch("exact_record_schema_v12")
 r = x.fetch("reusable_objects")

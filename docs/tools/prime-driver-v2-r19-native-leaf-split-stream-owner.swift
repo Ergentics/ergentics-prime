@@ -4102,6 +4102,12 @@ private extension PrimeR19SplitAuthorities {
 @main
 private struct PrimeDriverV2R19NativeLeafSplitStreamOwner {
     static func main() {
+        // Retired 2026-09-20: this historical R19 helper can retain a failed
+        // process domain indefinitely. Reject before bootstrap intake or spawn.
+        // Exit without output so a closed/full pipe cannot delay rejection.
+        // Original Git blob: 87e375b489f17e03a586b131ae516d1aadc26f61.
+        // Existing binaries and live instances are unaffected.
+        Darwin._exit(70)
         do {
             switch try PrimeR19SplitOwner.run() {
             case .candidate:

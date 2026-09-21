@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this historical r14-guardian helper has
+# failure paths that can remain active indefinitely. Reject all roles before
+# bootstrap intake, library loading, process inspection, or child creation.
+# The historical body below is unchanged; its original Git blob is
+# b00c5c17b752ab2ca1947a86f925a97d4bb5be63. Existing live instances are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r14-retirement/v1\"," \
+    "\"status\":\"R14_GUARDIAN_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 BOOTSTRAP_ENV = {
   "LANG" => "C.UTF-8",
   "LC_ALL" => "C.UTF-8",

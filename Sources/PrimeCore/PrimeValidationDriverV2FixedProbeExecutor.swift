@@ -1627,7 +1627,7 @@ private final class PrimeValidationDriverV2FixedProbeJournal {
             )
         }
         let rebound = leaf.withCString {
-            openat(descriptor, $0, O_RDONLY | O_NOFOLLOW | O_CLOEXEC)
+            openat(descriptor, $0, O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK)
         }
         guard rebound >= 3 else {
             if rebound >= 0 { _ = Darwin.close(rebound) }
@@ -3834,12 +3834,8 @@ enum PrimeValidationDriverV2FixedProbeExecutor {
 private func primeValidationDriverV2FixedProbeFailStop(
     _ reason: PrimeSecureChildContainmentFailureReason
 ) -> Never {
-    let bytes = Array(
-        "prime-driver-v2-fixed-probe fail-stop: \(reason.rawValue)\n".utf8
-    )
-    _ = bytes.withUnsafeBytes {
-        Darwin.write(STDERR_FILENO, $0.baseAddress, $0.count)
-    }
+    // Mandatory containment failure cannot depend on inherited stderr: a full
+    // pipe can block and a broken pipe can replace the fixed status with SIGPIPE.
     Darwin._exit(70)
 }
 

@@ -1,0 +1,29 @@
+{
+  "schema": "ergentics.agent-definition.v1",
+  "id": "ergentics_swift_c",
+  "name": "Ergentics Swift+C Agent",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "description": "Implement and review native Swift work with explicit C boundaries, numerical semantics, build evidence and durable task state.",
+  "paths_relative_to": "bundle root",
+  "instructions": "agents/ergentics_swift_c/AGENT.md",
+  "operating_contract": "shared/OPERATING-CONTRACT.md",
+  "load_instructions": "LOAD.md",
+  "lineage": "references/lineage.json",
+  "implementation_languages": [
+    "Swift",
+    "C"
+  ],
+  "operator_binding": "Select and record actual hosted/operator configuration per authorized dispatch; no fixed model override.",
+  "capabilities": [
+    "task recovery",
+    "reasoning and implementation",
+    "bounded review",
+    "applicable build and behavior checks",
+    "versioned evidence and lesson capture",
+    "attributed post hoc synthesis"
+  ],
+  "default_activity": "No activity until a current assignment is dispatched",
+  "task_state": "Receiving task record outside this released bundle",
+  "extensions": {}
+}

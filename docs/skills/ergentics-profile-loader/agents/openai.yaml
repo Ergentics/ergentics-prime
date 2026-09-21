@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ergentics Profile Loader"
+  short_description: "Load versioned Ergentics profiles and selected lessons"
+  default_prompt: "Use $ergentics-profile-loader to bind and load the appropriate installed Ergentics profile for this task."

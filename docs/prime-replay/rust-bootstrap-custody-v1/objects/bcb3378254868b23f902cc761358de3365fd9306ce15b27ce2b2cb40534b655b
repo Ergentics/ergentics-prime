@@ -1,0 +1,58 @@
+{
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/bin/rustc": {
+    "bytes": 412504,
+    "sha256": "a11618eca0956a8aa4372c2bc898690b513cbdfa2cb9125b2a5301e360ed5b49"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-apple-darwin/bin/rust-lld": {
+    "bytes": 5711312,
+    "sha256": "6f44b61e91d6d7b6ba80bb75391587bb4fa832b248281bd67d519516cde43f98"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-apple-darwin/bin/llvm-objdump": {
+    "bytes": 943328,
+    "sha256": "82a155f861d4c87deaed3c85193a645f4556a60c4634ff13b09cde44fa5d6ec7"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-apple-darwin/bin/llvm-readobj": {
+    "bytes": 1791936,
+    "sha256": "5c388043b0ce7698cbce64e9ca94c2d397bad0018b7a104c4da5a0b8348053a4"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-apple-darwin/bin/llvm-objcopy": {
+    "bytes": 242128,
+    "sha256": "a7a547d50b4f643710e30238f451b355514cdcf819bd1d3b3e0d6264fca9a121"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-apple-darwin/bin/../lib/libLLVM.dylib": {
+    "bytes": 139564208,
+    "sha256": "6da171ecd17bbe20b57b2e2d2e324b8fb2267117b504e864eb8b3012a71a6fec"
+  },
+  "/usr/bin/ruby": {
+    "bytes": 135200,
+    "sha256": "9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/librustc_driver-4031c0ff8e88f5d1.dylib": {
+    "bytes": 83036200,
+    "sha256": "275171d3d528b7f78bcad812a84658ec3bd756ce9792a329b6edefdf70884c63"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/liballoc-2134654c5d504d4e.rlib": {
+    "bytes": 1012038,
+    "sha256": "6891dcc9a820a276eebd2bd301bfaf27b5eabc0bb3d7650b4744e352becd9e79"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/liballoc-2134654c5d504d4e.rmeta": {
+    "bytes": 7524838,
+    "sha256": "4f2e1e883f0fc754fa2a3ee5e22cb7f3fa7afe00bea14e0dd6723399b38897c5"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/libcompiler_builtins-f2b668fc48e6ffee.rlib": {
+    "bytes": 6115990,
+    "sha256": "589d8be5490977f83e7b1813be990ee9a58e696da65c119be70525b0a0deb525"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/libcompiler_builtins-f2b668fc48e6ffee.rmeta": {
+    "bytes": 2008762,
+    "sha256": "3ae610603823431f8f2bd522901b1a7d4794998e371ccabb88577981f8fd8422"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/libcore-da4f33393d26a649.rlib": {
+    "bytes": 3232116,
+    "sha256": "9c1c56c2c37e386558b4707bf16caa8162c094787aabdb64840d954109dc28a1"
+  },
+  "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap/prefix/lib/rustlib/aarch64-unknown-none-softfloat/lib/libcore-da4f33393d26a649.rmeta": {
+    "bytes": 64091283,
+    "sha256": "b476e2dbe77d084073321aa4bf726793394dcfc8e8430fa869c959436ad36175"
+  }
+}

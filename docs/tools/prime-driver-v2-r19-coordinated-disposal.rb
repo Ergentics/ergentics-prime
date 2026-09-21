@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this frozen helper has unbounded process, pipe,
+# or recovery waits. Reject before bootstrap intake, file access, or signals.
+# Original Git blob: 7f2cef7ff309b1b814ed8c797dd6aa46c5b7b4b1.
+# Existing live instances and historical copies are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-v2-historical-helper-retirement/v1\"," \
+    "\"helper\":\"prime-driver-v2-r19-coordinated-disposal.rb\"," \
+    "\"status\":\"RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostic failure or a full pipe must not delay retirement.
+ensure
+  Process.exit!(70)
+end
+
 # Safety-only Workstation controller for the permanently consumed, nonterminal
 # R19 mechanics invocation. This file does not interpret scientific evidence,
 # close authority, retry R19, launch a child, or own either retained process.

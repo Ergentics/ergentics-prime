@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this frozen helper has unbounded process, pipe,
+# or recovery waits. Reject before bootstrap intake, file access, or signals.
+# Original Git blob: 6fd46406f4a37f9dd62a703e80ef6857578941e9.
+# Existing live instances and historical copies are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-v2-historical-helper-retirement/v1\"," \
+    "\"helper\":\"ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb\"," \
+    "\"status\":\"RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostic failure or a full pipe must not delay retirement.
+ensure
+  Process.exit!(70)
+end
+
 # Closed control-only runner that captures the non-consuming C2 prefix harness
 # with descriptor-rooted publication and raw-first durable retention.
 

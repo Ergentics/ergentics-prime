@@ -1,0 +1,28 @@
+             VMA              LMA     Size Align Out     In      Symbol
+               0                0        0     1 __stack_bottom = 0x10010000
+               0                0        0     1 __stack_top = 0x10014000
+               0                0 10000000     1 . = 0x10000000
+        10000000         10000000       a4     4 .text
+        10000000         10000000       7c     4         image.ergentics_guest_bootstrap.2a11286205eb5262-cgu.0.rcgu.o:(.text.boot)
+        10000000         10000000        0     1                 $x
+        10000000         10000000       7c     1                 _start
+        10000060         10000060        0     1                 epr_guest_doorbell
+        10000064         10000064        0     1                 epr_guest_returned_doorbell
+        1000006c         1000006c        0     1                 epr_guest_reject
+        10000074         10000074        0     1                 epr_guest_panic
+        1000007c         1000007c       28     4         image.ergentics_guest_bootstrap.2a11286205eb5262-cgu.0.rcgu.o:(.text.epr_guest_evaluate)
+        1000007c         1000007c        0     1                 $x
+        1000007c         1000007c       28     1                 epr_guest_evaluate
+        100000a4         100000a4        0     1 __image_end = .
+        100000a4         100000a4        0     1 
+        100000a4         100000a4        0     1 
+        100000a4         100000a4        0     1 
+        100000a4         100000a4        0     1 
+        100000a4         100000a4        0     1 
+        100000a4         100000a4        0     1 
+               0                0      138     8 .symtab
+               0                0      138     8         <internal>:(.symtab)
+               0                0       21     1 .shstrtab
+               0                0       21     1         <internal>:(.shstrtab)
+               0                0       c9     1 .strtab
+               0                0       c9     1         <internal>:(.strtab)

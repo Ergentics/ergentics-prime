@@ -1,0 +1,60 @@
+# Rust guest bootstrap: build and static checkpoint
+
+Result: **BUILD_AND_STATIC_REVIEW_PASS**, not guest execution.
+
+Two disjoint source snapshots produced the same 164-byte freestanding AArch64
+guest and the same 66,576-byte ELF analysis container. The independent Ruby
+extractor and LLVM extraction agree. All seven A/B comparisons, including the
+linker maps and disassemblies, match.
+
+- Guest SHA-256: `6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1`
+- ELF SHA-256: `402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293`
+- Entry: `0x10000000`; doorbell PC: `0x10000060`.
+- The one Rust call uses/restores 16 bytes of its separate future 16-KiB stack.
+- Nine compile-time assertions; 12 synthetic inspector tests, 46 assertions,
+  zero failures. These are not execution tests of the guest.
+
+The compiler reduced the fixed arithmetic request to exact input checks and
+selection of 42/0. This is a bootstrap/compiler/transport artifact, not a dynamic
+addition benchmark or a Delta Processing Unit performance result.
+
+## Records
+
+- `checkpoint.json`: later independent instruction/identity/roadmap review.
+- `result.json`: original build-helper result, which correctly stopped at
+  pending instruction review. It has not been edited to manufacture a later PASS.
+- `comparison.json`: actual A/B hashes and equality.
+- `build-A/`, `build-B/`: exact six-file source snapshots, ELF, flat images,
+  map, disassembly, ELF facts, inspection, command/environment records and streams.
+- `source-identities.json`, `baseline-identities.json`: scoped source checks.
+- `toolchain-identities.json`, `toolchain-setup-record.json`: compiler and
+  analyzer identity plus the corrected pre-build companion-library omission.
+- `release-manifest.toml` and its sidecar: original official release data.
+  The sidecar preserves its original filename `channel-rust-1.98.0.toml`; compare
+  its digest to the retained `release-manifest.toml`, not that original basename.
+
+Command timings are Ruby CLOCK_MONOTONIC normalized integer nanoseconds and UTC
+timestamps. They are not raw hardware ticks, CPU time or energy measurements.
+Paths and vnode observations intentionally differ between A and B and remain
+in each invocation/stdout; they are not erased to make the deterministic
+inspection comparison pass.
+
+A post-build inspector stdout-only formatting edit was restored to the exact
+captured source before handoff. Final source equality is a scoped byte check,
+not a claim that the working directory never changed.
+
+The full official component archives and local compiler prefix remain separately
+at `/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap`.
+No shell profile or system toolchain was changed. This is local retention,
+not an off-device backup or proof against a malicious Mac.
+
+## Still required before a boot
+
+The app still embeds the original 92-byte assembly guest. Its current host
+does not map the new stack and still expects the old doorbell offset. This
+successor is deliberately not connected to that runtime or the Xcode target.
+Introduce reviewed successor-specific image/stack/trap/receipt handling and
+pure verifier tests before an explicitly scoped synthetic launch.
+
+No guest ran in this build workflow. No high-value input, host attestation,
+trust grant, scientific authority or Gate E promotion was created.

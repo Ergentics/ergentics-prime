@@ -1,6 +1,24 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
 
+# Retired 2026-09-20: this historical r18-successor-stopped-adoption-canary helper has
+# failure paths that can remain active indefinitely. Reject all roles before
+# bootstrap intake, library loading, process inspection, or child creation.
+# The historical body below is unchanged; its original Git blob is
+# c59d7bf98972dccbfe4e8c76c114b2fdf0bd3229. Existing live instances are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r18-successor-stopped-adoption-canary-retirement/v1\"," \
+    "\"status\":\"R18_SUCCESSOR_STOPPED_ADOPTION_CANARY_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 # This is a disposable successor proof for the corrected R18 stopped-adoption
 # transition. It selectively executes two hash-pinned regions of the committed
 # guardian without loading guardian top-level code. It invokes no Swift, Git,

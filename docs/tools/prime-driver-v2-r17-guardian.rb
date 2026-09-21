@@ -1,5 +1,23 @@
 #!/usr/bin/ruby
 
+# Retired 2026-09-20: this historical r17-guardian helper has
+# failure paths that can remain active indefinitely. Reject all roles before
+# bootstrap intake, library loading, process inspection, or child creation.
+# The historical body below is unchanged; its original Git blob is
+# 1e86926f3d163b85c0651c3a7ce64a74a494ca32. Existing live instances are unaffected.
+begin
+  STDERR.write_nonblock(
+    "{\"schema\":\"prime-driver-v2-r17-retirement/v1\"," \
+    "\"status\":\"R17_GUARDIAN_RETIRED\",\"launch_allowed\":false," \
+    "\"gate_e_outcome\":\"ABSTAIN\",\"gate_e_clearance\":0}\n",
+    exception: false
+  )
+rescue IOError, SystemCallError
+  # Diagnostics are best-effort, including closed or full output pipes.
+ensure
+  Process.exit!(70)
+end
+
 BOOTSTRAP_ENV = {
   "LANG" => "C.UTF-8",
   "LC_ALL" => "C.UTF-8",

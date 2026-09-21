@@ -137,7 +137,7 @@ final class PrimeValidationDriverV2IsolatedSpawnCanaryHeldExecutable:
             .path
         let opened = Darwin.open(
             path,
-            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
+            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC | O_NONBLOCK
         )
         guard opened >= 3 else {
             if opened >= 0 { _ = Darwin.close(opened) }
@@ -569,7 +569,7 @@ private final class PrimeValidationDriverV2CanaryJournal:
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard rebound >= 3 else {
@@ -781,7 +781,7 @@ private final class PrimeValidationDriverV2CanaryJournal:
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard opened >= 3 else {
@@ -1491,12 +1491,8 @@ private func primeValidationDriverV2CanaryContainOrFailStop(
 private func primeValidationDriverV2CanaryFailStop(
     _ reason: PrimeSecureChildContainmentFailureReason
 ) -> Never {
-    let bytes = Array(
-        "prime-driver-v2-canary fail-stop: \(reason.rawValue)\n".utf8
-    )
-    _ = bytes.withUnsafeBytes {
-        Darwin.write(STDERR_FILENO, $0.baseAddress, $0.count)
-    }
+    // Mandatory containment failure cannot depend on inherited stderr: a full
+    // pipe can block and a broken pipe can replace the fixed status with SIGPIPE.
     Darwin._exit(70)
 }
 

@@ -603,9 +603,14 @@ final class PrimeSecureChildHeldDirectory:
             throw PrimeValidationWorkflowFixtureChildError
                 .rejected("capture_file_duplicate_ledger")
         }
-        try requireStable()
-        try synchronizeNamespace()
-        return opened
+        do {
+            try requireStable()
+            try synchronizeNamespace()
+            return opened
+        } catch {
+            Darwin.close(opened)
+            throw error
+        }
     }
 
     func admitExpectedFixtureResult(
@@ -617,7 +622,7 @@ final class PrimeSecureChildHeldDirectory:
                 openat(
                     descriptor,
                     $0,
-                    O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                    O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
                 )
             }
             guard opened >= 3 else {
@@ -673,7 +678,7 @@ final class PrimeSecureChildHeldDirectory:
             openat(
                 self.descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         if !invocation.expectsResult {
@@ -791,7 +796,7 @@ final class PrimeSecureChildHeldDirectory:
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard opened >= 3 else {
@@ -873,7 +878,7 @@ final class PrimeSecureChildHeldDirectory:
             openat(
                 descriptor,
                 $0,
-                O_RDONLY | O_NOFOLLOW | O_CLOEXEC
+                O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK
             )
         }
         guard opened >= 3 else {
@@ -1053,7 +1058,7 @@ fileprivate final class PrimeSecureChildHeldExecutable:
         absolutePath = url.path
         descriptor = Darwin.open(
             absolutePath,
-            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC
+            O_RDONLY | O_NOFOLLOW_ANY | O_CLOEXEC | O_NONBLOCK
         )
         guard descriptor >= 3 else {
             if descriptor >= 0 { Darwin.close(descriptor) }
@@ -2227,10 +2232,7 @@ private enum PrimeSecureChildKernel {
     private static func failStop(
         _ reason: PrimeSecureChildContainmentFailureReason
     ) -> Never {
-        let message = "prime-secure-child fail-stop: \(reason.rawValue)\n"
-        _ = Array(message.utf8).withUnsafeBytes {
-            Darwin.write(STDERR_FILENO, $0.baseAddress, $0.count)
-        }
+        // Containment is unresolved: inherited stderr must not delay termination.
         Darwin._exit(70)
     }
 
