@@ -1,0 +1,143 @@
+{
+  "schema": "prime_connected_candidate_review_v1",
+  "status": "PASS",
+  "scope": "Independent readback of saved copies, indexes, pair rendering and retained codec ID evidence. No model execution, training, source mutation or fresh oracle adjudication.",
+  "candidate": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08",
+  "connected": {
+    "sources": 9,
+    "files": 155,
+    "bytes": 57877699,
+    "roles": {
+      "evidence": 19,
+      "implementation": 59,
+      "sidecar": 22,
+      "corpus": 55
+    },
+    "rawAndCurrentSourcePinsMatch": true,
+    "completeSHA256": "89c048d9c85ad04849c6a43c0ef7bd831b5e0a1432a4439c40c5a3b03a9c360f"
+  },
+  "neuralRuntime": {
+    "sources": 2,
+    "files": 16,
+    "bytes": 48297,
+    "roles": {
+      "implementation": 16
+    },
+    "rawAndCurrentSourcePinsMatch": true,
+    "completeSHA256": "0c87be009c9cf95f839c8af2d1d41cd0d78cc9b779b68eb039ef82b627b41b58"
+  },
+  "logic": {
+    "exemplarFiles": 47,
+    "exemplarRows": 6945,
+    "polarityCounts": {
+      "positive": 3292,
+      "negative": 3653
+    },
+    "auditFiles": 7,
+    "auditTriads": 24,
+    "decisionFiles": 9,
+    "decisionRows": 57
+  },
+  "agentcraft": {
+    "retainedChristoffelRows": 890,
+    "positiveYes": 127,
+    "negativeNo": 763,
+    "rawBytesMatchSource": true,
+    "negativeNoMeaning": "Correct negative classification; not relabeled as a wrong answer.",
+    "methodScaffolds": 3
+  },
+  "mathMusic": {
+    "rawRecords": 5930,
+    "train": 2029,
+    "holdout": 527,
+    "negativeRawOnly": 3374,
+    "familyLeakage": false,
+    "trainTopics": [
+      "algebra",
+      "geometry",
+      "music-theory"
+    ],
+    "completeNormalizedPromptAnswerAndIndexJoinsMatch": true,
+    "normalization": "NFC and outer-whitespace stripping; original raw fields retained",
+    "codecs": [
+      {
+        "split": "train",
+        "rows": 2029,
+        "maximumTokens": 113,
+        "unknownTokens": 0,
+        "over512": 0,
+        "idsSHA256": "5431546336f7f4635323cae83cbceccbfb777d32c0267413f2669c1bda618e42",
+        "inputSHA256": "ae04d34c388fd6f7f8517ebddbe84253ee036a4ddf460ddd78e58689699b013f"
+      },
+      {
+        "split": "holdout",
+        "rows": 527,
+        "maximumTokens": 145,
+        "unknownTokens": 0,
+        "over512": 0,
+        "idsSHA256": "ce7291ee9220643601c25518754f0ba1281880b66701b226462eced7659d197e",
+        "inputSHA256": "fb42dd354e1d70a75e0ce3cabe40892d9c9d6a25a1fc11626e1d110a457d3aab"
+      }
+    ]
+  },
+  "pmhnp": {
+    "sourceRows": 3090,
+    "sourceTrain": 2463,
+    "selectedTrain": 2268,
+    "validation": 303,
+    "holdout": 324,
+    "trainRowsExcludedForEvaluationQuestion": 195,
+    "validationHoldoutSharedQuestions": 9,
+    "everySourceRowIndexed": true,
+    "fullPromptAnswerPreserved": true,
+    "additionalTruncation": false,
+    "upstreamTruncationRepaired": false,
+    "codecs": [
+      {
+        "split": "train",
+        "rows": 2268,
+        "tokens": 201931,
+        "maximumTokens": 219,
+        "over512": 0,
+        "unknownTokens": 0,
+        "idsSHA256": "1b9b705907a361108d7777a3500244e5d66fd6ac98e7b29bd5befe3cec656206",
+        "inputSHA256": "425463ca525047acd065a64b2f3e7a708c2f7a4ee6996549b83890462a6c4940"
+      },
+      {
+        "split": "val",
+        "rows": 303,
+        "tokens": 28446,
+        "maximumTokens": 228,
+        "over512": 0,
+        "unknownTokens": 0,
+        "idsSHA256": "283321167109db35d3df183dc0b80ef205efd945a801d1ac27cff3e99f6f98a2",
+        "inputSHA256": "88fa7ab85411968561709dfb643354f227be8abb3afbee9566505c4b401e90fd"
+      },
+      {
+        "split": "holdout",
+        "rows": 324,
+        "tokens": 29487,
+        "maximumTokens": 199,
+        "over512": 0,
+        "unknownTokens": 0,
+        "idsSHA256": "dde25d0361168a8257ecfce6ecd6b494d188c43a3614f1b2b49367b9abad96c9",
+        "inputSHA256": "d8c2a6e6d337b73713cb4ce76ebae1c08e98b7002598f231b78d9c188144abf1"
+      }
+    ]
+  },
+  "tokenizer": {
+    "sha256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+    "currentReferenceBytesMatch": true
+  },
+  "modelState": {
+    "modelRunByReviewer": false,
+    "modelOrTokenizerWrites": false,
+    "weightsRehashedThisReadback": false,
+    "priorPackagingVerificationRetained": true
+  },
+  "limitations": [
+    "Raw source registration does not make every source an accepted training target.",
+    "PMHNP validation and holdout retain nine shared questions, explicitly reported.",
+    "Saved codec outputs prove encoding and length, not learned performance."
+  ]
+}

@@ -65,7 +65,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     func testFactorySourceAndPublicAPIStayClosedAndOrdered()
         throws
     {
-        let root = packageRoot()
+        let root = try packageRoot()
         let source = try String(
             contentsOfFile:
                 root.appendingPathComponent(
@@ -956,7 +956,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             )
         }
         let sourceRoot =
-            packageRoot()
+            try packageRoot()
         let probe =
             try PrimeNativeNeuralGateSecureExternalChildCapture
             .capture(
@@ -984,23 +984,60 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
             probe.standardOutputData,
             verifier.standardOutputData
         )
-        // Intentionally resealed from two matching live Release canary
-        // observations after neutral secure-child supervision replaced the
-        // two embedded lifecycle implementations. Package.swift is unchanged;
-        // the package description now enumerates the neutral deadline, drains,
-        // lifecycle, process-proof, and supervision sources in PrimeCore. This
-        // is actual-package secure-capture evidence, not Driver V2,
-        // source/execution-binding V7, or worker execution authority.
-        XCTAssertEqual(
-            probe.standardOutputData.count,
-            63_214
-        )
-        XCTAssertEqual(
-            PrimeSHA256.hexDigest(
-                of: probe.standardOutputData
-            ),
-            "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
-        )
+        // August 3's 63_214/9901... tuple remains named in the helper below.
+        // This separate current-package profile binds all bytes after exactly
+        // three schema-specific root substitutions. Each original path must
+        // equal this capture's descriptor-proven sourceRoot (plus fixed suffix).
+        try PrimeCurrentPackageDescribeCanaryFixture.validate(
+            probe.standardOutputData, sourceRoot: sourceRoot.path)
+        try PrimeCurrentPackageDescribeCanaryFixture.validate(
+            verifier.standardOutputData, sourceRoot: sourceRoot.path)
+
+        let actual = probe.standardOutputData
+        XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.validate(
+            actual, sourceRoot: sourceRoot.path + "-wrong"))
+        for suffix in [Data([0x0a]), Data("diagnostic\n".utf8), Data([0x20])] {
+            XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.validate(
+                actual + suffix, sourceRoot: sourceRoot.path))
+        }
+        // Same-length byte edits preserve formatting and every path offset.
+        // Requiring normalization to succeed proves these reach the full-output
+        // digest check instead of failing only at an earlier offset/schema check.
+        func replacingOnce(_ needle: String, with replacement: String) throws -> Data {
+            let before = Data(needle.utf8)
+            let after = Data(replacement.utf8)
+            XCTAssertEqual(before.count, after.count)
+            let range = try XCTUnwrap(actual.range(of: before))
+            XCTAssertNil(actual.range(of: before, options: [], in: range.upperBound ..< actual.count))
+            var changed = actual
+            changed.replaceSubrange(range, with: after)
+            XCTAssertEqual(changed.count, actual.count)
+            return changed
+        }
+        for changed in [
+            try replacingOnce("  \"name\" : \"ErgenticsPrime\",", with: "  \"name\" : \"ErgenticsPrimx\","),
+            try replacingOnce("\"PrimeDurableArtifacts.swift\"", with: "\"PrimeDurableArtifactx.swift\""),
+            try replacingOnce("d37885a278f1c37484a94d0f401a418735e66519", with: "e37885a278f1c37484a94d0f401a418735e66519"),
+        ] {
+            let normalized = try PrimeCurrentPackageDescribeCanaryFixture.normalize(changed, sourceRoot: sourceRoot.path)
+            XCTAssertEqual(normalized.count, PrimeCurrentPackageDescribeCanaryFixture.normalizedByteCount)
+            XCTAssertNotEqual(PrimeSHA256.hexDigest(of: normalized), PrimeCurrentPackageDescribeCanaryFixture.normalizedSHA256)
+            XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.validate(changed, sourceRoot: sourceRoot.path)) { error in
+                guard let rejection = error as? PrimeCurrentPackageDescribeCanaryFixture.Rejection,
+                      case .digest = rejection else {
+                    return XCTFail("content mutation did not reach the digest check: \(error)")
+                }
+            }
+        }
+        let damagedResource = try replacingOnce("/HistoricalFixtureEvidence\"", with: "/HistoricalFixtureEvidencx\"")
+        XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.validate(damagedResource, sourceRoot: sourceRoot.path))
+        let missingRootField = try replacingOnce("\n  \"path\" : \"", with: "\n  \"pazh\" : \"")
+        XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.validate(missingRootField, sourceRoot: sourceRoot.path))
+        for wrongOffset in [-1, 385, Int.max] {
+            XCTAssertThrowsError(try PrimeCurrentPackageDescribeCanaryFixture.replacePathToken(actual,
+                valueOffset: wrongOffset, actualValue: sourceRoot.path,
+                replacementValue: PrimeCurrentPackageDescribeCanaryFixture.placeholder))
+        }
         XCTAssertEqual(
             probe.validatedPrimeSourceSnapshot,
             verifier.validatedPrimeSourceSnapshot
@@ -1276,7 +1313,7 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
     private func assertSecureChildKernelFacadeRemainsClosedAndSwiftNative()
         throws
     {
-        let root = packageRoot()
+        let root = try packageRoot()
         let source = try String(
             contentsOf: root.appendingPathComponent(
                 Self.fixtureKernelRelativePath
@@ -2371,15 +2408,12 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
         return result
     }
 
-    private func packageRoot() -> URL {
-        URL(
-            fileURLWithPath: #filePath,
-            isDirectory: false
-        )
-        .deletingLastPathComponent()
-        .deletingLastPathComponent()
-        .deletingLastPathComponent()
-        .standardizedFileURL
+    private func packageRoot() throws -> URL {
+        let path = "/" + #filePath.split(separator: "/").dropLast(3).joined(separator: "/")
+        guard try PrimeSecureChildPath.canonicalPath(path) == path else {
+            throw PrimeNativeNeuralGateSecureExternalChildCaptureError.rejected("test_source_path")
+        }
+        return URL(fileURLWithPath: path, isDirectory: true)
     }
 
     private func assertLiveCapture(
@@ -2955,5 +2989,102 @@ final class PrimeNativeNeuralGateSecureExternalChildCaptureTests:
 
     private enum TestFailure: Error {
         case missing(String)
+    }
+}
+
+// Reviewed current-package canary profile, calibrated from two actual closed
+// Release captures at source seal 6e0c939f on 2026-09-08. The complete raw and
+// normalized JSON is retained in the task's calibration evidence. This pins
+// package-description bytes; native capture still validates the live complete
+// source closure, held tool image, cwd and child lifecycle independently.
+private enum PrimeCurrentPackageDescribeCanaryFixture {
+    // Historical actual-package checkpoint remains unchanged and named.
+    // Its original raw bytes were not recovered; this is not a replay claim.
+    static let historicalAugust3ByteCount = 63_214
+    static let historicalAugust3SHA256 =
+        "9901d983ed76f6ffa26f3c59142c6a71ec4453be2d38156001d10f0beb5d9bb5"
+    static let historicalCommit = "4be3bdb9eb768e0617851cf22c2d67f677025001"
+    static let normalizedByteCount = 86_930
+    static let normalizedSHA256 =
+        "3a6c0c5a9b38cde86e2ec58609e8a043a0dfcbcbe61b2b70db3cf56330b15561"
+    static let placeholder = "__PRIME_CURRENT_PACKAGE_SOURCE_ROOT__"
+    static let resourceTargets = [
+        "PrimeNativeNeuralGateHistoricalSourceDerivation",
+        "PrimeNativeNeuralGateHistoricalFixtureWorker",
+    ]
+    static let resourceNames = [
+        "HistoricalEvidenceExportSource",
+        "HistoricalFixtureEvidence",
+    ]
+    // Offsets are measured sequentially, after each prior replacement. This
+    // removes dependence on the length of a freshly admitted physical root.
+    static let valueOffsets = [384, 26_715, 30_759]
+    enum Rejection: Error { case schema, rootCoordinate, digest }
+
+    static func normalize(_ actual: Data, sourceRoot: String) throws -> Data {
+        guard !actual.isEmpty, actual.count <= 16_777_216,
+              sourceRoot.hasPrefix("/"), !sourceRoot.contains("\0"),
+              let object = try JSONSerialization.jsonObject(with: actual) as? [String: Any],
+              object["path"] as? String == sourceRoot,
+              let targets = object["targets"] as? [[String: Any]] else { throw Rejection.schema }
+        var suffixes = [""]
+        for index in resourceTargets.indices {
+            let matching = targets.filter { $0["name"] as? String == resourceTargets[index] }
+            let suffix = "/Sources/" + resourceTargets[index] + "/" + resourceNames[index]
+            guard matching.count == 1,
+                  let resources = matching[0]["resources"] as? [[String: Any]], resources.count == 1,
+                  Set(resources[0].keys) == Set(["path", "rule"]),
+                  resources[0]["path"] as? String == sourceRoot + suffix,
+                  let rule = resources[0]["rule"] as? [String: Any], Set(rule.keys) == Set(["copy"]),
+                  let copy = rule["copy"] as? [String: Any], copy.isEmpty else { throw Rejection.schema }
+            suffixes.append(suffix)
+        }
+        var rootValues: [String] = []
+        func collect(_ value: Any) {
+            if let value = value as? String {
+                if value.hasPrefix(sourceRoot) { rootValues.append(value) }
+            } else if let value = value as? [String: Any] {
+                for child in value.values { collect(child) }
+            } else if let value = value as? [Any] {
+                for child in value { collect(child) }
+            }
+        }
+        collect(object)
+        guard rootValues.sorted() == suffixes.map({ sourceRoot + $0 }).sorted() else { throw Rejection.schema }
+        var normalized = actual
+        for index in suffixes.indices {
+            normalized = try replacePathToken(normalized, valueOffset: valueOffsets[index],
+                actualValue: sourceRoot + suffixes[index], replacementValue: placeholder + suffixes[index])
+        }
+        return normalized
+    }
+
+    // One exact JSON string token at one reviewed byte coordinate. The pinned
+    // tool emits unescaped slashes. There is no parse/reserialization of the
+    // output and no global path replacement, target filtering or byte dropping.
+    static func replacePathToken(_ data: Data, valueOffset: Int,
+                                 actualValue: String, replacementValue: String) throws -> Data {
+        guard valueOffset >= 0, valueOffset <= data.count else { throw Rejection.rootCoordinate }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.withoutEscapingSlashes]
+        let token = try encoder.encode(actualValue)
+        guard token.count <= data.count - valueOffset,
+              data.subdata(in: valueOffset ..< valueOffset + token.count) == token,
+              data.range(of: token) == (valueOffset ..< valueOffset + token.count),
+              data.range(of: token, options: [], in: valueOffset + token.count ..< data.count) == nil,
+              let prefixText = String(data: data.prefix(valueOffset), encoding: .utf8),
+              prefixText.trimmingCharacters(in: .whitespacesAndNewlines).hasSuffix("\"path\" :") else {
+            throw Rejection.rootCoordinate
+        }
+        var result = Data(data.prefix(valueOffset))
+        result.append(try encoder.encode(replacementValue))
+        result.append(data.suffix(from: valueOffset + token.count))
+        return result
+    }
+
+    static func validate(_ actual: Data, sourceRoot: String) throws {
+        let normalized = try normalize(actual, sourceRoot: sourceRoot)
+        guard normalized.count == normalizedByteCount,
+              PrimeSHA256.hexDigest(of: normalized) == normalizedSHA256 else { throw Rejection.digest }
     }
 }

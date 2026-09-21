@@ -1,0 +1,439 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h2_live_execution_authorized": false,
+    "high_value_ingress": "DENIED",
+    "scientific_authority": false,
+    "stage_complete": false,
+    "successor_authorized": false,
+    "trusted_egress": "DENIED"
+  },
+  "canonical_graph": {
+    "input_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+    "node_counts": {
+      "state": 2,
+      "total": 11,
+      "transition": 1,
+      "witness": 8
+    },
+    "output_state_root": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66",
+    "receipt_root": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca",
+    "schemas": {
+      "input_state": "ergentics.provenance.hypervisor-stage.state.v1",
+      "output_state": "ergentics.provenance.hypervisor-stage.h2-static.state.v1",
+      "receipt": "ergentics.provenance.hypervisor-stage.h2-static.receipt.v1",
+      "transition": "ergentics.provenance.hypervisor-stage.h2-static.transition.v1",
+      "witness": "ergentics.provenance.hypervisor-stage.h2-static.witness.v1"
+    },
+    "shape": "ACYCLIC_STATE_WITNESS_TRANSITION_STATE",
+    "stream_policy": {
+      "cbor": "DETERMINISTIC_RFC8949_SUBSET",
+      "exact_reencode_required": true,
+      "json": "CANONICAL_SORTED_KEYS_NO_WHITESPACE",
+      "maximum_stream_bytes": 65536,
+      "outer_receipt_leaf_labels": [
+        "schema",
+        "state.json",
+        "state.cbor",
+        "transition.json",
+        "transition.cbor",
+        "witnesses.json",
+        "witnesses.cbor"
+      ],
+      "semantic_join_required": true,
+      "streams_retained_outside_test_process": false
+    },
+    "transition_root": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c",
+    "witnesses": [
+      {
+        "position": 0,
+        "predicate_id": "h1_receipt_reconstructed_exact",
+        "root": "1a4a51d63a6d24c5e2dba69fd3a24e392f1adbf3d4fb2bf4aaf665bbf791c810"
+      },
+      {
+        "position": 1,
+        "predicate_id": "h1_authority_ceiling_preserved",
+        "root": "f793e59c68b418dcad2a6c110c9f268e3cc9972a14aeaa48885ed211a62a2c90"
+      },
+      {
+        "position": 2,
+        "predicate_id": "fixed_guest_image_bytes_exact",
+        "root": "2aa8385efb8a06e4602738ed5de93c596e4f02fb85585eccf54b34d2cbeb2da5"
+      },
+      {
+        "position": 3,
+        "predicate_id": "fixed_guest_native_metadata_exact",
+        "root": "1affe61cf11a9dcd23eabe808f5d89060fe8fed5ad8aea53a85133b9c86722c1"
+      },
+      {
+        "position": 4,
+        "predicate_id": "fixed_request_reply_exact",
+        "root": "d24c8ec285440f165c11ec143699ac49cb654faecd56fe88aa9ca4607125d437"
+      },
+      {
+        "position": 5,
+        "predicate_id": "fixed_capability_and_register_plan_exact",
+        "root": "be0e3ce833bef606fa2a89ee7716d6514c61212c47f9c744237391b4984898e5"
+      },
+      {
+        "position": 6,
+        "predicate_id": "fixed_snapshot_commitment_exact",
+        "root": "fa78e9a3311c35c9536d1596b6d1883d755f87a77ea5a3534c329c5fe1636938"
+      },
+      {
+        "position": 7,
+        "predicate_id": "no_live_or_persistence_effects",
+        "root": "3b0b38a252c626b334d0b6e188015ebd140f9c9f90804796432bdb8e11e2e8b2"
+      }
+    ]
+  },
+  "effects": {
+    "h2_core": {
+      "app_launch": false,
+      "clock_read": false,
+      "environment_read": false,
+      "file_read": false,
+      "file_write": false,
+      "git_operation": false,
+      "hypervisor_call": false,
+      "journal_open": false,
+      "native_image_accessor_read": true,
+      "network": false,
+      "process_launch": false,
+      "sqlite_open": false,
+      "ui_entry": false,
+      "vm_launch": false
+    },
+    "verification_harness": {
+      "app_launches": 0,
+      "compiler_and_xctest_processes": true,
+      "exports": 0,
+      "guest_entries": 0,
+      "launch_services_registration_by_xcode": 2,
+      "network_observation": "NOT_MEASURED",
+      "notarizations": 0,
+      "provisioning_updates_requested": 0,
+      "uploads": 0,
+      "vm_launches": 0
+    }
+  },
+  "fixed_guest_identity": {
+    "accessors_per_production_admission": [
+      "epr_guest_image_bytes",
+      "epr_guest_image_size",
+      "epr_guest_image_load_address",
+      "epr_guest_doorbell_instruction_offset"
+    ],
+    "byte_count": 92,
+    "doorbell_instruction_offset": 80,
+    "image_load_ipa": "0x10000000",
+    "image_sha256": "67290a73b53047374096142356a35338f6722d724586cc10373dfecab9a4cc44",
+    "native_call_count": 4,
+    "reply_words_u64": [
+      1,
+      1,
+      42,
+      0
+    ],
+    "request_words_u64": [
+      1,
+      1,
+      19,
+      23
+    ],
+    "snapshot_merkle_root": "37b6aa19da562bf99810c8169e091357bc4e789a82b50366e0752ffb1a9d89df"
+  },
+  "graph": {
+    "edge_count": 11,
+    "edges": [
+      {
+        "from": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+        "predicate": "transition_input_state",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "1a4a51d63a6d24c5e2dba69fd3a24e392f1adbf3d4fb2bf4aaf665bbf791c810",
+        "predicate": "transition_witness_00",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "f793e59c68b418dcad2a6c110c9f268e3cc9972a14aeaa48885ed211a62a2c90",
+        "predicate": "transition_witness_01",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "2aa8385efb8a06e4602738ed5de93c596e4f02fb85585eccf54b34d2cbeb2da5",
+        "predicate": "transition_witness_02",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "1affe61cf11a9dcd23eabe808f5d89060fe8fed5ad8aea53a85133b9c86722c1",
+        "predicate": "transition_witness_03",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "d24c8ec285440f165c11ec143699ac49cb654faecd56fe88aa9ca4607125d437",
+        "predicate": "transition_witness_04",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "be0e3ce833bef606fa2a89ee7716d6514c61212c47f9c744237391b4984898e5",
+        "predicate": "transition_witness_05",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "fa78e9a3311c35c9536d1596b6d1883d755f87a77ea5a3534c329c5fe1636938",
+        "predicate": "transition_witness_06",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "3b0b38a252c626b334d0b6e188015ebd140f9c9f90804796432bdb8e11e2e8b2",
+        "predicate": "transition_witness_07",
+        "to": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c"
+      },
+      {
+        "from": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+        "predicate": "output_parent_state",
+        "to": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66"
+      },
+      {
+        "from": "10ceb9ba81e866a8dc21ad6b8e8ab0f06143dd14d87e66e1cdec344c4628cf1c",
+        "predicate": "output_transition",
+        "to": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66"
+      }
+    ]
+  },
+  "lineage": {
+    "freeze": {
+      "commit": "a7416b2cd07f18d9c1226389d92ead48b262fab5",
+      "file": "Control/hypervisor-local-v1/h2-static-admission-freeze.v1.json",
+      "sha256": "9ae8dafcabf970e8884b769e7b2fee00655e4147b58d848cd1892d561f533c47",
+      "tree": "cca6f2caa9f743a5d8663e1d097195d0b1bde58f"
+    },
+    "h1_result": {
+      "commit": "af58d8bdd3fe9ba90fc44a05d33d8a394dc91d9d",
+      "receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+      "result_sha256": "deea60ee59ce64e01de29d207bb7d67902da7195cbe7a58c833bfc94d12ff428",
+      "state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+      "tree": "0375eb125f3ca35a70d7c603318edb6e9f934373"
+    },
+    "implementation": {
+      "commit": "d1507c5f16d4da9f4cb31c13f9948f26ea3191c9",
+      "tree": "d39cdc97bf26546417041e63d2229a9d3b47555c"
+    }
+  },
+  "next": {
+    "authorized": false,
+    "eligible_action": "SEPARATE_H2_LIVE_MECHANICS_FREEZE_RECOMMENDATION",
+    "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1"
+  },
+  "outcome": "PASS_H2_STATIC_ADMISSION_ONLY",
+  "product_check": {
+    "accepted_by_user": true,
+    "archive": {
+      "app_executable_sha256": "da7f3166198eb5ecfa3b90b55e7a50faf148d99b5081eff47bdd083772991bef",
+      "app_info_plist_sha256": "9f1eb1d193a04c01465b599ce99e0ff4a8b2b7b16ab53b95fde013294e49994a",
+      "architecture": "arm64",
+      "configuration": "Release",
+      "archive_info_plist_sha256": "7fbe30cbd33eaaead978e160c219bfc93cc677f722c2ccc97524de00af51dddc",
+      "archive_version": 2,
+      "creation_utc": "2026-09-01T05:06:05Z",
+      "directory_count_excluding_root": 14,
+      "dsym_info_plist_sha256": "ed8d941c7537b06f0d447496f7f47002cef63069c2df2654cbdc9066b9588b4f",
+      "dsym_macho_uuid": "FF851FAB-D8AA-3318-81A1-360FF58BCB6E",
+      "dwarf_sha256": "b785b69325058315e83eea42a589ffd11bf5cc6c94cffd09436261997eb3a46a",
+      "entry_count_excluding_root": 28,
+      "file_count": 14,
+      "implementation_commit": "d1507c5f16d4da9f4cb31c13f9948f26ea3191c9",
+      "implementation_tree": "d39cdc97bf26546417041e63d2229a9d3b47555c",
+      "macho_uuid": "FF851FAB-D8AA-3318-81A1-360FF58BCB6E",
+      "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-H2-d1507c5.xcarchive",
+      "pkginfo_sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+      "regular_file_bytes": 9766384,
+      "relocation_yaml_sha256": "0680829da5493e777934d5b62b7b96e53ff9e11db87cdcfa2f90c37797ce49b0",
+      "symlink_count": 0,
+      "user_accepted_archive": true,
+      "uuid_join": "SATISFIED",
+      "uuid_dsym_join": "SATISFIED",
+      "whole_archive_file_hash_coverage": "COMPLETE_14_OF_14"
+    },
+    "bundle_identity": {
+      "build_number": "4",
+      "bundle_identifier": "com.ergentics.provenance",
+      "marketing_version": "1.0",
+      "minimum_macos": "26.0"
+    },
+    "observed_embedded_entitlements": {
+      "runtime_entitlement_effect": "NOT_ESTABLISHED",
+      "values": {
+        "com.apple.security.app-sandbox": true,
+        "com.apple.security.files.user-selected.read-only": true,
+        "com.apple.security.hypervisor": true
+      }
+    },
+    "package_classification": {
+      "current_h2_local_archive_observation": "PASS_LOCAL_DEVELOPMENT_ARCHIVE_OBSERVED",
+      "current_h2_package_admission": "ABSTAIN",
+      "distribution_or_testflight_eligibility": "NOT_ESTABLISHED",
+      "packaging_observation_status": "PASS_LOCAL_DEVELOPMENT_ARCHIVE_OBSERVED_PACKAGE_ADMISSION_ABSTAIN",
+      "per_stage_release_build_archive_action": "SATISFIED_BY_ACCEPTED_CURRENT_H2_ARCHIVE",
+      "source_to_archive_cryptographic_join": "NOT_ESTABLISHED"
+    },
+    "prior_accepted_product_checkpoint": {
+      "archive_binary_sha256": "002d744d3c600b4a3dc1059cb33bf56a63859b97682532265629886aae3de6d2",
+      "archive_macho_uuid": "468B0D86-5776-3FA9-9E5B-ACF3807DCB09",
+      "archive_receipt_commit": "19c1503ac1c898acc38e5dd0dfbee5846ecb5355",
+      "archive_receipt_file": "Distribution/LocalArchive-1.0.4-receipt.json",
+      "archive_receipt_sha256": "abbad30af3fd192c23ae164a7550b9ae87e3b2bd073197dc1ba5161e4500bf39",
+      "archive_receipt_tree": "dbf3ec3af57aab61c15649288c25dc115b292770",
+      "archive_role": "PACKAGE_CONTINUITY_ONLY_NOT_EXECUTION_GRANT",
+      "build_number": "4",
+      "bundle_identifier": "com.ergentics.provenance",
+      "marketing_version": "1.0",
+      "source_commit": "2eab0918b2bc01e2b2f4775e282af00f01cc5dca",
+      "source_tree": "25547ef9ef6bb0c8ba29ea7ce4e80a8dc44cbe4b"
+    },
+    "release_build": {
+      "app_executable_sha256": "6443876b8b71b633064328a8fc6604245b6e566089c0661960afcc329f3317d8",
+      "macho_uuid": "351D9946-42D9-36B6-BB98-57329ECB4023",
+      "status": "BUILD_SUCCEEDED"
+    },
+    "resources": {
+      "AppIcon.icns": "ab026ac535e6eccfeddda346f9724aeab07607a69229798da6b5e133b21ae9a5",
+      "Assets.car": "52b09f8ea0189e92cd85d10202d799aaa2304c7c7e607eae766f503e2710fbd1",
+      "ERGENTICS.spdx.json": "b77640573207c20580efe349647395a210b62268385b0b6bbaa461f99958729d",
+      "LICENSE": "039cbac208e63a0e6fd453e1de912384d3e9d0f6a2c5fcd2f5b8ec207364bbb8",
+      "PrivacyInfo.xcprivacy": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+      "THIRD_PARTY_NOTICES.md": "80acba3f9e986d09384b4e5615d400207795fc39a6545452c1ebc3411c19a675"
+    },
+    "signing": {
+      "archive_metadata_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+      "candidate_cdhash_full_sha256": "f4d2d3fb557cf11aa7c85206f2b3c7551b73d0ccb9f221b88c1bc02617097c75",
+      "code_directory_info_plist_slot_minus_1_sha256": "9f1eb1d193a04c01465b599ce99e0ff4a8b2b7b16ab53b95fde013294e49994a",
+      "code_directory_resources_slot_minus_3_sha256": "8a6a4ba30dd4a1aa7d19a142c92cc46e4c1815ff1a8b8edc678c9a3f7a793531",
+      "code_resources_sha256": "8a6a4ba30dd4a1aa7d19a142c92cc46e4c1815ff1a8b8edc678c9a3f7a793531",
+      "codesign_authority": "UNAVAILABLE",
+      "codesign_deep_strict_local_result": "CSSMERR_TP_NOT_TRUSTED",
+      "embedded_provisioning_profile": "ABSENT",
+      "gatekeeper_assessment": "NOT_ESTABLISHED_SPCTL_INTERNAL_ERROR",
+      "hardened_runtime": true,
+      "network_entitlement_present": false,
+      "pkginfo_code_resources_coverage": "OMITTED_BY_RESOURCE_RULES_SEPARATELY_HASHED",
+      "signature_claim": "EMBEDDED_APPLE_DEVELOPMENT_FORM_OBSERVED_NOT_TRUST_CHAIN_VERIFIED",
+      "strict_signature_trust": "NOT_ESTABLISHED_IN_THIS_OBSERVATION",
+      "team_identifier": "ZCQ435U8JP"
+    },
+    "source_continuity": {
+      "descriptor_held_three_point_source_manifest": "ABSENT",
+      "h2_source_compilation_unit_path_observed": true,
+      "implementation_commit_tree_exact_at_result_record": "SATISFIED",
+      "intermediate_descriptor_manifest": "NOT_CAPTURED",
+      "post_archive_descriptor_manifest": "NOT_CAPTURED",
+      "pre_build_descriptor_manifest": "NOT_CAPTURED",
+      "source_attribution_to_archive": "CONTEXTUAL_NOT_CRYPTOGRAPHIC",
+      "three_point_join": "NOT_ESTABLISHED"
+    },
+    "status": "PASS_ACCEPTED_RELEASE_BUILD_AND_LOCAL_DEVELOPMENT_ARCHIVE_OBSERVATION"
+  },
+  "recorded_at_utc": "2026-09-01T05:08:23Z",
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "disposition": "USER_ACCEPTED_FOR_H2_NON_AUTHORITATIVE_PRODUCT_CHECK",
+      "predicate": "three_point_descriptor_rooted_source_continuity_not_captured_for_this_build_archive"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_NON_BLOCKING_FOR_STATIC_H2",
+      "predicate": "canonical_json_and_cbor_projection_bytes_verified_in_process_but_not_retained_as_separate_files"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "LOCAL_KEYCHAIN_TRUST_QUALIFICATION",
+      "predicate": "codesign_deep_strict_returns_CSSMERR_TP_NOT_TRUSTED_for_this_and_the_accepted_build_4_archive"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_NON_BLOCKING_FOR_STATIC_H2",
+      "predicate": "native_image_accessors_co_reside_with_live_hypervisor_implementation_but_do_not_call_it"
+    }
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-h2-static-admission-result.v1",
+  "source_identity": {
+    "files": [
+      {
+        "git_blob": "fe975a40e01edf2737e7671deff8ed0a0d968e06",
+        "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+        "sha256": "703e338e79da153e6e3df3113b329451a52422adc2f0eedda6f91484bab181d9"
+      },
+      {
+        "git_blob": "a85b1f3965d40511c960381aaa311ca8011115a4",
+        "path": "Sources/HypervisorStageH2Admission.swift",
+        "sha256": "071748296746e09de51bc16814c44494ce9f9da1e6d8a3655c90c5a60d23903e"
+      },
+      {
+        "git_blob": "a054434089e60279178b67810ccd83d64a94bb5b",
+        "path": "Tests/HypervisorStageH2AdmissionTests.swift",
+        "sha256": "6b8336b96ce111005e5311a39aab7435658269ffa701a828d068569988655359"
+      }
+    ],
+    "tracked_worktree_at_result_record": "CLEAN"
+  },
+  "stage_complete": false,
+  "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+  "stage_ordinal": 2,
+  "status": "PASS_H2_STATIC_ADMISSION_ONLY",
+  "verification": {
+    "debug": {
+      "configuration": "Debug",
+      "full_suite_failed": 0,
+      "full_suite_passed": 455,
+      "h2_failed": 0,
+      "h2_passed": 9,
+      "test_binary_sha256": "ffbe05be5432b513e47ad1677e9628c610ddc3572b9e9f6b81a288001dd024e9",
+      "test_binary_uuid": "9CEEACEC-491D-375B-895D-07D5C5497308"
+    },
+    "independent_reviews": {
+      "graph_and_root_reconstruction": "PASS_NO_BLOCKER",
+      "native_pointer_and_linkage": "PASS_NO_BLOCKER",
+      "project_and_source_scope": "PASS_NO_BLOCKER"
+    },
+    "linkage_audit": {
+      "forbidden_native_or_hypervisor_symbols_retained": 0,
+      "hypervisor_load_command": false,
+      "macho": "BUNDLE_TWOLEVEL_NOUNDEFS",
+      "native_mod_init_functions": 0,
+      "required_retained_native_symbols": [
+        "_epr_guest_doorbell_instruction_offset",
+        "_epr_guest_image_bytes",
+        "_epr_guest_image_load_address",
+        "_epr_guest_image_size"
+      ],
+      "test_binary_identity_unchanged_after_load": true
+    },
+    "release": {
+      "configuration": "Release",
+      "full_suite_failed": 0,
+      "full_suite_passed": 408,
+      "h2_failed": 0,
+      "h2_passed": 9,
+      "test_binary_sha256": "271b28ab0cfe363b6b48b99e0a8138b10ed457b87be23a5b6a65439c718741e7",
+      "test_binary_uuid": "E1E4FD29-D66E-38E1-B855-D0CC66A2DD71"
+    },
+    "semantic_predicates": {
+      "authority_self_promotion_rejects": "SATISFIED",
+      "dual_stream_semantic_divergence_rejects": "SATISFIED",
+      "fresh_root_mutations_reject": "SATISFIED",
+      "h1_lineage_exact": "SATISFIED",
+      "native_image_and_metadata_exact": "SATISFIED",
+      "receipt_root_reconstructed": "SATISFIED",
+      "witness_inventory_and_order_exact": "SATISFIED"
+    }
+  },
+  "vm_disposition": "NOT_CREATED"
+}

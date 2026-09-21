@@ -1,0 +1,174 @@
+{
+  "schema": "com.ergentics.provenance.h3-product-result.v1",
+  "recorded_at_utc": "2026-09-01T15:37:34Z",
+  "status": "FAIL_CONSUMED_PRODUCT_H3_NATIVE_PREDICATE_REJECTION",
+  "source_checkpoint": {
+    "commit": "9524aa85cf8aa92f68351e694a71647696652321",
+    "tree": "c6d3a8427360d4711e5175c63c886021a17b346a",
+    "parent_commit": "12a0ff52a81e669f135ec9ab4640ee0ba091dbc6",
+    "tracked_product_sources_equal_checkpoint": true,
+    "whole_worktree_clean": false,
+    "excluded_modified_control_drafts": [
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json"
+    ],
+    "excluded_preexisting_untracked_control_entries": 53
+  },
+  "static_and_build_evidence": {
+    "h3_contract": "PASS_CONTRACT_ONLY",
+    "h3_native_fault_harness": "PASS",
+    "h3_native_fault_harness_source_sha256": "86b3900772f30f7353bf14f5e9b7fc61523f8f5c26ca432b2085c32986dedb3f",
+    "h3_native_harness_normal": "PASS",
+    "h3_native_harness_asan_ubsan": "PASS",
+    "h3_native_harness_tsan": "PASS",
+    "release_test": {
+      "result": "PASS",
+      "total": 444,
+      "passed": 444,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 0,
+      "errors": 0,
+      "started_at_utc": "2026-09-01T15:23:19.167Z",
+      "finished_at_utc": "2026-09-01T15:24:13.888Z",
+      "xcresult_path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-01/ErgenticsProvenance-1.0.6-tests.xcresult",
+      "xcresult_regular_files": 916,
+      "xcresult_regular_bytes": 875526,
+      "xcresult_info_plist_sha256": "bc07f3ca6dd4b444010ca9f63f3e9ebfa540eebf26f116a30f1f15b30308d53d",
+      "xcresult_content_root_sha256": "6d21f9e44b444e720ad358ae9ed7e4448abdf0610b2598eb9c1d1820a0f7e22a"
+    },
+    "signed_archive": {
+      "result": "PASS",
+      "warnings": 0,
+      "errors": 0,
+      "started_at_utc": "2026-09-01T15:25:21.182Z",
+      "finished_at_utc": "2026-09-01T15:26:01.113Z",
+      "archive_path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-01/Ergentics Provenance 1.0 (6).xcarchive",
+      "archive_xcresult_path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-01/ErgenticsProvenance-1.0.6-archive.xcresult",
+      "archive_content_root_sha256": "b7cca01442b7ad7bba210f19b4e4553f1983a6ae90e7f0919c38057f60f0a320",
+      "archive_xcresult_content_root_sha256": "bd42bb18db5418762d7eb779f53c1de69ea1a89f451bd6c222cbec61c882750a",
+      "bundle_identifier": "com.ergentics.provenance",
+      "marketing_version": "1.0",
+      "build_number": "6",
+      "architecture": "arm64",
+      "minimum_macos_version": "26.0",
+      "sdk": "macosx26.5",
+      "macho_uuid": "9FFECEC7-B819-3939-B8CB-EE0CB112F262",
+      "dsym_uuid": "9FFECEC7-B819-3939-B8CB-EE0CB112F262",
+      "binary_sha256": "cf345820af4158cf9e23ee82a689a85d7009bb2ecda439101d89344d59c81b94",
+      "dsym_sha256": "49f87e3132a6692c5d30df2c6d8cee93f1bd777086b6698ab6db92cff36cd1dd",
+      "codesign_verification": "PASS_VALID_ON_DISK_AND_DESIGNATED_REQUIREMENT",
+      "team_identifier": "ZCQ435U8JP",
+      "hardened_runtime": true,
+      "cdhash": "150c7b3870e1db376bb0af2bf35c8062ef432903",
+      "entitlements": {
+        "com.apple.security.app-sandbox": true,
+        "com.apple.security.files.user-selected.read-only": true,
+        "com.apple.security.hypervisor": true,
+        "network_client_present": false,
+        "network_server_present": false
+      }
+    },
+    "spdx": {
+      "document_namespace_uuid": "79c6a2b0-4600-4834-98a6-c70877f1f091",
+      "created_at_utc": "2026-09-01T15:20:23Z",
+      "sha256": "a8ecba5ca868e775073fad30a456f85d2aff49268221faf341f6b00fb4e5a941",
+      "bytes": 64982,
+      "analyzed_files": 73,
+      "source_files": 55,
+      "package_verification_code_sha1": "d529518de995d9fbdd71fad32d57dd61e8c94f21"
+    }
+  },
+  "single_live_h3_attempt": {
+    "attempt_count": 1,
+    "consumed": true,
+    "rerun_authorized": false,
+    "archive_app_path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-01/Ergentics Provenance 1.0 (6).xcarchive/Products/Applications/Ergentics Provenance.app",
+    "launch_transport": "/usr/bin/open -n exact_archived_app",
+    "launch_arguments": [],
+    "launched_at_utc": "2026-09-01T15:30:17.874Z",
+    "process_pid_diagnostic_only": 18216,
+    "process_ppid_observed": 1,
+    "process_group_observed": 18216,
+    "observed_executable_path_exact": true,
+    "debugger_attached": false,
+    "action": {
+      "accessibility_identifier": "run-h3-cursor-resume",
+      "click_count": 1,
+      "started_at_utc": "2026-09-01T15:33:37.765Z",
+      "observed_finished_at_utc": "2026-09-01T15:34:20.433Z",
+      "origin": "user-authorized Codex Accessibility UI actuation"
+    },
+    "raw_presentation": {
+      "status": "FAIL",
+      "detail": "H3 native result did not satisfy independent Swift reconstruction: H3 native PASS predicates rejected. No PASS or durable evidence was published.",
+      "source_generation": 1,
+      "source_run_entries": 1,
+      "target_generation": 2,
+      "target_run_entries": 0,
+      "gate_e": "ABSTAIN",
+      "authority_vector": "00000000",
+      "durable": false,
+      "h4_entered": false
+    },
+    "derived_boundary": {
+      "classification": "INFERENCE_FROM_NATIVE_COUNTERS",
+      "certain": [
+        "one source hv_vcpu_run call was entered",
+        "no target hv_vcpu_run call was entered",
+        "native aggregate PASS predicates were false"
+      ],
+      "not_recoverable_from_build_6_presentation": [
+        "failure_stage",
+        "first_error",
+        "source operation statuses",
+        "target operation statuses"
+      ],
+      "root_cause": "UNRESOLVED_BUILD_6_DIAGNOSTIC_FIELDS_DISCARDED",
+      "second_hv_vm_create_failure": "HYPOTHESIS_NOT_PROVEN"
+    },
+    "storage_and_authority": {
+      "journal_created": false,
+      "journal_opened": false,
+      "history_grant_present": false,
+      "product_durable_h3_evidence_published": false,
+      "process_local_h3_mode_consumed": true
+    },
+    "normal_quit_requested": true,
+    "quit_verified_at_utc": "2026-09-01T15:37:34Z",
+    "normal_quit_observed": true,
+    "application_processes_remaining_after_quit": 0
+  },
+  "observability_defect": {
+    "status": "OPEN",
+    "description": "The Build 6 rejection presentation retained generation and run-entry counters but discarded native failure_stage, first_error, and per-operation statuses.",
+    "successor_rule": "Preserve fixed value-only native diagnostics before any separately versioned live attempt; do not alter VM lifecycle from an unproven hypothesis."
+  },
+  "roadmap": {
+    "h1": "PASS_ACCEPTED_PREDECESSOR",
+    "h2_product_local_mechanics": "PASS_ACCEPTED_PREDECESSOR",
+    "h3_static_contract": "PASS",
+    "h3_product_live": "FAIL_CONSUMED_NO_RETRY",
+    "h4": "NOT_ENTERED",
+    "gate_e": "ABSTAIN_NONBLOCKING",
+    "authority_vector": "00000000",
+    "scientific_authority": false
+  },
+  "receipt_boundary": {
+    "role": "outer durable observation of signed archive and consumed product action",
+    "is_product_journal_evidence": false,
+    "gui_role": "presentation only"
+  },
+  "actions_not_performed": [
+    "second Build 6 H3 action",
+    "journal Create",
+    "journal Open",
+    "debugger attachment",
+    "process signal",
+    "direct journal read or write",
+    "H4 entry",
+    "GitHub action",
+    "Gate-E promotion",
+    "energy inference"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "status": "STATIC_REVIEW_NO_BLOCKING_FINDING",
+  "scope": "No guest or GPU launch; read ABI2 header, C expected-page/register logic and fixed assembly.",
+  "findings": [
+    "Job280-byte layout, token offset24, predictions offset32, allowedCount offset52 match C static assertions and assembly.",
+    "Each binding validates earlier source job, in-range distinct zero-placeholder slot; unused binding slots and unused tokens must be zero.",
+    "Assembly reads actual guest-committed source predictions, supporting two operands without host target injection.",
+    "The domain check uses unsigned subtraction to reject below-minimum values and explicit upper domain count; full vocabulary accepts0..<16384.",
+    "If second binding fails its domain, expected-page verifies only first inserted binding, preserves second zero placeholder, and checks bad source/slot/raw value registers before status7.",
+    "Owner-thread HV calls, code/page checks,10s watchdog join before destruction and failed-cleanup latch retain previous semantics."
+  ],
+  "remainingLiveChecks": [
+    "Two source bindings join actual prior predictions in raw guest input and source-index register receipts.",
+    "At least one invalid second binding verifies partial-prefix path.",
+    "Full-vocabulary mode retains final unassigned symbols without repair."
+  ],
+  "sourceBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.h",
+      "byteCount": 4034,
+      "sha256": "cb6edd41ee618feb882749d92552a0ab63995e153443ed379a6aebd04a901f57"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    }
+  ]
+}

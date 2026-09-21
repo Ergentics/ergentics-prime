@@ -1,0 +1,36 @@
+{
+  "models": [
+    {
+      "buildID": "EPM-20260908-0006-prime-swift-variable-depth-4000",
+      "modelID": "prime_native_variable_depth_v1_seed1618_steps4000",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000",
+      "weights": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsSHA256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd",
+      "nativeExecutable": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/Prime10MInference",
+      "originalWeightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-4000/prime-native-variable-depth-seed1618.safetensors",
+      "trainedIn": "Swift MLXLLM",
+      "trainingPerformedByThisExperiment": false,
+      "applicationBuildNumber": null,
+      "status": "prepared_for_inference"
+    },
+    {
+      "buildID": "EPM-20260908-0007-prime-swift-variable-depth-8000",
+      "modelID": "prime_native_variable_depth_v1_seed1618_steps8000",
+      "directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000",
+      "weights": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsSHA256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb",
+      "nativeExecutable": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/Prime10MInference",
+      "originalWeightsPath": "/Users/ergentics/prime-mlx-lab/native-variable-depth-seed1618-8000-v1/prime-native-variable-depth-seed1618.safetensors",
+      "trainedIn": "Swift MLXLLM",
+      "trainingPerformedByThisExperiment": false,
+      "applicationBuildNumber": null,
+      "status": "prepared_for_inference"
+    }
+  ],
+  "caseFile": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01/Inputs/cases.json",
+  "llamaModel": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Runtime/model",
+  "llamaPython": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/SharedRuntime/python/bin/python3",
+  "output": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-v-Llama-01",
+  "llamaBatchSize": 8,
+  "maximumNewTokens": 512
+}

@@ -23,9 +23,28 @@ let package = Package(
             name: "PrimeValidationWorkflowSecureChildIntegration",
             targets: ["PrimeValidationWorkflowSecureChildIntegration"]
         ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2Supervisor",
+            targets: ["PrimeValidationWorkflowDriverV2Supervisor"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2SpawnCanary",
+            targets: ["PrimeValidationWorkflowDriverV2SpawnCanary"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernor",
+            targets: ["PrimeValidationWorkflowDriverV2ShotGovernor"]
+        ),
+        .executable(
+            name: "PrimeValidationWorkflowDriverV2SessionFixture",
+            targets: ["PrimeValidationWorkflowDriverV2SessionFixture"]
+        ),
     ],
     dependencies: [
-        .package(path: "../.."),
+        .package(
+            name: "ergentics-prime",
+            path: "../.."
+        ),
     ],
     targets: [
         .target(
@@ -64,6 +83,58 @@ let package = Package(
                 ),
             ]
         ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2Supervisor",
+            dependencies: [
+                "PrimeValidationWorkflowDriverCore",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2SpawnCanary",
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .target(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernorCore",
+            dependencies: [
+                "PrimeValidationWorkflowDriverCore",
+                .product(
+                    name: "PrimeCore",
+                    package: "ergentics-prime"
+                ),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2ShotGovernor",
+            dependencies: [
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore",
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
+        .executableTarget(
+            name: "PrimeValidationWorkflowDriverV2SessionFixture",
+            linkerSettings: [
+                .unsafeFlags([
+                    "-Xlinker", "-S",
+                ]),
+            ]
+        ),
         .testTarget(
             name: "PrimeValidationWorkflowContractsTests",
             dependencies: [
@@ -74,6 +145,7 @@ let package = Package(
             name: "PrimeValidationWorkflowDriverCoreTests",
             dependencies: [
                 "PrimeValidationWorkflowDriverCore",
+                "PrimeValidationWorkflowDriverV2ShotGovernorCore",
                 .product(
                     name: "PrimeCore",
                     package: "ergentics-prime"
@@ -82,6 +154,8 @@ let package = Package(
             resources: [
                 .copy("Resources/xctest.list"),
                 .copy("Resources/swift-testing.list"),
+                .copy("Resources/current-source-inventory-v1-xctest.list"),
+                .copy("Resources/current-source-inventory-v1-swift-testing.list"),
             ]
         ),
     ]

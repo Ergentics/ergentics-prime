@@ -1,0 +1,365 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap.runtime-readiness.v1",
+  "status": "READY_FOR_SEPARATE_EXPLICIT_LAUNCH_APPROVAL",
+  "preparation_authorization": {
+    "basis": "go after 0f669f0 pure mechanics result",
+    "scope": "Read-only current admission checks and control-only readiness commit",
+    "launch_authorized": false,
+    "bootstrap_entries": 0,
+    "worker_entries": 0,
+    "signals": 0
+  },
+  "predecessor": {
+    "commit": "0f669f0336921b65ba24eadc9fe8a9f540bb30a8",
+    "tree": "050d974dc9b5001fcd5c3dc7e802df52bc4b2262",
+    "pure_test_result_sha256": "5c78775a672b6ed54895f0d702188bd2313fa2ef545d1778d0c8aab7cbea442c",
+    "pure_test_result": "30/30 Debug mechanics PASS; test product executed, no bootstrap/worker entry"
+  },
+  "implementation": {
+    "commit": "fa442554c4209881c6a33bfaaa6070190624e113",
+    "tree": "50b20fc1896a7bad22fc23aedd4415d8e948ef8a",
+    "source_files": 6,
+    "source_bytes": 138918,
+    "release_build_result_commit": "07930f030e4e32bc8c4c7aaed6efd02df736d0e6",
+    "release_build_result_sha256": "1b575cf8c958576384f47e157341a9258392bad0b20e223e549d1b498c1bd5d5"
+  },
+  "present_observation": {
+    "file": "gate-e-static-bootstrap-runtime-admission-observation.v1.json",
+    "sha256": "3e1afc2768f397825ab22ad449257aa1f1b9d4b93df6c4c8d11c91ca1a7d8a1a",
+    "status": "PASS_PRESENT_READ_ONLY_PREDICATES_NOT_LAUNCH",
+    "file_count": 24,
+    "ancestor_directories": 46,
+    "metadata_rows": 70,
+    "worker_topology": {
+      "files": 13,
+      "directories": 13
+    },
+    "bootstrap_topology": {
+      "files": 6,
+      "directories": 8
+    },
+    "raw_metadata_and_hashes_retained": true,
+    "not_a_live_runtime_token": true
+  },
+  "embedded_control": {
+    "commit": "568d22bf35c37ffc165580631bfd0da97701d61f",
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-admission-control.v1.json",
+    "bytes": 28799,
+    "sha256": "35a9a5c01d98bf42dbbfc394f1ca2c6a6b6f93194682977906d5a60f192ca2d1",
+    "unchanged": true,
+    "meaning": "Runtime journals intentionally bind this compiled design control; the external readiness/launch/result chain joins it to this newer checkpoint. No claim that this readiness file is embedded in the existing executable."
+  },
+  "selected_bootstrap": {
+    "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+    "argv_after_argv0": [],
+    "environment": {},
+    "bytes": 338736,
+    "sha256": "fe27a38d4a45669bc2b6b8f94dd2a8107ccbd696250c7f83f1dbe19169b21d2d",
+    "uuid": "DE930321-67E5-3512-B030-0A06AE04210A",
+    "device": "16777231",
+    "inode": "18344695",
+    "mode": "0755",
+    "uid": "501",
+    "gid": "20",
+    "nlink": "1",
+    "architecture": "arm64",
+    "minimum_macos": "14.0",
+    "sdk": "26.5",
+    "selection": "Release Build A only; B is a retained identity witness, never fallback",
+    "self_identity_limit": "main checks argc1 and empty environment, not its own mapped image. Outer fresh named-image admission must match this pin; exec-path race remains."
+  },
+  "future_outer_transport": {
+    "shell": "/bin/zsh",
+    "login": false,
+    "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45",
+    "command": "set -e\nset -C\numask 077\n/bin/mkdir -m 0700 '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1'\nexec /usr/bin/env -i '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap' < /dev/null > '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log' 2> '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log'",
+    "capture_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1",
+    "stdout": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stdout.log",
+    "stderr": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-launch-capture-0f669f0-r1/bootstrap.stderr.log",
+    "capture_root_mode": "0700",
+    "capture_file_mode": "0600",
+    "tools": {
+      "/bin/zsh": "1f473d234dd65157f530b4f676686517ec97fe9aa64c76d82f2611674cc44314",
+      "/usr/bin/env": "6e506aec3c0cff703ac1e66cedc6f1945354ad41339a38db4425c7c88227128f",
+      "/bin/mkdir": "08a20adeeff9bea14bae05c0a7f3c77c638b2b83fc3ab37e1c646e047bac7002"
+    },
+    "transport_scope": "One future tool invocation; exclusive outer capture mkdir, then exec env→exact bootstrap. No shell or SwiftPM child inside the bootstrap. No alternate image, request loader, stdin frame or caller-selected role.",
+    "consumption": "Only a separately approved envelope can enter. After successful preflight, the envelope is consumed at this outer transport entry, even if capture creation fails before bootstrap exec. No retry is inferred from missing internal00-start. This preparation consumes no launch.",
+    "timeout_and_signals": "No outer timeout or signals. Tool yield/poll only observes the same invocation; do not launch a second invocation.",
+    "environment_limit": "env -i is local environment replacement, not cloud/offline isolation, filesystem sandbox, network confinement or authority. Non-login zsh briefly inherits ambient local environment; transitive tool/runtime state remains outside exhaustive admission."
+  },
+  "fresh_preflight_before_any_approved_entry": [
+    "Resolve the exact readiness commit/tree and hashes; index/source selection remains current branch and committed fa44255 only; do not hash dirty Prime.",
+    "Read-only stat→hash→stat all24 pinned files plus exact worker/bootstrap source topology. Files must match expected bytes/type/mode/owner/nlink and any saved vnode pins, as now observed.",
+    "For fixed files and immutable source directories, require all captured metadata/hash fields unchanged from this observation. For ancestor directories outside immutable source topology, require device/inode/type/mode/uid/gid identity and no group/other writes; changing parent timestamps alone is not source mutation.",
+    "Recheck exact Release A named image and parent identities. Main does not self-bind mapped identity.",
+    "Recheck original control, source and result/carrier hashes; record outer zsh/env/mkdir identities and raw current metadata.",
+    "Require runtime root and outer capture root absent, including no dangling symlinks. Never precreate internal runtime workspace/leaves.",
+    "Persist a fresh read-only preflight receipt at the exact fresh_preflight_path outside both future roots before outer transport entry. Any mismatch stops without launch; no source repair, chmod, replacement or alternate image.",
+    "Confirm explicit approval covers the exact one-shot transport, owned-child signal envelope, ownership-loss failure path and indefinite blocking residuals. Present static/test PASS alone does not authorize it."
+  ],
+  "runtime_fixed_roots": {
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-c51f796-r1",
+    "root_mode": "0700",
+    "workspace_leaf": "workspace",
+    "workspace_mode": "0700",
+    "files_mode": "0600",
+    "allowed_file_leaves": [
+      "00-start.json",
+      "90-terminal.json",
+      "candidate-json.bin",
+      "candidate-cbor.bin",
+      "10-json-enter.json",
+      "11-json-verifier.json",
+      "12-json-graph.json",
+      "13-json-roundtrip.json",
+      "14-json-stderr.bin",
+      "15-json-exit.json",
+      "20-cbor-enter.json",
+      "21-cbor-verifier.json",
+      "22-cbor-graph.json",
+      "23-cbor-roundtrip.json",
+      "24-cbor-stderr.bin",
+      "25-cbor-exit.json",
+      "30-join-enter.json",
+      "31-join-receipt.json",
+      "32-authoritative-static-graph.json",
+      "33-join-stderr.bin",
+      "34-join-exit.json"
+    ],
+    "root_name_meaning": "The c51f796 name is compiled historical worker-build provenance, not a reset of this newer predecessor or a reuse of a consumed epoch.",
+    "retention": "Exclusive no-replace creation; retain every reached prefix/outcome permanently. No cleanup, truncation, repair, chmod or root reuse.",
+    "writes_before_start": "Root, workspace, both candidate leaves and their syncs precede00-start. An early failure can retain writes without a start or terminal.",
+    "workspace_invariant": "Empty held child cwd; no source, image, evidence, candidate or control directory is child cwd. Must remain unchanged and empty through post-reap checks."
+  },
+  "fixed_stages": [
+    {
+      "stage": "JSON",
+      "image": "ErgenticsGateEJSONProjector",
+      "entry_leaf": "10-json-enter.json",
+      "exit_leaf": "15-json-exit.json",
+      "fd_inputs": {
+        "0": "candidate-json.bin"
+      },
+      "fd_outputs": {
+        "1": "11-json-verifier.json",
+        "2": "14-json-stderr.bin",
+        "3": "12-json-graph.json",
+        "4": "13-json-roundtrip.json"
+      }
+    },
+    {
+      "stage": "CBOR",
+      "image": "ErgenticsGateECBORProjector",
+      "entry_leaf": "20-cbor-enter.json",
+      "exit_leaf": "25-cbor-exit.json",
+      "fd_inputs": {
+        "0": "candidate-cbor.bin"
+      },
+      "fd_outputs": {
+        "1": "21-cbor-verifier.json",
+        "2": "24-cbor-stderr.bin",
+        "3": "22-cbor-graph.json",
+        "4": "23-cbor-roundtrip.json"
+      }
+    },
+    {
+      "stage": "JOIN",
+      "image": "ErgenticsGateEDualGraphJoin",
+      "entry_leaf": "30-join-enter.json",
+      "exit_leaf": "34-join-exit.json",
+      "fd_inputs": {
+        "0": "12-json-graph.json",
+        "3": "11-json-verifier.json",
+        "4": "13-json-roundtrip.json",
+        "5": "22-cbor-graph.json",
+        "6": "21-cbor-verifier.json",
+        "7": "23-cbor-roundtrip.json"
+      },
+      "fd_outputs": {
+        "1": "31-join-receipt.json",
+        "2": "33-join-stderr.bin",
+        "8": "32-authoritative-static-graph.json"
+      }
+    }
+  ],
+  "inputs": {
+    "JSON": {
+      "carrier": "Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-json-input.v1.hex",
+      "carrier_sha256": "15006935c6ad4933d8084e646c9c7254878923f4889fca85e50496d0c507cee8",
+      "decoded_bytes": 1405,
+      "decoded_sha256": "cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e",
+      "terminal_lf": false
+    },
+    "CBOR": {
+      "carrier": "Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-cbor-input.v1.hex",
+      "carrier_sha256": "9e77f8b16c24da21ba1582e4464c6954aa548340a8c4d6edd6100be13859b84a",
+      "decoded_bytes": 1239,
+      "decoded_sha256": "c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636",
+      "map_keys": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "key_meanings": [
+        "schema text",
+        "source_commit text",
+        "source_tree text",
+        "source_identity text",
+        "one-byte byte string h00",
+        "ABSTAIN text",
+        "16 roles text array",
+        "16 predicates text array"
+      ],
+      "definite_shortest_only": true,
+      "trailing_bytes": false
+    },
+    "expected_semantic_root": {
+      "sha256": "093b6e90214704a3e8fdf28cf430a8c4cd106d695e621887b77db489fc5cd9bb",
+      "preimage": "ASCII ERGENTICS-GATE-E-STATIC-SEMANTIC-V1, one00 byte, UInt64BE1405, exact JSON candidate bytes",
+      "scope": "Expected mathematical commitment to exact declared subject/roles/predicates/prestate; not an observed execution receipt"
+    },
+    "candidates_independent": true,
+    "bootstrap_writes_candidate_inputs_only_not_worker_receipts": true
+  },
+  "runtime_admission": {
+    "source_files": 13,
+    "source_bytes": 169207,
+    "worker_images": 3,
+    "original_control_files": 1,
+    "source_and_images": "Original saved worker vnodes plus exact file bytes/mode/UID/nlink; held parent/leaf checks, bounded Mach-O parse and complete worker source namespace. No new Prime allowlist or identity schema.",
+    "continuous_boundary": "Entire held13source/3image/control/retained-endpoint cut before each stage and after each exact reap; entry intent synced then full equality rechecked before token consume. This is detection at named boundaries, not a continuous watcher or mapped-image join.",
+    "endpoint_creation": "Fresh read-only offset-zero inputs and distinct exclusive outputs; held empty cwd; worker FD maps fixed. Outer preparation cannot mint these not-yet-existing descriptors.",
+    "source_fd_parking_minimum": 32,
+    "caps": {
+      "candidate": 4194304,
+      "graph": 16777216,
+      "receipt": 262144,
+      "stderr": 65536,
+      "accepted_stderr_bytes": 0
+    },
+    "caps_limit": "Acceptance/read caps, not filesystem quotas or kernel-enforced output limits.",
+    "child_creation": "Existing fixed C posix_spawn only; SETPGROUP0, CLOEXEC_DEFAULT, SIGDEF/SIGMASK, explicit cwd inheritance/fchdir then close. No suspension, kernel image join or generic command API."
+  },
+  "signal_and_reap_envelope": {
+    "authorized_by_this_file": false,
+    "maximum_fixed_direct_child_entries": 3,
+    "maximum_simultaneous_owned_children": 1,
+    "maximum_positive_PID_SIGKILL_commitments_per_child": 1,
+    "maximum_positive_PID_SIGKILL_commitments_overall": 1,
+    "overall_bound_basis": "Any KILL commitment makes normalSuccess false and permanently stops the sequencer; no later stage can start. Per-child one-shot remains enforced.",
+    "ownership": "Exact positive PID returned by successful posix_spawn captured before fallible teardown handling. Sole serial reaper; explicit SIGCHLD default and SA_NOCLDWAIT cleared; C rechecks disposition before spawn.",
+    "deadline": {
+      "nanoseconds": "5000000000",
+      "starts": "Before stage entry-intent publication, not at main entry",
+      "predicate": "(now_ticks-start_ticks)*numerator >=5000000000*denominator using exact wide integer limbs",
+      "poll_pause_nanoseconds": "10000000",
+      "scope": "Observation cadence and per-stage deadline, not a hard overall/runtime/I/O bound; C setup occurs after final pre-spawn clock check."
+    },
+    "on_deadline_or_postspawn_reject": "While still exactly owned/unreaped only, consume commitment in memory before one kill(exactPositivePID,SIGKILL), record raw call result, no retry on any errno; then exact blocking wait may be indefinite.",
+    "normal_reap": "Only exact waitPID plus terminal exited/signaled status can remove the owned slot; normal success requires exit0, no KILL, no rejection and valid clock.",
+    "ownership_loss": "ECHILD, unexpected wait result/error, or exactPID with nonterminal traced status marks ownershipLost. Further signaling is forbidden. It can return70 with conservationUNPROVEN; not a guarantee the child is gone.",
+    "failure_recording": "A journal failure does not remove child ownership. Approved disposal may occur without complete durable call receipt; missing terminal never implies zero activity.",
+    "forbidden": [
+      "STOP",
+      "CONT",
+      "negative-PGID signals",
+      "signal-zero probes",
+      "manual signal",
+      "wait-any",
+      "old-process adoption/disposal",
+      "whole-host census",
+      "libproc generation inference",
+      "group/descendant conservation claims"
+    ]
+  },
+  "expected_success": {
+    "whole_invocation": [
+      "Normal bootstrap exit0",
+      "Captured outer stdout/stderr exactly0bytes",
+      "All8 internal journal records present and exact previous-leaf/hash ancestry joins",
+      "Three fixed stage completions in JSON→CBOR→JOIN order, exact child reap+exit0, no KILL/ownership loss/rejection",
+      "Every expected runtime leaf present once, workspace empty, all byte/metadata/receipt joins pass",
+      "Final raw terminal STATIC_GRAPH_JOIN_PASS_AT_RECORDED_CUT plus successful subsequent checks and outer postflight; terminal text alone is insufficient"
+    ],
+    "journal_order": [
+      "00-start.json",
+      "10-json-enter.json",
+      "15-json-exit.json",
+      "20-cbor-enter.json",
+      "25-cbor-exit.json",
+      "30-join-enter.json",
+      "34-join-exit.json",
+      "90-terminal.json"
+    ],
+    "data_joins": {
+      "JSON_candidate": "verifier.candidate_sha256 == roundtrip.candidate_sha256 == roundtrip.reconstructed_candidate_sha256 == cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e",
+      "CBOR_candidate": "verifier.candidate_sha256 == roundtrip.candidate_sha256 == roundtrip.reconstructed_candidate_sha256 == c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636",
+      "cross_codec_candidate_hash_equality": false,
+      "graphs": "JSON and CBOR graph capture bytes must be identical; hash the actual held bytes. Both reconstructed_graph_frame_sha256 values and verifier graph_frame_sha256 values equal that actual hash.",
+      "semantic_root": "Every verifier/roundtrip/join semantic field must equal expected_semantic_root093b6e90. The join independently recomputes this root from the graph source witness, roles, predicates and00000000/ABSTAIN prestate; this binds the exact external subject without treating lowerhex syntax as identity.",
+      "merkle_root": "All verifier/roundtrip/join graph_merkle_root fields agree; JOIN independently recomputes all13 row identities and the Merkle tree.",
+      "output_join": "FD8 capture bytes equal BOTH admitted projector graphs; join receipt references their actual SHA256 and the same semantic/Merkle roots.",
+      "parser": "Use closed exact canonical receipt grammars: fixed key order, exact schemas/authority labels/PASS literals, lowercase64hex fields, no whitespace/LF/escaping/duplicates/unknown fields. No regex substring scraping or general command/data loader. Bootstrap must never generate worker graph/verifier/roundtrip/join output bytes.",
+      "static_transition": "CANDIDATE_SCHEMA_ROLE_PREDICATE_AND_PRESTATE_EXACT only; the16 GateE role names are data, not process entries."
+    },
+    "authority_vector": "00000000",
+    "projection_write_mask": "00000000",
+    "gate_e": "ABSTAIN",
+    "terminal_limit": "Terminal success is published before final journal/cut recheck. A later failure cannot rewrite it; outer exit70 invalidates whole-invocation success."
+  },
+  "future_postflight": {
+    "before_interpretation": "Retain raw tool exit/stdio, raw internal journals/worker outputs/candidates, complete metadata/hash manifests; no cleanup or disposal by the observer.",
+    "source_images": "Fresh read-only source/control/worker/bootstrap image and immutable source topology comparison; no retrofit of missing historical observations.",
+    "graph": "Preserve independent JSON and CBOR graph/reconstruction receipts and join output, actual byte equality, semantic root,13-row Merkle recomputation receipt and hash-chain ancestry. Do not import a worker result as a new launch capability.",
+    "timing": "Record outer observer UTC start/end and exact internal raw tick/timebase pairs as distinct sources. Derive rational duration only where both samples/timebase are valid; do not use rounded decimals as CPU or energy.",
+    "energy": "No energy collection, CPU attribution, joule/erg or old-process actuation in this phase.",
+    "incomplete": "Nonterminal invocation or missing/failed terminal remains incomplete/FAIL/ABSTAIN, retained once; never retry the same envelope/root."
+  },
+  "residuals": [
+    "Named bootstrap/worker exec paths can change between checks and kernel execution; no mapped vnode proof.",
+    "Preflight snapshots do not hold a live capability; actual bootstrap admission is separate and may still fail.",
+    "Descriptor-held runtime boundary checks can detect changes at cuts, but do not prove all inter-cut events or watcher continuity.",
+    "Kernel-blocked opens/read/sync/spawn/wait, scheduler delay or system-library failures may prevent finite completion; no outer kill safety net.",
+    "Unexpected child ownership loss can leave a process without safe signaling authority; this is explicitUNPROVEN, not successful conservation.",
+    "Runtime/core/stdout side effects are source-limited, not kernel filesystem/network confinement. Transitive loader/system libraries are not exhaustively byte-pinned.",
+    "Internal journal hash ancestry is recorded locally; checked fsync outcomes are not an off-device archive or unconditional power-loss guarantee.",
+    "Old R18/R19 process state remains UNOBSERVED and unactuated; other host load may affect timing.",
+    "Past worker pre-B metadata omission remainsFAIL/UNOBSERVED; current admission never repairs it.",
+    "Only current arm64 host is in scope; minimum macOS14 metadata is not runtime execution on macOS14/15 or Intel/Rosetta.",
+    "Outer capture creation/redirection uses ordinary named shell paths inside a fresh private root, not the bootstrap's descriptor-rooted C leaf primitive. Same-UID path substitution and ambient shell/file-descriptor state are not eliminated."
+  ],
+  "unmodified": {
+    "production_driver_main": true,
+    "DriverCore": true,
+    "PrimeCore": true,
+    "Prime_source_identity": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "original_dirty_drafts": 23,
+    "bootstrap_source": true,
+    "worker_sources_and_images": true,
+    "current_branch": true
+  },
+  "scope": {
+    "launches_this_preparation": 0,
+    "builds": 0,
+    "tests": 0,
+    "signals": 0,
+    "process_census": 0,
+    "cleanup": 0,
+    "python": 0,
+    "ruby": 0,
+    "network": 0,
+    "energy": 0,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "approval_request": "After this readiness checkpoint is committed, separately approve the single frozen outer transport and retained Release A bootstrap, its exact capture/runtime roots, at most3 fixed JSON/CBOR/JOIN direct children and at most1 positive-PID SIGKILL commitment overall only while exactly owned, indefinite blocking, ownership-lossUNPROVEN exit70 path, and all named residuals. No retry/cleanup/repair/manual signal/alternate image/live GateE promotion.",
+  "next": "Only an explicitly approved static launch can follow. Even a resulting static graph PASS does not execute the16 live GateE Git/Swift roles or close GateE.",
+  "digest_rule": "No self digest or self commit. Pin complete readiness bytes and observation bytes externally by SHA256 and selective commit/tree.",
+  "fresh_preflight_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-launch-preflight.0f669f0.v1.json"
+}

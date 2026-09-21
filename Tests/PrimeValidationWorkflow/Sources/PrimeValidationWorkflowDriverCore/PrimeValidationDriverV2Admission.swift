@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
 
 import Foundation
-import PrimeCore
+@_spi(PrimeValidationDriverV2RoleFacade) import PrimeCore
 import PrimeValidationWorkflowContracts
 
 /// Durable admission declarations are mechanics-only. They can bind what a
@@ -463,7 +463,7 @@ public struct PrimeValidationSwiftTargetInfoObservationV2:
         self.runtimeResourcePath = runtimeResourcePath
     }
 
-    fileprivate static func parse(_ data: Data) throws -> Self {
+    static func parse(_ data: Data) throws -> Self {
         struct Target: Decodable {
             let triple: String
             let unversionedTriple: String
@@ -640,7 +640,7 @@ public struct PrimeValidationSwiftPackagePersonalityV2:
               symlinkInode > 0,
               symlinkOwnerUserID == 0,
               symlinkOwnerGroupID == 0,
-              symlinkMode == 0o777,
+              symlinkMode == 0o755,
               symlinkLinkCount > 0,
               resolvedExecutableAbsolutePath
                 == physicalSwiftPackage.canonicalAbsolutePath,
@@ -769,8 +769,7 @@ public struct PrimeValidationToolchainAdmissionReceiptV2:
         let expectedSDKVersion = Data((sdkVersion + "\n").utf8)
         let expectedSwiftVersion = Data(
             (
-                "swift-driver version: \(swiftDriverVersion) "
-                    + targetInfo.compilerVersion
+                targetInfo.compilerVersion
                     + "\nTarget: \(targetInfo.triple)\n"
             ).utf8
         )
@@ -891,6 +890,14 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchV2:
             physicalWorkingDirectoryAbsolutePath
     }
 
+    /// Physical argv[0] is derived separately from the unchanged logical
+    /// personality name. This computed value adds no field to old launch bytes.
+    public func physicalArgumentZero() throws -> String {
+        try PrimeValidationDriverV2SwiftPMPhysicalArguments.argumentZero(
+            executableAbsolutePath: physicalExecutable.absolutePath,
+            logicalArgumentZero: argumentZero)
+    }
+
     public func validate(
         intent: PrimeValidationRunIntentV2,
         toolchain: PrimeValidationToolchainAdmissionReceiptV2
@@ -936,8 +943,10 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchV2:
               physicalExecutable.content
                 == toolchain.swiftPackageExecutable.content,
               argumentZero == personality.argumentZero,
+              try physicalArgumentZero() == personality.requestedAbsolutePath,
               physicalArguments
-                == Array(logicalInvocation.arguments.dropFirst()),
+                == PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
+                    + Array(logicalInvocation.arguments.dropFirst()),
               orderedCompleteReplacementEnvironment
                 == expectedEnvironment,
               physicalWorkingDirectoryAbsolutePath
@@ -1002,7 +1011,8 @@ public struct PrimeValidationSwiftPackageAdmissionLaunchPlanV2:
                     logicalInvocation: invocation,
                     physicalExecutable: physical,
                     argumentZero: personality.argumentZero,
-                    physicalArguments: Array(invocation.arguments.dropFirst()),
+                    physicalArguments: PrimeValidationDriverV2SwiftPMPhysicalArguments.testabilityPrefix
+                        + Array(invocation.arguments.dropFirst()),
                     orderedCompleteReplacementEnvironment:
                         try completeReplacementEnvironment(
                             intent: intent,
@@ -1274,6 +1284,8 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
 
     public func validate(intent: PrimeValidationRunIntentV2) throws {
         try intent.validate()
+        let expectedGitExecutableAbsolutePath = try Self
+            .expectedXcodeGitExecutableAbsolutePath(intent: intent)
         guard repositoryRoot.role == .repository,
               companionRoot.role == .companion
         else {
@@ -1392,8 +1404,10 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
               repositoryHEADOutput.data == Data((repositoryCommit + "\n").utf8),
               companionHEADOutput.data == Data((companionCommit + "\n").utf8),
               companionCommit == intent.companionCommit,
-              gitExecutable.requestedAbsolutePath == "/usr/bin/git",
-              gitExecutable.canonicalAbsolutePath == "/usr/bin/git",
+              gitExecutable.requestedAbsolutePath
+                == expectedGitExecutableAbsolutePath,
+              gitExecutable.canonicalAbsolutePath
+                == expectedGitExecutableAbsolutePath,
               gitExecutable.requestedSymlinkTarget == nil,
               gitExecutable.ownerUserID == 0,
               gitExecutable.ownerGroupID == 0,
@@ -1419,6 +1433,33 @@ public struct PrimeValidationRepositoryAdmissionReceiptV2:
         value.utf8.count == 40 && value.utf8.allSatisfy {
             ($0 >= 48 && $0 <= 57) || ($0 >= 97 && $0 <= 102)
         }
+    }
+
+    private static func expectedXcodeGitExecutableAbsolutePath(
+        intent: PrimeValidationRunIntentV2
+    ) throws -> String {
+        let marker = "/Toolchains/XcodeDefault.xctoolchain/usr/bin/"
+        let swiftPath = intent.swiftExecutable.absolutePath
+        guard let markerRange = swiftPath.range(of: marker),
+              markerRange.lowerBound != swiftPath.startIndex,
+              String(swiftPath[markerRange.upperBound...]) == "swift"
+        else {
+            throw PrimeValidationDriverV2Error.invalidBinding(
+                "repository_git"
+            )
+        }
+        let developerDirectory = String(
+            swiftPath[..<markerRange.lowerBound]
+        )
+        guard developerDirectory.hasSuffix("/Contents/Developer")
+        else {
+            throw PrimeValidationDriverV2Error.invalidBinding(
+                "repository_git"
+            )
+        }
+        let result = developerDirectory + "/usr/bin/git"
+        try PrimeValidationDriverV2Validation.requireSafeAbsolutePath(result)
+        return result
     }
 }
 
@@ -1674,6 +1715,56 @@ public struct PrimeValidationExecutorAdmissionPolicyV2:
         ].sorted { $0.phase.rawValue < $1.phase.rawValue }
     )
 
+    public static let currentSourceExecutionV1 = Self(
+        scratchRelativePath: frozenV1.scratchRelativePath,
+        cacheRelativePath: frozenV1.cacheRelativePath,
+        configRelativePath: frozenV1.configRelativePath,
+        securityRelativePath: frozenV1.securityRelativePath,
+        clangModuleCacheRelativePath: frozenV1.clangModuleCacheRelativePath,
+        homeRelativePath: frozenV1.homeRelativePath,
+        swiftPMModuleCacheRelativePath: frozenV1.swiftPMModuleCacheRelativePath,
+        temporaryRelativePath: frozenV1.temporaryRelativePath,
+        outputRelativePath: frozenV1.outputRelativePath,
+        phaseBudgets: frozenV1.phaseBudgets.map { budget in
+            .init(phase: budget.phase, maximumActiveNanoseconds:
+                budget.phase == .referenceExecution || budget.phase == .candidateExecution
+                    ? PrimeValidationDriverV2ExecutionBudgetProfile.currentSourceExecutionV1.executionArmMaximumActiveNanoseconds
+                    : budget.maximumActiveNanoseconds)
+        })
+
+    package static func selected(for intent: PrimeValidationRunIntentV2) throws -> Self {
+        let profile = try budgetProfile(for: intent)
+        let policy: Self = profile == .frozenV1 ? .frozenV1 : .currentSourceExecutionV1
+        try policy.validate(intent: intent)
+        return policy
+    }
+
+    /// A semantic budget declaration does not admit a live staging layout.
+    /// The role bridge separately requires selected(for:) before execution.
+    package static func budgetProfile(for intent: PrimeValidationRunIntentV2) throws
+        -> PrimeValidationDriverV2ExecutionBudgetProfile {
+        try intent.validate()
+        return try knownBudgetProfile(intent)
+    }
+
+    private static func knownBudgetProfile(_ intent: PrimeValidationRunIntentV2) throws
+        -> PrimeValidationDriverV2ExecutionBudgetProfile {
+        let data = try PrimeCanonicalJSON.encode(intent)
+        guard let profile = try? PrimeValidationDriverV2ExecutionBudgetProfile.resolve(canonicalIntentData: data) else {
+            throw PrimeValidationDriverV2Error.invalidIntent
+        }
+        return profile
+    }
+
+    package var executionBudgetProfile: PrimeValidationDriverV2ExecutionBudgetProfile {
+        get throws {
+            guard self == .frozenV1 || self == .currentSourceExecutionV1 else {
+                throw PrimeValidationDriverV2Error.invalidIntent
+            }
+            return try .resolve(canonicalPhaseBudgetsData: PrimeCanonicalJSON.encode(phaseBudgets))
+        }
+    }
+
     public init(
         scratchRelativePath: String,
         cacheRelativePath: String,
@@ -1700,7 +1791,8 @@ public struct PrimeValidationExecutorAdmissionPolicyV2:
 
     public func validate(intent: PrimeValidationRunIntentV2) throws {
         try intent.validate()
-        guard self == .frozenV1,
+        let profile = try Self.knownBudgetProfile(intent)
+        guard self == (profile == .frozenV1 ? .frozenV1 : .currentSourceExecutionV1),
               intent.roots.scratchRelativePath == scratchRelativePath,
               intent.roots.cacheRelativePath == cacheRelativePath,
               intent.roots.configRelativePath == configRelativePath,
@@ -1861,7 +1953,7 @@ public struct PrimeValidationExecutorAdmissionReceiptV2:
         staging: PrimeValidationStagingLayoutReceiptV2
     ) throws -> Self {
         try intent.validate()
-        let policy = PrimeValidationExecutorAdmissionPolicyV2.frozenV1
+        let policy = try PrimeValidationExecutorAdmissionPolicyV2.selected(for: intent)
         try policy.validate(intent: intent)
         try supervisorExecutable.validate()
         let launchPlan = try PrimeValidationSwiftPackageAdmissionLaunchPlanV2
@@ -1999,7 +2091,7 @@ public struct PrimeValidationExecutorAdmissionReceiptV2:
               artifactKind == Self.artifactKind,
               intentSHA256 == (try intent.identitySHA256()),
               authority == .frozenPlannerV2,
-              policy == .frozenV1,
+              policy == (try PrimeValidationExecutorAdmissionPolicyV2.selected(for: intent)),
               supervisorExecutable.requestedAbsolutePath
                 == intent.driverExecutable.absolutePath,
               supervisorExecutable.content == intent.driverExecutable.content,

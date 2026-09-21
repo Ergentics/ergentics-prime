@@ -1,0 +1,158 @@
+{
+  "schema": "prime_logic_corpus_audit_summary_v1",
+  "status": "complete_read_only_audit",
+  "logicHead": "97be84b2790b79ce79558d6bade846a532226540",
+  "counts": {
+    "scope": "Actual current tracked explicit records, not a percentage of all Ergentics work",
+    "logicExemplarFiles": 47,
+    "logicExemplarRows": 6945,
+    "positive": 3292,
+    "negative": 3653,
+    "candidateFiles": 22,
+    "candidateRows": 5930,
+    "candidateTrainPositive": 2029,
+    "candidateHoldoutPositive": 527,
+    "candidateNegativeRawOnly": 3374,
+    "omittedExemplarFiles": 25,
+    "omittedExemplarRows": 1015,
+    "omittedPositive": 736,
+    "omittedNegative": 279,
+    "decisionFiles": 9,
+    "decisionRows": 57,
+    "auditSidecarFiles": 7,
+    "auditTriadRecordsIncludingAddenda": 24
+  },
+  "concreteSupportedOmissions": [
+    {
+      "paths": "corpus/exemplars/logic.{algo,crypto,finance,hardware,quantum,stats}.jsonl",
+      "rows": 242,
+      "positive": 185,
+      "negative": 57
+    },
+    {
+      "path": "corpus/exemplars/masterykit.introbudget.jsonl",
+      "rows": 25,
+      "positive": 23,
+      "negative": 2
+    },
+    {
+      "paths": "corpus/exemplars/music.{zeta,bowed}.jsonl",
+      "rows": 92,
+      "positive": 34,
+      "negative": 58
+    },
+    {
+      "paths": "corpus/exemplars/ur.{dice,puzzle}.jsonl",
+      "rows": 32,
+      "positive": 32,
+      "negative": 0
+    },
+    {
+      "path": "corpus/exemplars/agentcraft.oracle_independence.jsonl",
+      "rows": 343,
+      "positive": 228,
+      "negative": 115,
+      "schema": "0.2"
+    },
+    {
+      "path": "corpus/exemplars/christoffel.jsonl",
+      "rows": 5,
+      "positive": 4,
+      "negative": 1,
+      "schema": "0.2",
+      "scope": "Only promoted logic subset; distinct from tracked890-row Agentcraft source bank."
+    },
+    {
+      "path": "corpus/exemplars/barbershop.san_contact_time.jsonl",
+      "rows": 201,
+      "positive": 200,
+      "negative": 1
+    }
+  ],
+  "routingFindings": [
+    "Preserve all raw records and all actual audit/decision files separately. Named ledger-supported routes still need their own exact schema/target semantics; not blanket SFT approval.",
+    "Current candidate omits mathematical solution/verification traces from its compact text but preserves them in raw copies. Decision evidence and audit reports are not solver answers.",
+    "Both logic.parsing families are holdout, so all38 positive logic parsing rows are evaluation-only in the current2029-line training projection.",
+    "Audit sidecars are real audit-sidecar/0.1 data with source commit, measured pair evidence, nil-reasoner and adjudicated verdicts. Current per-row IOC checks are not replacements for those files.",
+    "Algebra/geometry addenda succeed only quadratic_solve and metal_coverage; preserve originals plus addenda. Systems/point-in-triangle/point-in-polygon retain cannot_certify under annotate-never-quarantine. Bowed sidecar retains not_independent velocity sentinel; corrected25-row corpus differs from old52.",
+    "Negative wrong-answer traps differ from correct negative/no classifications. Preserve role-specific targets; never run every negative through WRONG ANSWER or discard all no answers globally."
+  ],
+  "existingSplitEvidence": {
+    "committedGeneratedSplitJSON": [],
+    "reason": "Exact shallowHEAD tree has none; data/* and checkpoints are ignored. No claim about unavailable older commits or another computer.",
+    "source": "tools/split_by_family.py:70,111,193,226",
+    "originalTool": "sha256(version|family_id) mod1000; default eval0.10; optional explicit whole-family holds and deterministic raw record caps.",
+    "explicitRecipes": [
+      "tools/build_leaveout_corpus.sh",
+      "tools/build_unification_retest_corpus.sh"
+    ],
+    "recipeAssignments": [
+      "WA: quadratic.solve held out",
+      "WG: polygon.area held out",
+      "CA: all algebra held out",
+      "systems capped to300 total raw records"
+    ],
+    "candidateConflicts": [
+      "quadratic70 positive rows nowtrain vs WA heldout",
+      "polygon.area9 positive rows nowtrain vs WG heldout",
+      "systems560 positive rows nowtrain vs original300totalrawcap"
+    ],
+    "doNotRevive": "Both scripts concatenate rawMBE inputs. docs/corpus-incident-2026-07-03-findings.md:94-112 marks allsix generated corpora/checkpoints poisoned. Current mbe_holdings_to_text.py:116-132 has empty admission allowlist. Preserve historical assignment recipes as evidence; do not claim they are approved present training routes."
+  },
+  "logicTrainingCompatibility": {
+    "tokenizer": "Sources/Tokenizer/bpe.py:250-286 custom byte BPE, base256; saved merges.json/vocab.json/meta.json; loader reconstructs merges. Not PMHNP SentencePiece8192.",
+    "model": "Sources/ModelKit/model.py:25-48 defines separate POC16384vocab/256width/8layers/4heads and phase1design32768vocab/1024width/21layers/16heads; no current weights established here.",
+    "training": "Sources/TrainKit/train.py:48-104 reads a contiguous token stream and next-token seq_len windows; newline is not a separate sample. It does not consume split/audit sidecars automatically.",
+    "validation": "tools/answer_token_control.py separates answer-content CE from scaffold/full CE; wrapper adaptation alone cannot establish reasoning transfer."
+  },
+  "masteryByteJoin": {
+    "masteryHEAD": "bf059b96692dc0123a161ac2bdd1f1adef2f0899",
+    "engineFiles": 17,
+    "companionCurrentSeatCopy": {
+      "present": 17,
+      "exact": 13,
+      "different": [
+        "Calibration.swift",
+        "EngineConstants.swift",
+        "LearnerCalibration.swift",
+        "PracticeEvent.swift"
+      ]
+    },
+    "companionCurrentAppEngineDirectory": {
+      "present": 11,
+      "exact": 9,
+      "different": [
+        "Calibration.swift",
+        "EngineConstants.swift"
+      ]
+    },
+    "EngineV21Swift": "Exact present bytes in all3companion copies checked.",
+    "differences": "Mastery EngineConstants explicitly has algebra surface parameters. Current companion adds format-split calibration and event provenance. Entire CURRENT companion engine is not identical to MasteryKit.",
+    "sharedAppSeam": "algebra/geometry/music Package.swift resolve ../MasteryKit. GeometryKit/MusicTheoryKit pure oracles do not depend on it; tutor modules attach adaptive selection. Shared frozen engine does not imply shared trained weights/tokenizer.",
+    "logicAdaptation": "Sources/LegalKit/field_theory.py:14-32 rederives shared Phi=sum/entropy/diagnostics with three explicit legal adaptations. No vendored Swift MasteryKit source in logic tree.",
+    "byteEvidence": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration-review/mastery-engine-byte-join.json",
+      "byteCount": 15614,
+      "sha256": "d789779161081bc2a3e961e230cdf34d06f7ef8e5d7475a180e9a8bc5950e3c4"
+    }
+  },
+  "authorizedTaskToolFix": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration/Tools/PrimeCorpus/stage.rb",
+    "beforeSHA256": "d34cfc5827397de6d30f9f645edf2b696d6e6e66829179b30ce72bebc88cbdcb",
+    "afterSHA256": "fdc66addfd8e17e7b8af1a6038bcc78588171c0cc624160a80687f4dda730f82",
+    "scope": "Derive native manifest topics from actual train-family prefixes only. ruby -c passed; no stage regenerated."
+  },
+  "evidence": {
+    "all63FileHashesCounts": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration-review/logic-head-object-inventory-02.json",
+      "byteCount": 58016,
+      "sha256": "766d9486ec761183f221e48552f83ede4ef76f79d25cc16aabca3c15ec11822d"
+    },
+    "detailedReviewBeforeFinalCurrentEngineJoin": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration-review/logic-sidecar-mastery-review.json",
+      "byteCount": 53340,
+      "sha256": "a68bc21323d215586a8094519c664e10693fc460c0ca03f78c039066ca6ecb3d"
+    }
+  },
+  "execution": "No harvest, tokenizer training, model training/inference, app launch or source-repository mutation. Only requested task-local topics fix (syntaxchecked) and report files written. Old staged candidate untouched."
+}

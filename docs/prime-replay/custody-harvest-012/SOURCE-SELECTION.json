@@ -1,0 +1,390 @@
+{
+  "schema": "ergentics.prime-custody-source-selection.v1",
+  "owner": "Ergentics, LLC",
+  "base_commit": "ab4e7b8f17857c6249dcda7a3cf74df2e69319f7",
+  "candidate_skill_version": "0.1.0",
+  "contribution_version": "0.1.0",
+  "profile_package_version": "0.1.1",
+  "logical_profile_versions": "0.1.0 unchanged",
+  "selection": [
+    {
+      "path": "docs/skills/ergentics-prime-custody/SKILL.md",
+      "bytes": 4350,
+      "sha256": "550461810acce7ee01f8c4926b613337e1ff4448082f29df53877bedb284f96f"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-custody/agents/openai.yaml",
+      "bytes": 234,
+      "sha256": "3a425ac3886e6fd65fcc7b65cc121d531221c773310bdf6b3aada5a05e24bd40"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-custody/references/gate-record.md",
+      "bytes": 1617,
+      "sha256": "5543d64a7baf60b4cbfcf0af50eda9c96573672203f16a121277d04f921b596d"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-custody/references/lineage-and-extension.md",
+      "bytes": 2983,
+      "sha256": "0cd3cb1dd9cb6bcdec26fb5b59ec03de84b8dcaa33d56d6ee93addda988a38a7"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-custody/references/metadata-validation.md",
+      "bytes": 4327,
+      "sha256": "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-custody/scripts/requirements-validation.txt",
+      "bytes": 17,
+      "sha256": "c9e3d5b71ce6e54e3c1cd3e97da9a4682811879f2ed85455982ccb9a035fd158"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/CHANGELOG.md",
+      "bytes": 1101,
+      "sha256": "29865dc2b110a1d85fb593ad57e215c5bcf09ea0e4a90e0da5130f63ac674024"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/CONTRACTS.md",
+      "bytes": 5665,
+      "sha256": "d3c1d8e714c851da69eed3170f3473943b18997bb7cf857a06642895486d9b10"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/CORPUS.md",
+      "bytes": 2539,
+      "sha256": "81c55b449dd1371d858ae34fb6e00c12a7b1b512ece972fb47fdbf523dab055e"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/LOAD.md",
+      "bytes": 2922,
+      "sha256": "1118b4d730068c56cce46d7064546e50a57786b2e76df2e9d1b2fcf237ec7df3"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/MANIFEST.json",
+      "bytes": 3055,
+      "sha256": "68235f1964e79404b1fd15781c3a987aa5f8a808cf9f48816a0ccbff72954edc"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/README.md",
+      "bytes": 2602,
+      "sha256": "20f868e9786173b31297998bceb88b531d076b4653032f204bb28395460e4cee"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/adapters/codex.md",
+      "bytes": 1350,
+      "sha256": "899a5ff80d8a87880f423630f308aa9886817154e864984deddc14c37cce6a3b"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/adapters/portability.md",
+      "bytes": 1314,
+      "sha256": "f26cc6e75d2d080fa22e066c9a7bf1a72d5453fab339ce084982c512020b4468"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/INDEX.json",
+      "bytes": 7857,
+      "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/bounded-polling-control.md",
+      "bytes": 481,
+      "sha256": "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/bounded-supervision.md",
+      "bytes": 420,
+      "sha256": "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/cpp-file-identity.md",
+      "bytes": 499,
+      "sha256": "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/evidence-stages.md",
+      "bytes": 538,
+      "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/sharing-and-processing.md",
+      "bytes": 705,
+      "sha256": "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/corpus/entries/swift-c-boundary.md",
+      "bytes": 405,
+      "sha256": "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/profiles/ergentics_cpp.json",
+      "bytes": 2792,
+      "sha256": "65d7b7684d4ac0238c48bbd677f01f11aeb5fb4f2d95ac9c36e3de7fed5784b2"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/profiles/ergentics_swift_c.json",
+      "bytes": 2791,
+      "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/scripts/profile_packet.rb",
+      "bytes": 28361,
+      "sha256": "05b78a96f41194abe00328375eb6084dc2ba24f5e3aa4ea09cd996d8bbba3f94"
+    },
+    {
+      "path": "docs/ergentics/profiles/0.1.1/tests/check_profile_packet.rb",
+      "bytes": 25588,
+      "sha256": "ea19e9a24cf6c54d998bd84e70b27edfe7cb656b0692b98de60c71fa4f324828"
+    },
+    {
+      "path": "docs/ergentics/corpus/contributions/prime-gate-phase-custody/0.1.0/INDEX.json",
+      "bytes": 2684,
+      "sha256": "d08e0c5b1e49258e63a7078fc8c0afeffd6ebbcb7e7ff3b9a553db057c3957d0"
+    },
+    {
+      "path": "docs/ergentics/corpus/contributions/prime-gate-phase-custody/0.1.0/PROMOTION.json",
+      "bytes": 2309,
+      "sha256": "4cd4db1f25d857b59b3cb5e3bcfbfbca1b91d0fa234a888da11cec099a00a5c6"
+    },
+    {
+      "path": "docs/ergentics/corpus/contributions/prime-gate-phase-custody/0.1.0/entries/prime-gate-phase-custody.md",
+      "bytes": 3071,
+      "sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738"
+    }
+  ],
+  "selected_evidence": [
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/CANDIDATE-MANIFEST.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/CANDIDATE-MANIFEST.json",
+      "bytes": 1122,
+      "sha256": "42b304d540564232ac42f391b8f2e58b939e0e21439b86ac7bb8fc9fb1860a48"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/EVALUATION.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/EVALUATION.json",
+      "bytes": 8868,
+      "sha256": "1973d711ee764eae4a1c4972081fc43f6d7dd9ed40b8aa5f3e0366f58a71c936"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/METADATA.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/METADATA.json",
+      "bytes": 838,
+      "sha256": "353a0d2a1f4a241a04e72952f38e6452b8ea462d8dcc05ee3cb5ccef9fc009e7"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HARVEST-SOURCE-MANIFEST.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/HARVEST-SOURCE-MANIFEST.json",
+      "bytes": 752,
+      "sha256": "bd4351137d87bdd736d00c3036cc1a50b69e779da1b742cbf8b5f1defd638ca5"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HARVEST-BUILD.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/HARVEST-BUILD.json",
+      "bytes": 1297,
+      "sha256": "e8f0f484bf3ada34b14bc42674fe12a0a774d02d287f55d87012fb51857b7132"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HARVEST-VERIFICATION.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/HARVEST-VERIFICATION.json",
+      "bytes": 662,
+      "sha256": "18854c7663df9fe14f2207762d8231d2826611004ea2a9cd10555e8e22a20d65"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/PROMOTION-REQUEST.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/PROMOTION-REQUEST.json",
+      "bytes": 2372,
+      "sha256": "ccbc07d88f14a6f98cb8ea615ad2a817ce6ab4ebfab2ef4b19d2eed0c724b9ce"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/PROMOTION-COMMAND.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/PROMOTION-COMMAND.json",
+      "bytes": 300,
+      "sha256": "9f0a0c0317f2b771b2fd4fd348de72b96a5d5059bd8ee0b84b4216c0a7b61ca7"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HELPER-REPAIR.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/HELPER-REPAIR.json",
+      "bytes": 865,
+      "sha256": "0fa03aea81105fa1cae802856181b24674e72057cd525ed0ffd3f6b38ee8e7c4"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/UNICODE-FAILURE-ANALYSIS.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/UNICODE-FAILURE-ANALYSIS.json",
+      "bytes": 347,
+      "sha256": "18e908054dc9a58e5830e1aa3f65d85c8246f1638d4d91fd87be3411109b0031"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/FINAL-LOAD-VERIFICATION.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/FINAL-LOAD-VERIFICATION.json",
+      "bytes": 1440,
+      "sha256": "8ea50c0904da6aa8ce3a36a262f34b5d4d52b94317267558c49eb5c0eb568313"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/helper-checks-011/RESULTS.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/helper-checks-011/RESULTS.json",
+      "bytes": 51444,
+      "sha256": "46b8b026ebe8fd3edee2b6c93d02923b52d37accbd3c02d8fada55bb65be934b"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/evaluation-private/rubric.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/evaluation-private/rubric.json",
+      "bytes": 1632,
+      "sha256": "81f987ad90516b8027b3b981e94d16aab77eb7eceb8fc2bd9606f22eb4ab1080"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/positive_evidence.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/review/positive_evidence.json",
+      "bytes": 1557,
+      "sha256": "465b058aec2df64cf0487ca79fe25981d523ee797ce1acc9a8332fa3895d5f9d"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/review/golden_negative_evidence.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/review/golden_negative_evidence.json",
+      "bytes": 1538,
+      "sha256": "94ecb4c3baea91fce66477f9fe81416f511fa4e077d69f48313369755d5e5e5e"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load/swift/PREPARE.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load/swift/PREPARE.json",
+      "bytes": 2871,
+      "sha256": "7314150cd337f41b013090712d7ba9644db17f88da2c4a6242851ba8c196a6a9"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/CASES.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/swift/CASES.json",
+      "bytes": 2109,
+      "sha256": "662236ab01188634e355ab5768f088b547bda4e165c28ba6859b0aae0129eafd"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/FILE-HASHES.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/swift/results/FILE-HASHES.json",
+      "bytes": 5142,
+      "sha256": "541ed9a574f89205aa02d9822702ead0633047e0c708f61232ad1215427d8bda"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/REVIEW.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/swift/results/REVIEW.md",
+      "bytes": 3287,
+      "sha256": "d3777174486a04a0a9fb4217ca7e2b81a6c8369e8837abf5c9730f442c7a26a7"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/load-observation.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/swift/results/load-observation.json",
+      "bytes": 5718,
+      "sha256": "93ff5211b63c7856f4eb097ecd25e218b3c0c927f5aed7a7b537935dfe777478"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/swift/results/responses.json",
+      "bytes": 6655,
+      "sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/results/HANDOFF.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/swift/results/HANDOFF.md",
+      "bytes": 3120,
+      "sha256": "4d7729dc852aab11d28614bdd7b1383c823eca55043cf54780353645c2a4c475"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/results/load-observation.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/swift/results/load-observation.json",
+      "bytes": 6601,
+      "sha256": "0c4983108ed245f1640fc09854403ae3bff4830071ce0ec7d833a6b05de080aa"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/PREPARE.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/swift/PREPARE.json",
+      "bytes": 385,
+      "sha256": "5e869909276a8e68d568ca4eaccfc790d43cd47b8d7253df1ceb1618ba10d0a4"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/swift/PACKET-VERIFICATION.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/swift/PACKET-VERIFICATION.json",
+      "bytes": 221,
+      "sha256": "95f6bf77f1c429ee8c69569ea01b44be4d66855ccf59913578aa27a4d84275d2"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/CASES.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/cpp/CASES.json",
+      "bytes": 2304,
+      "sha256": "a55376d52e5779be65275a15b8dfde2d229948e3d800085100197b9e3c3cc533"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/ADDENDUM.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/cpp/results/ADDENDUM.md",
+      "bytes": 1642,
+      "sha256": "753e10e625c8945ea6d4b7b925d60b7f1325dfad73772d82c8a0394986816b29"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/REVIEW.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/cpp/results/REVIEW.md",
+      "bytes": 2236,
+      "sha256": "7b7f047464f2704391c80a802d3c4e43e271c3da754a54cbd4af95f594c353a5"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/load-observation.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/cpp/results/load-observation.json",
+      "bytes": 9445,
+      "sha256": "3e7a1f2f7eec1d79b34e8fa47cd4382c853896a665e32abf6c2b9610f348286e"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/cpp/results/responses.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/agents/cpp/results/responses.json",
+      "bytes": 6292,
+      "sha256": "edb164e1a1529bac73d4ab85745471177532d9283e5aa4344f671d90c8cc0bf8"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/results/HANDOFF.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/cpp/results/HANDOFF.md",
+      "bytes": 2452,
+      "sha256": "fdc8ff387c5d78ec4bbb6820b7ec1f5e298c87dc3a677b495a2263fd7bf88d87"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/results/REPAIR-REVIEW.md",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/cpp/results/REPAIR-REVIEW.md",
+      "bytes": 2177,
+      "sha256": "d3c496ad35f03738386dd27dd8566e5c560ece48eb87ee13b2b16f5ffd56a86d"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/results/load-observation.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/cpp/results/load-observation.json",
+      "bytes": 7554,
+      "sha256": "173eb25715ec281246c7fe903dde9631687e4954ede878aa1438cab461d6d70f"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/PREPARE.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/cpp/PREPARE.json",
+      "bytes": 379,
+      "sha256": "2cbe3ccdc5c327f17798cdf0fc957c2aab6da72b594d906ded086b7c5c4ecac2"
+    },
+    {
+      "source_locator": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/accepted-load-011/cpp/PACKET-VERIFICATION.json",
+      "repository_path": "docs/prime-replay/custody-harvest-012/evidence/accepted-load-011/cpp/PACKET-VERIFICATION.json",
+      "bytes": 221,
+      "sha256": "bd66db8799769222419b68792a842d98d32000ebb7d07690c5b8f716eb0137a4"
+    }
+  ],
+  "external_evidence": {
+    "root": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012",
+    "meaning": "Historical task-local origin. Selected proof files above are portable repository copies. Raw packets, full synthetic fixtures and the retained incomplete failure remain external, not automatically opened by a corpus/skill load."
+  },
+  "harvest_store": {
+    "result": "PASS",
+    "archive": "/Users/ergentics/2026-09-20/er/outputs/prime-skill-harvest-store/PRIME-CUSTODY-010-012/ergentics-prime-custody.zip",
+    "archive_sha256": "bb04868a2934a2170a4df0131949119c20c3de2f308ce161799d883acc24339b",
+    "archive_bytes": 14602,
+    "exact_source_zip_equality": true,
+    "files": 6,
+    "helper_verify_exit_code": 0,
+    "receipt_sha256": "148e0675168b9b7d45e38d64fb3abdeeb957659609b2b1ac23e5e9e858f1fea9",
+    "control_enabled": false,
+    "store_releases": 5,
+    "store_bytes": 222235,
+    "remaining_releases": 3,
+    "remaining_bytes": 16554981,
+    "scope": "Fixed store only; no installation, native execution or background service."
+  },
+  "installed_state": "New skill, corpus contribution and helper package are not installed. Both logical profiles observed the accepted lesson through explicit candidate-helper packets; original installed versions and bindings are preserved.",
+  "publication_scope": "Selected authored skill, compatible helper repair, reviewed contribution and bounded evidence for Ergentics/ergentics-prime. No raw CI logs, credentials, private runtime payloads, full archive or excluded local inputs.",
+  "classification": {
+    "custody_and_lesson": "PROVENANCE_FIX",
+    "helper_byte_comparison": "IMPLEMENTATION_FIX",
+    "protected_scientific_semantics_changed": false
+  }
+}

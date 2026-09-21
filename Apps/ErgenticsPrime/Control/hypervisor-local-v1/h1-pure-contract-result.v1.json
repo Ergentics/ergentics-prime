@@ -1,0 +1,224 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "high_value_ingress": "DENIED",
+    "next_stage_authorized": false,
+    "trusted_egress": "DENIED"
+  },
+  "canonical_streams": {
+    "aggregate_receipt_leaf_labels": [
+      "schema",
+      "state.json",
+      "state.cbor",
+      "transition.json",
+      "transition.cbor",
+      "witnesses.json",
+      "witnesses.cbor"
+    ],
+    "cbor_profile": "DETERMINISTIC_RFC8949_SUBSET",
+    "h0": {
+      "cbor_sha256": "a9af1fae892d4f96e52d69d997d3aacf2b91576bd55662d7cc1c4aba73a85def",
+      "json_sha256": "02961fc59d904bc110f340847b0c44f1741b1e2b5f571bb91080ad5f68788b7d",
+      "state_root": "7d1b5ac0bfaa03f4237a873baeb01dc2581d490a96832bc5284ba5aeb8f3850d"
+    },
+    "h1": {
+      "output_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+      "receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+      "transition_root": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0",
+      "witnesses": [
+        {
+          "predicate_id": "namespace_new_and_product_local",
+          "root": "7ccc5e09ac4d96cad16ac17179b945adefb4090a283d132f38bdccd27d9b88c0"
+        },
+        {
+          "predicate_id": "stage_order_exact",
+          "root": "e32758b52816f0e49a5561184516cfa832723fb22feba8a7bc6022a25a67717a"
+        },
+        {
+          "predicate_id": "predecessor_dag_exact",
+          "root": "3a8bb2ac4b5aaccf5b27e78bfbee2219f739fa2ebb8fd5a48b0189f5142b2448"
+        },
+        {
+          "predicate_id": "authority_ceiling_zero",
+          "root": "378f9dcb76e25ef7d68adff28e720ad9a27dfda49047d85d716760c148c17a13"
+        },
+        {
+          "predicate_id": "historical_comparators_non_authoritative",
+          "root": "750fbaaaf0e61a2d88e4841636b8e0cfaec6c6d90c400046d3582d818cb18de0"
+        },
+        {
+          "predicate_id": "json_cbor_semantic_join",
+          "root": "c1e8f411970cb3dcdcbc6d621a70a2bccd567b550f10825e923b0e70ffe0eb52"
+        },
+        {
+          "predicate_id": "merkle_ancestry_exact",
+          "root": "a9e19b18db95d1b42ece69601c0c18668a3039fd3f462e38a45b1a0e52a872b8"
+        },
+        {
+          "predicate_id": "no_live_effects",
+          "root": "9137c4ef4fcb852490b28e56a4e05bd8c538dec9df6eeb3bc7d486b7d668b999"
+        }
+      ]
+    },
+    "json_profile": "CANONICAL_SORTED_KEYS_NO_WHITESPACE",
+    "maximum_stream_bytes": 65536,
+    "semantic_join_required": true
+  },
+  "checkpoints": {
+    "canonical_source": {
+      "commit": "ba1750406bfab63afcdf83252c1f907829d78ac5",
+      "tree": "21a75ec7cfc47b9b8351f6d0023cb9a91af319af"
+    },
+    "h1_implementation": {
+      "commit": "24be18ff033072cd4206bae226a444b27a1ebf47",
+      "project_sha256": "9672908084007e3842b29ffee38b5a8b651e783a93847dc96056b03d66675e04",
+      "source_sha256": "8213aca88bdaea80d0ce02b76bc38d23cc7858c7d94b72fc0a26d84e8fb6c7fe",
+      "test_sha256": "94d79763ba2a3b14f95b22d4b9f073a474b0e08c0abed403d563e4321d7bb8ca",
+      "tree": "8fa29a04b4582f638116c04b7b1f2a54e1bcb10b"
+    },
+    "stage0_control": {
+      "commit": "f944cefb487dd1087df92f569d7f19ec1f733e06",
+      "freeze_sha256": "459a830f72910236ec8d7c430229f3d82d974c1cc9396d3b4a551bc14c7487f7",
+      "tree": "4bcd44bde7a20169c322af859fc9677032b6cd22"
+    }
+  },
+  "effects": {
+    "h1_core": {
+      "clock_read": false,
+      "environment_read": false,
+      "file_read": false,
+      "file_write": false,
+      "git_operation": false,
+      "journal_open": false,
+      "network": false,
+      "process_launch": false,
+      "vm_launch": false
+    },
+    "verification_harness": {
+      "app_launch": false,
+      "build_outputs_root": "/private/tmp",
+      "code_signing_allowed": false,
+      "compiler_and_xctest_processes": true,
+      "launch_services_registration_by_xcode_product_build": true,
+      "linker_adhoc_signature_observed": true,
+      "network_observation": "NOT_MEASURED",
+      "source_tree_writes_from_build_or_test": false,
+      "team_identifier": "NOT_SET",
+      "vm_launch": false
+    }
+  },
+  "graph": {
+    "edge_count": 11,
+    "edges": [
+      {
+        "from": "7d1b5ac0bfaa03f4237a873baeb01dc2581d490a96832bc5284ba5aeb8f3850d",
+        "predicate": "transition_input_state",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "7ccc5e09ac4d96cad16ac17179b945adefb4090a283d132f38bdccd27d9b88c0",
+        "predicate": "transition_witness_00",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "e32758b52816f0e49a5561184516cfa832723fb22feba8a7bc6022a25a67717a",
+        "predicate": "transition_witness_01",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "3a8bb2ac4b5aaccf5b27e78bfbee2219f739fa2ebb8fd5a48b0189f5142b2448",
+        "predicate": "transition_witness_02",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "378f9dcb76e25ef7d68adff28e720ad9a27dfda49047d85d716760c148c17a13",
+        "predicate": "transition_witness_03",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "750fbaaaf0e61a2d88e4841636b8e0cfaec6c6d90c400046d3582d818cb18de0",
+        "predicate": "transition_witness_04",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "c1e8f411970cb3dcdcbc6d621a70a2bccd567b550f10825e923b0e70ffe0eb52",
+        "predicate": "transition_witness_05",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "a9e19b18db95d1b42ece69601c0c18668a3039fd3f462e38a45b1a0e52a872b8",
+        "predicate": "transition_witness_06",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "9137c4ef4fcb852490b28e56a4e05bd8c538dec9df6eeb3bc7d486b7d668b999",
+        "predicate": "transition_witness_07",
+        "to": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0"
+      },
+      {
+        "from": "7d1b5ac0bfaa03f4237a873baeb01dc2581d490a96832bc5284ba5aeb8f3850d",
+        "predicate": "output_parent_state",
+        "to": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c"
+      },
+      {
+        "from": "511d0e7302c02cf93b439bc1d7e1be5b410255681209b2106ff2f46d1b5a4be0",
+        "predicate": "output_transition",
+        "to": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c"
+      }
+    ],
+    "node_counts": {
+      "state": 2,
+      "total": 11,
+      "transition": 1,
+      "witness": 8
+    },
+    "shape": "ACYCLIC_STATE_WITNESS_TRANSITION_STATE"
+  },
+  "lineage_disposition": "NEW_PRODUCT_LOCAL_NON_CONTINUATION",
+  "next": {
+    "authorized": false,
+    "eligible_action": "SEPARATE_H2_FREEZE_RECOMMENDATION",
+    "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1"
+  },
+  "outcome": "PASS_PURE_CONTRACT_ONLY",
+  "recorded_at_utc": "2026-09-01T00:31:48Z",
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "byte_bound_before_parse": 65536,
+      "disposition": "NAMED_NON_BLOCKING",
+      "predicate": "foundation_json_parse_precedes_explicit_depth_node_walk"
+    }
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-h1-result.v1",
+  "stage_id": "hypervisor_product_schema_and_pure_contract_v1",
+  "verification": {
+    "debug": {
+      "configuration": "Debug",
+      "failures": 0,
+      "tests": 426
+    },
+    "independent_audit": "PASS_NO_CHECKPOINT_BLOCKER",
+    "product_builds": {
+      "debug": "SUCCEEDED_CODE_SIGNING_ALLOWED_FALSE_LINKER_ADHOC_NO_LAUNCH",
+      "release": "SUCCEEDED_CODE_SIGNING_ALLOWED_FALSE_LINKER_ADHOC_NO_LAUNCH"
+    },
+    "release": {
+      "configuration": "Release",
+      "failures": 0,
+      "tests": 379
+    },
+    "runtime": {
+      "architecture": "arm64",
+      "macos_build": "25F84",
+      "macos_version": "26.5.2",
+      "swift": "6.3.3",
+      "xcode_build": "17F113",
+      "xcode_version": "26.6"
+    }
+  },
+  "vm_disposition": "NOT_CREATED"
+}

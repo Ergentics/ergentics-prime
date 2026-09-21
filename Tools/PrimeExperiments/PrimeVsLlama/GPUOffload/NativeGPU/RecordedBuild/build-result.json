@@ -1,0 +1,89 @@
+{
+  "status": "COMPILED_NOT_EXECUTED",
+  "processID": 27858,
+  "exitCode": 0,
+  "exactDirectChildReaped": true,
+  "timedOut": false,
+  "elapsedNanoseconds": 2974542917,
+  "inputs": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/main.swift",
+      "byteCount": 12583,
+      "sha256": "6c9710f44b91b2e46b9286220cc3f97c2485ce179d63979d73481fd94d29f546"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/MetalFieldEvaluator.swift",
+      "byteCount": 8322,
+      "sha256": "ac4df9254d566e22e623b63e864e3cda14f4f4ab50ee8ed785b9a3ba02a7d3bd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/CPUReference.swift",
+      "byteCount": 3259,
+      "sha256": "dc9aebd3f3ab59f923ebc89a0442515ae761ccedaa34db129c2d9d642bc0d4a7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/Bridge.h",
+      "byteCount": 97,
+      "sha256": "b05fca2c42a5f61acf6b4492f8498fe27945772bc9f84a3d77f22f97262e5afa"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build.py",
+      "byteCount": 3639,
+      "sha256": "c3c859040aeb77a917e2eaf7c7c9e68ece7db94b970af4bbc81b84722c96a89e"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "byteCount": 3903,
+      "sha256": "d2ae546092a1c728697883e663b07cf13eccd67795e8c1e7e9aa19a48760ab97"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+      "byteCount": 20215,
+      "sha256": "5b8db86cea4ccf1dfc10f2c94203f282ed03b5b4a2c4784e80b9f6101d89ab5c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+      "byteCount": 1612,
+      "sha256": "bbe37c301c49a92c4c6d6401dfd8054cd22f11fb9b7a06c94381a0fbd8131e6a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build_guest.py",
+      "byteCount": 6554,
+      "sha256": "7ae0d5688db3324662dce9be51cc2003fa772739d62c6bcb86415011cbad444b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/PrimeGuestCompute.o",
+      "byteCount": 9520,
+      "sha256": "caddeee1cca935208c961fc64850e7e7a605968c42129049099d82cd824d60e7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Admission/PrimeInferenceAdmission.h",
+      "byteCount": 1986,
+      "sha256": "2639d060edb6d4455beda20ab06247a884b3ace650b485c3fa0a5e3bf353aec0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Admission/PrimeInferenceAdmission.c",
+      "byteCount": 6147,
+      "sha256": "0d09694b4915e3ceffb6eb63657e1950537e6546295be7c5ec828d5bbd497567"
+    }
+  ],
+  "inputsUnchanged": true,
+  "stdout": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build02/stdout.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build02/stderr.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "modelRuns": 0,
+  "guestRuns": 0,
+  "GPUExecutions": 0,
+  "binary": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build02/PrimeGuestGPU",
+    "byteCount": 186896,
+    "sha256": "56dc977e6e0678c188e7ae1d1b03169a8f5b386b3137c48b4cf215a216ae47e8"
+  }
+}

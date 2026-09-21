@@ -1,0 +1,30 @@
+{
+  "snapshots": [
+    {
+      "directory": "../0014-prime-model-gpu-timing",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 6072,
+        "sha256": "316fcfefbba5c682ec1b558ca7a12faed09e78936f692d2b95cf3a4567cc7786"
+      },
+      "fileCount": 36,
+      "byteCount": 67998588
+    },
+    {
+      "directory": ".",
+      "manifest": {
+        "path": "FILE-MANIFEST.json",
+        "byteCount": 74229,
+        "sha256": "ac28bebb1359539ffcb4fc1d67711e39531b4d5a72fb9f556d89cf9b82c7cade"
+      },
+      "fileCount": 389,
+      "byteCount": 8107550
+    }
+  ],
+  "excludedUnsealedAdministrativeFiles": [
+    "SNAPSHOT-INDEX.json",
+    "VERIFICATION.json",
+    "SOURCE-INTEGRATION.json",
+    "prime-gpu-assessment-source.bundle"
+  ]
+}

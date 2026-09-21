@@ -1,0 +1,158 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_capability_mint": "ABSENT",
+    "projection_persisted": false
+  },
+  "checkpoint": "H4-B_DESTINATION_SPECIFIC_COORDINATOR_EXTRACTION",
+  "environment": {
+    "architecture": "arm64",
+    "macos_build": "25F84",
+    "macos_version": "26.5.2",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "h3_input_state": {
+    "current_product_mint_from_h3": "ABSENT",
+    "h3_rerun": false,
+    "live_handoff_bound": false,
+    "source_disposition": "H3_STRUCTURAL_FIXTURE_CONTRACT_ONLY"
+  },
+  "known_inherited_diagnostics": [
+    {
+      "component": "GuestJournalTests",
+      "h4b_relation": "NONE",
+      "observation": "A full-suite run emitted the pre-existing libsqlite3 journal.sqlite3-shm vnode-unlinked-while-in-use API warning while the suite still passed.",
+      "status": "TRACKED_OUT_OF_SLICE"
+    }
+  ],
+  "nonclaims": [
+    "This checkpoint does not complete or enter H4.",
+    "This checkpoint does not close Gate E or mint scientific authority.",
+    "The five typed operations prove at-most-once coordinator extraction, not delivery to or identity of an external sink.",
+    "Returned immutable delivery values remain ordinarily copyable after extraction.",
+    "No caller or sink identity authentication and no confused-deputy isolation is claimed.",
+    "H4-A disclosure events are checked inside the coordinator but are not exposed by H4-B outputs and are not new dispatch evidence.",
+    "Graph and Merkle outputs are empty typed preparation markers; no graph, root, or commitment is constructed.",
+    "JSON, CBOR, SQLite, reopen verification, durable persistence, and fault injection are not executed here.",
+    "No H3 rerun, H3 model change, VM, process, file, network, UI, or production-recipient operation is performed by H4-B."
+  ],
+  "pre_checkpoint_diagnostics": [
+    {
+      "authority_effect": "NONE",
+      "cause": "The first boundary-test fixture used validThroughTick 42, which was already less than live mach_continuous_time and therefore rejected before dispatcher construction.",
+      "correction": "The fixture was changed to UInt64.max minus 1 so exact-cutoff and plus-one expiry are evaluated after valid capability admission.",
+      "id": "expiry_boundary_fixture_clock_domain",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    }
+  ],
+  "predicates": [
+    {
+      "id": "exactly_five_nominally_distinct_typed_extraction_operations",
+      "result": "PASS"
+    },
+    {
+      "id": "recipient_indexed_generic_take_surface_absent",
+      "result": "PASS"
+    },
+    {
+      "id": "one_successful_extraction_per_destination_under_replay_and_concurrency",
+      "result": "PASS"
+    },
+    {
+      "id": "all_five_destinations_race_on_one_dispatcher_without_slot_interference",
+      "result": "PASS"
+    },
+    {
+      "id": "expiry_revalidated_atomically_at_extraction",
+      "result": "PASS"
+    },
+    {
+      "id": "inclusive_cutoff_and_monotonic_global_expiry",
+      "result": "PASS"
+    },
+    {
+      "id": "previously_delivered_slot_stays_consumed_after_later_global_expiry",
+      "result": "PASS"
+    },
+    {
+      "id": "release_output_contains_only_release_projection_fields",
+      "result": "PASS"
+    },
+    {
+      "id": "release_output_excludes_envelope_identity_authority_source_epoch_and_disclosure_metadata",
+      "result": "PASS"
+    },
+    {
+      "id": "raw_diagnostic_canary_absent_from_every_typed_output",
+      "result": "PASS"
+    },
+    {
+      "id": "graph_and_merkle_markers_are_payload_empty",
+      "result": "PASS"
+    },
+    {
+      "id": "consumed_or_poisoned_capability_cannot_construct_another_dispatcher",
+      "result": "PASS"
+    },
+    {
+      "id": "capability_consume_and_dispatcher_initialization_inaccessible_to_normal_app_code",
+      "result": "PASS"
+    },
+    {
+      "id": "test_only_mint_and_consume_symbols_absent_from_debug_and_release_apps",
+      "result": "PASS"
+    },
+    {
+      "id": "persistence_process_vm_and_production_mint_surfaces_absent",
+      "result": "PASS"
+    }
+  ],
+  "predecessor": {
+    "commit": "760113f6931e72796f8ad8ef73012e978b3a0b62",
+    "tree": "ccd4ab653496fcbed53ece269473e1c915059866"
+  },
+  "result": "PASS_H4B_DESTINATION_DISPATCH_CONTRACT_ONLY",
+  "schema": "com.ergentics.provenance.hypervisor.h4b-checkpoint.v1",
+  "source_commitments": [
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "sha256": "632550e9c015ff30ee108cacf1a9d9a4e49383792037afbd61d0b2cb8acc8c86"
+    },
+    {
+      "path": "Tests/HypervisorStageH4PrivacyTests.swift",
+      "sha256": "87654de15db2b2e678a2394adb281a29fdd4662532528ce74bcf1055f74158c6"
+    }
+  ],
+  "verification": {
+    "app_builds_warnings_as_errors": {
+      "debug": "PASS",
+      "release": "PASS"
+    },
+    "binary_test_bridge_symbol_scan": {
+      "debug": "ABSENT_PASS",
+      "release": "ABSENT_PASS"
+    },
+    "diff_check": "PASS",
+    "focused_h4_tests": {
+      "failed": 0,
+      "passed": 34,
+      "skipped": 0
+    },
+    "full_debug_tests": {
+      "failed": 0,
+      "passed": 596,
+      "skipped": 0
+    },
+    "full_release_tests": {
+      "failed": 0,
+      "passed": 549,
+      "skipped": 0
+    },
+    "independent_boundary_review": "NO_MUST_FIX_FINDINGS",
+    "production_compilation_condition": "EPR_H4_PRIVACY_TESTS_ABSENT_PASS",
+    "static_forbidden_surface_scan": "PASS"
+  }
+}

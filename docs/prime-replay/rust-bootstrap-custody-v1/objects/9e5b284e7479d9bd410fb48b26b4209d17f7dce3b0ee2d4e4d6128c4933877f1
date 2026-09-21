@@ -1,0 +1,18 @@
+{
+  "Guest/doorbell.S": {
+    "bytes": 1131,
+    "sha256": "60ae1941fd43a5d3410fdedefe2ecb99adad0d2bcfdfd429b75c35fb59a409fd"
+  },
+  "Sources/HypervisorGuest.c": {
+    "bytes": 22174,
+    "sha256": "a275507f2716ed4d8062f6d29cf86bcd77dcb556d451ee3c60b0944f25786feb"
+  },
+  "Sources/HypervisorGuest.h": {
+    "bytes": 3195,
+    "sha256": "4ee99c268151d0cfc508301c54fb3c9484731e2ea06c6bf839294a9a1fd12e68"
+  },
+  "ErgenticsProvenance.xcodeproj/project.pbxproj": {
+    "bytes": 26043,
+    "sha256": "7f4e560e92a17a1a59a3dfb61cb825418cd2484bb9ed5e020b0cb322862ce17c"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "ergentics.profile.v1",
+  "id": "ergentics_swift_c",
+  "version": "0.1.0",
+  "name": "Ergentics Swift+C",
+  "purpose": "Apply Ergentics method to Swift implementation, native state and deliberate C interfaces.",
+  "agent": {
+    "id": "ergentics_swift_c",
+    "version": "0.1.0",
+    "manifest_sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596"
+  },
+  "method": {
+    "policy_id": "EA-POLICY-001",
+    "required_capabilities": [
+      "Resolve the current authorized policy and receiving task.",
+      "Distinguish requested model/settings, observed instruction loading and actual execution.",
+      "Use relevant positive controls and golden negatives; preserve failures."
+    ],
+    "conditional_skills": [
+      {
+        "id": "ergentics-alignment",
+        "when": "Resolve verified policy and authorized task continuity; this named Codex skill is the current adapter."
+      },
+      {
+        "id": "ergentics-behavior-review",
+        "when": "Reported behavior or evidence conflicts need bounded investigation."
+      },
+      {
+        "id": "ergentics-surface-review",
+        "when": "A Surface checkpoint review is actually selected; apply its project constraints."
+      },
+      {
+        "id": "auto-harvest",
+        "when": "The current authorized selected-lesson packaging workflow is applicable and its qualified route is identified; this name is a logical capability, not a claimed installed package."
+      }
+    ],
+    "verification": [
+      "Bind input/source/runtime identities to the actual task.",
+      "Keep source correctness, build, loading, execution and output validation separate.",
+      "Known golden cases are regression controls, not blind evidence.",
+      "Record scoped uncertainties without transferring another task hold or prior PASS."
+    ]
+  },
+  "boundaries": {
+    "implementation_languages": [
+      "Swift",
+      "C"
+    ],
+    "project_rules_take_precedence": true,
+    "grants_tool_access": false
+  },
+  "continuity": {
+    "state_location": "Receiving task record outside immutable releases and prepared packets.",
+    "originals": "Preserve each attempt and author result separately before synthesis where independence is required.",
+    "lessons": "Use explicit selected corpus entries with source, version, attribution, review and use scope; no automatic global memory.",
+    "auto_harvest": "A qualified task-specific packager may produce selected candidates. Review and explicit promotion remain separate; this profile starts no collector."
+  },
+  "corpus": {
+    "accepted_kinds": [
+      "lesson",
+      "positive_control",
+      "golden_negative",
+      "task_fixture"
+    ],
+    "accepted_material_classes": [
+      "authored_method",
+      "synthetic"
+    ]
+  },
+  "extensions": {
+  }
+}

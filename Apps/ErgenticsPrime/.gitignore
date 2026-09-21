@@ -1,0 +1,16 @@
+.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Local retained model asset; embed.rb verifies it against PrimePromptCheckpoint.json.
+/Resources/PrimeModel/
+
+# Reproducible app service compilation outputs; sources and receipts are saved separately.
+/Tools/PrimeComputeNative/build*/
+
+# Machine-local paths to the retained, verified build assets.
+/BuildAssets.json
+
+# Preserve this existing tracked MLX test fixture under Prime's weight ignore rule.
+!/Packages/PrimeNativeRuntime/Vendor/ergentics-mlx-swift/Source/Cmlx/mlx-c/examples/arrays.safetensors

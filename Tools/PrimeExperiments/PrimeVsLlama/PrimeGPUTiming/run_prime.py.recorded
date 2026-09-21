@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+"""Small serial Prime-only regression run, using retained inputs and weights."""
+import hashlib,json,subprocess,sys
+from pathlib import Path
+w=Path(__file__).resolve().parent
+c=w.parents[1]/'outputs/Prime-Experiment-Builds'
+exe=Path(sys.argv[1]).resolve(); dest=w/'PrimeLive'; assert not dest.exists()
+config=json.loads((c/'Prime-Domain-03/REPLAY-CONFIG.json').read_bytes())
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+dest.mkdir(); before=sha(exe); count=0
+for seed in ('1618','2718','3141'):
+    for mode in ('host','guest'):
+        phase=dest/f'seed-{seed}-{mode}';phase.mkdir();(phase/'cache').mkdir()
+        cases=[];bindings=[]
+        for batch in ('000','058'):
+            src=c/f'Prime-Domain-03/Comparison/Requests/seed-{seed}/{mode}/batch-{batch}.json'
+            req=json.loads(src.read_bytes())
+            for i,case in enumerate(req['cases'][:2]):
+                cases.append(case)
+                bindings.append({'caseIndex':len(cases)-1,'sourceRequest':str(src),'sourceRequestSHA256':sha(src),'sourceCaseIndex':i,'predecessorResultDirectory':str(c/f'Prime-Domain-03/Comparison/Results/seed-{seed}-{mode}-batch-{batch}/native')})
+        weights=Path(config['weights'][seed]); assert sha(weights)==req['weightsSHA256']
+        req.update(cases=cases,weightsPath=str(weights))
+        (phase/'request.json').write_text(json.dumps(req,indent=2)+'\n')
+        (phase/'source-bindings.json').write_text(json.dumps(bindings,indent=2)+'\n')
+        spec={'argv':[str(exe),'--request',str(phase/'request.json'),'--output-directory',str(phase/'native')],
+              'environment':{'PATH':'/usr/bin:/bin:/usr/sbin:/sbin','HOME':str(phase),'TMPDIR':str(phase/'cache'),'OMP_NUM_THREADS':'2'},'phase':phase.name,'trainingPerformed':False,'referencesProvidedToModel':False,'executableSHA256':before}
+        (phase/'specification.json').write_text(json.dumps(spec,indent=2)+'\n')
+        with (phase/'outer.stdout').open('x') as o,(phase/'outer.stderr').open('x') as e:
+            r=subprocess.run(['/usr/bin/ruby',config['controller'],str(phase)],stdout=o,stderr=e,timeout=140)
+        receipt=json.loads((phase/'controller/result.json').read_bytes())
+        assert r.returncode==0 and receipt['passed'],str(phase)
+        assert sha(exe)==before and sha(weights)==req['weightsSHA256']
+        count+=1; print(json.dumps({'completed':phase.name}),flush=True)
+(dest/'COMPLETE.json').write_text(json.dumps({'processes':count,'modelForwards':96,'guestVMs':12,'guestEntries':60,'selection':'first two cases from retained batches000 and058, each seed/mode; inputs unchanged','trainingPerformed':False,'olderTextModelsInvoked':False,'executableSHA256':before},indent=2)+'\n')

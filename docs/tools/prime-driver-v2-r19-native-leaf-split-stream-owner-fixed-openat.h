@@ -1,0 +1,72 @@
+// SPDX-FileCopyrightText: 2026 Ergentics, LLC
+// SPDX-License-Identifier: LicenseRef-Ergentics-Proprietary
+
+#ifndef PRIME_DRIVER_V2_R19_NATIVE_LEAF_SPLIT_STREAM_OWNER_FIXED_OPENAT_H
+#define PRIME_DRIVER_V2_R19_NATIVE_LEAF_SPLIT_STREAM_OWNER_FIXED_OPENAT_H
+
+#include <stdint.h>
+
+#define PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT \
+    __attribute__((visibility("hidden"), warn_unused_result))
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_root_directory(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_private_tmp(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_dev_null(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_owner_a_image(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_primitive_a_image(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_supervisor_a_image(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_controller_a_image(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_auditor_a_image(void);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_create_owner_root(
+    int32_t private_tmp_fd
+);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_open_owner_root(
+    int32_t private_tmp_fd
+);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_create_poisoned_journal_leaf(
+    int32_t owner_root_fd,
+    uint32_t ordinal
+);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_get_fd_flags(int32_t fd);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_get_status_flags(int32_t fd);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_set_cloexec(int32_t fd);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_set_nonblocking(int32_t fd);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_set_nosigpipe(int32_t fd);
+
+PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+int32_t prime_driver_v2_r19_split_owner_full_fsync(int32_t fd);
+
+#undef PRIME_DRIVER_V2_R19_SPLIT_OWNER_FIXED_RESULT
+
+#endif

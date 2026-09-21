@@ -1,0 +1,89 @@
+{
+  "schema": "ergentics.agent-bundle-manifest.v1",
+  "name": "ergentics-agents",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 690,
+      "sha256": "4bea484dfea0cc4ee72eeaadfb606290600ae2a0b990098de1744dc3500ce360"
+    },
+    {
+      "path": "LOAD.md",
+      "bytes": 3383,
+      "sha256": "36ca9e17782f816e0b1499b227008842ff637b9a975b1212754ffd23c483c925"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4116,
+      "sha256": "11bf77a15d1990cf69b9792d2531396cbb13e072731afdb79660dab4e3f02e60"
+    },
+    {
+      "path": "adapters/codex/README.md",
+      "bytes": 2323,
+      "sha256": "852d1e60b8071089007a158c6b1930aedc8020a5dfd46ffa6a371fad680e90a6"
+    },
+    {
+      "path": "adapters/codex/config.fragment.toml",
+      "bytes": 515,
+      "sha256": "2c6ca3b9dd34692ab23f06435cd0ac81c919c255b35e9c48bdb25b3e2bdf7a8e"
+    },
+    {
+      "path": "adapters/codex/roles/ergentics_cpp.toml",
+      "bytes": 8613,
+      "sha256": "a3e23ea40160fbf31e10fdf41435bb31b0ebe937d5502c04fb0845461e6fccfb"
+    },
+    {
+      "path": "adapters/codex/roles/ergentics_swift_c.toml",
+      "bytes": 8361,
+      "sha256": "21e3eaab29612edf26b50a0565e50a4116d3aa3a15496188a2e69f13aa309b34"
+    },
+    {
+      "path": "agents/ergentics_cpp/AGENT.md",
+      "bytes": 2228,
+      "sha256": "c25453b511b63a42b5cd95a304f28ad4501d9024e1163f973ba239526b27d8ee"
+    },
+    {
+      "path": "agents/ergentics_cpp/agent.json",
+      "bytes": 1118,
+      "sha256": "23ee293cce8efef7306bf95a55cb41beb7adb96169969ac716ca86109954f647"
+    },
+    {
+      "path": "agents/ergentics_swift_c/AGENT.md",
+      "bytes": 1972,
+      "sha256": "0b906b5f4ce7032895dd5d80a095bccc1738e5817bae6a0bff2259951068879c"
+    },
+    {
+      "path": "agents/ergentics_swift_c/agent.json",
+      "bytes": 1120,
+      "sha256": "efd243cd5c1c41e7b4d5dc538e9169a617829a848309da8693261426b7d1e930"
+    },
+    {
+      "path": "agents.json",
+      "bytes": 617,
+      "sha256": "c8473f27dd61b5dc19d01ec8d9f6a1867c7e559ac6d3561ee7e699e2c639b5b7"
+    },
+    {
+      "path": "contracts/load-receipt.schema.json",
+      "bytes": 4392,
+      "sha256": "6aadb78e2011f756e43599a109ea08d08663d8e1b95088a7c2428d4f82b9f74b"
+    },
+    {
+      "path": "contracts/run-record.schema.json",
+      "bytes": 2888,
+      "sha256": "c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1"
+    },
+    {
+      "path": "references/lineage.json",
+      "bytes": 5434,
+      "sha256": "23d723bbae17fbefc32a7633053716945872956a8655dd1926a7d59406545da5"
+    },
+    {
+      "path": "shared/OPERATING-CONTRACT.md",
+      "bytes": 5571,
+      "sha256": "1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021"
+    }
+  ],
+  "self_hash": "Recorded in the external release receipt; excluded here."
+}

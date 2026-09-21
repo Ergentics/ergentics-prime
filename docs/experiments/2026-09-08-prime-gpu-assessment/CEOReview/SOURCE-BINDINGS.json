@@ -1,0 +1,119 @@
+{
+  "schema": "prime_ceo_os_source_bindings_v1",
+  "files": [
+    {
+      "path": "/Users/ergentics/ergentics-ceo/README.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/README.md",
+      "byteCount": 1391,
+      "sha256": "4a130a41536cc84cd81a637af7b4d62c285f4a04f9488c74dd40e3ad6ecada09"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/SCOPE.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/SCOPE.md",
+      "byteCount": 12897,
+      "sha256": "aff8063ef8c7436f57705994388807cd3f92f2f6f888bc91395b61fa62beb6c7"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/docs/STACK.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/docs/STACK.md",
+      "byteCount": 1541,
+      "sha256": "4af6ce92a32a4943708af3e4db7cb853ee5e3291ab98bb55596624a4ce2e9911"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/project.yml",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/project.yml",
+      "byteCount": 1400,
+      "sha256": "7663378b79382d0d2071adbb25aed083db9376551cc71ab71776a98de4978cbf"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/scripts/run-mac.sh",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/scripts/run-mac.sh",
+      "byteCount": 759,
+      "sha256": "5dad286ceedb70bcfd8919b52ab786d217c603a47f7efadee5e80f996fe4b305"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/ErgenticsCEO/Ergentics/ReposConfig.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/ErgenticsCEO/Ergentics/ReposConfig.swift",
+      "byteCount": 712,
+      "sha256": "4df7f96bb4c3ce5e84713d6b98188b176ece050432216bbf694ab05dbb004aef"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/ErgenticsCEO/Ergentics/ErgenticsOSReader.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/ErgenticsCEO/Ergentics/ErgenticsOSReader.swift",
+      "byteCount": 5235,
+      "sha256": "669dae4006546c9362454df09f9a63bddcb8c24b34cf931aecc86824916e1986"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/ErgenticsCEO/Ergentics/ErgenticsSnapshotService.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/ErgenticsCEO/Ergentics/ErgenticsSnapshotService.swift",
+      "byteCount": 17089,
+      "sha256": "aa63478c29baae9e13d32e736fe6cf0bdf3d27a43a4a5907c6d11d0df465477e"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/ErgenticsCEO/Ergentics/CommandDelegateRunner.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/ErgenticsCEO/Ergentics/CommandDelegateRunner.swift",
+      "byteCount": 3733,
+      "sha256": "0540cad8fdfa283c10082e81b76973893b99c5f0d3cf31dfdbf070bfc7bd7991"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/Tests/ErgenticsOSReaderTests.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/Tests/ErgenticsOSReaderTests.swift",
+      "byteCount": 601,
+      "sha256": "35e91d618a3b2a14e7e164d319a95bb6afcbed14b4ec775b8c13cf9289bd812f"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-ceo/ErgenticsCEO.xcodeproj/xcshareddata/xcschemes/ErgenticsCEO_macOS.xcscheme",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ergentics-ceo/ErgenticsCEO.xcodeproj/xcshareddata/xcschemes/ErgenticsCEO_macOS.xcscheme",
+      "byteCount": 4507,
+      "sha256": "eb2683711189456214e4b86be0f14daf32a025e0453376df0d3ea3bafbe82722"
+    },
+    {
+      "path": "/Users/ergentics/Developer/ErgenticsProvenance/Sources/VMWorkspaceModel.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ErgenticsProvenance/Sources/VMWorkspaceModel.swift",
+      "byteCount": 22791,
+      "sha256": "5855486afac31d915b511f15a3d912e32b29c92fcd700b44337404617baaaf0b"
+    },
+    {
+      "path": "/Users/ergentics/Developer/ErgenticsProvenance/Sources/VMWorkspaceStore.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ErgenticsProvenance/Sources/VMWorkspaceStore.swift",
+      "byteCount": 22348,
+      "sha256": "015da98e6729ddc6cbf6d2331b70336cb7019c1f20264e28832681924a5ffb16"
+    },
+    {
+      "path": "/Users/ergentics/Developer/ErgenticsProvenance/Sources/VMWorkspaceView.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/ErgenticsProvenance/Sources/VMWorkspaceView.swift",
+      "byteCount": 12341,
+      "sha256": "02cdcee2c2fe7f3c3884ade321818ca74e1ad20e9a92355f79216008bc88f301"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/README.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/prime-gpu-route-2026-09-08/GuestCompute/README.md",
+      "byteCount": 4700,
+      "sha256": "044f336055ef63cc63c41f8ddf4d48c95c7ee3b615491b1cb66410e534106e40"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+      "byteCount": 1612,
+      "sha256": "bbe37c301c49a92c4c6d6401dfd8054cd22f11fb9b7a06c94381a0fbd8131e6a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+      "byteCount": 20215,
+      "sha256": "5b8db86cea4ccf1dfc10f2c94203f282ed03b5b4a2c4784e80b9f6101d89ab5c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "byteCount": 3903,
+      "sha256": "d2ae546092a1c728697883e663b07cf13eccd67795e8c1e7e9aa19a48760ab97"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/BUILD.json",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/CEOReview/Source/0013-prime-guest-gpu-runtime/BUILD.json",
+      "byteCount": 744,
+      "sha256": "65173fd45dec8bfe1ba521cfbad1fa3b58050fcfae9ea2bf45a0b4231c2cb39b"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "ergentics.prime-rust-bootstrap-custody-locator.v1",
+  "owner": "Ergentics, LLC",
+  "version": "1.0.0",
+  "change_class": "PROVENANCE_FIX",
+  "phase": "POST_HISTORICAL_OUTCOME",
+  "historical_directory_name": "rust-guest-bootstrap-2026-08-30.YtXTfY",
+  "original_absolute_locator": "/Users/ergentics/Developer/ErgenticsProvenance/Control/rust-guest-bootstrap-2026-08-30.YtXTfY",
+  "portable_selected_snapshot": {
+    "relative_to_prime_repository_root": "docs/prime-replay/rust-bootstrap-custody-v1/manifest.json",
+    "manifest_sha256": "9c4f2494b76c4be439e90cad31b817716fdb6edcf1f3fcf2ae0f19989af7863f",
+    "preserves": "Selected original records, six A/B sources, images, ELF and maps, as content-addressed nonexecutable data."
+  },
+  "source_binding": {
+    "all_six_files_equal_across_build_A_build_B_and_staging": true,
+    "files": [
+      {
+        "path": "kernel.rs",
+        "bytes": 1381,
+        "sha256": "98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      },
+      {
+        "path": "entry.S",
+        "bytes": 1343,
+        "sha256": "0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      },
+      {
+        "path": "linker.ld",
+        "bytes": 1324,
+        "sha256": "f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      },
+      {
+        "path": "inspect.rb",
+        "bytes": 18696,
+        "sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      },
+      {
+        "path": "inspector-tests.rb",
+        "bytes": 7668,
+        "sha256": "0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      },
+      {
+        "path": "build.rb",
+        "bytes": 8272,
+        "sha256": "67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311",
+        "build_A": true,
+        "build_B": true,
+        "staging": true
+      }
+    ]
+  },
+  "artifact_binding": {
+    "image_bin": {
+      "bytes": 164,
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "build_A": true,
+      "build_B": true,
+      "llvm_A": true,
+      "llvm_B": true,
+      "header_derived": true
+    },
+    "image_elf": {
+      "bytes": 66576,
+      "sha256": "402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+      "build_A": true,
+      "build_B": true
+    },
+    "image_map": {
+      "bytes": 2026,
+      "sha256": "60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531",
+      "build_A": true,
+      "build_B": true
+    },
+    "staging_header": {
+      "path": "Sources/RustBootstrapImage.h",
+      "sha256": "676d0fb8f53a83c25bef454e3906d86069d63c5d924878995683fe2cf627b955",
+      "literal_words": 41,
+      "derived_bytes": 164,
+      "derived_sha256_matches_image": true
+    }
+  },
+  "recorded_outcome": {
+    "source_snapshots_equal": true,
+    "A_B_comparisons_equal": true,
+    "result_original": "BUILD_AND_STATIC_LAYOUT_PASS_PENDING_INSTRUCTION_REVIEW",
+    "checkpoint": "BUILD_AND_STATIC_REVIEW_PASS",
+    "guest_executions": 0,
+    "resulting_host_binary_executions": 0,
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "current_qualification": "NO_NEW_RUNTIME_QUALIFICATION",
+  "claim_boundary": "Repair of an incomplete copied-tree relative locator. Exact byte equality does not transfer historical authority or qualify later source/host integration."
+}

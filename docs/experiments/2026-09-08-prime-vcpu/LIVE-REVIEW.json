@@ -1,0 +1,826 @@
+{
+  "status": "PASS",
+  "scope": "independent full vCPU control, admission, request, feedback, process and cleanup readback",
+  "actualCounts": {
+    "models": 2,
+    "cases": 160,
+    "nativeModelForwards": 720,
+    "guestVMInstances": 160,
+    "controllerProcesses": 20,
+    "guestRunEntries": 880,
+    "guestCommittedPredictions": 720
+  },
+  "actualGuestFeedbackInsertions": 400,
+  "all20SelfAdmissionsPassed": true,
+  "all160VMLifecyclesClean": true,
+  "all880RawExitRegistersAndHVCPCsIndependentlyRecomputed": true,
+  "all720ModelInputsMatchGuestMaterializedJobs": true,
+  "all400ContinuationInputsUseActualPreviousPrediction": true,
+  "all20ControllersNormalExit0ExactReap1WithEOFAndEmptyGroups": true,
+  "all160WatchdogsCreatedAndJoinedWithoutFiring": true,
+  "signature": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0008-prime-vcpu-runtime/Runtime/PrimeVCPUInference",
+    "byteCount": 29958272,
+    "sha256": "c825b44c4d7d941ee2d28a07e748afbef82ce51e1bef7703d7cb38c779622b1b",
+    "entitlements": {
+      "com.apple.security.hypervisor": true
+    },
+    "display": "Executable=/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0008-prime-vcpu-runtime/Runtime/PrimeVCPUInference\nIdentifier=com.ergentics.prime.vcpu-inference\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20500 size=58734 flags=0x10000(runtime) hashes=1824+7 location=embedded\nVersionPlatform=1\nVersionMin=917504\nVersionSDK=917504\nHash type=sha256 size=32\nCandidateCDHash sha256=2352b82eae398f9f4d67524440f813e8c5ddf4d1\nCandidateCDHashFull sha256=2352b82eae398f9f4d67524440f813e8c5ddf4d192cab813409a6ca7681beba1\nHash choices=sha256\nCMSDigest=2352b82eae398f9f4d67524440f813e8c5ddf4d192cab813409a6ca7681beba1\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=15171584\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=2352b82eae398f9f4d67524440f813e8c5ddf4d1\nSignature size=4784\nAuthority=(unavailable)\nInfo.plist=not bound\nTeamIdentifier=ZCQ435U8JP\nRuntime Version=14.0.0\nSealed Resources=none\nInternal requirements count=1 size=200\n",
+    "independentStrictVerification": {
+      "exitCode": 0,
+      "method": "Read-only codesign --verify --strict --verbose=4, outside tool sandbox, independently returned valid on disk and satisfies designated requirement."
+    }
+  },
+  "compiledBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/main.swift",
+      "byteCount": 23183,
+      "sha256": "7278cac3b289369b6ab6b519bd8dc57ca0f43ad13173f63d2007e382342fe8dc"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/Bridge.h",
+      "byteCount": 89,
+      "sha256": "45ab5572e6485cb29dc812ab0a2cc627608b1a18be7abebcae372a17a6979f2e"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/PrimeGuestBridge.h",
+      "byteCount": 3659,
+      "sha256": "f5aed11e319504fb61f6a34c6778f1e7e69ba87c985c760af53a3159d25b6ad8"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/PrimeGuestBridge.c",
+      "byteCount": 20014,
+      "sha256": "1be244946dbeaccdc4c54901280e38914d0df0b3fc3b5e891a2601ce7961b9e2"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/build01/PrimeGuestBridge.o",
+      "byteCount": 9976,
+      "sha256": "52f5db44304219d08ebd01e8203a293a3b457c392de0960c72f1f3256bfbf2d8"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Admission/PrimeInferenceAdmission.h",
+      "byteCount": 1986,
+      "sha256": "2639d060edb6d4455beda20ab06247a884b3ace650b485c3fa0a5e3bf353aec0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Admission/PrimeInferenceAdmission.c",
+      "byteCount": 6147,
+      "sha256": "0d09694b4915e3ceffb6eb63657e1950537e6546295be7c5ec828d5bbd497567"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/build02/PrimeInferenceAdmission.o",
+      "byteCount": 5272,
+      "sha256": "9844c5f88314d3f761f4c665faba1c582d99f91071783978752525f2402a878b"
+    }
+  ],
+  "unchangedWeights": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "byteCount": 40919874,
+      "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "byteCount": 40919834,
+      "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "0006-batch-00",
+      "processID": 22727,
+      "elapsedSeconds": 0.8972930000163615,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 14864,
+          "sha256": "5cae37c3dc460b3c3cae17104ae1b62aefe47529c94703ed33d4ac8f68a8e5b9"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13826,
+        "sha256": "a39f0205e7f12c2b2676e4a6e9432e58cc467bd5cb7e5cfb9fc46e8411b139dc"
+      },
+      "result": {
+        "byteCount": 35700,
+        "sha256": "56f8a9753cbb4530527646723073cbd0dcfd389238e420a33513f3ebf6dbae53"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-01",
+      "processID": 22747,
+      "elapsedSeconds": 0.157043999992311,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 18709,
+          "sha256": "f9672dc922eeb10e2e2e51a0377564ef57c747f4be7ce402d57aef73c06797fb"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17018,
+        "sha256": "8e9618138a3dc211bb8a680a930616e348f9ccedc4f2a70bdf2a8d43e3c0db87"
+      },
+      "result": {
+        "byteCount": 42024,
+        "sha256": "0a85d51c9d67ffdfaeea56cfc6209ad06af14e434d7a47b315e832703f96a61f"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-02",
+      "processID": 22750,
+      "elapsedSeconds": 0.1365339999902062,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15108,
+          "sha256": "b072fda067e9e6709b38c5135bd6edca6da5979442a15def46a1be179d53097b"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13890,
+        "sha256": "db4cd1272ec227bb0e0fe975fb9b2247c86639569b56526247b30487a080b69c"
+      },
+      "result": {
+        "byteCount": 36006,
+        "sha256": "1be7bc79a970ddd69faeaff6efbc4c7e527604aec6b7abbe8d2964e946ff438d"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-03",
+      "processID": 22753,
+      "elapsedSeconds": 0.14422099996590987,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19020,
+          "sha256": "e8f761a41aaf1c0c751ae265c4489dee73d97af7c985330de936a25e13f57a1c"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17082,
+        "sha256": "5106d28a48a15704f4619c5b643992d3efe126e4e1a16a1f8a90434f6425e2ff"
+      },
+      "result": {
+        "byteCount": 42398,
+        "sha256": "6a46d7dec392a334353cd0c514f98a7c1b6c23ffedc28052d82b88bf9cac95ec"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-04",
+      "processID": 22756,
+      "elapsedSeconds": 0.14626700000371784,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15293,
+          "sha256": "26c7e675e7ecac951357d0f4e5474459601f2db490b421af60eeefbac1790c17"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13930,
+        "sha256": "d8e75db847268e465e62280ae4893b15be724805bf48df736efc5368f4374602"
+      },
+      "result": {
+        "byteCount": 36232,
+        "sha256": "d3dce43e6cfc0283c6d0596ef7c5e97ad3ab459f81cfca08fab32223e15e9907"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-05",
+      "processID": 22759,
+      "elapsedSeconds": 0.1479300000355579,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19233,
+          "sha256": "093cd5c5df4aa47b5e1d8812bb0913e1f6973da773668bee919847cc4609fec9"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17122,
+        "sha256": "1feb5415021972acb3d1a31426519536cf68b087dc3cb88f9a0bfbe566b84a6a"
+      },
+      "result": {
+        "byteCount": 42652,
+        "sha256": "8b1e65b68e65468e067c2ad70c22d3e010d344c2ffe60a4bf185facb6b7ebcfc"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-06",
+      "processID": 22762,
+      "elapsedSeconds": 0.1365980000118725,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15595,
+          "sha256": "e767eed6c16a16505720092d4fea121075d9981768e8f48318cea55be34ed7e2"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 14010,
+        "sha256": "4193cd38a36f378319c8886a9c74150b6963fdf88e1f5b03b549d520cd01d5c9"
+      },
+      "result": {
+        "byteCount": 36613,
+        "sha256": "fc75aface288be4ad96b647c8c837fc3b79a148d68141f68862005f053904b39"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-07",
+      "processID": 22765,
+      "elapsedSeconds": 0.14515499997651204,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19631,
+          "sha256": "9fd7ccf7dde7d6f015ddb14449c128d47eeaf3dd91bbcf28cc7c93f839554273"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17202,
+        "sha256": "e682afd50bb816168a9f4f80ccfa4f3312be3bdb3e152df55bf67d037c34c6c9"
+      },
+      "result": {
+        "byteCount": 43129,
+        "sha256": "bbe0625a1579c63eea98541d6d106d1ced0f22d6c26a8b645e75c5c5796aa3ac"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-08",
+      "processID": 22768,
+      "elapsedSeconds": 0.14031200000317767,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15548,
+          "sha256": "347cf5c2dad2336379db781dd5cf685e6fa649d4c3380a4af066f52d5838dfc5"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 14242,
+        "sha256": "481e3e9b289dd46bdaab4b8c6ff1e20457d6185eb2f3280375279bda4feb0abd"
+      },
+      "result": {
+        "byteCount": 36591,
+        "sha256": "b7d2b3636b89cb2f1b8efc345b956f53528da24909ad25d7851d11f216285641"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0006-batch-09",
+      "processID": 22771,
+      "elapsedSeconds": 0.1537980000139214,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19550,
+          "sha256": "78e0f5b3112426459fd36de7c4a2e16dbac2646a5bec7f4eab6d4829ceaf8d3c"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17434,
+        "sha256": "d665d603be854c3938fe5215135ab9d05cdf8fe7b5992b0c59159ee35015c803"
+      },
+      "result": {
+        "byteCount": 43072,
+        "sha256": "f816c7b02f97448ca76f1d793aa5692610ff0170c5b73b7a79e73f9864ea53b6"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0006-prime-swift-variable-depth-4000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919874,
+        "sha256": "4ec25a1a577aee22d70bb44bff2caf7e4b9790322596a13135a69e642e8047bd"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-00",
+      "processID": 22774,
+      "elapsedSeconds": 0.14031300001079217,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 14859,
+          "sha256": "88baca0841273090477c7390fd887f4f42a16931f75378e50fabd27ae3832c96"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13826,
+        "sha256": "406ed4651a308ad9cb6f1f79cdf4168fcdd030491a59311f8fca88bd1f1b4d92"
+      },
+      "result": {
+        "byteCount": 35693,
+        "sha256": "45b7d7b0f5a115b24c29d26697832eef6286345bdf4f7e3d8c3ec9ae7d0d538a"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-01",
+      "processID": 22777,
+      "elapsedSeconds": 0.14860400004545227,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 18707,
+          "sha256": "9d52139ed68ac94c10ceb5c31b22fa9579bf0b78ca1dccb4707ba66ce2a961b4"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17018,
+        "sha256": "2881e925fa3bc1c423d2eab3d2872c2131f14dfdbf67bc1f54925b4afaa46ea8"
+      },
+      "result": {
+        "byteCount": 42021,
+        "sha256": "1155fc03d5501e3ce7e6321070bfa417781c91432470dc4a9d6cfd5baddd114a"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-02",
+      "processID": 22780,
+      "elapsedSeconds": 0.14660999999614432,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15120,
+          "sha256": "da32c0cca94c6e08d43a3401703879102ae4526584813da8751734c4f9232a89"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13890,
+        "sha256": "3cabd2693c20004f2797a68f46b6dad21fc73820495e223d4f78c08801bf70c1"
+      },
+      "result": {
+        "byteCount": 36019,
+        "sha256": "a5cb7c4e5152bcb7723ef6f6c6738954410e7f0af33ac65a9b00f8227d70ca5e"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-03",
+      "processID": 22783,
+      "elapsedSeconds": 0.14970299997366965,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19029,
+          "sha256": "5a6e96a5ebda0e7e14581f2270b7392b917381157e11e1f423b171f836dacc03"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17082,
+        "sha256": "02fb411d6110935c8728c8fe780d2bd93d487f17303df2e66e7dd3d837bdab2e"
+      },
+      "result": {
+        "byteCount": 42409,
+        "sha256": "849d0e8be6d426d220845587cbae45b460556a5ffd100f6df94d3b971e95e42f"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-04",
+      "processID": 22786,
+      "elapsedSeconds": 0.14345499995397404,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15279,
+          "sha256": "e27dfc346db0337db30dc99bb6e5c8005aab2f2c6c1cf724790d9432ba13139b"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 13930,
+        "sha256": "df44490dfe2dc00493a6bac8efb9fe10d21e35b8faf554ec587f51405ea698c3"
+      },
+      "result": {
+        "byteCount": 36217,
+        "sha256": "ad7ec51a8a4362c5fbac739e27658ebfb7cc73adeac03467e0f28316103edfe5"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-05",
+      "processID": 22789,
+      "elapsedSeconds": 0.155994999979157,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19227,
+          "sha256": "064157809eaf5b1e2fa6eec4d5bb8ecaf7e13de143f1cfc12d4d0a2ad33b76e2"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17122,
+        "sha256": "522f2e7cd91c55235b6f7bbc9b5146901d97b54201b33ac7f1fdf5fd94b09149"
+      },
+      "result": {
+        "byteCount": 42645,
+        "sha256": "57b54a96af2107845780e1a3f15e09fb4b9abafb0a643d5cb3b99827d8fc558d"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-06",
+      "processID": 22792,
+      "elapsedSeconds": 0.14877599995816126,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15598,
+          "sha256": "3fd56a882fbe93ee6253976d01d239982e64d1bf7c60928e3c54919ee4dc13c6"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 14010,
+        "sha256": "647ebff1ecef1e10081f17fa0f98678f0d7c012cd7c49a153864367178bbc1d7"
+      },
+      "result": {
+        "byteCount": 36616,
+        "sha256": "6baaa360ccc593ca243963a147af94524aa4e75bc72dbe31fa8470807502897b"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-07",
+      "processID": 22795,
+      "elapsedSeconds": 0.14995500002987683,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19627,
+          "sha256": "58f73450b657988b4554fb2626f7dad0db8d6959abd1e804a885244f85c79e89"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17202,
+        "sha256": "e890783c71aa6184fae22aa507686868c38a3c5b6a3cad6677ae755cf7844936"
+      },
+      "result": {
+        "byteCount": 43125,
+        "sha256": "a534b20f49f88fba45ff64bd1bf7a2065526f8ea656c6c8fb5de94a5546b871b"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-08",
+      "processID": 22798,
+      "elapsedSeconds": 0.13537700002780184,
+      "cases": 8,
+      "modelForwards": 32,
+      "hvcExits": 40,
+      "actualGuestFeedbackInsertions": 16,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 15551,
+          "sha256": "15f3b0e1b95bae4b89c4b919821335f828328942abc3064d46b936a61283ada6"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 14242,
+        "sha256": "09142688834e574664531aa363f8ed33d84c109ef4e930d1220ce9068ad71479"
+      },
+      "result": {
+        "byteCount": 36593,
+        "sha256": "a4f5f498d31af5b3fe71c57a16a20ce236dfdaba5e2c97eb30d1a27c0c9be94a"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    },
+    {
+      "phase": "0007-batch-09",
+      "processID": 22801,
+      "elapsedSeconds": 0.1535390000208281,
+      "cases": 8,
+      "modelForwards": 40,
+      "hvcExits": 48,
+      "actualGuestFeedbackInsertions": 24,
+      "allAdmissionExecutionAndCleanupChecksPassed": true,
+      "controllerNormalExit0ExactReap1EmptyGroup": true,
+      "streams": {
+        "stdout": {
+          "byteCount": 19563,
+          "sha256": "b93945ba8bd49403ff43885cfeb14f68e32abcce505845dcd037ab93f9ce2f63"
+        },
+        "stderr": {
+          "byteCount": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "request": {
+        "byteCount": 17434,
+        "sha256": "ee0cc9da0305f680fbfe736e65b1c1493c81d26fd1a7cf1a90aa3527a041b814"
+      },
+      "result": {
+        "byteCount": 43085,
+        "sha256": "a73ca82f471327b3404d975b6689d3354ee567122a6562ae15bd897968a8db13"
+      },
+      "weightsPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0007-prime-swift-variable-depth-8000/Runtime/weights.safetensors",
+      "weightsBinding": {
+        "byteCount": 40919834,
+        "sha256": "4baff383398b024661ff48fb7b5d283a3451950ee2702455eb3a3f7c52a54afb"
+      },
+      "pilotCases": [],
+      "pilotLogitBindings": []
+    }
+  ],
+  "runComplete": {
+    "byteCount": 394,
+    "sha256": "0965c6ba1624ca3f2e4427705a7f1eff00859aff17e4e9ea5f2d014e5551a741"
+  },
+  "numericalReview": "Separate reviewer owns all720 numerical logits and prior host-only comparison. Nine pilot vectors checked here; no duplicate full payload reads.",
+  "limits": [
+    "Review performs file reads, hashes, CPU arithmetic and signature verification only; no model or Hypervisor execution.",
+    "ARM guest controls jobs and actual feedback; Swift/Metal model computation and weights remain on the host.",
+    "Freestanding ARM microguest: no booted general-purpose guest OS, guest MLX, GPU passthrough, app integration or independent OS attestation claim.",
+    "Dedicated Apple Development hardened helper has only hypervisor entitlement; it is an unsandboxed user-level host process, not App Sandbox.",
+    "Code/page integrity observations are joined to inspected compiled source, not independent live-memory snapshots.",
+    "Process-group absence is the controller observation after exact direct-child reap, not systemwide containment.",
+    "80 symbolic inputs per retained checkpoint cover two semantic programs, five mutation axes, two depths and eight starts. This is not a general language benchmark.",
+    "Final invalid neural predictions may complete transport; invalid predictions needed for continuation stop, without answer substitution.",
+    "Failure-injection checks are separate from these normal runs and will be reviewed in CHECKS-REVIEW.json."
+  ]
+}

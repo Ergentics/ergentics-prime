@@ -1,0 +1,1060 @@
+{
+  "schema": "ergentics-r19-obs11-c2-koine-synthesis-delta-postmortem-v1",
+  "status": "PASS_DATA_FIRST_POSTMORTEM_DESIGN_AUTHORITY_ABSTAIN",
+  "basis": {
+    "head_commit": "b8dcbc8805d096bc466a2ec1f26e657dee3b64e6",
+    "head_tree": "0babf8d9d989aa8f767000ef521e9ecc05d73a8e",
+    "result_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-result.v6.json",
+    "result_sha256": "b47fb84c60091c0f7aa6fadb29561ed8116257ac86532e18819e7796a2b3a4fd",
+    "result_git_blob": "8d724c30ce1c3f79000d3e6b33baf7c5be872b21",
+    "postmortem_scope": "EXACT_CONSUMED_C2_V6_ATTEMPT_AND_SEPARATELY_IDENTIFIED_STATIC_SUCCESSOR_DELTA_ONLY",
+    "historical_operations_reinterpreted": false
+  },
+  "serialization": {
+    "record_representation": "EXACT_PRETTY_UTF8_JSON_WITH_TERMINAL_LF",
+    "whole_record_compact_canonical_bytes": false,
+    "whole_record_integrity": "EXTERNAL_SHA256_AND_VALIDATION_RECEIPT",
+    "semantic_round_trip": "PARSE_THEN_RECURSIVE_LEXICOGRAPHIC_COMPACT_REENCODE_THEN_PARSE_EQUALS_ORIGINAL_VALUE",
+    "compact_canonicalization_scopes": [
+      "NODE_PAYLOAD_HASH_INPUTS",
+      "ORDERED_NODE_ADDRESS_LIST_HASH_INPUT",
+      "VALIDATION_CHECK_ID_VECTOR_HASH_INPUT",
+      "VALIDATION_AND_PROJECTION_RECEIPTS"
+    ],
+    "self_hashing": false
+  },
+  "authority": {
+    "authoritative": false,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "may_feed_controller": false,
+    "may_close_authority": false,
+    "successor_implementation_authorized": false,
+    "successor_invocation_authorized": false,
+    "koine_live_observer_invocations": 0,
+    "koine_live_actuation_calls": 0,
+    "koine_offline_oracle_implementations": 0,
+    "prose_may_supply_fact": false
+  },
+  "epistemic_lattice": {
+    "evidence_classes": [
+      "OBSERVED_RETAINED",
+      "OBSERVED_EXTERNAL",
+      "STATIC_DERIVED",
+      "UNKNOWN"
+    ],
+    "node_evidence_class_rule": "NONEMPTY_ARRAY_OF_DISTINCT_EVIDENCE_CLASSES_IN_DECLARED_ORDER",
+    "truth_states": [
+      "OBSERVED_TRUE",
+      "OBSERVED_FALSE",
+      "STATIC_TRUE",
+      "STATIC_FALSE",
+      "UNAVAILABLE",
+      "ABSENT_AT_SCOPED_SNAPSHOT",
+      "NOT_APPLICABLE"
+    ],
+    "missing_evidence_maps_to": "UNKNOWN",
+    "unknown_may_be_promoted_by_prose": false,
+    "contradiction_effect": "REJECT_DERIVED_PROJECTION_WITHOUT_MUTATING_SOURCE_FACTS",
+    "terminal_presence_implies_pass": false
+  },
+  "language_comparison": {
+    "runtime_languages": [
+      {
+        "language": "APPLE_SYSTEM_RUBY_2_6",
+        "best_role": "SMALL_SEPARATELY_FROZEN_ORCHESTRATOR_OR_OFFLINE_CHECKER",
+        "descriptor_semantics": "IO_NEW_RETURNS_DYNAMIC_IO; VNODE_KIND_REQUIRES_FSTAT",
+        "method_semantics": "IO_CHMOD_ABSENT_FILE_CHMOD_PRESENT; PARSE_SUCCESS_DOES_NOT_ESTABLISH_RUNTIME_RECEIVER_METHOD",
+        "abi_semantics": "FIDDLE_SIGNATURES_ARE_MANUAL_AND_NOT_HEADER_CHECKED",
+        "state_machine_strength": "ORDERED_FAIL_CLOSED_CHECKS_POSSIBLE_BUT_UNEXECUTED_DYNAMIC_PATHS_REMAIN_LATENT",
+        "content_addressing": "DIGEST_SHA256_AND_SORTED_CANONICAL_JSON_ARE_SUITABLE",
+        "authority_effect": "A_LIVE_RUNNER_MUTATES_STATE_AND_REQUIRES_AN_EXACT_FREEZE",
+        "c2_v6_delta": "EXACT_RECEIVER_METHOD_DEFECT_AT_THREE_DESCRIPTOR_MODE_TRANSITIONS",
+        "selection": "RETAIN_FOR_MINIMAL_SUCCESSOR_ONLY_IF_DESCRIPTOR_MODE_CALLS_MOVE_TO_ONE_FIXED_ARITY_HELPER"
+      },
+      {
+        "language": "SWIFT",
+        "best_role": "SINGLE_TYPED_LIVE_STATE_MACHINE_AND_DESCRIPTOR_LIFETIME_OWNER",
+        "descriptor_semantics": "PRIVATE_OWNING_TYPES_CAN_DISTINGUISH_VALIDATED_FILE_AND_DIRECTORY_DESCRIPTORS; KERNEL_KIND_STILL_REQUIRES_FSTAT",
+        "method_semantics": "MEMBER_AVAILABILITY_IS_COMPILE_TIME_CHECKED",
+        "abi_semantics": "CLANG_IMPORTED_FIXED_ARITY_DARWIN_DECLARATIONS_ARE_TYPE_CHECKED; VARIADIC_BOUNDARIES_STILL_REQUIRE_C",
+        "state_machine_strength": "CLOSED_ENUMS_UNIQUE_OWNERSHIP_AND_EXPLICIT_ERRNO_OUTCOMES",
+        "content_addressing": "TYPED_ENCODING_REQUIRES_AN_EXPLICIT_CANONICAL_BYTE_RULE",
+        "authority_effect": "SUITABLE_SOLE_LIVE_OWNER_ONLY_UNDER_A_SEPARATE_FREEZE",
+        "c2_v6_delta": "WOULD_HAVE_REJECTED_THE_MISSING_MEMBER_BEFORE_LAUNCH",
+        "selection": "LONG_TERM_OWNER_NOT_A_JUSTIFICATION_FOR_REWRITING_THIS_CONSUMED_SLICE"
+      },
+      {
+        "language": "FIXED_ARITY_C",
+        "best_role": "NARROW_IN_IMAGE_DARWIN_ABI_PRIMITIVE",
+        "descriptor_semantics": "FILE_DESCRIPTOR_REMAINS_AN_INT_AND_REQUIRES_FSTAT_PRE_POSTCONDITIONS",
+        "method_semantics": "NO_RECEIVER_METHOD_AMBIGUITY",
+        "abi_semantics": "COMPILED_AGAINST_DARWIN_HEADERS_WITH_COMPILE_AND_LINK_DIAGNOSTICS",
+        "state_machine_strength": "ONE_SYSCALL_ERRNO_AND_IMMEDIATE_HELD_DESCRIPTOR_POSTCONDITION_ONLY",
+        "content_addressing": "HASHING_AND_SCHEMA_OWNERSHIP_STAY_OUTSIDE_THE_PRIMITIVE",
+        "authority_effect": "MECHANICS_ONLY_CALLED_BY_THE_SINGLE_OWNER; NO_HELPER_PROCESS_OR_POLICY_OWNER",
+        "c2_v6_delta": "FCHMOD_INT_MODE_T_IS_THE_EXACT_PRIMITIVE_REQUIRED",
+        "selection": "STRONGEST_ABI_BOUNDARY"
+      },
+      {
+        "language": "KOINE_PURE_RELATION_MODEL",
+        "best_role": "POSTPUBLICATION_DIFFERENTIAL_ORACLE_AND_REPAIR_DELTA_SYNTHESIZER",
+        "descriptor_semantics": "REASONS_ONLY_OVER_SUPPLIED_DESCRIPTOR_AND_METHOD_FACTS; CANNOT_INSPECT_A_LIVE_FD",
+        "method_semantics": "CAN_REJECT_A_MODEL_WHERE_REQUIRED_METHOD_AVAILABILITY_IS_FALSE",
+        "abi_semantics": "CAN_COMPARE_MODELED_SIGNATURES_BUT_CANNOT_ESTABLISH_HOST_ABI",
+        "state_machine_strength": "PURE_PREDICATE_REPLAY_AND_MINIMAL_DELTA_SEARCH",
+        "content_addressing": "RECOMPUTES_ONLY_SPECIFIED_CANONICAL_HASHES_OVER_PUBLISHED_INPUT",
+        "authority_effect": "ZERO_LIVE_OBSERVATION_ACTUATION_VETO_OR_CONTROLLER_FEED",
+        "c2_v6_delta": "SELECTS_DESCRIPTOR_BOUND_FCHMOD_AND_REJECTS_NAMED_PATH_OR_LIVE_SHADOW_OPTIONS",
+        "selection": "DESIGN_ONLY_NO_LOCAL_IMPLEMENTATION_EXISTS"
+      }
+    ],
+    "representations": [
+      {
+        "representation": "NORMATIVE_TYPED_JSON",
+        "role": "SOLE_IMMUTABLE_FACT_AND_INTERCHANGE_VALUE_FOR_THIS_POSTMORTEM",
+        "strength": "EXACT_KEYS_VALUES_FRAMING_AND_SHA256_CAN_BE_REJOINED",
+        "limit": "CANNOT_OBSERVE_OR_VALIDATE_KERNEL_STATE_BY_ITSELF",
+        "authority": "NONE_BY_FORMAT"
+      },
+      {
+        "representation": "SQLITE_GRAPH_PROJECTION",
+        "role": "REBUILDABLE_READ_ONLY_JOIN_QUERY_AND_DISPLAY_CACHE",
+        "strength": "FOREIGN_KEYS_UNIQUENESS_AND_PREDICATE_QUERIES_OVER_IMPORTED_FACTS",
+        "limit": "DATABASE_PAGE_LAYOUT_IS_NOT_SEMANTIC_AUTHORITY_AND_CANNOT_ESTABLISH_LIVE_FACTS",
+        "authority": "NO_CONTROLLER_FEED"
+      },
+      {
+        "representation": "MARKDOWN_PROSE",
+        "role": "HUMAN_READABLE_PROJECTION_OF_CLAIM_IDS",
+        "strength": "EXPLAINS_CAUSAL_AND_DESIGN_EFFECTS",
+        "limit": "MAY_NOT_CREATE_FACTS_RESOLVE_UNKNOWN_OR_CHANGE_SCOPE",
+        "authority": "ZERO"
+      }
+    ],
+    "single_recommendation": {
+      "current_successor_shape": "NEW_VERSION_AND_FRESH_NAMESPACE_RETAIN_RUBY_ORCHESTRATION_REMOVE_THE_REDUNDANT_ROOT_0700_REASSERTION_AND_ROUTE_THE_TWO_REAL_MODE_TRANSITIONS_THROUGH_ONE_FIXED_ARITY_DESCRIPTOR_BOUND_FCHMOD_HELPER_WITH_ERRNO_AND_HELD_FSTAT_REVALIDATION",
+      "long_term_boundary": "SWIFT_SOLE_STATE_MACHINE_OWNER_PLUS_NARROW_IN_IMAGE_C_DARWIN_PRIMITIVES",
+      "koine_role": "PURE_OFFLINE_ORACLE_AFTER_CANONICAL_PUBLICATION_ONLY",
+      "not_selected": [
+        "NAMED_PATH_FILE_CHMOD",
+        "A_SECOND_LIVE_KOINE_OR_RUBY_OWNER",
+        "REWRITE_TO_SWIFT_INSIDE_THE_CONSUMED_V6_SLICE",
+        "SQLITE_OR_PROSE_AS_CONTROLLER_INPUT"
+      ]
+    }
+  },
+  "facts": [
+    {
+      "fact_id": "F01",
+      "evidence_class": "OBSERVED_EXTERNAL",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "OUTER_EXIT_CODE_EQUALS_70",
+      "value": true,
+      "scope": "EXACT_C2_V6_ATTEMPT",
+      "witness_ids": ["W_OUTER", "W_RESULT"]
+    },
+    {
+      "fact_id": "F02",
+      "evidence_class": "OBSERVED_EXTERNAL",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "OUTER_CAPTURE_IS_COMBINED_UNATTRIBUTED",
+      "value": true,
+      "scope": "CODEX_TRANSPORT",
+      "witness_ids": ["W_OUTER", "W_RESULT"]
+    },
+    {
+      "fact_id": "F03",
+      "evidence_class": "OBSERVED_EXTERNAL",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "CAPTURE_ROOT_EXISTS_MODE_0700_WITH_ONE_STAGING_ENTRY",
+      "value": true,
+      "scope": "POSTEXIT_RETAINED_STATE",
+      "witness_ids": ["W_RESULT", "W_STAGING"]
+    },
+    {
+      "fact_id": "F04",
+      "evidence_class": "OBSERVED_RETAINED",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "HARNESS_AND_CHILD_ENTRY_COUNTS_EQUAL_ZERO",
+      "value": true,
+      "scope": "EXACT_C2_V6_ATTEMPT",
+      "witness_ids": ["W_RESULT"]
+    },
+    {
+      "fact_id": "F05",
+      "evidence_class": "STATIC_DERIVED",
+      "truth_state": "STATIC_TRUE",
+      "predicate": "APPLE_RUBY_IO_RECEIVER_LACKS_CHMOD_AT_REQUIRED_CALL_SITES",
+      "value": true,
+      "scope": "RUNNER_SOURCE_AND_RECORDED_DIAGNOSIS",
+      "witness_ids": ["W_SOURCE", "W_RESULT"]
+    },
+    {
+      "fact_id": "F06",
+      "evidence_class": "UNKNOWN",
+      "truth_state": "UNAVAILABLE",
+      "predicate": "STAGING_CONTENT_FSYNC_AND_F_FULLFSYNC_COMPLETED",
+      "value": null,
+      "scope": "INPROCESS_CONTAINMENT_PUBLICATION",
+      "witness_ids": ["W_STAGING", "W_RESULT"]
+    },
+    {
+      "fact_id": "F07",
+      "evidence_class": "OBSERVED_EXTERNAL",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "STAGING_LEAF_IS_NOT_FIXED_99_NOT_SEALED_AND_NOT_TERMINAL",
+      "value": true,
+      "scope": "POSTEXIT_RETAINED_STATE",
+      "witness_ids": ["W_STAGING", "W_RESULT"]
+    },
+    {
+      "fact_id": "F08",
+      "evidence_class": "OBSERVED_RETAINED",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "EMBEDDED_PRE99_INVENTORY_PRECEDES_FINAL_ONE_ENTRY_INVENTORY",
+      "value": true,
+      "scope": "TWO_EXPLICIT_TIME_SCOPES",
+      "witness_ids": ["W_STAGING", "W_RESULT"]
+    },
+    {
+      "fact_id": "F09",
+      "evidence_class": "OBSERVED_EXTERNAL",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "GIT_TREE_MODE_100644_DOES_NOT_PRESERVE_LIVE_MODE_0600",
+      "value": true,
+      "scope": "ARCHIVE_VERSUS_LIVE_METADATA",
+      "witness_ids": ["W_STAGING", "W_COMMIT"]
+    },
+    {
+      "fact_id": "F10",
+      "evidence_class": "OBSERVED_RETAINED",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "AUTHORITY_VECTOR_REMAINS_00000000_AND_SCIENCE_ABSTAINS",
+      "value": true,
+      "scope": "EXACT_C2_V6_RESULT",
+      "witness_ids": ["W_RESULT"]
+    },
+    {
+      "fact_id": "F11",
+      "evidence_class": "OBSERVED_RETAINED",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "PRE99_ROOT_IS_SAME_VNODE_MODE_0700_NLINK_2_SIZE_64_WITH_EMPTY_INVENTORY",
+      "value": true,
+      "scope": "BEFORE_STAGING_LEAF_CREATION",
+      "witness_ids": ["W_STAGING", "W_RESULT"]
+    },
+    {
+      "fact_id": "F12",
+      "evidence_class": "OBSERVED_RETAINED",
+      "truth_state": "OBSERVED_TRUE",
+      "predicate": "EXACT_ATTEMPT_OPERATION_VECTOR_IS_SCOPED_AND_NONHISTORICAL",
+      "value": {
+        "capture_runner_outer_attempts": 1,
+        "capture_runner_entries": 1,
+        "capture_root_mkdirat_successes": 1,
+        "containment_staging_leaf_creations": 1,
+        "prefix_harness_entries": 0,
+        "child_process_spawns": 0,
+        "channel_capture_starts": 0,
+        "controller_bottom_entries": 0,
+        "controller_full_invocations": 0,
+        "swiftpm_spawns": 0,
+        "compiler_entries": 0,
+        "builds": 0,
+        "product_executions": 0,
+        "signals": 0,
+        "timeouts": 0,
+        "cleanup_actions": 0,
+        "network_actions": 0,
+        "github_actions": 0,
+        "python_entries": 0,
+        "active_matching_processes_after_exit": 0,
+        "postexec_observer_processes_are_not_target_operation_entries": true,
+        "historical_operations_reinterpreted": false
+      },
+      "scope": "THIS_EXACT_C2_OUTER_ATTEMPT_RUNNER_CHILD_AND_RESULT_ONLY",
+      "witness_ids": ["W_RESULT"]
+    }
+  ],
+  "graph": {
+    "model": {
+      "lifecycle_bipartition": ["STATE", "TRANSITION"],
+      "lifecycle_edges_allowed": ["STATE_TO_TRANSITION", "TRANSITION_TO_STATE"],
+      "evidence_bipartition": ["SEMANTIC_STATE_OR_TRANSITION", "WITNESS"],
+      "evidence_edges_allowed": ["SEMANTIC_TO_WITNESS"],
+      "direct_state_to_state_edges_allowed": false,
+      "direct_transition_to_transition_edges_allowed": false,
+      "direct_witness_to_witness_edges_allowed": false,
+      "node_payload_rule": "SHA256_CANONICAL_RECURSIVE_LEXICOGRAPHIC_KEYS_UTF8_NO_TRAILING_LF_OF_NODE_WITHOUT_ADDRESS_SHA256",
+      "node_address_rule": "LFID_ERGENTICS_DISPOSAL_LENGTH_FRAMED_ID_V1_DOMAIN_ERGENTICS_R19_OBS11_C2_POSTMORTEM_NODE_V1_COMPONENTS_NODE_TYPE_SCHEMA_NODE_PAYLOAD_SHA256",
+      "state_hash_chain_rule": "EACH_NONINITIAL_STATE_BODY_INCLUDES_PREDECESSOR_STATE_ADDRESS_SHA256",
+      "transition_predicate_rule": "ALL_REQUIRED_PREDICATES_HAVE_EXPLICIT_EPISTEMIC_STATUS_AND_VALUE",
+      "witness_join_rule": "EVERY_SUPPORTED_CLAIM_AND_TRANSITION_REFERENCES_CONTENT_ADDRESSED_WITNESS_NODES"
+    },
+    "state_nodes": [
+      {
+        "node_id": "S0",
+        "node_type": "STATE",
+        "epistemic_classes": ["OBSERVED_RETAINED", "STATIC_DERIVED", "UNKNOWN"],
+        "predecessor_state_address_sha256": null,
+        "state": {
+          "lifecycle": "READINESS_COMMITTED_UNCONSUMED",
+          "readiness_commit": "e56a988f478d3b8d895f53ebfe424530e371f3ce",
+          "readiness_tree": "9c3a90a9e5f2473ee133fe9113a8127e9a96ac5d",
+          "capture_root_observations": {
+            "candidate_freeze": {
+              "evidence_class": "OBSERVED_RETAINED",
+              "truth_state": "ABSENT_AT_SCOPED_SNAPSHOT"
+            },
+            "runner_internal_immediately_before_successful_exclusive_mkdirat": {
+              "evidence_class": "STATIC_DERIVED",
+              "truth_state": "STATIC_TRUE"
+            },
+            "separately_retained_outer_final_preflight": {
+              "evidence_class": "UNKNOWN",
+              "truth_state": "UNAVAILABLE"
+            }
+          },
+          "runner_attempts": 0,
+          "authority_vector": "00000000"
+        },
+        "address_sha256": "21d6749e23790879d2ed7a519618e402272359afbda889410ee534de643c9d92"
+      },
+      {
+        "node_id": "S1",
+        "node_type": "STATE",
+        "epistemic_classes": ["STATIC_DERIVED"],
+        "predecessor_state_address_sha256": "21d6749e23790879d2ed7a519618e402272359afbda889410ee534de643c9d92",
+        "state": {
+          "lifecycle": "RUNNER_ENTERED_CONSUMED",
+          "runner_attempts": 1,
+          "retry_authorized": false,
+          "harness_entries": 0,
+          "authority_vector": "00000000"
+        },
+        "address_sha256": "310dcc8983187fcf435cef2db7cfceb09857c967b7678408fcd4b886d9df86a6"
+      },
+      {
+        "node_id": "S2",
+        "node_type": "STATE",
+        "epistemic_classes": ["OBSERVED_RETAINED", "STATIC_DERIVED"],
+        "predecessor_state_address_sha256": "310dcc8983187fcf435cef2db7cfceb09857c967b7678408fcd4b886d9df86a6",
+        "state": {
+          "lifecycle": "CAPTURE_ROOT_CREATED_PRIMARY_PATH_ABORTED",
+          "phase": "ROOT_CREATION",
+          "root_device": 16777231,
+          "root_inode": 17960636,
+          "root_uid": 501,
+          "root_gid": 20,
+          "root_mode": "0700",
+          "root_nlink": 2,
+          "root_bytes": 64,
+          "root_flags": 0,
+          "inventory": [],
+          "inventory_manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "root_creation_count": 1,
+          "primary_error_class": "NoMethodError",
+          "primary_false_predicate": "IO_RECEIVER_SUPPORTS_CHMOD",
+          "harness_entries": 0,
+          "child_spawns": 0
+        },
+        "address_sha256": "4c95e6287b43cbc16ef1b90e52179166e91b1413ef1cf57bc38f3ad3b18a077f"
+      },
+      {
+        "node_id": "S3",
+        "node_type": "STATE",
+        "epistemic_classes": ["OBSERVED_EXTERNAL"],
+        "predecessor_state_address_sha256": "4c95e6287b43cbc16ef1b90e52179166e91b1413ef1cf57bc38f3ad3b18a077f",
+        "state": {
+          "lifecycle": "INCOMPLETE_STAGING_RETAINED_UNSEALED",
+          "outer_exit_code": 70,
+          "root_device": 16777231,
+          "root_inode": 17960636,
+          "root_uid": 501,
+          "root_gid": 20,
+          "root_mode": "0700",
+          "root_nlink": 3,
+          "root_bytes": 96,
+          "root_flags": 0,
+          "inventory": ["c2-prefix-capture.tmp.Z6GsWi"],
+          "inventory_manifest_sha256": "6b1746f46a72ea4a775436454be0f97de595e2c99d89bef9e436fab7c1b2868e",
+          "staging_device": 16777231,
+          "staging_inode": 17960637,
+          "staging_uid": 501,
+          "staging_gid": 20,
+          "staging_mode_live": "0600",
+          "staging_nlink": 1,
+          "staging_bytes": 2597,
+          "staging_flags": 0,
+          "staging_sha256": "5ec08e5067584fb0b9ba1a43434f47e36509a228b99a9ad5809f1f29d41b8c7f",
+          "staging_same_device_as_root": true,
+          "staging_inode_distinct_from_root": true,
+          "apfs_nlink_equation": "3_EQUALS_2_PLUS_1",
+          "fixed_99_present": false,
+          "terminal": false,
+          "sealed": false,
+          "scientific_outcome": "ABSTAIN",
+          "authority_vector": "00000000"
+        },
+        "address_sha256": "394f202d6fbf4853fd0925315ac77f3014974564972652192bac1d7650bd97be"
+      }
+    ],
+    "transition_nodes": [
+      {
+        "node_id": "T0",
+        "node_type": "TRANSITION",
+        "from_state_id": "S0",
+        "from_state_address_sha256": "21d6749e23790879d2ed7a519618e402272359afbda889410ee534de643c9d92",
+        "to_state_id": "S1",
+        "to_state_address_sha256": "310dcc8983187fcf435cef2db7cfceb09857c967b7678408fcd4b886d9df86a6",
+        "transition": "ENTER_EXACT_OUTER_DISPATCH_AND_CONSUME_ONE_SHOT",
+        "outcome": "ENTERED",
+        "predicates": [
+          {"predicate_id": "P_T0_1", "name": "READINESS_COMMIT_BOUND", "evidence_class": "OBSERVED_RETAINED", "truth_state": "OBSERVED_TRUE", "value": true},
+          {"predicate_id": "P_T0_2", "name": "OUTER_PROCESS_ENTRY", "evidence_class": "STATIC_DERIVED", "truth_state": "STATIC_TRUE", "value": true},
+          {"predicate_id": "P_T0_3", "name": "CONSUMPTION_ON_ENTRY", "evidence_class": "STATIC_DERIVED", "truth_state": "STATIC_TRUE", "value": true}
+        ],
+        "address_sha256": "c97ffb48119d364187cdac7c7726b79a8c9d5ba35cbb0ce88c0f92569c317381"
+      },
+      {
+        "node_id": "T1",
+        "node_type": "TRANSITION",
+        "from_state_id": "S1",
+        "from_state_address_sha256": "310dcc8983187fcf435cef2db7cfceb09857c967b7678408fcd4b886d9df86a6",
+        "to_state_id": "S2",
+        "to_state_address_sha256": "4c95e6287b43cbc16ef1b90e52179166e91b1413ef1cf57bc38f3ad3b18a077f",
+        "transition": "CREATE_AND_ADMIT_CAPTURE_ROOT",
+        "outcome": "FAIL_CLOSED_AFTER_CREATION_BEFORE_START_PUBLICATION",
+        "predicates": [
+          {"predicate_id": "P_T1_1", "name": "MKDIRAT_SUCCEEDED", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_TRUE", "value": true},
+          {"predicate_id": "P_T1_2", "name": "ROOT_HELD_RECOVERED_AND_REJOINED_AT_PRE99", "evidence_class": "OBSERVED_RETAINED", "truth_state": "OBSERVED_TRUE", "value": true},
+          {"predicate_id": "P_T1_3", "name": "IO_RECEIVER_SUPPORTS_CHMOD", "evidence_class": "STATIC_DERIVED", "truth_state": "STATIC_FALSE", "value": false},
+          {"predicate_id": "P_T1_4", "name": "START_FIXED_LEAF_PUBLISHED", "evidence_class": "OBSERVED_RETAINED", "truth_state": "OBSERVED_FALSE", "value": false}
+        ],
+        "address_sha256": "e6940f24ed0e3baf60cb2a63f590f8634549846c32fefd89d6b51626c7e64ad9"
+      },
+      {
+        "node_id": "T2",
+        "node_type": "TRANSITION",
+        "from_state_id": "S2",
+        "from_state_address_sha256": "4c95e6287b43cbc16ef1b90e52179166e91b1413ef1cf57bc38f3ad3b18a077f",
+        "to_state_id": "S3",
+        "to_state_address_sha256": "394f202d6fbf4853fd0925315ac77f3014974564972652192bac1d7650bd97be",
+        "transition": "RETAIN_INCOMPLETE_CONTAINMENT_PREFIX_AND_EXIT",
+        "outcome": "STAGING_ONLY_NOT_DURABLE_FIXED_99",
+        "predicates": [
+          {"predicate_id": "P_T2_1", "name": "ROOT_RECOVERED_WRITABLE_FOR_CONTAINMENT", "evidence_class": "STATIC_DERIVED", "truth_state": "STATIC_TRUE", "value": true},
+          {"predicate_id": "P_T2_2", "name": "STAGING_LEAF_CREATED_AND_BYTES_RETAINED", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_TRUE", "value": true},
+          {"predicate_id": "P_T2_3", "name": "STAGING_CONTENT_SYNC_COMPLETED", "evidence_class": "UNKNOWN", "truth_state": "UNAVAILABLE", "value": null},
+          {"predicate_id": "P_T2_4", "name": "STAGING_MODE_TRANSITION_TO_0400", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_FALSE", "value": false},
+          {"predicate_id": "P_T2_5", "name": "FIXED_99_PUBLICATION", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_FALSE", "value": false},
+          {"predicate_id": "P_T2_6", "name": "ROOT_TERMINAL_SEAL_TO_0500", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_FALSE", "value": false},
+          {"predicate_id": "P_T2_7", "name": "OUTER_EXIT_70", "evidence_class": "OBSERVED_EXTERNAL", "truth_state": "OBSERVED_TRUE", "value": true}
+        ],
+        "address_sha256": "aac35fd5d08fa575204d5ef941c17eece4aa36a817244383e5aa57c76bcf5575"
+      }
+    ],
+    "witness_nodes": [
+      {
+        "node_id": "W_READINESS",
+        "node_type": "WITNESS",
+        "witness_type": "CANONICAL_JSON",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v6.json",
+        "sha256": "ae12c21bcda2422daf0c437ac1c3f5dfb3daac770d171991d4ab08fd135adacf",
+        "git_blob": "3de6298ed8188985f5d923c09504d70ea57705a1",
+        "address_sha256": "f431a16277ac7d0f17019cc594c2363959c0e09b42c02bad3b767de21374410f"
+      },
+      {
+        "node_id": "W_SOURCE",
+        "node_type": "WITNESS",
+        "witness_type": "RUBY_SOURCE",
+        "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb",
+        "sha256": "7a84a99a0e9f77dace2d102f1e4058316762512f51e5ccb0c8e3a72e71f918c2",
+        "git_blob": "4dd0e5eb80780d2de03e2dfd2b2b118ba959fcb8",
+        "address_sha256": "01ee4afab5cefc0cdd2992b992937ee66149a238659b3b04a41de6dcb4d88f44"
+      },
+      {
+        "node_id": "W_OUTER",
+        "node_type": "WITNESS",
+        "witness_type": "COMBINED_UNATTRIBUTED_JSONL",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-failure.v6.combined.jsonl",
+        "sha256": "881b198f8e50d0e256f8f2f60c30ba245641acdde88f1ec510f99637b36a9ef3",
+        "git_blob": "d10e14b6ac7aa345aa43491fca0b07ff657dfb8c",
+        "bytes": 987,
+        "lf_count": 1,
+        "address_sha256": "39ac59e52bf8b2a9d7c8eb7b137a7e79c9c6cd15a4aa25ac5acfbe3335bfb1e7"
+      },
+      {
+        "node_id": "W_STAGING",
+        "node_type": "WITNESS",
+        "witness_type": "RETAINED_STAGING_CANONICAL_JSON_PLUS_LF",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v6/c2-prefix-capture.tmp.Z6GsWi",
+        "sha256": "5ec08e5067584fb0b9ba1a43434f47e36509a228b99a9ad5809f1f29d41b8c7f",
+        "git_blob": "ce1fadbbb0739188c73eb85c174e5b26b24165fc",
+        "live_mode": "0600",
+        "git_tree_mode": "100644",
+        "address_sha256": "f4b1819353d59388539bdc8451336271a474fd2e263078b2e13cb3c3d29156aa"
+      },
+      {
+        "node_id": "W_RESULT",
+        "node_type": "WITNESS",
+        "witness_type": "CANONICAL_RESULT_JSON",
+        "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-result.v6.json",
+        "sha256": "b47fb84c60091c0f7aa6fadb29561ed8116257ac86532e18819e7796a2b3a4fd",
+        "git_blob": "8d724c30ce1c3f79000d3e6b33baf7c5be872b21",
+        "address_sha256": "f7f6ae36450b1a5d01ea35495a3a910622eacdb86dda501116e0809a668cf9e1"
+      },
+      {
+        "node_id": "W_COMMIT",
+        "node_type": "WITNESS",
+        "witness_type": "GIT_COMMIT_TREE_BINDING",
+        "commit": "b8dcbc8805d096bc466a2ec1f26e657dee3b64e6",
+        "tree": "0babf8d9d989aa8f767000ef521e9ecc05d73a8e",
+        "address_sha256": "63f659308576b771e18be0342356a3a20dade1c71964a5f6aebf8b7269dc8c5b"
+      }
+    ],
+    "lifecycle_edges": [
+      {"from": "S0", "to": "T0", "edge_type": "STATE_TO_TRANSITION"},
+      {"from": "T0", "to": "S1", "edge_type": "TRANSITION_TO_STATE"},
+      {"from": "S1", "to": "T1", "edge_type": "STATE_TO_TRANSITION"},
+      {"from": "T1", "to": "S2", "edge_type": "TRANSITION_TO_STATE"},
+      {"from": "S2", "to": "T2", "edge_type": "STATE_TO_TRANSITION"},
+      {"from": "T2", "to": "S3", "edge_type": "TRANSITION_TO_STATE"}
+    ],
+    "evidence_edges": [
+      {"from": "S0", "to": "W_READINESS", "relation": "STATE_FIELDS_OBSERVED_IN"},
+      {"from": "S0", "to": "W_COMMIT", "relation": "CONTENT_BOUND_BY"},
+      {"from": "T0", "to": "W_RESULT", "relation": "CONSUMPTION_CLASS_RECORDED_IN"},
+      {"from": "T1", "to": "W_SOURCE", "relation": "SOURCE_ORDERED_BY"},
+      {"from": "T1", "to": "W_RESULT", "relation": "FAILURE_DIAGNOSIS_RECORDED_IN"},
+      {"from": "S2", "to": "W_STAGING", "relation": "PRE99_STATE_EMBEDDED_IN"},
+      {"from": "S2", "to": "W_RESULT", "relation": "PRE99_TIME_SCOPE_RECORDED_IN"},
+      {"from": "T2", "to": "W_SOURCE", "relation": "SOURCE_ORDERED_BY"},
+      {"from": "T2", "to": "W_STAGING", "relation": "STAGING_BYTES_OBSERVED_AND_SYNC_LIMIT_RECORDED_IN"},
+      {"from": "T2", "to": "W_OUTER", "relation": "EXIT_FRAME_OBSERVED_IN"},
+      {"from": "S3", "to": "W_STAGING", "relation": "FINAL_STAGING_BYTES_OBSERVED_AS"},
+      {"from": "S3", "to": "W_RESULT", "relation": "FINAL_METADATA_RECORDED_IN"},
+      {"from": "S3", "to": "W_COMMIT", "relation": "EXACT_BYTES_ARCHIVED_BY"}
+    ],
+    "merkle_commitment": {
+      "graph_domain": "ergentics-r19-obs11-c2-postmortem-graph-v1",
+      "leaf_order_rule": "NODE_ADDRESS_RAW_32_BYTES_ASCENDING",
+      "leaf_ordinal_origin": 0,
+      "leaf_count": 13,
+      "ordered_node_address_list_rule": "SHA256_CANONICAL_JSON_ARRAY_OF_LOWERCASE_HEX_ADDRESSES_SORTED_BY_RAW_32_BYTES_NO_TRAILING_LF",
+      "ordered_node_address_list_sha256": "f08842804c737747edbbd97a615cc238fed65151e8f5a662332398925fdd86cc",
+      "leaf_rule": "LFID_DOMAIN_ERGENTICS_R19_OBS11_C2_POSTMORTEM_MERKLE_LEAF_V1_COMPONENTS_GRAPH_DOMAIN_ORDINAL_DECIMAL_NODE_ADDRESS_HEX",
+      "parent_rule": "LFID_DOMAIN_ERGENTICS_R19_OBS11_C2_POSTMORTEM_MERKLE_NODE_V1_COMPONENTS_GRAPH_DOMAIN_LEFT_HEX_RIGHT_HEX",
+      "tree_shape": "RFC6962_LARGEST_POWER_OF_TWO_SPLIT_NO_ODD_DUPLICATION",
+      "root_sha256": "a94600285fa1b60851a6db9a380456c9fa4553caca3fb9c5960cd3b521436e2f"
+    },
+    "transition_chain": {
+      "genesis_rule": "LFID_DOMAIN_ERGENTICS_R19_OBS11_C2_POSTMORTEM_CHAIN_GENESIS_V1_COMPONENTS_S0_ADDRESS_W_READINESS_ADDRESS",
+      "successor_rule": "LFID_DOMAIN_ERGENTICS_R19_OBS11_C2_POSTMORTEM_TRANSITION_CHAIN_V1_COMPONENTS_PREVIOUS_CHAIN_TRANSITION_ADDRESS_FROM_STATE_ADDRESS_TO_STATE_ADDRESS",
+      "transition_order": ["T0", "T1", "T2"],
+      "tip_sha256": "a2ee1306a912c99fbb06aefea922fde0d77f1ab183a8df79125ae758ec68597d"
+    }
+  },
+  "synthesis": {
+    "kind": "PURE_CONSTRAINT_AND_LEXICOGRAPHIC_MINIMAL_DELTA_DESIGN",
+    "live_execution": false,
+    "constraints": [
+      "NO_NAMED_PATH_MODE_MUTATION",
+      "MODE_CHANGE_TARGETS_THE_ALREADY_HELD_DESCRIPTOR",
+      "FIXED_ARITY_DARWIN_SIGNATURE",
+      "EXACT_ERRNO_CAPTURE",
+      "HELD_FSTAT_AND_NAMED_VNODE_REVALIDATION_AFTER_MODE_CHANGE",
+      "NO_NEW_HELPER_PROCESS_OR_SECOND_OWNER",
+      "NO_CALLER_PATH_ARGV_ENV_CWD_TIMEOUT_OR_ROLE_INPUT",
+      "V6_NAMESPACE_IS_NOT_REUSED_REPAIRED_OR_RETRIED",
+      "AUTHORITY_VECTOR_REMAINS_00000000",
+      "KOINE_AND_SQLITE_NEVER_FEED_LIVE_CONTROL"
+    ],
+    "objective_order": [
+      "SATISFY_ALL_SAFETY_AND_EPISTEMIC_CONSTRAINTS",
+      "MINIMIZE_LIVE_OWNERSHIP_SURFACES",
+      "MINIMIZE_CHANGED_MODE_TRANSITION_CALL_SITES",
+      "MAXIMIZE_COMPILE_TIME_ABI_CHECKING_WITHOUT_EXPANDING_THIS_SLICE"
+    ],
+    "candidate_deltas": [
+      {
+        "candidate_id": "D0",
+        "delta": "NO_SOURCE_CHANGE",
+        "decision": "REJECT",
+        "first_false_constraint": "REQUIRED_MODE_TRANSITIONS_CALL_ABSENT_IO_METHOD"
+      },
+      {
+        "candidate_id": "D1",
+        "delta": "REPLACE_WITH_FILE_CHMOD_ON_A_PATH",
+        "decision": "REJECT",
+        "first_false_constraint": "NO_NAMED_PATH_MODE_MUTATION"
+      },
+      {
+        "candidate_id": "D2",
+        "delta": "OPEN_OR_CAST_A_SECOND_FILE_RECEIVER_FOR_CHMOD",
+        "decision": "REJECT",
+        "first_false_constraint": "MODE_CHANGE_TARGETS_THE_ALREADY_HELD_DESCRIPTOR"
+      },
+      {
+        "candidate_id": "D3",
+        "delta": "REMOVE_REDUNDANT_ROOT_0700_REASSERTION_AT_LINE_536_EQUIVALENT_AND_USE_ONE_FIXED_ARITY_FCHMOD_HELPER_AT_LINES_455_AND_705_EQUIVALENTS",
+        "decision": "SELECT_MINIMAL_SUCCESSOR_DESIGN_NOT_AUTHORIZED",
+        "preserves": [
+          "RUBY_ORCHESTRATION",
+          "ONE_PROCESS_OWNER",
+          "HELD_DESCRIPTOR_IDENTITY_AND_ROOT_0700_FAIL_CLOSED_ADMISSION_WITHOUT_REPAIR",
+          "ZERO_CALLER_CAPABILITIES"
+        ]
+      },
+      {
+        "candidate_id": "D4",
+        "delta": "REWRITE_THE_CAPTURE_RUNNER_AS_SWIFT_PLUS_IN_IMAGE_C",
+        "decision": "DEFER_LONG_TERM_ARCHITECTURE",
+        "reason": "STRONGEST_BOUNDARY_BUT_NOT_THE_MINIMAL_REPAIR_DELTA"
+      },
+      {
+        "candidate_id": "D5",
+        "delta": "ADD_A_LIVE_KOINE_OR_RUBY_SHADOW_OWNER",
+        "decision": "REJECT",
+        "first_false_constraint": "NO_NEW_HELPER_PROCESS_OR_SECOND_OWNER"
+      },
+      {
+        "candidate_id": "D6",
+        "delta": "RUN_A_PURE_KOINE_DIFFERENTIAL_ORACLE_AFTER_DURABLE_CANONICAL_PUBLICATION",
+        "decision": "SELECT_OPTIONAL_POSTPUBLICATION_DESIGN_NO_IMPLEMENTATION_EXISTS",
+        "effect": "CONTRADICTION_AND_MINIMAL_DELTA_REPORT_ONLY"
+      }
+    ],
+    "selected_design": ["D3", "D6"],
+    "selected_design_interpretation": "D3_IS_THE_SINGLE_MINIMAL_RUNTIME_REPAIR_SHAPE; D6_IS_A_SEPARATE_ZERO_AUTHORITY_POSTPUBLICATION_CHECK"
+  },
+  "koine_oracle_contract": {
+    "status": "DESIGNED_UNIMPLEMENTED_UNINVOKED",
+    "mode": "PURE_NO_IO_NO_PROCESS_NO_AUTHORITY",
+    "input": {
+      "kind": "ONE_CANONICAL_JSON_VALUE",
+      "required_sections": [
+        "EVIDENCE_COMMIT_AND_TREE",
+        "RAW_WITNESS_BYTES_WITH_EXPECTED_SHA256_AND_GIT_BLOB",
+        "CONTENT_ADDRESSED_STATE_TRANSITION_AND_WITNESS_NODES",
+        "BASELINE_RUBY_IO_CHMOD_MODEL",
+        "HYPOTHETICAL_FRESH_SUCCESSOR_FCHMOD_MODEL",
+        "CLAIM_PREDICATES_AND_EPISTEMIC_STATES",
+        "MERKLE_COMMITMENT_AND_TRANSITION_CHAIN",
+        "AUTHORITY_00000000"
+      ],
+      "live_paths_or_descriptors": 0,
+      "live_process_capabilities": 0,
+      "filesystem_observation_calls": 0
+    },
+    "output": {
+      "kind": "DISJOINT_CANONICAL_JSON_REPORT",
+      "required_sections": [
+        "INPUT_SHA256_AND_ROUND_TRIP",
+        "WITNESS_HASH_RESULTS",
+        "NODE_ADDRESS_RESULTS",
+        "MERKLE_AND_CHAIN_RESULTS",
+        "PREDICATE_RESULTS_WITH_UNKNOWN_PRESERVED",
+        "REMOVED_AND_ADDED_FAILURE_SURFACES",
+        "MINIMAL_DELTA_DECISION",
+        "AUTHORITY_00000000"
+      ],
+      "allowed_decisions": [
+        "MODEL_CONSISTENT",
+        "MODEL_INCONSISTENT",
+        "ABSTAIN_UNKNOWN"
+      ],
+      "may_authorize_implementation_or_launch": false,
+      "may_mutate_scientific_or_authority_state": false
+    },
+    "finite_predicates": [
+      "EXACT_WITNESS_SHA256_GIT_BLOB_BYTE_AND_LF_IDENTITIES",
+      "CANONICAL_PARSE_SERIALIZE_ROUND_TRIP",
+      "OUTER_CHANNEL_REMAINS_COMBINED_UNATTRIBUTED",
+      "PRE99_AND_FINAL_ROOT_VNODE_CONTINUITY",
+      "STAGING_SAME_DEVICE_ROOT_DISTINCT_INODE_AND_APFS_NLINK_EQUATION",
+      "FIXED_LEAF_ABSENCE_AND_UNSEALED_ROOT",
+      "PRIMARY_FAILURE_CLASS_MESSAGE_AND_SOURCE_CALL_SITE_JOIN",
+      "SYNC_COMPLETION_REMAINS_UNKNOWN",
+      "OPERATION_COUNTS_REMAIN_EXACT_ATTEMPT_SCOPED",
+      "GIT_MODE_AND_LIVE_MODE_REMAIN_DISTINCT_METADATA_DOMAINS",
+      "NODE_ADDRESS_DUPLICATE_REJECTION",
+      "MERKLE_ORDER_COUNT_AND_ROOT_RECOMPUTATION",
+      "TRANSITION_CHAIN_CONTINUITY",
+      "FRESH_SUCCESSOR_NAMESPACE_DISJOINT_FROM_CONSUMED_V6",
+      "AUTHORITY_AND_GATE_E_REMAIN_UNCHANGED"
+    ],
+    "synthesis_output": {
+      "baseline_failure_surface": "RUBY_DYNAMIC_IO_CHMOD",
+      "removed_surface": "RUBY_DYNAMIC_IO_CHMOD",
+      "added_surface": "FIXED_ARITY_DESCRIPTOR_BOUND_FCHMOD_AT_TWO_REAL_MODE_TRANSITIONS",
+      "removed_redundancy": "ROOT_0700_MODE_REASSERTION_AFTER_EXCLUSIVE_MKDIRAT_AND_BEFORE_EXACT_ADMISSION",
+      "observed_claims_added": 0,
+      "model_only_claims_added": 0,
+      "selected_candidate": "D3",
+      "optional_differential_oracle": "D6"
+    }
+  },
+  "prose_projection": {
+    "rule": "PROSE_MAY_ONLY_RENDER_TYPED_CLAIMS_WITH_EXACT_FACT_IDS_OR_DATA_SELECTORS_AND_EXPLICIT_SCOPE_AND_ZERO_SCIENTIFIC_AUTHORITY_EFFECT",
+    "pipeline": [
+      "EXACT_EVIDENCE_BYTES",
+      "VALIDATED_CANONICAL_CLAIMS",
+      "OPTIONAL_READ_ONLY_SQLITE_GRAPH_VIEWS",
+      "DISPOSABLE_MARKDOWN"
+    ],
+    "reverse_edges_allowed": false,
+    "claim_schema": {
+      "required_fields": [
+        "claim_id",
+        "claim_kind",
+        "text_semantics",
+        "fact_ids",
+        "operation_scope",
+        "temporal_scope",
+        "transport_scope",
+        "scientific_effect",
+        "authority_effect",
+        "permitted"
+      ],
+      "source_rule": "EACH_CLAIM_HAS_AT_LEAST_ONE_FACT_ID_OR_DATA_SELECTOR; FACTS_RESOLVE_TO_WITNESSES; DATA_SELECTORS_RESOLVE_IN_THE_EXACT_HASH_BOUND_NORMATIVE_JSON_OR_FINAL_VALIDATION_RECEIPT",
+      "unknown_policy": "RENDER_UNAVAILABLE_OR_OMIT_NEVER_INFER",
+      "new_scientific_or_authority_claim_requires": "NEW_CONTENT_ADDRESSED_CANONICAL_CLAIM_RECORD_NOT_A_PROSE_EDIT"
+    },
+    "claims": [
+      {
+        "claim_id": "C01",
+        "claim_kind": "FACT_PROJECTION",
+        "text_semantics": "THE_ONE_SHOT_WAS_CONSUMED_AND_EXITED_70_BEFORE_ANY_HARNESS_OR_CHILD_ENTRY",
+        "fact_ids": ["F01", "F04"],
+        "operation_scope": "EXACT_C2_V6_ATTEMPT",
+        "temporal_scope": "OUTER_ENTRY_THROUGH_POSTEXIT_OBSERVATION",
+        "transport_scope": "COMBINED_UNATTRIBUTED_OUTER",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C02",
+        "claim_kind": "CAUSAL_CLASSIFICATION",
+        "text_semantics": "THE_CAUSAL_DEFECT_WAS_AN_ABSENT_RUBY_IO_RECEIVER_METHOD_AT_A_DESCRIPTOR_MODE_TRANSITION",
+        "fact_ids": ["F05"],
+        "operation_scope": "EXACT_C2_V6_RUNNER_SOURCE_AND_ATTEMPT",
+        "temporal_scope": "PRIMARY_ROOT_CREATION_TRANSITION",
+        "transport_scope": "NOT_APPLICABLE",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C03",
+        "claim_kind": "NEGATIVE_CAUSAL_CLASSIFICATION",
+        "text_semantics": "THE_CAUSAL_DEFECT_WAS_NOT_OBSERVED_AS_A_TOCTOU_GOVERNOR_OR_KERNEL_FAILURE",
+        "fact_ids": ["F03", "F05"],
+        "operation_scope": "EXACT_C2_V6_CAUSAL_CLASSIFICATION_ONLY",
+        "temporal_scope": "PRIMARY_ROOT_CREATION_TRANSITION",
+        "transport_scope": "NOT_APPLICABLE",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true,
+        "qualification": "CLASSIFIES_THIS_CAUSE_ONLY_AND_DOES_NOT ERASE_NAMED_RESIDUAL_RACES"
+      },
+      {
+        "claim_id": "C04",
+        "claim_kind": "FACT_PROJECTION",
+        "text_semantics": "THE_RETAINED_LEAF_IS_STAGING_EVIDENCE_NOT_A_PUBLISHED_OR_SEALED_FIXED_99_TERMINAL",
+        "fact_ids": ["F07", "F08"],
+        "operation_scope": "EXACT_C2_V6_RETAINED_STATE",
+        "temporal_scope": "AFTER_RUNNER_EXIT",
+        "transport_scope": "FILESYSTEM_AND_GIT_ARCHIVE_METADATA_DISTINCT",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C05",
+        "claim_kind": "EPISTEMIC_LIMIT",
+        "text_semantics": "SYNC_COMPLETION_IS_UNKNOWN_DESPITE_SOURCE_ORDERING",
+        "fact_ids": ["F06"],
+        "operation_scope": "EXACT_C2_V6_INCOMPLETE_PUBLICATION",
+        "temporal_scope": "BETWEEN_WRITE_READBACK_AND_FAILED_MODE_TRANSITION",
+        "transport_scope": "NOT_RETAINED",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C06",
+        "claim_kind": "AUTHORITY_PROJECTION",
+        "text_semantics": "NO_SCIENTIFIC_AUTHORITY_CLOSED",
+        "fact_ids": ["F10"],
+        "operation_scope": "EXACT_C2_V6_RESULT",
+        "temporal_scope": "POSTEXIT_CLASSIFICATION",
+        "transport_scope": "CANONICAL_RESULT",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C07",
+        "claim_kind": "TRANSPORT_SCOPE_PROJECTION",
+        "text_semantics": "THE_987_BYTE_OUTER_FRAME_IS_COMBINED_AND_HAS_NO_STDOUT_STDERR_ATTRIBUTION",
+        "fact_ids": ["F02"],
+        "operation_scope": "EXACT_C2_V6_ATTEMPT",
+        "temporal_scope": "OUTER_EXIT_OBSERVATION",
+        "transport_scope": "COMBINED_UNATTRIBUTED_OUTER",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C08",
+        "claim_kind": "METADATA_DOMAIN_PROJECTION",
+        "text_semantics": "GIT_TREE_MODE_100644_AND_LIVE_INODE_MODE_0600_ARE_DISTINCT_METADATA_DOMAINS",
+        "fact_ids": ["F09"],
+        "operation_scope": "EXACT_RETAINED_STAGING_BYTES",
+        "temporal_scope": "POSTEXIT_AND_ARCHIVE",
+        "transport_scope": "LIVE_FILESYSTEM_VERSUS_GIT_TREE",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C09",
+        "claim_kind": "LANGUAGE_DESIGN_EVALUATION",
+        "text_semantics": "RUBY_IS_THE_MINIMAL_SUCCESSOR_ORCHESTRATOR_SWIFT_IS_THE_LONG_TERM_SOLE_OWNER_AND_FIXED_C_IS_THE_ABI_BOUNDARY",
+        "fact_ids": ["F05"],
+        "data_selectors": ["/language_comparison/runtime_languages", "/language_comparison/representations", "/language_comparison/single_recommendation"],
+        "operation_scope": "POSTMORTEM_DESIGN_ONLY",
+        "temporal_scope": "AFTER_DURABLE_C2_V6_RESULT",
+        "transport_scope": "NORMATIVE_JSON",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C10",
+        "claim_kind": "PURE_SYNTHESIS_RESULT",
+        "text_semantics": "THE_LEXICOGRAPHIC_CONSTRAINT_MODEL_SELECTS_D3_AND_OPTIONAL_D6_WITHOUT_AUTHORIZING_EITHER",
+        "fact_ids": ["F05", "F10"],
+        "data_selectors": ["/synthesis", "/koine_oracle_contract/input", "/koine_oracle_contract/output", "/koine_oracle_contract/finite_predicates", "/koine_oracle_contract/synthesis_output"],
+        "operation_scope": "POSTMORTEM_MODEL_ONLY",
+        "temporal_scope": "AFTER_DURABLE_C2_V6_RESULT",
+        "transport_scope": "NORMATIVE_JSON",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C11",
+        "claim_kind": "GRAPH_COMMITMENT_PROJECTION",
+        "text_semantics": "FOUR_HASH_CHAINED_STATES_THREE_TRANSITIONS_SIX_WITNESSES_AND_THE_MERKLE_AND_TRANSITION_TIPS_RECOMPUTE",
+        "fact_ids": ["F03", "F07", "F08", "F11"],
+        "data_selectors": ["/graph/model", "/graph/state_nodes", "/graph/transition_nodes", "/graph/witness_nodes", "/graph/merkle_commitment", "/graph/transition_chain"],
+        "operation_scope": "POSTMORTEM_GRAPH_ONLY",
+        "temporal_scope": "S0_THROUGH_S3",
+        "transport_scope": "NORMATIVE_JSON_AND_FINAL_VALIDATION_RECEIPT",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C12",
+        "claim_kind": "VALIDATION_HISTORY_PROJECTION",
+        "text_semantics": "SIX_VALIDATORS_PASSED_ONE_RUBY_2_6_SYNTAX_OBSERVER_FAILED_AND_NONE_MUTATED_THE_FILESYSTEM",
+        "fact_ids": [],
+        "data_selectors": ["/round_trip_semantics", "/operations/ruby_read_only_validator_entries", "/operations/ruby_read_only_validator_successes", "/operations/ruby_read_only_validator_syntax_failures", "EXTERNAL_FINAL_VALIDATION_RECEIPT"],
+        "operation_scope": "THIS_POSTMORTEM_VALIDATION_ONLY",
+        "temporal_scope": "PRELIMINARY_THROUGH_SEMANTIC_CLAIM_CLOSED_FINAL_VALIDATION",
+        "transport_scope": "CODEX_CAPTURE_AND_DURABLE_VALIDATION_RECEIPT",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C13",
+        "claim_kind": "STATE_DELTA_PROJECTION",
+        "text_semantics": "THE_EXACT_LIFECYCLE_RUNS_FROM_READINESS_THROUGH_CONSUMPTION_PRE99_AND_FINAL_UNSEALED_STAGING",
+        "fact_ids": ["F01", "F03", "F04", "F06", "F07", "F08", "F11"],
+        "data_selectors": ["/graph/state_nodes", "/graph/transition_nodes"],
+        "operation_scope": "EXACT_C2_V6_ATTEMPT",
+        "temporal_scope": "S0_THROUGH_S3",
+        "transport_scope": "EXACT_WITNESS_SET",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C14",
+        "claim_kind": "PROJECTION_POLICY",
+        "text_semantics": "EVIDENCE_TO_CLAIMS_TO_OPTIONAL_VIEWS_TO_MARKDOWN_IS_ONE_WAY_AND_PROSE_CANNOT_MUTATE_DATA",
+        "fact_ids": ["F10"],
+        "data_selectors": ["/prose_projection/pipeline", "/prose_projection/reverse_edges_allowed", "/authority/prose_may_supply_fact"],
+        "operation_scope": "POSTMORTEM_PRESENTATION_ONLY",
+        "temporal_scope": "ALL_PROJECTIONS",
+        "transport_scope": "NORMATIVE_JSON_TO_DERIVED_OUTPUTS",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      },
+      {
+        "claim_id": "C15",
+        "claim_kind": "SCOPED_OPERATION_VECTOR_PROJECTION",
+        "text_semantics": "THE_EXACT_ATTEMPT_HAS_ONE_OUTER_ATTEMPT_AND_THREE_POSITIVE_INFRASTRUCTURE_ENTRIES_AND_FROZEN_ZERO_CHILD_BUILD_SIGNAL_CLEANUP_AND_POSTEXIT_ACTIVE_MATCH_COUNTS_WITHOUT_REINTERPRETING_HISTORY",
+        "fact_ids": ["F12"],
+        "data_selectors": ["/basis/postmortem_scope", "/basis/historical_operations_reinterpreted"],
+        "operation_scope": "THIS_EXACT_C2_OUTER_ATTEMPT_RUNNER_CHILD_AND_RESULT_ONLY",
+        "temporal_scope": "EXACT_CONSUMED_C2_V6_ATTEMPT",
+        "transport_scope": "CANONICAL_RESULT_WITNESS",
+        "scientific_effect": "NONE",
+        "authority_effect": "NONE",
+        "permitted": true
+      }
+    ],
+    "markdown_section_claim_map": {
+      "OUTCOME_FIRST": ["C01", "C02", "C03", "C04", "C05", "C06", "C10"],
+      "LANGUAGE_COMPARISON": ["C02", "C09"],
+      "THE_SYNTHESIS_NOT_JUST_THE_LABEL": ["C05", "C06", "C10", "C14"],
+      "EXACT_STATE_AND_TRANSITION_DELTA": ["C01", "C02", "C04", "C05", "C11", "C13"],
+      "WHAT_PROSE_CAN_DO_TO_THE_DATA": ["C04", "C05", "C06", "C07", "C08", "C14", "C15"],
+      "VALIDATION_AND_THE_OBSERVER_DELTA": ["C06", "C11", "C12"]
+    },
+    "prohibited_claim_patterns": [
+      {
+        "pattern": "CALL_THE_COMBINED_OUTER_BYTES_STDOUT_OR_STDERR",
+        "violates": ["F02"],
+        "data_effect_if_ACCEPTED": "INVENTS_A_CHANNEL_ATTRIBUTION_EDGE"
+      },
+      {
+        "pattern": "APPLY_THIS_ATTEMPTS_ZERO_OPERATION_COUNTS_TO_HISTORICAL_R19_WORK",
+        "violates": ["basis.postmortem_scope", "basis.historical_operations_reinterpreted"],
+        "data_effect_if_ACCEPTED": "LEAKS_SCOPE_AND_ERASES_PRIOR_OPERATIONS"
+      },
+      {
+        "pattern": "CALL_SOURCE_ORDERED_SYNC_A_COMPLETED_SYNC",
+        "violates": ["F06"],
+        "data_effect_if_ACCEPTED": "PROMOTES_UNKNOWN_TO_OBSERVED_WITHOUT_A_WITNESS"
+      },
+      {
+        "pattern": "CALL_THE_STAGING_LEAF_FIXED_99_DURABLE_OR_TERMINAL",
+        "violates": ["F07"],
+        "data_effect_if_ACCEPTED": "CREATES_A_FALSE_TERMINAL_TRANSITION_AND_COULD_FALSELY_PROMOTE_AUTHORITY"
+      },
+      {
+        "pattern": "USE_EMBEDDED_EMPTY_PRE99_INVENTORY_AS_THE_FINAL_TOPOLOGY",
+        "violates": ["F08"],
+        "data_effect_if_ACCEPTED": "COLLAPSES_TWO_TIME_SCOPES_AND_DROPS_THE_RETAINED_STAGING_ENTRY"
+      },
+      {
+        "pattern": "USE_GIT_TREE_MODE_AS_THE_LIVE_INODE_MODE",
+        "violates": ["F09"],
+        "data_effect_if_ACCEPTED": "OVERWRITES_LIVE_METADATA_WITH_ARCHIVE_METADATA"
+      },
+      {
+        "pattern": "CALL_THIS_A_SCIENTIFIC_PASS_OR_FAIL",
+        "violates": ["F10"],
+        "data_effect_if_ACCEPTED": "REINTERPRETS_INFRASTRUCTURE_INCOMPLETE_AS_SCIENCE"
+      }
+    ],
+    "projection_failure_policy": "REJECT_OR_EMPTY_DERIVED_PROSE_AND_RETAIN_CANONICAL_FACTS_UNCHANGED"
+  },
+  "round_trip_semantics": {
+    "tests": [
+      "PARSE_JSON_AND_REENCODE_RECURSIVE_LEXICOGRAPHIC_KEYS_WITH_EQUAL_SEMANTIC_VALUE",
+      "RECOMPUTE_EVERY_NODE_ADDRESS",
+      "RECOMPUTE_STATE_HASH_CHAIN_ANCESTRY",
+      "REQUIRE_LIFECYCLE_GRAPH_STATE_TRANSITION_BIPARTITION",
+      "REQUIRE_EVIDENCE_GRAPH_SEMANTIC_WITNESS_BIPARTITION",
+      "REQUIRE_ALL_TRANSITION_STATE_AND_WITNESS_REFERENCES_RESOLVE",
+      "RECOMPUTE_MERKLE_ROOT",
+      "REQUIRE_EVERY_PERMITTED_PROSE_CLAIM_TO_RESOLVE_TO_FACTS_AND_WITNESSES",
+      "REQUIRE_UNKNOWN_SYNC_REMAINS_UNKNOWN",
+      "REQUIRE_AUTHORITY_VECTOR_AND_GATE_E_UNCHANGED"
+    ],
+    "status": "PASS_SIX_READ_ONLY_RUBY_VALIDATIONS_WITH_ONE_RETAINED_OBSERVER_SYNTAX_FAILURE",
+    "validator_language": "APPLE_SYSTEM_RUBY_2_6_PURE_READ_ONLY",
+    "validator_process_entries": 7,
+    "filesystem_mutations_by_validator": 0,
+    "preliminary_validation": {
+      "status": "PASS_PRELIMINARY_READ_ONLY_ROUND_TRIP",
+      "input_sha256": "debb01b59fb89b13fa94f6780451b1e21941e16c1ffbbd615903e539c607372c",
+      "check_count": 102,
+      "checks_sha256": "002821a9599d813a35223fb21c422d16cbea8f066dd721a23eb3b07fc8cb7e09",
+      "merkle_root_sha256": "5ff7ca999cf296b6e2ece63c85e88a6121ab6951e899ddbbadc5dbd6df66075b",
+      "transition_chain_tip_sha256": "d3185c00556b0dd307c1e43aede06c4c854e492538a9258922ed25aa30e793ea",
+      "superseded_by_model_correction": true
+    },
+    "failed_final_validator_attempt": {
+      "status": "FAIL_OBSERVER_HARNESS_SYNTAX_NO_SEMANTIC_CHECKS_REACHED",
+      "process_entry_ordinal": 2,
+      "ruby_version": "2.6.10",
+      "diagnosis": "ENDLESS_METHOD_DEFINITION_SYNTAX_IS_NOT_SUPPORTED_BY_APPLE_RUBY_2_6",
+      "first_rejected_source": "def cbytes(value) = JSON.generate(canon(value))",
+      "outer_exit_code": 1,
+      "semantic_checks_reached": 0,
+      "filesystem_mutations": 0,
+      "scientific_effect": "NONE",
+      "authority_effect": "NONE",
+      "correction": "USE_CLASSIC_DEF_BODY_END_SYNTAX_AND_RUN_ONE_FINAL_READ_ONLY_VALIDATOR"
+    },
+    "prior_final_validation": {
+      "status": "PASS_FINAL_READ_ONLY_ROUND_TRIP_SUPERSEDED_BY_CLAIM_CLOSURE_REVISION",
+      "input_sha256": "30427f8000b0c22b6f31ece8f39e4b54cb82c058d67e995966874d4927d7ce1f",
+      "validation_receipt_sha256": "9286e72e2f45ec373499f7ca392906b27b6c55aa52950f09f16abd234f2c0d27",
+      "check_count": 82,
+      "checks_sha256": "3566affc299cf44f22cefbc460217ff1cb32846b5ae39bd11e5440da7f217cd0",
+      "supersession_reason": "ADD_EXACT_OPERATION_SCOPE_COMPLETE_PROSE_CLAIM_MAP_AND_PROJECTION_RECEIPT_BOUNDARY"
+    },
+    "prior_claim_closure_validation": {
+      "status": "PASS_FINAL_CLAIM_CLOSED_READ_ONLY_ROUND_TRIP_SUPERSEDED_BY_GRAPH_MODEL_CORRECTION",
+      "input_sha256": "25931668eb5c3383d291a28cb854dac2329b6c4b5347bb6eb953738b6e1190bf",
+      "check_count": 98,
+      "checks_sha256": "79ec08b477f73ce8bf8b3fc63c8f206903f304a33a03d91b441219c2fc8c2e32",
+      "merkle_root_sha256": "5ff7ca999cf296b6e2ece63c85e88a6121ab6951e899ddbbadc5dbd6df66075b",
+      "transition_chain_tip_sha256": "d3185c00556b0dd307c1e43aede06c4c854e492538a9258922ed25aa30e793ea",
+      "supersession_reason": "DECLARE_MERKLE_DOMAIN_AND_ORDINAL_FIX_EPISTEMIC_TYPING_NARROW_PREFLIGHT_EVIDENCE_COMPLETE_FINAL_STATE_AND_REMOVE_TEMPORALLY_BROAD_EDGE"
+    },
+    "prior_model_validation": {
+      "status": "PASS_FINAL_MODEL_AND_CLAIM_CLOSED_READ_ONLY_ROUND_TRIP_SUPERSEDED_BY_SEMANTIC_PROSE_CLAIM_CLOSURE",
+      "input_sha256": "27022542c45a4846a868dadcba4c070a5541f90911bd287f7a3fbdb0365333ff",
+      "validation_receipt_sha256": "aee42a8aad6674efd8d9f8e2155d339b228381f692f0d4e1d26f96f72ef530bc",
+      "check_count": 117,
+      "checks_sha256": "d1831f720ae293b0c6bbc848dc4320e4ca470527e19af09abef2464ee6f2c430",
+      "merkle_root_sha256": "a94600285fa1b60851a6db9a380456c9fa4553caca3fb9c5960cd3b521436e2f",
+      "transition_chain_tip_sha256": "a2ee1306a912c99fbb06aefea922fde0d77f1ab183a8df79125ae758ec68597d",
+      "supersession_reason": "CORRECT_C12_PASS_COUNT_AND_BIND_REPRESENTATIONS_FULL_KOINE_CONTRACT_TERMINAL_INVENTORY_AND_SCOPED_OPERATION_VECTOR_TO_PROSE_SECTIONS"
+    },
+    "prior_semantic_claim_validation": {
+      "status": "PASS_FINAL_SEMANTIC_CLAIM_MODEL_CLOSED_READ_ONLY_ROUND_TRIP_SUPERSEDED_BY_EXACT_OPERATION_VECTOR_CLOSURE",
+      "input_sha256": "de3354c99a3aa8279ffe103a158f538f57232b7aa97afb300d5a65f20203ce22",
+      "validation_receipt_sha256": "5beb68f6d52a7fec24d0dc57661869c8b3374abc78f62e53645d4b671ff6875a",
+      "check_count": 143,
+      "checks_sha256": "c3cb925a2c0b5e948f8ce38b52cb25de64a41dd7106da644fbe1ee29ad139cde",
+      "merkle_root_sha256": "a94600285fa1b60851a6db9a380456c9fa4553caca3fb9c5960cd3b521436e2f",
+      "transition_chain_tip_sha256": "a2ee1306a912c99fbb06aefea922fde0d77f1ab183a8df79125ae758ec68597d",
+      "supersession_reason": "ADD_CAPTURE_RUNNER_OUTER_ATTEMPTS_CONTROLLER_FULL_INVOCATIONS_AND_ACTIVE_MATCHING_PROCESSES_AFTER_EXIT_TO_F12_C15_AND_VALIDATOR"
+    }
+  },
+  "operations": {
+    "scope": "THIS_EXACT_POSTMORTEM_TARGET_MUTATIONS_AND_SEVEN_NAMED_VALIDATOR_ENTRIES_ONLY",
+    "historical_operations_reinterpreted": false,
+    "nonvalidator_read_only_observer_processes_included": false,
+    "nonvalidator_read_only_observer_process_count": "UNCOUNTED_OUTSIDE_THIS_VECTOR",
+    "branch_creations": 0,
+    "python_entries": 0,
+    "koine_implementations": 0,
+    "ruby_read_only_validator_entries": 7,
+    "ruby_read_only_validator_successes": 6,
+    "ruby_read_only_validator_syntax_failures": 1,
+    "swift_commands": 0,
+    "swiftpm_commands": 0,
+    "compiler_entries": 0,
+    "process_signals": 0,
+    "controller_entries": 0,
+    "capture_runner_entries": 0,
+    "retained_state_mutations": 0,
+    "cleanup_repair_retry_actions": 0
+  }
+}

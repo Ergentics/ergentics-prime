@@ -1,0 +1,334 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h2_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "diagnostic_predecessor_attempt": {
+    "build_entered_product_compilation": false,
+    "classification": "SANDBOX_KEYCHAIN_VISIBILITY_FAILURE",
+    "ended_utc": "2026-09-01T00:57:55.186Z",
+    "error_count": 1,
+    "error_message_sha256": "07b8f4ae4fe5a128fe0fb5afce9d2db5532d49f3dd3a29005511bf0d2da045da",
+    "exit": "NONZERO",
+    "result_bundle_inventory_root_sha256": "46c1b19b640a6fef8d27c91ee0e76d37415d04dc548ccbdd73452d40ed7bcdc1",
+    "result_bundle_regular_file_bytes": 4629,
+    "source_manifest_after_failure_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "source_rejoin": "SATISFIED",
+    "started_utc": "2026-09-01T00:57:54.206Z",
+    "status": "FAIL_DIAGNOSTIC_RETAINED_FRESH_PATH_SUCCESSOR_ALLOWED"
+  },
+  "effects": {
+    "app_launches": 0,
+    "exports": 0,
+    "guest_entries": 0,
+    "launch_services_registrations_by_xcode": 2,
+    "network_observation": "NOT_MEASURED",
+    "notarizations": 0,
+    "provisioning_updates_requested": 0,
+    "uploads": 0,
+    "vm_launches": 0
+  },
+  "inventory_hash_profile": {
+    "entry_order": "BYTEWISE_SORTED_RELATIVE_PATH",
+    "entry_row": "relative_path NUL type NUL mode_low_07777_decimal NUL lstat_size_decimal NUL payload_digest_or_dash",
+    "entry_separator": "LF",
+    "file_payload_digest": "SHA256_FILE_BYTES",
+    "name": "ERGENTICS_DIRECTORY_INVENTORY_V1",
+    "root_digest": "SHA256_CONCATENATED_ENTRY_ROWS",
+    "special_payload": "DASH",
+    "symlink_payload_digest": "SHA256_LINK_TARGET_BYTES",
+    "terminal_separator": false,
+    "text_encoding": "UTF-8",
+    "walk": "DESCEND_ALL_DOT_ENTRIES_EXCEPT_DOT_AND_DOTDOT_USING_LSTAT"
+  },
+  "lineage": {
+    "execution_checkpoint": {
+      "commit": "f61051b8f870a1f31e6ce1e79a953d2edc014635",
+      "tree": "7a20fdf6f23acc11d7e36decb259fd968bfa7320"
+    },
+    "h1_implementation_checkpoint": {
+      "commit": "24be18ff033072cd4206bae226a444b27a1ebf47",
+      "tree": "8fa29a04b4582f638116c04b7b1f2a54e1bcb10b"
+    },
+    "h1_semantic_result_checkpoint": {
+      "commit": "af58d8bdd3fe9ba90fc44a05d33d8a394dc91d9d",
+      "h1_receipt_root": "159c6e01499532cd47c41d3f5f0d9f5594bfe2ab5a31de6e8d8f6f7e6a10db94",
+      "h1_result_sha256": "deea60ee59ce64e01de29d207bb7d67902da7195cbe7a58c833bfc94d12ff428",
+      "h1_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c",
+      "tree": "0375eb125f3ca35a70d7c603318edb6e9f934373"
+    },
+    "prior_product_observation_checkpoint": {
+      "commit": "f61051b8f870a1f31e6ce1e79a953d2edc014635",
+      "result_sha256": "8b2bf909eea8f51cf211285098f04f0c5e78fabeb2ed3ad274ebe22b63cf00da",
+      "tree": "7a20fdf6f23acc11d7e36decb259fd968bfa7320"
+    },
+    "product_git_object_manifest": {
+      "fixed_roots": [
+        "Assets.xcassets",
+        "Entitlements.plist",
+        "ErgenticsProvenance.xcodeproj/project.pbxproj",
+        "ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes",
+        "Guest",
+        "Info.plist",
+        "PrivacyInfo.xcprivacy",
+        "Sources",
+        "Tests"
+      ],
+      "hash_profile": {
+        "entry_order": "FIXED_ROOTS_ARRAY_ORDER",
+        "entry_row": "relative_path NUL git_object_id",
+        "entry_separator": "LF",
+        "root_hash": "SHA256",
+        "terminal_separator": false,
+        "text_encoding": "UTF-8"
+      },
+      "h1_implementation_sha256": "b3e66a86b7e7dbc212f6fe52e2784032f476d29050b9a7c15bf1c48480d56cd5",
+      "h1_semantic_result_sha256": "b3e66a86b7e7dbc212f6fe52e2784032f476d29050b9a7c15bf1c48480d56cd5",
+      "live_execution_checkpoint_sha256": "b3e66a86b7e7dbc212f6fe52e2784032f476d29050b9a7c15bf1c48480d56cd5",
+      "three_way_join": "SATISFIED"
+    },
+    "tracked_index_preflight": "CLEAN",
+    "tracked_index_postflight": "CLEAN",
+    "tracked_worktree_preflight": "CLEAN",
+    "tracked_worktree_postflight": "CLEAN",
+    "untracked_control_material": "PRESENT_PREEXISTING_AND_CURRENT_CONTROL_DRAFTS_EXCLUDED_FROM_FIXED_PRODUCT_ROOTS"
+  },
+  "product_inputs": {
+    "bundle_identifier": "com.ergentics.provenance",
+    "configuration": "Release",
+    "development_team": "ZCQ435U8JP",
+    "entitlements_file_sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2",
+    "info_plist_sha256": "f34fc9d79c16911cb2b4cd9c0d27b0851dbae2aa7312c180d23b03270958ce0b",
+    "minimum_macos": "26.0",
+    "privacy_manifest_sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+    "project_pbxproj_sha256": "9672908084007e3842b29ffee38b5a8b651e783a93847dc96056b03d66675e04",
+    "scheme": "ErgenticsProvenance",
+    "scheme_sha256": "3a34c15f9ecb369fd18956ee671fa3b67d83414d6af35c4a9a486bcca1df4666",
+    "signing_configuration": "PROJECT_DEFAULT_AUTOMATIC_APPLE_DEVELOPMENT",
+    "signing_overrides": false
+  },
+  "recorded_at_utc": "2026-09-01T01:02:02Z",
+  "release_archive": {
+    "action": {
+      "argv": [
+        "/usr/bin/xcodebuild",
+        "archive",
+        "-project",
+        "ErgenticsProvenance.xcodeproj",
+        "-scheme",
+        "ErgenticsProvenance",
+        "-configuration",
+        "Release",
+        "-derivedDataPath",
+        "/private/tmp/ergentics-h1-xcode-continuity-archive-dd-20260901T005748Z-r1",
+        "-resultBundlePath",
+        "/private/tmp/ergentics-h1-xcode-continuity-archive-20260901T005748Z-r1.xcresult",
+        "-archivePath",
+        "/private/tmp/ergentics-h1-xcode-continuity-20260901T005748Z-r1.xcarchive",
+        "-destination",
+        "generic/platform=macOS"
+      ],
+      "ended_utc": "2026-09-01T00:59:18.524Z",
+      "error_count": 0,
+      "exit": 0,
+      "result_bundle": {
+        "directory_count": 1,
+        "entry_count": 8,
+        "file_count": 7,
+        "inventory_root_sha256": "cd7d437d0392794685796b554a79e2e17156d9598b0a0c4f3c0035f480b64862",
+        "regular_file_bytes": 24169,
+        "special_count": 0,
+        "symlink_count": 0
+      },
+      "started_utc": "2026-09-01T00:59:04.426Z",
+      "status": "SUCCEEDED",
+      "warning_count": 1,
+      "warning_message_sha256": "d3b7fec474641d8c192fc40cfeaf35b290034eebd9beccb85aacdc7c32aa830e"
+    },
+    "app": {
+      "bundle_inventory": {
+        "directory_count": 4,
+        "entry_count": 11,
+        "file_count": 7,
+        "inventory_root_sha256": "1ea4f34ae340803abe99f117a4b5a52485d5b89d953bbed60630da2138773398",
+        "regular_file_bytes": 2399171,
+        "special_count": 0,
+        "symlink_count": 0
+      },
+      "candidate_cdhash_full_sha256": "b988f5b9b9c8c4308166ba7b1be7928a9d607a3119fe9b79411e179750cb550e",
+      "executable_sha256": "6a3edb29e89fa6b854b963c899fed987d8f2d3b2c7253a572d9d8cb652e1c299",
+      "info_plist_sha256": "16ec2915d6523f4756ac6b6d62853c613e798f1dfe04ccc94c5688489fff42bc",
+      "macho_architecture": "arm64",
+      "macho_lc_build_version": {
+        "minimum_macos": "26.0",
+        "platform": 1,
+        "sdk": "26.5"
+      },
+      "macho_uuid": "385845B9-966D-37CC-ACF3-355B6BF7BB36",
+      "privacy_manifest_relative_path": "Contents/Resources/PrivacyInfo.xcprivacy",
+      "privacy_manifest_sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    },
+    "archive": {
+      "archive_info_plist_sha256": "44cc99638ad76a25d3850f5bf7d57d80470c2cce794a227ae5dec4ab6f03d095",
+      "archive_version": 2,
+      "creation_utc": "2026-09-01T00:59:18Z",
+      "directory_count": 14,
+      "embedded_provisioning_profile": "ABSENT",
+      "entry_count": 25,
+      "file_count": 11,
+      "inventory_root_sha256": "c25dea213dff8ce151c3e49edcfe65246d700382071c6422a64ea367d4de3579",
+      "regular_file_bytes": 9165407,
+      "special_count": 0,
+      "symlink_count": 0
+    },
+    "dSYM": {
+      "dwarf_sha256": "1922caadc629305beb93d94eadecf0976a2517c70dcb94909e379c4392f298fc",
+      "macho_uuid": "385845B9-966D-37CC-ACF3-355B6BF7BB36",
+      "uuid_join": "SATISFIED"
+    }
+  },
+  "release_build": {
+    "action": {
+      "argv": [
+        "/usr/bin/xcodebuild",
+        "build",
+        "-project",
+        "ErgenticsProvenance.xcodeproj",
+        "-scheme",
+        "ErgenticsProvenance",
+        "-configuration",
+        "Release",
+        "-derivedDataPath",
+        "/private/tmp/ergentics-h1-xcode-continuity-build-dd-20260901T005748Z-r1",
+        "-resultBundlePath",
+        "/private/tmp/ergentics-h1-xcode-continuity-build-20260901T005748Z-r1.xcresult",
+        "-destination",
+        "platform=macOS,arch=arm64"
+      ],
+      "ended_utc": "2026-09-01T00:58:48.984Z",
+      "error_count": 0,
+      "exit": 0,
+      "result_bundle": {
+        "directory_count": 1,
+        "entry_count": 8,
+        "file_count": 7,
+        "inventory_root_sha256": "7f80239c1eaf791f953903cd4651a229fe6f27d3fe3209e31091fde8c2021617",
+        "regular_file_bytes": 23612,
+        "special_count": 0,
+        "symlink_count": 0
+      },
+      "started_utc": "2026-09-01T00:58:34.264Z",
+      "status": "SUCCEEDED",
+      "warning_count": 1,
+      "warning_message_sha256": "d3b7fec474641d8c192fc40cfeaf35b290034eebd9beccb85aacdc7c32aa830e"
+    },
+    "app": {
+      "bundle_inventory": {
+        "directory_count": 4,
+        "entry_count": 11,
+        "file_count": 7,
+        "inventory_root_sha256": "9a3e301c929dbc0a8e56b3b17c41ab7dfd87a78f8f0ac31f63dbc44b8d6cbce0",
+        "regular_file_bytes": 3850147,
+        "special_count": 0,
+        "symlink_count": 0
+      },
+      "candidate_cdhash_full_sha256": "a1206ff077f7fdb76374374f82dd5510f5d351123b7f95162260b97830fc2002",
+      "executable_sha256": "5ebee1ed00b42201d5970c331086a3181ec515497a9b0dac24605c8272f34cba",
+      "info_plist_sha256": "16ec2915d6523f4756ac6b6d62853c613e798f1dfe04ccc94c5688489fff42bc",
+      "macho_architecture": "arm64",
+      "macho_uuid": "2FA26CB3-F2E8-3DC1-9A92-0C59A6A95D4E",
+      "privacy_manifest_relative_path": "Contents/Resources/PrivacyInfo.xcprivacy",
+      "privacy_manifest_sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    }
+  },
+  "residuals": [
+    {
+      "authority_effect": "NONE",
+      "disposition": "NAMED_NON_BLOCKING_FOR_NON_AUTHORITATIVE_PRODUCT_CHECK",
+      "predicate": "three_point_source_join_does_not_exclude_intra_action_mutate_restore",
+      "scope": "pre_build_between_actions_post_archive_exact_descriptor_rooted_snapshots"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "DIAGNOSTIC_ONLY",
+      "predicate": "xcode_console_transport_truncated_while_structured_xcresult_retained"
+    },
+    {
+      "authority_effect": "NONE",
+      "disposition": "LOCAL_DEVELOPMENT_ONLY",
+      "predicate": "developer_id_app_store_testflight_and_notarization_not_established"
+    }
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-xcode-build-archive-continuity-result.v1",
+  "signing_postflight": {
+    "certificate_leaf_sha256": "729cd479e76970ac6ada6d49dbef619724d623f4481adb2755a07dfde86c2d26",
+    "codesign_deep_strict_build": "SATISFIED_ON_HOST_KEYCHAIN",
+    "codesign_deep_strict_archive": "SATISFIED_ON_HOST_KEYCHAIN",
+    "designated_requirement_build": "SATISFIED",
+    "designated_requirement_archive": "SATISFIED",
+    "effective_entitlements": {
+      "canonical_json_sha256": "f754d498901c39fbbc8f6a5cfb35cf5661174a201d24c6c37a22a3f50708336b",
+      "values": {
+        "com.apple.security.app-sandbox": true,
+        "com.apple.security.files.user-selected.read-only": true,
+        "com.apple.security.hypervisor": true
+      }
+    },
+    "hardened_runtime": true,
+    "identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "identity_sha1": "C0CBEC8DDAC4C1ABF4F2780D2E7170A828101CAF",
+    "team_identifier": "ZCQ435U8JP"
+  },
+  "source_join": {
+    "descriptor_rooted_manifest_file": "Control/hypervisor-local-v1/h1-xcode-product-source-manifest.v1.json",
+    "descriptor_rooted_manifest_file_bytes": 36540,
+    "descriptor_rooted_manifest_file_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "directory_count": 7,
+    "entry_count": 106,
+    "file_count": 99,
+    "fixed_root_count": 9,
+    "intermediate_manifest_file_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "manifest_root_sha256": "3f039152fd0f6f903ed7c6375ca13233c2ccaf80a527fb9b2b73271f965060d6",
+    "post_archive_manifest_file_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "pre_build_manifest_file_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "regular_file_bytes": 2497980,
+    "source_manifest_binary_sha256": "2aacceebc284bf5e020fcd3e23eab0254687a074628f942def03b28ce010739a",
+    "source_manifest_source_sha256": "7eddc5b4918017dfdb616b812bdafb6de15db026e08a6585b647014dd01d663a",
+    "special_count": 0,
+    "symlink_count": 0,
+    "three_point_join": "SATISFIED"
+  },
+  "stage_id": "hypervisor_product_schema_and_pure_contract_v1",
+  "stage_ordinal": 1,
+  "status": "PASS_XCODE_RELEASE_BUILD_ARCHIVE_WITH_THREE_POINT_SOURCE_JOIN",
+  "verification_predicates": {
+    "archive_exit_zero": "SATISFIED",
+    "archive_inventory_closed": "SATISFIED",
+    "build_exit_zero": "SATISFIED",
+    "bundle_identifier_exact": "SATISFIED",
+    "captures_complete": "SATISFIED",
+    "dsym_uuid_join": "SATISFIED",
+    "effective_entitlements_exact": "SATISFIED",
+    "hardened_runtime": "SATISFIED",
+    "host_signature_valid": "SATISFIED",
+    "implementation_product_manifest_join": "SATISFIED",
+    "intermediate_source_join_exact": "SATISFIED",
+    "no_build_archive_app_or_vm_launch": "SATISFIED",
+    "no_distribution_action": "SATISFIED",
+    "privacy_manifest_output_exact": "SATISFIED",
+    "product_input_hashes_exact": "SATISFIED",
+    "result_bundle_inventory_closed": "SATISFIED",
+    "source_pre_post_join_exact": "SATISFIED",
+    "stage_receipt_json_cbor_semantic_join": "SATISFIED",
+    "stage_receipt_merkle_ancestry_exact": "SATISFIED",
+    "stage_result_verified": "SATISFIED",
+    "team_identifier_exact": "SATISFIED"
+  },
+  "witness_role": "IMMUTABLE_PRODUCT_CONTINUITY_OBSERVATION_PENDING_SEPARATE_DUAL_STREAM_ELIGIBILITY_FREEZE"
+}

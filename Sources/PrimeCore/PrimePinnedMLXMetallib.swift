@@ -82,6 +82,23 @@ public enum PrimePinnedMLXMetallib {
         into artifactRoot: PrimeArtifactRoot,
         runtimeRole: PrimeMLXRuntimeRole
     ) throws -> PrimePinnedMLXMetallibBinding {
+        try captureSibling(
+            of: runningExecutableURL,
+            into: artifactRoot,
+            runtimeRole: runtimeRole,
+            loaderBundleCandidates: nil
+        )
+    }
+
+    // The public runtime entry always samples the actual process bundles.
+    // Internal fixture callers can supply their own bundle namespace while
+    // retaining the same working-directory, environment and file checks.
+    static func captureSibling(
+        of runningExecutableURL: URL,
+        into artifactRoot: PrimeArtifactRoot,
+        runtimeRole: PrimeMLXRuntimeRole,
+        loaderBundleCandidates: [URL]?
+    ) throws -> PrimePinnedMLXMetallibBinding {
         guard runningExecutableURL.isFileURL else {
             throw PrimeDurableArtifactError.unsafeArtifact(
                 runningExecutableURL.absoluteString
@@ -136,7 +153,8 @@ public enum PrimePinnedMLXMetallib {
             executableDirectory:
                 executableDirectory,
             sourceURL: sourceURL,
-            includeCurrentProcessContext: true
+            includeCurrentProcessContext: true,
+            loaderBundleCandidates: loaderBundleCandidates
         )
 
         let bundleData = try readExactBundle(
@@ -1253,7 +1271,8 @@ public enum PrimePinnedMLXMetallib {
     private static func requireNoLoaderShadowPaths(
         executableDirectory: URL,
         sourceURL: URL,
-        includeCurrentProcessContext: Bool
+        includeCurrentProcessContext: Bool,
+        loaderBundleCandidates: [URL]? = nil
     ) throws {
         let executableCandidates = [
             "mlx.metallib",
@@ -1277,40 +1296,42 @@ public enum PrimePinnedMLXMetallib {
             return
         }
 
-        var bundleCandidates = [URL]()
-        if let mainBundleURL = Bundle.main.bundleURL
-            as URL? {
-            bundleCandidates.append(
-                mainBundleURL
-                    .appendingPathComponent(
-                        sourceBundleRelativePath
-                    )
-            )
-        }
-        for bundle in Bundle.allBundles {
-            if let resourceURL = bundle.resourceURL {
+        var bundleCandidates = loaderBundleCandidates ?? []
+        if loaderBundleCandidates == nil {
+            if let mainBundleURL = Bundle.main.bundleURL
+                as URL? {
                 bundleCandidates.append(
-                    resourceURL
+                    mainBundleURL
                         .appendingPathComponent(
                             sourceBundleRelativePath
                         )
                 )
             }
-        }
-        for framework in Bundle.allFrameworks
-        where framework.bundleIdentifier
-            == "mlx-swift_Cmlx"
-            || framework.bundleIdentifier
-                == "com.apple.mlx.Cmlx"
-        {
-            if let resourceURL =
-                    framework.resourceURL {
-                bundleCandidates.append(
-                    resourceURL
-                        .appendingPathComponent(
-                            "default.metallib"
-                        )
-                )
+            for bundle in Bundle.allBundles {
+                if let resourceURL = bundle.resourceURL {
+                    bundleCandidates.append(
+                        resourceURL
+                            .appendingPathComponent(
+                                sourceBundleRelativePath
+                            )
+                    )
+                }
+            }
+            for framework in Bundle.allFrameworks
+            where framework.bundleIdentifier
+                == "mlx-swift_Cmlx"
+                || framework.bundleIdentifier
+                    == "com.apple.mlx.Cmlx"
+            {
+                if let resourceURL =
+                        framework.resourceURL {
+                    bundleCandidates.append(
+                        resourceURL
+                            .appendingPathComponent(
+                                "default.metallib"
+                            )
+                    )
+                }
             }
         }
         var observedBundleCandidates = Set<String>()

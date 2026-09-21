@@ -1,0 +1,92 @@
+{
+  "schema": "ergentics.private-compute.app-launch-readiness.v1",
+  "status": "READY_NEW_NATIVE_APP_ENTRY_NOT_LEGACY_BOOTSTRAP",
+  "source_commit": "d8cf849bde650d2cb87fb9d1ed098f210180f5f1",
+  "source_tree": "07d83f06a5d0f7798255614fcd46647ecc0dec8a",
+  "scope_sha256": "01eec8c9e0cd2ce613c349f6f9737075a4e88106b51d675ac02b77f1dd4acf58",
+  "source_snapshot_sha256_manifest": "22f18ffcfb03b25add13a16b1d96f79c8cba5bd572ead86aa6b1290baa989adb  Observability/ErgenticsPrivateCompute/.gitignore\n01eec8c9e0cd2ce613c349f6f9737075a4e88106b51d675ac02b77f1dd4acf58  Observability/ErgenticsPrivateCompute/Control/native-app-scope.v1.json\ne7929a61213e7828a48c76888bb3c8b9d23110692bf1e6ce405e490e75d95400  Observability/ErgenticsPrivateCompute/Entitlements.plist\n2c0a2c774174a2a4ddc7a5cf1191a0fedea3c7ba9d850b5680178b0ebb040cf2  Observability/ErgenticsPrivateCompute/ErgenticsPrivateCompute.xcodeproj/project.pbxproj\n40fd0e4256f7e888e461e285f9f09d2cbb04a0fb92b715074e8fbe3f336038be  Observability/ErgenticsPrivateCompute/ErgenticsPrivateCompute.xcodeproj/xcshareddata/xcschemes/ErgenticsPrivateCompute.xcscheme\n943b3eafb60e1eb25fab7228c047b25689fdc5644d3a52f1330bc54d3f1539a9  Observability/ErgenticsPrivateCompute/Info.plist\n88e2705538b0a078a2d7be9c436df8366437e8505b764c402f39c01454febec9  Observability/ErgenticsPrivateCompute/README.md\n69dda85bdab615643fa283d7fb5e4f1e6e70b29dbdbcf3daadd55b07556bc326  Observability/ErgenticsPrivateCompute/Sources/ComputeModel.swift\n633adc695f5f363e0b2e6dd4afd178d79ce95923faa56ffa73b7f15c1039711f  Observability/ErgenticsPrivateCompute/Sources/ErgenticsPrivateComputeApp.swift\nd8c6a23eac622a4e04db96eef51b0b6ac3e2d794f928cac2bcdce7f69a59d8f0  Observability/ErgenticsPrivateCompute/Sources/NativeReceipt.c\na18b4595276744d68e806aa2df32b5474c6b8f66ab0b06fd6e9f36fdba1c91e0  Observability/ErgenticsPrivateCompute/Sources/NativeReceipt.h\nf63ee8635d5f67fdc8865a23921777fca3c75380f3469389f8ffda0ef8ddeb3e  Observability/ErgenticsPrivateCompute/Sources/PrivateComputeCore.swift\n8f9e8fb10a46a1355c9cee17a92ce82f8ea22a4cd7217d8a10de843e21d5a4e3  Observability/ErgenticsPrivateCompute/Sources/WorkspaceView.swift\nd7855a62be149f73fdee962e7908e07a2444583c4bb7b49d7987926ae7fd4a80  Observability/ErgenticsPrivateCompute/Tests/PrivateComputeCoreTests.swift\n",
+  "snapshot_qualification": "Post-build, pre-first-app-entry source snapshot. Not a two-build reproducibility or mapped-image proof.",
+  "build": {
+    "command": "set -C\n/usr/bin/xcodebuild -project '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsPrivateCompute/ErgenticsPrivateCompute.xcodeproj' -scheme ErgenticsPrivateCompute -configuration Debug -destination 'platform=macOS,arch=arm64' -derivedDataPath '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData' -jobs 2 -disableAutomaticPackageResolution -skipPackageUpdates build > '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/app-build.log' 2>&1",
+    "exit_code": 0,
+    "log": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/app-build.log",
+    "warnings": [
+      "AppIntents metadata extraction skipped because app has no AppIntents dependency",
+      "Simulator/log-service connection diagnostics did not prevent the local macOS build",
+      "Xcode disabled Hardened Runtime for ad-hoc signing; do not claim Hardened Runtime enabled"
+    ]
+  },
+  "tests": {
+    "first": {
+      "exit_code": 65,
+      "stage": "Xcode testmanagerd service connection rejected by execution sandbox",
+      "tests_observed": 0,
+      "result": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/PureTests.xcresult"
+    },
+    "host_access": {
+      "exit_code": 0,
+      "tests": 12,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/pure-tests-host-access.log",
+      "xcresult": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/PureTestsHostAccess.xcresult"
+    },
+    "scope": "Hostless pure tests only; no app execution or app-container creation"
+  },
+  "image": {
+    "bundle": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app",
+    "executable": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute",
+    "bytes": 2538576,
+    "sha256": "e2e55968f9d7e9778af58f015f2904430e869868a2d44aae342d09ea6de6f65a",
+    "uuid": "1BB37A1A-5C45-3B4D-A767-C5A66328BEF5",
+    "device": "16777231",
+    "inode": "18353738",
+    "architecture": "arm64",
+    "code_directory_hash": "fe6a2f262e48568da43db8a401e4abfebedec0d2",
+    "signature": "ad-hoc",
+    "hardened_runtime": false,
+    "app_sandbox": true,
+    "network_entitlements": [],
+    "codesign_verify": "PASS"
+  },
+  "raw_built_inspection": {
+    "chunk_id": "a22f8e",
+    "wall_time_seconds": 0.000003,
+    "exit_code": 0,
+    "original_token_count": 928,
+    "output": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app: valid on disk\n/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app: satisfies its Designated Requirement\nExecutable=/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute\nwarning: Specifying ':' in the path is deprecated and will not work in a future release\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"https://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>com.apple.security.app-sandbox</key><true/></dict></plist>\nExecutable=/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute\nIdentifier=com.ergentics.PrivateCompute\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=5269 flags=0x2(adhoc) hashes=154+7 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=fe6a2f262e48568da43db8a401e4abfebedec0d2\nCandidateCDHashFull sha256=fe6a2f262e48568da43db8a401e4abfebedec0d27292ce8f6fdb5cc755f45c6d\nHash choices=sha256\nCMSDigest=fe6a2f262e48568da43db8a401e4abfebedec0d27292ce8f6fdb5cc755f45c6d\nCMSDigestType=2\nCDHash=fe6a2f262e48568da43db8a401e4abfebedec0d2\nSignature=adhoc\nInfo.plist entries=23\nTeamIdentifier=not set\nSealed Resources version=2 rules=13 files=3\nInternal requirements count=0 size=12\ne2e55968f9d7e9778af58f015f2904430e869868a2d44aae342d09ea6de6f65a  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute\n15006935c6ad4933d8084e646c9c7254878923f4889fca85e50496d0c507cee8  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/Resources/gate-e-static-bootstrap-json-input.v1.hex\n9e77f8b16c24da21ba1582e4464c6954aa548340a8c4d6edd6100be13859b84a  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/Resources/gate-e-static-bootstrap-cbor-input.v1.hex\n01eec8c9e0cd2ce613c349f6f9737075a4e88106b51d675ac02b77f1dd4acf58  /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/Resources/native-app-scope.v1.json\nUUID: 1BB37A1A-5C45-3B4D-A767-C5A66328BEF5 (arm64) /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute\n16777231|18353738|100755|501|20|1|2538576|1788113076.764425874|1788113076.764484041|/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app/Contents/MacOS/Ergentics Private Compute\napp_container_absent\n"
+  },
+  "reviews": {
+    "identity": "PASS corrected outer provenance/clock/input joins and native retention",
+    "security": "PASS corrected source/module/sandbox/descriptor boundaries",
+    "roadmap": "PASS actual joined graph and distinct math/persistence status; no live Gate E"
+  },
+  "first_entry": {
+    "authorization": "User explicitly requested creation and next run of an offline native Xcode app for this Mac",
+    "command": "/usr/bin/open '/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app'",
+    "application_container_absent_before_entry": true,
+    "run_leaf": "native-static-177403f-r1",
+    "no_repeat_launch_inferred": true,
+    "computation_children": 0,
+    "computation_signals": 0,
+    "network_probe": 0,
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "observer_scope": {
+    "launch_services": "One launch request for this new app; normal GUI lifetime, not an indefinite guardian session",
+    "Xcode_project_open": "May open the saved Xcode project separately for the user, without running its scheme",
+    "optional_UI": "The app's user-click Reveal receipt folder requests Finder via NSWorkspace. It is outside automatic computation and was not invoked by the controller.",
+    "container_permissions": "Read/write granted only for this new app container",
+    "old_processes": "UNOBSERVED_UNACTUATED",
+    "original_dirty_files_unchanged": 23
+  },
+  "limitations": [
+    "Independent implementations share one process/address space.",
+    "No package fetch, remote cloud, VM, live Git/Swift roles or old launcher entry.",
+    "App-only sandbox policy is not whole-Mac offline mode.",
+    "Final-component descriptor and named joins do not hold every ancestor or prove mapped-image identity.",
+    "Local checked sync/readback is not a remote archive or unconditional power-loss guarantee.",
+    "The code commit contains harmless extra EOF blank lines in three XML config files; git whitespace checker reported them, not a semantic/build failure."
+  ],
+  "digest_rule": "No self digest or commit; pin these complete bytes externally."
+}

@@ -1,0 +1,10 @@
+{
+  "processes": 6,
+  "modelForwards": 96,
+  "guestVMs": 12,
+  "guestEntries": 60,
+  "selection": "first two cases from retained batches000 and058, each seed/mode; inputs unchanged",
+  "trainingPerformed": false,
+  "olderTextModelsInvoked": false,
+  "executableSHA256": "615f0b059e409477b31dcaa99fa501a867d37e24bd8cc84815f04b27fcc5038c"
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-implementation-checkpoint-v4",
+  "status": "STATIC_PASS_FRESH_V4_BUILD_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "control_freeze": {
+    "commit": "ef45a0313ef51f1297f4df9bf717223960eb0ff0",
+    "tree": "c63cf04b8f81a619ac4073ac808226914dac825a",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v4.json",
+    "bytes": 7890,
+    "lf_count": 138,
+    "sha256": "09abe8a4d53c155a6bcad0d076bc41b61bf93bc13bec96f84af032f6aee185ce"
+  },
+  "implementation": {
+    "commit": "39133a795a3208e015853687094cd510ef25c32f",
+    "tree": "7fbb41f070c188c34a8189814b6e9d552b2b09bf",
+    "sources": [
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+        "bytes": 102511,
+        "lf_count": 2198,
+        "sha256": "380a44482bfc87456ca1fbc1e2669a1ad2441622882e0bdc5033be7779bfaece",
+        "git_blob": "6ba5b9b6c3c36b985370088b92c150b2bb23881d"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+        "bytes": 22971,
+        "lf_count": 799,
+        "sha256": "84697c963f9ac2e1955b0649e4ddb51d47139b3652561ad80b59854173af5cff",
+        "git_blob": "bef23ebc5df9735e49480601ab8c9c25f8947cc7"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+        "bytes": 5187,
+        "lf_count": 209,
+        "sha256": "188a21ecae2ccc8b95e86d61891a9eb753806a8214526e75cf1c7a3982feb3cd",
+        "git_blob": "92eb605ed7a708d7c36fabf2dcaa599a1e58e649"
+      }
+    ]
+  },
+  "v3_hold_ancestry": {
+    "readiness_commit": "b5afcd7a60be25439c59a4b2dc4c175550b5f6ad",
+    "record_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-preexecution-hold.v3.json",
+    "record_bytes": 2797,
+    "record_sha256": "a344fc6c3d8f2c996ae60710905fc37ddfd2b7fcab466fd861eb194f012253c1",
+    "retained_build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3",
+    "retained_build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3",
+    "retained_product_sha256": "6899ac3e1f4ed13119d6de612a8c8b555c050e835b364321f95cd4c0b2b828b6",
+    "binary_entries": 0,
+    "v3_journal": "ABSENT",
+    "reuse": false
+  },
+  "environment_admission": {
+    "entry_count": 1,
+    "exact_entry": "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0",
+    "vector_non_null": true,
+    "first_entry_non_null": true,
+    "second_entry_null": true,
+    "comparison": "STRNLEN_EXACT_37_THEN_MEMCMP_EXACT_37",
+    "generic_environment_surface": false,
+    "outer_launch_required": "USR_BIN_ENV_I_EXACT_SINGLE_ENTRY"
+  },
+  "static_review_convergence": [
+    "SWIFT_TYPE_AND_EXACT_SINGLE_ENVIRONMENT_PASS",
+    "JOURNAL_NAMESPACE_ORDER_AND_BOUNDING_PASS",
+    "IDENTITY_PATH_SCHEMA_AND_ALLOWLIST_PASS"
+  ],
+  "target_plan": {
+    "algorithm": "SHA256_DOMAIN_SEPARATED_U64BE_LENGTH_FRAMED_BINARY_MERKLE_V2",
+    "leaf_count": 3,
+    "root_sha256": "c2b5f0e4477bae767be6bc4d40e471eb47c90763d5838b29b5944c02403ff2c7"
+  },
+  "fresh_namespace_admission": {
+    "build_a_root": "ABSENT",
+    "build_b_root": "ABSENT",
+    "journal_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "readiness_json": "ABSENT",
+    "result_json": "ABSENT"
+  },
+  "build_command": {
+    "swift_driver_flag": "-Xfrontend -no-serialize-debugging-options",
+    "warnings": "-warnings-as-errors",
+    "zero_captured_diagnostic_bytes_required": true,
+    "binary_execution_authorized": false
+  },
+  "operations": {
+    "v4_compiler_entries": 0,
+    "v4_build_roots_created": 0,
+    "v4_binaries_executed": 0,
+    "all_controller_invocations": 0,
+    "all_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CHECKPOINT_THEN_FRESH_V4_BUILD_A_ONLY_AND_FULL_STATIC_PRODUCT_ADMISSION_NO_EXECUTION"
+}

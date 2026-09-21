@@ -1,0 +1,118 @@
+{
+  "schema": "prime_ceo_os_route_review_v1",
+  "date": "2026-09-08",
+  "mode": "bounded_read_only_source_and_exact_path_inventory",
+  "ceo": {
+    "repository": "/Users/ergentics/ergentics-ceo",
+    "head": "eb5683d607bb6890577c390339b256866bdcbb53",
+    "workingTreeStatus": [],
+    "applicableInstructions": {
+      "AGENTS.md": "absent",
+      "CLAUDE.md": "absent",
+      "read": [
+        "README.md",
+        "SCOPE.md",
+        "docs/STACK.md"
+      ],
+      "originalEdits": false
+    },
+    "actualProduct": "SwiftUI Mac/iPhone business and Ergentics-status application with local GRDB storage, repository readers and explicit CLI delegation; it is not a bootable operating system or VM runtime.",
+    "buildPath": {
+      "project": "ErgenticsCEO.xcodeproj",
+      "macScheme": "ErgenticsCEO_macOS",
+      "iosScheme": "ErgenticsCEO_iOS",
+      "documentedBuildCommand": "xcodebuild -scheme ErgenticsCEO_macOS -destination 'platform=macOS' build",
+      "declaredDependency": "GRDB.swift from7.0.0",
+      "projectVersion": "0.1.0 (1)",
+      "buildRunDuringAudit": false,
+      "scriptDefaultRetainedAppExists": false,
+      "expectedAppPathChecked": "/Users/ergentics/Library/Developer/Xcode/DerivedData/ErgenticsCEO-ghckrrxtjchmtugscynhiqxsrqvl/Build/Products/Debug/ErgenticsCEO.app",
+      "limit": "A real project and scheme exist; current build success and availability at other DerivedData paths were not claimed or searched."
+    },
+    "osReader": {
+      "implementation": "ErgenticsCEO/Ergentics/ErgenticsOSReader.swift:21-43",
+      "relativePath": "ergentics-workstation/ERGENTICS-OS.md",
+      "operation": "Read UTF8 Markdown and extract one-liner, truth-tier table, numbered session-recovery steps and recovery smell-test bullets. No bootloader, guest creation or executable image is loaded.",
+      "resolutionSource": "ErgenticsCEO/Ergentics/ReposConfig.swift:4-18",
+      "overridePreference": "com.ergentics.ceo / ergenticsReposRoot",
+      "overrideReadResult": "No such domain/default pair",
+      "effectiveDefaultRoot": "/Users/ergentics",
+      "exactGuidePath": "/Users/ergentics/ergentics-workstation/ERGENTICS-OS.md",
+      "guideExists": false,
+      "guideContentVerified": false,
+      "limitation": "The reference resolves to an absent guide at the default root. Its current full content was not available; conclusions about the reader derive from its actual implementation and founding scope, not the OS name."
+    },
+    "reusableForPrime": "Its snapshot service, source footnotes and status interface could display Prime artifacts through a new adapter. No current Prime guest/GPU service connection exists in CEO and it supplies no OS image or OS runtime.",
+    "negativeImplementationSearch": [
+      "No Hypervisor/VZ VM/vCPU/bootloader/image/kernel implementation found in CEO app/tests/scripts/project sources.",
+      "No Metal or GPU runtime in the searched CEO source."
+    ],
+    "installerInventory": {
+      "scope": "/Users/ergentics/ergentics-ceo",
+      "filesConsidered": 88,
+      "excludedDirectories": [
+        ".git",
+        ".build",
+        "node_modules",
+        "DerivedData"
+      ],
+      "imagePathsFound": [],
+      "wholeMachineClaim": false
+    },
+    "documentationCaution": "README/STACK contain older slice0\u20131 status; HEAD July10 has later Personal/Marketing/Money/manual-ops source. Those stale labels do not imply OS functionality."
+  },
+  "currentPrime": {
+    "savedBuild": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0013-prime-guest-gpu-runtime/BUILD.json",
+    "statusRecorded": "live_verified",
+    "actualGuest": "Fixed152-byte AArch64 guest image, two HVC exits, owned reply checksum, instantiated through Hypervisor.framework.",
+    "actualCompute": "Typed Gaussian potential/gradient operation dispatched to host Metal; guest reads returned float bits.",
+    "osRequiredForExistingService": false,
+    "fullOperatingSystemPresent": false,
+    "virtualGPUDeviceImplemented": false,
+    "currentMissingForFullOS": "There is no general guest kernel/userland, installer boot path, guest device driver or guest-visible GPU ABI in the fixed microguest."
+  },
+  "provenanceOSRoute": {
+    "repository": "/Users/ergentics/Developer/ErgenticsProvenance",
+    "configurationSource": "Sources/VMWorkspaceModel.swift:346-393",
+    "implemented": [
+      "VZVirtualMachine with VZGenericPlatformConfiguration",
+      "VZEFIBootLoader and persistent EFI variable store",
+      "Writable Disk.img via virtio block",
+      "Read-only Installer.iso via USB mass-storage",
+      "Virtio graphics1280x800, USB keyboard and screen-coordinate pointing device",
+      "Pause/resume and guarded suspend/restore path"
+    ],
+    "installerRequirement": "User-selected regular ARM64/aarch64 Linux UEFI ISO9660 image, <=16GiB. Import checks regular-file size and CD001 signature; architecture/bootability still requires actual installer acceptance.",
+    "installerSource": "Sources/VMWorkspaceStore.swift:347-367",
+    "networkDevices": [],
+    "directorySharingDevices": [],
+    "socketDevices": [],
+    "exactWorkspaceRootChecks": [
+      {
+        "path": "/Users/ergentics/Library/Containers/com.ergentics.provenance/Data/Library/Application Support/VMWorkspaces-v1",
+        "exists": false
+      },
+      {
+        "path": "/Users/ergentics/Library/Application Support/VMWorkspaces-v1",
+        "exists": false
+      }
+    ],
+    "acceptedInstallerFoundInCheckedRoots": false,
+    "wholeMachineInstallerSearch": false,
+    "missingForPrimeOSIntegration": [
+      "A verified compatible local installer and completed guest boot/install acceptance.",
+      "A defined guest-to-host request channel and actual guest-side client/service integration; existing VM configuration has no network, shared-directory or socket channel.",
+      "Explicitly select how the current typed compute callback connects to that OS guest; the existing bare-metal HVC ABI is not automatically available through VZVirtualMachine."
+    ],
+    "graphicsLimit": "Virtio display configuration is an actual VM graphics device declaration; it does not establish guest Metal, MLX compute, arbitrary shader offload or a measured virtual GPU."
+  },
+  "recommendation": "Keep the durable Prime runtime as the active execution basis. For a full OS, extend the existing Provenance ARM64 UEFI VM route after supplying and verifying its installer, then connect an explicit guest service. CEO is optional management UI and does not replace either execution path.",
+  "scopeLimits": [
+    "No CEO build or launch.",
+    "No image download or guest boot.",
+    "No model, training or GPU execution.",
+    "No original source edits.",
+    "No broad home-directory or private application-state search."
+  ],
+  "sourceBindings": "SOURCE-BINDINGS.json"
+}

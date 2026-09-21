@@ -1,0 +1,59 @@
+{
+  "archive": {
+    "binary_sha256": "5c093f075772837ac8b9aeb88e8ff9b7b4d621eabac97f58cc69d11d76d45df2",
+    "bundle_identifier": "com.ergentics.provenance",
+    "cpu": "arm64",
+    "leaf": "ErgenticsProvenance-W3-1e7ab2c.xcarchive",
+    "macho_uuid": "EE2D0A64-0B74-37BE-A8DC-710DA13576F6",
+    "minimum_macos": "26.0",
+    "signature_verification": "PASS_VALID_ON_DISK_AND_DESIGNATED_REQUIREMENT"
+  },
+  "fixture": {
+    "path": "Examples/prime-git-synthetic-example.json",
+    "sha256": "ee83373fd3b73d24455bec68957f030893edc027de2252471cb29910faa726a2"
+  },
+  "nonclaims": [
+    "No active-lease quit race was induced.",
+    "No lease was forced, stolen, or force-released.",
+    "Accessibility inspection is not pixel verification.",
+    "The imported producer claim was not promoted to live Git, Gate E, candidate, or scientific authority.",
+    "No VM, Git command, network request, persistent bookmark, or authoritative state commit was entered.",
+    "Start time and elapsed duration were not captured and are not reconstructed from this receipt."
+  ],
+  "observation": {
+    "accessibility_source_labels_absent": [
+      "branch_name",
+      "checkout_path",
+      "head_oid",
+      "imported_filename",
+      "observed_at",
+      "remote_location",
+      "schema_and_source_digest"
+    ],
+    "application_activity_after_assessment": "IDLE",
+    "captured_argv_count": 0,
+    "finished_observed_at_utc": "2026-09-01T22:32:58Z",
+    "minimized_accessibility_values": [
+      "Imported snapshot bytes · raw labels discarded",
+      "Producer reported unborn branch",
+      "The branch or reference name is intentionally withheld.",
+      "Producer did not check consistency",
+      "Producer reported no remote entries",
+      "Not recorded"
+    ],
+    "native_open_panel": "PASS",
+    "normal_application_quit": "PASS",
+    "pid": 71425,
+    "pid_after_quit": "ABSENT",
+    "picker_closed_after_selection": true,
+    "production_file_selection_path": "ENTERED",
+    "quit_now_exit_70_used": false
+  },
+  "result": "PASS_W2_SIGNED_NATIVE_PICKER_MINIMIZED_PRESENTATION_AND_SETTLED_QUIT",
+  "schema": "com.ergentics.provenance.prime-git.w2-live-acceptance.v1",
+  "scope": "One signed local ordinary launch, one real NSOpenPanel selection of the fixed synthetic fixture, minimized presentation inspection, and normal quit after Idle.",
+  "source": {
+    "commit": "1e7ab2cbdec8d1b35a43360ce21144384d8c93de",
+    "tree": "a2e6bbf110b80d66baac88b5a441e2b3f4a849a5"
+  }
+}

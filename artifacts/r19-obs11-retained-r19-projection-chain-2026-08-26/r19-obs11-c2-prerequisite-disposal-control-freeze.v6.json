@@ -1,0 +1,123 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v6",
+  "status": "FRESH_SUCCESSOR_AFTER_V5_BUILD_INVOCATION_DEVIATION_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_SUCCESSOR_FREEZE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_WILL_NOT_INTERVENE_AND_CONFIRMED_AUTHORIZATION_REMAINS",
+  "ancestry": {
+    "v5_control_commit": "e947ae9be8a4614a6bf79e34d7ff3ab9ad4379b3",
+    "v5_implementation_commit": "c3ba073fe33fb6cb24ba6070c3889148bac72485",
+    "v5_implementation_tree": "d1f133fea61c68e33acc7e8dd4bbf897229e968b",
+    "v5_implementation_checkpoint_commit": "7e65192a37370bfdbaebbef141d37b34c6a7759f",
+    "v5_implementation_checkpoint_tree": "b17fa9522f981f7157c797919b6f6a7726618432",
+    "v5_build_failure_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-build-a-failure.v5.json"
+  },
+  "v5_failure_disposition": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5",
+    "retention": "PERMANENT_NO_REUSE_NO_CLEANUP",
+    "clang_entries": 1,
+    "swiftc_entries": 1,
+    "product_created": false,
+    "binary_entries": 0,
+    "controller_invocations": 0,
+    "signals_entered": 0,
+    "v5_build_b_root": "ABSENT_AND_PERMANENTLY_UNENTERED",
+    "v5_readiness": "ABSENT_AND_PERMANENTLY_UNENTERED",
+    "v5_journal": "ABSENT_AND_PERMANENTLY_UNENTERED"
+  },
+  "inherited_without_semantic_change": [
+    "V5_COMBINED_ROOT_PRIMITIVE_AND_EIGHT_PHASE_BOUNDARIES",
+    "EXACT_SINGLE_HOST_ENVIRONMENT_VECTOR",
+    "ENTRY_PREFLIGHT_AND_CONSUMPTION_LATTICE",
+    "INDEPENDENT_OUTCOME_STREAM_AND_POWER_LOSS_ORDER",
+    "SELF_IMAGE_AND_TARGET_CONTINUITY",
+    "EXACT_THREE_TARGET_GENERATIONS_AND_ORDER",
+    "FINAL_COMPACT_ACTUATION_GATE",
+    "EXACT_THREE_FIXED_C_SIGKILL_WRAPPERS_AND_SIGNAL_ZERO_PROBES",
+    "POST_SIGNAL_DURABLE_CONSERVATION_OR_LOW_POWER_CONTAINMENT",
+    "TRUSTED_OUTER_READINESS_TRANSFER_BOUNDARY_AND_ALL_NAMED_RESIDUALS",
+    "NO_RETRY_NO_CLEANUP_NO_AUTHORITY_CLOSURE_NO_GATE_E_PROMOTION"
+  ],
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c"
+  ],
+  "source_corrections_only": [
+    "REPOINT_FIXED_BUILD_READINESS_JOURNAL_CONTROL_AND_SCHEMA_IDENTITIES_TO_V6"
+  ],
+  "build_command_corrections_only": [
+    "REMOVE_UNFROZEN_PARSE_AS_LIBRARY_FLAG",
+    "RESTORE_PRIOR_PROVEN_TOP_LEVEL_EXECUTABLE_CONFIGURATION"
+  ],
+  "swiftc_configuration": {
+    "flags_in_order": [
+      "-swift-version", "6", "-O", "-whole-module-optimization", "-gnone",
+      "-Xfrontend", "-no-serialize-debugging-options", "-warnings-as-errors",
+      "-emit-executable", "-target", "arm64-apple-macosx14.0", "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-module-name", "ErgenticsR19C2PrerequisiteDisposal", "-module-cache-path"
+    ],
+    "parse_as_library_entries": 0,
+    "top_level_controller_required": true
+  },
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-7e65192-v6",
+    "build_a_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-7e65192-v6",
+    "build_b_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-7e65192-v6/ErgenticsR19C2PrerequisiteDisposal",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-7e65192-8930176-8930235-8668003-v6",
+    "readiness_frame": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v6.frame",
+    "readiness_json": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v6.json",
+    "implementation_checkpoint": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v6.json",
+    "result": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v6.json",
+    "all_observed_absent_at_freeze": true,
+    "all_created_states_permanently_retained": true
+  },
+  "build_only_verification": {
+    "target": "arm64-apple-macosx14.0",
+    "configuration": "OPTIMIZED_NO_DEBUG_TOP_LEVEL_EXECUTABLE_NO_PARSE_AS_LIBRARY_WARNINGS_AS_ERRORS",
+    "two_disjoint_roots": true,
+    "raw_product_and_c_object_equality_required": true,
+    "build_a_complete_admission_before_build_b_creation": true,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "binary_execution_authorized_before_readiness_commit": false,
+    "compiler_diagnostics_required": "ZERO_CAPTURED_BYTES"
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+    "swiftc_and_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"
+  },
+  "language_and_harness_policy": {
+    "python": "FORBIDDEN",
+    "v6_python_entries": 0,
+    "preferred": ["SWIFT", "C", "APPLE_RUBY_FOR_NON_AUTHORITY_READ_ONLY_CHECKS"],
+    "ruby_fd3_through_fd7_pipe_deviation": "CATALOGED_UNSUITABLE_AS_SWIFT_FD_DOMAIN_PROXY",
+    "native_swift_envelope_probe": "PASS_FDS_0_1_2"
+  },
+  "transition_predicates": [
+    "V5_FAILURE_RECORD_AND_THIS_V6_FREEZE_COMMITTED_BEFORE_SOURCE_EDIT",
+    "EXACT_SOURCE_ALLOWLIST_ONLY",
+    "THREE_STATIC_REVIEWS_BEFORE_ANY_V6_COMPILER_ENTRY",
+    "V6_BUILD_A_COMPLETE_ADMISSION_BEFORE_V6_BUILD_B_CREATION",
+    "TWO_BUILD_RAW_EQUALITY_AND_READINESS_COMMIT_BEFORE_BINARY_EXECUTION",
+    "FRESH_LIVE_GENERATION_AND_ABSENT_JOURNAL_REVALIDATION_IMMEDIATELY_BEFORE_EXEC"
+  ],
+  "operations_at_freeze": {
+    "v6_source_edits": 0,
+    "v6_compiler_entries": 0,
+    "v6_build_roots_created": 0,
+    "v6_binary_entries": 0,
+    "v6_journal_roots_created": 0,
+    "all_v6_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "v6_python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_V5_FAILURE_AND_THIS_V6_FREEZE_THEN_APPLY_NAMESPACE_ONLY SOURCE_REPOINT_AND_REPEAT_THREE_STATIC_REVIEWS"
+}

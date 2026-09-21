@@ -1498,7 +1498,7 @@ public enum PrimeNativeNeuralGateSecureExternalChildCapture {
                   sourceRoot.path.hasPrefix("/"),
                   sourceRoot.path != "/",
                   !sourceRoot.path.contains("\0"),
-                  sourceRoot.standardizedFileURL.path
+                  try PrimeSecureChildPath.canonicalPath(sourceRoot.path)
                     == sourceRoot.path
             else {
                 throw rejected("source_root_url")

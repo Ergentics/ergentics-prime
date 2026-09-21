@@ -1,0 +1,225 @@
+{
+  "schema": "ergentics-r19-obs11-c2-attempt-supervisor-implementation-checkpoint-v10",
+  "status": "V10_SOURCE_IMPLEMENTATION_STATIC_REVIEW_GO_NO_BUILD_NO_EXECUTABLE_ENTRY",
+  "rank": "CONTROL_ONLY_POSTSOURCE_IMPLEMENTATION_CHECKPOINT",
+  "predecessor": {
+    "control_freeze_commit": "2f27f7d834e5dd27a4c86668430e4e0c5c6fad67",
+    "control_freeze_tree": "f53fc322c01ec9d67592474c7af3b7d7875b3681",
+    "control_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-attempt-supervisor-control-freeze.v10.json",
+    "control_freeze_sha256": "c96b4b746ce6fe1069dc9044a1734f5f6f7c7e620cb26dd9c7500a220a09990c",
+    "control_freeze_git_blob": "1a4634ff41a2e61551160bbcf8e5ae903c31454b",
+    "control_freeze_bytes": 42083,
+    "control_freeze_lf_count": 686
+  },
+  "implementation": {
+    "commit": "58caaf0c73ec374ca62363c660d96a5fc8a2bc2b",
+    "tree": "fa5328832dedddc6eb27b11fc455538ffc031ce6",
+    "parent_commit": "2f27f7d834e5dd27a4c86668430e4e0c5c6fad67",
+    "parent_tree": "f53fc322c01ec9d67592474c7af3b7d7875b3681",
+    "subject": "Implement R19 C2 native attempt owner",
+    "changed_paths_exact": [
+      "Observability/ErgenticsResearch/Package.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisor/main.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisorSupport/AttemptSupervisorSupport.swift",
+      "Observability/ErgenticsResearch/Sources/ErgenticsShotHypothesisResultComparator/main.swift",
+      "Observability/ErgenticsResearch/Tests/ErgenticsShotResearchCoreTests/C2V9TimingSupervisorTests.swift"
+    ],
+    "changed_paths_count": 5,
+    "diff_check": "PASS",
+    "worktree_after_commit": "CLEAN"
+  },
+  "source_files": [
+    {
+      "path": "Observability/ErgenticsResearch/Package.swift",
+      "sha256": "ccbc253b2e0b3b2070da026fef9b256e654a43c73c48a751dafc711c92553b3b",
+      "git_blob": "19a142ebfccba839c0ed8c66d3e9baae196f0d66",
+      "bytes": 2190,
+      "lf_count": 72,
+      "terminal_lf": true
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisor/main.swift",
+      "sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111",
+      "git_blob": "b489162d65749045f622efcf5064a465e725f9fc",
+      "bytes": 177722,
+      "lf_count": 4117,
+      "terminal_lf": true
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotAttemptSupervisorSupport/AttemptSupervisorSupport.swift",
+      "sha256": "3c490b5803226313c62f70d2e6ff0154dca324618e1c39119eeb9a03505bca5b",
+      "git_blob": "3ef04bc57b4e413f0a45932ba65bf6faaadf89fa",
+      "bytes": 15852,
+      "lf_count": 439,
+      "terminal_lf": true
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Sources/ErgenticsShotHypothesisResultComparator/main.swift",
+      "sha256": "11940119c2fd0e4a6afdc44926530a7a1624fbe7eaa17d01aabae41cb70e4f22",
+      "git_blob": "44c3e00f78f9056b7bf5e41af297f1a6c35401fe",
+      "bytes": 10411,
+      "lf_count": 290,
+      "terminal_lf": true
+    },
+    {
+      "path": "Observability/ErgenticsResearch/Tests/ErgenticsShotResearchCoreTests/C2V9TimingSupervisorTests.swift",
+      "sha256": "4a0dbe29580401c2789089c4639c008601364882a93ded3bf0255b5250c87e1b",
+      "git_blob": "c1e7d024d6e358bf2fa48c6db01c2729aeda17f2",
+      "bytes": 8760,
+      "lf_count": 224,
+      "terminal_lf": true
+    }
+  ],
+  "independent_exact_byte_reviews": [
+    {
+      "review": "SWIFT_DARWIN_OWNERSHIP_AND_STATE_MACHINE_SOURCE_STATIC",
+      "decision": "GO",
+      "exact_supervisor_sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111",
+      "exact_supervisor_bytes": 177722,
+      "exact_supervisor_lf_count": 4117,
+      "start_end_rehash_equal": true,
+      "blockers": []
+    },
+    {
+      "review": "RAW_JOURNAL_DURABILITY_AND_FAILURE_TOTALITY_SOURCE_STATIC",
+      "decision": "GO",
+      "exact_supervisor_sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111",
+      "exact_supervisor_bytes": 177722,
+      "exact_supervisor_lf_count": 4117,
+      "start_end_rehash_equal": true,
+      "blockers": []
+    },
+    {
+      "review": "ADVERSARIAL_CONTROL_FREEZE_CONFORMANCE_SOURCE_STATIC",
+      "decision": "GO",
+      "exact_supervisor_sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111",
+      "exact_supervisor_bytes": 177722,
+      "exact_supervisor_lf_count": 4117,
+      "start_end_rehash_equal": true,
+      "blockers": []
+    }
+  ],
+  "static_process_surface": {
+    "readiness_frame_parse_call_sites": 1,
+    "posix_spawn_call_sites": 1,
+    "waitpid_call_sites": 1,
+    "mach_continuous_time_call_sites": 2,
+    "kill_or_signal_call_sites": 0,
+    "timer_or_timeout_call_sites": 0,
+    "fork_call_sites": 0,
+    "direct_exec_call_sites": 0,
+    "shell_or_process_api_call_sites": 0,
+    "rename_or_delete_call_sites": 0,
+    "network_call_sites": 0,
+    "retry_surface": 0,
+    "cleanup_or_repair_surface": 0
+  },
+  "closed_source_invariants": {
+    "darwin_spawn_handles_optional_and_partial_init_safe": true,
+    "spawn_resources_destroyed_once_by_defer": true,
+    "logical_wait_attempt_latched_before_first_waitpid": true,
+    "wait_reentry_after_terminal_error": false,
+    "writer_fd_detached_before_single_close_entry": true,
+    "writer_close_return_and_errno_retained": true,
+    "raw_drain_continues_to_eof_after_prefix_overflow": true,
+    "raw_prefix_cap_bytes": 65536,
+    "raw_file_sync_mode_seal_second_sync_parent_sync_and_vnode_join": true,
+    "aggregate_io_call_eintr_and_partial_continuations_recorded": true,
+    "capture_leaf_descriptors_retained_through_end_boundary": true,
+    "capture_root_mutation_stamp_includes_ctime": true,
+    "end_boundary_source_order": [
+      "RAW_HELD_RELATIVE_NAMED_JOIN",
+      "EVERY_CAPTURE_LEAF_HELD_RELATIVE_JOIN",
+      "CAPTURE_ROOT_HELD_PARENT_RELATIVE_NAMED_JOIN",
+      "MACH_CONTINUOUS_TIME"
+    ],
+    "raw_runner_or_capture_observations_after_successful_end_tick": 0,
+    "success_owner_journal_exact_sequence": [
+      "00-start.json",
+      "01-conservation.json",
+      "02-end.json"
+    ],
+    "failure_owner_journal_shape": "EXACT_DURABLE_ORDINARY_PREFIX_PLUS_AT_MOST_ONE_PARTIAL_NEXT_ORDINARY_PLUS_AT_MOST_ONE_COMPLETE_OR_PARTIAL_99_NO_UNEXPECTED_NAMES",
+    "durable_leaf_reopen_rehash_vnode_and_ancestry_join": true,
+    "final_owner_root_mode": "0500",
+    "failure_record_contains_only_known_prepublication_facts": true,
+    "failure_record_does_not_claim_own_publication_or_future_root_seal": true,
+    "start_boundary_label": "BEFORE_FIRST_LIVE_ACTUATION",
+    "utc_role": "DISPLAY_ONLY"
+  },
+  "timing_model": {
+    "scientific_clock": "mach_continuous_time",
+    "elapsed_ticks_definition": "END_TICK_MINUS_START_TICK",
+    "elapsed_nanoseconds_rational_numerator_definition": "ELAPSED_TICKS_TIMES_TIMEBASE_NUMERATOR_REDUCED_BY_GCD",
+    "elapsed_nanoseconds_rational_denominator_definition": "TIMEBASE_DENOMINATOR_REDUCED_BY_GCD",
+    "integer_overflow_rejected": true,
+    "reversed_ticks_rejected": true,
+    "floating_point_used_for_canonical_duration": false,
+    "utc_subtraction_used_for_canonical_duration": false,
+    "utc_is_display_only": true
+  },
+  "hold_remediation": {
+    "first_static_review_disposition": "HOLD_REJECTED_BEFORE_COMPILATION",
+    "remediated_exact_supervisor_sha256": "00b6179022c46001d46d88771802fc823282df587a466d6d073f0e78d20f9111",
+    "closed_findings": [
+      "DARWIN_OPTIONAL_SPAWN_HANDLE_IMPORT_SHAPE",
+      "MONOTONIC_SINGLE_LOGICAL_WAIT",
+      "COUNTED_IO_CONTINUATIONS",
+      "EXACTLY_ONCE_WRITER_CLOSE_RECEIPT",
+      "PRESPAWN_FAILURE_RAW_DRAIN_AND_FINALIZATION",
+      "HELD_CAPTURE_LEAF_VNODE_CONTINUITY",
+      "RAW_AND_CAPTURE_FINAL_BOUNDARY_JOIN",
+      "EXACT_JOURNAL_PREFIX_PARTIAL_AND_FAILURE_INVENTORY",
+      "DURABLE_LEAF_REOPEN_REHASH_AND_ANCESTRY",
+      "PARTIAL_CHILD_CAPTURE_PUBLICATION_WAIT_AND_TIMING_FACT_RETENTION",
+      "UTC_DISPLAY_ONLY_AND_EXACT_START_LABEL"
+    ],
+    "scope_expansions": 0
+  },
+  "deferred_build_admissions": {
+    "swift_darwin_abi_compile_admission": "PENDING",
+    "pure_filtered_support_tests": "PENDING",
+    "release_build_a": "PENDING",
+    "release_build_b": "PENDING",
+    "a_b_raw_byte_identity": "PENDING",
+    "macho_uuid_cdhash_load_commands_and_size": "PENDING",
+    "start_boundary_disassembly_clock_immediately_before_mkdirat": "PENDING",
+    "end_boundary_disassembly_final_comparison_immediately_before_clock": "PENDING",
+    "encoded_receipt_cap_tests": "PENDING",
+    "final_supervisor_vnode_hash_uuid_cdhash_readiness_binding": "PENDING"
+  },
+  "entries_in_this_checkpoint": {
+    "swift_commands": 0,
+    "swiftpm_commands": 0,
+    "compiler_or_linker_commands": 0,
+    "test_entries": 0,
+    "supervisor_product_entries": 0,
+    "comparator_product_entries": 0,
+    "runner_entries": 0,
+    "bundle_entries": 0,
+    "child_spawns": 0,
+    "signals": 0,
+    "timeouts": 0,
+    "python_entries": 0,
+    "github_actions": 0,
+    "network_actions": 0,
+    "cleanup_actions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_or_build_authorized": false,
+    "supervisor_entry_authorized": false,
+    "runner_entry_authorized": false
+  },
+  "next": {
+    "step": "COMMIT_THIS_CHECKPOINT_THEN_AUTHOR_AND_REVIEW_SEPARATE_POSTSOURCE_BUILD_READINESS",
+    "build_readiness_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-attempt-supervisor-build-readiness.v10.json",
+    "build_commands_before_build_readiness_commit": 0,
+    "product_entries_before_final_live_readiness_commit": 0
+  },
+  "artifact_addressing": "NO_RECORD_EMBEDS_ITS_OWN_HASH;SUCCESSOR_GIT_COMMIT_AND_TREE_CONTENT_ADDRESS_THIS_CHECKPOINT"
+}

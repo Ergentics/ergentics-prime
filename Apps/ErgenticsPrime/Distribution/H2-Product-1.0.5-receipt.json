@@ -1,0 +1,137 @@
+{
+  "schema": "com.ergentics.provenance.h2-product-result.v1",
+  "recorded_at_utc": "2026-09-01T13:38:02Z",
+  "status": "PASS_PRODUCT_H2_FIXED_GUEST_AND_READ_ONLY_RECONSTRUCTION",
+  "source_checkpoint": {
+    "commit": "ffefa11b412cbefb0dd5230e7eb6f6cfa6d5eb55",
+    "tree": "2b6333ba5c05a8a6b3b4e873850bd36355a5cba9",
+    "archive_receipt": "Distribution/LocalArchive-1.0.5-receipt.json",
+    "quarantined_h2_control_drafts_used": false
+  },
+  "archived_product": {
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-01/Ergentics Provenance 1.0 (5).xcarchive/Products/Applications/Ergentics Provenance.app",
+    "bundle_identifier": "com.ergentics.provenance",
+    "marketing_version": "1.0",
+    "build_number": "5",
+    "architecture": "arm64",
+    "macho_uuid": "DDED3544-89E9-3AD2-AE1B-9166A0839FEB",
+    "binary_sha256": "bb0f92f5da3a6e94f38c00161b280feda84d5f2d3bff2817c80c20457821146d",
+    "signature_and_entitlement_admission_predecessor": "PASS_VALID_ON_DISK_AND_DESIGNATED_REQUIREMENT"
+  },
+  "fixed_guest_run": {
+    "launch_transport": "/usr/bin/open -n exact_archived_app",
+    "launch_arguments": [],
+    "debugger_launch_transport_used": false,
+    "p_traced_snapshot": "NOT_MEASURED",
+    "process_pid_diagnostic_only": 1823,
+    "actions": [
+      "select Hypervisor lab",
+      "Create private journal once",
+      "Run fixed guest once"
+    ],
+    "action_origin": "explicit user interaction with the product UI",
+    "user_reported_pass": true,
+    "accessibility_presentation_corroborated": true,
+    "status": "PASS",
+    "detail": "One fixed guest entry; 19 + 23 = 42; exact doorbell, independent snapshot and teardown verified.",
+    "retention_epoch_id": "epoch-d045ef4e-3c0c-464c-ab0c-0c5600f174ff",
+    "retention_genesis_sha256": "fff5191977ff4a21e49b27ed0cafdc50113a5b151b6345339ad29175c95de792",
+    "run_id": "6e542843-9a0a-49fa-8537-6b124d04c52d",
+    "native_interval": {
+      "ticks": 80801,
+      "timebase_numerator": 125,
+      "timebase_denominator": 3,
+      "exact_nanoseconds_numerator": 10100125,
+      "exact_nanoseconds_denominator": 3,
+      "cpu_time": "UNMEASURED",
+      "energy_ergs": "UNMEASURED"
+    },
+    "snapshot_merkle_sha256": "37b6aa19da562bf99810c8169e091357bc4e789a82b50366e0752ffb1a9d89df",
+    "events": [
+      {
+        "sequence": 0,
+        "kind": "start",
+        "cbor_bytes": 778,
+        "sha256": "211a6a5b4de8fe16d0eb2ef19d5e66e27c77a24ce8d6fa9b67534165d6e8855c"
+      },
+      {
+        "sequence": 1,
+        "kind": "observation",
+        "cbor_bytes": 1434,
+        "sha256": "648fe4cfa54e2bc3e4399beb54e4d843755c674c4c49efdfe65ff7e189f08817"
+      },
+      {
+        "sequence": 2,
+        "kind": "terminal",
+        "cbor_bytes": 552,
+        "sha256": "32a1227cd08a8935bc20b6995f8389e986ec70727395465c5c11ebc2dddc283a"
+      }
+    ],
+    "host_capabilities": {
+      "host_supported": 1,
+      "sysctl_status": 0,
+      "sysctl_returned_bytes": 4,
+      "queries_entered": 2,
+      "max_vcpus": 64,
+      "vcpu_status": 0,
+      "max_ipa_bits": 40,
+      "ipa_status": 0
+    },
+    "normal_quit_observed": true
+  },
+  "read_only_reconstruction": {
+    "same_archived_named_path_relaunched_outer_observation": true,
+    "mapped_image_identity_join": "NOT_MEASURED",
+    "launch_arguments": [],
+    "debugger_launch_transport_used": false,
+    "p_traced_snapshot": "NOT_MEASURED",
+    "process_pid_diagnostic_only": 2183,
+    "pre_open_state": {
+      "retention_grant_present": false,
+      "run_enabled": false,
+      "open_existing_evidence_enabled": true
+    },
+    "action": "Open existing evidence read-only once",
+    "create_actions": 0,
+    "run_actions": 0,
+    "status": "Verified read-only history ready; retention and Run remain unavailable",
+    "retention_or_execution_authority_restored": false,
+    "retention_epoch_id": "epoch-d045ef4e-3c0c-464c-ab0c-0c5600f174ff",
+    "journal_sha256": "48cec3ed2173353947f0142787754d051ef9b642f5970d01f67f1c091e2648f4",
+    "run_id": "6e542843-9a0a-49fa-8537-6b124d04c52d",
+    "run_status": "PASS",
+    "event_count": 3,
+    "same_snapshot_merkle": true,
+    "same_native_interval": true,
+    "same_event_sequence_kinds_sizes_and_digests": true,
+    "normal_quit_observed": true
+  },
+  "observation_boundary": {
+    "gui_role": "presentation only",
+    "accessibility_role": "outer read-only corroboration and permitted UI actuation only",
+    "authoritative_product_result": "app-owned verified journal and immutable reconstruction",
+    "direct_host_journal_read_attempt": "RETURNED_EPERM_AND_NOT_USED",
+    "application_processes_remaining_after_capture": 0
+  },
+  "roadmap": {
+    "h1": "PASS_ACCEPTED_PREDECESSOR",
+    "h2_product_local_mechanics": "PASS",
+    "formal_h2_stage": "INCOMPLETE_NOT_EVALUATED",
+    "h2_live_control_invoked": false,
+    "successor_authorized": false,
+    "scientific_authority": false,
+    "gate_e": "ABSTAIN_NONBLOCKING",
+    "authority_vector": "00000000"
+  },
+  "actions_not_performed": [
+    "second guest run",
+    "second journal Create",
+    "debugger attachment",
+    "direct journal write",
+    "outer process signal",
+    "network action",
+    "GitHub action",
+    "Gate-E promotion",
+    "energy inference"
+  ]
+}

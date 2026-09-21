@@ -1,0 +1,123 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "next_stage_authorized": false,
+    "production_h3_mint": "ABSENT",
+    "production_projection_persisted": false,
+    "production_store_mint": "ABSENT",
+    "roadmap_relation": "H4_PRE_ENTRY_FIXTURE_MECHANICS",
+    "scientific_authority": false
+  },
+  "checkpoint": "H4-D2B_DESCRIPTOR_ROOTED_SQLITE_IMAGE_PUBLICATION_FREEZE",
+  "d2_predecessor_receipt": {
+    "blob": "7c941f6fc58e7daa7a68a744b98aa86660775974",
+    "path": "Control/hypervisor-local-v1/h4d2-sqlite-persistence-admission-checkpoint-2026-09-01.v1.json",
+    "sha256": "6d828dabdec298a7c14483241905ca878ba3a0a4947ec5646af16c05a04a4f09"
+  },
+  "failure_semantics": {
+    "admitted": "Every ordered in-memory transaction, serialization, prepublication reconstruction, descriptor-rooted publication, sync, read-back, final identity, and semantic reconstruction predicate passed before the opaque receipt was minted.",
+    "published_unverified": "The exclusive rename reported success, but directory sync, final descriptor join, exact read-back, reconstruction, close, final inventory, or named-parent rebound did not complete exactly. The final is retained as evidence and no retry or reinterpretation is permitted.",
+    "prepublication_state_unknown": "No exclusive rename was entered, but exact inspection cannot prove both that staging creation was never entered and that the final leaf is absent. Observed entries are evidence-only; both leases enter terminal inspection state and no retry or reinterpretation is permitted.",
+    "publication_outcome_unknown": "Exclusive rename was entered without exact reported success or the post-entry namespace could not be classified exactly. Every observed entry is retained as evidence and no retry or reinterpretation is permitted.",
+    "rejected_before_publication": "No staging creation was entered, the final leaf is proven absent, and the in-memory transaction or prepublication image validation rejected. Both leases poison and no retry is permitted.",
+    "staging_retained": "Staging creation returned success and the held staging inode remains joined, but exact write, seal, full sync, read-back, lifetime, or prepublication continuity failed before rename entry. Staging is retained and both leases enter terminal inspection state.",
+    "transaction_outcome_unknown": "The private in-memory COMMIT was entered without exact reported success. No filesystem publication is entered; both leases become terminal and no retry is permitted.",
+    "unavailable": "A competing call observes IN_PROGRESS; a later call observes ALREADY_CONSUMED, COMMIT_REQUIRES_INSPECTION, EXPIRED, or POISONED according to retained process-local state."
+  },
+  "fixed_filesystem_contract": {
+    "directory": "canonical 0700 effective-uid-owned empty root, exclusively flocked and descriptor-held throughout",
+    "final_leaf": "h4d2b-receipt.sqlite",
+    "final_mode": "0400",
+    "initial_inventory": [],
+    "maximum_image_bytes": 262144,
+    "page_size": 4096,
+    "publication_flags": [
+      "RENAME_EXCL",
+      "RENAME_NOFOLLOW_ANY",
+      "RENAME_RESOLVE_BENEATH"
+    ],
+    "staging_leaf": ".h4d2b-receipt.sqlite.staging",
+    "staging_open": "openat(root, fixed_leaf, O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC, 0600)"
+  },
+  "implementation_allowlist": [
+    "Sources/HypervisorStageH4Persistence.swift",
+    "Sources/HypervisorStageH4OwnerBinding.swift",
+    "Sources/ProvenanceReadOnly.h",
+    "Tests/HypervisorStageH4PersistenceTests.swift"
+  ],
+  "implementation_hard_stops": [
+    "No SQLite connection may receive a filesystem path, URI, caller-selected VFS, /dev/fd path, cwd mutation, or caller-selected path, filename, SQL, descriptor, flag, or fault in production.",
+    "No rollback journal, WAL, SHM, temp leaf, custom VFS, sqlite3_backup-to-path, replacement rename, cleanup, unlink, repair, adoption, retry, process, VM, guest, network, signal, app entry, Git, or GitHub action is authorized.",
+    "No physical publication may be called an atomic database COMMIT, and F_FULLFSYNC may not be treated as mathematical power-loss proof.",
+    "No fixture result may enter or complete H4, authorize H5, promote Gate E, evaluate a candidate, mint authority, or create a production H3/store capability."
+  ],
+  "ordered_success_predicates": [
+    "admit and hold the exact empty private root",
+    "open only a private SQLITE_OPEN_MEMORY writer and install the frozen limits and hardening",
+    "create and validate the existing STRICT singleton schema and exact canonical row inside one transaction",
+    "recheck both owner and store-grant lifetimes immediately before COMMIT",
+    "enter COMMIT once and require exact SQLITE_OK",
+    "serialize main through one fixed-arity bridge and require positive 4096-byte-aligned size at most 262144 bytes",
+    "close the writer exactly",
+    "copy-deserialize the serialized image into a fresh private read-only connection and validate header, integrity, schema, row, canonical CBOR, indexed fields, JSON round trip, CBOR round trip, and semantic join",
+    "close the prepublication reader exactly and recheck both lifetimes before staging creation",
+    "create and hold the exact fresh staging inode and require inventory containing only staging",
+    "ftruncate to the exact image size and enter one bounded pwrite that returns the full image size",
+    "fchmod staging to 0400, require exact regular-file identity, owner, mode, nlink, and size, then fsync and F_FULLFSYNC",
+    "pread exact bytes plus EOF from the held staging descriptor and require byte equality to the serialized image",
+    "recheck both lifetimes immediately before visibility publication",
+    "enter one descriptor-rooted renameatx_np with the frozen exclusive flags and no fallback",
+    "require inventory containing only final and join final fstatat identity to the still-held staging descriptor",
+    "fsync the held parent directory",
+    "open final once with descriptor-rooted O_RDONLY|O_NOFOLLOW|O_CLOEXEC, join its vnode to the write descriptor, and read exact bytes plus EOF",
+    "deserialize only the held final read-back bytes into a fresh private read-only connection and revalidate integrity, schema, row, canonical streams, and semantic join",
+    "close the reader, final descriptor, and staging descriptor exactly, rejoin final identity and inventory, and rejoin the named parent to the held root",
+    "mint the opaque success receipt last"
+  ],
+  "out_of_scope_later_freezes": [
+    "fresh-process read-only adoption",
+    "bounded crash cutpoints and orphan-state classification",
+    "real constrained-volume ENOSPC, EIO, disk-full, and partial physical-write evidence",
+    "same-euid external mutation evidence",
+    "restart anti-replay, rollback resistance, authenticity, and external hash or Merkle commitment",
+    "APFS snapshots, clones, backups, secure deletion, and encryption at rest",
+    "production H3 handoff, privacy-minimized H3 receipt/root commitment, and production store grant"
+  ],
+  "retention_scope": {
+    "operation": "The one-shot store operation never cleans, unlinks, repairs, adopts, retries, or reinterprets staging, final, or unexpected evidence.",
+    "test_fixture": "EPR_H4_PRIVACY_TESTS may remove a private throwaway root only in XCTest teardown after all outcome and retention assertions complete; teardown is not part of the one-shot operation and creates no product behavior or evidence claim."
+  },
+  "predecessor": {
+    "commit": "2e9b3cc018822882ef264472e42bca87778dbf8e",
+    "tree": "c3cd80862fb41b19ceb326ebda2f2cf47ad48825"
+  },
+  "residuals": [
+    "Darwin directory locks are advisory. Same-euid, root, or Full-Disk-Access code can mutate a reachable vnode; descriptor and byte joins prevent that mutation from producing a false receipt but do not create hostile same-user isolation.",
+    "renameatx_np with RENAME_EXCL prevents replacement of an existing final leaf but has no atomic compare-and-rename-this-exact-inode operation; retained-descriptor post-joins detect failure rather than preventing every transient namespace mutation.",
+    "F_FULLFSYNC is the strongest exposed Darwin flush request, not proof against every device, firmware, power-loss, or filesystem failure.",
+    "A crash after staging creation or final publication but before receipt leaves an unadopted orphan and can never become PASS in this slice."
+  ],
+  "result_contract": "PASS_H4D2B_DESCRIPTOR_ROOTED_SQLITE_IMAGE_PUBLICATION_CONTRACT_ONLY",
+  "test_contract": [
+    "success proves the exact root transition empty to staging to final and no journal, WAL, SHM, temp, or unknown entry",
+    "serialization failure, oversize, misalignment, invalid header, and failed prepublication reconstruction reject before staging",
+    "staging collision and unknown initial entry reject before publication",
+    "deterministic truncate, pwrite error, zero, short, overrun, mode, stat, fsync, fullsync, read-back, and lifetime faults retain staging and never publish",
+    "deterministic rename collision, reported error, and ambiguous post-entry inspection map to publication-outcome-unknown or an exact pre-entry rejection without retry",
+    "directory-sync, final-open, final-vnode, final-byte, deserialize, schema, row, semantic, close, inventory, and parent-rebound faults become published-unverified",
+    "sequential and concurrent calls have one winner; replay, expiry, owner join, and separate store-grant lifetime remain exact",
+    "fault injection is deterministic userspace evidence and is not labeled actual ENOSPC, EIO, crash, power-loss, or partial physical-write evidence",
+    "test seams and symbols are absent from Debug and Release application binaries"
+  ],
+  "verification_order": [
+    "commit this control-only freeze on the exact predecessor",
+    "commit only the exact implementation allowlist with this freeze as parent",
+    "run focused tests, full Debug and Release tests, Debug and Release app builds, static surface scans, and three independent reviews after the implementation commit",
+    "commit a result-only checkpoint and detached SHA-256 sidecar only after verification"
+  ],
+  "schema": "com.ergentics.provenance.hypervisor.h4d2b-freeze.v1"
+}

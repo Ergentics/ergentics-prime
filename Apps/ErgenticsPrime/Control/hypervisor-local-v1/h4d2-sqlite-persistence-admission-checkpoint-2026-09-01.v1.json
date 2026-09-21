@@ -1,0 +1,150 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_h3_mint": "ABSENT",
+    "production_store_mint": "ABSENT"
+  },
+  "checkpoint": "H4-D2_ONE_SHOT_SQLITE_PERSISTENCE_ADMISSION",
+  "closure": {
+    "admitted_result": "One exact canonical-CBOR row was committed, the writer closed exactly, a fresh read-only private-cache connection reconstructed the frozen schema and semantics, that reader closed exactly, and the final descriptor/path/inventory join passed.",
+    "commit_ambiguity": "Entered COMMIT without reported success is terminal transaction-outcome-unknown. A retained row may be inspected as evidence but is never reconciled, retried, or promoted.",
+    "lifetime": "The D1 owner claim and the separate PRIV-006 store grant are both owner-object joined, inclusive-deadline bounded, single-winner, and terminalized together.",
+    "receipt": "The success receipt has one fileprivate mint after all close/reopen joins, exposes only fixed computed predicates, and has empty reflection.",
+    "scope": "Local fixture persistence mechanics only"
+  },
+  "environment": {
+    "architecture": "arm64",
+    "host_build": "25F84",
+    "macos": "26.5.2",
+    "sdk": "macOS 26.5",
+    "xcode": "26.6",
+    "xcode_build": "17F113"
+  },
+  "filesystem_contract": {
+    "database": "fresh O_CREAT|O_EXCL|O_NOFOLLOW 0600 regular file, effective-uid owned, nlink=1, held vnode joined to the named path",
+    "directory": "canonical 0700 effective-uid-owned held parent, exclusive flock, descriptor-rooted openat-dot plus fdopendir/readdir inventory",
+    "failure_retention": "No cleanup or reinterpretation of offending retained entries",
+    "named_open_residual": "SQLite opens the already-admitted database by name; no held-descriptor custom VFS is claimed",
+    "rollback_journal": "DELETE mode; optional only while the writer transaction may exist; actual live journal fstatat-joined before COMMIT",
+    "size": "fresh=0; committed positive, 4096-byte aligned, and <=262144 bytes"
+  },
+  "nonclaims": [
+    "This PASS does not enter or complete H4 and does not change Gate E from ABSTAIN.",
+    "It creates no production storage-path capability, production H3 mint, authority bit, live H3 run, VM/process action, Git/GitHub action, graph, Merkle root, release projection, signing result, archive, or scientific conclusion.",
+    "SQLite is a checked durable container for the fixture projection, not semantic, transition, execution, product, or scientific authority.",
+    "No owner anchor, epoch, source identity, envelope identity, run identifier, timestamp, digest, filesystem path, or diagnostic payload is serialized in SQLite or exposed by the success receipt.",
+    "The read-only reopen occurs in the same process and does not prove restart adoption, crash/power-loss recovery, disk-full or SQLITE_IOERR behavior, partial physical writes, rollback resistance, secure deletion, backup/snapshot exclusion, or encryption at rest.",
+    "The warning-free live-journal adversarial test mutates a joined stat copy through the production metadata validator; it does not claim resistance to a concurrent same-user physical mutation."
+  ],
+  "predecessor": {
+    "commit": "4995ba85031b3643df6598eb450ad612d16508a4",
+    "tree": "c69f1ccd3063f38b118bc6e3cbddd159fb42dfe7"
+  },
+  "result": "PASS_H4D2_ONE_SHOT_SQLITE_REOPEN_CONTRACT_ONLY",
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "de629277d962b6f3416425077ad3d7dcd8e4558774f00ec1a8af4a9ce09e17df"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "sha256": "302bf84de40b6feec0992d814334e4bec60de152fdbb5dbb42c3818f78919fd9"
+    },
+    {
+      "path": "Sources/HypervisorStageH4OwnerBinding.swift",
+      "sha256": "9c5a2484d25774e979ca509c3993e5a86c6c5aad6602b65f5cb483c4b368164f"
+    },
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "sha256": "9da1d1ce01805d0dcae34d7df33b02722f843ed9304dceaf96a06fd872c7331d"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Persistence.swift",
+      "sha256": "baeeda290a304641192bbb854e9fa37db78353bb37f26d735545cfd037dd06f5"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.h",
+      "sha256": "2a2508d305085eb4bccac1848063dc5723bb07c2dbc3ff2cb49fee58c8805637"
+    },
+    {
+      "path": "Tests/HypervisorStageH4PersistenceTests.swift",
+      "sha256": "be3b646db9b160ea89ab3af3faacb9d134a0b55169c033136950c62597a631be"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d2-sqlite-persistence-admission-freeze-2026-09-01.v1.json",
+      "sha256": "e71c8b6406fa64c51eaf317fe715315f30211fe12bdb132c9179cbe085f4edae"
+    }
+  ],
+  "sqlite_contract": {
+    "application_id": 1162891828,
+    "connections": "FULLMUTEX|NOFOLLOW|PRIVATECACHE for writer and reader",
+    "journal_mode": "DELETE",
+    "max_page_count": 64,
+    "page_size": 4096,
+    "row_cardinality": 1,
+    "schema": "STRICT WITHOUT ROWID singleton table with semantic_schema, claim_state, predicate_count, authority_vector, and canonical_cbor",
+    "synchronous": "EXTRA with fullfsync=ON",
+    "transaction": "one BEGIN IMMEDIATE transaction creates schema, sets application/user versions, inserts and validates one row, rechecks both lifetimes and live filesystem continuity, then enters COMMIT",
+    "user_version": 1
+  },
+  "verification": {
+    "application_binary_surface": {
+      "debug": {
+        "path": "/private/tmp/epr-h4d2-final-app-debug/Build/Products/Debug/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "sha256": "6ddbd25c00cb3953091cd5a93233d99f212d804fc89ad9691cf4bb8286ac2137",
+        "size_bytes": 9175864,
+        "uuid": "60E1FEC7-78A2-3409-9CDA-5DB8DF346AF3"
+      },
+      "release": {
+        "path": "/private/tmp/epr-h4d2-final-app-release/Build/Products/Release/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+        "sha256": "cdb11e5b4aaf8d8b48bc58de53392f5cec36b9390ac48f344a0518eedb5cd8e9",
+        "size_bytes": 3527192,
+        "uuid": "73BF10B8-ABBE-3EF7-878E-F78A73243980"
+      },
+      "nm_test_seam_matches": 0,
+      "strings_test_seam_matches": 0
+    },
+    "builds": {
+      "debug_app": "PASS",
+      "release_app": "PASS",
+      "signing": "DISABLED_FOR_LOCAL_BUILD_CHECK"
+    },
+    "compiler_policy": "GCC_TREAT_WARNINGS_AS_ERRORS=YES and SWIFT_TREAT_WARNINGS_AS_ERRORS=YES",
+    "focused_h4d2": {
+      "executed": 17,
+      "failures": 0,
+      "result": "PASS",
+      "xcresult": "/private/tmp/epr-h4d2-final-focused/Logs/Test/Test-ErgenticsProvenance-2026.09.01_18-27-04--0700.xcresult"
+    },
+    "full_debug": {
+      "executed": 642,
+      "failures": 0,
+      "result": "PASS",
+      "xcresult": "/private/tmp/epr-h4d2-final-full-debug/Logs/Test/Test-ErgenticsProvenance-2026.09.01_18-27-30--0700.xcresult"
+    },
+    "full_release": {
+      "executed": 595,
+      "failures": 0,
+      "result": "PASS",
+      "xcresult": "/private/tmp/epr-h4d2-final-full-release/Logs/Test/Test-ErgenticsProvenance-2026.09.01_18-27-28--0700.xcresult"
+    },
+    "independent_reviews": [
+      "owner-binding, receipt-mint, and freeze audit: PASS",
+      "atomicity, replay, poison, and unknown-state race audit: PASS",
+      "SQLite filesystem, live-journal, and checkpoint-claim audit: PASS"
+    ],
+    "structural": {
+      "diff_check": "PASS",
+      "freeze_json": "PASS",
+      "project_plist": "PASS",
+      "production_source_process_or_network_surface": "ABSENT"
+    },
+    "tool_notices": [
+      "Xcode selected the first matching local macOS destination.",
+      "AppIntents metadata extraction was skipped because the app has no AppIntents.framework dependency."
+    ]
+  },
+  "schema": "com.ergentics.provenance.hypervisor.h4d2-checkpoint.v1"
+}

@@ -1,0 +1,915 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ergentics.provenance.hypervisor-stage.h2-live.execution-wire.schema.v1",
+  "title": "H2 live readiness, controller observation, and verifier receipt wire schemas",
+  "$defs": {
+    "hex64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "git40": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    },
+    "absolutePath": {
+      "type": "string",
+      "pattern": "^/[^\\u0000]*$"
+    },
+    "predicateId": {
+      "enum": [
+        "h2_static_predecessor_exact",
+        "signed_worker_and_source_identity_exact",
+        "closed_worker_caller_input_surface_exact",
+        "single_native_owner_generation_exact",
+        "fixed_image_request_reply_snapshot_exact",
+        "single_vm_entry_and_trap_exact",
+        "native_deadline_and_watchdog_exact",
+        "native_teardown_and_memory_conservation_exact",
+        "capability_witness_decode_exact",
+        "outer_image_join_and_containment_exact",
+        "outer_exact_reap_and_frame_exact",
+        "no_application_journal_sqlite_or_output_file_effects"
+      ]
+    },
+    "nullableHex64": {
+      "oneOf": [
+        { "$ref": "#/$defs/hex64" },
+        { "type": "null" }
+      ]
+    },
+    "committedFrameIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "tree", "file_sha256", "frame_sha256", "merkle_root"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/git40" },
+        "tree": { "$ref": "#/$defs/git40" },
+        "file_sha256": { "$ref": "#/$defs/hex64" },
+        "frame_sha256": { "$ref": "#/$defs/hex64" },
+        "merkle_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "committedControlIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "tree", "file_sha256"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/git40" },
+        "tree": { "$ref": "#/$defs/git40" },
+        "file_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "committedBuildChain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["producer_preparation_envelope", "p00", "predecessor_tools_build_envelope", "t00", "bootstrap_launch_envelope", "b00", "o00", "p01", "build_launch_envelope", "b01", "o01"],
+      "properties": {
+        "producer_preparation_envelope": { "$ref": "#/$defs/committedControlIdentity" },
+        "p00": { "$ref": "#/$defs/committedFrameIdentity" },
+        "predecessor_tools_build_envelope": { "$ref": "#/$defs/committedControlIdentity" },
+        "t00": { "$ref": "#/$defs/committedFrameIdentity" },
+        "bootstrap_launch_envelope": { "$ref": "#/$defs/committedControlIdentity" },
+        "b00": { "$ref": "#/$defs/committedFrameIdentity" },
+        "o00": { "$ref": "#/$defs/committedFrameIdentity" },
+        "p01": { "$ref": "#/$defs/committedFrameIdentity" },
+        "build_launch_envelope": { "$ref": "#/$defs/committedControlIdentity" },
+        "b01": { "$ref": "#/$defs/committedFrameIdentity" },
+        "o01": { "$ref": "#/$defs/committedFrameIdentity" }
+      }
+    },
+    "readinessManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "authority_vector",
+        "gate_e",
+        "source_freeze_commit",
+        "source_freeze_tree",
+        "source_freeze_file_sha256",
+        "implementation_commit",
+        "implementation_tree",
+        "independent_decoder_source_sha256",
+        "pinned_source_manifest_root",
+        "committed_build_chain",
+        "build_result_schema",
+        "build_result_status",
+        "build_result_commit",
+        "build_result_tree",
+        "build_result_file_sha256",
+        "build_result_section_merkle_root",
+        "binary_readiness_checkpoint_commit",
+        "binary_readiness_checkpoint_tree",
+        "binary_readiness_checkpoint_file_sha256",
+        "controller_sha256",
+        "controller_uuid",
+        "controller_source_manifest_root",
+        "worker_sha256",
+        "worker_uuid",
+        "worker_full_codedirectory_hash",
+        "worker_cdhash",
+        "worker_identifier",
+        "worker_team",
+        "worker_certificate_sha256",
+        "worker_requirement_sha256",
+        "worker_entitlements_sha256",
+        "worker_identity_header_sha256",
+        "verifier_sha256",
+        "verifier_uuid",
+        "verifier_device",
+        "verifier_inode",
+        "verifier_source_manifest_root",
+        "runtime_root_path",
+        "runtime_root_device",
+        "runtime_root_inode",
+        "runtime_root_owner",
+        "runtime_root_mode",
+        "runtime_root_inventory_sha256",
+        "runtime_root_entries",
+        "controller_file_actions_sha256",
+        "invocation_id",
+        "live_invocation_count",
+        "successor_authorized"
+      ],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.readiness-manifest.v1" },
+        "authority_vector": { "const": "00000000" },
+        "gate_e": { "const": "ABSTAIN" },
+        "source_freeze_commit": { "$ref": "#/$defs/git40" },
+        "source_freeze_tree": { "$ref": "#/$defs/git40" },
+        "source_freeze_file_sha256": { "$ref": "#/$defs/hex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "independent_decoder_source_sha256": { "$ref": "#/$defs/hex64" },
+        "pinned_source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "committed_build_chain": { "$ref": "#/$defs/committedBuildChain" },
+        "build_result_schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.build-result.v1" },
+        "build_result_status": { "const": "PASS_BUILD_AUDIT_ONLY" },
+        "build_result_commit": { "$ref": "#/$defs/git40" },
+        "build_result_tree": { "$ref": "#/$defs/git40" },
+        "build_result_file_sha256": { "$ref": "#/$defs/hex64" },
+        "build_result_section_merkle_root": { "$ref": "#/$defs/hex64" },
+        "binary_readiness_checkpoint_commit": { "$ref": "#/$defs/git40" },
+        "binary_readiness_checkpoint_tree": { "$ref": "#/$defs/git40" },
+        "binary_readiness_checkpoint_file_sha256": { "$ref": "#/$defs/hex64" },
+        "controller_sha256": { "$ref": "#/$defs/hex64" },
+        "controller_uuid": { "$ref": "#/$defs/uuid" },
+        "controller_source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "worker_sha256": { "$ref": "#/$defs/hex64" },
+        "worker_uuid": { "$ref": "#/$defs/uuid" },
+        "worker_full_codedirectory_hash": { "$ref": "#/$defs/hex64" },
+        "worker_cdhash": { "type": "string", "pattern": "^[0-9a-f]{40,128}$" },
+        "worker_identifier": { "const": "com.ergentics.provenance" },
+        "worker_team": { "const": "ZCQ435U8JP" },
+        "worker_certificate_sha256": { "$ref": "#/$defs/hex64" },
+        "worker_requirement_sha256": { "$ref": "#/$defs/hex64" },
+        "worker_entitlements_sha256": { "$ref": "#/$defs/hex64" },
+        "worker_identity_header_sha256": { "$ref": "#/$defs/hex64" },
+        "verifier_sha256": { "$ref": "#/$defs/hex64" },
+        "verifier_uuid": { "$ref": "#/$defs/uuid" },
+        "verifier_device": { "$ref": "#/$defs/decimal" },
+        "verifier_inode": { "$ref": "#/$defs/decimal" },
+        "verifier_source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "runtime_root_path": { "$ref": "#/$defs/absolutePath" },
+        "runtime_root_device": { "$ref": "#/$defs/decimal" },
+        "runtime_root_inode": { "$ref": "#/$defs/decimal" },
+        "runtime_root_owner": { "$ref": "#/$defs/decimal" },
+        "runtime_root_mode": { "const": "0700" },
+        "runtime_root_inventory_sha256": { "$ref": "#/$defs/hex64" },
+        "runtime_root_entries": {
+          "const": [
+            "ErgenticsProvenanceH2LiveController",
+            "ErgenticsProvenanceH2LiveWorker"
+          ]
+        },
+        "controller_file_actions_sha256": { "$ref": "#/$defs/hex64" },
+        "invocation_id": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+        "live_invocation_count": { "const": 1 },
+        "successor_authorized": { "const": false }
+      }
+    },
+    "controllerSelf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "named_device", "named_inode", "descriptor_device", "descriptor_inode", "post_reap_named_device", "post_reap_named_inode", "owner", "mode", "nlink", "byte_count", "allocated_bytes", "descriptor_sha256", "post_reap_descriptor_sha256", "uuid", "mapped_device", "mapped_inode", "mapped_join"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "named_device": { "$ref": "#/$defs/decimal" },
+        "named_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "post_reap_named_device": { "$ref": "#/$defs/decimal" },
+        "post_reap_named_inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "type": "string", "pattern": "^0[0-7]{3,4}$" },
+        "nlink": { "$ref": "#/$defs/decimal" },
+        "byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 134217728 },
+        "descriptor_sha256": { "$ref": "#/$defs/hex64" },
+        "post_reap_descriptor_sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "mapped_device": { "$ref": "#/$defs/decimal" },
+        "mapped_inode": { "$ref": "#/$defs/decimal" },
+        "mapped_join": { "type": "boolean" }
+      }
+    },
+    "childTransport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["configured_argv", "configured_environment_count", "configured_cwd_root_device", "configured_cwd_root_inode", "descriptor_cwd_join", "stdin_source", "stdin_reads_expected", "posix_spawn_cloexec_default", "inherited_fds", "file_actions_sha256", "caller_path_role_request_deadline_inputs"],
+      "properties": {
+        "configured_argv": { "const": ["ErgenticsProvenanceH2LiveWorker"] },
+        "configured_environment_count": { "const": 0 },
+        "configured_cwd_root_device": { "$ref": "#/$defs/decimal" },
+        "configured_cwd_root_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_cwd_join": { "type": "boolean" },
+        "stdin_source": { "const": "/dev/null" },
+        "stdin_reads_expected": { "const": 0 },
+        "posix_spawn_cloexec_default": { "type": "boolean" },
+        "inherited_fds": { "const": ["stdin_dev_null", "stdout_pipe", "stderr_pipe"] },
+        "file_actions_sha256": { "$ref": "#/$defs/hex64" },
+        "caller_path_role_request_deadline_inputs": { "const": 0 }
+      }
+    },
+    "runtimeLeaf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "device", "inode", "owner", "mode", "nlink", "byte_count", "allocated_bytes", "sha256", "uuid"],
+      "properties": {
+        "name": { "enum": ["ErgenticsProvenanceH2LiveController", "ErgenticsProvenanceH2LiveWorker"] },
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "device": { "$ref": "#/$defs/decimal" },
+        "inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0700" },
+        "nlink": { "const": "1" },
+        "byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 134217728 },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" }
+      }
+    },
+    "runtimeRoot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "device", "inode", "owner", "mode", "entries", "controller_leaf", "worker_leaf", "inventory_before_sha256", "inventory_post_arm_sha256", "inventory_post_reap_sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "device": { "$ref": "#/$defs/decimal" },
+        "inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "type": "string", "pattern": "^0[0-7]{3,4}$" },
+        "entries": { "const": ["ErgenticsProvenanceH2LiveController", "ErgenticsProvenanceH2LiveWorker"] },
+        "controller_leaf": { "allOf": [{ "$ref": "#/$defs/runtimeLeaf" }, { "properties": { "name": { "const": "ErgenticsProvenanceH2LiveController" } } }] },
+        "worker_leaf": { "allOf": [{ "$ref": "#/$defs/runtimeLeaf" }, { "properties": { "name": { "const": "ErgenticsProvenanceH2LiveWorker" } } }] },
+        "inventory_before_sha256": { "$ref": "#/$defs/hex64" },
+        "inventory_post_arm_sha256": { "$ref": "#/$defs/hex64" },
+        "inventory_post_reap_sha256": { "$ref": "#/$defs/nullableHex64" }
+      }
+    },
+    "continuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["armed", "root_events", "controller_events", "worker_events", "any_event", "post_arm_controller_sha256", "post_arm_worker_sha256", "post_reap_controller_sha256", "post_reap_worker_sha256"],
+      "properties": {
+        "armed": { "type": "boolean" },
+        "root_events": { "type": "integer", "minimum": 0 },
+        "controller_events": { "type": "integer", "minimum": 0 },
+        "worker_events": { "type": "integer", "minimum": 0 },
+        "any_event": { "type": "boolean" },
+        "post_arm_controller_sha256": { "$ref": "#/$defs/hex64" },
+        "post_arm_worker_sha256": { "$ref": "#/$defs/hex64" },
+        "post_reap_controller_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "post_reap_worker_sha256": { "$ref": "#/$defs/nullableHex64" }
+      }
+    },
+    "signalObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "status"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "status": { "type": ["integer", "null"] }
+      }
+    },
+    "pipeObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["byte_count", "eof", "overflow"],
+      "properties": {
+        "byte_count": { "type": "integer", "minimum": 0, "maximum": 65536 },
+        "eof": { "type": ["boolean", "null"] },
+        "overflow": { "type": "boolean" }
+      }
+    },
+    "controllerStdoutObservation": {
+      "allOf": [
+        { "$ref": "#/$defs/pipeObservation" },
+        { "properties": { "byte_count": { "type": "integer", "minimum": 0, "maximum": 1144 } } }
+      ]
+    },
+    "waitObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reaped", "wait_status_raw", "wifexited", "wifsignaled", "exit_status", "termsig"],
+      "properties": {
+        "reaped": { "type": "boolean" },
+        "wait_status_raw": { "type": ["integer", "null"] },
+        "wifexited": { "type": ["boolean", "null"] },
+        "wifsignaled": { "type": ["boolean", "null"] },
+        "exit_status": { "type": ["integer", "null"], "minimum": 0, "maximum": 255 },
+        "termsig": { "type": ["integer", "null"], "minimum": 1, "maximum": 127 }
+      }
+    },
+    "workerPid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pid", "parent_pid", "session_id", "start_seconds", "start_microseconds", "double_snapshot_equal"],
+      "properties": {
+        "pid": { "type": "integer", "minimum": 1 },
+        "parent_pid": { "type": "integer", "minimum": 1 },
+        "session_id": { "type": "integer", "minimum": 1 },
+        "start_seconds": { "$ref": "#/$defs/decimal" },
+        "start_microseconds": { "$ref": "#/$defs/decimal" },
+        "double_snapshot_equal": { "type": "boolean" }
+      }
+    },
+    "workerImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "named_device", "named_inode", "descriptor_device", "descriptor_inode", "mapped_device", "mapped_inode", "post_reap_named_device", "post_reap_named_inode", "owner", "mode", "nlink", "byte_count", "allocated_bytes", "sha256", "post_reap_descriptor_sha256", "uuid", "full_codedirectory_hash", "cdhash", "identifier", "team", "certificate_sha256", "requirement_sha256", "entitlements_sha256", "static_code_admitted", "all_joins"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "named_device": { "$ref": "#/$defs/decimal" },
+        "named_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "mapped_device": { "$ref": "#/$defs/decimal" },
+        "mapped_inode": { "$ref": "#/$defs/decimal" },
+        "post_reap_named_device": { "$ref": "#/$defs/decimal" },
+        "post_reap_named_inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0700" },
+        "nlink": { "const": "1" },
+        "byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 134217728 },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "post_reap_descriptor_sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "full_codedirectory_hash": { "$ref": "#/$defs/hex64" },
+        "cdhash": { "type": "string", "pattern": "^[0-9a-f]{40,128}$" },
+        "identifier": { "type": "string" },
+        "team": { "type": "string" },
+        "certificate_sha256": { "$ref": "#/$defs/hex64" },
+        "requirement_sha256": { "$ref": "#/$defs/hex64" },
+        "entitlements_sha256": { "$ref": "#/$defs/hex64" },
+        "static_code_admitted": { "type": "boolean" },
+        "all_joins": { "type": "boolean" }
+      }
+    },
+    "controllerFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "code", "child_spawned", "detail_sha256"],
+      "properties": {
+        "phase": { "enum": ["self_admission", "runtime_root_admission", "watch_arm", "pipe_setup", "spawn", "generation_join", "image_join", "resume", "capture", "wait", "post_reap_continuity", "frame_encoding"] },
+        "code": { "enum": ["IDENTITY_JOIN", "ROOT_INVENTORY", "WATCH_EVENT", "FD_SETUP", "SPAWN", "PID_GENERATION", "MAPPED_IMAGE", "SIGNAL", "TIMEOUT", "PIPE_EOF", "PIPE_OVERFLOW", "EXIT_STATUS", "FRAME", "POST_REAP_JOIN", "INTERNAL_INVARIANT"] },
+        "child_spawned": { "type": "boolean" },
+        "detail_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "controllerObservationBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "controller_pid", "controller_self", "child_transport", "runtime_root", "continuity", "worker_frame_hex", "worker_frame_sha256", "worker_pid", "worker_image", "sigcont", "sigkill", "stdout", "stderr", "wait", "controller_status", "failure"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.controller-observation.v1" },
+        "controller_pid": { "$ref": "#/$defs/workerPid" },
+        "controller_self": { "$ref": "#/$defs/controllerSelf" },
+        "child_transport": { "$ref": "#/$defs/childTransport" },
+        "runtime_root": { "$ref": "#/$defs/runtimeRoot" },
+        "continuity": { "$ref": "#/$defs/continuity" },
+        "worker_frame_hex": { "oneOf": [{ "type": "string", "pattern": "^[0-9a-f]{2288}$" }, { "type": "null" }] },
+        "worker_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "worker_pid": { "oneOf": [{ "$ref": "#/$defs/workerPid" }, { "type": "null" }] },
+        "worker_image": { "oneOf": [{ "$ref": "#/$defs/workerImage" }, { "type": "null" }] },
+        "sigcont": { "$ref": "#/$defs/signalObservation" },
+        "sigkill": { "$ref": "#/$defs/signalObservation" },
+        "stdout": { "$ref": "#/$defs/controllerStdoutObservation" },
+        "stderr": { "$ref": "#/$defs/pipeObservation" },
+        "wait": { "$ref": "#/$defs/waitObservation" },
+        "controller_status": { "enum": ["TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION", "FAIL_REJECTED_BEFORE_SPAWN", "FAIL_CONTAINED_AFTER_SPAWN", "INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY"] },
+        "failure": { "oneOf": [{ "$ref": "#/$defs/controllerFailure" }, { "type": "null" }] }
+      }
+    },
+    "controllerObservation": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/controllerObservationBase" },
+            {
+              "properties": {
+                "controller_status": { "const": "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION" },
+                "failure": { "type": "null" },
+                "controller_pid": {
+                  "allOf": [
+                    { "$ref": "#/$defs/workerPid" },
+                    { "properties": { "double_snapshot_equal": { "const": true } } }
+                  ]
+                },
+                "controller_self": {
+                  "allOf": [
+                    { "$ref": "#/$defs/controllerSelf" },
+                    { "properties": { "mode": { "const": "0700" }, "nlink": { "const": "1" }, "mapped_join": { "const": true } } }
+                  ]
+                },
+                "child_transport": {
+                  "allOf": [
+                    { "$ref": "#/$defs/childTransport" },
+                    { "properties": { "descriptor_cwd_join": { "const": true }, "posix_spawn_cloexec_default": { "const": true } } }
+                  ]
+                },
+                "runtime_root": {
+                  "allOf": [
+                    { "$ref": "#/$defs/runtimeRoot" },
+                    { "properties": { "mode": { "const": "0700" }, "inventory_post_reap_sha256": { "$ref": "#/$defs/hex64" } } }
+                  ]
+                },
+                "continuity": {
+                  "allOf": [
+                    { "$ref": "#/$defs/continuity" },
+                    { "properties": { "armed": { "const": true }, "root_events": { "const": 0 }, "controller_events": { "const": 0 }, "worker_events": { "const": 0 }, "any_event": { "const": false }, "post_reap_controller_sha256": { "$ref": "#/$defs/hex64" }, "post_reap_worker_sha256": { "$ref": "#/$defs/hex64" } } }
+                  ]
+                },
+                "worker_frame_hex": { "type": "string", "pattern": "^[0-9a-f]{2288}$" },
+                "worker_frame_sha256": { "$ref": "#/$defs/hex64" },
+                "worker_pid": {
+                  "allOf": [
+                    { "$ref": "#/$defs/workerPid" },
+                    { "properties": { "double_snapshot_equal": { "const": true } } }
+                  ]
+                },
+                "worker_image": {
+                  "allOf": [
+                    { "$ref": "#/$defs/workerImage" },
+                    { "properties": { "identifier": { "const": "com.ergentics.provenance" }, "team": { "const": "ZCQ435U8JP" }, "static_code_admitted": { "const": true }, "all_joins": { "const": true } } }
+                  ]
+                },
+                "sigcont": { "const": { "count": 1, "status": 0 } },
+                "sigkill": { "const": { "count": 0, "status": null } },
+                "stdout": { "const": { "byte_count": 1144, "eof": true, "overflow": false } },
+                "stderr": { "const": { "byte_count": 0, "eof": true, "overflow": false } },
+                "wait": {
+                  "allOf": [
+                    { "$ref": "#/$defs/waitObservation" },
+                    { "properties": { "reaped": { "const": true }, "wait_status_raw": { "const": 0 }, "wifexited": { "const": true }, "wifsignaled": { "const": false }, "exit_status": { "const": 0 }, "termsig": { "type": "null" } } }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/controllerObservationBase" },
+            {
+              "properties": {
+                "controller_status": { "const": "FAIL_REJECTED_BEFORE_SPAWN" },
+                "failure": {
+                  "allOf": [
+                    { "$ref": "#/$defs/controllerFailure" },
+                    { "properties": { "phase": { "const": "spawn" }, "code": { "const": "SPAWN" }, "child_spawned": { "const": false } } }
+                  ]
+                },
+                "worker_frame_hex": { "type": "null" },
+                "worker_frame_sha256": { "type": "null" },
+                "worker_pid": { "type": "null" },
+                "worker_image": { "type": "null" },
+                "sigcont": { "const": { "count": 0, "status": null } },
+                "sigkill": { "const": { "count": 0, "status": null } },
+                "stdout": { "const": { "byte_count": 0, "eof": true, "overflow": false } },
+                "stderr": { "const": { "byte_count": 0, "eof": true, "overflow": false } },
+                "wait": { "const": { "reaped": false, "wait_status_raw": null, "wifexited": null, "wifsignaled": null, "exit_status": null, "termsig": null } }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/controllerObservationBase" },
+            {
+              "properties": {
+                "controller_status": { "const": "FAIL_CONTAINED_AFTER_SPAWN" },
+                "failure": {
+                  "allOf": [
+                    { "$ref": "#/$defs/controllerFailure" },
+                    { "properties": { "phase": { "enum": ["spawn", "generation_join", "image_join", "resume", "capture", "wait", "post_reap_continuity", "frame_encoding"] }, "child_spawned": { "const": true } } }
+                  ]
+                },
+                "worker_pid": { "$ref": "#/$defs/workerPid" },
+                "stdout": { "allOf": [{ "$ref": "#/$defs/controllerStdoutObservation" }, { "properties": { "eof": { "const": true } } }] },
+                "stderr": { "allOf": [{ "$ref": "#/$defs/pipeObservation" }, { "properties": { "eof": { "const": true } } }] },
+                "wait": { "allOf": [{ "$ref": "#/$defs/waitObservation" }, { "properties": { "reaped": { "const": true }, "wait_status_raw": { "type": "integer" } } }] }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/controllerObservationBase" },
+            {
+              "properties": {
+                "controller_status": { "const": "INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY" },
+                "failure": {
+                  "allOf": [
+                    { "$ref": "#/$defs/controllerFailure" },
+                    { "properties": { "phase": { "enum": ["spawn", "generation_join", "image_join", "resume", "capture", "wait"] }, "child_spawned": { "const": true } } }
+                  ]
+                },
+                "worker_pid": { "$ref": "#/$defs/workerPid" },
+                "sigkill": { "allOf": [{ "$ref": "#/$defs/signalObservation" }, { "properties": { "count": { "const": 1 }, "status": { "type": "integer" } } }] },
+                "wait": { "const": { "reaped": false, "wait_status_raw": null, "wifexited": null, "wifsignaled": null, "exit_status": null, "termsig": null } }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "witnessRoot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "predicate_id", "root"],
+      "properties": {
+        "position": { "type": "integer", "minimum": 0, "maximum": 11 },
+        "predicate_id": { "$ref": "#/$defs/predicateId" },
+        "root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "verifierReceiptBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "outcome", "failed_predicates", "readiness_manifest_sha256", "controller_frame_sha256", "worker_frame_sha256", "implementation_commit", "implementation_tree", "pinned_source_manifest_root", "worker_identity_header_sha256", "independent_decoder_source_sha256", "input_receipt_root", "input_state_root", "parent_receipt_root", "parent_state_roots", "output_state_root", "transition_root", "receipt_root", "ordered_witness_roots", "state_json_hex", "state_cbor_hex", "transition_json_hex", "transition_cbor_hex", "witnesses_json_hex", "witnesses_cbor_hex", "authority_vector", "gate_e", "successor_authorized"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.verifier-receipt.v1" },
+        "outcome": { "enum": ["PASS_H2_LIVE_MECHANICS_ONLY", "FAIL_H2_LIVE_MECHANICS", "INCOMPLETE_H2_LIVE_MECHANICS"] },
+        "failed_predicates": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/predicateId" } },
+                "readiness_manifest_sha256": { "$ref": "#/$defs/hex64" },
+        "controller_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "worker_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "pinned_source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "worker_identity_header_sha256": { "$ref": "#/$defs/hex64" },
+        "independent_decoder_source_sha256": { "$ref": "#/$defs/hex64" },
+        "input_receipt_root": { "const": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca" },
+        "input_state_root": { "const": "6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66" },
+        "parent_receipt_root": { "const": "50a3a244914f5987c3552a0d68faaedef29d17d856d7d645f6d834b5e32c20ca" },
+        "parent_state_roots": { "const": ["6b880870ce4216c9c0793ef198695920323ff23cf6e79b0d8a6cca1f2d8d5d66"] },
+        "output_state_root": { "$ref": "#/$defs/nullableHex64" },
+        "transition_root": { "$ref": "#/$defs/nullableHex64" },
+        "receipt_root": { "$ref": "#/$defs/nullableHex64" },
+        "ordered_witness_roots": { "oneOf": [{ "type": "array", "minItems": 12, "maxItems": 12, "items": { "$ref": "#/$defs/witnessRoot" } }, { "type": "null" }] },
+        "state_json_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "state_cbor_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "transition_json_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "transition_cbor_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "witnesses_json_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "witnesses_cbor_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "authority_vector": { "const": "00000000" },
+        "gate_e": { "const": "ABSTAIN" },
+        "successor_authorized": { "const": false }
+      }
+    },
+    "verifierReceipt": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/verifierReceiptBase" },
+            {
+              "properties": {
+                "outcome": { "const": "PASS_H2_LIVE_MECHANICS_ONLY" },
+                "failed_predicates": { "const": [] },
+                "worker_frame_sha256": { "$ref": "#/$defs/hex64" },
+                "output_state_root": { "$ref": "#/$defs/hex64" },
+                "transition_root": { "$ref": "#/$defs/hex64" },
+                "receipt_root": { "$ref": "#/$defs/hex64" },
+                "ordered_witness_roots": {
+                  "type": "array",
+                  "minItems": 12,
+                  "maxItems": 12,
+                  "prefixItems": [
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 0 }, "predicate_id": { "const": "h2_static_predecessor_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 1 }, "predicate_id": { "const": "signed_worker_and_source_identity_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 2 }, "predicate_id": { "const": "closed_worker_caller_input_surface_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 3 }, "predicate_id": { "const": "single_native_owner_generation_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 4 }, "predicate_id": { "const": "fixed_image_request_reply_snapshot_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 5 }, "predicate_id": { "const": "single_vm_entry_and_trap_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 6 }, "predicate_id": { "const": "native_deadline_and_watchdog_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 7 }, "predicate_id": { "const": "native_teardown_and_memory_conservation_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 8 }, "predicate_id": { "const": "capability_witness_decode_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 9 }, "predicate_id": { "const": "outer_image_join_and_containment_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 10 }, "predicate_id": { "const": "outer_exact_reap_and_frame_exact" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/witnessRoot" }, { "properties": { "position": { "const": 11 }, "predicate_id": { "const": "no_application_journal_sqlite_or_output_file_effects" } } }] }
+                  ],
+                  "items": false
+                },
+                "state_json_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "state_cbor_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "transition_json_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "transition_cbor_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "witnesses_json_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "witnesses_cbor_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/verifierReceiptBase" },
+            {
+              "properties": {
+                "outcome": { "const": "FAIL_H2_LIVE_MECHANICS" },
+                "failed_predicates": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/predicateId" } },
+                "output_state_root": { "type": "null" },
+                "transition_root": { "type": "null" },
+                "receipt_root": { "type": "null" },
+                "ordered_witness_roots": { "type": "null" },
+                "state_json_hex": { "type": "null" },
+                "state_cbor_hex": { "type": "null" },
+                "transition_json_hex": { "type": "null" },
+                "transition_cbor_hex": { "type": "null" },
+                "witnesses_json_hex": { "type": "null" },
+                "witnesses_cbor_hex": { "type": "null" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/verifierReceiptBase" },
+            {
+              "properties": {
+                "outcome": { "const": "INCOMPLETE_H2_LIVE_MECHANICS" },
+                "failed_predicates": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": { "$ref": "#/$defs/predicateId" },
+                  "contains": { "const": "outer_exact_reap_and_frame_exact" },
+                  "minContains": 1,
+                  "maxContains": 1
+                },
+                "output_state_root": { "type": "null" },
+                "transition_root": { "type": "null" },
+                "receipt_root": { "type": "null" },
+                "ordered_witness_roots": { "type": "null" },
+                "state_json_hex": { "type": "null" },
+                "state_cbor_hex": { "type": "null" },
+                "transition_json_hex": { "type": "null" },
+                "transition_cbor_hex": { "type": "null" },
+                "witnesses_json_hex": { "type": "null" },
+                "witnesses_cbor_hex": { "type": "null" }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "x-readiness-external-commit-joins": {
+    "required_committed_inputs": ["source_freeze", "producer_preparation_envelope", "P00", "predecessor_tools_build_envelope", "T00", "bootstrap_launch_envelope", "B00", "O00", "P01", "build_launch_envelope", "B01", "O01", "binary_readiness_checkpoint"],
+    "R01_fields_bound_exactly": ["source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "pinned_source_manifest_root", "committed_build_chain", "build_result_schema", "build_result_status", "build_result_commit", "build_result_tree", "build_result_file_sha256", "build_result_section_merkle_root", "binary_readiness_checkpoint_commit", "binary_readiness_checkpoint_tree", "binary_readiness_checkpoint_file_sha256", "controller_sha256", "controller_uuid", "controller_source_manifest_root", "worker_sha256", "worker_uuid", "worker_full_codedirectory_hash", "worker_cdhash", "worker_identifier", "worker_team", "worker_certificate_sha256", "worker_requirement_sha256", "worker_entitlements_sha256", "worker_identity_header_sha256", "verifier_sha256", "verifier_uuid", "verifier_device", "verifier_inode", "verifier_source_manifest_root", "runtime_root_path", "runtime_root_device", "runtime_root_inode", "runtime_root_owner", "runtime_root_mode", "runtime_root_inventory_sha256", "runtime_root_entries", "controller_file_actions_sha256"],
+    "committed_build_chain_cross_joins": ["each_p00_t00_b00_o00_p01_b01_o01_commit_tree_file_sha256_equals_the_exact_separately_committed_artifact", "each_frame_sha256_equals_SHA256_of_exact_magic_length_canonical_payload_frame_bytes", "each_merkle_root_reconstructs_from_the_corresponding_machine_contract", "committed_build_chain_producer_preparation_envelope_equals_P00_preparation_envelope_commit_tree_file_sha256", "P00_status_equals_PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY", "P00_producer_source_is_exactly_one_B00_complete_tree_member_with_equal_path_mode_byte_count_SHA256_and_Git_blob", "committed_build_chain_p00_frame_sha256_equals_T00_producer_preparation_frame_sha256_and_T00_producer_path_named_descriptor_mapped_vnode_SHA256_UUID_generation_exactly_joins_P00_selected_producer", "committed_build_chain_predecessor_tools_build_envelope_equals_T00_build_envelope_commit_tree_file_sha256", "T00_status_equals_PASS_PREDECESSOR_TOOLS_BUILD_ONLY", "P00_two_retained_preparation_roots_plus_T00_two_retained_predecessor_roots_plus_B01_four_retained_bootstrap_product_roots_equal_eight_canonical_paths_with_no_equality_or_ancestry_and_eight_pairwise_distinct_held_device_inode_tuples", "committed_build_chain_bootstrap_launch_envelope_equals_O00_launch_envelope_commit_tree_file_sha256", "committed_build_chain_t00_frame_sha256_equals_B00_O00_P01_and_B01_producer_predecessor_tools_build_result_frame_sha256", "committed_build_chain_build_launch_envelope_equals_O01_build_launch_envelope_commit_tree_file_sha256", "O00_status_equals_PASS_BOOTSTRAP_CAPTURE_ONLY", "O01_status_equals_PASS_OUTER_BUILD_CAPTURE_ONLY", "committed_build_chain_b01_commit_tree_file_sha256_equals_build_result_commit_tree_file_sha256", "committed_build_chain_b01_merkle_root_equals_build_result_section_merkle_root", "B01_status_equals_PASS_BUILD_AUDIT_ONLY", "B01_producer_bootstrap_outer_receipt_sha256_equals_committed_build_chain_o00_frame_sha256", "O01_b00_o00_p01_and_b01_frame_hashes_equal_the_corresponding_committed_build_chain_frame_hashes"],
+    "verifier_launch_join": "later_live_envelope_must_hold_verifier_O_NOFOLLOW_and_join_R01_sha256_uuid_device_inode_to_named_descriptor_and_mapped_main_image_before_decode",
+    "operator": "evaluate_exact_committed_external_field_map_no_prose_fallback"
+  },
+  "x-frame-join-language": {
+    "operand": { "frame_enum": ["R01", "C01", "L01", "V01"], "pointer": "RFC6901_JSON_POINTER_WITHOUT_WILDCARDS" },
+    "derived_operand_enum": ["SHA256_EXACT_R01_FRAME", "SHA256_EXACT_C01_FRAME", "SHA256_EXACT_L01_FRAME", "DECODE_EXACT_CANONICAL_JSON_HEX", "DECODE_EXACT_DETERMINISTIC_CBOR_HEX", "RECONSTRUCT_STATE_ROOT", "RECONSTRUCT_TRANSITION_ROOT", "RECONSTRUCT_WITNESS_ROOTS", "RECONSTRUCT_RECEIPT_ROOT"],
+    "operator_enum": ["equals", "equals_all", "equals_if_present", "sha256_hex_decoded_equals", "path_is_exact_child", "evaluate_exact"],
+    "missing_operand": "EXIT_65_WITH_ZERO_V01_BYTES_UNLESS_OPERATOR_equals_if_present"
+  },
+  "x-frame-joins-by-controller-status": {
+    "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION": [
+      { "left": { "frame": "R01", "pointer": "/controller_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/controller_uuid" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/uuid" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/path" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/device" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/inode" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_owner" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/owner" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_mode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/mode" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_inventory_sha256" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/runtime_root/inventory_before_sha256" }, { "frame": "C01", "pointer": "/runtime_root/inventory_post_arm_sha256" }, { "frame": "C01", "pointer": "/runtime_root/inventory_post_reap_sha256" }] },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_entries" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/entries" } },
+      { "left": { "frame": "R01", "pointer": "/controller_source_manifest_root" }, "operator": "equals_all", "right": [{ "frame": "R01", "pointer": "/verifier_source_manifest_root" }, { "frame": "R01", "pointer": "/pinned_source_manifest_root" }] },
+      { "left": { "frame": "R01", "pointer": "/controller_file_actions_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/child_transport/file_actions_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/worker_sha256" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/worker_image/sha256" }, { "frame": "C01", "pointer": "/continuity/post_arm_worker_sha256" }, { "frame": "C01", "pointer": "/continuity/post_reap_worker_sha256" }] },
+      { "left": { "frame": "R01", "pointer": "/controller_sha256" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/continuity/post_arm_controller_sha256" }, { "frame": "C01", "pointer": "/continuity/post_reap_controller_sha256" }] },
+      { "left": { "frame": "R01", "pointer": "/worker_uuid" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/uuid" } },
+      { "left": { "frame": "R01", "pointer": "/worker_full_codedirectory_hash" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/full_codedirectory_hash" } },
+      { "left": { "frame": "R01", "pointer": "/worker_cdhash" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/cdhash" } },
+      { "left": { "frame": "R01", "pointer": "/worker_identifier" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/identifier" } },
+      { "left": { "frame": "R01", "pointer": "/worker_team" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/team" } },
+      { "left": { "frame": "R01", "pointer": "/worker_certificate_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/certificate_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/worker_requirement_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/requirement_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/worker_entitlements_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/entitlements_sha256" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/child_transport/configured_cwd_root_device" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/child_transport/configured_cwd_root_inode" } },
+      { "left": { "frame": "C01", "pointer": "/controller_self/named_device" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/controller_self/descriptor_device" }, { "frame": "C01", "pointer": "/controller_self/mapped_device" }, { "frame": "C01", "pointer": "/controller_self/post_reap_named_device" }] },
+      { "left": { "frame": "C01", "pointer": "/controller_self/named_inode" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/controller_self/descriptor_inode" }, { "frame": "C01", "pointer": "/controller_self/mapped_inode" }, { "frame": "C01", "pointer": "/controller_self/post_reap_named_inode" }] },
+      { "left": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/controller_self/post_reap_descriptor_sha256" }, { "frame": "R01", "pointer": "/controller_sha256" }] },
+      { "left": { "frame": "C01", "pointer": "/worker_image/named_device" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/worker_image/descriptor_device" }, { "frame": "C01", "pointer": "/worker_image/mapped_device" }] },
+      { "left": { "frame": "C01", "pointer": "/worker_image/named_inode" }, "operator": "equals_all", "right": [{ "frame": "C01", "pointer": "/worker_image/descriptor_inode" }, { "frame": "C01", "pointer": "/worker_image/mapped_inode" }] },
+      { "left": { "frame": "C01", "pointer": "/worker_image/named_device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/post_reap_named_device" } },
+      { "left": { "frame": "C01", "pointer": "/worker_image/named_inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/post_reap_named_inode" } },
+      { "left": { "frame": "C01", "pointer": "/worker_image/sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/post_reap_descriptor_sha256" } },
+      { "left": { "frame": "C01", "pointer": "/controller_pid/pid" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_pid/parent_pid" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/controller_leaf/path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/path" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/controller_leaf/device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_device" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/controller_leaf/inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_inode" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/controller_leaf/sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/worker_leaf/path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/path" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/worker_leaf/device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/descriptor_device" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/worker_leaf/inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/descriptor_inode" } },
+      { "left": { "frame": "C01", "pointer": "/runtime_root/worker_leaf/sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/worker_image/sha256" } },
+      { "left": { "frame": "C01", "pointer": "/worker_frame_hex" }, "operator": "sha256_hex_decoded_equals", "right": { "frame": "C01", "pointer": "/worker_frame_sha256" } }
+    ],
+    "FAIL_REJECTED_BEFORE_SPAWN": [
+      { "left": { "frame": "R01", "pointer": "/controller_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/controller_uuid" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/uuid" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/path" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_device" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/device" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_inode" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/inode" } }
+    ],
+    "FAIL_CONTAINED_AFTER_SPAWN": [
+      { "left": { "frame": "R01", "pointer": "/controller_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/path" } },
+      { "left": { "frame": "R01", "pointer": "/worker_sha256" }, "operator": "equals_if_present", "right": { "frame": "C01", "pointer": "/worker_image/sha256" } }
+    ],
+    "INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY": [
+      { "left": { "frame": "R01", "pointer": "/controller_sha256" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/controller_self/descriptor_sha256" } },
+      { "left": { "frame": "R01", "pointer": "/runtime_root_path" }, "operator": "equals", "right": { "frame": "C01", "pointer": "/runtime_root/path" } },
+      { "left": { "frame": "R01", "pointer": "/worker_sha256" }, "operator": "equals_if_present", "right": { "frame": "C01", "pointer": "/worker_image/sha256" } }
+    ]
+  },
+  "x-runtime-root-reconstruction": {
+    "applies_when": { "frame": "C01", "pointer": "/controller_status", "equals": "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION" },
+    "predicates_in_order": [
+      "controller_leaf_path_is_runtime_root_path_slash_ErgenticsProvenanceH2LiveController",
+      "worker_leaf_path_is_runtime_root_path_slash_ErgenticsProvenanceH2LiveWorker",
+      "controller_leaf_owner_mode_nlink_byte_count_allocated_bytes_sha256_uuid_device_inode_equal_controller_self",
+      "worker_leaf_owner_mode_nlink_byte_count_allocated_bytes_sha256_uuid_device_inode_equal_worker_image",
+      "canonical_descriptor_rooted_two_leaf_inventory_reconstructs_runtime_root_inventory_before_sha256",
+      "inventory_before_sha256_equals_inventory_post_arm_sha256_equals_inventory_post_reap_sha256"
+    ],
+    "operator": "evaluate_exact"
+  },
+  "x-darwin-wait-status-derivation": {
+    "applies_to": "every_C01_with_wait.reaped_true",
+    "normal_exit": "wait_status_raw_bitand_0x7f_equals_0; wifexited=true; wifsignaled=false; exit_status=(wait_status_raw_shift_right_8)_bitand_0xff; termsig=null",
+    "signaled_exit": "wait_status_raw_bitand_0x7f_is_1_through_0x7e; wifexited=false; wifsignaled=true; exit_status=null; termsig=wait_status_raw_bitand_0x7f",
+    "pass_requires": { "wait_status_raw": 0, "wifexited": true, "wifsignaled": false, "exit_status": 0, "termsig": null },
+    "operator": "evaluate_exact"
+  },
+  "x-controller-failure-availability-and-predicate-map": {
+    "semantic_predicate_order_exact": [
+      "h2_static_predecessor_exact",
+      "signed_worker_and_source_identity_exact",
+      "closed_worker_caller_input_surface_exact",
+      "single_native_owner_generation_exact",
+      "fixed_image_request_reply_snapshot_exact",
+      "single_vm_entry_and_trap_exact",
+      "native_deadline_and_watchdog_exact",
+      "native_teardown_and_memory_conservation_exact",
+      "capability_witness_decode_exact",
+      "outer_image_join_and_containment_exact",
+      "outer_exact_reap_and_frame_exact",
+      "no_application_journal_sqlite_or_output_file_effects"
+    ],
+    "input_admission_disposition": "ANY_MALFORMED_NONCANONICAL_OR_UNJOINED_R01_OR_C01_EXITS_65_WITH_ZERO_V01_BYTES; readiness framing and readiness-controller joining are admission conditions and never V01 failed_predicates",
+    "outer_incomplete_without_C01_phases": ["self_admission", "runtime_root_admission", "watch_arm", "pipe_setup", "frame_encoding_before_complete_observation"],
+    "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION": {
+      "evaluation": "evaluate every semantic_predicate_order_exact entry independently from the admitted R01 C01 and exact decoded L01 evidence",
+      "failed_predicates": "the exact order-preserving subset of semantic_predicate_order_exact whose predicate evaluation is false; no omitted false predicate and no added predicate",
+      "PASS_H2_LIVE_MECHANICS_ONLY": "failed_predicates is exactly empty",
+      "FAIL_H2_LIVE_MECHANICS": "failed_predicates is exactly nonempty"
+    },
+    "FAIL_REJECTED_BEFORE_SPAWN": {
+      "phase": "spawn",
+      "code": "SPAWN",
+      "child_spawned": false,
+      "exact_failed_predicates": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+      "unlisted_semantic_predicates": "NOT_EVALUATED_NOT_PASS"
+    },
+    "FAIL_CONTAINED_AFTER_SPAWN": {
+      "phase_exact_failed_predicates": {
+        "spawn": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "generation_join": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "image_join": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "resume": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "capture": ["outer_exact_reap_and_frame_exact"],
+        "wait": ["outer_exact_reap_and_frame_exact"],
+        "post_reap_continuity": ["outer_image_join_and_containment_exact"],
+        "frame_encoding": ["outer_exact_reap_and_frame_exact"]
+      },
+      "unlisted_semantic_predicates": "NOT_EVALUATED_NOT_PASS"
+    },
+    "INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY": {
+      "phase_exact_failed_predicates": {
+        "spawn": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "generation_join": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "image_join": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "resume": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"],
+        "capture": ["outer_exact_reap_and_frame_exact"],
+        "wait": ["outer_exact_reap_and_frame_exact"]
+      },
+      "unlisted_semantic_predicates": "NOT_EVALUATED_NOT_PASS"
+    },
+    "failed_predicate_order": "always preserve semantic_predicate_order_exact; exact constants and selected phase rows are already in that order",
+    "operator": "evaluate_exact"
+  },
+  "x-verifier-output-joins": {
+    "PASS_H2_LIVE_MECHANICS_ONLY": {
+      "scalar_joins": [
+        { "left": { "frame": "V01", "pointer": "/readiness_manifest_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_R01_FRAME" } },
+        { "left": { "frame": "V01", "pointer": "/controller_frame_sha256" }, "operator": "equals", "right": { "derived": "SHA256_EXACT_C01_FRAME" } },
+        { "left": { "frame": "V01", "pointer": "/worker_frame_sha256" }, "operator": "equals_all", "right": [{ "derived": "SHA256_EXACT_L01_FRAME" }, { "frame": "C01", "pointer": "/worker_frame_sha256" }] },
+        { "left": { "frame": "V01", "pointer": "/implementation_commit" }, "operator": "equals", "right": { "frame": "R01", "pointer": "/implementation_commit" } },
+        { "left": { "frame": "V01", "pointer": "/implementation_tree" }, "operator": "equals", "right": { "frame": "R01", "pointer": "/implementation_tree" } },
+        { "left": { "frame": "V01", "pointer": "/pinned_source_manifest_root" }, "operator": "equals", "right": { "frame": "R01", "pointer": "/pinned_source_manifest_root" } },
+        { "left": { "frame": "V01", "pointer": "/worker_identity_header_sha256" }, "operator": "equals", "right": { "frame": "R01", "pointer": "/worker_identity_header_sha256" } },
+        { "left": { "frame": "V01", "pointer": "/independent_decoder_source_sha256" }, "operator": "equals", "right": { "frame": "R01", "pointer": "/independent_decoder_source_sha256" } }
+      ],
+      "projection_predicates_in_order": [
+        "hex_decode_all_six_projection_streams_and_reject_odd_or_empty",
+        "state_JSON_is_canonical_sorted_key_JSON_and_exactly_reencodes",
+        "state_CBOR_is_deterministic_CBOR_and_exactly_reencodes",
+        "state_JSON_and_CBOR_decode_to_one_identical_typed_semantic_value",
+        "transition_JSON_and_CBOR_each_exactly_reencode_and_decode_identically",
+        "witnesses_JSON_and_CBOR_each_exactly_reencode_and_decode_identically",
+        "twelve_witnesses_have_exact_position_predicate_id_outcome_and_evidence_source_mapping",
+        "reconstruct_each_witness_root_from_its_exact_semantic_witness",
+        "reconstruct_transition_root_and_require_exact_parent_input_roots_and_twelve_witness_roots",
+        "reconstruct_output_state_root_and_require_transition_root_and_static_parent_ancestry",
+        "reconstruct_outer_receipt_root_from_schema_state_JSON_state_CBOR_transition_JSON_transition_CBOR_witnesses_JSON_witnesses_CBOR",
+        "V01_ordered_witness_roots_output_state_root_transition_root_and_receipt_root_equal_all_reconstructed_roots"
+      ],
+      "witness_evidence_sources_by_position": [
+        { "position": 0, "sources": ["R01", "frozen_static_constants"] },
+        { "position": 1, "sources": ["R01"] },
+        { "position": 2, "sources": ["R01", "C01", "L01"] },
+        { "position": 3, "sources": ["L01"] },
+        { "position": 4, "sources": ["L01"] },
+        { "position": 5, "sources": ["L01"] },
+        { "position": 6, "sources": ["L01"] },
+        { "position": 7, "sources": ["L01"] },
+        { "position": 8, "sources": ["L01", "R01"] },
+        { "position": 9, "sources": ["C01", "R01"] },
+        { "position": 10, "sources": ["C01", "L01"] },
+        { "position": 11, "sources": ["R01", "C01", "L01", "frozen_zero_effect_constants"] }
+      ]
+    },
+    "FAIL_or_INCOMPLETE": {
+      "roots_and_projection_streams": "all null",
+      "failed_predicates": "equal the exact controller-status row selected from x-controller-failure-availability-and-predicate-map in semantic_predicate_order_exact order; arbitrary nonempty subsets are rejected",
+      "unlisted_semantic_predicates": "NOT_EVALUATED_NOT_PASS"
+    },
+    "operator": "evaluate_exact"
+  },
+  "x-verifier-outcome-by-controller-status": {
+    "TRANSPORT_COMPLETE_ELIGIBLE_FOR_OFFLINE_VERIFICATION": {
+      "allowed_outcomes": ["PASS_H2_LIVE_MECHANICS_ONLY", "FAIL_H2_LIVE_MECHANICS"],
+      "PASS_requires": ["all_12_frozen_predicates_reconstructed_and_satisfied", "failed_predicates_exactly_empty", "all_x-frame-joins", "x-runtime-root-reconstruction", "x-darwin-wait-status-derivation", "x-verifier-output-joins/PASS_H2_LIVE_MECHANICS_ONLY"],
+      "FAIL_requires": ["failed_predicates_equals_the_exact_nonempty_ordered_subset_of_the_12_frozen_semantic_predicates_that_evaluate_false", "all_roots_and_projection_streams_are_null"]
+    },
+    "FAIL_REJECTED_BEFORE_SPAWN": { "outcome": "FAIL_H2_LIVE_MECHANICS", "failed_predicates": ["outer_image_join_and_containment_exact", "outer_exact_reap_and_frame_exact"] },
+    "FAIL_CONTAINED_AFTER_SPAWN": { "outcome": "FAIL_H2_LIVE_MECHANICS", "failed_predicates": "exact phase-selected ordered row from x-controller-failure-availability-and-predicate-map" },
+    "INCOMPLETE_AFTER_BOUNDED_CONTROLLER_EXIT_NO_RETRY": { "outcome": "INCOMPLETE_H2_LIVE_MECHANICS", "failed_predicates": "exact phase-selected ordered row from x-controller-failure-availability-and-predicate-map" }
+  },
+  "x-verifier-order": [
+    "decode_validate_and_exactly_reencode_EPRH2R01",
+    "enforce_exact_x-readiness-external-commit-joins",
+    "decode_validate_and_exactly_reencode_EPRH2C01",
+    "enforce_exact_x-frame-joins-by-controller-status_table",
+    "enforce_exact_x-runtime-root-reconstruction",
+    "enforce_exact_x-darwin-wait-status-derivation",
+    "enforce_exact_x-controller-failure-availability-and-predicate-map",
+    "enforce_exact_x-verifier-outcome-by-controller-status_table",
+    "decode_and_classify_EPRH2L01",
+    "project_and_round_trip_JSON_and_CBOR",
+    "enforce_exact_x-verifier-output-joins",
+    "reconstruct_Merkle_graph_and_emit_EPRH2V01"
+  ],
+  "oneOf": [
+    { "$ref": "#/$defs/readinessManifest" },
+    { "$ref": "#/$defs/controllerObservation" },
+    { "$ref": "#/$defs/verifierReceipt" }
+  ]
+}

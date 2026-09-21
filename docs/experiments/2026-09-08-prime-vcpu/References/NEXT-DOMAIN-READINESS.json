@@ -1,0 +1,416 @@
+{
+  "allThreeManifestsByteIdentical": true,
+  "allThreeTensorSchemasEqualSelectedSwiftPrime10M": true,
+  "checkpoints": [
+    {
+      "allF32": true,
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "manifestFileBytes": 2158230,
+      "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-manifest.json",
+      "originalEvaluation": {
+        "holdout": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9723404255319149,
+          "direct_accuracy": 0.8914893617021277,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9723404255319149
+        },
+        "mutation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9170212765957447,
+          "direct_accuracy": 0.8361702127659575,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9170212765957447
+        },
+        "validation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9603729603729604,
+          "direct_accuracy": 0.8904428904428905,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9603729603729604
+        }
+      },
+      "originalOutcome": "GROUNDED",
+      "parameterCount": 10227968,
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportManifestHashScope": "Canonical compact JSON of manifest.rows, not the whole file; verified. Each split and mutation hash also verified.",
+      "reportManifestSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace-shadow.json",
+      "reportSHA256": "0296bc8a2470ece5adf147d902aa6cddbecee5af42b28a5bad13de1d879b503c",
+      "seed": 1618,
+      "tensorCount": 74,
+      "trainingSteps": 2400,
+      "weightsBytes": 40919832,
+      "weightsHashMatchesOriginalReport": true,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed1618/prime-domain-trace.safetensors",
+      "weightsSHA256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+    },
+    {
+      "allF32": true,
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "manifestFileBytes": 2158230,
+      "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-manifest.json",
+      "originalEvaluation": {
+        "holdout": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9382978723404255,
+          "direct_accuracy": 0.9297872340425531,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9382978723404255
+        },
+        "mutation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9319148936170213,
+          "direct_accuracy": 0.9,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9319148936170213
+        },
+        "validation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.916083916083916,
+          "direct_accuracy": 0.8671328671328671,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.916083916083916
+        }
+      },
+      "originalOutcome": "ABSTAIN",
+      "parameterCount": 10227968,
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportManifestHashScope": "Canonical compact JSON of manifest.rows, not the whole file; verified. Each split and mutation hash also verified.",
+      "reportManifestSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace-shadow.json",
+      "reportSHA256": "f25fbe98f4c0afba3fe82a90eb3711837ff8cce3aeefd2eb512ab0a4b37b310f",
+      "seed": 2718,
+      "tensorCount": 74,
+      "trainingSteps": 2400,
+      "weightsBytes": 40919832,
+      "weightsHashMatchesOriginalReport": true,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow/prime-domain-trace.safetensors",
+      "weightsSHA256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+    },
+    {
+      "allF32": true,
+      "implementation": {
+        "custom_metal_kernels": false,
+        "framework": "mlx",
+        "imported_base_weights": false,
+        "model_implementation": "mlx_lm.models.llama.Model",
+        "random_initialization": true,
+        "standard_primitives": true
+      },
+      "manifestFileBytes": 2158230,
+      "manifestFileSHA256": "1a49ef580dd702567c3a66df443cbb6f1e1b10f08f525ce1648d76612388f80d",
+      "manifestPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-manifest.json",
+      "originalEvaluation": {
+        "holdout": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.9957446808510638,
+          "direct_accuracy": 0.9553191489361702,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.9957446808510638
+        },
+        "mutation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.8893617021276595,
+          "direct_accuracy": 0.7936170212765957,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.8893617021276595
+        },
+        "validation": {
+          "abstain_accuracy": 1.0,
+          "autoregressive_accuracy": 0.958041958041958,
+          "direct_accuracy": 0.8414918414918415,
+          "left_summary_accuracy": 1.0,
+          "right_summary_accuracy": 1.0,
+          "teacher_accuracy": 0.958041958041958
+        }
+      },
+      "originalOutcome": "GROUNDED",
+      "parameterCount": 10227968,
+      "profile": {
+        "attention_heads": 4,
+        "expected_parameter_count": 10227968,
+        "feed_forward_dimension": 640,
+        "head_dimension": 64,
+        "layer_count": 8,
+        "model_dimension": 256,
+        "observed_parameter_count": 10227968,
+        "profile_id": "ergentics_prime_poc_10m_v1",
+        "vocab_size": 16384
+      },
+      "reportManifestHashScope": "Canonical compact JSON of manifest.rows, not the whole file; verified. Each split and mutation hash also verified.",
+      "reportManifestSHA256": "6965656679ac7c8cf5c8624b15e21cc8f3f5fffc4ac97a56ab8a558d07b44d48",
+      "reportPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace-shadow.json",
+      "reportSHA256": "4c408f786e97407e260f6fa3e50c1d465bf353125f1db78e6d74a788677e534c",
+      "seed": 3141,
+      "tensorCount": 74,
+      "trainingSteps": 2400,
+      "weightsBytes": 40919832,
+      "weightsHashMatchesOriginalReport": true,
+      "weightsPath": "/Users/ergentics/prime-mlx-lab/domain-trace-shadow-seed3141/prime-domain-trace.safetensors",
+      "weightsSHA256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+    }
+  ],
+  "codec": {
+    "abstainSymbol": 224,
+    "actuallyRepresentedSummaryTargets": [
+      128,
+      130,
+      131,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      224
+    ],
+    "assignedFinalSymbols": [
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      224
+    ],
+    "assignedSummarySymbols": "128..163 plus224 ABSTAIN",
+    "controlSymbols": {
+      "ANSWER": 3,
+      "BOS": 1,
+      "CONTEXT": 4,
+      "RESUME": 7,
+      "TRACE": 5,
+      "VERSUS": 6
+    },
+    "domainIDs": "64..68 correspond to I,II,III,IV,V",
+    "durabilityIDs": {
+      "96": 0.0,
+      "97": 0.35,
+      "98": 0.7
+    },
+    "finalFormula": "192 + sideOffset + eventIndex; leftOffset0,rightOffset3; WE0,PF1,RP2",
+    "invalidInputSymbol": 225,
+    "modelOutputDomain": "Unrestricted full-vocabulary argmax0..16383; assignment classification is separate from what may be predicted.",
+    "modelVocabularySize": 16384,
+    "readinessIDs": {
+      "80": 0.18,
+      "81": 0.3,
+      "82": 0.45,
+      "83": 0.64,
+      "84": 0.82
+    },
+    "summaryFormula": "128 + priorityBand*3 + eventIndex; priorityBand0..11; WE0,PF1,RP2",
+    "type": "Original fixed symbolic vocabulary, not SentencePiece or a text tokenizer"
+  },
+  "currentRuntimeFit": {
+    "allOriginalInputIDsWithinVocabulary": true,
+    "canRunCompleteOriginalTraceUnchanged": false,
+    "canRunIndependentDirectOrCandidateHeadsAsStaticJobs": true,
+    "inputLengthBlocker": false,
+    "jobCountBlocker": false,
+    "longestOriginalInputIDs": 10,
+    "maxInputIDs": 64,
+    "maxJobs": 5,
+    "notYetEstablished": "These Python-trained checkpoints have not been live-verified in this Swift host runner or guest bridge by this readiness check. Exact tensor schema alone does not establish behavioral or bitwise equivalence.",
+    "originalTracePlusDirectJobs": 4,
+    "strict10MLoaderTensorShapeFit": true,
+    "strict10MLoaderWeightSizeFit": true
+  },
+  "exactBlockers": [
+    {
+      "consequence": "One final input would have to be incorrectly frozen, supplied from gold/history, or filled by host orchestration. None reproduces the intended guest-carried original trace.",
+      "current": "InputJob permits only one priorPredictionOffset. Both Swift expected construction and guest W27 propagation select only the immediately preceding prediction.",
+      "id": "TWO_SOURCE_FEEDBACK_UNREPRESENTABLE",
+      "required": "The final job must insert two different independently learned predictions: left from its earlier job and right from its immediate predecessor.",
+      "source": "Native/main.swift:159-172,294-301; Guest/PrimeGuestBridge.h:13-16; Guest/guest.S:18-29"
+    },
+    {
+      "consequence": "A correct domain summary triggers INVALID_FEEDBACK when the next job tries to consume it. Increasing only the job count does not solve this.",
+      "current": "InputCase only allows allowedValueMinimum16or64. C validates those two minima; guest accepts only eight consecutive symbols before using a previous prediction.",
+      "id": "Z8_ONLY_FEEDBACK_DOMAIN",
+      "required": "Actual summary outputs128..163 or224ABSTAIN; preserve original unfiltered0..16383 argmax predictions for continuation.",
+      "source": "Native/main.swift:175-189; Guest/PrimeGuestBridge.c:159-162,184; Guest/guest.S:21-25"
+    }
+  ],
+  "gpuRun": false,
+  "manifest": {
+    "available": true,
+    "engineAuthority": "SeatEngine.Recommender.scoredCandidates+strict_first_argmax",
+    "engineBuild": "v2.1.8-shareGuardOn-fmtSplit-decisionTruth",
+    "familyID": "ergentics_prime_domain_trace_shadow",
+    "inputLengthDistributionsAcrossAll2707Rows": {
+      "composed_final_input": {
+        "5": 1538,
+        "6": 1169
+      },
+      "direct_input_ids": {
+        "9": 1538,
+        "10": 1169
+      },
+      "final_prefix_ids": {
+        "2": 1538,
+        "3": 1169
+      },
+      "final_suffix_ids": {
+        "1": 2707
+      },
+      "left_input_ids": {
+        "6": 1538,
+        "7": 1169
+      },
+      "right_input_ids": {
+        "6": 1538,
+        "7": 1169
+      }
+    },
+    "languageID": "ergentics_prime_engine_domain_trace_v1",
+    "mutations": 470,
+    "representedBySplit": {
+      "holdout": {
+        "False": 32,
+        "True": 438
+      },
+      "mutation": {
+        "False": 32,
+        "True": 438
+      },
+      "train": {
+        "False": 72,
+        "True": 1266
+      },
+      "validation": {
+        "False": 24,
+        "True": 405
+      }
+    },
+    "rows": 2237,
+    "schemaVersion": "1",
+    "splitCounts": {
+      "holdout": 470,
+      "mutation": 470,
+      "train": 1338,
+      "validation": 429
+    }
+  },
+  "minimalFaithfulSuccessor": {
+    "boundedFeedback": "For each job permit up to2 mappings {inputOffset,sourceJobIndex}; require distinct inbounds zero placeholders and sourceJobIndex<currentJobIndex. Guest copies from its own committed prediction array.",
+    "changeWeightsOrTokenizer": false,
+    "fourJobPlan": "0direct(static),1leftSummary(static),2rightSummary(static),3final: insert committed prediction1 at prefixLength and committed prediction2 at prefixLength+1.",
+    "hostVerification": "Verify callback inputs against exactly those guest-committed outputs; do not fill guest slots on the host.",
+    "newGuestABIRequired": true,
+    "validationBeforeClaimingReady": "Fresh signed bridge build, host native baseline for original domain checkpoint, guest input/readback/cleanup checks, then compare actual logits and outputs. Retain all three seeds and both represented/malformed cases in future selection.",
+    "valuePolicy": "Preserve full-vocabulary0..16383 returned predictions for this domain profile; do not reuse the Z8 eight-value early-stop rule or silently map output IDs. Retain explicit per-profile policy and separate classification of assigned summary/final/ABSTAIN IDs."
+  },
+  "noNewDatasetGenerated": true,
+  "originalFilesModified": false,
+  "originalNativeIO": {
+    "direct": "direct_input_ids -> fresh predicted final ID",
+    "final": "final_prefix_ids + [fresh predicted left-summary ID, fresh predicted right-summary ID] + final_suffix_ids -> fresh predicted final ID",
+    "leftSummary": "left_input_ids -> fresh predicted left-summary ID",
+    "liveTracePlusDirectJobCount": 4,
+    "liveTraceStageCount": 3,
+    "originalContinuationPolicy": "Final evaluation inserts BOTH actual argmax predictions without clamping or early stopping for predictions outside the assigned summary set; this includes legitimate224ABSTAIN.",
+    "rightSummary": "right_input_ids -> fresh predicted right-summary ID",
+    "sourceLines": "prime_mlx_domain_trace_shadow.py:186-235",
+    "teacherControl": "Original evaluate also calls final_examples(rows) without prediction dictionaries, which substitutes gold targets. That teacher-only control must not be used as the live trace path."
+  },
+  "retainedScientificStatus": "Original three-seed consensus ABSTAIN: all clear structural domain transfer; only2of3clear the frozen trace-over-direct gain threshold. Do not upgrade this status from tensor/header readiness.",
+  "reviewedSourceBindings": [
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/tools/prime_mlx_domain_trace_shadow.py",
+      "sha256": "d6e8c11d70a6ea9fd961d699d975707ebed6ab615b39093ea719827781fe0d62"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/recommender-seat/Sources/SeatEngine/Lab/ErgenticsPrimeDomainTraceShadowCanary.swift",
+      "sha256": "aa376e72b5aea8c1ef266061eb250d721d66ef1054943fa445986428e44d57ee"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/main.swift",
+      "sha256": "7278cac3b289369b6ab6b519bd8dc57ca0f43ad13173f63d2007e382342fe8dc"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/PrimeGuestBridge.h",
+      "sha256": "f5aed11e319504fb61f6a34c6778f1e7e69ba87c985c760af53a3159d25b6ad8"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/PrimeGuestBridge.c",
+      "sha256": "1be244946dbeaccdc4c54901280e38914d0df0b3fc3b5e891a2601ce7961b9e2"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Guest/guest.S",
+      "sha256": "40b48d887c4ec995c9370743c07e31ac446cbb3e164224255479911b1e8150ab"
+    }
+  ],
+  "schema": "prime_next_domain_readiness_v1",
+  "status": "BLOCKED_BY_CURRENT_GUEST_FEEDBACK_ABI;MODELS_AND_MANIFESTS_RETAINED",
+  "trainingRun": false
+}

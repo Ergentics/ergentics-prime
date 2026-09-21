@@ -1,0 +1,99 @@
+{
+  "schema": "ergentics.profile-manifest.v1",
+  "name": "ergentics-profiles",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 497,
+      "sha256": "0f4156d809a582ddef6e267d583631b27d09dcacd92b1891a1a874b10084d11f"
+    },
+    {
+      "path": "CONTRACTS.md",
+      "bytes": 5665,
+      "sha256": "016d41efe63161e9f4393535898ba04ae635223fd05e147620a19e2642f6b3e8"
+    },
+    {
+      "path": "CORPUS.md",
+      "bytes": 2539,
+      "sha256": "81c55b449dd1371d858ae34fb6e00c12a7b1b512ece972fb47fdbf523dab055e"
+    },
+    {
+      "path": "LOAD.md",
+      "bytes": 2922,
+      "sha256": "1118b4d730068c56cce46d7064546e50a57786b2e76df2e9d1b2fcf237ec7df3"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2455,
+      "sha256": "bd00d4c9aefecf223df6eabab473210c72f17004da0240233a77b6c9c69951a4"
+    },
+    {
+      "path": "adapters/codex.md",
+      "bytes": 1350,
+      "sha256": "899a5ff80d8a87880f423630f308aa9886817154e864984deddc14c37cce6a3b"
+    },
+    {
+      "path": "adapters/portability.md",
+      "bytes": 1314,
+      "sha256": "f26cc6e75d2d080fa22e066c9a7bf1a72d5453fab339ce084982c512020b4468"
+    },
+    {
+      "path": "corpus/INDEX.json",
+      "bytes": 7857,
+      "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f"
+    },
+    {
+      "path": "corpus/entries/bounded-polling-control.md",
+      "bytes": 481,
+      "sha256": "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48"
+    },
+    {
+      "path": "corpus/entries/bounded-supervision.md",
+      "bytes": 420,
+      "sha256": "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73"
+    },
+    {
+      "path": "corpus/entries/cpp-file-identity.md",
+      "bytes": 499,
+      "sha256": "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4"
+    },
+    {
+      "path": "corpus/entries/evidence-stages.md",
+      "bytes": 538,
+      "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+    },
+    {
+      "path": "corpus/entries/sharing-and-processing.md",
+      "bytes": 705,
+      "sha256": "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0"
+    },
+    {
+      "path": "corpus/entries/swift-c-boundary.md",
+      "bytes": 405,
+      "sha256": "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669"
+    },
+    {
+      "path": "profiles/ergentics_cpp.json",
+      "bytes": 2792,
+      "sha256": "65d7b7684d4ac0238c48bbd677f01f11aeb5fb4f2d95ac9c36e3de7fed5784b2"
+    },
+    {
+      "path": "profiles/ergentics_swift_c.json",
+      "bytes": 2791,
+      "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d"
+    },
+    {
+      "path": "scripts/profile_packet.rb",
+      "bytes": 28257,
+      "sha256": "63ed495b1b26732133141205074bc9321e7d431c9a25b87ad3e30380eb55e459"
+    },
+    {
+      "path": "tests/check_profile_packet.rb",
+      "bytes": 23558,
+      "sha256": "d0a8d7fbc5dfd98aacceca8c253d6e076133a76609002b725eea699bb6f924e1"
+    }
+  ],
+  "self_hash": "External release receipt"
+}

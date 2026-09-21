@@ -1,0 +1,196 @@
+{
+  "schema": "ergentics-r19-obs11-c2-preconsumption-prefix-harness-readiness-v4",
+  "status": "READY_FOR_ONE_EXACT_NONCONSUMING_PREFIX_HARNESS_ENTRY",
+  "rank": "CONTROL_ONLY_READINESS_NO_CONTROLLER_CONSUMPTION",
+  "predecessor": {
+    "harness_commit": "dc24c27788e87589ee9aa8f758ff2b6b32a25a30",
+    "harness_tree": "2fd7c0e9de44c05e5b2c7f2cedcb578e86df3a8e",
+    "native_errno_checkpoint_commit": "19cc29018b345fcbbb6ffa3c12ec4fa2a268b27a",
+    "native_errno_checkpoint_tree": "79deb3dd6bdbf0f5151c62cd836317733b3a6e2e",
+    "source_implementation_commit": "91d2481795cb3a210b461813dd7efcd6d2740fd8",
+    "source_implementation_tree": "8e7971e27849298a02ba2271f9f2135f619a9248"
+  },
+  "harness": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb",
+    "absolute_path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb",
+    "git_mode": "100644",
+    "device": 16777231,
+    "inode": 17956974,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "bytes": 9474,
+    "lines": 271,
+    "sha256": "634f40ff5b6c074719cbdf4e5f15df52abec9f8e6ff6a95ea2f9076c0036c81c",
+    "git_blob": "3f44a938d597210eebed57f7589888c045eba700",
+    "ruby_2_6_syntax": "PASS",
+    "self_authorizing": false
+  },
+  "controller_source": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "bytes": 150718,
+    "lines": 4054,
+    "sha256": "bcbe4ab65fb87568593e0442a657f7b9e736900b923e9985d99e01aefca56967",
+    "git_blob": "24b1b274d97755d268f57e2157013c8a4735cfe8"
+  },
+  "prefix_boundary": {
+    "marker_hex": "0a6a6f75726e616c203d206e696c0a7374617465203d20433253746174654d616368696e652e6e65770a",
+    "marker_occurrences": 1,
+    "marker_offset": 143920,
+    "prefix_bytes": 143920,
+    "prefix_lines": 3879,
+    "prefix_sha256": "4215239f13fe8e48d8efcb340f09189ed4ec5e3d147bacc0b06f06c426ad1ae0",
+    "included_terminal_definition": "bootstrap_preflight_complete_end_LF",
+    "excluded_first_bottom_assignment": "journal_equals_nil",
+    "state_machine_constructor_excluded": true,
+    "journal_constructor_excluded": true,
+    "build_namespace_constructor_excluded": true
+  },
+  "exact_transport": {
+    "outer_shell": "/bin/zsh",
+    "outer_shell_login": false,
+    "pre_exec_action": "VERIFY_EXACT_HARNESS_SHA256_BYTES_MODE_UID_GID_NLINK_AND_GIT_BLOB",
+    "exec_chain": [
+      "/usr/bin/env",
+      "-i",
+      "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0",
+      "/usr/bin/ruby",
+      "--disable-gems",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb"
+    ],
+    "script_arguments": [],
+    "ruby_argv": [],
+    "ruby_environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "stdout": "DISTINCT_CAPTURE_PIPE",
+    "stderr": "DISTINCT_CAPTURE_PIPE",
+    "tty": false,
+    "outer_timeout": null,
+    "outer_signal_authority": false
+  },
+  "closed_call_graph": {
+    "source_prefix_evaluation_entries": 1,
+    "bootstrap_preflight_entries": 1,
+    "post_bootstrap_continuity_revalidation_entries": 2,
+    "post_bootstrap_dot_build_snapshot_entries": 1,
+    "controller_bottom_entries": 0,
+    "controller_full_invocations": 0,
+    "state_machine_constructor_entries": 0,
+    "journal_constructor_entries": 0,
+    "filesystem_creation_call_entries": 0,
+    "process_spawn_call_entries": 0,
+    "process_signal_call_entries": 0,
+    "swiftpm_spawn_entries": 0,
+    "product_execution_entries": 0,
+    "python_entries": 0
+  },
+  "language_and_fd_policy": {
+    "python": "FORBIDDEN",
+    "python_entries": 0,
+    "ruby_fd3_through_fd7_pipe_deviation": "CATALOGED_UNSUITABLE_AS_SWIFT_FD_DOMAIN_PROXY",
+    "ruby_inherited_fd_census_in_this_harness": false,
+    "swift_fd_domain_inference_from_this_harness": false,
+    "eventual_swift_spawn_close_others_frozen": true,
+    "native_swift_fd_domain_remains_separate": true
+  },
+  "independent_reviews": [
+    {
+      "scope": "IDENTITY_MARKER_COLLISION_DESCRIPTOR_AND_ABSENCE_AUDIT",
+      "harness_sha256": "634f40ff5b6c074719cbdf4e5f15df52abec9f8e6ff6a95ea2f9076c0036c81c",
+      "status": "GO"
+    },
+    {
+      "scope": "CALL_GRAPH_SCOPED_COUNTER_FAILURE_DIAGNOSTIC_AND_CANONICAL_OUTPUT_AUDIT",
+      "harness_sha256": "634f40ff5b6c074719cbdf4e5f15df52abec9f8e6ff6a95ea2f9076c0036c81c",
+      "status": "GO"
+    },
+    {
+      "scope": "APPLE_RUBY_LIBPROC_MAPPED_IMAGE_FD_POLICY_AND_DYNAMIC_ADMISSION_AUDIT",
+      "harness_sha256": "634f40ff5b6c074719cbdf4e5f15df52abec9f8e6ff6a95ea2f9076c0036c81c",
+      "status": "GO"
+    }
+  ],
+  "review_operation_deviation": {
+    "candidate_affected": "SUPERSEDED_8cf3aadd_CANDIDATE_ONLY",
+    "temporary_paths": [
+      "/tmp/c2_harness_defs.txt",
+      "/tmp/c2_controller_defs.txt"
+    ],
+    "temporary_file_creations": 2,
+    "temporary_file_unlinks": 2,
+    "workspace_mutations": 0,
+    "git_mutations": 0,
+    "source_evaluations": 0,
+    "effect_on_final_harness_bytes": "NONE",
+    "reinterpretation": false
+  },
+  "output_namespaces_at_freeze": {
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1": "ABSENT"
+  },
+  "dynamic_hard_stops": [
+    "HARNESS_IDENTITY_DRIFT",
+    "CONTROLLER_SOURCE_IDENTITY_OR_PREFIX_BOUNDARY_DRIFT",
+    "ENV_ARGV_CWD_CREDENTIAL_OR_GROUP_DRIFT",
+    "PINNED_SOURCE_TOOL_SDK_RESOURCE_OR_DIRECTORY_DRIFT",
+    "LIVE_RETIRED_GENERATION_PRESENT_OR_UNKNOWN",
+    "CONTROLLER_PROCESS_OR_MAPPED_RUBY_JOIN_FAILURE",
+    "DOT_BUILD_CAP_OR_PRE_POST_SNAPSHOT_DRIFT",
+    "ANY_FROZEN_OUTPUT_NAMESPACE_PRESENT",
+    "ANY_DESCRIPTOR_CLOSE_ERROR",
+    "ANY_CONTROLLER_BOTTOM_SPAWN_SIGNAL_CREATION_SWIFTPM_PRODUCT_OR_PYTHON_ENTRY"
+  ],
+  "named_residuals": [
+    "PRE_EXEC_NAMED_PATH_HASH_CHECK_TO_RUBY_SCRIPT_OPEN_RACE_EXISTS_BUT_THIS_HARNESS_HAS_NO_ACTUATION_AUTHORITY",
+    "HARNESS_HOLDS_AND_REJOINS_CONTROLLER_SOURCE_BUT_DOES_NOT_SELF_HASH",
+    "RUBY_INHERITED_FD_DOMAIN_IS_NOT_CENSUSED_AND_MAY_NOT_BE_USED_AS_SWIFT_FD_EVIDENCE",
+    "TMP_RECEIPT_IS_HELD_AFTER_BOOTSTRAP_WITHOUT_A_SEPARATE_FINAL_NAMED_REJOIN_AND_IS_NOT_USED_FOR_ACTUATION",
+    "TREE_SNAPSHOT_IS_PRE_POST_NOT_A_LIVE_DESCENDANT_WATCH"
+  ],
+  "operations_at_freeze": {
+    "exact_harness_entries": 0,
+    "source_prefix_evaluations": 0,
+    "bootstrap_preflight_entries": 0,
+    "controller_bottom_entries": 0,
+    "controller_full_invocations": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "output_roots_created": 0,
+    "signals": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_record": false,
+    "build_authorized_by_this_record": false,
+    "prefix_harness_entry_frozen_by_this_record": true
+  },
+  "next": {
+    "step": "VERIFY_THIS_READINESS_COMMIT_AND_EXACT_HARNESS_IDENTITY_THEN_ENTER_THE_HARNESS_ONCE",
+    "on_exact_exit_zero": "RETAIN_EXACT_STDOUT_AND_STDERR_IDENTITIES_AND_COMMIT_A_NONCONSUMING_PREFIX_RESULT",
+    "on_nonzero": "RETAIN_FAILURE_BYTES_AND_FREEZE_ANY_SUCCESSOR_CORRECTION_BEFORE_REENTRY",
+    "controller_consumption_after_harness": false
+  },
+  "artifact_addressing": "THIS_READINESS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

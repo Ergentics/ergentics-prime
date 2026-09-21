@@ -1,0 +1,69 @@
+--- Original/MetalFieldEvaluator.swift
++++ MetalFieldEvaluator.swift
+@@ -15,6 +15,23 @@
+ public final class MetalFieldEvaluator {
+ 
+     public static let maxNodeCount = 64
++    public static let maxPointCount = 4096
++    public private(set) var submittedDispatchCount = 0
++    public private(set) var lastCommandBufferStatus: Int?
++    public private(set) var lastCommandBufferError: String?
++    public var deviceName: String { device.name }
++    public var deviceRegistryID: UInt64 { device.registryID }
++    public var deviceHasUnifiedMemory: Bool { device.hasUnifiedMemory }
++
++    public static func inputsValid(points: [SIMD2<Double>], nodes: [GPUNode], sigma: Double) -> Bool {
++        guard !points.isEmpty, points.count <= maxPointCount,
++              !nodes.isEmpty, nodes.count <= maxNodeCount,
++              sigma.isFinite, sigma > 0,
++              points.allSatisfy({ $0.x.isFinite && $0.y.isFinite && Float($0.x).isFinite && Float($0.y).isFinite }),
++              nodes.allSatisfy({ $0.pos.x.isFinite && $0.pos.y.isFinite && $0.weight.isFinite && $0.pad == 0 }) else { return false }
++        let sf = Float(sigma), s2 = sf * sf
++        return sf.isFinite && sf > 0 && s2.isFinite && s2 > 0 && (2 * s2).isFinite && (1 / s2).isFinite
++    }
+ 
+     public struct GPUNode {
+         public var pos: SIMD2<Float>
+@@ -32,7 +49,9 @@
+     private let pipeline: MTLComputePipelineState
+ 
+     public init?() {
+-        guard let dev = MTLCreateSystemDefaultDevice(),
++        guard MemoryLayout<GPUNode>.stride == 16,
++              MemoryLayout<SIMD2<Float>>.stride == 8,
++              let dev = MTLCreateSystemDefaultDevice(),
+               let q = dev.makeCommandQueue() else { return nil }
+         do {
+             let lib = try dev.makeLibrary(source: Self.shaderSource, options: nil)
+@@ -49,8 +68,7 @@
+     public func evaluate(points: [SIMD2<Double>],
+                          nodes: [GPUNode],
+                          sigma: Double) -> Evaluation? {
+-        guard !points.isEmpty, !nodes.isEmpty, nodes.count <= Self.maxNodeCount,
+-              sigma > 0, sigma.isFinite else { return nil }
++        guard Self.inputsValid(points: points, nodes: nodes, sigma: sigma) else { return nil }
+ 
+         let ptF = points.map { SIMD2(Float($0.x), Float($0.y)) }
+         var nodeCount = UInt32(nodes.count)
+@@ -95,8 +113,12 @@
+             }
+         }
+ #endif
++        submittedDispatchCount += 1
+         cb.commit()
+         cb.waitUntilCompleted()
++        lastCommandBufferStatus = Int(cb.status.rawValue)
++        lastCommandBufferError = cb.error.map(String.init(describing:))
++        guard cb.status == .completed, cb.error == nil else { return nil }
+ 
+         let vPtr = vBuf.contents().bindMemory(to: Float.self, capacity: points.count)
+         let gPtr = gBuf.contents().bindMemory(to: SIMD2<Float>.self, capacity: points.count)
+@@ -108,6 +130,8 @@
+             vOut.append(Double(vPtr[i]))
+             gOut.append(SIMD2(Double(gPtr[i].x), Double(gPtr[i].y)))
+         }
++        guard vOut.allSatisfy({ $0.isFinite }),
++              gOut.allSatisfy({ $0.x.isFinite && $0.y.isFinite }) else { return nil }
+         return Evaluation(v: vOut, grad: gOut)
+     }
+ 

@@ -1,0 +1,109 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_capability_mint": "ABSENT",
+    "projection_persisted": false
+  },
+  "checkpoint": "H4-A_PRE_PERSISTENCE_PRIVACY_CONTRACT",
+  "environment": {
+    "architecture": "arm64",
+    "macos_build": "25F84",
+    "macos_version": "26.5.2",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "nonclaims": [
+    "This checkpoint does not complete or enter H4.",
+    "This checkpoint does not close Gate E or mint scientific authority.",
+    "The source origin is H3_STRUCTURAL_FIXTURE with CONTRACT_ONLY disposition; it is not verified-live H3 provenance.",
+    "Graph, Merkle, JSON, CBOR, SQLite, reopen verification, and durable fault injection are not executed here.",
+    "No VM, process, file, SQLite, network, UI, wall-clock, or persistence action is performed by the H4-A state machine.",
+    "A future production mint requires an unforgeable one-use H3 handoff and destination-specific coordinator operations."
+  ],
+  "predicates": [
+    {
+      "id": "closed_typed_source_domain_separated_and_bound",
+      "result": "PASS"
+    },
+    {
+      "id": "request_and_source_collections_bounded_before_canonicalization_or_hash",
+      "result": "PASS"
+    },
+    {
+      "id": "five_destination_scopes_independently_exact_and_recipient_joined",
+      "result": "PASS"
+    },
+    {
+      "id": "global_reject_deauthorizes_every_destination",
+      "result": "PASS"
+    },
+    {
+      "id": "release_and_internal_projection_types_independent",
+      "result": "PASS"
+    },
+    {
+      "id": "coordinator_members_inaccessible_to_normal_app_builds",
+      "result": "PASS"
+    },
+    {
+      "id": "raw_diagnostic_default_denied_and_noninterfering",
+      "result": "PASS"
+    },
+    {
+      "id": "one_winner_replay_reject_and_failure_poison",
+      "result": "PASS"
+    },
+    {
+      "id": "test_only_mint_symbols_absent_from_debug_and_release_apps",
+      "result": "PASS"
+    }
+  ],
+  "predecessor": {
+    "commit": "01322dd6b13eec2bfe7df030f34fd7fffe9f10eb",
+    "tree": "14b5949ac372244a51d9a6b1482185a0d21407d7"
+  },
+  "result": "PASS_H4A_PRE_PERSISTENCE_CONTRACT_ONLY",
+  "schema": "com.ergentics.provenance.hypervisor.h4a-checkpoint.v1",
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "d7ed0e18b2339158a2bfddc58e69d76d88731cfc118c53a0e70a5f66234b6287"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "sha256": "d1829409fc68f4ec297125ce784e220902780c7ac2f34fa9f3f379a055586659"
+    },
+    {
+      "path": "Tests/HypervisorStageH4PrivacyTests.swift",
+      "sha256": "5bbd6486fc19caa0c459f064a3ca031522fc67bfc309a554c27a098c4865c55d"
+    }
+  ],
+  "verification": {
+    "app_builds": {
+      "debug": "PASS",
+      "release": "PASS"
+    },
+    "focused_h4a_tests": {
+      "failed": 0,
+      "passed": 22,
+      "skipped": 0
+    },
+    "full_debug_tests": {
+      "failed": 0,
+      "passed": 584,
+      "skipped": 0
+    },
+    "full_release_tests": {
+      "failed": 0,
+      "passed": 537,
+      "skipped": 0
+    },
+    "project_file_lint": "PASS",
+    "strict_swift_typecheck": {
+      "production": "PASS",
+      "test_conditioned": "PASS"
+    }
+  }
+}

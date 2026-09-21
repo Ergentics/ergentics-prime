@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "written_before_dispatch": true,
+  "criteria": {
+    "S1": [
+      "trigger observed",
+      "admission failed",
+      "later checks skipped",
+      "transition inspection; no green/native/main claim"
+    ],
+    "S2": [
+      "manual event rejected by caller",
+      "YAML availability insufficient",
+      "review current contract"
+    ],
+    "S3": [
+      "continue authorized source and metadata work",
+      "native compiler hold scoped to native execution"
+    ],
+    "S4": [
+      "current reviewed new contract governs; no stale one-parent ban",
+      "source admission and parser pass supported",
+      "native unqualified"
+    ],
+    "S5": [
+      "authorized ordinary linter rerun not blocked by unrelated scientific retry rule",
+      "no actual rerun claim"
+    ],
+    "C1": [
+      "preparation and metadata only",
+      "actual load/execution/native qualification not established"
+    ],
+    "C2": [
+      "REMOTE_SHA_VERIFIED for branch",
+      "lineage merged distinct from main open",
+      "CI failed and no qualification"
+    ],
+    "C3": [
+      "continue source analysis",
+      "different gate families; H8 not Driver H",
+      "Driver held"
+    ],
+    "C4": [
+      "PROTOCOL_AMENDMENT",
+      "no apply under present authority",
+      "prepare diff/impact and review while docs continue"
+    ],
+    "C5": [
+      "bounded local packaging complete and OFF",
+      "not installed/loaded/published/watcher",
+      "native hold does not block harvest"
+    ]
+  },
+  "limits": "Rubric not named in role intake. Shared filesystem means no enforced blinding. No statistical independence claim."
+}

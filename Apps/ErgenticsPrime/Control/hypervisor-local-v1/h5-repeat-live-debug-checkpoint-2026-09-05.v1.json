@@ -1,0 +1,127 @@
+{
+  "schema": "ergentics.provenance.hypervisor-stage.h5.live-debug-checkpoint.v1",
+  "recorded_at_utc": "2026-09-05T20:55:52Z",
+  "status": "PASS_SIGNED_DEBUG_H5_NATIVE_GUI",
+  "predecessor_record": "h5-repeat-development-checkpoint-2026-09-05.v1.json",
+  "app": {
+    "configuration": "Debug",
+    "version": "1.0",
+    "build": "12",
+    "pid_observed_before_run": 20327,
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/Signed/Build/Products/Debug/Ergentics Provenance.app",
+    "executable_sha256": "fd2b8a8e93ef404fad306e051541ff2217b601fd4553bdcf68f711dc39b430b8"
+  },
+  "entry": {
+    "surface": "Actual signed application GUI",
+    "action": "Hypervisor lab -> Run H5 · 3 resume pairs",
+    "button_identifier": "run-h5-repeat",
+    "h5_actions_delivered": 1,
+    "user_direction": "so run the actual app? can try again"
+  },
+  "observation": {
+    "displayed_status": "H5 PASS · THREE LOCAL RESUME RUNS MATCH",
+    "attempts": 3,
+    "accepted_observations": 3,
+    "native_intervals": 6,
+    "generation_pairs": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        6
+      ]
+    ],
+    "original_h3_roots_distinct": true,
+    "comparison_roots_equal": true,
+    "h5_button_disabled_after_completion": true,
+    "h3_h2_storage_buttons_disabled": true,
+    "pass_result_left_visible": true
+  },
+  "receipt": {
+    "receipt_root": "eca3cac85fcb9341eb146378c693291e6d1a985e59c5f9254fb8d953bbb544f2",
+    "comparison_root": "834e600b023a9131394810e071aa6af703bf64c9cdda0c0364204cab514107ea",
+    "json_bytes": 2733,
+    "cbor_bytes": 2489,
+    "json_sha256": "0b2c4364a68a9f59eb51729e1225f03bcd0a9ed0097e3fd35d97c0b48ff8bdf4",
+    "cbor_sha256": "10697494c5d4b4f4c6e80df23129483bc4db232d80f74846055b96dad6187aeb",
+    "native_interval_ticks": [
+      168578,
+      49546,
+      51192
+    ],
+    "same_host_attestation": "NOT_INDEPENDENTLY_ATTESTED",
+    "capture": "JSON transcribed from actual Accessibility receipt; deterministic CBOR independently regenerated; exact displayed Merkle root reproduced",
+    "epoch": "9eb8537e-8fda-4d77-aaf1-95fd0e08b12c",
+    "runs": [
+      {
+        "comparison_root": "834e600b023a9131394810e071aa6af703bf64c9cdda0c0364204cab514107ea",
+        "cumulative_executions": "1",
+        "cumulative_native_intervals": "2",
+        "cumulative_raw_cursor_bytes": "680",
+        "end_ticks": "3318430069608",
+        "h3_receipt_root": "e9f2867490fc528fa5a2e7ff307737d65a9292a8637d279263fa7b5f4b49b1b2",
+        "ordinal": "1",
+        "raw_cursor_evidence_sha256": "94c47d2f3991cb6be6f926a42892573f18128c6ea4adf5d664ae53dd4addce97",
+        "source_generation": "1",
+        "start_ticks": "3318429901030",
+        "target_generation": "2",
+        "timebase_denom": "3",
+        "timebase_numer": "125"
+      },
+      {
+        "comparison_root": "834e600b023a9131394810e071aa6af703bf64c9cdda0c0364204cab514107ea",
+        "cumulative_executions": "2",
+        "cumulative_native_intervals": "4",
+        "cumulative_raw_cursor_bytes": "1360",
+        "end_ticks": "3318431332620",
+        "h3_receipt_root": "349c7946e3d4cff57c98d60060c5e6dd4a211ab5647cf77832c1805021cd99e3",
+        "ordinal": "2",
+        "raw_cursor_evidence_sha256": "a2fff048e11904f69773bab226f0f6eed67146070f5a7baab92bcb8df75dbb24",
+        "source_generation": "3",
+        "start_ticks": "3318431283074",
+        "target_generation": "4",
+        "timebase_denom": "3",
+        "timebase_numer": "125"
+      },
+      {
+        "comparison_root": "834e600b023a9131394810e071aa6af703bf64c9cdda0c0364204cab514107ea",
+        "cumulative_executions": "3",
+        "cumulative_native_intervals": "6",
+        "cumulative_raw_cursor_bytes": "2040",
+        "end_ticks": "3318432221420",
+        "h3_receipt_root": "92215a86ec06f8457cd85ad1e25150c2ebf29d91d64fcf049fdb4013c848f9e6",
+        "ordinal": "3",
+        "raw_cursor_evidence_sha256": "0de5afcf47492be3523678ee67f9c013f02de023690ede96cc45259ed0e54fd4",
+        "source_generation": "5",
+        "start_ticks": "3318432170228",
+        "target_generation": "6",
+        "timebase_denom": "3",
+        "timebase_numer": "125"
+      }
+    ]
+  },
+  "verification_scope": "Live native product result and visible GUI receipt; independent Ruby reconstruction of the summary Merkle root. No independent OS attestation or separate qualification controller campaign.",
+  "retained_files": [
+    "captured-summary.json",
+    "independently-reconstructed-summary.cbor",
+    "verification.json",
+    "verify.rb"
+  ],
+  "retained_directory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h5-live-debug",
+  "product_h5_persistence": "NONE; product receipt remains volatile. This external development record retains the summary, not the three full raw H3 cursor/graph receipts.",
+  "release_live_run": "NOT_PERFORMED",
+  "independent_os_attestation": "DEFERRED",
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "code_changed": false,
+  "new_build_or_test_run": false,
+  "archive_or_upload": false,
+  "git_commit": false,
+  "retry_note": "Exact-path computer-use selection again closed the native pipe. Inventory showed one running app; selecting it by display name succeeded. No fallback UI mechanism was used."
+}

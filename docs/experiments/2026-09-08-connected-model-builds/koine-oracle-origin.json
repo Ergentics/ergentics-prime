@@ -1,0 +1,141 @@
+{
+  "schema": "ergentics.koine-origin-review.v1",
+  "review_date": "2026-09-08",
+  "mode": "read_only_no_model_run",
+  "conclusion": "The local Driver R19 Koine oracle is a proposed offline pure relation/hash checker, explicitly designed but unimplemented and uninvoked. It is not a saved learned model, an imported oracle package, or an identified MasteryKit implementation. The separate Koine Greek corpus is a placeholder, not this oracle.",
+  "earliest_driver_mention_verified": {
+    "commit": "c3b155f648b6abcaca734eb34d6a38837d150571",
+    "date": "2026-08-24",
+    "subject": "docs: freeze R19 coordinated disposal predecessor",
+    "source": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-DURABLE-PHASE-CONTROL-2026-08-22.md",
+    "lines": [
+      14495,
+      14504
+    ],
+    "zero_count_lines": [
+      14551,
+      14553
+    ],
+    "scope": "Earliest matching commit in git log -S Koine for the current Driver control and postmortem files; not a claim about every repository or external history."
+  },
+  "postmortem_introduction": {
+    "commit": "b40a8d572585aa1e4c348ae17ed442c9362c4f0b",
+    "date": "2026-08-26",
+    "subject": "Record R19 C2 Koine synthesis postmortem"
+  },
+  "implementation_and_binding": {
+    "canonical_status": "DESIGNED_UNIMPLEMENTED_UNINVOKED",
+    "canonical_mode": "PURE_NO_IO_NO_PROCESS_NO_AUTHORITY",
+    "implementation_count": 0,
+    "live_observer_count": 0,
+    "live_actuation_count": 0,
+    "proposed_input": "One canonical JSON value containing immutable witness bytes, content-addressed state/transition/witness nodes, expected hashes, baseline and successor models, predicates and commitment chain.",
+    "proposed_output": [
+      "MODEL_CONSISTENT",
+      "MODEL_INCONSISTENT",
+      "ABSTAIN_UNKNOWN"
+    ],
+    "predicate_count": 15,
+    "role": "Offline differential report after Swift has finished process conservation and durably published its immutable trace. Would perform deterministic finite predicate/hash checks, without live I/O, process access or authority.",
+    "weights_tokenizer_training_data_or_external_retrieval_binding_found": false,
+    "active_candidate_app_binding_found": false,
+    "binding_search_note": "No Koine text matches in the inspected app Sources or current Tools/PrimeExperiments source files. R matches in retained docs/artifacts describe the proposal; no implementation found in R Sources, Tests or docs/tools."
+  },
+  "separate_greek_corpus": {
+    "source": "/Users/ergentics/ergentics-llm/docs/CORPUS-GOSPELS-GRC.md",
+    "lines": [
+      1,
+      5
+    ],
+    "status": "TBD placeholder",
+    "last_change_commit": "ba451930511422e0887fdeb03c6a352a979ccc9b",
+    "date": "2026-08-04",
+    "subject": "Phase 3–4b: native tiny decoder, lab tokenizer pipeline, Prime Native loader.",
+    "scaffolder": "/Users/ergentics/ergentics-llm/scripts/prime-corpus-init-gospels-grc.sh",
+    "corpus_folder": "/Users/ergentics/ergentics-mlx-lab/corpus/grc/L1",
+    "corpus_folder_exists": false,
+    "meaning": "Proposed four Gospel text files and provenance metadata supplied by the user; repository does not ship the Greek text. No local grc/L1 corpus directory or grc/koine tokenizer artifact found in the inspected lab paths.",
+    "same_as_driver_oracle": false
+  },
+  "sources": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/R19-OBS11-C2-KOINE-SYNTHESIS-DELTA-POSTMORTEM-2026-08-26.md",
+      "sha256": "ec7e89e8a782ad9fe9f52af9c9887d17b4878894086fb3f23425ee04ee2995a5",
+      "key_lines": {
+        "unimplemented": 53,
+        "design_choices": [
+          89,
+          90
+        ],
+        "contract": [
+          92,
+          100
+        ]
+      }
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-koine-synthesis-delta-postmortem.v1.json",
+      "sha256": "ac9f44203101c6168042ccf2d69b7dfc1dc72892ed453e12107df8c097daeec5",
+      "keys": [
+        "koine_oracle_contract.status",
+        "koine_oracle_contract.mode",
+        "authority.koine_offline_oracle_implementations",
+        "koine_oracle_contract.finite_predicates"
+      ]
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/PRIME-SWIFT-VALIDATION-DRIVER-V2-DURABLE-PHASE-CONTROL-2026-08-22.md",
+      "sha256": "77b7235a07c02b678cb40ccbc9ec48d70170403cf254f988fa6c102f950d13ab",
+      "key_lines": {
+        "origin": [
+          14495,
+          14504
+        ],
+        "counts": [
+          14551,
+          14553
+        ]
+      }
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm/docs/CORPUS-GOSPELS-GRC.md",
+      "sha256": "cf91473613bb89be0a1e6d6376bc8c26947faaa5d52f028992d77fb3f4b4f735",
+      "key_lines": {
+        "placeholder": 3
+      }
+    }
+  ],
+  "search_scope": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+      "head": "671c110b283ecac5f7db1c001a73fc1d20f8ac92",
+      "sparse_checkout": false
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm",
+      "head": "e827595b485cd95519cc7e5ece6178fa67cc5677",
+      "sparse_checkout": false
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab",
+      "head": null,
+      "sparse_checkout": false
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics",
+      "head": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+      "sparse_checkout": false
+    },
+    {
+      "path": "/Users/ergentics/MasteryKit",
+      "head": "bf059b96692dc0123a161ac2bdd1f1adef2f0899",
+      "sparse_checkout": false
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-sources/ergentics-logic",
+      "head": "97be84b2790b79ce79558d6bade846a532226540",
+      "sparse_checkout": true
+    }
+  ],
+  "search_boundaries": "Bounded case-insensitive Koine/koiné/κοινή search of relevant source, docs and structured manifests; no model weights loaded, no GPU, no private user/session data, no upstream edits. Absence claims apply to inspected paths only. No external origin, citation, imported implementation or etymology for the Driver name was established."
+}

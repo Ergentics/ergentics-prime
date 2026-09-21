@@ -1,0 +1,127 @@
+{
+  "schema": "prime_ur_gpu_route_review_v1",
+  "date": "2026-09-08",
+  "mode": "bounded_read_only_source_audit",
+  "repository": "/Users/ergentics/ur-app",
+  "head": "838e00a013969ba92715b5c3044c540336786486",
+  "dependency": {
+    "repository": "/Users/ergentics/MasteryKit",
+    "head": "bf059b96692dc0123a161ac2bdd1f1adef2f0899",
+    "role": "Only package dependency in Ur Package.swift; tutor seam, not rendering backend"
+  },
+  "originalWorkingTreeStatus": [
+    "M app/Ur.xcodeproj/project.pbxproj",
+    "?? mockups/Codex-Design/"
+  ],
+  "finding": "Ur does not provide a reusable Metal compute, virtual-GPU or Hypervisor/paravirtualization implementation. URRenderKit is an actual CPU Core Graphics/vImage renderer; the iOS RealityKit scene delegates rendering to Apple and exposes no Prime compute or vGPU interface.",
+  "implementedRoutes": [
+    {
+      "name": "URRenderKit headless board",
+      "entrypoint": "CGContextRasterizer.render(_:size:scale:phase:)",
+      "path": "Sources/URRenderKit/CGContextRasterizer.swift",
+      "lines": "67-92,190-218",
+      "implementation": "Allocates a bitmap CGContext, invokes BoardPainter through CGTarget, and blurs with Accelerate vImageBoxConvolve_ARGB8888 CPU buffers. This is a primary CPU route, not a GPU failure fallback.",
+      "outputs": "BoardRender.cgImage(), pngData(), packed rgbaBytes()",
+      "cli": "swift run URRender --board-cg /absolute/output.png",
+      "cliSource": "Sources/URRender/main.swift:103-117,183-190"
+    },
+    {
+      "name": "SwiftUI board",
+      "entrypoint": "BoardCanvas.body",
+      "path": "Sources/UrUI/UrBoardView.swift",
+      "lines": "49-67",
+      "implementation": "Shared BoardPainter through GraphicsContextTarget into SwiftUI Canvas. No repository-owned Metal shader, MTLDevice, command queue or explicit GPU completion."
+    },
+    {
+      "name": "RealityKit board",
+      "entrypoint": "RealityBoardView.body",
+      "path": "Sources/UrUI/RealityBoardView.swift",
+      "lines": "18-57,89-171,344-350",
+      "implementation": "iOS-only RealityView using authored USDZ entities, virtual scene camera, lights and gestures. Non-iOS implementation is Color.black. The virtual camera is unrelated to a virtual GPU.",
+      "limits": "No exported compute buffers, shader dispatch, guest device driver or host/guest GPU transport."
+    },
+    {
+      "name": "Chrome snapshots",
+      "entrypoint": "ImageRendererBackend.png / HostingViewBackend.png",
+      "path": "Sources/UrUI/SceneRasterizer.swift",
+      "lines": "77-139",
+      "implementation": "SwiftUI ImageRenderer default; explicit --backend=hosting uses NSHostingView.cacheDisplay into NSBitmapImageRep. Alternative UI rasterization capability, not GPU virtualization."
+    }
+  ],
+  "reusableCode": [
+    {
+      "path": "Sources/URRenderKit/PaintTarget.swift",
+      "line": 55,
+      "use": "Backend-independent semantic paint protocol; a new Metal backend could implement it, but none is present."
+    },
+    {
+      "path": "Sources/URRenderKit/BoardPainter.swift",
+      "line": 17,
+      "use": "Pure state/size/phase to drawing commands; actual reusable scene definition."
+    },
+    {
+      "path": "Sources/URRenderKit/CGContextRasterizer.swift",
+      "line": 43,
+      "use": "Packed RGBA bytes for a deterministic CPU reference."
+    },
+    {
+      "path": "Sources/URRenderKit/PixelKit.swift",
+      "line": 17,
+      "use": "Pixel hashing and sampling for parity review."
+    }
+  ],
+  "testsAndRetainedEvidence": [
+    {
+      "path": "Tests/URRenderKitTests/URRenderSettleTests.swift",
+      "claim": "R1 deterministic buffers, R3 fit, R4 state pixels, R5 color law, R6 clock-independent canonical phase. Present source; not run in this audit."
+    },
+    {
+      "path": "Tests/UrUITests/URRenderParityTests.swift",
+      "claim": "R2 CG versus ImageRenderer spatial-confinement assertions. Tight region max <=3/255, fewer than0.1% over2/255, soft MAE<6, whole frame MAE<1. Source assertions are not a new execution receipt."
+    },
+    {
+      "commit": "e839809b91f146dcda92af9afd401b501d06a997",
+      "claim": "Historical July7 commit records whole-frame MAE0.69/255 for CG versus ImageRenderer. Retained commit report; no raw numerical receipt discovered in the narrowly inspected render evidence files."
+    },
+    {
+      "path": "mockups/URRenderKit/PLAN-URRenderKit-harness.md",
+      "line": 120,
+      "claim": "Recorded July8 stable macOS15.7.7/Xcode26.3 render success for both backends, GitHub run28924042371; beta crash classified beta-only. Local retained accounting, remote run not fetched."
+    }
+  ],
+  "negativeSearchScope": {
+    "ur": [
+      "Sources",
+      "Tests",
+      "Scripts",
+      "Package.swift",
+      "README.md",
+      "LOCAL-SETUP.md",
+      "agent-harvest.md",
+      ".github",
+      "docs",
+      "mockups/URRenderKit"
+    ],
+    "directDependency": [
+      "MasteryKit/Sources",
+      "MasteryKit/Package.swift"
+    ],
+    "patterns": [
+      "Metal/MetalKit imports",
+      ".metal files",
+      "MTLCreate/MTLDevice/MTLCommand",
+      "GPU/vGPU",
+      "Hypervisor",
+      "paravirtualization",
+      "VZVirtual"
+    ],
+    "result": "No repository-owned Metal compute, Hypervisor or virtual-GPU implementation found. UI text and RealityKit virtual camera were inspected rather than counted as device capability."
+  },
+  "recommendedBoundary": "Use existing Prime host-Metal/guest-feedback machinery for an actual compute-route measurement. Ur contributes a deterministic visual CPU reference and scene adapter if a future graphics experiment is wanted; adding or measuring a real virtual GPU requires additional implementation outside the found Ur code.",
+  "noBuilds": true,
+  "noInference": true,
+  "noGPUExecution": true,
+  "noOriginalEdits": true,
+  "noNetwork": true,
+  "sourceBindings": "SOURCE-BINDINGS.json"
+}

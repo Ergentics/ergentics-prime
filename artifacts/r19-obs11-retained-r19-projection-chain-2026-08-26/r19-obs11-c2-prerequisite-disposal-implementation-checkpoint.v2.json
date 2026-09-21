@@ -1,0 +1,94 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-implementation-checkpoint-v2",
+  "status": "STATIC_PASS_BUILD_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "control_freeze": {
+    "commit": "d7ecc1dab5d9bd8e2d7ae2354de10292113dd0f8",
+    "tree": "3bc7b2840a1eb11806ed83be0d3c56e421ab4c4f",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v2.json",
+    "bytes": 12111,
+    "lf_count": 258,
+    "sha256": "71a5e61d38b9e20e7d2c907376f63dd1b92c9ce9d6fe5b9408c54dfdcf7ce656"
+  },
+  "implementation": {
+    "commit": "32763b1b95b3f1d8f14c93808bc5ca057bd76541",
+    "tree": "a2ae278e18188f3c0a3bfe4cb54c0c461714d45d",
+    "sources": [
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+        "bytes": 101734,
+        "lf_count": 2180,
+        "sha256": "e70b4d6be5d0e955f484dc93b4e4737ded1d5125a8f98110ca6d64312f83cc21",
+        "git_blob": "a8aec3b0caeb421a3ccbc4635c436e3488379e8c"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+        "bytes": 22971,
+        "lf_count": 799,
+        "sha256": "5368779889c0be3c834d6b25133f86be1cb401690b1feef474d67d713d06fad0",
+        "git_blob": "f40a4cb262f1685943d5608b1ed6266e9638ce17"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+        "bytes": 5187,
+        "lf_count": 209,
+        "sha256": "188a21ecae2ccc8b95e86d61891a9eb753806a8214526e75cf1c7a3982feb3cd",
+        "git_blob": "92eb605ed7a708d7c36fabf2dcaa599a1e58e649"
+      }
+    ]
+  },
+  "static_review_convergence": [
+    {
+      "scope": "SWIFT_TYPE_ABI_AND_STATE_ORDER",
+      "result": "PASS_NO_EXACT_STATIC_BLOCKER"
+    },
+    {
+      "scope": "JOURNAL_POWER_LOSS_LATTICE_AND_POST_SIGNAL_CONSERVATION",
+      "result": "PASS_NO_FREEZE_SOURCE_MISMATCH"
+    },
+    {
+      "scope": "SELF_TARGET_IMAGE_AND_PROCESS_IDENTITY",
+      "result": "PASS_UNDER_EXPLICIT_TRUSTED_OUTER_AND_NO_CONCURRENT_SAME_EUID_MUTATOR_BOUNDARY"
+    }
+  ],
+  "target_plan": {
+    "algorithm": "SHA256_DOMAIN_SEPARATED_U64BE_LENGTH_FRAMED_BINARY_MERKLE_V2",
+    "leaf_count": 3,
+    "root_sha256": "c2b5f0e4477bae767be6bc4d40e471eb47c90763d5838b29b5944c02403ff2c7"
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+    "swiftc_and_swift_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"
+  },
+  "frozen_residuals": [
+    "IRREDUCIBLE_PROCESS_ENTRY_TO_SYNCED_ROOT_SELF_PROOF_GAP",
+    "OUTER_AUTHENTICATED_READINESS_CHECK_TO_CHILD_FIXED_PATH_OPEN_SAME_EUID_SUBSTITUTION_RACE",
+    "WRITABLE_FIXTURE_CAN_MUTATE_AFTER_FINAL_REHASH_BEFORE_FIXED_CALL",
+    "NEGATIVE_PGID_MEMBERSHIP_CAN_CHANGE_AFTER_FINAL_ENUMERATION_BEFORE_FIXED_CALL",
+    "SNAPSHOT_GENERATION_TO_FIXED_NUMERIC_PID_OR_PGID_CALL_RACE"
+  ],
+  "namespace_admission": {
+    "build_a_root": "ABSENT",
+    "build_b_root": "ABSENT",
+    "journal_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "readiness_json": "ABSENT"
+  },
+  "operations": {
+    "compilers_entered": 0,
+    "build_roots_created": 0,
+    "binaries_executed": 0,
+    "journal_roots_created": 0,
+    "controller_invocations": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CONTROL_ONLY_CHECKPOINT_THEN_TWO_DISJOINT_BUILD_ONLY_COMPILES_NO_BINARY_EXECUTION"
+}

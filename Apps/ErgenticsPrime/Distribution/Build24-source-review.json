@@ -1,0 +1,183 @@
+{
+  "schema": "ergentics.native-app-source-review.v1",
+  "owner": "Ergentics, LLC",
+  "appBuild": "1.0 (24)",
+  "status": "SOURCE_REVIEWED_NATIVE_DELIVERY_PENDING",
+  "observedAt": "2026-09-21T19:35:24Z",
+  "sourceParent": "39fe11cfea0cf9d1ea59614c67bd22c960afa4a6",
+  "commitBinding": "The enclosing Git commit identifies this reviewed source selection; publication is verified separately.",
+  "changeClasses": [
+    "IMPLEMENTATION_FIX",
+    "PROVENANCE_FIX"
+  ],
+  "toolchain": {
+    "xcode": "27.0 (27A266a)",
+    "swift": "6.4",
+    "target": "arm64-apple-macosx26.0"
+  },
+  "tests": {
+    "result": "PASS",
+    "total": 20,
+    "failures": 0,
+    "suites": {
+      "ErgenticsAgentLibraryTests": 3,
+      "ErgenticsAgentTaskStoreTests": 5,
+      "ErgenticsAgentsModelTests": 8,
+      "PrimePromptTests": 4
+    },
+    "method": "Hostless XCTest via installed Xcode framework; synthetic lifecycle events and temporary storage, no model/helper dispatch.",
+    "logSHA256": "59ce9f96bae4b564fcfb173e9824702cfcf8e381fad5e05a40049e572910f3e1"
+  },
+  "sourceChecks": {
+    "status": "PASS",
+    "observedAt": "2026-09-21T19:34:21Z",
+    "appSwiftFilesParsed": 80,
+    "projectMembership": "exact original lists plus named additions",
+    "catalog": {
+      "sha256": "43f14b0a0a6c6b846563ceb0c078d09965e933e5293a38b8bf571b2b6b963f85",
+      "resources": 30,
+      "profiles": 2,
+      "lessons": 8
+    },
+    "rolePackets": {
+      "cpp": "cc735f7b16ca3bce4f35ca97b663b5028ddc739de3cb48237c74a510e2d11c42",
+      "swift": "31349a981182758cd1050b4c09d80371162e4f178afff3c24e1ca2703ed7cff9"
+    },
+    "preservedExcludedInputs": {
+      "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result-binding.e8aa9e68.v1.json": "66db52a349dfc1d32194d7f8b73c1e6d12e90f4c633b6c4f94b2568222527c31",
+      "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result.e8aa9e68.v1.json": "0904ac3d16a690017e462fcf63699a2324c3c8ad75f4e14d768daa1085ae28d8",
+      "Observability/ErgenticsProvenance/Sources/GuestStorage.swift": "9df9392e2a2a41bb45cdcdd1215abebd91facc2e93e28edfacd783c350800a28"
+    },
+    "unchangedControls": [
+      ".github/workflows/prime-active-root-quarantine.yml",
+      ".github/scripts/prime-ci-active-root-quarantine.sh",
+      "Apps/ErgenticsPrime/Entitlements.plist",
+      "Apps/ErgenticsPrime/Sources/PrimePromptModel.swift",
+      "Apps/ErgenticsPrime/Sources/PrimePromptBackend.swift",
+      "Apps/ErgenticsPrime/Sources/PrimeRuntimeBackend.swift"
+    ]
+  },
+  "preview": {
+    "result": "PARTIAL_SHARED_VIEW",
+    "renderer": "NSHostingView without a window",
+    "state": "synthetic empty task with real bundled catalog",
+    "pngSHA256": "2689f0c9bf0de9b600b791b2d8a7c05285eb5602006872382d3e83db94d9ca03",
+    "limits": [
+      "Native task List rows did not draw in the window-free preview.",
+      "No native chrome, hit-testing, keyboard interaction or installed app acceptance.",
+      "Earlier ImageRenderer output was an unsupported split-view placeholder, not an accepted preview."
+    ]
+  },
+  "spdx": {
+    "files": 306,
+    "byteIdenticalRepeatedGeneration": true,
+    "sha256": "566bb75b327cc7af21885f55dbf4ab367d25cf9bf78a2df041190d24bf61adcc"
+  },
+  "roles": {
+    "implementation": [
+      "ergentics_swift_c",
+      "ergentics_cpp"
+    ],
+    "review": "Root reconciled two hosted profile handoffs and a later read-only C/C++ profile review. Original observations and corrections remain in local evidence.",
+    "modelDiversity": "Requested labels/efforts are not verified serving-build identities."
+  },
+  "repairs": [
+    "Retain draft and avoid dispatch when saving input fails.",
+    "Pair each response with its request and observe only the owned run.",
+    "Stop after stream-persistence failure without recursive publisher cancellation.",
+    "Retain run ownership across app sidebar navigation.",
+    "Remember explicit recovery store on reopening; preserve original files.",
+    "Display readable conversations even when interrupted-state writeback exceeds storage bounds."
+  ],
+  "delivery": {
+    "xcodeScheme": "ErgenticsPrime",
+    "signedBuild": "NOT_COMPLETED",
+    "installation": "NOT_PERFORMED",
+    "modelExecution": "NOT_PERFORMED",
+    "observedBlockers": [
+      "Ordinary Xcode dependency-manifest evaluation: sandbox-exec sandbox_apply Operation not permitted.",
+      "Full source typecheck: SwiftUI SDK macro server sandbox failure.",
+      "Code-signing identity discovery: zero valid identities visible in this task environment."
+    ],
+    "constraints": "Signing, entitlements, native admission and experimental runner limits remain unchanged."
+  },
+  "repository": {
+    "workflow": ".github/workflows/prime-active-root-quarantine.yml",
+    "integrationPR": 139,
+    "plannedTrigger": "pull_request synchronize from verified lineage fast-forward",
+    "gate": "Existing V2 phase admission unresolved; no main merge or guard change."
+  },
+  "harvest": {
+    "backgroundCollector": false,
+    "automaticCorpusPromotion": false,
+    "priorAutoHarvestState": "OFF; 5/8 retained releases",
+    "newLessons": "Local post hoc candidates only; existing eight reviewed bundled entries unchanged."
+  },
+  "files": [
+    {
+      "path": "Sources/ErgenticsAgentLibrary.swift",
+      "bytes": 21611,
+      "sha256": "60b925a428c273bd246a62ab4c16b88df372ec5c35915d7a06969914efdf3da6"
+    },
+    {
+      "path": "Sources/ErgenticsAgentCatalogIdentity.swift",
+      "bytes": 212,
+      "sha256": "06ebb60c7f14092b0c9226f5e7354b5358a1e09380fb06f7cdf27af5a121936c"
+    },
+    {
+      "path": "Sources/ErgenticsAgentTaskStore.swift",
+      "bytes": 10114,
+      "sha256": "3068dbe750da7a77ab9074d4ace4fe990e94df7dfb48c1221ca2df54cbce12cd"
+    },
+    {
+      "path": "Sources/ErgenticsAgentsModel.swift",
+      "bytes": 16749,
+      "sha256": "ff425ced33760a86be131d1fc7d3701a754c5965c5451ab558c295598e4fb57e"
+    },
+    {
+      "path": "Sources/ErgenticsAgentsView.swift",
+      "bytes": 18223,
+      "sha256": "65c7b5c4f804d09a7b86f30a24aead4d16ad8bd5cdf8a58eb22b67749ec9084c"
+    },
+    {
+      "path": "Sources/ProvenanceView.swift",
+      "bytes": 21481,
+      "sha256": "6f784a1bd78f32ab19a6a9801f2f3a09dcea0f438311a5540eba6359ff46267a"
+    },
+    {
+      "path": "Tests/ErgenticsAgentLibraryTests.swift",
+      "bytes": 10117,
+      "sha256": "4cbf45fdf09d677fde6ac48a55e19da6f2aa013bfc33d078235165e6d4eb0a64"
+    },
+    {
+      "path": "Tests/ErgenticsAgentTaskStoreTests.swift",
+      "bytes": 3478,
+      "sha256": "cc047830e547e58a640cf96b1998ff4a439e419885c1c7f0f77286b06950db34"
+    },
+    {
+      "path": "Tests/ErgenticsAgentsModelTests.swift",
+      "bytes": 12179,
+      "sha256": "b42ef9a2e8acf7e0ca1bfc81476d60a263517c30890a861ffd405c937c75ec6e"
+    },
+    {
+      "path": "Tests/PrimePromptTests.swift",
+      "bytes": 7262,
+      "sha256": "86bbb13b98d8876194e1ad3a7a59a3b1476394a0d1274e230c6847cc64ee5515"
+    },
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "bytes": 102791,
+      "sha256": "b0fd197cd0dcfe5835a82f82546ec4b0d52fb963efd72b9b08333b7286042d48"
+    },
+    {
+      "path": "ERGENTICS.spdx.json",
+      "bytes": 281281,
+      "sha256": "566bb75b327cc7af21885f55dbf4ab367d25cf9bf78a2df041190d24bf61adcc"
+    },
+    {
+      "path": "NATIVE-AGENTS.md",
+      "bytes": 4245,
+      "sha256": "ff68db535fcb19952a8e32440f31cb7e4778ef06bf8973ed5e3ce740f57f6392"
+    }
+  ]
+}

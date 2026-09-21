@@ -1,0 +1,86 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-build-a-failure-v5",
+  "status": "BUILD_A_SWIFTC_INVOCATION_DEVIATION_FAILURE_CONSUMED_RETAINED_NO_EXECUTABLE_NO_REUSE",
+  "rank": "LOCAL_BUILD_MECHANICS_FAILURE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "predecessor": {
+    "control_freeze_commit": "e947ae9be8a4614a6bf79e34d7ff3ab9ad4379b3",
+    "implementation_commit": "c3ba073fe33fb6cb24ba6070c3889148bac72485",
+    "implementation_tree": "d1f133fea61c68e33acc7e8dd4bbf897229e968b",
+    "implementation_checkpoint_commit": "7e65192a37370bfdbaebbef141d37b34c6a7759f",
+    "implementation_checkpoint_tree": "b17fa9522f981f7157c797919b6f6a7726618432",
+    "implementation_checkpoint_sha256": "015bcc6d64c385f014d8273667aa8a7a89b454086b1976dab9bc8725730a19ba"
+  },
+  "invocation": {
+    "classification": "BUILD_ONLY_NO_BINARY_EXECUTION",
+    "build_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5",
+    "environment": "EXACT_ENV_I_DEVELOPER_DIR_LANG_LC_ALL_PATH_SDKROOT_TMPDIR_TZ_CF_ENCODING",
+    "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+    "umask": "0077",
+    "clang_entries": 1,
+    "swiftc_entries": 1,
+    "binary_entries": 0,
+    "signals_entered": 0,
+    "python_entries": 0
+  },
+  "clang_result": {
+    "exit": 0,
+    "captured_diagnostic_bytes": 0,
+    "object_path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5/ergentics-r19-c2-prerequisite-disposal-fixed.o",
+    "bytes": 17168,
+    "sha256": "a8d7daca4b2c4333f2261795b0f77156e40a9ff9415899ccac12d15a47361731",
+    "mode": "0600",
+    "uid": 501,
+    "gid": 0,
+    "device": 16777231,
+    "inode": 17954335,
+    "nlink": 1,
+    "flags": 0
+  },
+  "swiftc_result": {
+    "exit": 1,
+    "product": "ABSENT",
+    "captured_combined_diagnostic_bytes": 373,
+    "captured_combined_diagnostic_sha256": "76b8122686e4229e401d62e33ef304293d96cc3cb9cfdb15d54c253b28a06c48",
+    "error": {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+      "line": 2197,
+      "column": 1,
+      "message": "statements are not allowed at the top level"
+    },
+    "causal_flag": "-parse-as-library",
+    "diagnosis": "OUTER_BUILD_INVOCATION_DEVIATION_CONTRADICTED_THE_FROZEN_TOP_LEVEL_EXECUTABLE_AND_PRIOR_SUCCESSFUL_NO_PARSE_AS_LIBRARY_CONFIGURATION",
+    "source_defect": false
+  },
+  "retained_root": {
+    "path": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b672534-v5",
+    "mode": "0700",
+    "uid": 501,
+    "gid": 0,
+    "device": 16777231,
+    "inode": 17954332,
+    "nlink": 5,
+    "flags": 0,
+    "regular_file_count": 69,
+    "directory_count": 5,
+    "allocated_kibibytes": 37692,
+    "retention": "PERMANENT_NO_CLEANUP_NO_REUSE"
+  },
+  "unentered_v5_state": {
+    "build_b_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "journal_root": "ABSENT",
+    "controller_invocations": 0,
+    "kill_commitments": 0,
+    "kill_calls": 0,
+    "signals_entered": 0,
+    "processes_disposed": 0
+  },
+  "disposition": {
+    "v5_build_equality": "NOT_ESTABLISHED",
+    "v5_execution_authority": "SUPERSEDED_BEFORE_ANY_BINARY_EXISTED",
+    "retry_or_reuse": false,
+    "next": "FREEZE_FRESH_V6_NAMESPACES_AND_EXACT_NO_PARSE_AS_LIBRARY_BUILD_VECTOR_THEN_NAMESPACE_ONLY_SOURCE_REPOINT"
+  }
+}

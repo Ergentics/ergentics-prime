@@ -1,0 +1,293 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap.release-build-result.v1",
+  "status": "PASS_BUILD_IDENTITY_AND_FROZEN_ORDER",
+  "predecessor": {
+    "freeze_commit": "3505fcb317673676c859a6bb95b6386a36001d91",
+    "freeze_tree": "4bde8ca27e3cbcbc3eea0aa6ed7263d29e7449e5",
+    "freeze_sha256": "99b3d95e4e7df31b1a577f32156d979250780ea260bb0dedc3b45e2c6bdbd5b2",
+    "implementation_commit": "fa442554c4209881c6a33bfaaa6070190624e113",
+    "implementation_tree": "50b20fc1896a7bad22fc23aedd4415d8e948ef8a"
+  },
+  "source": {
+    "file_count": 6,
+    "total_bytes": 138918,
+    "files": [
+      {
+        "path": "Package.swift",
+        "bytes": 689,
+        "sha256": "f291fc7afe1264cf4801f226f17a2a44354421471cbe30d8bf9e8a8ef7716b69",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/ErgenticsGateEStaticBootstrap/main.swift",
+        "bytes": 549,
+        "sha256": "ba0cc66f043b690fa5a108261cca55b2ede95a704b97eda2507bf7598bd499d0",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapCore/GateEStaticBootstrap.swift",
+        "bytes": 86142,
+        "sha256": "f92dedb49537d470094bd74ce1da28d9d2be8bdd9c95f11c8c5dd914e59b0299",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/BootstrapPrimitives.c",
+        "bytes": 20123,
+        "sha256": "bc730cd1973b44c5872d1d2edc926f7741e961f16d6259a139dfaf933b10a16b",
+        "mode": "0644"
+      },
+      {
+        "path": "Sources/GateEStaticBootstrapPrimitives/include/BootstrapPrimitives.h",
+        "bytes": 4904,
+        "sha256": "5f5f37a819cfa941ea7218767d7ff682ede2cb7827274bcc82f6668c5d2e7c24",
+        "mode": "0644"
+      },
+      {
+        "path": "Tests/GateEStaticBootstrapCoreTests/GateEStaticBootstrapCoreTests.swift",
+        "bytes": 26511,
+        "sha256": "3cedf5fa63b9f177834a4b954127026830072dfdc3b90c185342dd8e0f63e046",
+        "mode": "0644"
+      }
+    ],
+    "source_edits": 0,
+    "dirty_worktree_admitted": false
+  },
+  "build_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1",
+  "builds": [
+    {
+      "label": "A",
+      "exec_session": 75669,
+      "normal_exit_code": 0,
+      "product": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+      "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A",
+      "observer_UTC_before_entry": "2026-08-30T16:55:56Z",
+      "observer_UTC_after_completion": "2026-08-30T16:56:52Z",
+      "build_reported_elapsed_seconds": "5.15",
+      "elapsed_qualification": "SwiftPM-reported wall duration, not independent exact CPU/energy/scientific timing. UTC observations only bracket tool entry/completion.",
+      "source_postflight": "PASS_COMPLETE_LISTED_FIELDS_AND_DIGESTS"
+    },
+    {
+      "label": "B",
+      "exec_session": 78997,
+      "normal_exit_code": 0,
+      "product": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+      "cwd": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B",
+      "observer_UTC_before_entry": "2026-08-30T16:57:11Z",
+      "observer_UTC_after_completion": "2026-08-30T16:58:21Z",
+      "build_reported_elapsed_seconds": "4.91",
+      "elapsed_qualification": "SwiftPM-reported wall duration, not independent exact CPU/energy/scientific timing. UTC observations only bracket tool entry/completion.",
+      "source_postflight": "PASS_COMPLETE_LISTED_FIELDS_AND_DIGESTS"
+    }
+  ],
+  "ordered_evidence": {
+    "source_preflight_sha256": "730a7e26bf5a707c88efbeb640479d69c03a3cb9e1470a07e70d37212f0188a3",
+    "A_postflight_B_admission_sha256": "567945476e49c0efc031e8d504823220de58902ad9e394aeffb17836100f1d25",
+    "A_postflight_persisted_and_hash_verified_before_B": true,
+    "pre_B_checks": {
+      "A_normal_exit_zero": true,
+      "A_all_source_fields_and_hashes_match": true,
+      "B_all_source_fields_and_hashes_match": true,
+      "tool_and_SDK_fields_match": true
+    },
+    "final_source_tool_checks": {
+      "A_equals_original_preflight": true,
+      "B_equals_original_preflight": true,
+      "tools_equal_original_preflight": true
+    },
+    "missing_required_observations": [],
+    "frozen_sequence": "PASS",
+    "historical_pre_B_omission": "Still UNOBSERVED/FAIL in predecessor worker build record; not repaired by this run."
+  },
+  "products": [
+    {
+      "label": "A",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+      "bytes": 338736,
+      "device": "16777231",
+      "inode": "18344695",
+      "raw_mode": "100755",
+      "uid": "501",
+      "gid": "20",
+      "nlink": "1",
+      "mtime": "1788108965.814965114",
+      "ctime": "1788108965.814965114",
+      "sha256": "fe27a38d4a45669bc2b6b8f94dd2a8107ccbd696250c7f83f1dbe19169b21d2d",
+      "uuid": "DE930321-67E5-3512-B030-0A06AE04210A",
+      "architecture": "arm64",
+      "minimum_macos": "14.0",
+      "sdk": "26.5"
+    },
+    {
+      "label": "B",
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/scratch/arm64-apple-macosx/release/ErgenticsGateEStaticBootstrap",
+      "bytes": 338736,
+      "device": "16777231",
+      "inode": "18345062",
+      "raw_mode": "100755",
+      "uid": "501",
+      "gid": "20",
+      "nlink": "1",
+      "mtime": "1788109039.726446851",
+      "ctime": "1788109039.726446851",
+      "sha256": "fe27a38d4a45669bc2b6b8f94dd2a8107ccbd696250c7f83f1dbe19169b21d2d",
+      "uuid": "DE930321-67E5-3512-B030-0A06AE04210A",
+      "architecture": "arm64",
+      "minimum_macos": "14.0",
+      "sdk": "26.5"
+    }
+  ],
+  "comparisons": {
+    "raw_cmp_exit_zero": true,
+    "architecture_arm64": true,
+    "UUID_equal": true,
+    "load_commands_equal": true,
+    "min_macos_14": true,
+    "sdk_26_5": true,
+    "SHA256_equal": true,
+    "size_equal": true,
+    "metadata_and_bytes_unchanged_across_analysis": true,
+    "all_six_analyzers_exit_zero": true,
+    "all_analyzer_stderr_bytes": 0,
+    "binary_normalization": false
+  },
+  "diagnostics": {
+    "compiler_errors": 0,
+    "manifest_verbose_output_on_stderr": "Retained; SwiftPM emits verbose manifest command text prefixed warning. No bootstrap source compiler diagnostics observed.",
+    "skip_update_deprecation": "Flag omitted in this new freeze; no old warning repeated.",
+    "frontend_option": "Explicit -Xfrontend forwarding used.",
+    "native_C_debug_flags": "Verbose Clang line contains -g0 twice (SwiftPM default plus explicit flag); no source normalization or post-link rewrite.",
+    "compiler_parallelism": "--jobs1 is the SwiftPM job setting. Verbose frontend reports num-threads18; it is not a one-CPU claim."
+  },
+  "artifacts": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/committed-package.tar",
+      "sha256": "23090c85a1c96b2f9c1f34152bb86a7c24cd6e3d401722ab8304a2a99520d507",
+      "bytes": 153600
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/source-preflight.json",
+      "sha256": "730a7e26bf5a707c88efbeb640479d69c03a3cb9e1470a07e70d37212f0188a3",
+      "bytes": 72006
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A-postflight-B-admission.json",
+      "sha256": "567945476e49c0efc031e8d504823220de58902ad9e394aeffb17836100f1d25",
+      "bytes": 67863
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/source-postflight.json",
+      "sha256": "bf69b2e76245804fed20b512bacaf6d311f507e6a3cc99584693ac7c3d28805b",
+      "bytes": 66921
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/build-comparison.json",
+      "sha256": "e62575109ed71571e2e139bc739ed72e3dcd93e0455a2a8a2b09c3e87e2b07c0",
+      "bytes": 31163
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/build.stdout.log",
+      "sha256": "9806c477a0ea676bebe1ec6d273a4675ca90a14983380860a9b8ad85547257e8",
+      "bytes": 25066
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/build.stderr.log",
+      "sha256": "9687d2ad719d8e6dc8bd535842c68399fad3b1e95327ca774a4423c0a05f8a8e",
+      "bytes": 4175
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/lipo.stdout.log",
+      "sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+      "bytes": 6
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/lipo.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/dwarfdump.stdout.log",
+      "sha256": "5ad69dc97d65e8166d786eb4e574fa896c980715c25239f3d5b85ae316cd16ba",
+      "bytes": 241
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/dwarfdump.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/otool.stdout.log",
+      "sha256": "3c3a46a96094117ca37a9c2b7d01cbe37d30fe506870299fed5161140eb8feda",
+      "bytes": 12449
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/A/otool.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/build.stdout.log",
+      "sha256": "74a3d46dd68b0b955a98f996bf8b26c38d7296fc2d3148748eb4e4e74ead140d",
+      "bytes": 25066
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/build.stderr.log",
+      "sha256": "66de58ffa8d3ecbfa6826b0f5b3f8e699075ab451b50d3cf723e2e6f53095dff",
+      "bytes": 4175
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/lipo.stdout.log",
+      "sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+      "bytes": 6
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/lipo.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/dwarfdump.stdout.log",
+      "sha256": "58482cba23a6c9f7fd54074767ae24648e4bf6dc00f167ccfb6c9b1a9858afaf",
+      "bytes": 241
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/dwarfdump.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/otool.stdout.log",
+      "sha256": "25c2b81baed9063c68f38abb59daa3162ddcb9d1c0b6f9e0b6614fd9627415fb",
+      "bytes": 12449
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-builds-fa44255-2026-08-30-r1/B/otool.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "authority": {
+    "bootstrap_entries": 0,
+    "worker_entries": 0,
+    "tests_built": 0,
+    "tests_executed": 0,
+    "signals": 0,
+    "old_process_census": 0,
+    "energy_work": 0,
+    "dependency_fetch": 0,
+    "github": 0,
+    "python": 0,
+    "ruby": 0,
+    "cleanup": 0,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "unverified": [
+    "Runtime behavior and conditional containment are untested.",
+    "Thirty pure tests are still source-only.",
+    "Target minimum macOS14 does not prove execution on macOS14/macOS15.",
+    "Tool/SDK/source observations are named pre/post snapshots, not atomic kernel-held closure.",
+    "Build identity and correct ordering do not authorize bootstrap or worker entry."
+  ],
+  "next_recommendation": "Separately freeze pure-test build/execution with no bootstrap/worker entry, then prepare fresh static-launch admission only after those mechanics pass.",
+  "digest_rule": "No self digest; externally hash complete result bytes and bind its selective Git commit/tree."
+}

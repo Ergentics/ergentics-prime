@@ -1,0 +1,238 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_capability_mint": "ABSENT",
+    "projection_persisted": false
+  },
+  "checkpoint": "H4-D_PRIVATE_OWNER_EPOCH_CANONICAL_BINDING",
+  "environment": {
+    "architecture": "arm64",
+    "macos_build": "25F84",
+    "macos_version": "26.5.2",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "h3_input_state": {
+    "current_product_mint_from_h3": "ABSENT",
+    "h3_rerun": false,
+    "live_handoff_bound": false,
+    "source_disposition": "H3_STRUCTURAL_FIXTURE_CONTRACT_ONLY"
+  },
+  "implementation": {
+    "anchor_retained_fields": [
+      "epoch"
+    ],
+    "canonical_slots": [
+      "internal_receipt",
+      "sqlite_projection"
+    ],
+    "lifecycle": [
+      "ready",
+      "claimed",
+      "bound_or_poisoned"
+    ],
+    "post_bind_successor_slots": [
+      "release_presentation",
+      "graph_preparation",
+      "merkle_preparation"
+    ],
+    "production_entry": "DestinationDispatcher.bindCanonicalStreams()",
+    "production_entry_argument_count": 0,
+    "successor_representation": "OPAQUE_NON_EQUATABLE_NON_HASHABLE_NON_CODABLE_STRUCT"
+  },
+  "nonclaims": [
+    "This checkpoint does not complete or enter H4.",
+    "This checkpoint does not close Gate E or mint scientific authority.",
+    "H4-D is process-local construction provenance only; it does not prove producer truth, cryptographic authenticity, independent witness identity, or verified-live H3 provenance.",
+    "Ordinary Swift value copies of the opaque bound handoff retain the same private anchor and remain replayable until a separately frozen D2 one-shot persistence admission consumes them.",
+    "The exact epoch is retained privately in the process-local anchor; no owner identifier, source identity, envelope identity, epoch, UUID label, pointer label, or anchor value is serialized into JSON or CBOR.",
+    "The H4-C two-delivery mixability seam remains only as test-conditioned historical regression evidence and is absent from the application surface.",
+    "Release, graph, and Merkle successor exits remain typed one-shot dispatcher outputs; H4-D does not claim that they are persisted, externally delivered, or independently authenticated.",
+    "No SQLite open/write/transaction/WAL/reopen, file operation, graph construction, Merkle commitment, fault-injected persistence, VM, process, network, UI, or H3 action occurs in H4-D.",
+    "No durable anti-replay, rollback resistance, revocation of returned values, debugger resistance, same-process compromise resistance, or restart-spanning owner identity is claimed."
+  ],
+  "pre_checkpoint_diagnostics": [
+    {
+      "cause": "The first H4-D expiry tests used cutoff 41, which H4-A correctly treated as already expired before dispatcher construction.",
+      "correction": "The fixtures now use the H4-B monotonic-domain boundary UInt64.max minus 1 and UInt64.max.",
+      "id": "expiry_fixture_clock_domain",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    },
+    {
+      "cause": "The first success transition cleared all five H4-B slots although only the two canonical slots were consumed.",
+      "correction": "Success now preserves release, graph, and Merkle as independent one-shot, deadline-revalidated successors.",
+      "id": "post_bind_successor_slot_loss",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    },
+    {
+      "cause": "The first implementation stored an injectable canonical projector in the product dispatcher for XCTest scheduling.",
+      "correction": "Production calls projectBound directly; projector substitution exists only under EPR_H4_PRIVACY_TESTS and its symbols are absent from both app builds.",
+      "id": "production_projector_injection_surface",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    },
+    {
+      "cause": "The first anchor retained source and envelope hashes used only by tests.",
+      "correction": "The anchor now retains only the exact epoch plus its inaccessible reference identity; the unnecessary linkable hashes were removed.",
+      "id": "unnecessary_anchor_linkability",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    },
+    {
+      "cause": "The first opaque handoff was a class, exposing wrapper reference identity, and the test projector could return another dispatcher's wrapper.",
+      "correction": "The handoff is now a non-Equatable, non-Hashable struct and completion rejoins its private anchor to the exact dispatcher input before publication; foreign-owner substitution poisons.",
+      "id": "wrapper_identity_and_test_owner_substitution",
+      "result": "CORRECTED_BEFORE_CHECKPOINT"
+    }
+  ],
+  "predicates": [
+    {
+      "id": "zero_argument_fresh_dispatcher_canonical_bind",
+      "result": "PASS"
+    },
+    {
+      "id": "internal_and_sqlite_slots_claimed_atomically_under_one_dispatcher_lock",
+      "result": "PASS"
+    },
+    {
+      "id": "production_codec_entry_accepts_only_fileprivate_dispatcher_constructed_input",
+      "result": "PASS"
+    },
+    {
+      "id": "production_caller_supplied_delivery_byte_owner_epoch_clock_and_projector_surfaces_absent",
+      "result": "PASS"
+    },
+    {
+      "id": "private_anchor_identity_rejoined_before_bound_publication",
+      "result": "PASS"
+    },
+    {
+      "id": "foreign_owner_test_substitution_rejects_and_poisons",
+      "result": "PASS"
+    },
+    {
+      "id": "equal_semantics_and_equal_epoch_dispatchers_have_distinct_private_anchors",
+      "result": "PASS"
+    },
+    {
+      "id": "different_epochs_remain_absent_from_both_canonical_streams",
+      "result": "PASS"
+    },
+    {
+      "id": "sequential_and_concurrent_bind_have_exactly_one_success",
+      "result": "PASS"
+    },
+    {
+      "id": "every_exit_rejects_while_canonical_codec_owns_claim",
+      "result": "PASS"
+    },
+    {
+      "id": "bind_versus_individual_canonical_extraction_has_one_linearized_winner",
+      "result": "PASS"
+    },
+    {
+      "id": "any_prior_destination_extraction_poisons_canonical_bind",
+      "result": "PASS"
+    },
+    {
+      "id": "projection_failure_poisons_every_remaining_exit",
+      "result": "PASS"
+    },
+    {
+      "id": "expiry_revalidated_before_and_after_bounded_synchronous_codec",
+      "result": "PASS"
+    },
+    {
+      "id": "post_bind_release_graph_and_merkle_remain_one_shot_and_expiring",
+      "result": "PASS"
+    },
+    {
+      "id": "opaque_handoff_has_struct_reflection_and_no_value_protocol_or_class_identity_surface",
+      "result": "PASS"
+    },
+    {
+      "id": "diagnostic_root_epoch_owner_source_and_envelope_canaries_absent_from_streams_errors_and_exposed_reflection",
+      "result": "PASS"
+    },
+    {
+      "id": "test_only_mint_projector_unbound_codec_and_introspection_symbols_absent_from_debug_and_release_apps",
+      "result": "PASS"
+    },
+    {
+      "id": "persistence_file_process_vm_network_ui_graph_merkle_and_authority_surfaces_absent",
+      "result": "PASS"
+    }
+  ],
+  "predecessor": {
+    "commit": "c6931abf083b1b5ed153a88e29ec07b0c1fb46c4",
+    "tree": "9d2a47b5e6a81ebeb508503f849a44f39eb5e1d9"
+  },
+  "result": "PASS_H4D_PRIVATE_OWNER_EPOCH_BINDING_CONTRACT_ONLY",
+  "schema": "com.ergentics.provenance.hypervisor.h4d-checkpoint.v1",
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "67bddc29f3ccdd73a9ade6eda381ee343a1fbb61569874044810226a981b4ab7"
+    },
+    {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "sha256": "fe63e6c7b636cfe10cec3f1f6643b24a09a7b61507adac23a57b6b2a6d232880"
+    },
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "sha256": "16927538ed26f819fae20b30f3e433179c8f5f5e0ceb9f0d5c58b56a72f94fe4"
+    },
+    {
+      "path": "Sources/HypervisorStageH4OwnerBinding.swift",
+      "sha256": "52723ed25974dca84f50ea16420ec93fa4d7d3bac481a4ce10f037c180763514"
+    },
+    {
+      "path": "Tests/HypervisorStageH4CanonicalStreamsTests.swift",
+      "sha256": "cf7f942b2235770b34b7f2e7873cad500520db603df9486bce118862e0f85b78"
+    },
+    {
+      "path": "Tests/HypervisorStageH4OwnerBindingTests.swift",
+      "sha256": "a4011e9d0954438f6a01f83a9ce70df350a95cbd44325bd61c140c8d2fd9eb4c"
+    }
+  ],
+  "verification": {
+    "app_builds_warnings_as_errors": {
+      "debug": "PASS",
+      "release": "PASS"
+    },
+    "binary_test_bridge_symbol_scan": {
+      "debug": "ABSENT_PASS",
+      "release": "ABSENT_PASS"
+    },
+    "diff_check": "PASS",
+    "focused_h4a_h4b_h4c_h4d_tests": {
+      "failed": 0,
+      "passed": 63,
+      "skipped": 0
+    },
+    "focused_h4d_tests": {
+      "failed": 0,
+      "passed": 14,
+      "skipped": 0
+    },
+    "full_debug_tests": {
+      "failed": 0,
+      "passed": 625,
+      "skipped": 0
+    },
+    "full_release_tests": {
+      "failed": 0,
+      "passed": 578,
+      "skipped": 0
+    },
+    "independent_reviews": {
+      "must_fix_remaining": 0,
+      "privacy": "NO_MUST_FIX_FINDINGS",
+      "state_machine": "NO_MUST_FIX_FINDINGS",
+      "successor_pipeline": "NO_MUST_FIX_FINDINGS"
+    },
+    "production_compilation_condition": "EPR_H4_PRIVACY_TESTS_ABSENT_PASS",
+    "project_file_lint": "PASS",
+    "static_forbidden_surface_scan": "PASS"
+  }
+}

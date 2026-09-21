@@ -1,0 +1,13 @@
+{
+  "scope": "Source connections, retained raw roles, prepared records and codec outputs; no model training",
+  "connectedReview": "reconciliation/connected-review.json",
+  "connectedReviewSHA256": "ad325551bf63144e53c034da3b9df56de4401599cc0ecfd0e06722e0a3984d85",
+  "connectorReviewPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-corpus-integration-review/connector-smoke-9ctk2a8d/result.json",
+  "pmhnpPairReview": "reconciliation/pmhnp-pair-review.json",
+  "currentToolSHA256": {
+    "stage.rb": "fdc66addfd8e17e7b8af1a6038bcc78588171c0cc624160a80687f4dda730f82",
+    "pair-pmhnp.rb": "a128286b6e8ef81bd9540891b232b8b8707b762ca858d6c9223e68fc26afbd33",
+    "connect.rb": "2ea175b2e9a7c01d7cddd1ef254a1653dda21a4605fc4cecffab11ea83b8d4a8"
+  },
+  "historicalMathGuardScope": "Four guards ran on the original stager before the training-topic metadata correction; final projection and all source/record/codec joins independently verified after correction."
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "pid": 22615,
+  "exitCode": 0,
+  "exactDirectChildReaped": true,
+  "elapsedNanoseconds": 4208563250,
+  "timedOut": false,
+  "signals": [],
+  "finalGroupObservation": "absent_ESRCH",
+  "capture": "separate ordinary files; no pipe EOF claim",
+  "stdout": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/build02/stdout.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/build02/stderr.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "retainedInputsUnchanged": true,
+  "modelOrMetalExecution": false,
+  "binary": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/build02/PrimeVCPUInference",
+    "byteCount": 30114592,
+    "sha256": "124113f208e072ab132da9e59fa1e8235831d9425c0b93d9c6c96d256e4054ae"
+  }
+}

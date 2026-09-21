@@ -1,0 +1,25 @@
+{
+  "schema": "ergentics.agent-bundle.v1",
+  "name": "ergentics-agents",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "agents": [
+    {
+      "id": "ergentics_swift_c",
+      "name": "Ergentics Swift+C Agent",
+      "version": "0.1.0",
+      "definition": "agents/ergentics_swift_c/agent.json"
+    },
+    {
+      "id": "ergentics_cpp",
+      "name": "Ergentics C/C++ Agent",
+      "version": "0.1.0",
+      "definition": "agents/ergentics_cpp/agent.json"
+    }
+  ],
+  "loading": {
+    "explicit_instruction_handoff": "LOAD.md",
+    "codex_native_adapter": "adapters/codex/README.md"
+  },
+  "extensions": {}
+}

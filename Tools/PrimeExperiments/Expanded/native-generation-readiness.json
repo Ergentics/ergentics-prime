@@ -1,0 +1,92 @@
+{
+  "schema": "prime_native_generation_budget_review_v1",
+  "scope": "Read-only readiness review of saved driver/model source; no inference, training or sealed-build modification.",
+  "sources": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-driver/main.swift",
+      "sha256": "4fb6da66020d87f512f79adae80b5d45692625af6dea3e2ebf17abf6941a5243"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm/Sources/ErgenticsLLM/NativeTinyDecoder.swift",
+      "sha256": "6cdc9647d633d60d64888746e61f21056b54d06a6f6089a6f214916d8b49796c"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm/Sources/ErgenticsLLM/NativeLabTrainProfile.swift",
+      "sha256": "4c0a1f3edfc10d4e5e5d4cac18727d223c1ae4569f557b59167387c60654c917"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm/Sources/ErgenticsLLM/NativeLabTrainer.swift",
+      "sha256": "e8c142254a56e3cb42fb57df038f6f8773a3c87b27613ce36a7775a3a6382ebd"
+    },
+    {
+      "path": "/Users/ergentics/ergentics-llm/Sources/ErgenticsTokenizer/PrimeNativeByteTokenizer.swift",
+      "sha256": "dee28cc80d26dec611b2d71d2e5b23b08134274b090030361328a6fcbced0bc9"
+    }
+  ],
+  "finding": "32 generated tokens was a comparison-driver cap, not an architecture requirement. NativeTinyDecoder has a learned positional embedding table of 512 entries and explicitly checks sequence length <=512. Original inspected native profiles train with maxSeqLen512.",
+  "mechanicallyValidRevision": {
+    "contextLimit": 512,
+    "effectiveNewTokenBudget": "min(requestedNewTokens, 512 - actualEncodedPromptTokenCount)",
+    "inputPolicy": "Never truncate the prompt. Encode with the original tokenizer and framing, then reject an over-budget prompt explicitly. Keep model/tokenizer bytes unchanged.",
+    "nativeEOS": {
+      "pmhnpSentencePiece": 2,
+      "latinSentencePiece": 2,
+      "compositionalByte512": 70
+    },
+    "conservativeBound": "Total prompt plus generated tokens <=512 means every model forward pass remains inside the saved position table. This establishes mechanical validity, not learned coding capability."
+  },
+  "shortPromptBudgets": {
+    "maximumASCIIQuestionBytes": 180,
+    "byte512RawMaximumPromptTokens": 181,
+    "byte512RawMinimumOutputBudget": 331,
+    "byte512AnswerFramedMaximumPromptTokens": 190,
+    "byte512AnswerFramedMinimumOutputBudget": 322,
+    "learnedTokenizer": "Measure actual SentencePiece IDs; do not estimate from bytes or compare token counts as equivalent amounts of text.",
+    "llama": "A 512-new-token request fits well within the saved older Llama configuration for these short prompts; retain and report the original tokenizer/chat framing."
+  },
+  "stopPolicy": {
+    "endOfSequence": "Stop only at the exact model/tokenizer EOS; retain EOS in raw token IDs and exclude it from rendered text.",
+    "contextBudget": "Distinguish exhausting available context from an explicit smaller output cap.",
+    "deadline": "Emit already-generated partial output and an explicit deadline stop instead of losing all content via an exception.",
+    "repetition": "Preserve repeated tokens/text. Report longest identical-token run and distinct token count as diagnostics; do not stop merely because a token repeats.",
+    "nonfiniteLogits": "Report as runtime failure with partial output; do not fabricate or normalize an answer.",
+    "accounting": [
+      "requestedNewTokens",
+      "effectiveNewTokens",
+      "promptTokenCount",
+      "generatedTokenCount",
+      "contextLimit",
+      "stopReason",
+      "elapsedSeconds",
+      "rawGeneratedTokenIDs",
+      "renderedOutput"
+    ]
+  },
+  "computation": "Existing native driver recomputes the complete prefix at every token. A larger output budget increases work; keep GPU runs serial and preserve a wall-time bound.",
+  "codingCases": {
+    "file": "coding-cases.json",
+    "caseCount": 2,
+    "questionBytes": [
+      153,
+      143
+    ],
+    "functionalVectorCounts": [
+      15,
+      12
+    ],
+    "goldOrExamplesInQuestions": false,
+    "note": "All vectors checked independently from explicit expected values; input mutation and new-list identity are separate requirements."
+  },
+  "checker": {
+    "file": "check-coding.py",
+    "sha256": "2242418a6ac12b8a87b70950bce5560edfecaa8c4c9095ce086d8c511e82b805",
+    "implementation": "Restricted AST interpretation followed by actual CPython execution of the unchanged validated single function in an isolated child, with only len/range/set/list/enumerate exposed.",
+    "latestSelfCheck": "coding-checker-self-check-03.json",
+    "authoredFixtureCount": 14,
+    "allSelfChecksPassed": true,
+    "modelOutputsEvaluatedByThisReview": false,
+    "limits": "CPU soft2/hard3seconds; parent4seconds; interpreter10,000steps/vector; CPython100,000opcodes/vector with per-opcode local-value checks; source16KiB/AST512nodes/depth24/collections256/integer256bits.",
+    "addressSpaceLimit": "Attempted 512MiB AS rlimit is rejected by this macOS Python runtime; receipts explicitly record addressLimitInstalled=false. Independent AST/data/opcode/CPU/wall bounds remain active.",
+    "interpretation": "Unsupported grammar is distinct from wrong answers. Strip only an enclosing Python fence, preserve raw bytes and extracted code, report strict code-only compliance separately. A positive functional claim requires both interpreters and identical observations."
+  }
+}

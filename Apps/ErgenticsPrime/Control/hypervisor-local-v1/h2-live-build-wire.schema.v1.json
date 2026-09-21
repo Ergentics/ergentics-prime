@@ -1,0 +1,1902 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ergentics.provenance.hypervisor-stage.h2-live.build-wire.schema.v1",
+  "title": "H2 live build bootstrap, signed-worker audit, and build-result schemas",
+  "$defs": {
+    "hex64": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "git40": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "uuid": { "type": "string", "pattern": "^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$" },
+    "decimal": { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+    "absolutePath": { "type": "string", "pattern": "^/[^\\u0000]*$" },
+    "nullableHex64": { "oneOf": [{ "$ref": "#/$defs/hex64" }, { "type": "null" }] },
+    "predecessorBuiltImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root_member", "path", "device", "inode", "named_post_device", "named_post_inode", "owner", "mode", "nlink", "descriptor_held", "byte_count", "allocated_bytes", "sha256", "uuid", "load_commands_sha256", "codedirectory_sha256", "expanded_build_settings_sha256", "output_file_watch_event_mask", "output_file_watch_armed", "output_file_events_before_final_revalidation", "terminal_named_device", "terminal_named_inode", "terminal_descriptor_device", "terminal_descriptor_inode", "terminal_byte_count", "terminal_sha256", "terminal_uuid", "terminal_all_joins"],
+      "properties": {
+        "root_member": { "enum": ["A", "B"] },
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "device": { "$ref": "#/$defs/decimal" },
+        "inode": { "$ref": "#/$defs/decimal" },
+        "named_post_device": { "$ref": "#/$defs/decimal" },
+        "named_post_inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0700" },
+        "nlink": { "const": 1 },
+        "descriptor_held": { "type": "boolean" },
+        "byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 134217728 },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "load_commands_sha256": { "$ref": "#/$defs/hex64" },
+        "codedirectory_sha256": { "$ref": "#/$defs/hex64" },
+        "expanded_build_settings_sha256": { "$ref": "#/$defs/hex64" },
+        "output_file_watch_event_mask": { "const": ["NOTE_WRITE", "NOTE_EXTEND", "NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"] },
+        "output_file_watch_armed": { "type": "boolean" },
+        "output_file_events_before_final_revalidation": { "type": "integer", "minimum": 0 },
+        "terminal_named_device": { "$ref": "#/$defs/decimal" },
+        "terminal_named_inode": { "$ref": "#/$defs/decimal" },
+        "terminal_descriptor_device": { "$ref": "#/$defs/decimal" },
+        "terminal_descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "terminal_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "terminal_sha256": { "$ref": "#/$defs/hex64" },
+        "terminal_uuid": { "$ref": "#/$defs/uuid" },
+        "terminal_all_joins": { "type": "boolean" }
+      }
+    },
+    "predecessorBuiltImagePass": {
+      "allOf": [
+        { "$ref": "#/$defs/predecessorBuiltImage" },
+        { "properties": { "descriptor_held": { "const": true }, "output_file_watch_armed": { "const": true }, "output_file_events_before_final_revalidation": { "const": 0 }, "terminal_all_joins": { "const": true } } }
+      ]
+    },
+    "predecessorSourceCopy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root_member", "implementation_path", "path", "named_pre_device", "named_pre_inode", "descriptor_device", "descriptor_inode", "named_post_device", "named_post_inode", "byte_count", "sha256", "git_blob", "owner", "mode", "nlink", "parent_path", "parent_device", "parent_inode", "file_watch_event_mask", "parent_entry_watch_event_mask", "file_watch_armed", "parent_entry_watch_armed", "file_events", "parent_entry_events", "all_identity_joins"],
+      "properties": {
+        "root_member": { "enum": ["A", "B"] },
+        "implementation_path": { "enum": ["Tools/H2LiveBootstrapCaptureLauncher/main.c", "Tools/H2LiveBuildBootstrapSupervisor/main.c"] },
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "named_pre_device": { "$ref": "#/$defs/decimal" },
+        "named_pre_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "named_post_device": { "$ref": "#/$defs/decimal" },
+        "named_post_inode": { "$ref": "#/$defs/decimal" },
+        "byte_count": { "type": "integer", "minimum": 1, "maximum": 67108864 },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "git_blob": { "$ref": "#/$defs/git40" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0400" },
+        "nlink": { "const": 1 },
+        "parent_path": { "$ref": "#/$defs/absolutePath" },
+        "parent_device": { "$ref": "#/$defs/decimal" },
+        "parent_inode": { "$ref": "#/$defs/decimal" },
+        "file_watch_event_mask": { "const": ["NOTE_WRITE", "NOTE_EXTEND", "NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"] },
+        "parent_entry_watch_event_mask": { "const": ["NOTE_WRITE", "NOTE_EXTEND", "NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"] },
+        "file_watch_armed": { "type": "boolean" },
+        "parent_entry_watch_armed": { "type": "boolean" },
+        "file_events": { "type": "integer", "minimum": 0 },
+        "parent_entry_events": { "type": "integer", "minimum": 0 },
+        "all_identity_joins": { "type": "boolean" }
+      }
+    },
+    "predecessorSourceCopyPass": {
+      "allOf": [
+        { "$ref": "#/$defs/predecessorSourceCopy" },
+        { "properties": { "file_watch_armed": { "const": true }, "parent_entry_watch_armed": { "const": true }, "file_events": { "const": 0 }, "parent_entry_events": { "const": 0 }, "all_identity_joins": { "const": true } } }
+      ]
+    },
+    "predecessorSourceCopySetA": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/predecessorSourceCopyPass" }, { "properties": { "root_member": { "const": "A" }, "implementation_path": { "const": "Tools/H2LiveBootstrapCaptureLauncher/main.c" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/predecessorSourceCopyPass" }, { "properties": { "root_member": { "const": "A" }, "implementation_path": { "const": "Tools/H2LiveBuildBootstrapSupervisor/main.c" } } }] }
+      ],
+      "items": false
+    },
+    "predecessorSourceCopySetB": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/predecessorSourceCopyPass" }, { "properties": { "root_member": { "const": "B" }, "implementation_path": { "const": "Tools/H2LiveBootstrapCaptureLauncher/main.c" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/predecessorSourceCopyPass" }, { "properties": { "root_member": { "const": "B" }, "implementation_path": { "const": "Tools/H2LiveBuildBootstrapSupervisor/main.c" } } }] }
+      ],
+      "items": false
+    },
+    "predecessorProducerBuildObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "role", "actuator", "compiler_path", "compiler_sha256", "compiler_uuid", "compiler_named_device", "compiler_named_inode", "compiler_descriptor_device", "compiler_descriptor_inode", "compiler_mapped_device", "compiler_mapped_inode", "compiler_all_joins", "spawn_status", "spawn_returned_pid", "generation_snapshot_A", "generation_snapshot_B", "generation_snapshots_equal", "pid", "parent_pid", "session_id", "start_seconds", "start_microseconds", "pgid", "pid_double_snapshot_equal", "argv", "environment", "cwd_path", "cwd_device", "cwd_inode", "descriptor_cwd_join", "stdin_source", "stdin_byte_count", "stdin_sha256", "stdin_eof_sent", "deadline_seconds", "start_continuous_ticks", "deadline_continuous_ticks", "end_continuous_ticks", "resource_observation", "wait_target_pid", "wait_returned_pid", "wait_errno", "wait_status", "exit_status", "exact_reap", "stdout_prefix_hex", "stdout_bytes", "stdout_sha256", "stdout_eof", "stdout_overflow", "stderr_prefix_hex", "stderr_bytes", "stderr_sha256", "stderr_eof", "stderr_overflow", "outer_capture_complete", "manual_intervention_entered", "process_containment"],
+      "properties": {
+        "position": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "role": { "enum": ["predecessor_tools_builder_A", "predecessor_tools_builder_B"] },
+        "actuator": { "const": "explicit_non_authoritative_local_bootstrap_boundary" },
+        "compiler_path": { "$ref": "#/$defs/absolutePath" },
+        "compiler_sha256": { "$ref": "#/$defs/hex64" },
+        "compiler_uuid": { "$ref": "#/$defs/uuid" },
+        "compiler_named_device": { "$ref": "#/$defs/decimal" },
+        "compiler_named_inode": { "$ref": "#/$defs/decimal" },
+        "compiler_descriptor_device": { "$ref": "#/$defs/decimal" },
+        "compiler_descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "compiler_mapped_device": { "oneOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+        "compiler_mapped_inode": { "oneOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+        "compiler_all_joins": { "type": "boolean" },
+        "spawn_status": { "type": "integer", "minimum": 0 },
+        "spawn_returned_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "generation_snapshot_A": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "generation_snapshot_B": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "generation_snapshots_equal": { "type": ["boolean", "null"] },
+        "pid": { "type": ["integer", "null"], "minimum": 1 },
+        "parent_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "session_id": { "type": ["integer", "null"], "minimum": 1 },
+        "start_seconds": { "oneOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+        "start_microseconds": { "oneOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+        "pgid": { "type": ["integer", "null"], "minimum": 1 },
+        "pid_double_snapshot_equal": { "type": ["boolean", "null"] },
+        "argv": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "environment": { "type": "object", "additionalProperties": { "type": "string" } },
+        "cwd_path": { "$ref": "#/$defs/absolutePath" },
+        "cwd_device": { "$ref": "#/$defs/decimal" },
+        "cwd_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_cwd_join": { "type": "boolean" },
+        "stdin_source": { "const": "exact_held_predecessor_tools_builder_source_bytes" },
+        "stdin_byte_count": { "type": "integer", "minimum": 1, "maximum": 67108864 },
+        "stdin_sha256": { "$ref": "#/$defs/hex64" },
+        "stdin_eof_sent": { "type": "boolean" },
+        "deadline_seconds": { "const": 300 },
+        "start_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "deadline_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "end_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "resource_observation": { "const": "UNMEASURED_BOOTSTRAP_TRUST_BOUNDARY_ROOT_INVENTORIES_ONLY" },
+        "wait_target_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "wait_returned_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "wait_errno": { "type": ["integer", "null"], "minimum": 0 },
+        "wait_status": { "type": ["integer", "null"] },
+        "exit_status": { "type": ["integer", "null"], "minimum": 0, "maximum": 255 },
+        "exact_reap": { "type": "boolean" },
+        "stdout_prefix_hex": { "type": "string", "pattern": "^[0-9a-f]*$", "maxLength": 33554432 },
+        "stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "stdout_eof": { "type": ["boolean", "null"] },
+        "stdout_overflow": { "type": "boolean" },
+        "stderr_prefix_hex": { "type": "string", "pattern": "^[0-9a-f]*$", "maxLength": 33554432 },
+        "stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "stderr_eof": { "type": ["boolean", "null"] },
+        "stderr_overflow": { "type": "boolean" },
+        "outer_capture_complete": { "type": "boolean" },
+        "manual_intervention_entered": { "type": "boolean" },
+        "process_containment": { "const": "UNPROVEN_BOOTSTRAP_TRUST_BOUNDARY" }
+      }
+    },
+    "predecessorProducerBuildObservationPass": {
+      "allOf": [
+        { "$ref": "#/$defs/predecessorProducerBuildObservation" },
+        { "properties": {
+          "compiler_mapped_device": { "$ref": "#/$defs/decimal" },
+          "compiler_mapped_inode": { "$ref": "#/$defs/decimal" },
+          "compiler_all_joins": { "const": true },
+          "spawn_status": { "const": 0 },
+          "spawn_returned_pid": { "type": "integer", "minimum": 1 },
+          "generation_snapshot_A": { "$ref": "#/$defs/processGenerationSnapshot" },
+          "generation_snapshot_B": { "$ref": "#/$defs/processGenerationSnapshot" },
+          "generation_snapshots_equal": { "const": true },
+          "pid": { "type": "integer", "minimum": 1 },
+          "parent_pid": { "type": "integer", "minimum": 1 },
+          "session_id": { "type": "integer", "minimum": 1 },
+          "start_seconds": { "$ref": "#/$defs/decimal" },
+          "start_microseconds": { "$ref": "#/$defs/decimal" },
+          "pgid": { "type": "integer", "minimum": 1 },
+          "pid_double_snapshot_equal": { "const": true },
+          "descriptor_cwd_join": { "const": true },
+          "stdin_eof_sent": { "const": true },
+          "wait_target_pid": { "type": "integer", "minimum": 1 },
+          "wait_returned_pid": { "type": "integer", "minimum": 1 },
+          "wait_errno": { "const": 0 },
+          "wait_status": { "type": "integer" },
+          "exit_status": { "const": 0 },
+          "exact_reap": { "const": true },
+          "stdout_prefix_hex": { "const": "" },
+          "stdout_bytes": { "const": 0 },
+          "stdout_sha256": { "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+          "stdout_eof": { "const": true },
+          "stdout_overflow": { "const": false },
+          "stderr_prefix_hex": { "const": "" },
+          "stderr_bytes": { "const": 0 },
+          "stderr_sha256": { "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+          "stderr_eof": { "const": true },
+          "stderr_overflow": { "const": false },
+          "outer_capture_complete": { "const": true },
+          "manual_intervention_entered": { "const": false }
+        } }
+      ]
+    },
+    "predecessorProducerCompilerAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "uuid", "named_device", "named_inode", "descriptor_device", "descriptor_inode", "all_named_descriptor_joins"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "named_device": { "$ref": "#/$defs/decimal" },
+        "named_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "all_named_descriptor_joins": { "type": "boolean" }
+      }
+    },
+    "predecessorProducerFailedBuildTranscript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "role", "failure_subphase", "spawn_entered", "spawn_status", "compiler_identity", "spawn_returned_pid", "generation_snapshot_A", "generation_snapshot_B", "generation_snapshot_count", "generation_snapshots_equal", "stdin_bytes_written", "stdin_eof_sent", "wait_target_pid", "wait_returned_pid", "wait_errno", "wait_status", "capture_started", "stdout_prefix_hex", "stdout_bytes", "stdout_sha256", "stdout_eof", "stdout_overflow", "stderr_prefix_hex", "stderr_bytes", "stderr_sha256", "stderr_eof", "stderr_overflow", "available_prefix_sha256"],
+      "properties": {
+        "position": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "role": { "enum": ["predecessor_tools_builder_A", "predecessor_tools_builder_B"] },
+        "failure_subphase": { "enum": ["pre_spawn", "post_spawn_pre_snapshot_A", "post_snapshot_A_pre_snapshot_B", "generation_or_image_join", "stdin_write", "stdin_eof", "running", "wait", "capture"] },
+        "spawn_entered": { "type": "boolean" },
+        "spawn_status": { "type": ["integer", "null"], "minimum": 0 },
+        "compiler_identity": { "oneOf": [{ "$ref": "#/$defs/predecessorProducerCompilerAdmission" }, { "type": "null" }] },
+        "spawn_returned_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "generation_snapshot_A": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "generation_snapshot_B": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "generation_snapshot_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "generation_snapshots_equal": { "type": ["boolean", "null"] },
+        "stdin_bytes_written": { "type": "integer", "minimum": 0, "maximum": 67108864 },
+        "stdin_eof_sent": { "type": "boolean" },
+        "wait_target_pid": { "type": ["integer", "null"], "minimum": 1 },
+        "wait_returned_pid": { "type": ["integer", "null"], "minimum": -1 },
+        "wait_errno": { "type": ["integer", "null"], "minimum": 0 },
+        "wait_status": { "type": ["integer", "null"] },
+        "capture_started": { "type": "boolean" },
+        "stdout_prefix_hex": { "type": "string", "pattern": "^[0-9a-f]*$", "maxLength": 33554432 },
+        "stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "stdout_eof": { "type": ["boolean", "null"] },
+        "stdout_overflow": { "type": "boolean" },
+        "stderr_prefix_hex": { "type": "string", "pattern": "^[0-9a-f]*$", "maxLength": 33554432 },
+        "stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "stderr_eof": { "type": ["boolean", "null"] },
+        "stderr_overflow": { "type": "boolean" },
+        "available_prefix_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorProducerPreparationFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "code", "source_admitted", "initial_root_count", "armed_root_continuity_count", "pre_action_root_count", "completed_build_count", "failed_build_entered", "observed_image_count", "pair_available", "final_root_count", "last_completed_position", "detail_sha256"],
+      "properties": {
+        "phase": { "enum": ["envelope_admission", "source_admission", "root_admission", "watch_arm", "layout_admission", "build", "image_admission", "pair_comparison", "final_revalidation", "result_encoding"] },
+        "code": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "source_admitted": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "initial_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "armed_root_continuity_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "pre_action_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "completed_build_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "failed_build_entered": { "type": "boolean" },
+        "observed_image_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "pair_available": { "type": "boolean" },
+        "final_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "last_completed_position": { "type": ["integer", "null"], "minimum": 0, "maximum": 1 },
+        "detail_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorProducerPreparationResultBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "failure", "preparation_envelope_commit", "preparation_envelope_tree", "preparation_envelope_file_sha256", "operator_effective_uid", "outer_capture_transport", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "build_plan_sha256", "xcode_version", "xcode_build", "sdk_path", "sdk_version", "sdk_contents", "trust_boundary", "producer_source", "build_actions_sha256", "root_A_initial", "root_B_initial", "root_A_pre_actions", "root_B_pre_actions", "root_A", "root_B", "root_A_continuity", "root_B_continuity", "roots_pairwise_disjoint", "roots_retained", "build_observations", "failed_build", "signals_entered", "absolute_horizon_seconds", "producer_A", "producer_B", "producer_pair", "selected_producer", "producer_images_terminal_revalidation_complete", "h2_live_controller_launches", "worker_launches", "semantic_verifier_launches", "vm_creations", "guest_entries", "result_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.predecessor-producer-preparation-result.v1" },
+        "status": { "enum": ["PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY", "FAIL_PREDECESSOR_PRODUCER_PREPARATION_RETAINED"] },
+        "failure": { "oneOf": [{ "$ref": "#/$defs/predecessorProducerPreparationFailure" }, { "type": "null" }] },
+        "preparation_envelope_commit": { "$ref": "#/$defs/git40" },
+        "preparation_envelope_tree": { "$ref": "#/$defs/git40" },
+        "preparation_envelope_file_sha256": { "$ref": "#/$defs/hex64" },
+        "operator_effective_uid": { "$ref": "#/$defs/decimal" },
+        "outer_capture_transport": { "const": "EXPLICIT_LOCAL_OPERATOR_CONTROL_BOUND_BY_PREPARATION_ENVELOPE_NO_PROCESS_AUTHORITY" },
+        "source_freeze_commit": { "$ref": "#/$defs/git40" },
+        "source_freeze_tree": { "$ref": "#/$defs/git40" },
+        "source_freeze_file_sha256": { "$ref": "#/$defs/hex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+        "xcode_version": { "const": "26.6" },
+        "xcode_build": { "const": "17F113" },
+        "sdk_path": { "const": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk" },
+        "sdk_version": { "const": "26.5" },
+        "sdk_contents": { "const": "ADMITTED_UNMEASURED_BOOTSTRAP_TRUST_ROOT" },
+        "trust_boundary": { "const": { "admitted_root": "LOCAL_HOST_KERNEL_FILESYSTEM_XCODE_PATH_VERSION_COMPILER_IMAGE_AND_UNMEASURED_SDK_CONTENTS_WITH_EXPLICIT_OPERATOR_OUTER_CAPTURE", "bootstrap_process_containment": "UNPROVEN_DESCENDANT_CONFINEMENT", "manual_host_process_management": "PERMITTED_AFTER_FINITE_CAPTURE_HORIZON_WITHOUT_AUTHORITY_OR_RESULT_REINTERPRETATION", "scientific_authority": false, "authority_vector": "00000000", "gate_e": "ABSTAIN" } },
+        "producer_source": { "oneOf": [{ "$ref": "#/$defs/sourceFile" }, { "type": "null" }] },
+        "build_actions_sha256": { "$ref": "#/$defs/hex64" },
+        "root_A_initial": { "oneOf": [{ "$ref": "#/$defs/predecessorInitialRootObservation" }, { "type": "null" }] },
+        "root_B_initial": { "oneOf": [{ "$ref": "#/$defs/predecessorInitialRootObservation" }, { "type": "null" }] },
+        "root_A_pre_actions": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_B_pre_actions": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_A": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_B": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_A_continuity": { "oneOf": [{ "$ref": "#/$defs/actionRootContinuity" }, { "type": "null" }] },
+        "root_B_continuity": { "oneOf": [{ "$ref": "#/$defs/actionRootContinuity" }, { "type": "null" }] },
+        "roots_pairwise_disjoint": { "type": ["boolean", "null"] },
+        "roots_retained": { "type": "boolean" },
+        "build_observations": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "$ref": "#/$defs/predecessorProducerBuildObservation" } },
+        "failed_build": { "oneOf": [{ "$ref": "#/$defs/predecessorProducerFailedBuildTranscript" }, { "type": "null" }] },
+        "signals_entered": { "const": 0 },
+        "absolute_horizon_seconds": { "const": 660 },
+        "producer_A": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "producer_B": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "producer_pair": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "selected_producer": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "producer_images_terminal_revalidation_complete": { "type": "boolean" },
+        "h2_live_controller_launches": { "const": 0 },
+        "worker_launches": { "const": 0 },
+        "semantic_verifier_launches": { "const": 0 },
+        "vm_creations": { "const": 0 },
+        "guest_entries": { "const": 0 },
+        "result_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorProducerPreparationResult": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/predecessorProducerPreparationResultBase" },
+            { "properties": {
+              "status": { "const": "PASS_PREDECESSOR_PRODUCER_PREPARATION_ONLY" },
+              "failure": { "type": "null" },
+              "producer_source": { "allOf": [{ "$ref": "#/$defs/sourceFile" }, { "properties": { "path": { "const": "Tools/H2LivePredecessorToolsBuilder/main.c" }, "mode": { "const": "100644" }, "byte_count": { "type": "integer", "minimum": 1, "maximum": 67108864 } } }] },
+              "root_A_initial": { "$ref": "#/$defs/predecessorInitialRootObservation" },
+              "root_B_initial": { "$ref": "#/$defs/predecessorInitialRootObservation" },
+              "root_A_pre_actions": { "$ref": "#/$defs/rootObservationWithinLimit" },
+              "root_B_pre_actions": { "$ref": "#/$defs/rootObservationWithinLimit" },
+              "root_A": { "$ref": "#/$defs/rootObservationWithinLimit" },
+              "root_B": { "$ref": "#/$defs/rootObservationWithinLimit" },
+              "root_A_continuity": { "$ref": "#/$defs/predecessorRootContinuityPass" },
+              "root_B_continuity": { "$ref": "#/$defs/predecessorRootContinuityPass" },
+              "roots_pairwise_disjoint": { "const": true },
+              "roots_retained": { "const": true },
+              "failed_build": { "type": "null" },
+              "build_observations": {
+                "type": "array", "minItems": 2, "maxItems": 2,
+                "prefixItems": [
+                  { "allOf": [{ "$ref": "#/$defs/predecessorProducerBuildObservationPass" }, { "properties": { "position": { "const": 0 }, "role": { "const": "predecessor_tools_builder_A" } } }] },
+                  { "allOf": [{ "$ref": "#/$defs/predecessorProducerBuildObservationPass" }, { "properties": { "position": { "const": 1 }, "role": { "const": "predecessor_tools_builder_B" } } }] }
+                ],
+                "items": false
+              },
+              "producer_A": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "A" } } }] },
+              "producer_B": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "B" } } }] },
+              "producer_pair": { "$ref": "#/$defs/pairIdentityPass" },
+              "selected_producer": { "$ref": "#/$defs/predecessorBuiltImagePass" },
+              "producer_images_terminal_revalidation_complete": { "const": true }
+            } }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/predecessorProducerPreparationResultBase" },
+            { "properties": { "status": { "const": "FAIL_PREDECESSOR_PRODUCER_PREPARATION_RETAINED" }, "failure": { "$ref": "#/$defs/predecessorProducerPreparationFailure" } } },
+            {
+              "if": { "properties": { "failure": { "properties": { "phase": { "const": "build" } } } } },
+              "then": { "properties": { "failed_build": { "$ref": "#/$defs/predecessorProducerFailedBuildTranscript" } } },
+              "else": { "properties": { "failed_build": { "type": "null" } } }
+            }
+          ]
+        }
+      ]
+    },
+    "predecessorToolsFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "code", "available_source_hash_count", "initial_root_count", "armed_root_continuity_count", "source_copy_count", "pre_action_root_count", "final_root_count", "completed_action_count", "built_image_count", "capture_pair_available", "supervisor_pair_available", "last_completed_position", "failed_action_position", "detail_sha256"],
+      "properties": {
+        "phase": { "enum": ["envelope_admission", "source_admission", "root_admission", "watch_arm", "source_materialization", "action", "image_admission", "capture_pair_comparison", "supervisor_pair_comparison", "final_revalidation", "result_encoding"] },
+        "code": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "available_source_hash_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "initial_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "armed_root_continuity_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "source_copy_count": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "pre_action_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "final_root_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "completed_action_count": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "built_image_count": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "capture_pair_available": { "type": "boolean" },
+        "supervisor_pair_available": { "type": "boolean" },
+        "last_completed_position": { "type": ["integer", "null"], "minimum": 0, "maximum": 3 },
+        "failed_action_position": { "type": ["integer", "null"], "minimum": 0, "maximum": 3 },
+        "detail_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorFailedActionTranscript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_position", "role", "actuator", "failure_phase", "executable_available", "generation_snapshot_count", "action_root_continuity_available", "resource_observation_available", "wait_available", "signal_receipt_available", "action_available", "action", "available_observation", "signal_receipt", "available_prefix_sha256"],
+      "properties": {
+        "action_position": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "role": { "enum": ["predecessor_capture_launcher_A", "predecessor_capture_launcher_B", "predecessor_bootstrap_supervisor_A", "predecessor_bootstrap_supervisor_B"] },
+        "actuator": { "const": "separately_committed_predecessor_tools_build_envelope" },
+        "failure_phase": { "enum": ["pre_spawn", "post_spawn_pre_join", "running", "containment", "reap_capture"] },
+        "executable_available": { "type": "boolean" },
+        "generation_snapshot_count": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "action_root_continuity_available": { "type": "boolean" },
+        "resource_observation_available": { "type": "boolean" },
+        "wait_available": { "type": "boolean" },
+        "signal_receipt_available": { "type": "boolean" },
+        "action_available": { "type": "boolean" },
+        "action": { "oneOf": [{ "$ref": "#/$defs/action" }, { "type": "null" }] },
+        "available_observation": { "$ref": "#/$defs/failedActionAvailableObservation" },
+        "signal_receipt": { "oneOf": [{ "$ref": "#/$defs/positivePidKillReceipt" }, { "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] },
+        "available_prefix_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorInitialRootObservation": {
+      "allOf": [
+        { "$ref": "#/$defs/rootObservationWithinLimit" },
+        { "properties": { "entry_count": { "const": 0 }, "aggregate_allocated_bytes": { "const": 0 }, "aggregate_logical_bytes": { "const": 0 } } }
+      ]
+    },
+    "predecessorRootContinuityPass": {
+      "allOf": [
+        { "$ref": "#/$defs/actionRootContinuity" },
+        { "properties": { "root_identity_watch_armed": { "const": true }, "parent_entry_watch_armed": { "const": true }, "root_identity_events": { "const": 0 }, "parent_entry_events": { "const": 0 }, "all_identity_joins": { "const": true } } }
+      ]
+    },
+    "predecessorToolsPassActions": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 0 }, "role": { "const": "predecessor_capture_launcher_A" }, "actuator": { "const": "separately_committed_predecessor_tools_build_envelope" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 1 }, "role": { "const": "predecessor_capture_launcher_B" }, "actuator": { "const": "separately_committed_predecessor_tools_build_envelope" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 2 }, "role": { "const": "predecessor_bootstrap_supervisor_A" }, "actuator": { "const": "separately_committed_predecessor_tools_build_envelope" } } }] },
+        { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 3 }, "role": { "const": "predecessor_bootstrap_supervisor_B" }, "actuator": { "const": "separately_committed_predecessor_tools_build_envelope" } } }] }
+      ],
+      "items": false
+    },
+    "predecessorToolsBuildResultBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "failure", "build_envelope_commit", "build_envelope_tree", "build_envelope_file_sha256", "producer_preparation_frame_sha256", "producer", "producer_generation", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "build_plan_sha256", "repository_root_path", "repository_root_device", "repository_root_inode", "capture_launcher_source_sha256", "bootstrap_supervisor_source_sha256", "source_copies_A", "source_copies_B", "root_A_initial", "root_B_initial", "root_A_pre_actions", "root_B_pre_actions", "root_A", "root_B", "root_A_continuity", "root_B_continuity", "roots_pairwise_disjoint", "roots_retained", "build_actions_sha256", "actions", "failed_action", "entered_compiler_driver_actions", "all_entered_direct_children_exactly_reaped", "signals_entered", "absolute_horizon_seconds", "capture_launcher_A", "capture_launcher_B", "capture_launcher_pair", "bootstrap_supervisor_A", "bootstrap_supervisor_B", "bootstrap_supervisor_pair", "selected_capture_launcher", "selected_bootstrap_supervisor", "h2_live_controller_launches", "worker_launches", "semantic_verifier_launches", "vm_creations", "guest_entries", "result_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.predecessor-tools-build-result.v1" },
+        "status": { "enum": ["PASS_PREDECESSOR_TOOLS_BUILD_ONLY", "FAIL_PREDECESSOR_TOOLS_BUILD_RETAINED"] },
+        "failure": { "oneOf": [{ "$ref": "#/$defs/predecessorToolsFailure" }, { "type": "null" }] },
+        "build_envelope_commit": { "$ref": "#/$defs/git40" },
+        "build_envelope_tree": { "$ref": "#/$defs/git40" },
+        "build_envelope_file_sha256": { "$ref": "#/$defs/hex64" },
+        "producer_preparation_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "producer": { "$ref": "#/$defs/launcherImageIdentity" },
+        "producer_generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "source_freeze_commit": { "$ref": "#/$defs/git40" },
+        "source_freeze_tree": { "$ref": "#/$defs/git40" },
+        "source_freeze_file_sha256": { "$ref": "#/$defs/hex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+        "repository_root_path": { "$ref": "#/$defs/absolutePath" },
+        "repository_root_device": { "$ref": "#/$defs/decimal" },
+        "repository_root_inode": { "$ref": "#/$defs/decimal" },
+        "capture_launcher_source_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "bootstrap_supervisor_source_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "source_copies_A": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "$ref": "#/$defs/predecessorSourceCopy" } },
+        "source_copies_B": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "$ref": "#/$defs/predecessorSourceCopy" } },
+        "root_A_initial": { "oneOf": [{ "$ref": "#/$defs/predecessorInitialRootObservation" }, { "type": "null" }] },
+        "root_B_initial": { "oneOf": [{ "$ref": "#/$defs/predecessorInitialRootObservation" }, { "type": "null" }] },
+        "root_A_pre_actions": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_B_pre_actions": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_A": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_B": { "oneOf": [{ "$ref": "#/$defs/rootObservationWithinLimit" }, { "type": "null" }] },
+        "root_A_continuity": { "oneOf": [{ "$ref": "#/$defs/actionRootContinuity" }, { "type": "null" }] },
+        "root_B_continuity": { "oneOf": [{ "$ref": "#/$defs/actionRootContinuity" }, { "type": "null" }] },
+        "roots_pairwise_disjoint": { "type": ["boolean", "null"] },
+        "roots_retained": { "type": "boolean" },
+        "build_actions_sha256": { "$ref": "#/$defs/hex64" },
+        "actions": { "type": "array", "minItems": 0, "maxItems": 4, "items": { "$ref": "#/$defs/actionPass" } },
+        "failed_action": { "oneOf": [{ "$ref": "#/$defs/predecessorFailedActionTranscript" }, { "type": "null" }] },
+        "entered_compiler_driver_actions": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "all_entered_direct_children_exactly_reaped": { "type": "boolean" },
+        "signals_entered": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "absolute_horizon_seconds": { "const": 1320 },
+        "capture_launcher_A": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "capture_launcher_B": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "capture_launcher_pair": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "bootstrap_supervisor_A": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "bootstrap_supervisor_B": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "bootstrap_supervisor_pair": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "selected_capture_launcher": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "selected_bootstrap_supervisor": { "oneOf": [{ "$ref": "#/$defs/predecessorBuiltImage" }, { "type": "null" }] },
+        "h2_live_controller_launches": { "const": 0 },
+        "worker_launches": { "const": 0 },
+        "semantic_verifier_launches": { "const": 0 },
+        "vm_creations": { "const": 0 },
+        "guest_entries": { "const": 0 },
+        "result_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "predecessorToolsBuildResult": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/predecessorToolsBuildResultBase" },
+            {
+              "properties": {
+                "status": { "const": "PASS_PREDECESSOR_TOOLS_BUILD_ONLY" },
+                "failure": { "type": "null" },
+                "producer": { "allOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "properties": { "all_joins": { "const": true } } }] },
+                "capture_launcher_source_sha256": { "$ref": "#/$defs/hex64" },
+                "bootstrap_supervisor_source_sha256": { "$ref": "#/$defs/hex64" },
+                "source_copies_A": { "$ref": "#/$defs/predecessorSourceCopySetA" },
+                "source_copies_B": { "$ref": "#/$defs/predecessorSourceCopySetB" },
+                "root_A_initial": { "$ref": "#/$defs/predecessorInitialRootObservation" },
+                "root_B_initial": { "$ref": "#/$defs/predecessorInitialRootObservation" },
+                "root_A_pre_actions": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                "root_B_pre_actions": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                "root_A": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                "root_B": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                "root_A_continuity": { "$ref": "#/$defs/predecessorRootContinuityPass" },
+                "root_B_continuity": { "$ref": "#/$defs/predecessorRootContinuityPass" },
+                "roots_pairwise_disjoint": { "const": true },
+                "roots_retained": { "const": true },
+                "actions": { "$ref": "#/$defs/predecessorToolsPassActions" },
+                "failed_action": { "type": "null" },
+                "entered_compiler_driver_actions": { "const": 4 },
+                "all_entered_direct_children_exactly_reaped": { "const": true },
+                "signals_entered": { "const": 0 },
+                "capture_launcher_A": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "A" } } }] },
+                "capture_launcher_B": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "B" } } }] },
+                "capture_launcher_pair": { "$ref": "#/$defs/pairIdentityPass" },
+                "bootstrap_supervisor_A": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "A" } } }] },
+                "bootstrap_supervisor_B": { "allOf": [{ "$ref": "#/$defs/predecessorBuiltImagePass" }, { "properties": { "root_member": { "const": "B" } } }] },
+                "bootstrap_supervisor_pair": { "$ref": "#/$defs/pairIdentityPass" },
+                "selected_capture_launcher": { "$ref": "#/$defs/predecessorBuiltImagePass" },
+                "selected_bootstrap_supervisor": { "$ref": "#/$defs/predecessorBuiltImagePass" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/predecessorToolsBuildResultBase" },
+            { "properties": { "status": { "const": "FAIL_PREDECESSOR_TOOLS_BUILD_RETAINED" }, "failure": { "$ref": "#/$defs/predecessorToolsFailure" } } }
+          ]
+        }
+      ]
+    },
+    "bootstrapLaunchFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "predecessor_tools_build_result_frame_sha256", "build_plan_sha256", "bootstrap_supervisor_path", "bootstrap_supervisor_device", "bootstrap_supervisor_inode", "bootstrap_supervisor_sha256", "bootstrap_supervisor_uuid", "repository_root_path", "repository_root_device", "repository_root_inode", "ordered_source_files", "source_manifest_root", "bootstrap_A_initial", "bootstrap_B_initial", "product_A_initial", "product_B_initial", "source_view_path", "bootstrap_actions_sha256", "replacement_environment_sha256", "transport", "horizons_seconds", "bootstrap_launch_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.bootstrap-launch.v1" },
+        "source_freeze_commit": { "$ref": "#/$defs/git40" },
+        "source_freeze_tree": { "$ref": "#/$defs/git40" },
+        "source_freeze_file_sha256": { "$ref": "#/$defs/hex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "predecessor_tools_build_result_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_supervisor_path": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_supervisor_device": { "$ref": "#/$defs/decimal" },
+        "bootstrap_supervisor_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_supervisor_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_supervisor_uuid": { "$ref": "#/$defs/uuid" },
+        "repository_root_path": { "$ref": "#/$defs/absolutePath" },
+        "repository_root_device": { "$ref": "#/$defs/decimal" },
+        "repository_root_inode": { "$ref": "#/$defs/decimal" },
+        "ordered_source_files": { "type": "array", "minItems": 1, "maxItems": 4096, "items": { "$ref": "#/$defs/sourceFile" } },
+        "source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "bootstrap_A_initial": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "bootstrap_B_initial": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "product_A_initial": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "product_B_initial": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "source_view_path": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_actions_sha256": { "$ref": "#/$defs/hex64" },
+        "replacement_environment_sha256": { "$ref": "#/$defs/hex64" },
+        "transport": {
+          "const": {
+            "argv": ["ErgenticsProvenanceH2LiveBuildBootstrapSupervisor"],
+            "environment": {},
+            "cwd": "descriptor_held_bootstrap_A_root",
+            "stdin": "one_EPRH2B00_frame_then_EOF",
+            "inherited_fds": ["stdin_frame", "stdout_pipe", "stderr_pipe"],
+            "stdout": "one_EPRH2P01_or_EPRH2F00_frame_then_EOF",
+            "stderr_pass_bytes": 0,
+            "posix_spawn_cloexec_default": true
+          }
+        },
+        "horizons_seconds": {
+          "const": {
+            "supervisor_internal": 2100,
+            "outer": 2160,
+            "post_kill_reap": 30,
+            "absolute_exit": 2220
+          }
+        },
+        "bootstrap_launch_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "bootstrapFailureObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "phase", "code", "completed_action_count", "last_completed_position", "completed_action_roles", "detail_sha256"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.bootstrap-failure.v1" },
+        "phase": { "enum": ["input_admission", "self_admission", "root_admission", "source_manifest", "source_materialization", "watch_arm", "action", "final_revalidation", "frame_encoding"] },
+        "code": { "enum": ["FRAME", "IDENTITY_JOIN", "ROOT_JOIN", "SOURCE_JOIN", "WATCH_EVENT", "RESOURCE_LIMIT", "SPAWN", "IMAGE_JOIN", "TIMEOUT", "EXIT_STATUS", "PIPE_EOF", "PIPE_OVERFLOW", "PAIR_MISMATCH", "INTERNAL_INVARIANT"] },
+        "completed_action_count": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "last_completed_position": { "type": ["integer", "null"], "minimum": 0, "maximum": 5 },
+        "completed_action_roles": { "type": "array", "minItems": 0, "maxItems": 6, "items": { "enum": ["build_controller_c_A", "build_controller_swift_A", "build_controller_c_B", "build_controller_swift_B", "build_launcher_A", "build_launcher_B"] } },
+        "detail_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "bootstrapOuterReceiptBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "failure_code", "launch_envelope_commit", "launch_envelope_tree", "launch_envelope_file_sha256", "predecessor_tools_build_result_frame_sha256", "b00_frame_sha256", "capturer", "capturer_generation", "capturer_binary_audits", "supervisor", "supervisor_generation", "supervisor_stdout_bytes", "supervisor_stdout_sha256", "supervisor_stdout_prefix_hex", "supervisor_stdout_eof", "supervisor_stdout_overflow", "supervisor_stderr_bytes", "supervisor_stderr_sha256", "supervisor_stderr_prefix_hex", "supervisor_stderr_eof", "supervisor_stderr_overflow", "supervisor_wait", "supervisor_signal_receipt", "supervisor_group_absence_zero_probe_statuses", "bootstrap_failure_frame_hex", "bootstrap_failure_frame_sha256", "bootstrap_failure", "p01_frame_hex", "p01_frame_sha256", "absolute_horizon_seconds", "outer_receipt_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.bootstrap-outer-receipt.v1" },
+        "status": { "enum": ["PASS_BOOTSTRAP_CAPTURE_ONLY", "INCOMPLETE_BOOTSTRAP_CAPTURE_NO_RETRY"] },
+        "failure_code": { "type": ["string", "null"], "maxLength": 128 },
+        "launch_envelope_commit": { "$ref": "#/$defs/git40" },
+        "launch_envelope_tree": { "$ref": "#/$defs/git40" },
+        "launch_envelope_file_sha256": { "$ref": "#/$defs/hex64" },
+        "predecessor_tools_build_result_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "b00_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "capturer": { "$ref": "#/$defs/launcherImageIdentity" },
+        "capturer_generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "capturer_binary_audits": { "$ref": "#/$defs/captureLauncherBinaryAudits" },
+        "supervisor": { "oneOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "type": "null" }] },
+        "supervisor_generation": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "supervisor_stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 2097168 },
+        "supervisor_stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "supervisor_stdout_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 4194336 },
+        "supervisor_stdout_eof": { "type": ["boolean", "null"] },
+        "supervisor_stdout_overflow": { "type": "boolean" },
+        "supervisor_stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "supervisor_stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "supervisor_stderr_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 33554432 },
+        "supervisor_stderr_eof": { "type": ["boolean", "null"] },
+        "supervisor_stderr_overflow": { "type": "boolean" },
+        "supervisor_wait": { "oneOf": [{ "$ref": "#/$defs/outerWaitObservation" }, { "type": "null" }] },
+        "supervisor_signal_receipt": { "oneOf": [{ "$ref": "#/$defs/positivePidKillReceipt" }, { "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] },
+        "supervisor_group_absence_zero_probe_statuses": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "enum": ["ESRCH", "OBSERVED"] } },
+        "bootstrap_failure_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 131072 },
+        "bootstrap_failure_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "bootstrap_failure": { "oneOf": [{ "$ref": "#/$defs/bootstrapFailureObservation" }, { "type": "null" }] },
+        "p01_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 4194336 },
+        "p01_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "absolute_horizon_seconds": { "const": 2220 },
+        "outer_receipt_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "bootstrapOuterReceipt": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/bootstrapOuterReceiptBase" },
+            {
+              "properties": {
+                "status": { "const": "PASS_BOOTSTRAP_CAPTURE_ONLY" },
+                "failure_code": { "type": "null" },
+                "capturer": { "allOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "properties": { "all_joins": { "const": true } } }] },
+                "supervisor": { "allOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "properties": { "all_joins": { "const": true } } }] },
+                "supervisor_generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+                "supervisor_stdout_eof": { "const": true },
+                "supervisor_stdout_overflow": { "const": false },
+                "supervisor_stderr_bytes": { "const": 0 },
+                "supervisor_stderr_sha256": { "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+                "supervisor_stderr_prefix_hex": { "const": "" },
+                "supervisor_stderr_eof": { "const": true },
+                "supervisor_stderr_overflow": { "const": false },
+                "supervisor_wait": { "const": { "reaped": true, "wait_status_raw": 0, "wifexited": true, "wifsignaled": false, "exit_status": 0, "termsig": null } },
+                "supervisor_signal_receipt": { "type": "null" },
+                "supervisor_group_absence_zero_probe_statuses": { "const": ["ESRCH", "ESRCH"] },
+                "bootstrap_failure_frame_hex": { "type": "null" },
+                "bootstrap_failure_frame_sha256": { "type": "null" },
+                "bootstrap_failure": { "type": "null" },
+                "p01_frame_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "p01_frame_sha256": { "$ref": "#/$defs/hex64" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/bootstrapOuterReceiptBase" },
+            { "properties": { "status": { "const": "INCOMPLETE_BOOTSTRAP_CAPTURE_NO_RETRY" }, "failure_code": { "type": "string", "minLength": 1 } } }
+          ]
+        }
+      ]
+    },
+    "bootstrapManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "bootstrap_producer", "bootstrap_launch_frame_sha256", "predecessor_tools_build_result_frame_sha256", "bootstrap_binary_audits", "source_freeze_commit", "source_freeze_tree", "source_freeze_file_sha256", "implementation_commit", "implementation_tree", "build_plan_sha256", "repository_root_path", "repository_root_device", "repository_root_inode", "bootstrap_source_manifest_root", "b00_manifest_and_tree_reconstructed_exact", "source_view_matches_B00_before_after", "source_view_root", "source_view_device", "source_view_inode", "source_view_inventory_root", "source_view_root_observation", "bootstrap_source_continuity", "bootstrap_actions", "bootstrap_receipt_root", "bootstrap_A_root", "bootstrap_A_root_device", "bootstrap_A_root_inode", "bootstrap_A_root_inventory", "bootstrap_A_root_observation", "bootstrap_A_path", "bootstrap_A_device", "bootstrap_A_inode", "bootstrap_A_byte_count", "bootstrap_A_sha256", "bootstrap_A_uuid", "bootstrap_B_root", "bootstrap_B_root_device", "bootstrap_B_root_inode", "bootstrap_B_root_inventory", "bootstrap_B_root_observation", "bootstrap_B_path", "bootstrap_B_device", "bootstrap_B_inode", "bootstrap_B_byte_count", "bootstrap_B_sha256", "bootstrap_B_uuid", "bootstrap_pair_raw_equal", "bootstrap_pair_load_commands_sha256", "bootstrap_pair_codedirectory_sha256", "selected_path", "selected_device", "selected_inode", "selected_byte_count", "selected_sha256", "selected_uuid", "launcher_A_path", "launcher_A_device", "launcher_A_inode", "launcher_A_byte_count", "launcher_A_sha256", "launcher_A_uuid", "launcher_B_path", "launcher_B_device", "launcher_B_inode", "launcher_B_byte_count", "launcher_B_sha256", "launcher_B_uuid", "launcher_pair_raw_equal", "launcher_pair_load_commands_sha256", "launcher_pair_codedirectory_sha256", "selected_launcher_path", "selected_launcher_device", "selected_launcher_inode", "selected_launcher_byte_count", "selected_launcher_sha256", "selected_launcher_uuid", "product_A_root", "product_A_device", "product_A_inode", "product_A_root_observation", "product_B_root", "product_B_device", "product_B_inode", "product_B_root_observation"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.build-bootstrap-manifest.v1" },
+        "bootstrap_producer": { "$ref": "#/$defs/bootstrapProducer" },
+        "bootstrap_launch_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "predecessor_tools_build_result_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_binary_audits": { "$ref": "#/$defs/bootstrapBinaryAudits" },
+        "source_freeze_commit": { "$ref": "#/$defs/git40" },
+        "source_freeze_tree": { "$ref": "#/$defs/git40" },
+        "source_freeze_file_sha256": { "$ref": "#/$defs/hex64" },
+        "implementation_commit": { "$ref": "#/$defs/git40" },
+        "implementation_tree": { "$ref": "#/$defs/git40" },
+        "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+        "repository_root_path": { "$ref": "#/$defs/absolutePath" },
+        "repository_root_device": { "$ref": "#/$defs/decimal" },
+        "repository_root_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_source_manifest_root": { "$ref": "#/$defs/hex64" },
+        "b00_manifest_and_tree_reconstructed_exact": { "const": true },
+        "source_view_matches_B00_before_after": { "const": true },
+        "source_view_root": { "$ref": "#/$defs/absolutePath" },
+        "source_view_device": { "$ref": "#/$defs/decimal" },
+        "source_view_inode": { "$ref": "#/$defs/decimal" },
+        "source_view_inventory_root": { "$ref": "#/$defs/hex64" },
+        "source_view_root_observation": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "bootstrap_source_continuity": { "$ref": "#/$defs/sourceContinuityObservationPass" },
+        "bootstrap_actions": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 0 }, "role": { "const": "build_controller_c_A" }, "actuator": { "const": "bootstrap_supervisor" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 1 }, "role": { "const": "build_controller_swift_A" }, "actuator": { "const": "bootstrap_supervisor" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 2 }, "role": { "const": "build_controller_c_B" }, "actuator": { "const": "bootstrap_supervisor" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 3 }, "role": { "const": "build_controller_swift_B" }, "actuator": { "const": "bootstrap_supervisor" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 4 }, "role": { "const": "build_launcher_A" }, "actuator": { "const": "bootstrap_supervisor" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 5 }, "role": { "const": "build_launcher_B" }, "actuator": { "const": "bootstrap_supervisor" } } }] }
+          ],
+          "items": false
+        },
+        "bootstrap_receipt_root": { "$ref": "#/$defs/hex64" },
+        "bootstrap_A_root": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_A_root_device": { "$ref": "#/$defs/decimal" },
+        "bootstrap_A_root_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_A_root_inventory": { "$ref": "#/$defs/hex64" },
+        "bootstrap_A_root_observation": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "bootstrap_A_path": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_A_device": { "$ref": "#/$defs/decimal" },
+        "bootstrap_A_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_A_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "bootstrap_A_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_A_uuid": { "$ref": "#/$defs/uuid" },
+        "bootstrap_B_root": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_B_root_device": { "$ref": "#/$defs/decimal" },
+        "bootstrap_B_root_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_B_root_inventory": { "$ref": "#/$defs/hex64" },
+        "bootstrap_B_root_observation": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "bootstrap_B_path": { "$ref": "#/$defs/absolutePath" },
+        "bootstrap_B_device": { "$ref": "#/$defs/decimal" },
+        "bootstrap_B_inode": { "$ref": "#/$defs/decimal" },
+        "bootstrap_B_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "bootstrap_B_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_B_uuid": { "$ref": "#/$defs/uuid" },
+        "bootstrap_pair_raw_equal": { "const": true },
+        "bootstrap_pair_load_commands_sha256": { "$ref": "#/$defs/hex64" },
+        "bootstrap_pair_codedirectory_sha256": { "$ref": "#/$defs/hex64" },
+        "selected_path": { "$ref": "#/$defs/absolutePath" },
+        "selected_device": { "$ref": "#/$defs/decimal" },
+        "selected_inode": { "$ref": "#/$defs/decimal" },
+        "selected_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "selected_sha256": { "$ref": "#/$defs/hex64" },
+        "selected_uuid": { "$ref": "#/$defs/uuid" },
+        "launcher_A_path": { "$ref": "#/$defs/absolutePath" },
+        "launcher_A_device": { "$ref": "#/$defs/decimal" },
+        "launcher_A_inode": { "$ref": "#/$defs/decimal" },
+        "launcher_A_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "launcher_A_sha256": { "$ref": "#/$defs/hex64" },
+        "launcher_A_uuid": { "$ref": "#/$defs/uuid" },
+        "launcher_B_path": { "$ref": "#/$defs/absolutePath" },
+        "launcher_B_device": { "$ref": "#/$defs/decimal" },
+        "launcher_B_inode": { "$ref": "#/$defs/decimal" },
+        "launcher_B_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "launcher_B_sha256": { "$ref": "#/$defs/hex64" },
+        "launcher_B_uuid": { "$ref": "#/$defs/uuid" },
+        "launcher_pair_raw_equal": { "const": true },
+        "launcher_pair_load_commands_sha256": { "$ref": "#/$defs/hex64" },
+        "launcher_pair_codedirectory_sha256": { "$ref": "#/$defs/hex64" },
+        "selected_launcher_path": { "$ref": "#/$defs/absolutePath" },
+        "selected_launcher_device": { "$ref": "#/$defs/decimal" },
+        "selected_launcher_inode": { "$ref": "#/$defs/decimal" },
+        "selected_launcher_byte_count": { "type": "integer", "minimum": 1, "maximum": 134217728 },
+        "selected_launcher_sha256": { "$ref": "#/$defs/hex64" },
+        "selected_launcher_uuid": { "$ref": "#/$defs/uuid" },
+        "product_A_root": { "$ref": "#/$defs/absolutePath" },
+        "product_A_device": { "$ref": "#/$defs/decimal" },
+        "product_A_inode": { "$ref": "#/$defs/decimal" },
+        "product_A_root_observation": { "$ref": "#/$defs/rootObservationWithinLimit" },
+        "product_B_root": { "$ref": "#/$defs/absolutePath" },
+        "product_B_device": { "$ref": "#/$defs/decimal" },
+        "product_B_inode": { "$ref": "#/$defs/decimal" },
+        "product_B_root_observation": { "$ref": "#/$defs/rootObservationWithinLimit" }
+      }
+    },
+    "signedWorkerAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "worker_path", "pre_device", "pre_inode", "descriptor_device", "descriptor_inode", "post_device", "post_inode", "sha256", "uuid", "full_codedirectory_hash", "cdhash", "identifier", "team", "certificate_sha256", "requirement_sha256", "entitlements_sha256", "SecStaticCode_status", "strict_no_network", "all_joins", "admitted"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.signed-worker-audit.v1" },
+        "worker_path": { "$ref": "#/$defs/absolutePath" },
+        "pre_device": { "$ref": "#/$defs/decimal" },
+        "pre_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "post_device": { "$ref": "#/$defs/decimal" },
+        "post_inode": { "$ref": "#/$defs/decimal" },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "full_codedirectory_hash": { "$ref": "#/$defs/hex64" },
+        "cdhash": { "type": "string", "pattern": "^[0-9a-f]{40,128}$" },
+        "identifier": { "const": "com.ergentics.provenance" },
+        "team": { "const": "ZCQ435U8JP" },
+        "certificate_sha256": { "$ref": "#/$defs/hex64" },
+        "requirement_sha256": { "$ref": "#/$defs/hex64" },
+        "entitlements_sha256": { "$ref": "#/$defs/hex64" },
+        "SecStaticCode_status": { "type": "integer" },
+        "strict_no_network": { "const": true },
+        "all_joins": { "type": "boolean" },
+        "admitted": { "type": "boolean" }
+      }
+    },
+    "signedWorkerAuditPass": {
+      "allOf": [
+        { "$ref": "#/$defs/signedWorkerAudit" },
+        {
+          "properties": {
+            "SecStaticCode_status": { "const": 0 },
+            "strict_no_network": { "const": true },
+            "all_joins": { "const": true },
+            "admitted": { "const": true }
+          }
+        }
+      ]
+    },
+    "bootstrapBinaryAudits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["build_controller_process_spawn_sites_exact_0", "build_controller_process_signal_sites_exact_0", "build_launcher_posix_spawn_call_sites_exact_1", "build_launcher_kill_call_sites_exact_1", "controller_request_surface_next_ordinal_only", "finite_horizons_embedded_exact"],
+      "properties": {
+        "build_controller_process_spawn_sites_exact_0": { "const": true },
+        "build_controller_process_signal_sites_exact_0": { "const": true },
+        "build_launcher_posix_spawn_call_sites_exact_1": { "const": true },
+        "build_launcher_kill_call_sites_exact_1": { "const": true },
+        "controller_request_surface_next_ordinal_only": { "const": true },
+        "finite_horizons_embedded_exact": { "const": true }
+      }
+    },
+    "captureLauncherBinaryAudits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["posix_spawn_call_sites_exact_1", "signal_call_sites_bounded", "spawn_target_supervisor_only", "zero_argument_surface", "empty_replacement_environment", "finite_horizon_embedded", "no_shell_ruby_python_swiftpm_or_git"],
+      "properties": {
+        "posix_spawn_call_sites_exact_1": { "const": true },
+        "signal_call_sites_bounded": { "const": true },
+        "spawn_target_supervisor_only": { "const": true },
+        "zero_argument_surface": { "const": true },
+        "empty_replacement_environment": { "const": true },
+        "finite_horizon_embedded": { "const": true },
+        "no_shell_ruby_python_swiftpm_or_git": { "const": true }
+      }
+    },
+    "bootstrapProducer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["launch_frame_sha256", "input_frame_exactly_decoded_and_reencoded", "supervisor_path", "named_device", "named_inode", "descriptor_device", "descriptor_inode", "mapped_device", "mapped_inode", "sha256", "uuid", "generation", "all_joins"],
+      "properties": {
+        "launch_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "input_frame_exactly_decoded_and_reencoded": { "const": true },
+        "supervisor_path": { "$ref": "#/$defs/absolutePath" },
+        "named_device": { "$ref": "#/$defs/decimal" },
+        "named_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "mapped_device": { "$ref": "#/$defs/decimal" },
+        "mapped_inode": { "$ref": "#/$defs/decimal" },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "all_joins": { "const": true }
+      }
+    },
+    "rootObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "device", "inode", "owner", "mode", "entry_count", "entry_count_ceiling", "aggregate_allocated_bytes", "aggregate_allocated_bytes_ceiling", "aggregate_logical_bytes", "aggregate_logical_bytes_ceiling", "inventory_root"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "device": { "$ref": "#/$defs/decimal" },
+        "inode": { "$ref": "#/$defs/decimal" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0700" },
+        "entry_count": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "entry_count_ceiling": { "const": 200000 },
+        "aggregate_allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "aggregate_allocated_bytes_ceiling": { "const": 8589934592 },
+        "aggregate_logical_bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "aggregate_logical_bytes_ceiling": { "const": 8589934592 },
+        "inventory_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "rootObservationWithinLimit": {
+      "allOf": [
+        { "$ref": "#/$defs/rootObservation" },
+        {
+          "properties": {
+            "entry_count": { "type": "integer", "minimum": 0, "maximum": 200000 },
+            "aggregate_allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 8589934592 }
+            ,"aggregate_logical_bytes": { "type": "integer", "minimum": 0, "maximum": 8589934592 }
+          }
+        }
+      ]
+    },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "mode", "byte_count", "sha256", "git_blob"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1, "maxLength": 4096, "pattern": "^[^/\\u0000][^\\u0000]*$" },
+        "mode": { "enum": ["100644", "100755"] },
+        "byte_count": { "type": "integer", "minimum": 0, "maximum": 67108864 },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "git_blob": { "$ref": "#/$defs/git40" }
+      }
+    },
+    "sourceContinuityObservationBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root_path", "root_named_pre_device", "root_named_pre_inode", "root_descriptor_device", "root_descriptor_inode", "root_named_post_device", "root_named_post_inode", "parent_path", "parent_device", "parent_inode", "parent_entry_name", "root_watch_armed", "parent_watch_armed", "root_entry_events", "root_all_joins", "descriptor_file_count", "descriptor_directory_count", "descriptor_count_ceiling", "per_file_bytes_max_observed", "per_file_bytes_ceiling", "aggregate_regular_file_bytes", "aggregate_regular_file_bytes_ceiling", "armed", "post_registration_events", "continuous_events", "first_final_drain_events", "second_final_drain_events", "pre_arm_manifest_root", "post_arm_manifest_root", "final_manifest_root"],
+      "properties": {
+        "root_path": { "$ref": "#/$defs/absolutePath" },
+        "root_named_pre_device": { "$ref": "#/$defs/decimal" },
+        "root_named_pre_inode": { "$ref": "#/$defs/decimal" },
+        "root_descriptor_device": { "$ref": "#/$defs/decimal" },
+        "root_descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "root_named_post_device": { "$ref": "#/$defs/decimal" },
+        "root_named_post_inode": { "$ref": "#/$defs/decimal" },
+        "parent_path": { "$ref": "#/$defs/absolutePath" },
+        "parent_device": { "$ref": "#/$defs/decimal" },
+        "parent_inode": { "$ref": "#/$defs/decimal" },
+        "parent_entry_name": { "type": "string", "minLength": 1, "pattern": "^[^/\\u0000]+$" },
+        "root_watch_armed": { "type": "boolean" },
+        "parent_watch_armed": { "type": "boolean" },
+        "root_entry_events": { "type": "integer", "minimum": 0 },
+        "root_all_joins": { "type": "boolean" },
+        "descriptor_file_count": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "descriptor_directory_count": { "type": "integer", "minimum": 1, "maximum": 4096 },
+        "descriptor_count_ceiling": { "const": 8192 },
+        "per_file_bytes_max_observed": { "type": "integer", "minimum": 0, "maximum": 67108864 },
+        "per_file_bytes_ceiling": { "const": 67108864 },
+        "aggregate_regular_file_bytes": { "type": "integer", "minimum": 0, "maximum": 536870912 },
+        "aggregate_regular_file_bytes_ceiling": { "const": 536870912 },
+        "armed": { "type": "boolean" },
+        "post_registration_events": { "type": "integer", "minimum": 0 },
+        "continuous_events": { "type": "integer", "minimum": 0 },
+        "first_final_drain_events": { "type": "integer", "minimum": 0 },
+        "second_final_drain_events": { "type": "integer", "minimum": 0 },
+        "pre_arm_manifest_root": { "$ref": "#/$defs/hex64" },
+        "post_arm_manifest_root": { "$ref": "#/$defs/hex64" },
+        "final_manifest_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "sourceContinuityObservationPass": {
+      "allOf": [
+        { "$ref": "#/$defs/sourceContinuityObservationBase" },
+        {
+          "properties": {
+            "root_watch_armed": { "const": true },
+            "parent_watch_armed": { "const": true },
+            "root_entry_events": { "const": 0 },
+            "root_all_joins": { "const": true },
+            "armed": { "const": true },
+            "post_registration_events": { "const": 0 },
+            "continuous_events": { "const": 0 },
+            "first_final_drain_events": { "const": 0 },
+            "second_final_drain_events": { "const": 0 }
+          }
+        }
+      ]
+    },
+    "actionRootContinuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "owner", "mode", "named_pre_device", "named_pre_inode", "descriptor_device", "descriptor_inode", "named_post_device", "named_post_inode", "parent_path", "parent_device", "parent_inode", "parent_entry_name", "root_identity_watch_event_mask", "parent_entry_watch_event_mask", "root_identity_watch_armed", "parent_entry_watch_armed", "root_identity_events", "parent_entry_events", "all_identity_joins", "inventory_before_sha256", "inventory_post_reap_sha256", "entry_count_before", "entry_count_post_reap", "aggregate_allocated_bytes_before", "aggregate_allocated_bytes_post_reap", "aggregate_logical_bytes_before", "aggregate_logical_bytes_post_reap"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "owner": { "$ref": "#/$defs/decimal" },
+        "mode": { "const": "0700" },
+        "named_pre_device": { "$ref": "#/$defs/decimal" },
+        "named_pre_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "named_post_device": { "$ref": "#/$defs/decimal" },
+        "named_post_inode": { "$ref": "#/$defs/decimal" },
+        "parent_path": { "$ref": "#/$defs/absolutePath" },
+        "parent_device": { "$ref": "#/$defs/decimal" },
+        "parent_inode": { "$ref": "#/$defs/decimal" },
+        "parent_entry_name": { "type": "string", "minLength": 1, "pattern": "^[^/\\u0000]+$" },
+        "root_identity_watch_event_mask": { "const": ["NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"] },
+        "parent_entry_watch_event_mask": { "const": ["NOTE_WRITE", "NOTE_EXTEND", "NOTE_ATTRIB", "NOTE_DELETE", "NOTE_RENAME", "NOTE_REVOKE", "NOTE_LINK"] },
+        "root_identity_watch_armed": { "type": "boolean" },
+        "parent_entry_watch_armed": { "type": "boolean" },
+        "root_identity_events": { "type": "integer", "minimum": 0 },
+        "parent_entry_events": { "type": "integer", "minimum": 0 },
+        "all_identity_joins": { "type": "boolean" },
+        "inventory_before_sha256": { "$ref": "#/$defs/hex64" },
+        "inventory_post_reap_sha256": { "$ref": "#/$defs/hex64" },
+        "entry_count_before": { "type": "integer", "minimum": 0, "maximum": 200000 },
+        "entry_count_post_reap": { "type": "integer", "minimum": 0, "maximum": 200000 },
+        "aggregate_allocated_bytes_before": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+        "aggregate_allocated_bytes_post_reap": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+        "aggregate_logical_bytes_before": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+        "aggregate_logical_bytes_post_reap": { "type": "integer", "minimum": 0, "maximum": 8589934592 }
+      }
+    },
+    "processGenerationSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pid", "parent_pid", "session_id", "start_seconds", "start_microseconds", "pgid", "mapped_image_device", "mapped_image_inode", "mapped_image_sha256", "mapped_image_uuid"],
+      "properties": {
+        "pid": { "type": "integer", "minimum": 1 },
+        "parent_pid": { "type": "integer", "minimum": 1 },
+        "session_id": { "type": "integer", "minimum": 1 },
+        "start_seconds": { "$ref": "#/$defs/decimal" },
+        "start_microseconds": { "$ref": "#/$defs/decimal" },
+        "pgid": { "type": "integer", "minimum": 1 },
+        "mapped_image_device": { "$ref": "#/$defs/decimal" },
+        "mapped_image_inode": { "$ref": "#/$defs/decimal" },
+        "mapped_image_sha256": { "$ref": "#/$defs/hex64" },
+        "mapped_image_uuid": { "$ref": "#/$defs/uuid" }
+      }
+    },
+    "launcherSignalReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_frame_sha256", "snapshot_A", "snapshot_B", "snapshots_equal", "group_members", "group_membership_join", "signal", "entered_count", "status", "exact_reap", "group_absence_zero_probe_statuses"],
+      "properties": {
+        "request_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "snapshot_A": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "snapshot_B": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "snapshots_equal": { "const": true },
+        "group_members": { "type": "array", "minItems": 1, "maxItems": 64, "items": { "$ref": "#/$defs/processGenerationSnapshot" } },
+        "group_membership_join": { "const": true },
+        "signal": { "const": "SIGKILL" },
+        "entered_count": { "const": 1 },
+        "status": { "type": "integer" },
+        "exact_reap": { "type": "boolean" },
+        "group_absence_zero_probe_statuses": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "enum": ["ESRCH", "OBSERVED"] } }
+      }
+    },
+    "positivePidKillReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_pid", "spawn_returned_pid", "signal", "entered_count", "status", "generation_or_group_authority_claimed", "exact_reap", "absence_zero_probe_status"],
+      "properties": {
+        "target_pid": { "type": "integer", "minimum": 1 },
+        "spawn_returned_pid": { "type": "integer", "minimum": 1 },
+        "signal": { "const": "SIGKILL" },
+        "entered_count": { "const": 1 },
+        "status": { "type": "integer" },
+        "generation_or_group_authority_claimed": { "const": false },
+        "exact_reap": { "type": "boolean" },
+        "absence_zero_probe_status": { "enum": ["ESRCH", "OBSERVED"] }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "role", "actuator", "executable_path", "logical_argv0", "executable_named_device", "executable_named_inode", "executable_descriptor_device", "executable_descriptor_inode", "executable_mapped_device", "executable_mapped_inode", "executable_sha256", "executable_uuid", "executable_all_joins", "pid", "parent_pid", "session_id", "start_seconds", "start_microseconds", "pgid", "pgid_equals_pid", "pid_double_snapshot_equal", "argv", "environment", "cwd_path", "cwd_device", "cwd_inode", "descriptor_cwd_join", "action_root_continuity", "stdin_source", "stdin_reads_expected", "inherited_fds", "posix_spawn_cloexec_default", "parent_child_fd_copies_closed", "deadline_seconds", "start_continuous_ticks", "deadline_continuous_ticks", "end_continuous_ticks", "resource_observation", "exit_status", "sigcont_count", "sigcont_status", "launcher_pre_join_positive_pid_kill_entries", "launcher_post_join_group_kill_receipt_entries", "launcher_signal_receipt", "stdout_bytes", "stdout_sha256", "stdout_eof", "stdout_overflow", "stderr_bytes", "stderr_sha256", "stderr_eof", "stderr_overflow", "exact_reap", "process_group_observed_empty", "group_absence_zero_probes", "group_absence_zero_probe_statuses"],
+      "properties": {
+        "position": { "type": "integer", "minimum": 0 },
+        "role": {
+          "enum": [
+            "predecessor_capture_launcher_A",
+            "predecessor_capture_launcher_B",
+            "predecessor_bootstrap_supervisor_A",
+            "predecessor_bootstrap_supervisor_B",
+            "signed_worker_auditor_A",
+            "signed_worker_auditor_B",
+            "worker_debug_A",
+            "worker_debug_B",
+            "worker_release_A",
+            "worker_release_B",
+            "worker_codesign",
+            "worker_static_code_audit",
+            "controller_release_A",
+            "controller_release_B",
+            "verifier_release_A",
+            "verifier_release_B",
+            "xctest_debug",
+            "xctest_release",
+            "build_controller_c_A",
+            "build_controller_swift_A",
+            "build_controller_c_B",
+            "build_controller_swift_B",
+            "build_launcher_A",
+            "build_launcher_B"
+          ]
+        },
+        "actuator": { "enum": ["separately_committed_predecessor_tools_build_envelope", "bootstrap_supervisor", "outer_build_launcher"] },
+        "executable_path": { "$ref": "#/$defs/absolutePath" },
+        "logical_argv0": { "$ref": "#/$defs/absolutePath" },
+        "executable_named_device": { "$ref": "#/$defs/decimal" },
+        "executable_named_inode": { "$ref": "#/$defs/decimal" },
+        "executable_descriptor_device": { "$ref": "#/$defs/decimal" },
+        "executable_descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "executable_mapped_device": { "$ref": "#/$defs/decimal" },
+        "executable_mapped_inode": { "$ref": "#/$defs/decimal" },
+        "executable_sha256": { "$ref": "#/$defs/hex64" },
+        "executable_uuid": { "$ref": "#/$defs/uuid" },
+        "executable_all_joins": { "type": "boolean" },
+        "pid": { "type": "integer", "minimum": 1 },
+        "parent_pid": { "type": "integer", "minimum": 1 },
+        "session_id": { "type": "integer", "minimum": 1 },
+        "start_seconds": { "$ref": "#/$defs/decimal" },
+        "start_microseconds": { "$ref": "#/$defs/decimal" },
+        "pgid": { "type": "integer", "minimum": 1 },
+        "pgid_equals_pid": { "type": "boolean" },
+        "pid_double_snapshot_equal": { "type": "boolean" },
+        "argv": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "environment": { "type": "object", "additionalProperties": { "type": "string" } },
+        "cwd_path": { "$ref": "#/$defs/absolutePath" },
+        "cwd_device": { "$ref": "#/$defs/decimal" },
+        "cwd_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_cwd_join": { "type": "boolean" },
+        "action_root_continuity": { "$ref": "#/$defs/actionRootContinuity" },
+        "stdin_source": { "const": "/dev/null" },
+        "stdin_reads_expected": { "const": 0 },
+        "inherited_fds": { "const": ["stdin_dev_null", "stdout_pipe", "stderr_pipe"] },
+        "posix_spawn_cloexec_default": { "type": "boolean" },
+        "parent_child_fd_copies_closed": { "type": "boolean" },
+        "deadline_seconds": { "type": "integer", "minimum": 1, "maximum": 900 },
+        "start_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "deadline_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "end_continuous_ticks": { "$ref": "#/$defs/decimal" },
+        "resource_observation": { "$ref": "#/$defs/actionResourceObservation" },
+        "exit_status": { "type": ["integer", "null"] },
+        "sigcont_count": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "sigcont_status": { "type": ["integer", "null"] },
+        "launcher_pre_join_positive_pid_kill_entries": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "launcher_post_join_group_kill_receipt_entries": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "launcher_signal_receipt": { "oneOf": [{ "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] },
+        "stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "stdout_eof": { "type": "boolean" },
+        "stdout_overflow": { "type": "boolean" },
+        "stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "stderr_eof": { "type": "boolean" },
+        "stderr_overflow": { "type": "boolean" },
+        "exact_reap": { "type": "boolean" },
+        "process_group_observed_empty": { "type": "boolean" },
+        "group_absence_zero_probes": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "group_absence_zero_probe_statuses": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "enum": ["ESRCH", "OBSERVED"] } }
+      }
+    },
+    "actionResourceObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_interval_milliseconds", "scan_deadline_milliseconds", "timebase_numer", "timebase_denom", "unreaped_interval_start_ticks", "unreaped_interval_end_ticks", "first_sample_ticks", "last_sample_ticks", "sample_count", "max_inter_sample_gap_ticks", "max_scan_duration_ticks", "full_unreaped_interval_covered", "entry_count_ceiling", "aggregate_allocated_bytes_ceiling", "aggregate_logical_bytes_ceiling", "peak_entry_count_observed", "peak_aggregate_allocated_bytes_observed", "peak_aggregate_logical_bytes_observed", "post_reap_entry_count", "post_reap_aggregate_allocated_bytes", "post_reap_aggregate_logical_bytes", "ceiling_exceeded_observed"],
+      "properties": {
+        "sample_interval_milliseconds": { "const": 100 },
+        "scan_deadline_milliseconds": { "const": 100 },
+        "timebase_numer": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "timebase_denom": { "type": "integer", "minimum": 1, "maximum": 4294967295 },
+        "unreaped_interval_start_ticks": { "$ref": "#/$defs/decimal" },
+        "unreaped_interval_end_ticks": { "$ref": "#/$defs/decimal" },
+        "first_sample_ticks": { "$ref": "#/$defs/decimal" },
+        "last_sample_ticks": { "$ref": "#/$defs/decimal" },
+        "sample_count": { "type": "integer", "minimum": 2, "maximum": 4294967295 },
+        "max_inter_sample_gap_ticks": { "$ref": "#/$defs/decimal" },
+        "max_scan_duration_ticks": { "$ref": "#/$defs/decimal" },
+        "full_unreaped_interval_covered": { "type": "boolean" },
+        "entry_count_ceiling": { "const": 200000 },
+        "aggregate_allocated_bytes_ceiling": { "const": 8589934592 },
+        "aggregate_logical_bytes_ceiling": { "const": 8589934592 },
+        "peak_entry_count_observed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "peak_aggregate_allocated_bytes_observed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "peak_aggregate_logical_bytes_observed": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "post_reap_entry_count": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "post_reap_aggregate_allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "post_reap_aggregate_logical_bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "ceiling_exceeded_observed": { "type": "boolean" }
+      }
+    },
+    "actionResourceObservationWithinLimit": {
+      "allOf": [
+        { "$ref": "#/$defs/actionResourceObservation" },
+        {
+          "properties": {
+            "peak_entry_count_observed": { "type": "integer", "minimum": 0, "maximum": 200000 },
+            "peak_aggregate_allocated_bytes_observed": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+            "peak_aggregate_logical_bytes_observed": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+            "post_reap_entry_count": { "type": "integer", "minimum": 0, "maximum": 200000 },
+            "post_reap_aggregate_allocated_bytes": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+            "post_reap_aggregate_logical_bytes": { "type": "integer", "minimum": 0, "maximum": 8589934592 },
+            "full_unreaped_interval_covered": { "const": true },
+            "ceiling_exceeded_observed": { "const": false }
+          }
+        }
+      ]
+    },
+    "pairIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["A_byte_count", "B_byte_count", "A_sha256", "B_sha256", "A_uuid", "B_uuid", "A_load_commands_sha256", "B_load_commands_sha256", "A_codedirectory_sha256", "B_codedirectory_sha256", "A_expanded_build_settings_sha256", "B_expanded_build_settings_sha256", "raw_equal"],
+      "properties": {
+        "A_byte_count": { "type": "integer", "minimum": 1, "maximum": 536870912 },
+        "B_byte_count": { "type": "integer", "minimum": 1, "maximum": 536870912 },
+        "A_sha256": { "$ref": "#/$defs/hex64" },
+        "B_sha256": { "$ref": "#/$defs/hex64" },
+        "A_uuid": { "$ref": "#/$defs/uuid" },
+        "B_uuid": { "$ref": "#/$defs/uuid" },
+        "A_load_commands_sha256": { "$ref": "#/$defs/hex64" },
+        "B_load_commands_sha256": { "$ref": "#/$defs/hex64" },
+        "A_codedirectory_sha256": { "$ref": "#/$defs/hex64" },
+        "B_codedirectory_sha256": { "$ref": "#/$defs/hex64" },
+        "A_expanded_build_settings_sha256": { "$ref": "#/$defs/hex64" },
+        "B_expanded_build_settings_sha256": { "$ref": "#/$defs/hex64" },
+        "raw_equal": { "type": "boolean" }
+      }
+    },
+    "pairIdentityPass": {
+      "allOf": [
+        { "$ref": "#/$defs/pairIdentity" },
+        {
+          "properties": {
+            "raw_equal": { "const": true }
+          }
+        }
+      ]
+    },
+    "signedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256", "uuid", "full_codedirectory_hash", "cdhash", "identifier", "team", "certificate_sha256", "requirement_sha256", "entitlements_sha256"],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "full_codedirectory_hash": { "$ref": "#/$defs/hex64" },
+        "cdhash": { "type": "string", "pattern": "^[0-9a-f]{40,128}$" },
+        "identifier": { "const": "com.ergentics.provenance" },
+        "team": { "const": "ZCQ435U8JP" },
+        "certificate_sha256": { "$ref": "#/$defs/hex64" },
+        "requirement_sha256": { "$ref": "#/$defs/hex64" },
+        "entitlements_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "productsBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["debug_worker", "release_unsigned_worker", "signed_worker", "controller", "offline_verifier", "signed_worker_auditor", "generated_worker_identity_header_sha256"],
+      "properties": {
+        "debug_worker": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "release_unsigned_worker": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "signed_worker": { "oneOf": [{ "$ref": "#/$defs/signedIdentity" }, { "type": "null" }] },
+        "controller": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "offline_verifier": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "signed_worker_auditor": { "oneOf": [{ "$ref": "#/$defs/pairIdentity" }, { "type": "null" }] },
+        "generated_worker_identity_header_sha256": { "$ref": "#/$defs/nullableHex64" }
+      }
+    },
+    "productsPass": {
+      "allOf": [
+        { "$ref": "#/$defs/productsBase" },
+        {
+          "properties": {
+            "debug_worker": { "$ref": "#/$defs/pairIdentityPass" },
+            "release_unsigned_worker": { "$ref": "#/$defs/pairIdentityPass" },
+            "signed_worker": { "$ref": "#/$defs/signedIdentity" },
+            "controller": { "$ref": "#/$defs/pairIdentityPass" },
+            "offline_verifier": { "$ref": "#/$defs/pairIdentityPass" },
+            "signed_worker_auditor": { "$ref": "#/$defs/pairIdentityPass" },
+            "generated_worker_identity_header_sha256": { "$ref": "#/$defs/hex64" }
+          }
+        }
+      ]
+    },
+    "signing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entered_count", "identity", "timestamp", "options", "network", "provisioning_updates", "selected_unsigned_worker_sha256", "signed_worker_sha256"],
+      "properties": {
+        "entered_count": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "identity": { "type": ["string", "null"] },
+        "timestamp": { "enum": ["none", null] },
+        "options": { "enum": ["runtime", null] },
+        "network": { "const": false },
+        "provisioning_updates": { "const": 0 },
+        "selected_unsigned_worker_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "signed_worker_sha256": { "$ref": "#/$defs/nullableHex64" }
+      }
+    },
+    "staticCodeAuditResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auditor_A_sha256", "auditor_B_sha256", "auditor_pair_equal", "invocation_count", "receipt_schema", "receipt", "receipt_frame_hex", "receipt_frame_sha256", "SecStaticCode_status", "strict_no_network", "descriptor_vnode_hash_join", "admitted"],
+      "properties": {
+        "auditor_A_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "auditor_B_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "auditor_pair_equal": { "type": ["boolean", "null"] },
+        "invocation_count": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "receipt_schema": { "type": ["string", "null"] },
+        "receipt": { "oneOf": [{ "$ref": "#/$defs/signedWorkerAudit" }, { "type": "null" }] },
+        "receipt_frame_hex": { "type": ["string", "null"], "pattern": "^[0-9a-f]*$", "maxLength": 131072 },
+        "receipt_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "SecStaticCode_status": { "type": ["integer", "null"] },
+        "strict_no_network": { "type": "boolean" },
+        "descriptor_vnode_hash_join": { "type": ["boolean", "null"] },
+        "admitted": { "type": ["boolean", "null"] }
+      }
+    },
+    "testsResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["debug_exit", "release_exit", "debug_passed", "debug_failed", "release_passed", "release_failed", "new_h2_verifier_source_native_lifecycle_reference_count", "hypervisor_load_command", "fixture_only"],
+      "properties": {
+        "debug_exit": { "type": ["integer", "null"] },
+        "release_exit": { "type": ["integer", "null"] },
+        "debug_passed": { "type": ["integer", "null"], "minimum": 0 },
+        "debug_failed": { "type": ["integer", "null"], "minimum": 0 },
+        "release_passed": { "type": ["integer", "null"], "minimum": 0 },
+        "release_failed": { "type": ["integer", "null"], "minimum": 0 },
+        "new_h2_verifier_source_native_lifecycle_reference_count": { "type": ["integer", "null"], "minimum": 0 },
+        "hypervisor_load_command": { "type": ["boolean", "null"] },
+        "fixture_only": { "type": ["boolean", "null"] }
+      }
+    },
+    "pbxDistributionInventoryEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ordinal", "object_id", "isa", "scope", "owning_target_id", "owning_target_name", "path_or_name", "source_tree", "excluded_filename_match"],
+      "properties": {
+        "ordinal": { "type": "integer", "minimum": 0, "maximum": 199999 },
+        "object_id": { "type": "string", "pattern": "^[0-9A-F]{24}$" },
+        "isa": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "scope": { "enum": ["application_target_membership", "copy_files", "resources", "xpc_or_helper", "product_reference", "unreachable_named_reference"] },
+        "owning_target_id": { "oneOf": [{ "type": "string", "pattern": "^[0-9A-F]{24}$" }, { "type": "null" }] },
+        "owning_target_name": { "type": ["string", "null"], "maxLength": 4096 },
+        "path_or_name": { "type": "string", "maxLength": 4096 },
+        "source_tree": { "type": ["string", "null"], "maxLength": 128 },
+        "excluded_filename_match": { "type": "boolean" }
+      }
+    },
+    "predecessorProducerDistributionExclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["excluded_filename", "excluded_sha256", "excluded_uuid", "pbx_project_path", "pbx_project_sha256", "pbx_project_git_blob", "pbx_inventory_algorithm", "pbx_inventory_entries", "pbx_inventory_entry_count", "pbx_inventory_root", "pbx_application_target_membership_count", "pbx_copy_files_reference_count", "pbx_resources_reference_count", "pbx_xpc_or_helper_reference_count", "pbx_inventory_complete", "accepted_archive_status", "accepted_archive_app_bundle_occurrence_count", "exported_app_status", "exported_app_occurrence_count", "testflight_payload_status", "app_store_payload_status", "archive_exclusion_deferred_to_later_archive_gate"],
+      "properties": {
+        "excluded_filename": { "const": "ErgenticsProvenanceH2LivePredecessorToolsBuilder" },
+        "excluded_sha256": { "$ref": "#/$defs/hex64" },
+        "excluded_uuid": { "$ref": "#/$defs/uuid" },
+        "pbx_project_path": { "const": "ErgenticsProvenance.xcodeproj/project.pbxproj" },
+        "pbx_project_sha256": { "$ref": "#/$defs/hex64" },
+        "pbx_project_git_blob": { "$ref": "#/$defs/git40" },
+        "pbx_inventory_algorithm": { "const": "H2_PBX_COMPLETE_REACHABILITY_INVENTORY_V1" },
+        "pbx_inventory_entries": { "type": "array", "minItems": 1, "maxItems": 200000, "uniqueItems": true, "items": { "$ref": "#/$defs/pbxDistributionInventoryEntry" } },
+        "pbx_inventory_entry_count": { "type": "integer", "minimum": 1, "maximum": 200000 },
+        "pbx_inventory_root": { "$ref": "#/$defs/hex64" },
+        "pbx_application_target_membership_count": { "type": "integer", "minimum": 0 },
+        "pbx_copy_files_reference_count": { "type": "integer", "minimum": 0 },
+        "pbx_resources_reference_count": { "type": "integer", "minimum": 0 },
+        "pbx_xpc_or_helper_reference_count": { "type": "integer", "minimum": 0 },
+        "pbx_inventory_complete": { "type": "boolean" },
+        "accepted_archive_status": { "const": "NOT_PRODUCED_IN_H2" },
+        "accepted_archive_app_bundle_occurrence_count": { "type": "null" },
+        "exported_app_status": { "const": "NOT_PRODUCED_IN_H2" },
+        "exported_app_occurrence_count": { "type": "null" },
+        "testflight_payload_status": { "const": "NOT_PRODUCED_IN_H2" },
+        "app_store_payload_status": { "const": "NOT_PRODUCED_IN_H2" },
+        "archive_exclusion_deferred_to_later_archive_gate": { "const": true }
+      }
+    },
+    "predecessorProducerDistributionExclusionPass": {
+      "allOf": [
+        { "$ref": "#/$defs/predecessorProducerDistributionExclusion" },
+        { "properties": {
+          "pbx_inventory_entries": { "items": { "allOf": [{ "$ref": "#/$defs/pbxDistributionInventoryEntry" }, { "properties": { "excluded_filename_match": { "const": false } } }] } },
+          "pbx_application_target_membership_count": { "const": 0 },
+          "pbx_copy_files_reference_count": { "const": 0 },
+          "pbx_resources_reference_count": { "const": 0 },
+          "pbx_xpc_or_helper_reference_count": { "const": 0 },
+          "pbx_inventory_complete": { "const": true }
+        } }
+      ]
+    },
+    "binaryAudits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["raw_pair_equal", "size_pair_equal", "uuid_pair_equal", "load_commands_pair_equal", "linker_adhoc_signature_pair_equal", "symbol_predicates", "forbidden_import_counts", "predecessor_producer_distribution_exclusion"],
+      "properties": {
+        "raw_pair_equal": { "type": ["boolean", "null"] },
+        "size_pair_equal": { "type": ["boolean", "null"] },
+        "uuid_pair_equal": { "type": ["boolean", "null"] },
+        "load_commands_pair_equal": { "type": ["boolean", "null"] },
+        "linker_adhoc_signature_pair_equal": { "type": ["boolean", "null"] },
+        "symbol_predicates": { "type": ["object", "null"], "additionalProperties": { "type": "boolean" } },
+        "forbidden_import_counts": { "type": ["object", "null"], "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "predecessor_producer_distribution_exclusion": { "oneOf": [{ "$ref": "#/$defs/predecessorProducerDistributionExclusion" }, { "type": "null" }] }
+      }
+    },
+    "binaryAuditsPass": {
+      "allOf": [
+        { "$ref": "#/$defs/binaryAudits" },
+        {
+          "properties": {
+            "raw_pair_equal": { "const": true },
+            "size_pair_equal": { "const": true },
+            "uuid_pair_equal": { "const": true },
+            "load_commands_pair_equal": { "const": true },
+            "linker_adhoc_signature_pair_equal": { "const": true },
+            "symbol_predicates": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "live_controller_process_spawn_sites_exact_1",
+                "live_controller_signal_sites_bounded",
+                "controller_hypervisor_symbols_exact_0",
+                "worker_exported_lifecycle_symbols_exact_0",
+                "worker_native_lifecycle_api_set_exact",
+                "worker_rust_legacy_cancel_calls_exact_0",
+                "worker_hypervisor_framework_linked",
+                "worker_security_framework_linked"
+              ],
+              "properties": {
+                "live_controller_process_spawn_sites_exact_1": { "const": true },
+                "live_controller_signal_sites_bounded": { "const": true },
+                "controller_hypervisor_symbols_exact_0": { "const": true },
+                "worker_exported_lifecycle_symbols_exact_0": { "const": true },
+                "worker_native_lifecycle_api_set_exact": { "const": true },
+                "worker_rust_legacy_cancel_calls_exact_0": { "const": true },
+                "worker_hypervisor_framework_linked": { "const": true },
+                "worker_security_framework_linked": { "const": true }
+              }
+            },
+        "forbidden_import_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["worker_file_write", "worker_database", "worker_ui", "worker_network", "worker_process_spawn", "worker_process_signal"],
+              "properties": {
+                "worker_file_write": { "const": 0 },
+                "worker_database": { "const": 0 },
+                "worker_ui": { "const": 0 },
+                "worker_network": { "const": 0 },
+                "worker_process_spawn": { "const": 0 },
+            "worker_process_signal": { "const": 0 }
+          }
+        },
+        "predecessor_producer_distribution_exclusion": { "$ref": "#/$defs/predecessorProducerDistributionExclusionPass" }
+          }
+        }
+      ]
+    },
+    "actionPass": {
+      "allOf": [
+        { "$ref": "#/$defs/action" },
+        {
+          "properties": {
+            "exit_status": { "const": 0 },
+            "sigcont_count": { "const": 1 },
+            "sigcont_status": { "const": 0 },
+            "launcher_pre_join_positive_pid_kill_entries": { "const": 0 },
+            "launcher_post_join_group_kill_receipt_entries": { "const": 0 },
+            "launcher_signal_receipt": { "type": "null" },
+            "executable_all_joins": { "const": true },
+            "pgid_equals_pid": { "const": true },
+            "pid_double_snapshot_equal": { "const": true },
+            "posix_spawn_cloexec_default": { "const": true },
+            "parent_child_fd_copies_closed": { "const": true },
+            "descriptor_cwd_join": { "const": true },
+            "action_root_continuity": {
+              "allOf": [
+                { "$ref": "#/$defs/actionRootContinuity" },
+                { "properties": { "root_identity_watch_armed": { "const": true }, "parent_entry_watch_armed": { "const": true }, "root_identity_events": { "const": 0 }, "parent_entry_events": { "const": 0 }, "all_identity_joins": { "const": true } } }
+              ]
+            },
+            "resource_observation": { "$ref": "#/$defs/actionResourceObservationWithinLimit" },
+            "stdout_eof": { "const": true },
+            "stdout_overflow": { "const": false },
+            "stderr_eof": { "const": true },
+            "stderr_overflow": { "const": false },
+            "stderr_bytes": { "const": 0 },
+            "stderr_sha256": { "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+            "exact_reap": { "const": true },
+            "process_group_observed_empty": { "const": true },
+            "group_absence_zero_probes": { "const": 2 }
+            ,"group_absence_zero_probe_statuses": { "const": ["ESRCH", "ESRCH"] }
+          }
+        }
+      ]
+    },
+    "launcherImageIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "named_device", "named_inode", "descriptor_device", "descriptor_inode", "mapped_device", "mapped_inode", "sha256", "uuid", "all_joins"],
+      "properties": {
+        "path": { "$ref": "#/$defs/absolutePath" },
+        "named_device": { "$ref": "#/$defs/decimal" },
+        "named_inode": { "$ref": "#/$defs/decimal" },
+        "descriptor_device": { "$ref": "#/$defs/decimal" },
+        "descriptor_inode": { "$ref": "#/$defs/decimal" },
+        "mapped_device": { "$ref": "#/$defs/decimal" },
+        "mapped_inode": { "$ref": "#/$defs/decimal" },
+        "sha256": { "$ref": "#/$defs/hex64" },
+        "uuid": { "$ref": "#/$defs/uuid" },
+        "all_joins": { "type": "boolean" }
+      }
+    },
+    "outerWaitObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reaped", "wait_status_raw", "wifexited", "wifsignaled", "exit_status", "termsig"],
+      "properties": {
+        "reaped": { "type": "boolean" },
+        "wait_status_raw": { "type": ["integer", "null"] },
+        "wifexited": { "type": ["boolean", "null"] },
+        "wifsignaled": { "type": ["boolean", "null"] },
+        "exit_status": { "type": ["integer", "null"], "minimum": 0, "maximum": 255 },
+        "termsig": { "type": ["integer", "null"], "minimum": 1, "maximum": 127 }
+      }
+    },
+    "outerActionTranscript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_position", "request_frame_hex", "request_frame_sha256", "terminal_frame_hex", "terminal_frame_sha256", "action", "containment_request_frame_hex", "containment_request_frame_sha256", "signal_receipt"],
+      "properties": {
+        "action_position": { "type": "integer", "minimum": 0, "maximum": 13 },
+        "request_frame_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 512 },
+        "request_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "terminal_frame_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 2097152 },
+        "terminal_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "action": { "$ref": "#/$defs/action" },
+        "containment_request_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 8192 },
+        "containment_request_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "signal_receipt": { "oneOf": [{ "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] }
+      }
+    },
+    "failedActionAvailableObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spawn_entered", "executable", "generation_snapshot_A", "generation_snapshot_B", "pgid_joined", "action_root_continuity", "resource_observation", "stdout_bytes", "stdout_sha256", "stdout_prefix_hex", "stdout_eof", "stdout_overflow", "stderr_bytes", "stderr_sha256", "stderr_prefix_hex", "stderr_eof", "stderr_overflow", "wait", "absolute_horizon_reached"],
+      "properties": {
+        "spawn_entered": { "type": "boolean" },
+        "executable": { "oneOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "type": "null" }] },
+        "generation_snapshot_A": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "generation_snapshot_B": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "pgid_joined": { "type": ["boolean", "null"] },
+        "action_root_continuity": { "oneOf": [{ "$ref": "#/$defs/actionRootContinuity" }, { "type": "null" }] },
+        "resource_observation": { "oneOf": [{ "$ref": "#/$defs/actionResourceObservation" }, { "type": "null" }] },
+        "stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "stdout_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 33554432 },
+        "stdout_eof": { "type": ["boolean", "null"] },
+        "stdout_overflow": { "type": "boolean" },
+        "stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "stderr_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 33554432 },
+        "stderr_eof": { "type": ["boolean", "null"] },
+        "stderr_overflow": { "type": "boolean" },
+        "wait": { "oneOf": [{ "$ref": "#/$defs/outerWaitObservation" }, { "type": "null" }] },
+        "absolute_horizon_reached": { "type": "boolean" }
+      }
+    },
+    "outerFailedActionTranscript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_position", "failure_phase", "request_frame_hex", "request_frame_sha256", "terminal_frame_hex", "terminal_frame_sha256", "action", "available_observation", "containment_request_frame_hex", "containment_request_frame_sha256", "signal_receipt", "available_prefix_sha256"],
+      "properties": {
+        "action_position": { "type": "integer", "minimum": 0, "maximum": 13 },
+        "failure_phase": { "enum": ["request", "pre_spawn", "post_spawn_pre_join", "running", "containment", "reap_capture"] },
+        "request_frame_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 512 },
+        "request_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "terminal_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 2097152 },
+        "terminal_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "action": { "oneOf": [{ "$ref": "#/$defs/action" }, { "type": "null" }] },
+        "available_observation": { "$ref": "#/$defs/failedActionAvailableObservation" },
+        "containment_request_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 8192 },
+        "containment_request_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "signal_receipt": { "oneOf": [{ "$ref": "#/$defs/positivePidKillReceipt" }, { "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] },
+        "available_prefix_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "outerLauncherReceiptBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "failure_code", "build_launch_envelope_commit", "build_launch_envelope_tree", "build_launch_envelope_file_sha256", "b00_frame_sha256", "o00_frame_sha256", "p01_frame_sha256", "build_plan_sha256", "launcher", "launcher_generation", "controller", "controller_generation", "action_transcript", "failed_action", "controller_stdout_bytes", "controller_stdout_sha256", "controller_stdout_prefix_hex", "controller_stdout_eof", "controller_stdout_overflow", "controller_stderr_bytes", "controller_stderr_sha256", "controller_stderr_prefix_hex", "controller_stderr_eof", "controller_stderr_overflow", "controller_wait", "controller_signal_receipt", "controller_group_absence_zero_probe_statuses", "b01_frame_hex", "b01_frame_sha256", "outer_receipt_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.outer-launcher-receipt.v1" },
+        "status": { "enum": ["PASS_OUTER_BUILD_CAPTURE_ONLY", "INCOMPLETE_OUTER_BUILD_CAPTURE_NO_RETRY"] },
+        "failure_code": { "type": ["string", "null"], "maxLength": 128 },
+        "build_launch_envelope_commit": { "$ref": "#/$defs/git40" },
+        "build_launch_envelope_tree": { "$ref": "#/$defs/git40" },
+        "build_launch_envelope_file_sha256": { "$ref": "#/$defs/hex64" },
+        "b00_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "o00_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "p01_frame_sha256": { "$ref": "#/$defs/hex64" },
+        "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+        "launcher": { "$ref": "#/$defs/launcherImageIdentity" },
+        "launcher_generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+        "controller": { "oneOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "type": "null" }] },
+        "controller_generation": { "oneOf": [{ "$ref": "#/$defs/processGenerationSnapshot" }, { "type": "null" }] },
+        "action_transcript": { "type": "array", "minItems": 0, "maxItems": 14, "items": { "$ref": "#/$defs/outerActionTranscript" } },
+        "failed_action": { "oneOf": [{ "$ref": "#/$defs/outerFailedActionTranscript" }, { "type": "null" }] },
+        "controller_stdout_bytes": { "type": "integer", "minimum": 0, "maximum": 2097168 },
+        "controller_stdout_sha256": { "$ref": "#/$defs/hex64" },
+        "controller_stdout_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 4194336 },
+        "controller_stdout_eof": { "type": ["boolean", "null"] },
+        "controller_stdout_overflow": { "type": "boolean" },
+        "controller_stderr_bytes": { "type": "integer", "minimum": 0, "maximum": 16777216 },
+        "controller_stderr_sha256": { "$ref": "#/$defs/hex64" },
+        "controller_stderr_prefix_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})*$", "maxLength": 33554432 },
+        "controller_stderr_eof": { "type": ["boolean", "null"] },
+        "controller_stderr_overflow": { "type": "boolean" },
+        "controller_wait": { "oneOf": [{ "$ref": "#/$defs/outerWaitObservation" }, { "type": "null" }] },
+        "controller_signal_receipt": { "oneOf": [{ "$ref": "#/$defs/positivePidKillReceipt" }, { "$ref": "#/$defs/launcherSignalReceipt" }, { "type": "null" }] },
+        "controller_group_absence_zero_probe_statuses": { "type": "array", "minItems": 0, "maxItems": 2, "items": { "enum": ["ESRCH", "OBSERVED"] } },
+        "b01_frame_hex": { "type": ["string", "null"], "pattern": "^(?:[0-9a-f]{2})+$", "maxLength": 4194336 },
+        "b01_frame_sha256": { "$ref": "#/$defs/nullableHex64" },
+        "outer_receipt_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "outerLauncherReceipt": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/outerLauncherReceiptBase" },
+            {
+              "properties": {
+                "status": { "const": "PASS_OUTER_BUILD_CAPTURE_ONLY" },
+                "failure_code": { "type": "null" },
+                "launcher": { "allOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "properties": { "all_joins": { "const": true } } }] },
+                "controller": { "allOf": [{ "$ref": "#/$defs/launcherImageIdentity" }, { "properties": { "all_joins": { "const": true } } }] },
+                "action_transcript": { "type": "array", "minItems": 14, "maxItems": 14 },
+                "failed_action": { "type": "null" },
+                "controller_generation": { "$ref": "#/$defs/processGenerationSnapshot" },
+                "controller_stdout_eof": { "const": true },
+                "controller_stdout_overflow": { "const": false },
+                "controller_stderr_bytes": { "const": 0 },
+                "controller_stderr_sha256": { "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
+                "controller_stderr_prefix_hex": { "const": "" },
+                "controller_stderr_eof": { "const": true },
+                "controller_stderr_overflow": { "const": false },
+                "controller_wait": { "const": { "reaped": true, "wait_status_raw": 0, "wifexited": true, "wifsignaled": false, "exit_status": 0, "termsig": null } },
+                "controller_signal_receipt": { "type": "null" },
+                "controller_group_absence_zero_probe_statuses": { "const": ["ESRCH", "ESRCH"] },
+                "b01_frame_hex": { "type": "string", "pattern": "^(?:[0-9a-f]{2})+$" },
+                "b01_frame_sha256": { "$ref": "#/$defs/hex64" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/outerLauncherReceiptBase" },
+            { "properties": { "status": { "const": "INCOMPLETE_OUTER_BUILD_CAPTURE_NO_RETRY" }, "failure_code": { "type": "string", "minLength": 1 } } }
+          ]
+        }
+      ]
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "measurement_basis", "app_launches", "h2_live_controller_launches", "worker_launches", "semantic_verifier_launches", "vm_creations", "guest_entries", "launcher_pre_join_positive_pid_SIGKILL_entries", "launcher_timeout_group_SIGKILL_receipt_entries", "other_signals", "network_actions_authorized_or_entered", "ambient_network_observation", "product_archives", "provisioning_updates", "codesign_identity_operations", "static_auditor_launches"],
+      "properties": {
+        "scope": { "const": "OUTER_LAUNCHER_ACTIONS_STATIC_PRODUCT_AUDITS_AND_EXACT_LAUNCHER_SIGNAL_RECEIPTS_ONLY_NOT_GLOBAL_HOST_ABSENCE" },
+        "measurement_basis": { "const": "DIRECT_ACTION_ROLE_ENTRIES_STATIC_IMPORT_AUDITS_AND_EXACT_SIGNAL_RECEIPTS_NOT_KERNEL_WIDE_EFFECT_AUDIT" },
+        "app_launches": { "const": 0 },
+        "h2_live_controller_launches": { "const": 0 },
+        "worker_launches": { "const": 0 },
+        "semantic_verifier_launches": { "const": 0 },
+        "vm_creations": { "const": 0 },
+        "guest_entries": { "const": 0 },
+        "launcher_pre_join_positive_pid_SIGKILL_entries": { "type": "integer", "minimum": 0, "maximum": 14 },
+        "launcher_timeout_group_SIGKILL_receipt_entries": { "type": "integer", "minimum": 0, "maximum": 14 },
+        "other_signals": { "const": 0 },
+        "network_actions_authorized_or_entered": { "const": 0 },
+        "ambient_network_observation": { "const": "UNASSESSED" },
+        "product_archives": { "const": 0 },
+        "provisioning_updates": { "const": 0 },
+        "codesign_identity_operations": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "static_auditor_launches": { "type": "integer", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "buildFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "code", "completed_action_count", "last_completed_position", "detail_sha256"],
+      "properties": {
+        "phase": { "enum": ["action", "native_operation", "final_revalidation"] },
+        "code": { "enum": ["IDENTITY_JOIN", "SOURCE_JOIN", "WATCH_EVENT", "RESOURCE_LIMIT", "SPAWN", "IMAGE_JOIN", "TIMEOUT", "EXIT_STATUS", "PIPE_EOF", "PIPE_OVERFLOW", "PAIR_MISMATCH", "SIGNING", "STATIC_CODE", "TEST", "BINARY_AUDIT", "EFFECT_MISMATCH", "INTERNAL_INVARIANT"] },
+        "completed_action_count": { "type": "integer", "minimum": 0, "maximum": 14 },
+        "last_completed_position": { "type": ["integer", "null"], "minimum": 0, "maximum": 13 },
+        "detail_sha256": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "buildResultBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "status", "failure", "source_freeze", "producer", "source_identity", "source_continuity", "build_roots", "actions", "products", "signing", "static_code_audit", "tests", "binary_audits", "effects", "section_merkle_root"],
+      "properties": {
+        "schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.build-result.v1" },
+        "status": { "enum": ["PASS_BUILD_AUDIT_ONLY", "FAIL_BUILD_AUDIT_RETAINED"] },
+        "failure": { "oneOf": [{ "$ref": "#/$defs/buildFailure" }, { "type": "null" }] },
+        "source_freeze": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit", "tree", "file_sha256"],
+          "properties": { "commit": { "$ref": "#/$defs/git40" }, "tree": { "$ref": "#/$defs/git40" }, "file_sha256": { "$ref": "#/$defs/hex64" } }
+        },
+        "producer": {
+          "type": "object",
+          "additionalProperties": false,
+              "required": ["source_manifest_root", "bootstrap_A_sha256", "bootstrap_B_sha256", "selected_sha256", "uuid", "launcher_A_sha256", "launcher_B_sha256", "selected_launcher_sha256", "launcher_uuid", "build_plan_sha256", "predecessor_tools_build_result_frame_sha256", "bootstrap_outer_receipt_sha256", "bootstrap_manifest_sha256"],
+          "properties": {
+            "source_manifest_root": { "$ref": "#/$defs/hex64" },
+            "bootstrap_A_sha256": { "$ref": "#/$defs/hex64" },
+            "bootstrap_B_sha256": { "$ref": "#/$defs/hex64" },
+            "selected_sha256": { "$ref": "#/$defs/hex64" },
+            "uuid": { "$ref": "#/$defs/uuid" },
+            "launcher_A_sha256": { "$ref": "#/$defs/hex64" },
+            "launcher_B_sha256": { "$ref": "#/$defs/hex64" },
+            "selected_launcher_sha256": { "$ref": "#/$defs/hex64" },
+                "launcher_uuid": { "$ref": "#/$defs/uuid" },
+                "build_plan_sha256": { "$ref": "#/$defs/hex64" },
+                "predecessor_tools_build_result_frame_sha256": { "$ref": "#/$defs/hex64" },
+                "bootstrap_outer_receipt_sha256": { "$ref": "#/$defs/hex64" },
+                "bootstrap_manifest_sha256": { "$ref": "#/$defs/hex64" }
+          }
+        },
+        "source_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["implementation_commit", "implementation_tree", "b00_launch_frame_sha256", "b00_manifest_and_tree_reconstructed_exact", "source_view_matches_B00_before_after", "repository_worktree_cleanliness", "ordered_files", "manifest_root", "generated_header_sha256"],
+          "properties": {
+            "implementation_commit": { "$ref": "#/$defs/git40" },
+            "implementation_tree": { "$ref": "#/$defs/git40" },
+            "b00_launch_frame_sha256": { "$ref": "#/$defs/hex64" },
+            "b00_manifest_and_tree_reconstructed_exact": { "type": "boolean" },
+            "source_view_matches_B00_before_after": { "type": "boolean" },
+            "repository_worktree_cleanliness": { "const": "UNASSESSED" },
+            "ordered_files": { "type": "array", "minItems": 1, "maxItems": 4096, "items": { "$ref": "#/$defs/sourceFile" } },
+            "manifest_root": { "$ref": "#/$defs/hex64" },
+            "generated_header_sha256": { "$ref": "#/$defs/nullableHex64" }
+          }
+        },
+        "source_continuity": { "$ref": "#/$defs/sourceContinuityObservationBase" },
+        "build_roots": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["bootstrap_A", "bootstrap_B", "product_A", "product_B", "source_view", "source_view_within_bootstrap_A", "four_top_level_roots_disjoint", "retained"],
+          "properties": {
+            "bootstrap_A": { "$ref": "#/$defs/rootObservation" },
+            "bootstrap_B": { "$ref": "#/$defs/rootObservation" },
+            "product_A": { "$ref": "#/$defs/rootObservation" },
+            "product_B": { "$ref": "#/$defs/rootObservation" },
+            "source_view": { "$ref": "#/$defs/rootObservation" },
+            "source_view_within_bootstrap_A": { "type": "boolean" },
+            "four_top_level_roots_disjoint": { "type": "boolean" },
+            "retained": { "type": "boolean" }
+          }
+        },
+        "actions": { "type": "array", "minItems": 0, "maxItems": 14, "items": { "$ref": "#/$defs/action" } },
+        "products": { "$ref": "#/$defs/productsBase" },
+        "signing": { "$ref": "#/$defs/signing" },
+        "static_code_audit": { "$ref": "#/$defs/staticCodeAuditResult" },
+        "tests": { "$ref": "#/$defs/testsResult" },
+        "binary_audits": { "$ref": "#/$defs/binaryAudits" },
+        "effects": { "$ref": "#/$defs/effects" },
+        "section_merkle_root": { "$ref": "#/$defs/hex64" }
+      }
+    },
+    "buildResult": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/buildResultBase" },
+            {
+              "properties": {
+                "status": { "const": "PASS_BUILD_AUDIT_ONLY" },
+                "failure": { "type": "null" },
+                "source_identity": {
+                  "allOf": [
+                    { "$ref": "#/$defs/buildResultBase/properties/source_identity" },
+                    { "properties": { "b00_manifest_and_tree_reconstructed_exact": { "const": true }, "source_view_matches_B00_before_after": { "const": true }, "generated_header_sha256": { "$ref": "#/$defs/hex64" } } }
+                  ]
+                },
+                "source_continuity": { "$ref": "#/$defs/sourceContinuityObservationPass" },
+                "build_roots": {
+                  "allOf": [
+                    { "$ref": "#/$defs/buildResultBase/properties/build_roots" },
+                    {
+                      "properties": {
+                        "bootstrap_A": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                        "bootstrap_B": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                        "product_A": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                        "product_B": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                        "source_view": { "$ref": "#/$defs/rootObservationWithinLimit" },
+                        "source_view_within_bootstrap_A": { "const": true },
+                        "four_top_level_roots_disjoint": { "const": true },
+                        "retained": { "const": true }
+                      }
+                    }
+                  ]
+                },
+                "actions": {
+                  "type": "array",
+                  "minItems": 14,
+                  "maxItems": 14,
+                  "prefixItems": [
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 0 }, "role": { "const": "signed_worker_auditor_A" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 1 }, "role": { "const": "signed_worker_auditor_B" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 2 }, "role": { "const": "worker_debug_A" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 3 }, "role": { "const": "worker_debug_B" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 4 }, "role": { "const": "worker_release_A" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 5 }, "role": { "const": "worker_release_B" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 6 }, "role": { "const": "worker_codesign" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 7 }, "role": { "const": "worker_static_code_audit" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 8 }, "role": { "const": "controller_release_A" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 9 }, "role": { "const": "controller_release_B" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 10 }, "role": { "const": "verifier_release_A" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 11 }, "role": { "const": "verifier_release_B" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 12 }, "role": { "const": "xctest_debug" }, "actuator": { "const": "outer_build_launcher" } } }] },
+                    { "allOf": [{ "$ref": "#/$defs/actionPass" }, { "properties": { "position": { "const": 13 }, "role": { "const": "xctest_release" }, "actuator": { "const": "outer_build_launcher" } } }] }
+                  ],
+                  "items": false
+                },
+                "products": { "$ref": "#/$defs/productsPass" },
+                "signing": {
+                  "allOf": [
+                    { "$ref": "#/$defs/signing" },
+                    { "properties": { "entered_count": { "const": 1 }, "identity": { "const": "Apple Development: Ashton Wilson (43KWC8944S)" }, "timestamp": { "const": "none" }, "options": { "const": "runtime" }, "selected_unsigned_worker_sha256": { "$ref": "#/$defs/hex64" }, "signed_worker_sha256": { "$ref": "#/$defs/hex64" } } }
+                  ]
+                },
+                "static_code_audit": {
+                  "allOf": [
+                    { "$ref": "#/$defs/staticCodeAuditResult" },
+                    { "properties": { "auditor_A_sha256": { "$ref": "#/$defs/hex64" }, "auditor_B_sha256": { "$ref": "#/$defs/hex64" }, "auditor_pair_equal": { "const": true }, "invocation_count": { "const": 1 }, "receipt_schema": { "const": "ergentics.provenance.hypervisor-stage.h2-live.signed-worker-audit.v1" }, "receipt": { "$ref": "#/$defs/signedWorkerAuditPass" }, "receipt_frame_hex": { "type": "string", "pattern": "^[0-9a-f]+$" }, "receipt_frame_sha256": { "$ref": "#/$defs/hex64" }, "SecStaticCode_status": { "const": 0 }, "strict_no_network": { "const": true }, "descriptor_vnode_hash_join": { "const": true }, "admitted": { "const": true } } }
+                  ]
+                },
+                "tests": {
+                  "allOf": [
+                    { "$ref": "#/$defs/testsResult" },
+                    { "properties": { "debug_exit": { "const": 0 }, "release_exit": { "const": 0 }, "debug_passed": { "type": "integer", "minimum": 1 }, "debug_failed": { "const": 0 }, "release_passed": { "type": "integer", "minimum": 1 }, "release_failed": { "const": 0 }, "new_h2_verifier_source_native_lifecycle_reference_count": { "const": 0 }, "hypervisor_load_command": { "const": false }, "fixture_only": { "const": true } } }
+                  ]
+                },
+                "binary_audits": { "$ref": "#/$defs/binaryAuditsPass" },
+                "effects": {
+                  "allOf": [
+                    { "$ref": "#/$defs/effects" },
+                    { "properties": { "launcher_pre_join_positive_pid_SIGKILL_entries": { "const": 0 }, "launcher_timeout_group_SIGKILL_receipt_entries": { "const": 0 }, "codesign_identity_operations": { "const": 1 }, "static_auditor_launches": { "const": 1 } } }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/buildResultBase" },
+            { "properties": { "status": { "const": "FAIL_BUILD_AUDIT_RETAINED" }, "failure": { "$ref": "#/$defs/buildFailure" } } }
+          ]
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/predecessorProducerPreparationResult" },
+    { "$ref": "#/$defs/predecessorToolsBuildResult" },
+    { "$ref": "#/$defs/bootstrapLaunchFrame" },
+    { "$ref": "#/$defs/bootstrapOuterReceipt" },
+    { "$ref": "#/$defs/bootstrapManifest" },
+    { "$ref": "#/$defs/signedWorkerAudit" },
+    { "$ref": "#/$defs/buildResult" },
+    { "$ref": "#/$defs/outerLauncherReceipt" }
+  ]
+}

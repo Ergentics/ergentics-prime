@@ -1,0 +1,348 @@
+{
+  "schema": "ergentics.provenance.hypervisor-stage-h2-live-mechanics-implementation-handoff.v1",
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "stage_id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+  "stage_ordinal": 2,
+  "slice": "H2_LIVE_IMPLEMENTATION_HANDOFF_ONLY",
+  "status": "FROZEN_H2_LIVE_IMPLEMENTATION_ONLY_NO_BUILD_OR_EXECUTION_AUTHORIZED",
+  "frozen_at_utc": "2026-09-01T11:41:10Z",
+  "predecessor": {
+    "commit": "32d5d866de925f374a8cefd4f0dbd85b13f62cb5",
+    "tree": "d0fd9aca69484ffe44d9cc5ca1e8a2a28683d814",
+    "parent_commit": "eafa7be6fd2e7e7349fd688df884d999feace5ae",
+    "parent_tree": "e5accd4ac939169dd02769097281040855f5cade",
+    "commit_subject": "Freeze H2 live mechanics source and build protocol",
+    "freeze_delta_paths_exact": [
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.sha256"
+    ],
+    "required_status": "FROZEN_SOURCE_AND_BUILD_PROTOCOL_NO_IMPLEMENTATION_BUILD_OR_LIVE_INVOCATION_AUTHORIZED",
+    "required_authority_vector": "00000000",
+    "required_gate_e": "ABSTAIN"
+  },
+  "sealed_inputs": {
+    "source_freeze": {
+      "path": "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.json",
+      "sha256": "f4ca5ce19208509c670018f64f622d0aa0df4497d3e152e95d63299252c58ccb",
+      "git_blob": "6ed224d728e695ae7c03d142b4a4c92374a32697"
+    },
+    "source_freeze_sidecar": {
+      "path": "Control/hypervisor-local-v1/h2-live-mechanics-source-freeze.v1.sha256",
+      "sha256": "51b50dae052209ddd6c7657d511aa0c4a4fbb051541dc4be3c9db2833e0be2f8",
+      "git_blob": "b356b80f3229413ccf79e6f5b152e7231bf4a2d5"
+    },
+    "build_plan": {
+      "path": "Control/hypervisor-local-v1/h2-live-build-plan.v1.json",
+      "sha256": "d7503908ea6719fe3e024b5e47d9b5e4d8a686ceaf52c3985cf0636510b29102",
+      "git_blob": "33c09b8b954ee73f4b690258308dbbfbd59ce269"
+    },
+    "build_wire_schema": {
+      "path": "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json",
+      "sha256": "095ba62a7520f9425d3901015ff5a13f873b0e4dbe77afc38b6c1caff5cd25e7",
+      "git_blob": "c1e82d7c1bcd7d3d36af4c8ad5b2cd52ce904217"
+    },
+    "execution_wire_schema": {
+      "path": "Control/hypervisor-local-v1/h2-live-execution-wire.schema.v1.json",
+      "sha256": "a9a9d6aa1f641c55aee2c0ef54ce21eb0dad2a12430061c157735f0432800e59",
+      "git_blob": "e9cf06c8a3cdf3b7e3f9a499ac91756f75992f9f"
+    }
+  },
+  "handoff_commit_contract": {
+    "changed_paths_exact": [
+      "Control/hypervisor-local-v1/h2-live-mechanics-implementation-handoff.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-implementation-handoff.v1.sha256"
+    ],
+    "control_only": true,
+    "implementation_source_changes": 0,
+    "compiler_processes": 0,
+    "build_processes": 0,
+    "test_processes": 0,
+    "codesign_processes": 0,
+    "app_launches": 0,
+    "vm_launches": 0,
+    "guest_entries": 0,
+    "signals": 0,
+    "network_actions": 0,
+    "runtime_or_evidence_roots_created": 0
+  },
+  "commit_protocol": {
+    "handoff_commit_parent_exact": "32d5d866de925f374a8cefd4f0dbd85b13f62cb5",
+    "handoff_commit_parent_tree_exact": "d0fd9aca69484ffe44d9cc5ca1e8a2a28683d814",
+    "handoff_commit_delta_exact": [
+      "Control/hypervisor-local-v1/h2-live-mechanics-implementation-handoff.v1.json",
+      "Control/hypervisor-local-v1/h2-live-mechanics-implementation-handoff.v1.sha256"
+    ],
+    "handoff_cached_diff_must_equal_delta_exact": true,
+    "implementation_commit_first_parent": "THE_COMMIT_THAT_ADDS_ONLY_THIS_JSON_AND_ITS_DETACHED_SHA256_SIDECAR",
+    "implementation_cached_diff_must_equal_allowed_paths_exact": true,
+    "self_hash_rule": "JSON_CONTAINS_NO_OWN_DIGEST_OR_OWN_COMMIT; SIDECAR_IS_LOWERCASE_SHA256_TWO_ASCII_SPACES_EXACT_JSON_REPOSITORY_RELATIVE_PATH_AND_ONE_LF",
+    "sidecar_filename_exact": "Control/hypervisor-local-v1/h2-live-mechanics-implementation-handoff.v1.sha256",
+    "git_mutations_authorized_for_handoff": [
+      "ADD_THE_EXACT_JSON_AND_SIDECAR_TO_INDEX",
+      "CREATE_ONE_LOCAL_COMMIT_WITH_EXACT_PINNED_PARENT"
+    ],
+    "git_mutations_forbidden": [
+      "BRANCH_CREATE_DELETE_OR_SWITCH",
+      "TAG_CREATE_DELETE_OR_MOVE",
+      "FETCH_PULL_PUSH_OR_NETWORK",
+      "RESET_REBASE_MERGE_CHERRY_PICK_OR_AMEND",
+      "STAGE_OR_COMMIT_ANY_AMBIENT_UNTRACKED_PATH"
+    ],
+    "untracked_state": "NOT_ADMITTED_NOT_DELETED_NOT_COMMITTED_NOT_A_CLEANLINESS_AUTHORITY"
+  },
+  "implementation_scope": {
+    "allowed_paths_exact": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Tools/H2LivePredecessorToolsBuilder/main.c",
+      "Tools/H2LiveBootstrapCaptureLauncher/main.c",
+      "Tools/H2LiveBuildBootstrapSupervisor/main.c",
+      "Tools/H2LiveBuildLauncher/main.c",
+      "Tools/H2LiveBuildController/main.swift",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.c",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.h",
+      "Tools/H2LiveWorker/main.swift",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.c",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.h",
+      "Tools/H2LiveController/main.swift",
+      "Tools/H2LiveController/H2LiveControl.c",
+      "Tools/H2LiveController/H2LiveControl.h",
+      "Tools/H2LiveController/H2LiveWorkerIdentityTemplate.h",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+      "Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift",
+      "Tools/H2LiveVerifier/main.swift",
+      "Tests/HypervisorStageH2LiveVerifierTests.swift"
+    ],
+    "allowed_paths_canonical_json_sha256": "a6e523ea745a04da34abde4192e05ae0b2ed67e1b8bee83603e0352cdc3a68cc",
+    "path_set_rule": "THE_IMPLEMENTATION_COMMIT_DIFF_AGAINST_THIS_CONTROL_ONLY_HANDOFF_COMMIT_MUST_EQUAL_THIS_EXACT_TWENTY_PATH_SET_WITH_NO_ADDITIONS_OMISSIONS_RENAMES_OR_DELETIONS",
+    "existing_path_exact": {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "preimage_sha256": "703e338e79da153e6e3df3113b329451a52422adc2f0eedda6f91484bab181d9",
+      "preimage_git_blob": "fe975a40e01edf2737e7671deff8ed0a0d968e06",
+      "required_final_git_mode": "100644"
+    },
+    "new_paths_exact": [
+      "Tools/H2LivePredecessorToolsBuilder/main.c",
+      "Tools/H2LiveBootstrapCaptureLauncher/main.c",
+      "Tools/H2LiveBuildBootstrapSupervisor/main.c",
+      "Tools/H2LiveBuildLauncher/main.c",
+      "Tools/H2LiveBuildController/main.swift",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.c",
+      "Tools/H2LiveBuildController/H2LiveBuildControl.h",
+      "Tools/H2LiveWorker/main.swift",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.c",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.h",
+      "Tools/H2LiveController/main.swift",
+      "Tools/H2LiveController/H2LiveControl.c",
+      "Tools/H2LiveController/H2LiveControl.h",
+      "Tools/H2LiveController/H2LiveWorkerIdentityTemplate.h",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+      "Tools/H2LiveVerifier/H2LiveSignedWorkerAudit.swift",
+      "Tools/H2LiveVerifier/main.swift",
+      "Tests/HypervisorStageH2LiveVerifierTests.swift"
+    ],
+    "new_paths_required_git_mode": "100644",
+    "path_type_and_ancestry_rule": "EVERY FINAL IMPLEMENTATION PATH MUST RESOLVE THROUGH THE CANONICAL REPOSITORY ANCESTRY AND ENTER THE GIT TREE AS A REGULAR 100644 BLOB; SYMLINKS GITLINKS SPECIAL FILES AND CASE_ALIASES REJECT",
+    "new_worktree_file_nlink_required": 1,
+    "pinned_existing_sources": [
+      {
+        "path": "Sources/HypervisorGuest.c",
+        "sha256": "e5374a2afd7467332abef6303f0ddd85fd800d86baac42d82c10c6c8f3803547"
+      },
+      {
+        "path": "Sources/HypervisorGuest.h",
+        "sha256": "e19229d2faa27274b1a8b86464a60cc082caedef379139d98f738c9bf59fdf3a"
+      },
+      {
+        "path": "Sources/GuestCapabilityPlan.h",
+        "sha256": "5d4ee247d70fb3a6708ed6f04dac6ad81b0ce936bdbcae66e56864b89670ab70"
+      },
+      {
+        "path": "Sources/ProvenanceReadOnly.c",
+        "sha256": "78c4d4e2e8e4b50ee81b5a671b127dfb2fdad2ec812b67314bf6553af37fd0c6"
+      },
+      {
+        "path": "Sources/ProvenanceReadOnly.h",
+        "sha256": "cbc28fb9d69547fe354c425535d90938697ffed71e3e2217b1fabfe4573e63d6"
+      },
+      {
+        "path": "Guest/doorbell.S",
+        "sha256": "60ae1941fd43a5d3410fdedefe2ecb99adad0d2bcfdfd429b75c35fb59a409fd"
+      },
+      {
+        "path": "Sources/GuestContract.swift",
+        "sha256": "0a60872f4edb891888598442681b8b720ecda38b4b3d6a0ced09d1ce775627f7"
+      },
+      {
+        "path": "Sources/GuestCapabilityWitness.swift",
+        "sha256": "eb60116c87ab02c2f406891ae680936f01bce27d19842275f14a849de9ff809e"
+      },
+      {
+        "path": "Sources/MerkleGenesis.swift",
+        "sha256": "6d6a47252e498ca3c6ce27d4d4405e2201bf3b6b296fd2a6d4d035de83c730c3"
+      },
+      {
+        "path": "Sources/RustBootstrapImage.h",
+        "sha256": "676d0fb8f53a83c25bef454e3906d86069d63c5d924878995683fe2cf627b955"
+      },
+      {
+        "path": "Entitlements.plist",
+        "sha256": "ffab5dd538d1fc0aefa6b0e7facf2dcc4f0927845db0806b2bec82a617b2dcf2"
+      }
+    ],
+    "pinned_existing_sources_canonical_json_sha256": "744216ea21a7d8b32cc04a888e66a7408fffe5c519c510c54bf2db7f020b1fbe",
+    "existing_product_source_bytes_unchanged": true,
+    "app_product_source_membership_changes": false,
+    "app_bundle_resource_changes": false,
+    "entitlement_changes": false,
+    "run_script_changes": false,
+    "ui_changes": false,
+    "new_public_api": false,
+    "new_non_app_xcode_targets_exact": [
+      "ErgenticsProvenanceH2LiveWorker",
+      "ErgenticsProvenanceH2LiveController"
+    ],
+    "test_target_new_membership_exact": [
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveCodec.swift",
+      "Tools/H2LiveVerifier/HypervisorStageH2LiveProjector.swift",
+      "Tests/HypervisorStageH2LiveVerifierTests.swift"
+    ],
+    "future_result_paths_are_not_implementation_inputs": true
+  },
+  "implementation_contract": {
+    "source_authority": "THE_FOUR_PREDECESSOR_CONTROL_INPUTS_AND_THEIR_EXACT_MACHINE_CONTRACTS",
+    "worker_product": "ErgenticsProvenanceH2LiveWorker",
+    "worker_profile": "BASELINE_ASSEMBLY_92",
+    "worker_compiled_sources_exact": [
+      "Tools/H2LiveWorker/main.swift",
+      "Tools/H2LiveWorker/H2LiveWorkerControl.c",
+      "Sources/HypervisorGuest.c",
+      "Sources/ProvenanceReadOnly.c"
+    ],
+    "controller_product": "ErgenticsProvenanceH2LiveController",
+    "controller_compiled_sources_exact": [
+      "Tools/H2LiveController/main.swift",
+      "Tools/H2LiveController/H2LiveControl.c"
+    ],
+    "offline_products_exact": [
+      "ErgenticsProvenanceH2LivePredecessorToolsBuilder",
+      "ErgenticsProvenanceH2LiveBootstrapCaptureLauncher",
+      "ErgenticsProvenanceH2LiveBuildBootstrapSupervisor",
+      "ErgenticsProvenanceH2LiveBuildLauncher",
+      "ErgenticsProvenanceH2LiveBuildController",
+      "ErgenticsProvenanceH2LiveVerifier",
+      "ErgenticsProvenanceH2LiveSignedWorkerAudit"
+    ],
+    "worker_entry": "ONE_RESERVATION_ONE_WITNESS_COPY_ONE_RUN_RESERVED_ONE_RELEASE_NO_LEGACY_RUN_CANCEL_RETAIN_SECOND_RESERVATION_OR_CURSOR",
+    "controller_surface": "ZERO_ARGUMENTS_FIXED_SIBLING_WORKER_NO_CALLER_PATH_ARGV_ENV_CWD_REQUEST_IMAGE_PLAN_ROLE_OR_DEADLINE_INPUT",
+    "build_controller_surface": "ZERO_ARGUMENTS_NEXT_ORDINAL_ONLY_NO_PROCESS_SPAWN_OR_SIGNAL_SITE",
+    "build_launcher_surface": "ZERO_ARGUMENTS_SOLE_FIXED_OWNER_OF_CONTROLLER_AND_FOURTEEN_ORDERED_ACTIONS",
+    "verifier_surface": "OFFLINE_CANONICAL_FRAME_VALIDATION_PROJECTION_MERKLE_AND_ROUND_TRIP_ONLY_NO_VM_GUEST_OR_AUTHORITY_MINTING",
+    "persistence_in_worker": false,
+    "network_in_worker": false,
+    "ui_in_worker": false,
+    "foundation_process_anywhere": false,
+    "runtime_git_process": false,
+    "generic_command_surface": false,
+    "indefinite_wait": false,
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN"
+  },
+  "implementation_verification_allowed": {
+    "read_only_source_inspection": true,
+    "strict_json_parse_and_duplicate_key_audit": true,
+    "sha256_and_git_object_checks": true,
+    "project_text_inventory_and_reference_graph_audit": true,
+    "forbidden_symbol_and_surface_text_audit": true,
+    "git_diff_check": true,
+    "compiler_or_preprocessor_execution": false,
+    "swift_typecheck": false,
+    "xcodebuild": false,
+    "swift_build_or_test": false,
+    "xctest": false,
+    "codesign_or_security_audit": false,
+    "implemented_binary_execution": false
+  },
+  "implementation_commit_acceptance": {
+    "immediate_parent_rule": "THE_IMPLEMENTATION_COMMIT_IMMEDIATE_PARENT_MUST_BE_THE_CONTROL_ONLY_COMMIT_WHOSE_TREE_CONTAINS_THIS_HANDOFF_JSON_AND_ITS_EXACT_DETACHED_SHA256_SIDECAR",
+    "required_changed_path_count": 20,
+    "required_changed_paths": "implementation_scope.allowed_paths_exact",
+    "required_git_entry_type_and_mode": "100644_REGULAR_BLOB_FOR_ALL_TWENTY_PATHS",
+    "generated_worker_identity_header_committed": false,
+    "require_no_control_result_files": true,
+    "require_no_build_outputs": true,
+    "require_no_runtime_or_evidence_roots": true,
+    "require_unrelated_untracked_paths_untouched": true,
+    "require_three_independent_post_commit_source_reviews": true,
+    "required_review_axes_exact": [
+      "MACHINE_CONTRACT_AND_WIRE_FIDELITY",
+      "ROADMAP_ORDER_AND_SCOPE_FIDELITY",
+      "SECURITY_CONTAINMENT_AND_CAPABILITY_SURFACE"
+    ],
+    "review_subject_binding": "EACH_REVIEW_MUST_PIN_THE_SAME_FINAL_IMPLEMENTATION_COMMIT_AND_TREE_AND_RECONSTRUCT_ITS_EXACT_TWENTY_PATH_PARENT_DELTA_WITH_MODE_AND_GIT_BLOB_ID; NO_PRECOMMIT_WORKTREE_REVIEW_CAN_SATISFY_THIS_REQUIREMENT",
+    "review_timing": "AFTER_THE_IMPLEMENTATION_COMMIT_AND_BEFORE_ANY_P00_PREPARATION_ENVELOPE",
+    "review_pass_cannot_replace_build_or_runtime_evidence": true,
+    "result": "IMPLEMENTATION_TREE_ONLY_NOT_BUILD_ADMISSION_NOT_LIVE_READINESS"
+  },
+  "unrelated_worktree_policy": {
+    "ambient_untracked_control_paths_may_exist": true,
+    "ambient_untracked_paths_are_not_inputs_or_authority": true,
+    "must_not_read_as_implementation_inputs": true,
+    "must_not_modify_stage_or_commit": true,
+    "worktree_cleanliness_is_not_a_pass_predicate": true,
+    "later_source_identity": "EXACT_COMMITTED_IMPLEMENTATION_TREE_RECONSTRUCTED_BY_B00_NOT_AMBIENT_WORKTREE_STATE"
+  },
+  "hard_stops": [
+    "STOP_IF_HEAD_OR_TREE_DOES_NOT_EQUAL_THE_PINNED_PREDECESSOR_BEFORE_HANDOFF_CREATION",
+    "STOP_IF_ANY_PREDECESSOR_CONTROL_INPUT_SHA256_DIFFERS",
+    "STOP_IF_HANDOFF_COMMIT_CONTAINS_ANY_PATH_OTHER_THAN_THE_JSON_AND_DETACHED_SHA256_SIDECAR",
+    "STOP_IF_HANDOFF_COMMIT_PARENT_IS_NOT_EXACTLY_THE_PINNED_SOURCE_FREEZE_COMMIT_AND_TREE",
+    "STOP_IF_IMPLEMENTATION_DIFF_PATH_SET_IS_NOT_EXACTLY_THE_TWENTY_ALLOWLISTED_PATHS",
+    "STOP_IF_ANY_IMPLEMENTATION_PATH_IS_NOT_A_CANONICAL_REGULAR_100644_BLOB_OR_ANY_NEW_WORKTREE_FILE_HAS_NLINK_OTHER_THAN_ONE",
+    "STOP_IF_THE_BUILD_ROOT_ONLY_GENERATED_H2LIVEWORKERIDENTITY_HEADER_IS_COMMITTED",
+    "STOP_IF_ANY_EXISTING_PRODUCT_SOURCE_BYTE_ENTITLEMENT_APP_RESOURCE_RUN_SCRIPT_OR_UI_SOURCE_CHANGES",
+    "STOP_IF_ANY_COMPILER_PREPROCESSOR_BUILD_TEST_CODESIGN_SECURITY_APP_VM_GUEST_CONTROLLER_WORKER_VERIFIER_OR_PREDECESSOR_TOOL_PROCESS_IS_ENTERED",
+    "STOP_IF_ANY_SIGNAL_NETWORK_ACTION_RUNTIME_OR_EVIDENCE_ROOT_CREATION_OCCURS",
+    "STOP_IF_IMPLEMENTATION_INTRODUCES_CALLER_SUPPLIED_PATH_ARGV_ENV_CWD_REQUEST_IMAGE_PLAN_ROLE_OR_DEADLINE_INPUT",
+    "STOP_IF_IMPLEMENTATION_INTRODUCES_PROCESS_SQLITE_JOURNAL_FILE_NETWORK_OR_UI_CAPABILITY_IN_THE_WORKER",
+    "STOP_IF_IMPLEMENTATION_INTRODUCES_LEGACY_EPR_GUEST_RUN_RETAIN_CANCEL_ISCANCELLED_SECOND_RESERVATION_OR_H3_CURSOR",
+    "STOP_IF_IMPLEMENTATION_INTRODUCES_AN_INDEFINITE_WAIT_RETRY_OR_SECOND_EXECUTION_PATH",
+    "STOP_IF_ANY_REVIEW_ATTEMPTS_TO_INFER_BUILD_RUNTIME_GATE_E_OR_SCIENTIFIC_PASS_FROM_SOURCE_ONLY_EVIDENCE"
+  ],
+  "out_of_scope": [
+    "P00_PREPARATION_ENVELOPE_OR_DIRECT_CLANG_BUILD",
+    "T00_PREDECESSOR_TOOLS_BUILD_ENVELOPE_OR_EXECUTION",
+    "B00_FRAME_MATERIALIZATION",
+    "O00_CAPTURE_LAUNCH",
+    "P01_OR_B01_OR_O01_BUILD_EXECUTION",
+    "CODESIGN_KEYCHAIN_OR_STATIC_CODE_TRUST_AUDIT",
+    "RUNTIME_ROOT_OR_EXACT_BINARY_READINESS",
+    "H2_LIVE_INVOCATION",
+    "H3_CURSOR",
+    "GATE_E_AUTHORITY_OR_CANDIDATE_SELECTION",
+    "ARCHIVE_EXPORT_TESTFLIGHT_OR_APP_STORE_EXCLUSION_PROOF"
+  ],
+  "successor": {
+    "implementation_action": "COMMIT_THE_EXACT_TWENTY_PATH_IMPLEMENTATION_TREE_ONLY",
+    "after_implementation_commit": "RUN_THREE_INDEPENDENT_READ_ONLY_REVIEWS_BOUND_TO_THE_EXACT_COMMIT_TREE_PARENT_DELTA_MODES_AND_BLOBS",
+    "on_all_three_exact_subject_review_passes": "RECOMMEND_A_SEPARATE_NONAUTHORITATIVE_P00_PREPARATION_ENVELOPE",
+    "P00_envelope_forbidden_before_all_three_exact_subject_review_passes": true,
+    "P00_execution_requires_separate_committed_envelope": true,
+    "live_H2_requires_new_explicit_user_approval": true,
+    "may_close_gate_e": false,
+    "may_mint_execution_authority": false
+  },
+  "authority_ceiling": {
+    "authority_delta": "00000000",
+    "authority_vector": "00000000",
+    "scientific_authority": false,
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "trusted_ingress": "DENIED",
+    "trusted_egress": "DENIED"
+  }
+}

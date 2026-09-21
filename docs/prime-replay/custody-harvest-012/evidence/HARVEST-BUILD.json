@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "/Users/ergentics/2026-09-20/er/work/prime-skill-readiness/harvest-skills",
+    "build",
+    "--control",
+    "/Users/ergentics/2026-09-20/er/work/prime-skill-readiness/auto-harvest-control.json",
+    "--release",
+    "PRIME-CUSTODY-010-012",
+    "--skill-dir",
+    "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody",
+    "--source-root",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source",
+    "--manifest",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/HARVEST-SOURCE-MANIFEST.json"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.053564457999999995,
+  "control_after": {
+    "schema": 1,
+    "enabled": false,
+    "storeRoot": "/Users/ergentics/2026-09-20/er/outputs/prime-skill-harvest-store"
+  },
+  "helper_sha256": "1d62cb7cfbbdb6d660c8bab62b2b94a5fc6564b7b15ff0253e83256c2365242e",
+  "source_manifest_sha256": "bd4351137d87bdd736d00c3036cc1a50b69e779da1b742cbf8b5f1defd638ca5",
+  "candidate_manifest_sha256": "42b304d540564232ac42f391b8f2e58b939e0e21439b86ac7bb8fc9fb1860a48",
+  "stdout_sha256": "2301175e4e11fd7187d92e0e672a4860977f8fcb4e64536f480bfeb2c976d981",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "installed": false
+}

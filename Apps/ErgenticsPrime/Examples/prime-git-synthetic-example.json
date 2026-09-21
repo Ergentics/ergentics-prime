@@ -1,0 +1,12 @@
+{
+  "schema": "com.ergentics.provenance.prime-git.snapshot.v1",
+  "repositoryPath": "/EXAMPLE-NOT-A-REAL-REPOSITORY/Prime",
+  "observedAt": "2026-08-30T00:00:00Z",
+  "headMode": "unborn",
+  "branch": "synthetic-example-only",
+  "headOID": null,
+  "changeCounts": { "staged": null, "unstaged": null, "untracked": null },
+  "remotes": [],
+  "upstream": null,
+  "consistency": "unchecked"
+}

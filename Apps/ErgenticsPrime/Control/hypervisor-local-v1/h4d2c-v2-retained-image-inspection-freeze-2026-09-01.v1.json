@@ -1,0 +1,215 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d2c-freeze.v1",
+  "checkpoint": "H4-D2C_V2_RETAINED_IMAGE_READ_ONLY_INSPECTION_FREEZE",
+  "recorded_at_utc": "2026-09-02T04:06:35Z",
+  "predecessor": {
+    "commit": "b2377a00411078e33ebdccff7600c8afe8ef26b6",
+    "tree": "6c5b0fda6ae0a3c771db1b3ade5f79b1cc426cc8",
+    "subject_archive_source_commit": "ca8c28d8a694fb0269b8dedeb564fc212eecf2f8",
+    "d2b_checkpoint_commit": "6f3de30313bde8b5321f1bfa63248d0a82e63dd9",
+    "d2b_implementation_commit": "8aeb7e5f5a28deb85dda5efcf1bc035de85b7876"
+  },
+  "result_contract": "PASS_H4D2C_V2_INSPECTION_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "next_stage_authorized": false,
+    "production_h3_mint": "ABSENT",
+    "production_inspector_mint": "ABSENT",
+    "scientific_authority": false
+  },
+  "ordering": {
+    "basis": "The D2b freeze names fresh-process read-only adoption first among later freezes.",
+    "correction": "The retained image is not self-sufficient for dual-stream adoption because it stores CBOR but not the independently generated JSON bytes.",
+    "this_slice": "Read-only classification and integrity inspection of the retained D2b/v2 image.",
+    "later": [
+      "D3 fresh disjoint publisher storing both exact canonical JSON and exact canonical CBOR",
+      "D3b genuine restart adoption of that self-sufficient dual-stream image",
+      "bounded crash-cut and orphan-state evidence",
+      "constrained physical I/O evidence",
+      "bipartite graph and domain-separated Merkle commitment"
+    ]
+  },
+  "retained_format_fact": {
+    "schema": "com.ergentics.provenance.hypervisor.h4.sqlite-image-publication.v2",
+    "application_id": 1162891828,
+    "user_version": 1,
+    "table": "h4_receipts",
+    "retained_columns": [
+      "singleton",
+      "semantic_schema",
+      "claim_state",
+      "predicate_count",
+      "authority_vector",
+      "canonical_cbor"
+    ],
+    "canonical_json_bytes_retained": false,
+    "canonical_json_digest_retained": false,
+    "original_owner_anchor_retained": false,
+    "original_persistence_lease_retained": false,
+    "original_vnode_commitment_retained_outside_image": false,
+    "consequence": "Exact v2 bytes can prove a canonical-CBOR/scalar join only. They cannot prove continuity of H4-C's independently produced JSON stream or restore the original owner/lease."
+  },
+  "closed_input_surface": {
+    "operation": "inspectRetainedV2Image()",
+    "operation_arguments": 0,
+    "caller_path_arguments": 0,
+    "caller_schema_arguments": 0,
+    "caller_role_arguments": 0,
+    "caller_policy_arguments": 0,
+    "production_factory": "ABSENT",
+    "test_factory": "EPR_H4_PRIVACY_TESTS_ONLY_ROOT_URL_ADMISSION",
+    "held_root": "Canonical absolute 0700 effective-uid-owned directory opened O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC and held under nonblocking shared flock.",
+    "one_shot": {
+      "initial": "ready",
+      "transition": "ready_to_claimed_to_terminal",
+      "one_winner": true,
+      "copy_replay": "shared owner state",
+      "concurrent_replay": "one inspection only",
+      "retry": false,
+      "cleanup": false,
+      "repair": false
+    }
+  },
+  "namespace_classification": {
+    "empty": "EMPTY",
+    "staging_only": "STAGING_RETAINED_INSPECTION_ONLY",
+    "final_only_valid": "VALID_V2_CBOR_ONLY_JSON_MISSING_INSPECTION_ONLY",
+    "final_only_invalid": "PUBLISHED_INVALID_INSPECTION_ONLY",
+    "staging_and_final": "NAMESPACE_AMBIGUOUS_INSPECTION_ONLY",
+    "other_entries": "NAMESPACE_AMBIGUOUS_INSPECTION_ONLY",
+    "inventory_failure": "UNAVAILABLE_INSPECTION_ONLY",
+    "every_outcome_admitted": false
+  },
+  "descriptor_and_byte_contract": {
+    "root_leaf_names": [
+      ".h4d2b-receipt.sqlite.staging",
+      "h4d2b-receipt.sqlite"
+    ],
+    "final_open": "descriptor-rooted fixed C wrapper with O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC",
+    "final_metadata": {
+      "type": "regular",
+      "mode": "0400",
+      "owner": "effective_uid",
+      "nlink": 1,
+      "minimum_bytes": 100,
+      "maximum_bytes": 262144,
+      "alignment_bytes": 4096
+    },
+    "joins": [
+      "held root to named root before classification",
+      "inventory exact before final open",
+      "named final lstat to opened final fstat",
+      "bounded pread through exact size plus explicit EOF",
+      "opened final metadata stable after read",
+      "inventory exact after read and reconstruction",
+      "named final to held final vnode and complete metadata",
+      "held root to named root at terminal observation"
+    ],
+    "same_bytes_new_inode_before_inspection": "UNDETECTABLE_AS_D2B_CONTINUITY_AND_NEVER_PROMOTABLE",
+    "same_bytes_new_inode_during_inspection": "REJECT_BY_NAMED_OPENED_FINAL_REJOIN"
+  },
+  "sqlite_and_cbor_contract": {
+    "filesystem_sqlite_open_count": 0,
+    "database": ":memory:",
+    "deserialize": "copy retained bytes into SQLite-owned read-only in-memory image",
+    "reader_policy": [
+      "FULLMUTEX",
+      "PRIVATECACHE",
+      "EXRESCODE",
+      "query_only",
+      "defensive",
+      "trusted_schema_off",
+      "DQS_DDL_off",
+      "DQS_DML_off",
+      "read_only_authorizer"
+    ],
+    "checks": [
+      "SQLite header and page count exact",
+      "integrity_check(1) equals ok",
+      "application_id exact",
+      "user_version exact",
+      "sqlite_schema exact",
+      "table_xinfo exact",
+      "one exact row",
+      "indexed scalar storage classes and values exact",
+      "canonical CBOR strict decode and identical re-encode",
+      "decoded CBOR semantics equal indexed scalars",
+      "reader closes exactly"
+    ],
+    "json_derivation": "NOT_PERFORMED",
+    "independent_json_join": "MISSING",
+    "dual_stream_adoption": "REJECTED"
+  },
+  "success_receipt": {
+    "type": "RetainedImageInspectionReceipt",
+    "payload_exposure": "NONE",
+    "reflection": "EMPTY",
+    "fixed_facts": {
+      "classification": "VALID_V2_CBOR_ONLY_JSON_MISSING",
+      "sqlite_image_exact": true,
+      "canonical_cbor_exact": true,
+      "indexed_fields_exact": true,
+      "independent_json_present": false,
+      "dual_stream_join_exact": false,
+      "admitted": false,
+      "h4_entered": false,
+      "authority_vector": "00000000"
+    }
+  },
+  "implementation_allowlist": [
+    "Sources/HypervisorStageH4Persistence.swift",
+    "Sources/HypervisorStageH4CanonicalStreams.swift",
+    "Sources/ProvenanceReadOnly.h",
+    "Tests/HypervisorStageH4PersistenceTests.swift"
+  ],
+  "required_tests": [
+    "valid D2b image classifies CBOR-only and JSON-missing without admission",
+    "empty root",
+    "staging-only root",
+    "staging-and-final root",
+    "unknown entry",
+    "symlink final",
+    "FIFO final returns without blocking",
+    "wrong mode, hard link and misaligned or oversized final",
+    "SQLite header, schema, row, indexed scalar, CBOR and semantic corruption",
+    "root rebound and final replacement during inspection",
+    "sequential copies and concurrent calls have one terminal winner",
+    "receipt has no payload reflection",
+    "production binary excludes test factory, fault hooks and diagnostic canaries"
+  ],
+  "effects": {
+    "application_launch": false,
+    "vm_launch": false,
+    "guest_execution": false,
+    "process_launch": false,
+    "network": false,
+    "environment_read": false,
+    "wall_clock_read": false,
+    "file_create": false,
+    "file_delete": false,
+    "file_rename": false,
+    "file_content_write": false,
+    "sqlite_path_open": false,
+    "read_may_cause_filesystem_atime_bookkeeping": true
+  },
+  "hard_stops": [
+    "Do not call a v2 result adopted, admitted, reconstructed dual-stream, H4-entered or authoritative.",
+    "Do not derive JSON from CBOR and relabel it as the independently retained JSON stream.",
+    "Do not migrate, rewrite, rename, clean, repair or delete any retained v2 namespace.",
+    "Do not add a production path loader, store mint, H3 mint, UI action, process, VM, network or Gate-E transition.",
+    "Do not fold D3 writer/schema changes, graph/Merkle work, crash cuts or distribution into this allowlist."
+  ],
+  "nonclaims": [
+    "A new XCTest object is not a genuinely fresh operating-system process.",
+    "Descriptor and named-path joins prove the inspected interval, not continuity to D2b publication before inspector admission.",
+    "Advisory flock does not exclude same-euid, root or Full-Disk-Access mutation.",
+    "Read-only calls may cause filesystem-managed access-time bookkeeping.",
+    "No authenticity, anti-replay, rollback resistance, crash/power-loss recovery, constrained-I/O behavior, encryption, snapshot exclusion or secure deletion is proven.",
+    "This freeze neither enters nor completes H4, changes Gate E, evaluates a Prime candidate, validates distribution nor mints scientific authority."
+  ]
+}

@@ -1,0 +1,1146 @@
+{
+  "recordedAtUTC": "2026-09-08T19:59:44Z",
+  "scope": "Actual saved-checkpoint question-to-output experiments; no training or app installation.",
+  "generation": "Greedy, maximum 32 new tokens, offline, one model process at a time.",
+  "limits": [
+    "Different vocabularies, architectures, training data and prompt formats: not an isolated tokenizer comparison.",
+    "Equal token limits do not mean equal text length. These few prompts do not establish broad quality.",
+    "English compositional trial is historically rejected; PMHNP native line is frozen; Latin has only 10 recorded steps.",
+    "New Swift driver links retained native debug library objects; no claim of a fresh rebuild of latest native repository HEAD.",
+    "Native reserved-token text is a fixed tokenizer mapping; token choice comes from actual model logits."
+  ],
+  "app": {
+    "installedBuild": 22,
+    "changed": false,
+    "wrongStage7CheckpointStillInstalled": true,
+    "userObservedOutput": "Repeated reserved token 47",
+    "llamaIntegration": "Stopped and removed from app source; never installed.",
+    "appSource": "093e382737ace2c71c75464e36b70cfd2be79466"
+  },
+  "olderLlamaFiles": [
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/README.md",
+      "bytes": 15516,
+      "sha256": "c1d69f6519370e59818d6d8e3242dcd45c183410f0bf7a36ae7adb999f7c5ae9"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/chat_template.jinja",
+      "bytes": 3827,
+      "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/config.json",
+      "bytes": 1122,
+      "sha256": "c546925585e48f43890d9dc5150df4fec73dd3780d92961c5ace451934cc4cd6"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/model.safetensors",
+      "bytes": 1807496278,
+      "sha256": "c9661f6b390552c011bf0e827d61b0339bc3030c6ffbc78afc68d31ecfbdb42c"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/model.safetensors.index.json",
+      "bytes": 45760,
+      "sha256": "ae531298ce4a2160df907d7da67ed845f4d05048d4ac26a0f44748e792c754b9"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/special_tokens_map.json",
+      "bytes": 296,
+      "sha256": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/tokenizer.json",
+      "bytes": 17209920,
+      "sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b"
+    },
+    {
+      "path": "/Users/ergentics/prime-mlx-lab/runtime-bundle-3b-sft-loop-20260722-full/tokenizer_config.json",
+      "bytes": 50525,
+      "sha256": "941290c40ad93f86d5b8d07bbc08dd59881da5ba683e533885b523c9ba184b94"
+    }
+  ],
+  "runs": [
+    {
+      "name": "native-english-framed-question1",
+      "question": "What is 2 + 2?",
+      "output": "Result: -1.\n",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "d4652eeb571ff045ce7dadba6e23deab37aca2d4198c934af5222f0af0eb1112",
+        "generatedTokenIDs": [
+          3,
+          288,
+          301,
+          305,
+          302,
+          266,
+          70
+        ],
+        "inputTransform": "NFC_append_LF_Answer_colon_LF_then_BOS_byte512",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "profile": "compositional_v2",
+        "promptTokenIDs": [
+          1,
+          343,
+          360,
+          353,
+          372,
+          288,
+          361,
+          371,
+          288,
+          306,
+          288,
+          299,
+          288,
+          306,
+          319,
+          266,
+          321,
+          366,
+          371,
+          375,
+          357,
+          370,
+          314,
+          266
+        ],
+        "questionSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "renderedOutput": "Result: -1.\n",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "endOfSequence",
+        "tokenizer": {
+          "id": "ergentics_prime_nfc_utf8_byte_v1"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "e01d45e4186c58cf0b5a4b5bc55d54035d09a09b7f9bbd9bc07d26164dab4d8f",
+        "type": "result",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:55:01.370141Z",
+        "elapsed_seconds": 0.1920440000249073,
+        "pid": 10383,
+        "requested_wait_pid": 10383,
+        "returned_wait_pid": 10383,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 1496,
+            "eof": true,
+            "captured_bytes": 1496,
+            "sha256": "d2c05259313556459038e9d1876789f5ea92cd89b5aea8310d9ef5d4ca2df805"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-english-framed-question1"
+    },
+    {
+      "name": "native-english-framed-question2",
+      "question": "What is the capital of France?",
+      "output": "Result: -1.\n",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "594bf835337c6b90ba6b477a0b4aa478e8532670de1c5293abb94a7b1aa2a4cb",
+        "generatedTokenIDs": [
+          3,
+          288,
+          301,
+          305,
+          302,
+          266,
+          70
+        ],
+        "inputTransform": "NFC_append_LF_Answer_colon_LF_then_BOS_byte512",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "profile": "compositional_v2",
+        "promptTokenIDs": [
+          1,
+          343,
+          360,
+          353,
+          372,
+          288,
+          361,
+          371,
+          288,
+          372,
+          360,
+          357,
+          288,
+          355,
+          353,
+          368,
+          361,
+          372,
+          353,
+          364,
+          288,
+          367,
+          358,
+          288,
+          326,
+          370,
+          353,
+          366,
+          355,
+          357,
+          319,
+          266,
+          321,
+          366,
+          371,
+          375,
+          357,
+          370,
+          314,
+          266
+        ],
+        "questionSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "renderedOutput": "Result: -1.\n",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "endOfSequence",
+        "tokenizer": {
+          "id": "ergentics_prime_nfc_utf8_byte_v1"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "e01d45e4186c58cf0b5a4b5bc55d54035d09a09b7f9bbd9bc07d26164dab4d8f",
+        "type": "result",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:55:12.580620Z",
+        "elapsed_seconds": 0.1917939999839291,
+        "pid": 10399,
+        "requested_wait_pid": 10399,
+        "returned_wait_pid": 10399,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 1560,
+            "eof": true,
+            "captured_bytes": 1560,
+            "sha256": "6bce78947481d67b161edba17195098680effbd7c109bf1c565bb15d4818cf2b"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-english-framed-question2"
+    },
+    {
+      "name": "native-english-question1",
+      "question": "What is 2 + 2?",
+      "output": "ABSTAIN\n",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "generatedTokenIDs": [
+          2,
+          70
+        ],
+        "inputTransform": "NFC_then_BOS_byte512",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "profile": "compositional_v2",
+        "promptTokenIDs": [
+          1,
+          343,
+          360,
+          353,
+          372,
+          288,
+          361,
+          371,
+          288,
+          306,
+          288,
+          299,
+          288,
+          306,
+          319
+        ],
+        "questionSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "renderedOutput": "ABSTAIN\n",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "endOfSequence",
+        "tokenizer": {
+          "id": "ergentics_prime_nfc_utf8_byte_v1"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "e01d45e4186c58cf0b5a4b5bc55d54035d09a09b7f9bbd9bc07d26164dab4d8f",
+        "type": "result",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:50:26.898351Z",
+        "elapsed_seconds": 1.926895999989938,
+        "pid": 10141,
+        "requested_wait_pid": 10141,
+        "returned_wait_pid": 10141,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 1042,
+            "eof": true,
+            "captured_bytes": 1042,
+            "sha256": "effd0119926d6b9d82662fa0a97c0291d982d6fc1f00c365bea1f45d76a469df"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-english-question1"
+    },
+    {
+      "name": "native-english-question2",
+      "question": "What is the capital of France?",
+      "output": ".\nResult: -1.\n",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "generatedTokenIDs": [
+          302,
+          266,
+          3,
+          288,
+          301,
+          305,
+          302,
+          266,
+          70
+        ],
+        "inputTransform": "NFC_then_BOS_byte512",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_compositional_v2",
+        "profile": "compositional_v2",
+        "promptTokenIDs": [
+          1,
+          343,
+          360,
+          353,
+          372,
+          288,
+          361,
+          371,
+          288,
+          372,
+          360,
+          357,
+          288,
+          355,
+          353,
+          368,
+          361,
+          372,
+          353,
+          364,
+          288,
+          367,
+          358,
+          288,
+          326,
+          370,
+          353,
+          366,
+          355,
+          357,
+          319
+        ],
+        "questionSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "renderedOutput": ".\nResult: -1.\n",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "endOfSequence",
+        "tokenizer": {
+          "id": "ergentics_prime_nfc_utf8_byte_v1"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "e01d45e4186c58cf0b5a4b5bc55d54035d09a09b7f9bbd9bc07d26164dab4d8f",
+        "type": "result",
+        "weightsSHA256": "ac73ec8d823364caae75443f4e58c813e6fa62ae0fed32703cc89830dd50ee7c"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:50:44.405668Z",
+        "elapsed_seconds": 0.3049159999936819,
+        "pid": 10182,
+        "requested_wait_pid": 10182,
+        "returned_wait_pid": 10182,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 1660,
+            "eof": true,
+            "captured_bytes": 1660,
+            "sha256": "d1de7537192ed42f8686050cb8351fe2ab979802fb3b7abe416a94383016f674"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-english-question2"
+    },
+    {
+      "name": "native-latin-question1",
+      "question": "What is 2 + 2?",
+      "output": "                                ",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "generatedTokenIDs": [
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311
+        ],
+        "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_latin_primary_v1",
+        "profile": "latin",
+        "promptTokenIDs": [
+          16383,
+          16332,
+          278,
+          1428,
+          16311,
+          16336,
+          16311,
+          47,
+          16311,
+          16336,
+          16369
+        ],
+        "questionSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "renderedOutput": "                                ",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "tokenLimit",
+        "tokenizer": {
+          "id": "ergentics_latin_bpe_v2",
+          "manifestSHA256": "b1ae203307de9c657f9d2558875e104d33f62e464c2cb83504d2f2f714ac6b76",
+          "modelSHA256": "3819dbc5381bfd5f52cc8b28e6f1e224ea5e30bdaaaf94dc5307fde91c9cccb5"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "0081f72e30d8b79cf95c870a48f7403fdf47df0840cc2fd53e8c84890fa1ee14",
+        "type": "result",
+        "weightsSHA256": "44d6afdc49fa0d933e027f30593070e7bcfbe0fb4f904187234c08ba9990b196"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:50:52.901975Z",
+        "elapsed_seconds": 0.4777239999966696,
+        "pid": 10194,
+        "requested_wait_pid": 10194,
+        "returned_wait_pid": 10194,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 3908,
+            "eof": true,
+            "captured_bytes": 3908,
+            "sha256": "d4c62bcc7dd50a69e3f9ff826a39cbb08def86ed8304e628bc54be19c5c2759d"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-latin-question1"
+    },
+    {
+      "name": "native-latin-question2",
+      "question": "What is the capital of France?",
+      "output": "                                ",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "generatedTokenIDs": [
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311,
+          16311
+        ],
+        "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_latin_primary_v1",
+        "profile": "latin",
+        "promptTokenIDs": [
+          16383,
+          16332,
+          278,
+          1428,
+          1363,
+          16312,
+          10359,
+          343,
+          421,
+          16331,
+          1217,
+          529,
+          16322,
+          16312,
+          16369
+        ],
+        "questionSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "renderedOutput": "                                ",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "tokenLimit",
+        "tokenizer": {
+          "id": "ergentics_latin_bpe_v2",
+          "manifestSHA256": "b1ae203307de9c657f9d2558875e104d33f62e464c2cb83504d2f2f714ac6b76",
+          "modelSHA256": "3819dbc5381bfd5f52cc8b28e6f1e224ea5e30bdaaaf94dc5307fde91c9cccb5"
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "0081f72e30d8b79cf95c870a48f7403fdf47df0840cc2fd53e8c84890fa1ee14",
+        "type": "result",
+        "weightsSHA256": "44d6afdc49fa0d933e027f30593070e7bcfbe0fb4f904187234c08ba9990b196"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:51:06.823872Z",
+        "elapsed_seconds": 0.3561679999693297,
+        "pid": 10207,
+        "requested_wait_pid": 10207,
+        "returned_wait_pid": 10207,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 3927,
+            "eof": true,
+            "captured_bytes": 3927,
+            "sha256": "f0bca29c8c71a5e16da5f616be893931a4507b5f3eac3f1fcd1221b078bc7fd7"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-latin-question2"
+    },
+    {
+      "name": "native-pmhnp-question1",
+      "question": "What is 2 + 2?",
+      "output": "AAAA666C monitoring monitoring monitoring, and reassess levels clozapine. AvoidA agonists. Coordinate. H6DATAAD6",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "generatedTokenIDs": [
+          8100,
+          8100,
+          8100,
+          8100,
+          8137,
+          8137,
+          8137,
+          8102,
+          802,
+          802,
+          802,
+          8097,
+          297,
+          1890,
+          1047,
+          918,
+          8098,
+          2501,
+          8100,
+          4528,
+          8098,
+          4843,
+          8098,
+          434,
+          8137,
+          8105,
+          8100,
+          8104,
+          8100,
+          8100,
+          8105,
+          8137
+        ],
+        "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_lab_v2",
+        "profile": "pmhnp",
+        "promptTokenIDs": [
+          654,
+          293,
+          476,
+          452,
+          476,
+          8120
+        ],
+        "questionSHA256": "38d46ad3618826cf660df542bcf13a3b92b61df92854e2723efcba659af53f4b",
+        "renderedOutput": "AAAA666C monitoring monitoring monitoring, and reassess levels clozapine. AvoidA agonists. Coordinate. H6DATAAD6",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "tokenLimit",
+        "tokenizer": {
+          "id": "prime_native_bpe_v1",
+          "manifestSHA256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+          "modelSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+          "specialTokenIDs": {
+            "bos": 1,
+            "eos": 2,
+            "pad": -1,
+            "unk": 0
+          }
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "c6310be8d5f9e5fda12b18776be763bbccf7afee3cbe5c2a90406e3d5ee20266",
+        "type": "result",
+        "weightsSHA256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:58:13.075783Z",
+        "elapsed_seconds": 1.0115569999907166,
+        "pid": 10539,
+        "requested_wait_pid": 10539,
+        "returned_wait_pid": 10539,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 5385,
+            "eof": true,
+            "captured_bytes": 5385,
+            "sha256": "1ddc2acb0d0478253c059eac5fcc56d257b4bc14bc1aeb33287f172154fd9be3"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-pmhnp-question1"
+    },
+    {
+      "name": "native-pmhnp-question2",
+      "question": "What is the capital of France?",
+      "output": "? patient? patient's own and its own own own decision-making?-making?-making?-eating. It. When the most appropriates",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "generatedTokenIDs": [
+          8120,
+          361,
+          8120,
+          361,
+          8126,
+          8081,
+          1376,
+          297,
+          1475,
+          1376,
+          1376,
+          1376,
+          1201,
+          8099,
+          2499,
+          8120,
+          8099,
+          2499,
+          8120,
+          8099,
+          2499,
+          8120,
+          8099,
+          4459,
+          8098,
+          1256,
+          8098,
+          1148,
+          291,
+          399,
+          453,
+          8081
+        ],
+        "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_lab_v2",
+        "profile": "pmhnp",
+        "promptTokenIDs": [
+          654,
+          293,
+          291,
+          4657,
+          868,
+          322,
+          500,
+          8083,
+          474,
+          8120
+        ],
+        "questionSHA256": "115049a298532be2f181edb03f766770c0db84c22aff39003fec340deaec7545",
+        "renderedOutput": "? patient? patient's own and its own own own decision-making?-making?-making?-eating. It. When the most appropriates",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "tokenLimit",
+        "tokenizer": {
+          "id": "prime_native_bpe_v1",
+          "manifestSHA256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+          "modelSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+          "specialTokenIDs": {
+            "bos": 1,
+            "eos": 2,
+            "pad": -1,
+            "unk": 0
+          }
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "c6310be8d5f9e5fda12b18776be763bbccf7afee3cbe5c2a90406e3d5ee20266",
+        "type": "result",
+        "weightsSHA256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:58:25.707441Z",
+        "elapsed_seconds": 0.3057759999646805,
+        "pid": 10550,
+        "requested_wait_pid": 10550,
+        "returned_wait_pid": 10550,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 5299,
+            "eof": true,
+            "captured_bytes": 5299,
+            "sha256": "1d19ba3a1cb5d346fe3636c3816efa89d1e756e8a5c7efce0146f4da50c03181"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-pmhnp-question2"
+    },
+    {
+      "name": "native-pmhnp-question3",
+      "question": "What does PMHNP stand for?",
+      "output": "the patient? \"I?? feared, and the patient's, and supports, and the patient's? while \"no\"? the problem.",
+      "nativeOrTemplateDetails": {
+        "corpusRead": false,
+        "effectivePromptSHA256": "d4f79624a603d55c11f07f4768c3fdab2b86b706b905fa08c0a54ecba4ce7289",
+        "generatedTokenIDs": [
+          291,
+          361,
+          8120,
+          687,
+          8111,
+          8120,
+          8120,
+          5829,
+          8097,
+          297,
+          291,
+          361,
+          8126,
+          8081,
+          8097,
+          297,
+          2038,
+          8097,
+          297,
+          291,
+          361,
+          8126,
+          8081,
+          8120,
+          1312,
+          687,
+          2585,
+          8135,
+          8120,
+          291,
+          1228,
+          8098
+        ],
+        "inputTransform": "NFC_then_original_SentencePiece_no_added_BOS_or_EOS",
+        "maximumNewTokens": 32,
+        "modelFamilyID": "ergentics_native_lab_v2",
+        "profile": "pmhnp",
+        "promptTokenIDs": [
+          654,
+          1021,
+          548,
+          6959,
+          334,
+          8120
+        ],
+        "questionSHA256": "d4f79624a603d55c11f07f4768c3fdab2b86b706b905fa08c0a54ecba4ce7289",
+        "renderedOutput": "the patient? \"I?? feared, and the patient's, and supports, and the patient's? while \"no\"? the problem.",
+        "schema": "prime_native_checkpoint_comparison_v1",
+        "scope": "retained_checkpoint_inference_experiment_not_corpus_or_product_admission",
+        "stopReason": "tokenLimit",
+        "tokenizer": {
+          "id": "prime_native_bpe_v1",
+          "manifestSHA256": "ce72705efd7e4d54dc4dd573eff8ef44788584ebb0d1633f44304e495aac0e1c",
+          "modelSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+          "specialTokenIDs": {
+            "bos": 1,
+            "eos": 2,
+            "pad": -1,
+            "unk": 0
+          }
+        },
+        "trainingPerformed": false,
+        "trainManifestSHA256": "c6310be8d5f9e5fda12b18776be763bbccf7afee3cbe5c2a90406e3d5ee20266",
+        "type": "result",
+        "weightsSHA256": "ae60f5c1728639021718fb67b5080d523cc579c9e35eac32684fefb044b84d28"
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:59:07.299949Z",
+        "elapsed_seconds": 0.3084810000145808,
+        "pid": 10581,
+        "requested_wait_pid": 10581,
+        "returned_wait_pid": 10581,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 5110,
+            "eof": true,
+            "captured_bytes": 5110,
+            "sha256": "02d41dd8e8cbbe801acb5c59f5a641b7183628f045774c8030be03d570930ec8"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "eof": true,
+            "captured_bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/native-pmhnp-question3"
+    },
+    {
+      "name": "older-llama-question1",
+      "question": "What is 2 + 2?",
+      "output": "2 + 2 = 4",
+      "nativeOrTemplateDetails": {
+        "inputTransform": "Original local Llama user-to-assistant chat template",
+        "generatedTokenIDs": null,
+        "tokenIDsNote": "Existing CLI reports token counts, not raw output IDs."
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:43:56.832351Z",
+        "elapsed_seconds": 3.0560139999724925,
+        "pid": 9897,
+        "requested_wait_pid": 9897,
+        "returned_wait_pid": 9897,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 141,
+            "eof": true,
+            "captured_bytes": 141,
+            "sha256": "520fa346ce19fd843947421c19acc17ece5cdb1fbe10a62931b580524d8173ce"
+          },
+          "stderr": {
+            "total_bytes": 280,
+            "eof": true,
+            "captured_bytes": 280,
+            "sha256": "f92fa174b5a473627663f8aea55f0b2df413d3a2d19510d734135fc9d12dae02"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/older-llama-question1"
+    },
+    {
+      "name": "older-llama-question2",
+      "question": "What is the capital of France?",
+      "output": "The capital of France is Paris.",
+      "nativeOrTemplateDetails": {
+        "inputTransform": "Original local Llama user-to-assistant chat template",
+        "generatedTokenIDs": null,
+        "tokenIDsNote": "Existing CLI reports token counts, not raw output IDs."
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:48:27.469349Z",
+        "elapsed_seconds": 2.592744000023231,
+        "pid": 10008,
+        "requested_wait_pid": 10008,
+        "returned_wait_pid": 10008,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 163,
+            "eof": true,
+            "captured_bytes": 163,
+            "sha256": "f0ac350233f367e84778dfd78199f2aaa93fbde15b9202c13f627301d8cf7f78"
+          },
+          "stderr": {
+            "total_bytes": 280,
+            "eof": true,
+            "captured_bytes": 280,
+            "sha256": "f92fa174b5a473627663f8aea55f0b2df413d3a2d19510d734135fc9d12dae02"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/older-llama-question2"
+    },
+    {
+      "name": "older-llama-question3",
+      "question": "What does PMHNP stand for?",
+      "output": "PMHNP stands for Psychiatric-Mental Health Nurse Practitioner.",
+      "nativeOrTemplateDetails": {
+        "inputTransform": "Original local Llama user-to-assistant chat template",
+        "generatedTokenIDs": null,
+        "tokenIDsNote": "Existing CLI reports token counts, not raw output IDs."
+      },
+      "process": {
+        "started_at_utc": "2026-09-08T19:59:19.534739Z",
+        "elapsed_seconds": 2.7267090000095777,
+        "pid": 10591,
+        "requested_wait_pid": 10591,
+        "returned_wait_pid": 10591,
+        "exact_reap_count": 1,
+        "raw_wait_status": 0,
+        "exit_status": 0,
+        "termination_signal": null,
+        "reason": null,
+        "runner_error": null,
+        "signals": [
+
+        ],
+        "process_group_members_after_reap": [
+
+        ],
+        "streams": {
+          "stdout": {
+            "total_bytes": 195,
+            "eof": true,
+            "captured_bytes": 195,
+            "sha256": "eec69a877f4e2d3c016586250ac309a18e2b6fc519609ce460b4e113b1755b94"
+          },
+          "stderr": {
+            "total_bytes": 280,
+            "eof": true,
+            "captured_bytes": 280,
+            "sha256": "f92fa174b5a473627663f8aea55f0b2df413d3a2d19510d734135fc9d12dae02"
+          }
+        },
+        "passed": true
+      },
+      "evidenceDirectory": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-model-comparison/older-llama-question3"
+    }
+  ]
+}

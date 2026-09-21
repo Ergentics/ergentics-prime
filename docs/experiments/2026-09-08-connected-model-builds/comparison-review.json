@@ -1,0 +1,389 @@
+{
+  "schema": "prime_cross_domain_independent_comparison_review_v1",
+  "reviewedAtUTC": "2026-09-08T21:19:01.002056+00:00",
+  "status": "completed_evidence_verified_with_limited_case_interpretation",
+  "checksPassed": 887,
+  "failedChecks": [],
+  "executedByThisReviewer": {
+    "gpuInference": 0,
+    "training": 0,
+    "builds": 0
+  },
+  "evidence": {
+    "readback": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-cross-domain-comparison/comparison-readback-data.json",
+      "byteCount": 128865,
+      "sha256": "44a4e248406de5a6c9d40189c152bcb905c13b9029e6422c36a2bd35f5573ba9"
+    },
+    "readbackSource": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-cross-domain-comparison/read-completed-comparison.py",
+      "byteCount": 15452,
+      "sha256": "676eb7c4109ec8e65ee75359ec2fe3f1e3e662e8b2aeb4df8df8915e33ab732e"
+    },
+    "sourceCases": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-cross-domain-comparison/cases.json",
+      "byteCount": 11205,
+      "sha256": "1481e492b242841b6b6de50b78903090c514789c9dad9a2c9eb9119b9478bd23"
+    },
+    "questionOnlyInputs": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-cross-domain-comparison/questions-only.json",
+      "byteCount": 1899,
+      "sha256": "caad47f7ecdf2abbc747101094fc941f72067e0de45e533ab1a7c7fdf912fa90"
+    },
+    "rootResults": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/results.json",
+      "byteCount": 117500,
+      "sha256": "b2b7eea162bbffdeb6906db795a24df15b18342e97d3c85c88e67292557c7485"
+    },
+    "readerLineFramingCorrection": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-cross-domain-comparison/review-reader-correction.json",
+      "byteCount": 504,
+      "sha256": "4c17086a82726aeb6ee0cd97bc8673af2d8333ff44fb8e3f88c31c50177b6e1e"
+    }
+  },
+  "completedProcesses": {
+    "total": 33,
+    "normalExitZero": 33,
+    "exactLeaderReapOnce": 33,
+    "bothCapturedStreamsEOFWithExactCountAndHash": 33,
+    "recordedOriginalProcessGroupEmptyAfterReap": 33,
+    "signalsNeeded": 0,
+    "scope": "No detached-session census claim; observed receipts are distinct from mathematical or language correctness."
+  },
+  "sourceAndInputReview": {
+    "allFiveQuestionsExactUTF8Matched": true,
+    "sameLiteralQuestionSHA256AcrossAllFourTextLineages": true,
+    "allSourceFileRawLineRecordAndAnswerBindingsMatched": true,
+    "referenceAnswersSuppliedToModel": false,
+    "noOracleInjectionFinding": "Inspected saved Swift inference takes prompt tokens through NativeTinyDecoder.forward and full-vocabulary greedy logits. Symbolic Python feeds its predicted intermediate into the second real forward. Launchers pass only question/request, retained local model path, and bounded generation options; no source trace, expected-answer file or grading result is loaded by inference.",
+    "originalLauncherSourcePreserved": true,
+    "currentLauncherHashesMatchFrozenBuildMetadata": true,
+    "originalNativeDriverSHA256": "4fb6da66020d87f512f79adae80b5d45692625af6dea3e2ebf17abf6941a5243",
+    "nativeRuntimeBinarySHA256": "f3abcf441bfa66637869e4d48c7e8916c81599fb8939b321a23114119b840f85",
+    "learntTokenizerPromptUnknownCounts": {
+      "pmhnp": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "latin": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "noSilentEnglishNormalization": "Native Unicode NFC and native BOS are recorded; questions here are NFC already. English primary runs add the existing training completion suffix LF Answer: LF. Llama uses its own saved chat template."
+  },
+  "primaryConditions": [
+    {
+      "build": "0001-pmhnp-native",
+      "profile": "Frozen PMHNP native lab_v2, learned SentencePiece8192, NativeTiny29,639,680 parameters, 85,425 recorded historical steps.",
+      "maximumNewTokens": 32,
+      "inputTransform": "Original plain NFC/SentencePiece, no added BOS/EOS or completion suffix.",
+      "matchingAnswersObserved": 0,
+      "cases": 5,
+      "limit": "All five reach cap; no claim about unlimited continuation or clinical correctness."
+    },
+    {
+      "build": "0002-older-llama",
+      "profile": "Older Ergentics Llama3.2-3B instruction fine-tune, own tokenizer/chat template, quantized saved weights.",
+      "maximumNewTokens": 256,
+      "matchingAnswersObserved": 4,
+      "cases": 5,
+      "limit": "Initial32-token outputs retained as diagnostic truncations; extended four complete at44/91/71/93 tokens. Fifth reaches256 and addresses wrong task from the start."
+    },
+    {
+      "build": "0003-native-llm-english",
+      "profile": "Preserved native compositional_v2 byte512 structured English trial; 55,218 historical steps, previously rejected trial.",
+      "maximumNewTokens": 32,
+      "inputTransform": "NFC question + LF Answer: LF + original BOS byte512.",
+      "matchingAnswersObserved": 0,
+      "cases": 5,
+      "limit": "All primary responses end by EOS in2–7 tokens. Original five unframed responses remain diagnostic; no additional training occurred."
+    },
+    {
+      "build": "0004-native-llm-latin",
+      "profile": "Native Latin primary, learned SentencePiece16384; ten-step research checkpoint.",
+      "maximumNewTokens": 32,
+      "matchingAnswersObserved": 0,
+      "cases": 5,
+      "limit": "English questions are outside its Latin training scope. Whitespace is faithfully decoded, not suppressed."
+    }
+  ],
+  "caseInterpretation": [
+    {
+      "caseID": "01-algebra",
+      "questionSHA256": "900ae7730c91a45d297ffdfb0826c68b6976f962d17a1dc569360d02462a7aa2",
+      "sourceFileSHA256": "b85cdc98e71fb0bb05b6795db16f5db081d7ec23e8314a11ef49db3b79f2331e",
+      "sourceLineOneBased": 23,
+      "sourceRecordID": "algebra.solve.linear.a1_b4_c6",
+      "expectedAnswer": "x = 2",
+      "primaryObservations": [
+        {
+          "build": "0001-pmhnp-native",
+          "assessment": "No answer to the sourced question in the recorded 32-token output. PMHNP-pattern fragments are not clinically evaluated.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "291f62e2c63b3743a25dcddf5234593b84f90142c432a2068ba67c31b6d6294b"
+        },
+        {
+          "build": "0002-older-llama",
+          "assessment": "Explicit x = 2.",
+          "matchesSourcedAnswer": true,
+          "tokenCapReached": false,
+          "generatedTokenCount": 44,
+          "stdoutSHA256": "70bf48b1070fc8614e9f5efd420bcd076ffa390961f0420a2a70182c4d191860"
+        },
+        {
+          "build": "0003-native-llm-english",
+          "renderedOutput": "Result: -1.\n",
+          "assessment": "Wrong value.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": false,
+          "stopReason": "endOfSequence",
+          "stdoutSHA256": "cd32fcaf324c956ec2736f48b5964a2455881079915c7d68fdfc8d7d0ca3992a"
+        },
+        {
+          "build": "0004-native-llm-latin",
+          "assessment": "Exactly 32 ASCII spaces, from 32 predictions of token16311; no answer.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "199efd459844b866056625d6af99db2ccd55df580c7992a00ed3d6427cf04874"
+        }
+      ]
+    },
+    {
+      "caseID": "02-geometry",
+      "questionSHA256": "cb7f76295a3d08c966b8287a515dc78d84c561e684f9fd4ecf2e0a465afbe752",
+      "sourceFileSHA256": "7e3c3f758120c923f0daa6228e6fb4e34cb272e57453a5a111cfbcc1dbcfd96d",
+      "sourceLineOneBased": 1,
+      "sourceRecordID": "geometry.area.triangle.right_3x4",
+      "expectedAnswer": "6.0000",
+      "primaryObservations": [
+        {
+          "build": "0001-pmhnp-native",
+          "assessment": "No answer to the sourced question in the recorded 32-token output. PMHNP-pattern fragments are not clinically evaluated.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "f19f37516045fdaccedbdae32637171e4b6425878a1ab2cb6ce75704312961a0"
+        },
+        {
+          "build": "0002-older-llama",
+          "assessment": "Explicit area 6, numerically equal to source 6.0000.",
+          "matchesSourcedAnswer": true,
+          "tokenCapReached": false,
+          "generatedTokenCount": 91,
+          "stdoutSHA256": "cc377790ce1a00e21c941c1de9fa8d8c40b8f26c5f81fa33f71a286755a0babb"
+        },
+        {
+          "build": "0003-native-llm-english",
+          "renderedOutput": "Result: o.\n",
+          "assessment": "Letter o is neither zero nor area 6.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": false,
+          "stopReason": "endOfSequence",
+          "stdoutSHA256": "4e43d04634331760a975a61fbfea8fbf89fc24e1fe5b6082b2f7f4fc83558b6b"
+        },
+        {
+          "build": "0004-native-llm-latin",
+          "assessment": "Exactly 32 ASCII spaces, from 32 predictions of token16311; no answer.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "2a8e6e8bfe972ed851985624ab8daf166d39f98f184a35bb66c3cee03b8b1a16"
+        }
+      ]
+    },
+    {
+      "caseID": "03-logic-parsing",
+      "questionSHA256": "69c010309b8b3b9bdf710cad219cfa93f463f4407a9377c71ca298a1383c594a",
+      "sourceFileSHA256": "0e4925428774d7f16159508cbc9d397199d9f20c2e9e0a7bef7d6845cc506837",
+      "sourceLineOneBased": 21,
+      "sourceRecordID": "logic.parsing.expr.prec_basic",
+      "expectedAnswer": "2 + 3 * 4 = 14",
+      "primaryObservations": [
+        {
+          "build": "0001-pmhnp-native",
+          "assessment": "No answer to the sourced question in the recorded 32-token output. PMHNP-pattern fragments are not clinically evaluated.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "3b4b861801015efa46b4511dd00d3fb61e728a953ba7b473b06b8ea2e0a1e64d"
+        },
+        {
+          "build": "0002-older-llama",
+          "assessment": "Explicit final result 14 with precedence steps.",
+          "matchesSourcedAnswer": true,
+          "tokenCapReached": false,
+          "generatedTokenCount": 71,
+          "stdoutSHA256": "ab0e12c07ba719965c837a6176e50513ed0c6568a810d134ee1e0ac21d9a8d72"
+        },
+        {
+          "build": "0003-native-llm-english",
+          "renderedOutput": "Result: -2.\n",
+          "assessment": "Wrong value.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": false,
+          "stopReason": "endOfSequence",
+          "stdoutSHA256": "b385457a6efb0147ecb6919f66a29adac82f34ef187953bae458f1a061dd31d0"
+        },
+        {
+          "build": "0004-native-llm-latin",
+          "assessment": "Exactly 32 ASCII spaces, from 32 predictions of token16311; no answer.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "25d14d95d8f6790cd3f7f1e94bdf55b1f5df08d7b6b16b8506712ac6b01ec34c"
+        }
+      ]
+    },
+    {
+      "caseID": "04-music",
+      "questionSHA256": "46bed3aa67633ecea4f5908f043e7bc5aab4fc17310fbf8248c7b56c09a42567",
+      "sourceFileSHA256": "ac7440c62aa0f35ee6740c23b06494808721d40711c4e21c0a20b31578b88542",
+      "sourceLineOneBased": 139,
+      "sourceRecordID": "music.theory.triad.quality.major.C",
+      "expectedAnswer": "major",
+      "primaryObservations": [
+        {
+          "build": "0001-pmhnp-native",
+          "assessment": "No answer to the sourced question in the recorded 32-token output. PMHNP-pattern fragments are not clinically evaluated.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "302f6b7dd6ce602793e1e5b566809f32df383d7de95bb367e8ef6352de3a13e1"
+        },
+        {
+          "build": "0002-older-llama",
+          "assessment": "Explicit chord quality major.",
+          "matchesSourcedAnswer": true,
+          "tokenCapReached": false,
+          "generatedTokenCount": 93,
+          "stdoutSHA256": "10374c3bd8d007ecfc321e29da82f68ed9af71920c1654730ef3f6b9d1314c1e"
+        },
+        {
+          "build": "0003-native-llm-english",
+          "renderedOutput": "Result: -1.\n",
+          "assessment": "Numeric value instead of chord quality.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": false,
+          "stopReason": "endOfSequence",
+          "stdoutSHA256": "14e0278294f20e3a2cdb4bd35b0d81bb335b73bf3aac80a3fd9458260c9e0b74"
+        },
+        {
+          "build": "0004-native-llm-latin",
+          "assessment": "Exactly 32 ASCII spaces, from 32 predictions of token16311; no answer.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "7825cf09989d1f6b9d95322361296b1d23ef680ee9fb1f0f8f9ae8a3683c393c"
+        }
+      ]
+    },
+    {
+      "caseID": "05-agentcraft-christoffel",
+      "questionSHA256": "870d6283160bf5c85529a9eae7d8b8eef7585b9529357d63b432b6e6ccfa3037",
+      "sourceFileSHA256": "25f6e657bd507f9d66219f2ce956db314863e937fc3708903e065ad3bf71019d",
+      "sourceLineOneBased": 1,
+      "sourceRecordID": "christoffel.lower.2_3",
+      "expectedAnswer": "aabab",
+      "primaryObservations": [
+        {
+          "build": "0001-pmhnp-native",
+          "assessment": "No answer to the sourced question in the recorded 32-token output. PMHNP-pattern fragments are not clinically evaluated.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "b934de7308681572459a0fb450120289693b9ac68e565f231d0d16f0a4d3fd8e"
+        },
+        {
+          "build": "0002-older-llama",
+          "assessment": "Answers an unrelated Christoffel-symbol task, not the lower word aabab; no requested independent construction certificate.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "generatedTokenCount": 256,
+          "stdoutSHA256": "df25805139db23f3d6a5ddf9d175ad0d8780f23375fedbdc07c6f20feba1a585"
+        },
+        {
+          "build": "0003-native-llm-english",
+          "renderedOutput": "Result:",
+          "assessment": "Result marker without a word or certificate.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": false,
+          "stopReason": "endOfSequence",
+          "stdoutSHA256": "59c60ad47b91fe4c5d305248e24a432fa85d5a5a2dd3912c1eae0c250a6803e2"
+        },
+        {
+          "build": "0004-native-llm-latin",
+          "assessment": "Exactly 32 ASCII spaces, from 32 predictions of token16311; no answer.",
+          "matchesSourcedAnswer": false,
+          "tokenCapReached": true,
+          "stdoutSHA256": "8a706cc5922549f4bb1982167a23922c44c2a53562cadea894a6f4f1302940a6"
+        }
+      ]
+    }
+  ],
+  "primeSymbolic": {
+    "build": "0005-prime-symbolic",
+    "modelBinding": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0005-prime-symbolic/model-binding.json",
+      "byteCount": 5164,
+      "sha256": "9c1ca1770b1407c1469f64983a643955536e5d0e463a12dcde7ab89fa4fec840"
+    },
+    "sameFiveEnglishQuestions": "unsupported_text_codec; not executed and not scored as failures",
+    "nativeCases": [
+      {
+        "caseID": "native-01",
+        "originalRowID": "trace-holdout-two-3-32-33",
+        "originalSplit": "holdout",
+        "expectedIntermediateTokenID": 20,
+        "predictedIntermediateTokenID": 20,
+        "expectedFinalTokenID": 19,
+        "predictedFinalTokenID": 19,
+        "predictedResidue": 3,
+        "bothPredictionsMatch": true,
+        "predictionSHA256": "444e217421fd6a86599034cf84b3e49db7a01aaa37c90abd4ca3a7e1b179749b",
+        "controllerResultSHA256": "4c84804da48f830d78593ff9c2a3635ec22710db8af64913185f82666cd90935",
+        "exitStatus": 0
+      },
+      {
+        "caseID": "native-02",
+        "originalRowID": "trace-holdout-two-3-32-34",
+        "originalSplit": "holdout",
+        "expectedIntermediateTokenID": 20,
+        "predictedIntermediateTokenID": 20,
+        "expectedFinalTokenID": 20,
+        "predictedFinalTokenID": 20,
+        "predictedResidue": 4,
+        "bothPredictionsMatch": true,
+        "predictionSHA256": "1642d2fc354f9cbdd1331e4481b71438b302e37178f9b94efa50a3571b1e62d1",
+        "controllerResultSHA256": "c2cb6722c06d28387bf7f4154c53d3875ba8e0c248b65cfde119ee85366db0c3",
+        "exitStatus": 0
+      },
+      {
+        "caseID": "native-03",
+        "originalRowID": "trace-holdout-two-3-34-32",
+        "originalSplit": "holdout",
+        "expectedIntermediateTokenID": 21,
+        "predictedIntermediateTokenID": 21,
+        "expectedFinalTokenID": 22,
+        "predictedFinalTokenID": 22,
+        "predictedResidue": 6,
+        "bothPredictionsMatch": true,
+        "predictionSHA256": "ee387aaa9d459a1bc6b07d5bc6c6af685368a64adc3c53f9c92a053e08c8e528",
+        "controllerResultSHA256": "7f881fd9f4198b3e204e22fd13a6211dcd77347524316aeaf96b8db4e8f06ed6",
+        "exitStatus": 0
+      }
+    ],
+    "matchedIntermediateAndFinal": 3,
+    "caseCount": 3,
+    "scope": "Three exact original native holdout requests, learned Z/8Z trace model10,227,968 parameters. Correct predicted residues3,4,6. These are not evidence of English/cross-domain question answering."
+  },
+  "interpretationLimits": [
+    "Five selected text questions are a diagnostic sample, not a heldout benchmark or general model ranking.",
+    "Different tokenizers, training curricula, parameter counts, completion formats and caps prevent treating these small counts as standardized accuracy.",
+    "The Christoffel source requests both the word and independent certification; a matching word alone would not establish the full request.",
+    "Recorded normal exits establish operational completion; they do not turn malformed or unrelated predictions into correct answers.",
+    "These are saved local experiment builds, not an app release. Shared Python depends on the installed macOS Command Line Tools interpreter; native binaries retain platform/Metal dependencies.",
+    "Small source, tokenizer, executable and evidence files were independently rehashed; large text-model payloads were size-checked and joined to packaging hashes. Native driver results bind its own before/after weight hashes. This review did not duplicate all large model payload hashing."
+  ],
+  "reportWrites": "Only task-local review source and JSON; original repositories, build folders and native evidence unchanged."
+}

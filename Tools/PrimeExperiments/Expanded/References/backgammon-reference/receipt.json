@@ -1,0 +1,44 @@
+{
+  "compileExit": 0,
+  "runExit": 0,
+  "compiledOriginalFiles": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/Board.swift",
+      "bytes": 2444,
+      "sha256": "9b83473a88093065fa90387ed457651f56d48cd8dd38ebacfd6e3caa86dbb641"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/Player.swift",
+      "bytes": 523,
+      "sha256": "764cd566e69df69ed120bdcca6cc2848eeec6928e79ca4def541081b8cb3a683"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/GameState.swift",
+      "bytes": 5478,
+      "sha256": "1ee053f0376f357cc8924c90f9ca2be76e88bd099b3ebbdc327983cadb7361e0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/Dice.swift",
+      "bytes": 2063,
+      "sha256": "6e4a3df64daaf3dbea3a27fc1372a81f12f2465c53209ef69a75d4deb76c751d"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/Move.swift",
+      "bytes": 2558,
+      "sha256": "0949aa290c63c74677bd6a59c471eb6e04983e89216c495b4909fb45c4713cfb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/MoveGenerator.swift",
+      "bytes": 8908,
+      "sha256": "8f0cdb3253ea206ae3d9f9e9421d336d7e81a2c8c3881bf860801842666ec1fb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-game-connection/backgammon-app/Sources/BackgammonKit/RulesEngine.swift",
+      "bytes": 1811,
+      "sha256": "cc378b4a7def068bcbe49f18d6db1a7b7208ba029a7aea79c8ccf33ae3c13e9d"
+    }
+  ],
+  "resultSHA256": "cded663f1235b79d9910c791cbabfef51d165a224ca3366be3acf00abd73e6a3",
+  "binarySHA256": "884a79273eadfae94e78ee3563b913c6faa48c49895ad9aaf5e68bbd5679de24",
+  "scope": "Deterministic engine reference only; no model, training, GPU, or upstream writes"
+}

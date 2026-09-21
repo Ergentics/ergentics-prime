@@ -1,0 +1,240 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-mapped-image-correction-freeze-v2",
+  "status": "C2_MAPPED_IMAGE_CORRECTION_FROZEN_SOURCE_EDIT_ONLY_CONTROLLER_UNCONSUMED",
+  "rank": "CONTROL_ONLY_CORRECTION_FREEZE",
+  "predecessor": {
+    "current_commit": "ece27b10ed86487cac435bc344e3ec8775bfb3a3",
+    "current_tree": "9a20be246fcab0c6d230dadae3d253893bbdb8f1",
+    "c2_control_v1": {
+      "commit": "f7baf3997a98cd9ae34da2cb835c429b6c58dd10",
+      "tree": "5a2434d5610de7981b8f8d00714651a8cee6e0b5",
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-control-freeze.v1.json",
+      "bytes": 20265,
+      "sha256": "caa6ed8a9cac827efe55ae36bf8fc2ac946a7c6fdd4e004f0d963836aa2e6932",
+      "git_blob": "ddb4b7bb29814f13a931a0f6e77a5c75bb3d27a0"
+    },
+    "c2_implementation_v1": {
+      "commit": "38daa48fcd2173e02381cddca12d2cd159a60c02",
+      "tree": "734b546901a25595113851e06b9e8b2b5f5470bf",
+      "checkpoint_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-implementation-checkpoint.v1.json",
+      "checkpoint_bytes": 9901,
+      "checkpoint_sha256": "44d148c0d4eba788943e8a8409cd93af2e3af6be197b9e501ab75dec8147f58b",
+      "checkpoint_git_blob": "a255b1f411fc10ae6a950c7cd849c4bd0f5b9429"
+    },
+    "prerequisite_disposal_v6": {
+      "commit": "ece27b10ed86487cac435bc344e3ec8775bfb3a3",
+      "tree": "9a20be246fcab0c6d230dadae3d253893bbdb8f1",
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v6.json",
+      "bytes": 8766,
+      "sha256": "6337e1e0e25f4cba85367f2b83fea53073cd7fccf30fc300f6e68e66159a6b18",
+      "git_blob": "23ee160a7183e3cb009d0cdb8690457c021a5cbb",
+      "terminal": "ALL_THREE_EXACT_TARGET_GENERATIONS_CONSERVED"
+    }
+  },
+  "source_before_correction": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 148364,
+    "lines": 3982,
+    "sha256": "708783e3cf777ff8d03e9fa0d884c2077d134a1ff71cdf1df24993c900592b51",
+    "git_blob": "05de5233e14b24cd392704521a5fee44fcbc1a3e"
+  },
+  "defect": {
+    "function": "mapped_image_identity",
+    "predicate_before": "EXECUTABLE_MAPPING_AND_FILE_OFFSET_EQUALS_ZERO_AND_PATH_EQUALS_EXPECTED_PATH",
+    "failed_image": "/usr/bin/ruby",
+    "cause": "PROC_PIDREGIONPATHINFO_REPORTS_ABSOLUTE_FAT_FILE_OFFSET_WHILE_THE_ACTIVE_SLICE_INTERNAL_TEXT_FILE_OFFSET_IS_ZERO",
+    "observed_absolute_file_offset": 65536,
+    "effect_if_uncorrected": "BOOTSTRAP_PREFLIGHT_FAILS_BEFORE_CONSUMPTION_AND_BEFORE_ANY_OUTPUT_ROOT",
+    "controller_invocation_consumed": false,
+    "c2_output_namespace_created": false,
+    "authority_effect": "NONE"
+  },
+  "measurement": {
+    "static_file_rows": [
+      {
+        "path": "/usr/bin/ruby",
+        "device": 16777231,
+        "inode": 1152921500312572705,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0555",
+        "nlink": 1,
+        "flags": 524320,
+        "bytes": 135200,
+        "sha256": "9d6ff3e289c7d908e3c785e0bedd6692d1d6a3377965c88c04d847104b7c892c",
+        "container": "FAT_MAGIC_TWO_ARCHITECTURES",
+        "active_architecture": "arm64e",
+        "active_uuid_hex": "eb2540b7e13236beb719619d0fbf7203",
+        "fat_slice_offset": 65536,
+        "fat_slice_bytes": 69664,
+        "fat_slice_alignment": 16384,
+        "slice_text_file_offset": 0,
+        "expected_proc_region_absolute_file_offset": 65536
+      },
+      {
+        "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+        "device": 16777231,
+        "inode": 1118471,
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "nlink": 1,
+        "flags": 32,
+        "bytes": 23293616,
+        "sha256": "dc1a5f5bd4f05be81b8cc4a4bc6e0fd8846210e4cb829062d0fed3d03f79b753",
+        "container": "THIN_MACH_O",
+        "active_architecture": "arm64",
+        "active_uuid_hex": "561f67557606396f9382b01d5cc7edfb",
+        "slice_text_file_offset": 0,
+        "expected_proc_region_absolute_file_offset": 0
+      }
+    ],
+    "live_read_only_join": {
+      "runtime": "/usr/bin/ruby",
+      "pid": 9363,
+      "uuid_hex": "eb2540b7e13236beb719619d0fbf7203",
+      "mapped_device": 16777231,
+      "mapped_inode": 1152921500312572705,
+      "mapped_absolute_file_offset": 65536,
+      "status": "PASS_PATH_UUID_OFFSET_DEVICE_INODE_JOIN",
+      "mutations": 0,
+      "signals": 0,
+      "output_roots": 0
+    },
+    "prior_read_only_harness_miss": {
+      "count": 1,
+      "cause": "MEASUREMENT_SCANNER_CONTINUED_PAST_AVAILABLE_REGIONS_AND_RECEIVED_EINVAL",
+      "c2_consumed": false,
+      "mutation": false,
+      "signal": false,
+      "reinterpretation": false
+    }
+  },
+  "frozen_correction": {
+    "table_name": "MAPPED_EXECUTABLE_EXPECTED",
+    "table_cardinality": 2,
+    "key": "EXACT_ABSOLUTE_PATH",
+    "rows": [
+      {
+        "path": "/usr/bin/ruby",
+        "uuid_hex": "eb2540b7e13236beb719619d0fbf7203",
+        "absolute_file_offset": 65536
+      },
+      {
+        "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-package",
+        "uuid_hex": "561f67557606396f9382b01d5cc7edfb",
+        "absolute_file_offset": 0
+      }
+    ],
+    "function_signature": "mapped_image_identity(pid, expected_path, observed_uuid_hex)",
+    "lookup_rule": "EXACT_PATH_ROW_MUST_EXIST_AND_ROW_UUID_MUST_EQUAL_DOUBLE_SNAPSHOTTED_PROC_PIDUNIQIDENTIFIERINFO_UUID",
+    "region_rule": "VM_PROT_EXECUTE_AND_EXACT_ROW_ABSOLUTE_FILE_OFFSET_AND_EXACT_REGION_PATH",
+    "return_shape": {
+      "device": "PROC_REGION_DEVICE",
+      "inode": "PROC_REGION_INODE",
+      "file_offset": "PROC_REGION_ABSOLUTE_FILE_OFFSET",
+      "path": "PROC_REGION_PATH",
+      "uuid_hex": "JOINED_PROCESS_UUID"
+    },
+    "callers": [
+      {
+        "site": "GroupTracker.arm_direct!",
+        "uuid_source": "member.unique.uuid_hex",
+        "vnode_join": "MAPPED_DEVICE_INODE_EQUALS_HELD_SWIFT_PACKAGE_DEVICE_INODE",
+        "receipt": "STRUCTURED_MAPPED_IMAGE"
+      },
+      {
+        "site": "bootstrap_preflight",
+        "uuid_source": "controller_join.unique.uuid_hex",
+        "vnode_join": "MAPPED_DEVICE_INODE_EQUALS_HELD_RUBY_DEVICE_INODE",
+        "receipt": "STRUCTURED_MAPPED_RUBY"
+      }
+    ],
+    "unchanged_invariants": [
+      "SWIFT_PACKAGE_REMAINS_EXACT_OFFSET_ZERO",
+      "NO_GLOBAL_NONZERO_OFFSET_ACCEPTANCE",
+      "NO_CALLER_SUPPLIED_PATH_UUID_OFFSET_OR_IMAGE",
+      "NO_NEW_COMMAND_OR_ROLE_SURFACE",
+      "NO_SPAWN_EXEC_WAIT_OR_SIGNAL_CHANGE",
+      "NO_NAMESPACE_IDENTITY_CHANGE",
+      "NO_SOURCE_MANIFEST_OR_BUILD_INPUT_CHANGE",
+      "NO_PRODUCT_EXECUTION",
+      "NO_AUTHORITY_BIT_CHANGE"
+    ]
+  },
+  "allowlist": {
+    "source_edit_paths": [
+      "docs/tools/ergentics-r19-obs11-c2-build-controller.rb"
+    ],
+    "successor_control_paths": [
+      "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-mapped-image-correction-implementation-checkpoint.v2.json"
+    ],
+    "source_semantic_regions": [
+      "MAPPED_EXECUTABLE_EXPECTED_CONSTANT_AFTER_SWIFT_PACKAGE_DEFINITION",
+      "mapped_image_identity",
+      "GroupTracker.arm_direct!_MAPPED_IMAGE_CALL_AND_RECEIPT",
+      "bootstrap_preflight_MAPPED_IMAGE_CALL_AND_RECEIPT"
+    ]
+  },
+  "hard_stops": [
+    "TABLE_CARDINALITY_NOT_EXACTLY_TWO",
+    "UNKNOWN_PATH_OR_UUID",
+    "RUBY_OFFSET_NOT_EXACTLY_65536",
+    "SWIFT_PACKAGE_OFFSET_NOT_EXACTLY_ZERO",
+    "PATH_UUID_OR_OFFSET_CALLER_PARAMETER_SURFACE",
+    "GENERIC_NONZERO_OFFSET_ACCEPTANCE",
+    "DEVICE_OR_INODE_JOIN_REMOVED",
+    "PROCESS_UUID_JOIN_REMOVED",
+    "C2_CONTROLLER_OR_COMPILER_OR_SWIFTPM_OR_PRODUCT_EXECUTION",
+    "OUTPUT_ROOT_CREATION",
+    "SIGNAL_OR_CLEANUP_OR_RETRY",
+    "PYTHON_ENTRY",
+    "AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+  ],
+  "operations": {
+    "c2_controller_invocations": 0,
+    "c2_controller_process_entries": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "product_executions": 0,
+    "c2_output_roots_created": 0,
+    "signals": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries_after_v5_freeze": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_record": false,
+    "build_authorized_by_this_record": false,
+    "runner_execution_authorized": false,
+    "authority_closure_authorized": false
+  },
+  "next": {
+    "step": "EDIT_ONLY_THE_FROZEN_SOURCE_REGIONS_THEN_THREE_INDEPENDENT_STATIC_REVIEWS",
+    "requires": [
+      "RUBY_2_6_PARSE_WITHOUT_TOP_LEVEL_SOURCE_EVALUATION",
+      "EXACT_SOURCE_DIFF_AND_HASH",
+      "TWO_ROW_TABLE_CARDINALITY_AND_LITERAL_AUDIT",
+      "BOTH_CALLER_UUID_AND_VNODE_JOIN_AUDIT",
+      "NO_PROCESS_SURFACE_DELTA_AUDIT",
+      "SEPARATE_IMPLEMENTATION_CHECKPOINT",
+      "SEPARATE_LAUNCH_READINESS_FREEZE_BEFORE_ANY_CONTROLLER_ENTRY"
+    ]
+  },
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

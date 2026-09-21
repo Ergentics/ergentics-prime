@@ -1,0 +1,70 @@
+{
+  "schema": "ergentics.capability-flow-independent-verifier.reviews.v1",
+  "recordedAtUTC": "2026-08-31T23:24:29Z",
+  "reviewedResultSHA256": "832b156fdf50fc46c4efbd984f15e6fe76abe5bf81f59b0b37d34417b84069b5",
+  "reviewedContractCorrectionSHA256": "7bf08a9cdc3a4cdc75869bcc01e0b1721aef49362380f234f023726926214710",
+  "convergence": "PASS",
+  "reviews": [
+    {
+      "role": "cryptographic-and-riemann-reconstruction",
+      "verdict": "PASS",
+      "verified": [
+        "SHA-256 Merkle and access-digest known-answer vectors",
+        "Riemann deny-only reconstruction",
+        "Change Index equality",
+        "grant capability execution transition access and evidence joins",
+        "panic-to-silent-reject behavior",
+        "binary source test project and receipt hashes"
+      ],
+      "scopePins": [
+        "core-deterministic CBOR plus set semantics only",
+        "Swift domain-array normal form not enforced",
+        "runtime and Gate-E claims remain unassessed or abstained"
+      ]
+    },
+    {
+      "role": "hostless-process-and-xcode-integration",
+      "verdict": "PASS",
+      "verified": [
+        "held-fd identity and named vnode joins on every invocation",
+        "test-only PBX source and resource wiring",
+        "six direct verifier invocations per configuration",
+        "twelve exact reaps with zero observed signals and timeouts",
+        "zero app and guest launches",
+        "binary size hash UUID mode link count signature and dependency"
+      ],
+      "scopePins": [
+        "post-spawn horizon is best-effort userspace",
+        "synchronous posix_spawn and entered kernel calls are not externally bounded",
+        "no suspended-child mapped-vnode proof"
+      ]
+    },
+    {
+      "role": "incident-closure-and-claim-scope",
+      "verdict": "PASS",
+      "verified": [
+        "declared access-evidence coverage is separate from runtime attempt completeness",
+        "Swift generic invalid-capability theorem tripwire aligns with Rust",
+        "non-Riemann semantics remain partial",
+        "process-wide syscall and hostile-runtime completeness remain unassessed",
+        "Gate E remains ABSTAIN and authority vector remains 00000000"
+      ]
+    }
+  ],
+  "correctionHistory": [
+    {
+      "trigger": "integration review",
+      "change": "split observed post-spawn behavior from whole-invocation synchronous-spawn uncertainty"
+    },
+    {
+      "trigger": "cryptographic review",
+      "change": "separate CBOR set semantics from Swift domain order disclose remapped source path and narrow userspace horizon"
+    }
+  ],
+  "reviewActions": {
+    "edits": 0,
+    "appLaunches": 0,
+    "guestLaunches": 0,
+    "verifierInvocations": 0
+  }
+}

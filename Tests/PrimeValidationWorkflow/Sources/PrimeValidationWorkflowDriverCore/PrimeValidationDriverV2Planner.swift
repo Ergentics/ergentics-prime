@@ -651,6 +651,9 @@ public enum PrimeValidationInvocationFactoryV2 {
                 "release",
                 "--build-tests",
                 "--force-resolved-versions",
+                "--jobs", "2",
+                "--disable-build-manifest-caching",
+                "-Xswiftc", "-num-threads", "-Xswiftc", "2",
             ],
             orderedEnvironment: intent.environmentPolicy.orderedEntries,
             workingDirectoryAbsolutePath:

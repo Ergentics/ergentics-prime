@@ -1,0 +1,35 @@
+{
+  "schema": "prime_domain_python_original_source_binding_v1",
+  "sources": [
+    {
+      "byteCount": 32203,
+      "name": "prime_mlx_native_mechanics_canary.py",
+      "originalPath": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/tools/prime_mlx_native_mechanics_canary.py",
+      "savedPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Comparison/PythonParity/Source/prime_mlx_native_mechanics_canary.py",
+      "sha256": "c22d5a9591923ec10213339a4380207f0a09da24571b7970849b9f35776c203b",
+      "topLevelNodeKinds": [
+        "Assign",
+        "Expr",
+        "FunctionDef",
+        "If",
+        "Import",
+        "ImportFrom"
+      ]
+    },
+    {
+      "byteCount": 9044,
+      "name": "prime_native_compositional_language.py",
+      "originalPath": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/tools/prime_native_compositional_language.py",
+      "savedPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Comparison/PythonParity/Source/prime_native_compositional_language.py",
+      "sha256": "434496b900d52e3d1236b8a17b5cb80c9b0df1f663c55e883fe987f03c4c6663",
+      "topLevelNodeKinds": [
+        "Assign",
+        "ClassDef",
+        "Expr",
+        "FunctionDef",
+        "Import",
+        "ImportFrom"
+      ]
+    }
+  ]
+}

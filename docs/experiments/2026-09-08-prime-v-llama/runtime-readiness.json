@@ -1,0 +1,424 @@
+{
+  "schema": "prime_system_runtime_readiness_v1",
+  "recordedAtUTC": "2026-09-08T22:33:29.326980+00:00",
+  "scope": "Read-only source and retained result audit for a fresh Prime-system versus Llama experiment; no source edits, builds, model runs, new hypervisor execution, guest installation, or host reconfiguration.",
+  "conclusion": {
+    "boundedHostModelInferenceAvailable": true,
+    "boundedHostToolExecutionAvailable": true,
+    "existingModelToToolToModelLoopEstablished": false,
+    "fixedBareMetalHypervisorGuestImplementedAndHistoricallyRun": true,
+    "arbitraryGuestProgramOrQuestionAPIAvailable": false,
+    "existingOSGuestAtDefaultWorkspacePaths": false,
+    "recommendedImmediateRoute": "Reuse the saved experiment process controller and existing checkpoint adapters for explicit bounded host model and fixed-tool phases. Preserve raw neural outputs and the actual tool request/result separately. A hypervisor probe can be an additional signed fixed microguest phase; do not call the current host model a model running inside a VM.",
+    "codexRelationship": "The inspected application/repository code does not establish that Codex uses this custom app hypervisor. It is application-owned Hypervisor.framework code. Host execution through the experiment controller is not evidence of a HypervisorGuest or VZVirtualMachine invocation."
+  },
+  "repositories": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging",
+      "head": "c60f2ab8997d63c5a68bf653f59686c22abfebb5",
+      "trackedClean": true,
+      "preservedUntracked": [
+        "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result-binding.e8aa9e68.v1.json",
+        "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result.e8aa9e68.v1.json",
+        "Observability/ErgenticsProvenance/Sources/GuestStorage.swift"
+      ],
+      "untrackedScopeNote": "Exact git status --untracked-files=all confirmed these three retained files. Their contents were not altered or treated as current source."
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo",
+      "head": "093e382737ace2c71c75464e36b70cfd2be79466",
+      "trackedClean": true,
+      "untrackedPresent": false
+    }
+  ],
+  "components": [
+    {
+      "name": "Saved experiment host process controller",
+      "role": "Owned-process execution and evidence capture",
+      "readyForFixedHostPrograms": true,
+      "source": {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Tools/PrimeExperiments/controller.rb",
+        "byteCount": 8747,
+        "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931",
+        "relevantLines": [
+          11,
+          12,
+          58,
+          60,
+          71
+        ]
+      },
+      "features": [
+        "Explicit argv/environment from trusted wrapper specification",
+        "Clean environment, separate process group, EOF stdin, fixed working directory",
+        "120-second run bound and 32 MiB retained cap per output stream",
+        "INT/TERM/HUP cancellation, TERM/KILL cleanup, exact leader reap, process-group census and both output EOF checks",
+        "Raw outputs and final status retained; no detached-session containment claim"
+      ],
+      "limitation": "This controller is not a security sandbox for arbitrary untrusted model-generated code. The model/tool allowlist and any filesystem/network isolation need explicit integration."
+    },
+    {
+      "name": "Saved text-checkpoint adapters",
+      "role": "Actual host MLX Metal question-to-token inference",
+      "source": {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Tools/PrimeExperiments/Expanded/run.rb",
+        "byteCount": 2760,
+        "sha256": "302d414304b999bceebc34911965058dfe55a56e4f675f9984e74163fec10a9b",
+        "relevantLines": [
+          18,
+          20,
+          24,
+          28,
+          32,
+          33
+        ]
+      },
+      "entrypointShape": [
+        "/usr/bin/ruby",
+        "BUILD/Revisions/expanded-01/run.rb",
+        "--prompt",
+        "TEXT",
+        "--output",
+        "FRESH_ABSOLUTE_DIRECTORY"
+      ],
+      "availableBuilds": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native",
+          "profile": "pmhnp",
+          "entrypointExists": true
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama",
+          "profile": "older_llama",
+          "entrypointExists": true
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english",
+          "profile": "compositional_v2",
+          "entrypointExists": true
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin",
+          "profile": "latin",
+          "entrypointExists": true
+        }
+      ],
+      "features": [
+        "Existing checkpoint and tokenizer adapters; no new training",
+        "Requested generation at most 512 tokens; native total context limited to 512 with full prompt retained",
+        "Compositional-v2 explicit Answer prefix; learned SentencePiece profiles no fabricated question oracle",
+        "Offline Hugging Face/Transformers environment and no reference answer supplied to neural model"
+      ],
+      "externalDependency": "Saved SharedRuntime/python retains original Command Line Tools Python 3.9 interpreter dependency; no installation performed in this audit."
+    },
+    {
+      "name": "Saved Prime symbolic checkpoint",
+      "role": "Actual 10,227,968-parameter model inference over original fixed Z8 symbols",
+      "build": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0005-prime-symbolic/BUILD.json",
+      "entrypoint": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0005-prime-symbolic/run.rb",
+      "requestShape": [
+        "--request",
+        "ABS_NATIVE_SYMBOL_REQUEST",
+        "--output",
+        "FRESH_ABSOLUTE_DIRECTORY"
+      ],
+      "textCodecAvailable": false,
+      "limitation": "Cannot compare arbitrary English tool-calling prompts by inventing a byte or SentencePiece mapping. Symbol predictions can be evaluated directly; any deterministic text-to-symbol adapter must be separately named and measured."
+    },
+    {
+      "name": "App PrimeRuntimeBackend and PrimePromptBackend",
+      "role": "Signed helper launch and streamed generation response",
+      "source": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/PrimeRuntimeBackend.swift",
+          "byteCount": 20964,
+          "sha256": "24b3e2cc11c3f8845b28b411aaf04f2b30558d539914c80697063f347c30f091",
+          "relevantLines": [
+            147,
+            226
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/PrimePromptBackend.swift",
+          "byteCount": 12471,
+          "sha256": "8b895c4ae75face98f6d2cc97737b134607baf42efa4fe5c12f8dfcc62982e58",
+          "relevantLines": [
+            18,
+            72
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeRuntime/main.swift",
+          "byteCount": 8857,
+          "sha256": "aac67c832ed06faba13be1ae3bff9401faa34c78057dac2e8909a2f923a46135"
+        }
+      ],
+      "readyScope": "Build22 invokes the actual bundled Stage7 checkpoint in a host helper via --generate; shared execute verifies signed helper identity, bounded drains, cancellation, process ownership and final response binding. Generation is 300 seconds/4 MiB. Runtime check is a separate fixed command.",
+      "notProvided": [
+        "Arbitrary tool scheduler",
+        "Trained language Prime checkpoint adapter",
+        "Model execution inside either kind of guest"
+      ],
+      "checkpointCaution": "The Build22 checkpoint is the fixed-workload 271M Stage7 baseline. Correct token I/O did not establish useful language ability."
+    },
+    {
+      "name": "Driver V2 E-H",
+      "role": "Fixed source/probe/build/test execution and validation scheduling",
+      "source": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeValidationDriverV2RoleFacade.swift",
+          "byteCount": 41579,
+          "sha256": "0fcbf521d12fdc553c278ffea30a26663d801191eccdeabea298879a0fac9c9d",
+          "relevantLines": [
+            50,
+            886,
+            893
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift",
+          "byteCount": 157222,
+          "sha256": "6856b11a40e77bf53ac7e2f76799587aff382dd483efa241bc062c2d2fa14558"
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2ExecutionBinding.swift",
+          "byteCount": 22921,
+          "sha256": "c2ff0a43b8fab6d773b4607efac135d40841971d522a6184dfbf276e37f12168"
+        }
+      ],
+      "actualCapabilities": [
+        "Source-bound Git and Swift observation roles",
+        "Release build and two test inventory roles",
+        "Bounded fixed reference/candidate shard scheduling and exact process/output capture",
+        "Raw parser-derived semantic reconciliation and retained evidence publication"
+      ],
+      "limitation": "Public role context cannot supply arbitrary executable, argv, environment, deadline or callback. Existing hard-pinned role and source bindings are not a generic language-model tool API. Using the experiment controller is the smaller immediate integration."
+    },
+    {
+      "name": "HypervisorModel / HypervisorGuest",
+      "role": "Actual fixed bare-metal Apple Hypervisor.framework guests",
+      "source": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/HypervisorModel.swift",
+          "byteCount": 75653,
+          "sha256": "86b087edfe2fbd03c087c2caa77b493fdcb8571dde5378005239368f5bcf0b9b",
+          "relevantLines": [
+            617,
+            620,
+            633,
+            1077,
+            1135
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/HypervisorGuest.c",
+          "byteCount": 88641,
+          "sha256": "331ed77cb98ede31e93b8923893fe233337e7e7aceebf04886a0e1c234c55b86",
+          "relevantLines": [
+            25,
+            95,
+            1263,
+            1563
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/HypervisorGuest.h",
+          "byteCount": 13029,
+          "sha256": "d663619e58a267dce936a4551ba69a493c238fa9c6897ef68ebf003fa9dbb58d",
+          "relevantLines": [
+            249,
+            254,
+            297,
+            307
+          ]
+        }
+      ],
+      "needsOSInstaller": false,
+      "microguestInputs": "Baseline fixed 19 + 23 = 42. H3 fixed cursor/checkpoint/resume increments that result to 43. C embeds exact guest images and request bytes; reserved API does not accept arbitrary program, model or question.",
+      "lifecycle": "Real hv_vm_create/hv_vcpu_run, mappings/registers, independent state checks and teardown; reservation owner and cancellation cooperate with app admission.",
+      "currentInvocationBarrier": "Normal Release Build22 has no automatic --run-fixed-guest-once dispatch; it is compiled under DEBUG. Rust entry is an explicit integration seam not selected by UI/startup/argv. Special H3 qualification controller requires a separately compiled/sealed qualification app.",
+      "signingAdmission": {
+        "source": {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/ProvenanceReadOnly.c",
+          "byteCount": 10962,
+          "sha256": "8c8968aad189d223773b1838fd34b6e3726dffef3d0b9f5c716cc196ea03e1f0",
+          "relevantLines": [
+            140,
+            154,
+            162,
+            171
+          ]
+        },
+        "requirements": [
+          "Apple generic signing anchor",
+          "Exact application identifier com.ergentics.provenance",
+          "Team ZCQ435U8JP",
+          "Hardened runtime and checked effective entitlement set"
+        ],
+        "consequence": "Unsigned or alternate-ID generic CLI reusing current C is rejected before VM creation. Preserve this admission; implement a deliberately signed app/helper adapter instead of stubbing or weakening it."
+      },
+      "entitlements": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Entitlements.plist",
+        "byteCount": 429,
+        "sha256": "5f3880bb954815bd8ab08c7dd8da0b37db742ca70dbf4b9f79241bc51702ff6b"
+      },
+      "notProvided": [
+        "General OS guest",
+        "Arbitrary guest-code scheduler",
+        "LLM loading or GPU pass-through",
+        "Automatic Codex integration"
+      ]
+    },
+    {
+      "name": "VMWorkspaceModel / VMWorkspaceStore",
+      "role": "Full ARM64 Linux guest through Virtualization.framework",
+      "source": [
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/VMWorkspaceModel.swift",
+          "byteCount": 22791,
+          "sha256": "5855486afac31d915b511f15a3d912e32b29c92fcd700b44337404617baaaf0b",
+          "relevantLines": [
+            16,
+            121,
+            365,
+            380,
+            381,
+            382
+          ]
+        },
+        {
+          "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Sources/VMWorkspaceStore.swift",
+          "byteCount": 22348,
+          "sha256": "015da98e6729ddc6cbf6d2331b70336cb7019c1f20264e28832681924a5ffb16",
+          "relevantLines": [
+            93,
+            102
+          ]
+        }
+      ],
+      "prerequisites": [
+        "User-selected regular ARM64/aarch64 UEFI ISO9660 installer",
+        "Private Disk.img, Installer.iso and EFI.variables workspace setup",
+        "Boot/install acceptance inside actual guest"
+      ],
+      "configuration": {
+        "networkDevices": [],
+        "directorySharingDevices": [],
+        "socketDevices": []
+      },
+      "commandChannelReady": false,
+      "observedDefaultRoots": [
+        {
+          "path": "/Users/ergentics/Library/Containers/com.ergentics.provenance/Data/Library/Application Support/VMWorkspaces-v1",
+          "exists": false
+        },
+        {
+          "path": "/Users/ergentics/Library/Application Support/VMWorkspaces-v1",
+          "exists": false
+        }
+      ],
+      "observationLimit": "Only exact default root existence was checked. No assertion about every image elsewhere on this Mac; no private application journal or prompt content read."
+    }
+  ],
+  "retainedEvidence": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/h8-live-build16/receipt.json",
+      "scope": "Historical real fixed H3 cursor/resume microguest",
+      "recordedClaim": "RECORDED_H7_NATIVE_PASS",
+      "actualInput": {
+        "left": 19,
+        "right": 23,
+        "increment": 1
+      },
+      "recordedH3Status": "PASS",
+      "retainedBytesGrantFreshExecution": false,
+      "freshRunDuringThisAudit": false
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/gate-h-live/completed-attempt-06.json",
+      "status": "VERIFIED_GATE_H_EXECUTION_EVIDENCE",
+      "sourceCommit": "6f656bb0d0e88c81774045aaee5bf0ec52676367",
+      "scope": "Native host Driver validation, no OS guest or language quality claim",
+      "referenceAndCandidateEach": {
+        "passed": 1078,
+        "skipped": 2,
+        "semanticResults": 1080
+      },
+      "recordedNativeProcessConservation": true,
+      "offlineReaderReconstructedNativeAuthority": false
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-stage7-live/opt-in-attempt-01/checks/result.json",
+      "status": "Both previously skipped opt-in methods later passed once each",
+      "exit": 0,
+      "exactReapCount": 1,
+      "elapsedSeconds": 3.2389039999688976,
+      "scope": "Sparse-artifact publication plus pinned live companion transport; separate from neural resume science"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-stage7-live/readiness/attempt-04-review.json",
+      "controlReview": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-stage7-live/readiness/attempt-04-control-review.json",
+      "sourceCommit": "7cceee63288765f80f69de0a6167bbf069ac958e",
+      "stage7": "PASS_EXACT",
+      "stage8": "PASS_RETAINED_RELOAD_EXACT",
+      "actualParameterCount": 271107072,
+      "actualWorkerPIDs": [
+        1545,
+        1619,
+        1742
+      ],
+      "exactDomains": 18,
+      "retainedLeaves": 12,
+      "retainedBytes": 9760974232,
+      "scope": "Actual host MLX fixed-workload checkpoint/resume and independent fresh-process retained reload, not language quality, formal OS authority, or model-in-VM proof",
+      "checkpointFilesRehashedThisAudit": 0
+    }
+  ],
+  "minimumLiveIntegration": [
+    {
+      "step": 1,
+      "action": "Select an existing checkpoint and its actual accepted input encoding. Run a fresh bounded raw prediction with the saved adapter.",
+      "evidence": "Request, checkpoint identity, raw token/text result, owned process result."
+    },
+    {
+      "step": 2,
+      "action": "For a tool-enabled arm, give an explicit tool protocol and accept only a small fixed structured tool request from the actual model output. Refuse malformed or unsupported requests.",
+      "evidence": "Raw output plus exact parsed request or refusal. No hidden reference answer, hand-authored replacement request, or shell evaluation."
+    },
+    {
+      "step": 3,
+      "action": "Execute the selected deterministic Ergentics engine under the existing owned process controller with fixed argv and separately retained inputs/results.",
+      "evidence": "Tool source/binary identity, actual output and exit status. Mark the output as deterministic engine output, not the neural answer."
+    },
+    {
+      "step": 4,
+      "action": "Return the actual tool result through an explicitly documented model prompt/adapter for a second real inference and compare raw versus assisted outcomes.",
+      "evidence": "Second request and raw response, measurable correctness and failure preservation. If the original Prime symbolic model cannot use the protocol, report that compatibility limit rather than substitute a different model silently."
+    },
+    {
+      "step": 5,
+      "action": "If a hypervisor capability is included now, add a narrowly signed fixed-guest runner preserving the current identity/entitlement gate and record the actual microguest receipt as a separate system phase.",
+      "evidence": "A fresh successful HV invocation is required; historical receipts alone do not count. Do not claim the model or host deterministic tools ran inside that guest."
+    }
+  ],
+  "comparisonInterpretation": {
+    "recommendedArms": [
+      "Model alone",
+      "Same model with the same explicit fixed tool protocol and engine",
+      "Optional separate hypervisor fixed-workload execution check"
+    ],
+    "primeSystemVsLlamaModel": "This comparison measures an integrated system against a model if capabilities differ. To attribute improvements, retain raw-model and equally tool-enabled controls where input encodings support them.",
+    "hypervisorDoesNotAddLearnedKnowledge": "Isolation, checkpoint/resume and verified execution are runtime capabilities. They do not themselves turn fixed Stage7 or symbolic weights into a language model.",
+    "sourceCorpus": "Connected source data is an available tool/corpus catalog. Its presence does not mean existing checkpoint weights have trained on it."
+  },
+  "actions": {
+    "sourceEdits": 0,
+    "builds": 0,
+    "modelRuns": 0,
+    "hypervisorRuns": 0,
+    "guestInstalls": 0,
+    "networkCalls": 0,
+    "hostConfigurationChanges": 0,
+    "privateApplicationJournalReads": 0
+  }
+}

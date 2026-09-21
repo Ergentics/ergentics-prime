@@ -1,0 +1,193 @@
+{
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "production_capability_mint": "ABSENT",
+    "projection_persisted": false
+  },
+  "checkpoint": "H4-C_DUAL_CANONICAL_RECONSTRUCTION_CONTRACT",
+  "environment": {
+    "architecture": "arm64",
+    "macos_build": "25F84",
+    "macos_version": "26.5.2",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "h3_input_state": {
+    "current_product_mint_from_h3": "ABSENT",
+    "h3_rerun": false,
+    "live_handoff_bound": false,
+    "source_disposition": "H3_STRUCTURAL_FIXTURE_CONTRACT_ONLY"
+  },
+  "named_residuals": [
+    {
+      "id": "four_field_owner_mixability",
+      "observation": "Equal four-field deliveries from different dispatchers and different source roots join successfully.",
+      "result": "OBSERVED_EXPECTED_NONCLAIM"
+    },
+    {
+      "id": "copy_and_replay_remain_possible",
+      "observation": "Returned immutable deliveries and reconstructed byte streams remain ordinarily copyable and replayable.",
+      "result": "OBSERVED_EXPECTED_NONCLAIM"
+    },
+    {
+      "id": "private_owner_epoch_binding_absent",
+      "observation": "A separate private owner and epoch binding is required before persistence may treat the pair as provenance.",
+      "result": "REQUIRED_BEFORE_PERSISTENCE_ADMISSION"
+    }
+  ],
+  "nonclaims": [
+    "This checkpoint does not complete or enter H4.",
+    "This checkpoint does not close Gate E or mint scientific authority.",
+    "The reconstruction receipt contains structural predicates only; it proves representation consistency, not producer truth.",
+    "Four-field equality does not bind dispatcher, owner, capability, epoch, source root, receipt root, or live H3 identity.",
+    "Same-valued cross-dispatcher mixing and replay remain admissible by design in H4-C.",
+    "No authenticity, signature, anti-replay, private owner binding, or epoch binding is claimed.",
+    "No JSON or CBOR bytes are written to a file, database, journal, graph, Merkle tree, VM, process, network, or UI.",
+    "SQLite open/write/reopen, atomic persistence, fault injection, graph construction, and Merkle commitment remain unexecuted.",
+    "The source origin remains H3_STRUCTURAL_FIXTURE with CONTRACT_ONLY disposition; no live H3 run or mint occurs."
+  ],
+  "predicates": [
+    {
+      "id": "json_accepts_only_internal_receipt_delivery",
+      "result": "PASS"
+    },
+    {
+      "id": "cbor_accepts_only_sqlite_projection_delivery",
+      "result": "PASS"
+    },
+    {
+      "id": "production_arbitrary_byte_ingestion_surface_absent",
+      "result": "PASS"
+    },
+    {
+      "id": "canonical_json_four_field_order_and_grammar_exact",
+      "order": [
+        "authority_vector",
+        "claim_state",
+        "predicate_count",
+        "schema"
+      ],
+      "result": "PASS"
+    },
+    {
+      "id": "rfc8949_core_deterministic_cbor_complete_encoded_key_order_exact",
+      "order": [
+        "schema",
+        "claim_state",
+        "predicate_count",
+        "authority_vector"
+      ],
+      "result": "PASS"
+    },
+    {
+      "id": "stream_bound_exact_at_maximum_valid_json",
+      "maximum_bytes": 158,
+      "result": "PASS"
+    },
+    {
+      "id": "json_and_cbor_decode_and_reencode_independently",
+      "result": "PASS"
+    },
+    {
+      "id": "exact_typed_semantic_join_after_independent_round_trips",
+      "result": "PASS"
+    },
+    {
+      "id": "reconstruction_compared_back_to_both_typed_source_values",
+      "result": "PASS"
+    },
+    {
+      "id": "consistent_tampering_different_from_typed_sources_rejects",
+      "result": "PASS"
+    },
+    {
+      "id": "independently_frozen_known_answer_vectors_cover_integer_width_boundaries",
+      "predicate_counts": [
+        1,
+        19,
+        23,
+        24,
+        255,
+        256,
+        4096
+      ],
+      "result": "PASS"
+    },
+    {
+      "id": "every_truncated_prefix_and_all_trailing_bytes_reject",
+      "result": "PASS"
+    },
+    {
+      "id": "duplicate_unknown_reordered_escaped_nonminimal_and_wrong_major_forms_reject",
+      "result": "PASS"
+    },
+    {
+      "id": "json_and_cbor_independently_reject_wrong_schema_claim_count_and_authority",
+      "result": "PASS"
+    },
+    {
+      "id": "cross_stream_semantic_conflict_rejects",
+      "result": "PASS"
+    },
+    {
+      "id": "diagnostic_epoch_root_envelope_and_policy_canaries_absent_from_both_streams",
+      "result": "PASS"
+    },
+    {
+      "id": "persistence_process_vm_hash_merkle_graph_and_authority_surfaces_absent",
+      "result": "PASS"
+    }
+  ],
+  "predecessor": {
+    "commit": "f5e291be2150798a480add0b1698592dd599f8fe",
+    "tree": "e240a95d551393158b91c39353a5c4cf19cadf9a"
+  },
+  "result": "PASS_H4C_DUAL_CANONICAL_RECONSTRUCTION_CONTRACT_ONLY",
+  "schema": "com.ergentics.provenance.hypervisor.h4c-checkpoint.v1",
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "ff057243539f80622831af932d362cb774927a1be565837ff3307ac0047a047c"
+    },
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "sha256": "6894608658dce117a0e7792ba6f97d2f1627a9b661f05fcb0dc2e3e17c9dd568"
+    },
+    {
+      "path": "Tests/HypervisorStageH4CanonicalStreamsTests.swift",
+      "sha256": "19aaea89f2f40108029c0512156a84491bdd4896a91e6a493ea61be39ed6a93c"
+    }
+  ],
+  "verification": {
+    "app_builds_warnings_as_errors": {
+      "debug": "PASS",
+      "release": "PASS"
+    },
+    "binary_test_bridge_symbol_scan": {
+      "debug": "ABSENT_PASS",
+      "release": "ABSENT_PASS"
+    },
+    "diff_check": "PASS",
+    "focused_h4c_tests": {
+      "failed": 0,
+      "passed": 15,
+      "skipped": 0
+    },
+    "full_debug_tests": {
+      "failed": 0,
+      "passed": 611,
+      "skipped": 0
+    },
+    "full_release_tests": {
+      "failed": 0,
+      "passed": 564,
+      "skipped": 0
+    },
+    "independent_boundary_review": "NO_MUST_FIX_FINDINGS",
+    "production_compilation_condition": "EPR_H4_PRIVACY_TESTS_ABSENT_PASS",
+    "project_file_lint": "PASS",
+    "static_forbidden_surface_scan": "PASS"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v4",
+  "status": "FRESH_SUCCESSOR_AFTER_V3_PREEXECUTION_HOST_ENVIRONMENT_HOLD_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_SUCCESSOR_FREEZE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_AND_WILL_NOT_INTERVENE_IN_THIS_PROCESS",
+  "ancestry": {
+    "v3_readiness_commit": "b5afcd7a60be25439c59a4b2dc4c175550b5f6ad",
+    "v3_readiness_tree": "c28b4fc66f78252d18ffee148e679030b6a81f7e",
+    "v3_control_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v3.json",
+    "v3_control_bytes": 6487,
+    "v3_control_sha256": "af465c9f1a5f57dab1e87107ec0010c53dfa50bbf6c94230c1cc4e646ae9b08b",
+    "v3_readiness_frame_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.frame",
+    "v3_readiness_frame_bytes": 1889,
+    "v3_readiness_frame_sha256": "e53a06a82b98f8b6d8e36ca804e661d6cca7636cbf6d4d40a8fbb6f115dbe1db",
+    "v3_readiness_record_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.json",
+    "v3_readiness_record_bytes": 6087,
+    "v3_readiness_record_sha256": "73512eee5ee41c832428eef0c6721e8c0a88eedbe70134574fc45db184abd049",
+    "v3_preexecution_hold_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-preexecution-hold.v3.json",
+    "v3_preexecution_hold_bytes": 2797,
+    "v3_preexecution_hold_sha256": "a344fc6c3d8f2c996ae60710905fc37ddfd2b7fcab466fd861eb194f012253c1"
+  },
+  "inheritance": {
+    "source": "V3_CONTROL_AND_READINESS_BY_EXACT_HASH",
+    "inherited_without_semantic_change": [
+      "PURPOSE_CLASSIFICATION_AND_AUTHORITY_VECTOR",
+      "EXACT_THREE_TARGET_GENERATIONS_AND_ORDER",
+      "ENTRY_LATTICE_EXCEPT_EXACT_ENVIRONMENT_VECTOR_AND_NAMESPACE_NAMES",
+      "INDEPENDENT_OUTCOME_STREAM_AND_POWER_LOSS_ORDER",
+      "SELF_IMAGE_AND_TARGET_CONTINUITY",
+      "FINAL_COMPACT_ACTUATION_GATE",
+      "EXACT_THREE_FIXED_C_SIGKILL_WRAPPERS_AND_SIGNAL_ZERO_PROBES",
+      "POST_SIGNAL_DURABLE_CONSERVATION_OR_LOW_POWER_CONTAINMENT",
+      "TRUSTED_OUTER_READINESS_TRANSFER_BOUNDARY_AND_ALL_NAMED_RESIDUALS",
+      "NO_RETRY_NO_CLEANUP_NO_AUTHORITY_CLOSURE_NO_GATE_E_PROMOTION"
+    ],
+    "superseded": [
+      "ALL_V3_BUILD_AND_EXECUTION_NAMESPACES",
+      "V3_ZERO_ENVIRONMENT_ENTRY_ADMISSION",
+      "V3_READINESS_AS_EXECUTION_ELIGIBILITY"
+    ]
+  },
+  "v3_hold_disposition": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3",
+    "build_product_sha256": "6899ac3e1f4ed13119d6de612a8c8b555c050e835b364321f95cd4c0b2b828b6",
+    "build_product_uuid": "B6FF2D5C-2194-3878-AEC7-75CDF947AFF6",
+    "build_a_mode": "0500",
+    "build_b_mode": "0400",
+    "retention": "PERMANENT_NO_REUSE_NO_CLEANUP",
+    "compiler_entries": 4,
+    "binary_entries": 0,
+    "controller_invocations": 0,
+    "signals_entered": 0,
+    "v3_journal": "ABSENT_AND_PERMANENTLY_UNENTERED",
+    "v3_result": "ABSENT_AND_PERMANENTLY_UNENTERED"
+  },
+  "environment_correction": {
+    "observed_mechanism": "FOUNDATION_PROCESS_ENVIRONMENT_INITIALIZATION_ON_THIS_HOST",
+    "probe_transport": "DIRECT_APPLE_RUBY_NSGETENVIRON_UNDER_ENV_I",
+    "probe_result": "EXACTLY_ONE_ENTRY",
+    "exact_entry": "__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0",
+    "source_admission": "NON_NULL_ENVIRON_VECTOR_EXACT_LENGTH_ONE_EXACT_NUL_TERMINATED_UTF8_VALUE",
+    "outer_launch": "USR_BIN_ENV_I_PLUS_EXACT_SINGLE_NAME_VALUE_ENTRY",
+    "generic_environment_surface": false,
+    "additional_entries_authorized": 0,
+    "missing_entry_authorized": false,
+    "reason": "MATCH_THE_MEASURED_HOST_RUNTIME_VECTOR_WITHOUT_BROADENING_CALLER_CONTROL"
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c"
+  ],
+  "source_corrections_only": [
+    "REPLACE_ZERO_ENVIRONMENT_GUARD_WITH_EXACT_SINGLE_HOST_ENTRY_GUARD",
+    "RECEIPT_EXACT_SINGLE_HOST_ENTRY_AND_COUNT_ONE",
+    "REPOINT_FIXED_BUILD_READINESS_JOURNAL_CONTROL_AND_SCHEMA_IDENTITIES_TO_V4"
+  ],
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4",
+    "build_a_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4",
+    "build_b_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-b5afcd7-v4/ErgenticsR19C2PrerequisiteDisposal",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-b5afcd7-8930176-8930235-8668003-v4",
+    "readiness_frame": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v4.frame",
+    "readiness_json": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v4.json",
+    "implementation_checkpoint": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v4.json",
+    "result": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v4.json",
+    "all_observed_absent_at_freeze": true,
+    "all_created_states_permanently_retained": true
+  },
+  "build_only_verification": {
+    "target": "arm64-apple-macosx14.0",
+    "configuration": "OPTIMIZED_NO_DEBUG_TOP_LEVEL_EXECUTABLE_NO_PARSE_AS_LIBRARY_WARNINGS_AS_ERRORS",
+    "two_disjoint_roots": true,
+    "raw_product_and_c_object_equality_required": true,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "binary_execution_authorized_before_readiness_commit": false,
+    "compiler_diagnostics_required": "ZERO_CAPTURED_BYTES"
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+    "swiftc_and_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"
+  },
+  "fixed_targets": [
+    "POSITIVE_PID_KILL_21601_GENERATION_8930176_17456018_SESSION_GROUP_21601_21601",
+    "NEGATIVE_PGID_KILL_21660_GENERATION_8930235_17456153_SESSION_GROUP_21660_21660",
+    "POSITIVE_PID_KILL_56518_GENERATION_8668003_16806376_SESSION_GROUP_56508_56508"
+  ],
+  "forbidden_signal_targets": [21600, 56508],
+  "transition_predicates": [
+    "V3_PREEXECUTION_HOLD_AND_V4_FREEZE_COMMITTED_BEFORE_SOURCE_EDIT",
+    "EXACT_SOURCE_ALLOWLIST_ONLY",
+    "STATIC_REVIEW_BEFORE_ANY_V4_COMPILER_ENTRY",
+    "V4_BUILD_A_COMPLETE_ADMISSION_BEFORE_V4_BUILD_B_CREATION",
+    "TWO_BUILD_RAW_EQUALITY_AND_READINESS_COMMIT_BEFORE_BINARY_EXECUTION",
+    "EXACT_SINGLE_ENVIRONMENT_VECTOR_REPRODUCED_BEFORE_EXEC",
+    "FRESH_LIVE_GENERATION_AND_ABSENT_JOURNAL_REVALIDATION_IMMEDIATELY_BEFORE_EXEC"
+  ],
+  "operations_at_freeze": {
+    "v4_source_edits": 0,
+    "v4_compiler_entries": 0,
+    "v4_build_roots_created": 0,
+    "v4_binary_entries": 0,
+    "v4_journal_roots_created": 0,
+    "all_controller_invocations": 0,
+    "all_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_V3_HOLD_AND_THIS_V4_FREEZE_THEN_APPLY_EXACT_SOURCE_ONLY_CORRECTIONS_AND_REPEAT_STATIC_REVIEW"
+}

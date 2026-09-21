@@ -1,0 +1,212 @@
+{
+  "schema": "prime_ur_gpu_source_bindings_v1",
+  "files": [
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/AGENTS.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/AGENTS.md",
+      "byteCount": 3561,
+      "sha256": "c40b69989286cefe1e24fd88cc181ca04a3f51e0b87cc0a134115eb842bb83b4",
+      "tracked": true,
+      "lastPathCommit": "26088fbb679e72cd3fa485b78275a2afc0b0d0ce"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Package.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Package.swift",
+      "byteCount": 5130,
+      "sha256": "ef928cbd77663e695c80adfbc8003e344bad238a098234914871738d9c1977e2",
+      "tracked": true,
+      "lastPathCommit": "de7f204eebca6b660a0906f4b5190d994eb7fc34"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/PaintTarget.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/PaintTarget.swift",
+      "byteCount": 3563,
+      "sha256": "8fd48aed9079ae3d9c66e41c14673bde41d9a47b154cae7da75ad0f36e5a6bc3",
+      "tracked": true,
+      "lastPathCommit": "d6df8395ef108bc6d2f58606e02f77d83e369390"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/BoardPainter.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/BoardPainter.swift",
+      "byteCount": 8107,
+      "sha256": "7271e9c4a773d5252d5cdef3270445ce36ff5572d78a4595c89a5df8f4653454",
+      "tracked": true,
+      "lastPathCommit": "d6df8395ef108bc6d2f58606e02f77d83e369390"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/BoardModel.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/BoardModel.swift",
+      "byteCount": 5419,
+      "sha256": "b8555c5264d8f63e1d46bd92a374b97f698edb0eedd6f89f085a37add71403aa",
+      "tracked": true,
+      "lastPathCommit": "d6df8395ef108bc6d2f58606e02f77d83e369390"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/BoardGeometry.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/BoardGeometry.swift",
+      "byteCount": 5467,
+      "sha256": "fe4cb3d6b0afc428ddb480fa0d50da6c57dfff1c6a3fde33ef08c022875ea1ea",
+      "tracked": true,
+      "lastPathCommit": "effbbdb04b4dd44c40944d6c6d30e8f8fc2133d7"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/CGContextRasterizer.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/CGContextRasterizer.swift",
+      "byteCount": 10596,
+      "sha256": "8264a1faf8b94a0aec985d4ac3dd20c89dbec549ef910619c47c4808e2197d53",
+      "tracked": true,
+      "lastPathCommit": "e839809b91f146dcda92af9afd401b501d06a997"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRenderKit/PixelKit.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRenderKit/PixelKit.swift",
+      "byteCount": 1767,
+      "sha256": "e3d987426ef1f83f7953d480e9cf1ae11118da49338c648de3988db0bd0d687f",
+      "tracked": true,
+      "lastPathCommit": "8fabff9e01026551d46dc6d4465182fdb4db2ab3"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/UrUI/RealityBoardView.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/UrUI/RealityBoardView.swift",
+      "byteCount": 18516,
+      "sha256": "ecf560f6ffec02ee8d0fe1e624bed45296b2f1a0a9935c522516dbfe81c74056",
+      "tracked": true,
+      "lastPathCommit": "7b21e080bf2c499e1e82c6d52375b1a20fc20341"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/UrUI/UrBoardView.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/UrUI/UrBoardView.swift",
+      "byteCount": 3966,
+      "sha256": "b661967d9cb46936ef56d3342c4cf79236d3612097ea27ae54ecaecd57443f58",
+      "tracked": true,
+      "lastPathCommit": "d6df8395ef108bc6d2f58606e02f77d83e369390"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/UrUI/GraphicsContextTarget.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/UrUI/GraphicsContextTarget.swift",
+      "byteCount": 3963,
+      "sha256": "d13036a4399da2362a1d9121d5324327bbe3d66c170bb6251b93fcc0147205f4",
+      "tracked": true,
+      "lastPathCommit": "d6df8395ef108bc6d2f58606e02f77d83e369390"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/UrUI/SceneRasterizer.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/UrUI/SceneRasterizer.swift",
+      "byteCount": 7045,
+      "sha256": "9edd46b905da5606179a2762c97cf03d9bc6ec0ec10c31e40db364061e7564ef",
+      "tracked": true,
+      "lastPathCommit": "04b1fa8ee95558385ebd176d6ac6ff1329441346"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Sources/URRender/main.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Sources/URRender/main.swift",
+      "byteCount": 17275,
+      "sha256": "4f09ef04e31e51318ca2fa0da4e3f7ef4224a36b02e9e88bf73e3988a3be4e0f",
+      "tracked": true,
+      "lastPathCommit": "467bc64dd98e9d02f4211640ae00864c685ffcb1"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Tests/URRenderKitTests/URRenderSettleTests.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Tests/URRenderKitTests/URRenderSettleTests.swift",
+      "byteCount": 6726,
+      "sha256": "cdf6b5b3e0aca4da43048fb447a83c50bf31b28156d8b5c6437241b8f02df525",
+      "tracked": true,
+      "lastPathCommit": "8fabff9e01026551d46dc6d4465182fdb4db2ab3"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Tests/UrUITests/URRenderParityTests.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Tests/UrUITests/URRenderParityTests.swift",
+      "byteCount": 8441,
+      "sha256": "60de2eb141855bf4052eeaf21358f9eaea9f1e3297e25551d6fd1fe490cd7314",
+      "tracked": true,
+      "lastPathCommit": "e839809b91f146dcda92af9afd401b501d06a997"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Tests/UrUITests/ChromeRasterSettleTests.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Tests/UrUITests/ChromeRasterSettleTests.swift",
+      "byteCount": 8297,
+      "sha256": "149ed63956645a1a948201927ff336f4b3a3d1c37cd38439e6094a2b067c1851",
+      "tracked": true,
+      "lastPathCommit": "5c89e1333a8df71ec1d34a7c96a7ebbfd7711b82"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/Scripts/render-smoke.sh",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/Scripts/render-smoke.sh",
+      "byteCount": 2629,
+      "sha256": "85f41ee44a9dd2ad8f7404d6056379b251b4150fdc45119e7c8fbaae25cf32ff",
+      "tracked": true,
+      "lastPathCommit": "657c823a43d4a910debd08d3b57b6b2f0a4866ce"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/mockups/URRenderKit/PLAN-URRenderKit-harness.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/mockups/URRenderKit/PLAN-URRenderKit-harness.md",
+      "byteCount": 9598,
+      "sha256": "45a8acd36e4e2923eed49dc6e578b1ff90c1a5de39527d59722d92cf514750a4",
+      "tracked": true,
+      "lastPathCommit": "180120bc892a1075896dbd41c20e0c87d6e0f293"
+    },
+    {
+      "repository": "/Users/ergentics/ur-app",
+      "path": "/Users/ergentics/ur-app/docs/PLAY-BOARD-REBUILD.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/ur-app/docs/PLAY-BOARD-REBUILD.md",
+      "byteCount": 6545,
+      "sha256": "9f13afcd190510c3a2351bf398afe9d98b8fed204b7308afbfa53576791c7a42",
+      "tracked": true,
+      "lastPathCommit": "5f211d74e53e7d119ff5bfa463d33d504e03f3f4"
+    },
+    {
+      "repository": "/Users/ergentics/MasteryKit",
+      "path": "/Users/ergentics/MasteryKit/AGENTS.md",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/MasteryKit/AGENTS.md",
+      "byteCount": 724,
+      "sha256": "42753a7185f44816bc29220c898bc58afd6bdfdd7f0c528aaf4e60638d2f0323",
+      "tracked": true,
+      "lastPathCommit": "bf059b96692dc0123a161ac2bdd1f1adef2f0899"
+    },
+    {
+      "repository": "/Users/ergentics/MasteryKit",
+      "path": "/Users/ergentics/MasteryKit/Package.swift",
+      "copyPath": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/UrReview/Source/MasteryKit/Package.swift",
+      "byteCount": 2651,
+      "sha256": "1775da96c572ddc4b7b63545e1c7e566defc0cb4146f484d61aab3574d5d67af",
+      "tracked": true,
+      "lastPathCommit": "bf059b96692dc0123a161ac2bdd1f1adef2f0899"
+    }
+  ],
+  "gitHistory": [
+    {
+      "commit": "d6df8395ef108bc6d2f58606e02f77d83e369390",
+      "record": "d6df8395ef108bc6d2f58606e02f77d83e369390\n2026-07-07T20:33:36-07:00\nURRenderKit Tier 3: BoardPainter + CGContextRasterizer; UrBoardView reroute\n\nFactor the board's draw commands out of `UrBoardView.body` into a backend-agnostic\n`BoardPainter` rendering against a SwiftUI-free `PaintTarget`, in a new Liquid-Glass-FREE\n`URRenderKit` library (UrKit + CoreGraphics/Accelerate only \u2014 compiles under\nUR_CI_ENGINE_ONLY / Xcode 16, so its board-parity laws can run in CI).\n\n  \u2022 URRenderKit: UrBoardState/HeroStone/StoneColor + BoardPhase (moved down; UrUI\n    re-exports via @_exported import), BoardGeometry (palette + trackPoint topology),\n    PaintTarget (6 primitives \u2014 fill/stroke/translate/scale/rotate/blur; semantic paths\n    so each backend builds native shapes), BoardPainter (faithful port), and a headless\n    CGContextRasterizer (sRGB, deterministic vImage box blur, premultiplied source-over).\n  \u2022 UrUI: GraphicsContextTarget \u2014 the one SwiftUI-touching adapter \u2014 maps the primitives\n    onto GraphicsContext with the identical Path/Color constructors the prototype used.\n    UrBoardView becomes a thin shell; its TimelineView only supplies the BoardPhase.\n  \u2022 URRender: `--board-ir` (ImageRenderer, frozen phase) and `--board-cg` (the CG path,\n    no run-loop) dev renders.\n\nOn-screen output is BYTE-IDENTICAL after the reroute (isolated board, reduceMotion,\nvia ImageRenderer \u2014 same SHA before/after). The board now also renders through Core\nGraphics, deterministically, with no ImageRenderer and no run-loop.\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+    },
+    {
+      "commit": "8fabff9e01026551d46dc6d4465182fdb4db2ab3",
+      "record": "8fabff9e01026551d46dc6d4465182fdb4db2ab3\n2026-07-07T20:42:25-07:00\nURRenderKit settle gate: R1/R3/R4/R5/R6 (CI-visible, pure Core Graphics)\n\nAdd URRenderSettleTests \u2014 the oracle-bound board-parity gate \u2014 plus PixelKit (raw-buffer\nSHA-256 + amber/teal channel classifier). All five laws are pure Core Graphics (no\nImageRenderer, no SwiftUI), so the test target is unconditional and runs under\nUR_CI_ENGINE_ONLY on Xcode 16 \u2014 the board's pixels get CI coverage on every push.\n\n  \u2022 R1 determinism \u2014 same (state, phase) \u21d2 byte-identical buffer (SHA-256).\n  \u2022 R3 fit invariance \u2014 k\u00d7 scale \u21d2 k\u00d7 pixels; board centered in an oversized slot.\n  \u2022 R4 state\u2192pixel presence \u2014 target bloom, suggested amber rim, and litPath teal all\n    appear at their trackPoint coordinates.\n  \u2022 R5 two-color law \u2014 the best-move cue classifies AMBER (not teal); the engine spine\n    classifies TEAL (not amber) \u2014 the rule becomes a pixel test, not prose.\n  \u2022 R6 idle/reduce-motion canonical \u2014 the reduceMotion phase is clock-independent, so\n    two clocks render byte-identically.\n\nDeterminism fix: `rgbaBytes()` now returns PACKED rows (drop the CG row-stride padding,\nwhich vImage leaves uninitialized) so the hash is stable across runs.\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+    },
+    {
+      "commit": "e839809b91f146dcda92af9afd401b501d06a997",
+      "record": "e839809b91f146dcda92af9afd401b501d06a997\n2026-07-07T20:56:09-07:00\nURRenderKit R2: CG\u2194ImageRenderer board parity (confinement form, local-only)\n\nAdd URRenderParityTests \u2014 the acceptance gate for retiring ImageRenderer on the board\npath. Renders the same board through both backends and proves they are the same scene in\nspatial-confinement form (NOT a whole-frame \u22642/255 claim):\n\n  \u2022 Solid, non-rosette interiors agree \u22643/255 worst-case, \u226599.9% within \u22642/255 (the\n    material-policy bound); whole-frame mean abs error 0.69/255.\n  \u2022 Every larger disagreement is confined to the DECLARED-SOFT set \u2014 AA edges, blur halos,\n    translucent glows (IR alpha<255, the render's own coverage) and the five rotated\n    gold-gradient rosettes (known BoardGeometry.rosettes) \u2014 never a structural mismatch.\n    The residual is exactly where any two rasterizers differ: antialiasing, Gaussian blur,\n    and 1-LSB gradient sampling (SwiftUI vs CGGradient).\n\nBoth backends rasterize into the SAME explicit sRGB CGContext via ImageRenderer's\nrender(rasterizationScale:renderer:) closure \u2014 no display-P3/nsImage tag mismatch, and no\nTimelineView (BoardCanvas at a frozen phase) so no run-loop hazard. Local-only (needs\nSwiftUI + ImageRenderer); the pure-CG laws R1/R3/R4/R5/R6 remain CI-visible.\n\nBoardRender gains a public `init(context:)` so the same PixelKit sampling serves both\nbackends.\n\nCo-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+    },
+    {
+      "commit": "5f211d74e53e7d119ff5bfa463d33d504e03f3f4",
+      "record": "5f211d74e53e7d119ff5bfa463d33d504e03f3f4\n2026-07-25T20:30:30-07:00\nRebuild the canonical Play board (#67)\n\nCo-authored-by: Ergentics <ergentics@Ergenticss-MacBook-Pro.local>\nCo-authored-by: Ergentics <support@ergentics.com>"
+    }
+  ]
+}

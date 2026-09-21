@@ -1,0 +1,98 @@
+{
+  "schema": "prime_durable_experiment_build_index_v1",
+  "builds": [
+    {
+      "directory": "0001-pmhnp-native",
+      "buildID": "EPM-20260908-0001-pmhnp-native",
+      "fileManifest": {
+        "path": "file-manifest.json",
+        "byteCount": 11247,
+        "sha256": "51b8bef87c1e5d11538d12f446f6f18d5c16c800dc85d957c3f3e09c2eb04a30"
+      },
+      "fileCount": 62,
+      "bytes": 174304324
+    },
+    {
+      "directory": "0002-older-llama",
+      "buildID": "EPM-20260908-0002-older-llama",
+      "fileManifest": {
+        "path": "file-manifest.json",
+        "byteCount": 18491,
+        "sha256": "742997823f7f9c186bfab10ad5d0e7686003d2a8964d21fcd3a2f668c0d92d86"
+      },
+      "fileCount": 101,
+      "bytes": 1831687549
+    },
+    {
+      "directory": "0003-native-llm-english",
+      "buildID": "EPM-20260908-0003-native-llm-english",
+      "fileManifest": {
+        "path": "file-manifest.json",
+        "byteCount": 19667,
+        "sha256": "cef8e5abb9b3e9ccdda936e3a12227de26afb4664c9af6f439fe70e117e6282d"
+      },
+      "fileCount": 107,
+      "bytes": 158235304
+    },
+    {
+      "directory": "0004-native-llm-latin",
+      "buildID": "EPM-20260908-0004-native-llm-latin",
+      "fileManifest": {
+        "path": "file-manifest.json",
+        "byteCount": 11260,
+        "sha256": "75695cdd45d2007aa2eab62a59b80d98bf1489f6df74a3c7d60f6591f94d7a03"
+      },
+      "fileCount": 62,
+      "bytes": 190986802
+    },
+    {
+      "directory": "0005-prime-symbolic",
+      "buildID": "EPM-20260908-0005-prime-symbolic",
+      "fileManifest": {
+        "path": "file-manifest.json",
+        "byteCount": 8707,
+        "sha256": "0a7c2dfeadc7f5baac165e2fbb988a5710ae53ddae294d88060410f69c80aed1"
+      },
+      "fileCount": 50,
+      "bytes": 41239064
+    }
+  ],
+  "modelTrainingPerformed": false,
+  "inferenceRuns": 69,
+  "comparisonReview": {
+    "path": "comparison-review.json",
+    "byteCount": 18618,
+    "sha256": "0e563af4d2daaf91b2a253ffbee4c0e24bf210a97a26684e4bf8158eded500d8"
+  },
+  "sharedRuntime": {
+    "manifest": {
+      "path": "0002-older-llama/python-runtime-files.json",
+      "byteCount": 6729867,
+      "sha256": "efc7ecc0e60de6002de7fa2878d01d3e006c75b81a1de7aa4ef8dd964509a343"
+    },
+    "requiredBy": [
+      "0002-older-llama",
+      "0005-prime-symbolic"
+    ]
+  },
+  "originalInferenceRuns": 33,
+  "expandedInferenceRuns": 36,
+  "expandedExperiment": {
+    "directory": "Expanded-01",
+    "sameQuestionsPerTextModel": 9,
+    "fileManifest": {
+      "path": "FILE-MANIFEST.json",
+      "byteCount": 115414,
+      "sha256": "6b2f27e4da5813b12ea96d1f4658dceca973ca5887541aef84d607e27bbccd36"
+    },
+    "fileCount": 537
+  },
+  "primarySystemComparison": "Prime with runtime/execution capabilities versus Llama remains open",
+  "failedLaunchesWithoutGeneration": [
+    {
+      "build": "0001-pmhnp-native",
+      "directory": "Results/coding-01",
+      "signal": 6
+    }
+  ]
+}

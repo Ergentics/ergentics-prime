@@ -1,0 +1,197 @@
+{
+  "schema": "prime_cross_domain_source_cases_v1",
+  "status": "source_cases_prepared_no_model_execution",
+  "selection": "One short nontrivial retained problem per requested domain, chosen before any cross-domain model output. Diagnostic sample, not a heldout/generalization claim. Original wording, double spaces and Unicode preserved.",
+  "questionOnlyInputs": {
+    "path": "questions-only.json",
+    "byteCount": 1899,
+    "sha256": "caad47f7ecdf2abbc747101094fc941f72067e0de45e533ab1a7c7fdf912fa90"
+  },
+  "connectedCandidateComplete": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/COMPLETE.json",
+    "byteCount": 1099,
+    "sha256": "89c048d9c85ad04849c6a43c0ef7bd831b5e0a1432a4439c40c5a3b03a9c360f"
+  },
+  "connectedSourceBindings": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/source-bindings.json",
+    "byteCount": 90709,
+    "sha256": "5b80085054a9491ad9f3ff2807d9dc57f66e4d07ab6683fffd4a394c78516f05"
+  },
+  "maximumQuestionUTF8Bytes": 400,
+  "trainingPerformed": false,
+  "modelInferencePerformed": false,
+  "sourceMutation": false,
+  "cases": [
+    {
+      "caseID": "01-algebra",
+      "domain": "algebra",
+      "sourceFile": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/raw/ergentics-logic/corpus/exemplars/algebra.solve.jsonl",
+        "byteCount": 1101044,
+        "sha256": "b85cdc98e71fb0bb05b6795db16f5db081d7ec23e8314a11ef49db3b79f2331e"
+      },
+      "sourceRepository": "ergentics-logic",
+      "sourceRevision": "97be84b2790b79ce79558d6bade846a532226540",
+      "sourceRelativePath": "corpus/exemplars/algebra.solve.jsonl",
+      "sourceGitBlob": "b938cc26eaf384add625d216a0c484fab75f4241",
+      "sourceLineOneBased": 23,
+      "sourceRawLineSHA256": "d06a745db787dc2d8df3b96ea7a087132dd6f8f1c60575a72e52a0024f3fcbd2",
+      "sourceRecordID": "algebra.solve.linear.a1_b4_c6",
+      "sourceFamily": "algebra.linear.solve",
+      "sourceSchema": "0.1",
+      "sourceApp": "algebra-app",
+      "sourceRepoDeclared": "Ergentics/algebra-app",
+      "originalQuestion": "Solve the linear equation x + 4 = 6 for x.",
+      "questionUTF8ByteCount": 42,
+      "questionSHA256": "900ae7730c91a45d297ffdfb0826c68b6976f962d17a1dc569360d02462a7aa2",
+      "originalAnswer": "x = 2",
+      "polarity": "positive",
+      "labelSemantics": "Correct solution of an equation; positive is accepted mathematical answer.",
+      "independentOracleCountDeclared": 3,
+      "oracleFamiliesDeclared": [
+        "field_isolation",
+        "evaluation_residual",
+        "bisection"
+      ],
+      "modelInputFile": "prompts/01-algebra.txt",
+      "modelInputRule": "Exact originalQuestion UTF8 only. Do not send originalAnswer, oracle metadata, source trace, or this reference record to the model. Model-specific tokenizer/BOS/template must be recorded separately by each runner."
+    },
+    {
+      "caseID": "02-geometry",
+      "domain": "geometry",
+      "sourceFile": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/raw/ergentics-logic/corpus/exemplars/geometry.area.jsonl",
+        "byteCount": 180624,
+        "sha256": "7e3c3f758120c923f0daa6228e6fb4e34cb272e57453a5a111cfbcc1dbcfd96d"
+      },
+      "sourceRepository": "ergentics-logic",
+      "sourceRevision": "97be84b2790b79ce79558d6bade846a532226540",
+      "sourceRelativePath": "corpus/exemplars/geometry.area.jsonl",
+      "sourceGitBlob": "de1cff91ca64cf52b0155f98a65100859c900489",
+      "sourceLineOneBased": 1,
+      "sourceRawLineSHA256": "134aa4eb45788f78caec8555452a6d0b72adf382a669c27000d1e17cf72c1e7f",
+      "sourceRecordID": "geometry.area.triangle.right_3x4",
+      "sourceFamily": "geometry.triangle.area",
+      "sourceSchema": "0.1",
+      "sourceApp": "geometry-app",
+      "sourceRepoDeclared": "Ergentics/geometry-app",
+      "originalQuestion": "Find the area of the triangle with vertices A=(0,0), B=(3,0), C=(0,4). (right triangle, legs 3,4)",
+      "questionUTF8ByteCount": 97,
+      "questionSHA256": "cb7f76295a3d08c966b8287a515dc78d84c561e684f9fd4ecf2e0a465afbe752",
+      "originalAnswer": "6.0000",
+      "polarity": "positive",
+      "labelSemantics": "Correct numerical area; four-decimal canonical formatting is retained.",
+      "independentOracleCountDeclared": 3,
+      "oracleFamiliesDeclared": [
+        "side_length_formula",
+        "coordinate_cross_product",
+        "statistical_estimation"
+      ],
+      "modelInputFile": "prompts/02-geometry.txt",
+      "modelInputRule": "Exact originalQuestion UTF8 only. Do not send originalAnswer, oracle metadata, source trace, or this reference record to the model. Model-specific tokenizer/BOS/template must be recorded separately by each runner."
+    },
+    {
+      "caseID": "03-logic-parsing",
+      "domain": "logic-parsing",
+      "sourceFile": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/raw/ergentics-logic/corpus/exemplars/logic.parsing.jsonl",
+        "byteCount": 172717,
+        "sha256": "0e4925428774d7f16159508cbc9d397199d9f20c2e9e0a7bef7d6845cc506837"
+      },
+      "sourceRepository": "ergentics-logic",
+      "sourceRevision": "97be84b2790b79ce79558d6bade846a532226540",
+      "sourceRelativePath": "corpus/exemplars/logic.parsing.jsonl",
+      "sourceGitBlob": "89554c945c5b0c9651389b048f8658b7684743a1",
+      "sourceLineOneBased": 21,
+      "sourceRawLineSHA256": "734cfdc7bbf6ca1c8318d1c7e62312c8d3348fbad1e52d6bd3a1ab6c5d54c5c6",
+      "sourceRecordID": "logic.parsing.expr.prec_basic",
+      "sourceFamily": "logic.parsing.expr",
+      "sourceSchema": "0.1",
+      "sourceApp": "ergentics-logic",
+      "sourceRepoDeclared": "Ergentics/ergentics-logic",
+      "originalQuestion": "Evaluate the arithmetic expression  2 + 3 * 4  respecting standard operator precedence (× ÷ bind tighter than + −) and LEFT-associativity. (÷ is exact rational.)",
+      "questionUTF8ByteCount": 166,
+      "questionSHA256": "69c010309b8b3b9bdf710cad219cfa93f463f4407a9377c71ca298a1383c594a",
+      "originalAnswer": "2 + 3 * 4 = 14",
+      "polarity": "positive",
+      "labelSemantics": "Correct exact arithmetic with precedence; canonical answer includes the original expression.",
+      "independentOracleCountDeclared": 3,
+      "oracleFamiliesDeclared": [
+        "two_stack_rpn",
+        "precedence_climbing_grammar",
+        "binding_power_loop"
+      ],
+      "modelInputFile": "prompts/03-logic-parsing.txt",
+      "modelInputRule": "Exact originalQuestion UTF8 only. Do not send originalAnswer, oracle metadata, source trace, or this reference record to the model. Model-specific tokenizer/BOS/template must be recorded separately by each runner."
+    },
+    {
+      "caseID": "04-music",
+      "domain": "music",
+      "sourceFile": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/raw/ergentics-logic/corpus/exemplars/music.theory.jsonl",
+        "byteCount": 485973,
+        "sha256": "ac7440c62aa0f35ee6740c23b06494808721d40711c4e21c0a20b31578b88542"
+      },
+      "sourceRepository": "ergentics-logic",
+      "sourceRevision": "97be84b2790b79ce79558d6bade846a532226540",
+      "sourceRelativePath": "corpus/exemplars/music.theory.jsonl",
+      "sourceGitBlob": "9987b994d7a01084a8815ebac937435b529e6cac",
+      "sourceLineOneBased": 139,
+      "sourceRawLineSHA256": "6343ce3ba815df4f328916386caa0cd8140da1032c35042ce0853ed04a7631d9",
+      "sourceRecordID": "music.theory.triad.quality.major.C",
+      "sourceFamily": "music.triad.quality",
+      "sourceSchema": "0.1",
+      "sourceApp": "music-theory-app",
+      "sourceRepoDeclared": "Ergentics/music-theory-app",
+      "originalQuestion": "Classify the quality of the chord with pitch classes {C, E, G} (pc set [0, 4, 7]): major, minor, diminished, or augmented?",
+      "questionUTF8ByteCount": 122,
+      "questionSHA256": "46bed3aa67633ecea4f5908f043e7bc5aab4fc17310fbf8248c7b56c09a42567",
+      "originalAnswer": "major",
+      "polarity": "positive",
+      "labelSemantics": "Correct chord-quality classification; positive is an accepted classification, not a yes/no token.",
+      "independentOracleCountDeclared": 3,
+      "oracleFamiliesDeclared": [
+        "third_stacking",
+        "five_limit_acoustic",
+        "generated_set_match"
+      ],
+      "modelInputFile": "prompts/04-music.txt",
+      "modelInputRule": "Exact originalQuestion UTF8 only. Do not send originalAnswer, oracle metadata, source trace, or this reference record to the model. Model-specific tokenizer/BOS/template must be recorded separately by each runner."
+    },
+    {
+      "caseID": "05-agentcraft-christoffel",
+      "domain": "agentcraft-christoffel",
+      "sourceFile": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Connected-Candidate-2026-09-08/raw/ergentics-logic/corpus/exemplars/christoffel.jsonl",
+        "byteCount": 19886,
+        "sha256": "25f6e657bd507f9d66219f2ce956db314863e937fc3708903e065ad3bf71019d"
+      },
+      "sourceRepository": "ergentics-logic",
+      "sourceRevision": "97be84b2790b79ce79558d6bade846a532226540",
+      "sourceRelativePath": "corpus/exemplars/christoffel.jsonl",
+      "sourceGitBlob": "0e56a30761aa9d3520865d412901a3e118b8a8e4",
+      "sourceLineOneBased": 1,
+      "sourceRawLineSHA256": "bdc51d6b9f3bf399ae4369049da54caffe60312207f54ff43395b819639d216f",
+      "sourceRecordID": "christoffel.lower.2_3",
+      "sourceFamily": "christoffel.lower.slope.2_3",
+      "sourceSchema": "0.2",
+      "sourceApp": "ergentics-verifier",
+      "sourceRepoDeclared": "ergentics-verifier/corpus-christoffel",
+      "originalQuestion": "Derive the lower Christoffel word of slope 2/3 (a=East,b=North; length 5) and certify it by independent methods.",
+      "questionUTF8ByteCount": 112,
+      "questionSHA256": "870d6283160bf5c85529a9eae7d8b8eef7585b9529357d63b432b6e6ccfa3037",
+      "originalAnswer": "aabab",
+      "polarity": "positive",
+      "labelSemantics": "Constructive lower-Christoffel word; positive is an accepted construction. This is the promoted logic sink, distinct from the full Agentcraft classifier bank. Original question also asks certification; matching the word alone does not establish the requested independent certificate.",
+      "independentOracleCountDeclared": 4,
+      "oracleFamiliesDeclared": [
+        "beatty_mechanical_floor",
+        "balance_and_lyndon_order",
+        "stern_brocot_mediant_recursion",
+        "central_word_periodicity"
+      ],
+      "modelInputFile": "prompts/05-agentcraft-christoffel.txt",
+      "modelInputRule": "Exact originalQuestion UTF8 only. Do not send originalAnswer, oracle metadata, source trace, or this reference record to the model. Model-specific tokenizer/BOS/template must be recorded separately by each runner."
+    }
+  ]
+}

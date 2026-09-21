@@ -1,0 +1,30 @@
+{
+  "snapshots": [
+    {
+      "directory": "../0013-prime-guest-gpu-runtime",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 5971,
+        "sha256": "105b5cbcbe90ca86dd6d204f8979a0f23dd0b5516356b4248419b0f6eb87bc09"
+      },
+      "fileCount": 34,
+      "byteCount": 532354
+    },
+    {
+      "directory": ".",
+      "manifest": {
+        "path": "FILE-MANIFEST.json",
+        "byteCount": 25667,
+        "sha256": "c3791d1fd530c5087610ea0d197f25e75f3b059d6a1edb065c13cefe6debc59c"
+      },
+      "fileCount": 150,
+      "byteCount": 1082868
+    }
+  ],
+  "excludedUnsealedAdministrativeFiles": [
+    "SNAPSHOT-INDEX.json",
+    "VERIFICATION.json",
+    "SOURCE-INTEGRATION.json",
+    "prime-gpu-source.bundle"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "ergentics_local_app_checkpoint_v1",
+  "version": "1.0",
+  "build": "21",
+  "display_name": "Ergentics Prime",
+  "bundle_identifier": "com.ergentics.provenance",
+  "source_commit": "fbe358c632d44fb8c244a036469ef605c5a36b38",
+  "source_repository": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo",
+  "archive": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-09-08/Ergentics Prime 1.0 (21).xcarchive",
+  "standalone_app": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Ergentics Prime.app",
+  "installed_app": "/Applications/Ergentics Prime.app",
+  "previous_installed_app_backup": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Previous-installed-Build19.app",
+  "signing": "Apple Development; team ZCQ435U8JP; sandbox and hardened runtime retained",
+  "release_tests": {
+    "executed": 993,
+    "passed": 989,
+    "skipped": 4,
+    "failed": 0,
+    "skip_reason": "Four opt-in native process fixtures; all ran and passed in the separate 12-case harness."
+  },
+  "focused_process_tests": {
+    "passed": 12,
+    "skipped": 0,
+    "failed": 0
+  },
+  "native_lease_tests": {
+    "passed": 15,
+    "skipped": 0,
+    "failed": 0
+  },
+  "independent_packaging": {
+    "passed": 15,
+    "failed": 0,
+    "report": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/packaging-review.json",
+      "bytes": 17053,
+      "sha256": "2c2a5d0f62acfd9540a416c4b7903a64357e51e78e21b05043b6c2000240a1f2"
+    }
+  },
+  "live_checks": {
+    "method": "Actual signed app actions and Accessibility observations; no pixel-layout or screen-capture protection qualification.",
+    "gpu_device": "Apple M5 Max",
+    "development_runs_seconds": [
+      1.04,
+      0.22
+    ],
+    "archived_copy_seconds": 0.31,
+    "installed_app_seconds": 0.27,
+    "all_exact_fp32": true,
+    "all_preserved_same_lock_and_opaque_metadata": true,
+    "archived_git": "Opened source repository through Workspace; Git showed main, fbe358c632, clean worktree and Ready.",
+    "archived_vm": "VM setup opened; no installer chosen or guest booted.",
+    "quit": "Archived copy quit; installed app remains open on successful Prime result.",
+    "busy_stop_and_quit": "Covered by focused model/process tests, not separately observed during the short signed-app GPU operation.",
+    "reports": [
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/Prime-runtime-build05-pass01.json",
+        "bytes": 8013,
+        "sha256": "35cc4f8316ba8233df57e3c976c967dda3c18016ce7ef2cca310a069e5fc5935"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/Prime-runtime-build05-pass02.json",
+        "bytes": 8013,
+        "sha256": "35cc4f8316ba8233df57e3c976c967dda3c18016ce7ef2cca310a069e5fc5935"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/Prime-runtime-archive21.json",
+        "bytes": 7958,
+        "sha256": "0120730b06690a3d1433fddc8bcb4c884ba867678aac49ddf9b6933e3f57147c"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/Prime-runtime-installed21.json",
+        "bytes": 7870,
+        "sha256": "ee9ef197c1b71f47971a933be41efce77edc6633b11c4e40d493d827d3183864"
+      }
+    ]
+  },
+  "privacy": {
+    "git_configuration": "Only required author values and nonempty filter names are copied into app output; raw config errors withheld; credential helpers disabled.",
+    "limits": "Git file previews and patches are unredacted; visible content may be captured or read by authorized accessibility tools. Native reports contain local paths, device/process information and metadata hashes. No end-to-end secret-containment claim.",
+    "metadata": "com.apple.provenance was already permitted. Sandbox-generated com.apple.quarantine rejected the strict lock policy; the explicit signed-app internal lease now preserves both. No metadata stripped and no new entitlements granted."
+  },
+  "source_history": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Ergentics-Prime-Build21-Source.bundle",
+    "bytes": 11091948,
+    "sha256": "3474e813a07923cac4ccad735b0209177b257e5c3a2f3aeeba8d6446720c8e74"
+  },
+  "installation": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Build21/Checks/install-21.json",
+    "bytes": 603,
+    "sha256": "3d4a890d1d8172ba63f20032dfb67c452e798ce13b77ecc9eb8be3877820d0c0"
+  },
+  "remaining": [
+    "Single maintained Prime package integration",
+    "Persisted repository/VM/checkpoint workspace association",
+    "Prime model Stage 7 successful native resume receipt and app checkpoint/generation connection; Stage 8 follows",
+    "Real ARM64 UEFI guest acceptance",
+    "External TestFlight upload and delivered-signature acceptance"
+  ],
+  "preserved": [
+    "Driver V2 F–H checkpoint 6f656bb and H06 evidence",
+    "Unfinished StartOwner quarantine and 350-test predecessor evidence",
+    "Build 19 and all earlier archives"
+  ],
+  "os_attestation": "Parked",
+  "testflight_upload_performed": false,
+  "notarization_performed": false
+}

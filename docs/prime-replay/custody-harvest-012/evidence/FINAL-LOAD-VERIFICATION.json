@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "actual_loads": [
+    {
+      "profile_id": "ergentics_swift_c",
+      "run_id": "prime-custody-012-accepted-011-swift",
+      "observation_sha256": "0c4983108ed245f1640fc09854403ae3bff4830071ce0ec7d833a6b05de080aa",
+      "packet_receipt_sha256": "6ad7454d8fa45d538f8260b74a186438a19e7dfb1ae14e8e7feedaa39f21846a",
+      "actual_read_hashes_verified": 15,
+      "result_bytes": 9721,
+      "result_cap": 16384,
+      "loaded_lesson_sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+      "helper_package_version": "0.1.1 candidate; not installed",
+      "serving_build": null
+    },
+    {
+      "profile_id": "ergentics_cpp",
+      "run_id": "prime-custody-012-accepted-011-cpp",
+      "observation_sha256": "173eb25715ec281246c7fe903dde9631687e4954ede878aa1438cab461d6d70f",
+      "packet_receipt_sha256": "de522711aa31ebcec0855a1cc6429a6cae8f9f1ff32ecffbafb3c667d8c33a1d",
+      "actual_read_hashes_verified": 19,
+      "result_bytes": 12183,
+      "result_cap": 16384,
+      "loaded_lesson_sha256": "0a8a8250abc0216193087289e2f35e5e39317b207109d2bcf273a83813cbd738",
+      "helper_package_version": "0.1.1 candidate; not installed",
+      "serving_build": null
+    }
+  ],
+  "installed_packages_changed": false,
+  "native_registry_activated": false,
+  "scope": "Original per-role read/response observations and exact-file checks; not enforced isolation or serving-build attestation."
+}

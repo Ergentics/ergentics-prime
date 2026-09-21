@@ -1,0 +1,38 @@
+{
+  "schema": "ergentics.skill-candidate-manifest.v1",
+  "name": "ergentics-prime-custody",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "bytes": 4350,
+      "sha256": "550461810acce7ee01f8c4926b613337e1ff4448082f29df53877bedb284f96f"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "bytes": 234,
+      "sha256": "3a425ac3886e6fd65fcc7b65cc121d531221c773310bdf6b3aada5a05e24bd40"
+    },
+    {
+      "path": "references/gate-record.md",
+      "bytes": 1617,
+      "sha256": "5543d64a7baf60b4cbfcf0af50eda9c96573672203f16a121277d04f921b596d"
+    },
+    {
+      "path": "references/lineage-and-extension.md",
+      "bytes": 2983,
+      "sha256": "0cd3cb1dd9cb6bcdec26fb5b59ec03de84b8dcaa33d56d6ee93addda988a38a7"
+    },
+    {
+      "path": "references/metadata-validation.md",
+      "bytes": 4327,
+      "sha256": "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352"
+    },
+    {
+      "path": "scripts/requirements-validation.txt",
+      "bytes": 17,
+      "sha256": "c9e3d5b71ce6e54e3c1cd3e97da9a4682811879f2ed85455982ccb9a035fd158"
+    }
+  ]
+}

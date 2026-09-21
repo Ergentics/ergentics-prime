@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ergentics Prime Custody"
+  short_description: "Review Prime gate admission and source custody"
+  default_prompt: "Use $ergentics-prime-custody to review this Prime gate and its next authorized transition."

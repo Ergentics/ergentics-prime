@@ -1,0 +1,127 @@
+{
+  "schema": "prime_connected_sources_v1",
+  "sources": [
+    {
+      "id": "companion-neural-runtime",
+      "root": "/Users/ergentics/pmhnp-companion-ergentics",
+      "revision": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+      "controlState": "Selected package/endpoint paths have empty git status; listed current bytes hash-bound.",
+      "files": [
+        {
+          "path": "neural-kit/Package.swift",
+          "byteCount": 2629,
+          "sha256": "c0aeb33490bccd9d0b6df2dc8a8d6e0fd74545fc1cc348617c112b9a9b0a430d",
+          "role": "implementation"
+        },
+        {
+          "path": "neural-kit/Sources/NeuralKit/PrimeRuntimeSession.swift",
+          "byteCount": 1391,
+          "sha256": "ef75cb5a979bfb1ecedf8e38f64173c29c908536cfa3d0795db403686f2025a2",
+          "role": "implementation"
+        },
+        {
+          "path": "neural-kit/Sources/NeuralKit/PrimeAskBrain.swift",
+          "byteCount": 1224,
+          "sha256": "2c28d9d328424cd03aed92692c5a86a684dd7b1fabd2810eaec799de7fc1915a",
+          "role": "implementation"
+        },
+        {
+          "path": "neural-kit/Sources/NeuralKit/PrimeStudyWire.swift",
+          "byteCount": 813,
+          "sha256": "8422e189c612b0259b7f0a299c4afc5ec2049981795aedcf3dd8f321a42c3e62",
+          "role": "implementation"
+        },
+        {
+          "path": "neural-kit/Sources/NeuralKit/PrimeRuntimeConfiguration+App.swift",
+          "byteCount": 2958,
+          "sha256": "f1fa664263dcad96f4d21ab5eb49e456c5145a99e53a4d604b9a9b23959ce9d2",
+          "role": "implementation"
+        },
+        {
+          "path": "neural-kit/Sources/NeuralKit/ErgenticsPrimeLabProfile.swift",
+          "byteCount": 1733,
+          "sha256": "5d2e26a05af2bbacfab3739c02e06ea7d0f62b5516fddbb855b9c0096202acc0",
+          "role": "implementation"
+        },
+        {
+          "path": "prime-runtime/Sources/ErgenticsPrimeRuntime/PrimeRuntime.swift",
+          "byteCount": 1218,
+          "sha256": "fe907f281220a7910f41733ec23bd82dc557ec07bab98ddcf3012b1cdf5d683e",
+          "role": "implementation"
+        },
+        {
+          "path": "prime-runtime/Sources/ErgenticsPrimeRuntime/MLXPrimeRuntime.swift",
+          "byteCount": 3094,
+          "sha256": "c0e02a69f475b55c8b3c166710fa6a84e63c90778473612283396ceae6af74d2",
+          "role": "implementation"
+        },
+        {
+          "path": "prime-runtime/Sources/ErgenticsPrimeRuntime/CoreMLPrimeRuntime.swift",
+          "byteCount": 4563,
+          "sha256": "a681b68c91a42d68fbef7c477400dce49a62d567906fa7087892b5781b0a54ce",
+          "role": "implementation"
+        },
+        {
+          "path": "prime-runtime/Sources/ErgenticsPrimeRuntime/PrimeStudyPrompt.swift",
+          "byteCount": 2327,
+          "sha256": "c8f8fd47b88617833d05f053a6a45adf1d4882849965f3e8f719c54a0fe68946",
+          "role": "implementation"
+        },
+        {
+          "path": "prime-seat-kit/Sources/PrimeSeatKit/PrimeScreeningStudyPrompt.swift",
+          "byteCount": 1306,
+          "sha256": "dae5ad0f182edfad9dbd232de379a5b2e13fdbbecc49ddda09ce8e65f7cfeb6b",
+          "role": "implementation"
+        },
+        {
+          "path": "PMHNPCompanion/PMHNPCompanion/Sources/Engine/PrimeChatModelEndpoint.swift",
+          "byteCount": 9394,
+          "sha256": "fc678e7845967d5ee40754b8ffe8d5ee8b082b9fdbf382669e1c813ebe27877c",
+          "role": "implementation"
+        },
+        {
+          "path": "PMHNPCompanion/PMHNPCompanion/Sources/Engine/StudyAskRuntimeBridge.swift",
+          "byteCount": 295,
+          "sha256": "8b5b76d267ccc326f2c68418fbf5924189ef97e44e9cd74e5956a5b22e7133e1",
+          "role": "implementation"
+        }
+      ]
+    },
+    {
+      "id": "ergentics-llm-native-engine",
+      "root": "/Users/ergentics/ergentics-llm",
+      "revision": "e827595b485cd95519cc7e5ece6178fa67cc5677",
+      "controlState": "Current listed source bytes hash-bound; no whole-repository clean claim.",
+      "files": [
+        {
+          "path": "Sources/ErgenticsLLM/NativeTinyDecoder.swift",
+          "byteCount": 4947,
+          "sha256": "6cdc9647d633d60d64888746e61f21056b54d06a6f6089a6f214916d8b49796c",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/ErgenticsLLM/NativeLabTrainProfile.swift",
+          "byteCount": 5270,
+          "sha256": "4c0a1f3edfc10d4e5e5d4cac18727d223c1ae4569f557b59167387c60654c917",
+          "role": "implementation"
+        },
+        {
+          "path": "Sources/ErgenticsLLM/NativeLabCheckpoint.swift",
+          "byteCount": 5135,
+          "sha256": "1fab3de8aeac4d9a24d37ccca130c8df8940e86ae24fa45b890a2f8863d94753",
+          "role": "implementation"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "reusableRuntime": "PrimeRuntime.generate(messages:options:) and PrimeRuntimeLoader in prime-runtime; backend adapters MLXPrimeRuntime and CoreMLPrimeRuntime load declared model bundles and use their compatible tokenizers.",
+      "neuralKitRole": "PrimeRuntimeSession owns a loaded runtime; PrimeAskBrain wraps session loading and proposal. NeuralKit is already a separate Swift package rather than the PMHNP app target.",
+      "remainingDomainCoupling": "Both backend generate methods invoke PrimeStudyPrompt.normalizeForGeneration. It allows exactly one user message and routes screening severity prompts through PrimeSeatKit to append Clinical meaning:. PrimeStudyWire also applies study framing. These are PMHNP-specific conventions within otherwise reusable loading/generation code.",
+      "nativeEngineReuse": "NativeTinyDecoder.forward(tokenIds:positionOffset:) is shared by explicitly separate PMHNP, Latin and compositional profiles. NativeLabCheckpoint.loadWeights loads the selected checkpoint. PMHNP is one corpus/tokenizer/profile, not the definition of the neural engine.",
+      "appSpecificVerification": "PrimeChatModelEndpoint.disposeModelDraft may substitute reference text after generation and marks that channel modelHybridGold; reply also has a fixed social-response branch. Use raw model helpers for the cross-domain comparison, retaining model output separately from deterministic answers.",
+      "practicalNextBoundary": "Keep model loading, tokenization and raw generation reusable. Make study framing and PMHNP verification explicit app adapters. Attach corpus/export registries to model experiments without changing existing tokenizers or claiming the source catalog has trained the model."
+    }
+  ]
+}

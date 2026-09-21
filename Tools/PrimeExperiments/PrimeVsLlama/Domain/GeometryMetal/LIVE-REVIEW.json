@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "scope": "Independent saved-result readback only; no GPU run by reviewer.",
+  "actualGPUDispatches": 1,
+  "points": 200,
+  "nodes": 12,
+  "device": {
+    "hasUnifiedMemory": true,
+    "name": "Apple M5 Max",
+    "registryID": 4294968913
+  },
+  "allSixOutputArraysHashAndFiniteVerified": true,
+  "allFourToleranceSummariesRecomputedFromOriginalArrays": true,
+  "independentPythonDoubleFormulaMaxDifferenceFromSavedCPU": 8.881784197001252e-16,
+  "invalidInputsRejectedBeforeDispatch": 14,
+  "controller": {
+    "pid": 25320,
+    "exitCode": 0,
+    "exactReapCount": 1,
+    "emptyOwnedGroup": true,
+    "elapsedSeconds": 0.44769999996060506,
+    "bothStreamsHashBoundAndEOF": true
+  },
+  "comparisons": {
+    "CPUDirectPotentialVsLogSumExp": {
+      "absoluteTolerance": 1e-05,
+      "count": 200,
+      "failures": 0,
+      "maxAbsoluteError": 1.3322676295501878e-15,
+      "maxRelativeError": 5.448426578777114e-16,
+      "maxToleranceRatio": 5.448426578777114e-12,
+      "relativeTolerance": 0.0001
+    },
+    "gpuGradientVsCPUDirect": {
+      "absoluteTolerance": 0.0001,
+      "count": 400,
+      "failures": 0,
+      "maxAbsoluteError": 5.100295865645421e-07,
+      "maxRelativeError": 2.552041651423886e-05,
+      "maxToleranceRatio": 0.004927997111492388,
+      "relativeTolerance": 0.001
+    },
+    "gpuGradientVsLogSumExpFiniteDifference": {
+      "absoluteTolerance": 0.0001,
+      "count": 400,
+      "failures": 0,
+      "maxAbsoluteError": 5.099486983795032e-07,
+      "maxRelativeError": 2.5534080902607377e-05,
+      "maxToleranceRatio": 0.0049305769778823505,
+      "relativeTolerance": 0.001
+    },
+    "gpuPotentialVsCPUDirect": {
+      "absoluteTolerance": 1e-05,
+      "count": 200,
+      "failures": 0,
+      "maxAbsoluteError": 5.362635326910947e-07,
+      "maxRelativeError": 5.088762473116117e-07,
+      "maxToleranceRatio": 0.005088762473116117,
+      "relativeTolerance": 0.0001
+    }
+  },
+  "inputs": {
+    "byteCount": 29036,
+    "sha256": "aab167376f256285e8e87ee2b6cc3d8d3e0eb4a78b0ad4df473eac36d3dd4d67"
+  },
+  "result": {
+    "byteCount": 5164,
+    "sha256": "0a98419eb61b5da21a7abc6cf1f96fcd512bee2ad74530be53572234a86febe5"
+  },
+  "sourceStillMatchesCompiledBindings": true,
+  "limits": [
+    "This evaluates one host Metal geometry kernel; it is not a virtual GPU device or guest HVC vector service.",
+    "No neural inference, model training, app integration or performance benchmark claim.",
+    "Original kernel remains byte-identical; the task-only adapter adds input and command/result checks."
+  ]
+}

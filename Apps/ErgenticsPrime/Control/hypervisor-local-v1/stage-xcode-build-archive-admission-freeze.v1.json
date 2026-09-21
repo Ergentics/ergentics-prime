@@ -1,0 +1,367 @@
+{
+  "authority_ceiling": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "product_check_may_authorize_execution": false,
+    "product_check_may_close_gate_e": false,
+    "product_check_may_mint_scientific_authority": false
+  },
+  "control_predecessor": {
+    "commit": "603a789085c7ef9db061641c54f9259bfbc0948b",
+    "continuity_result_file": "Control/hypervisor-local-v1/h1-xcode-build-archive-continuity-result.v1.json",
+    "continuity_result_sha256": "908ea5d0fc095b2c3df17a0465400b4a0fdb4d44e896ca43bc7edce4eec6da07",
+    "source_manifest_file": "Control/hypervisor-local-v1/h1-xcode-product-source-manifest.v1.json",
+    "source_manifest_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+    "tree": "f9e28f335d054da5e00a8394ec6d67eeec0ab208"
+  },
+  "correction_policy": {
+    "failed_or_incomplete_attempt_is_retained": true,
+    "implicit_latest_attempt_selection": false,
+    "overwrite_prior_attempt": false,
+    "successor_attempt_requires_new_content_addressed_node": true,
+    "successor_attempt_roots_prior_attempt_ancestry": true
+  },
+  "data_precedence": {
+    "archive_succeeded_gui_label_is_authority": false,
+    "console_text_is_gating": false,
+    "gui_role": "PRESENTATION_ONLY",
+    "primary_evidence": [
+      "exact_product_input_manifest",
+      "xcodebuild_process_exit",
+      "structured_xcresult_inventory",
+      "signed_product_bytes_and_metadata",
+      "closed_archive_inventory",
+      "independent_codesign_postflight",
+      "app_and_dsym_uuid_join",
+      "dual_stream_graph_reconstruction"
+    ],
+    "prose_may_override_predicate_data": false
+  },
+  "failure_semantics": {
+    "already_verified_stage_semantics_revoked": false,
+    "application_poisoned": false,
+    "gate_e_changed": false,
+    "missing_or_unknown_required_predicate": "BLOCK_SUCCESSOR_FREEZE_ELIGIBILITY",
+    "process_containment_created": false,
+    "rejected_required_predicate": "BLOCK_SUCCESSOR_FREEZE_ELIGIBILITY"
+  },
+  "frozen_at_utc": "2026-09-01T01:11:38Z",
+  "h1_evaluation": {
+    "authority_vector": "00000000",
+    "eligibility_graph": {
+      "aggregate_merkle_root": "23fdbc75aa627f6d0ea28dfcc0971f82f2d036268b49cf12e5945fef5d336cb1",
+      "cbor_sha256": "51ffda46233533dcc281af9e9db560a9658cb26f3813c54ffa5255389718dd2b",
+      "json_sha256": "f615485593777d6022d1e76b9fab275f2857bc5d68a8fc84f2478cf591f90768",
+      "receipt_file": "Control/hypervisor-local-v1/h1-xcode-product-eligibility-graph-receipt.v1.json",
+      "receipt_sha256": "fd0f496f132ce5b8f673b52fdf41ee5ca41f8bcd4def172c7dd39a5eacac50a8",
+      "state_root": "ec47f37f9efbf34a6471a1c3a79b7184e6d4f5b10a21f092a000f473c75b72cc",
+      "transition_root": "4852bb589cba2f7d0d9f52a385e3934d362f8995e339f5d4be2960041f46c596",
+      "witness_root": "8347175f9e6470fc10b93b6129ce2b61b472f405a3fac8f6b30665ca0528b005"
+    },
+    "evidence_inputs": {
+      "continuity_result_sha256": "908ea5d0fc095b2c3df17a0465400b4a0fdb4d44e896ca43bc7edce4eec6da07",
+      "source_manifest_sha256": "f4b4a093354dc1a12818b4daeb1d026bb6ce4386281b45fc34a9611a627c798c",
+      "stage_result_sha256": "deea60ee59ce64e01de29d207bb7d67902da7195cbe7a58c833bfc94d12ff428"
+    },
+    "evidence_to_graph_full_semantic_reconstruction": "SATISFIED",
+    "gate_e": "ABSTAIN",
+    "h1_semantic_outcome": "PASS_PURE_CONTRACT_ONLY",
+    "h2_execution_authorized": false,
+    "h2_freeze_recommendation_eligible": true,
+    "predicate_count": 21,
+    "predicate_set_exact": "SATISFIED",
+    "product_check_outcome": "PASS_XCODE_RELEASE_BUILD_ARCHIVE_WITH_THREE_POINT_SOURCE_JOIN",
+    "stage_output_state_root": "5afb4febb330a5ca6049a9c0c8c71d6a68e963d19615859ee8b441ad7017b46c"
+  },
+  "per_stage_action_contract": {
+    "action_order": [
+      "stage_semantic_result_verify",
+      "product_input_preflight",
+      "release_build",
+      "intermediate_product_input_join",
+      "release_archive",
+      "product_and_signature_postflight",
+      "post_archive_product_input_join",
+      "dual_stream_eligibility_projection",
+      "independent_round_trip_verification",
+      "result_commit"
+    ],
+    "archive": {
+      "allow_provisioning_updates": false,
+      "archive_path": "FRESH_DISJOINT_LOCAL_PATH",
+      "configuration": "Release",
+      "destination": "generic/platform=macOS",
+      "expected_exit": 0,
+      "notarization": false,
+      "result_bundle_path": "FRESH_DISJOINT_LOCAL_PATH",
+      "signing": "PROJECT_DEFAULT_AUTOMATIC_APPLE_DEVELOPMENT",
+      "upload": false
+    },
+    "build": {
+      "configuration": "Release",
+      "derived_data_path": "FRESH_DISJOINT_LOCAL_PATH",
+      "destination": "platform=macOS,arch=arm64",
+      "expected_exit": 0,
+      "result_bundle_path": "FRESH_DISJOINT_LOCAL_PATH",
+      "signing": "PROJECT_DEFAULT_AUTOMATIC_APPLE_DEVELOPMENT"
+    },
+    "each_stage_requires_distinct_release_build_and_archive": true,
+    "future_stage_action_requires_exact_stage_profile_and_machine_validator": true,
+    "prior_stage_artifact_reuse": false,
+    "project": "ErgenticsProvenance.xcodeproj",
+    "scheme": "ErgenticsProvenance",
+    "xcode_gui_required": false,
+    "xcodebuild_required": true
+  },
+  "per_stage_effect_ceiling": {
+    "app_launches_from_build_archive_check": 0,
+    "exports": 0,
+    "gate_e_promotions": 0,
+    "guest_entries_from_build_archive_check": 0,
+    "network_observation": "NOT_MEASURED_UNLESS_SEPARATELY_FROZEN",
+    "notarizations": 0,
+    "provisioning_updates_requested": 0,
+    "uploads": 0,
+    "vm_launches_from_build_archive_check": 0
+  },
+  "product_policy": {
+    "allowed_effective_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": true,
+      "com.apple.security.hypervisor": true
+    },
+    "archive_role": "LOCAL_DEVELOPMENT_PACKAGING_EVIDENCE_ONLY",
+    "bundle_identifier": "com.ergentics.provenance",
+    "certificate_cdhash_and_leaf_digest": "OBSERVED_PER_ATTEMPT_NOT_PERMANENTLY_PINNED",
+    "development_team": "ZCQ435U8JP",
+    "dsym_uuid_must_equal_archive_executable_uuid": true,
+    "hardened_runtime": true,
+    "minimum_macos": "26.0",
+    "privacy_manifest_relative_path": "Contents/Resources/PrivacyInfo.xcprivacy",
+    "privacy_manifest_required": true,
+    "special_or_path_escape_entry_count": 0,
+    "symlink_entry_count": 0
+  },
+  "raw_capture_durability_residual": {
+    "authority_effect": "NONE",
+    "captures_complete_meaning": "REQUIRED_OBSERVATIONS_CAPTURED_AT_CHECK_TIME_NOT_RAW_REPLAY",
+    "disappearance_blocks_distribution_or_scientific_reinterpretation": true,
+    "disappearance_revokes_recorded_observation": false,
+    "durable_record": "CONTENT_ADDRESSED_SUMMARY_ONLY",
+    "gate_e": "ABSTAIN",
+    "raw_archive_retained": false,
+    "raw_byte_replay_available": false,
+    "raw_console_retained": false,
+    "raw_xcresult_retained": false,
+    "scope": "NON_AUTHORITATIVE_H1_PRODUCT_COMPATIBILITY_ONLY",
+    "temporary_paths_may_disappear": true
+  },
+  "required_predicates": [
+    "archive_exit_zero",
+    "archive_inventory_closed",
+    "build_exit_zero",
+    "bundle_identifier_exact",
+    "captures_complete",
+    "dsym_uuid_join",
+    "effective_entitlements_exact",
+    "hardened_runtime",
+    "host_signature_valid",
+    "implementation_product_manifest_join",
+    "intermediate_source_join_exact",
+    "no_build_archive_app_or_vm_launch",
+    "no_distribution_action",
+    "privacy_manifest_output_exact",
+    "product_input_hashes_exact",
+    "result_bundle_inventory_closed",
+    "source_pre_post_join_exact",
+    "stage_receipt_json_cbor_semantic_join",
+    "stage_receipt_merkle_ancestry_exact",
+    "stage_result_verified",
+    "team_identifier_exact"
+  ],
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-xcode-build-archive-admission-freeze.v1",
+  "source_identity_contract": {
+    "execution_checkpoint_is_not_renamed_implementation_checkpoint": true,
+    "fixed_product_roots": [
+      "Assets.xcassets",
+      "Entitlements.plist",
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "ErgenticsProvenance.xcodeproj/xcshareddata/xcschemes",
+      "Guest",
+      "Info.plist",
+      "PrivacyInfo.xcprivacy",
+      "Sources",
+      "Tests"
+    ],
+    "implementation_checkpoint_required": true,
+    "live_descriptor_manifest_required_at_pre_intermediate_post": true,
+    "product_git_object_manifest_join_required": true,
+    "semantic_result_checkpoint_required": true,
+    "untracked_control_material_is_product_input": false
+  },
+  "stage_disposition": {
+    "h1_through_h7_pass_effect": "SEPARATE_SUCCESSOR_FREEZE_RECOMMENDATION_ELIGIBLE_ONLY",
+    "h8_pass_effect": "ROADMAP_COMPLETION_REVIEW_ELIGIBLE_ONLY",
+    "separate_successor_freeze_required": true,
+    "successor_execution_authorized_by_product_check": false
+  },
+  "stages": [
+    {
+      "id": "hypervisor_product_schema_and_pure_contract_v1",
+      "ordinal": "1"
+    },
+    {
+      "id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+      "ordinal": "2"
+    },
+    {
+      "id": "hypervisor_explicit_state_cursor_resume_v1",
+      "ordinal": "3"
+    },
+    {
+      "id": "hypervisor_durable_receipt_fault_injection_v1",
+      "ordinal": "4"
+    },
+    {
+      "id": "hypervisor_repeated_same_host_resume_determinism_v1",
+      "ordinal": "5"
+    },
+    {
+      "id": "hypervisor_signed_product_resource_probe_v1",
+      "ordinal": "6"
+    },
+    {
+      "id": "hypervisor_bounded_product_checkpoint_execution_v1",
+      "ordinal": "7"
+    },
+    {
+      "id": "hypervisor_retained_product_provenance_and_admission_v1",
+      "ordinal": "8"
+    }
+  ],
+  "stream_and_graph_contract": {
+    "aggregate_merkle_leaf_labels": [
+      "schema",
+      "graph.json",
+      "graph.cbor"
+    ],
+    "cbor_profile": "RFC8949_CORE_DETERMINISTIC_SUBSET",
+    "graph_edges": [
+      "stage_output_state -> eligibility_transition",
+      "xcode_product_witness -> eligibility_transition",
+      "eligibility_transition -> eligibility_state"
+    ],
+    "graph_node_types": [
+      "xcode_product_witness",
+      "eligibility_transition",
+      "eligibility_state"
+    ],
+    "independent_verifier_required": true,
+    "json_cbor_semantic_join_required": true,
+    "json_profile": "SORTED_KEYS_NO_WHITESPACE_WITHOUT_ESCAPING_SLASHES",
+    "maximum_stream_bytes": 65536,
+    "node_projection_merkle_labels": [
+      "schema",
+      "ROLE.json",
+      "ROLE.cbor"
+    ],
+    "required_rooted_ceiling_fields": {
+      "gui_role": "PRESENTATION_ONLY",
+      "product_check_may_authorize_execution": false,
+      "product_check_may_close_gate_e": false,
+      "product_check_may_mint_scientific_authority": false
+    },
+    "state_root_must_include_full_authority_ceiling": true,
+    "transition_combiner": "ALL_OF"
+  },
+  "three_point_continuity_scope": {
+    "intra_action_mutate_restore_excluded": false,
+    "named_residual_authority_effect": "NONE",
+    "required_joins": [
+      "pre_build",
+      "between_build_and_archive",
+      "post_archive"
+    ],
+    "scope": "NON_AUTHORITATIVE_LOCAL_PRODUCT_COMPATIBILITY"
+  },
+  "future_stage_witness_template": {
+    "allow_unknown_top_level_fields": false,
+    "bounds": {
+      "archive_entries_maximum": 4096,
+      "archive_regular_bytes_maximum": 536870912,
+      "result_bundle_entries_maximum": 4096,
+      "result_bundle_regular_bytes_maximum": 134217728,
+      "source_entries_maximum": 4096,
+      "source_regular_bytes_maximum": 1073741824,
+      "text_field_utf8_bytes_maximum": 4096
+    },
+    "enum_values": {
+      "predicate_result": [
+        "SATISFIED",
+        "REJECTED",
+        "UNKNOWN"
+      ],
+      "stage_product_outcome": [
+        "PASS_XCODE_RELEASE_BUILD_ARCHIVE_WITH_THREE_POINT_SOURCE_JOIN",
+        "FAIL",
+        "ABSTAIN"
+      ]
+    },
+    "required_field_groups": {
+      "actions": [
+        "exact_argv",
+        "fresh_paths",
+        "start_end_utc",
+        "exit_code",
+        "status",
+        "error_warning_counts",
+        "result_bundle_inventory"
+      ],
+      "archive_product": [
+        "closed_inventory",
+        "executable_sha256",
+        "macho_architecture",
+        "macho_uuid",
+        "lc_build_version",
+        "bundle_metadata",
+        "privacy_manifest_path_sha256",
+        "dsym_uuid_sha256"
+      ],
+      "lineage": [
+        "implementation_commit_tree",
+        "semantic_result_commit_tree",
+        "execution_commit_tree",
+        "stage_output_state_root",
+        "stage_receipt_root",
+        "product_git_object_manifest_join"
+      ],
+      "signing": [
+        "codesign_deep_strict",
+        "designated_requirement",
+        "team_identifier",
+        "certificate_leaf_sha256",
+        "candidate_cdhash_full",
+        "hardened_runtime",
+        "effective_entitlements"
+      ],
+      "source": [
+        "fixed_roots",
+        "manifest_profile",
+        "manifest_file_sha256",
+        "manifest_root_sha256",
+        "entry_file_directory_byte_counts",
+        "pre_intermediate_post_join"
+      ]
+    },
+    "machine_closed": false,
+    "may_authorize_future_stage_action": false,
+    "required_predicate_set_equality": true,
+    "required_successor": "SEPARATELY_FROZEN_EXACT_STAGE_PROFILE_AND_MACHINE_VALIDATOR",
+    "schema_id": "ergentics.provenance.hypervisor-stage-xcode-build-archive-continuity-result.v1"
+  },
+  "status": "FROZEN_H1_SATISFIED_H2_FREEZE_RECOMMENDATION_ELIGIBLE_NOT_AUTHORIZED"
+}

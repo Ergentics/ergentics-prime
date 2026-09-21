@@ -1,0 +1,239 @@
+{
+  "schema": "ergentics.private-compute.native-app-result.v1",
+  "status": "STATIC_PASS_LOCAL_RETAINED_NATIVE_APP",
+  "source_commit": "d8cf849bde650d2cb87fb9d1ed098f210180f5f1",
+  "source_tree": "07d83f06a5d0f7798255614fcd46647ecc0dec8a",
+  "readiness_commit": "043473ea6a4757f4d2c262a9b258bfae17960393",
+  "readiness_tree": "474096fd90e08434adf6d9ee72ab4581c34f6879",
+  "readiness_sha256": "696a9ba9865c8a66e7b84d65458bc42918a287f832185ab72053ba69aeb06580",
+  "outcome": {
+    "new_app_opened": true,
+    "launch_requests": 1,
+    "launch_request": {
+      "chunk_id": "18c304",
+      "wall_time_seconds": 0.000003375,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "launch_observer_UTC_start": "2026-08-30T18:08:18.999Z",
+    "launch_observer_UTC_return": "2026-08-30T18:08:23.274Z",
+    "mathematical_result": "STATIC_PASS_LOCAL",
+    "retained_leaves": 12,
+    "three_graph_captures_byte_identical": true,
+    "external_postflight": "PASS exact retained hashes/byte counts/graph equality and stable run/terminal metadata",
+    "old_bootstrap_result": "UNCHANGED_FAIL_CAUSE_UNIDENTIFIED",
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "application": {
+    "name": "Ergentics Private Compute",
+    "bundle": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/DerivedData/Build/Products/Debug/Ergentics Private Compute.app",
+    "project": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/Observability/ErgenticsPrivateCompute/ErgenticsPrivateCompute.xcodeproj",
+    "image_sha256": "e2e55968f9d7e9778af58f015f2904430e869868a2d44aae342d09ea6de6f65a",
+    "image_uuid": "1BB37A1A-5C45-3B4D-A767-C5A66328BEF5",
+    "codesign_verification": "PASS",
+    "effective_entitlements": {
+      "com.apple.security.app-sandbox": true
+    },
+    "network_entitlements": [],
+    "hardened_runtime": false,
+    "signature": "ad-hoc",
+    "execution_venue": "LOCAL_MAC_NOT_REMOTE_CLOUD_OR_VM",
+    "retained_result_path": "/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1",
+    "Xcode_project_open_request_succeeded": true
+  },
+  "raw_terminal": {
+    "application_image_sha256": "e2e55968f9d7e9778af58f015f2904430e869868a2d44aae342d09ea6de6f65a",
+    "artifacts": [
+      {
+        "bytes": 738,
+        "name": "00-start.json",
+        "sha256": "d7679302187b5863bf8b348cb4622a4526c29e5b63fd439571525c2ef9db4784"
+      },
+      {
+        "bytes": 442,
+        "name": "10-json-verifier.json",
+        "sha256": "23b270a00ee76331482e4708ff50c8346250792bb676aaf04e3328c1f091e01a"
+      },
+      {
+        "bytes": 5278,
+        "name": "11-json-graph.json",
+        "sha256": "5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd"
+      },
+      {
+        "bytes": 752,
+        "name": "12-json-roundtrip.json",
+        "sha256": "aa46f3485e7933fc7f33ab59c57f57df4806a6d4f98be11a6954e238791a8697"
+      },
+      {
+        "bytes": 442,
+        "name": "20-cbor-verifier.json",
+        "sha256": "07fda2449bea24b493c6918592daad0955256630029ee011e96bddb0ab1d184c"
+      },
+      {
+        "bytes": 5278,
+        "name": "21-cbor-graph.json",
+        "sha256": "5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd"
+      },
+      {
+        "bytes": 752,
+        "name": "22-cbor-roundtrip.json",
+        "sha256": "a2cf192d87acc2195ca3078e5c58e5c9629db89dfaa3b4540c174400be11f669"
+      },
+      {
+        "bytes": 500,
+        "name": "30-join-receipt.json",
+        "sha256": "3ac202619d2ce9a3f67877e23b9ebc3f6472eb3199c02db2fa45662436503d94"
+      },
+      {
+        "bytes": 5278,
+        "name": "31-authoritative-graph.json",
+        "sha256": "5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd"
+      },
+      {
+        "bytes": 1239,
+        "name": "candidate-cbor.bin",
+        "sha256": "c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636"
+      },
+      {
+        "bytes": 1405,
+        "name": "candidate-json.bin",
+        "sha256": "cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e"
+      }
+    ],
+    "authority_vector": "00000000",
+    "clock_end": {
+      "denominator": "3",
+      "numerator": "125",
+      "raw_error": 0,
+      "ticks": "60699290862862"
+    },
+    "clock_start": {
+      "denominator": "3",
+      "numerator": "125",
+      "raw_error": 0,
+      "ticks": "60699290589400"
+    },
+    "digest_rule": "No self digest; this terminal joins every earlier leaf by hash and byte count",
+    "energy_ergs": null,
+    "energy_reason": "NOT_MEASURED",
+    "environment_summary": "49 native environment entries · CF encoding key present · values not collected",
+    "exact_elapsed_nanoseconds": "34182750 / 3 ns",
+    "gate_e": "ABSTAIN",
+    "graph_frame_sha256": "5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd",
+    "graph_merkle_root": "ddfe414abae6918391ee34ee36166f68163e431e58d4182437f56a0839869810",
+    "historical_bootstrap": "FAIL_RETAINED_CAUSE_UNIDENTIFIED_NO_RETRY",
+    "image_observation_limit": "Named bundle image observation, not mapped-vnode bind",
+    "live_gate_e_roles_executed": false,
+    "mathematical_pass": true,
+    "projection_write_mask": "00000000",
+    "raw_leaves_written_readback_equal_and_synced": true,
+    "result": "STATIC_PASS_LOCAL",
+    "retention_limit": "Local app-container retention, not remote archival backup or unconditional power-loss guarantee",
+    "run_id": "native-static-177403f-r1",
+    "schema": "ergentics.private-compute.terminal.v1",
+    "scope_sha256": "01eec8c9e0cd2ce613c349f6f9737075a4e88106b51d675ac02b77f1dd4acf58",
+    "semantic_root": "093b6e90214704a3e8fdf28cf430a8c4cd106d695e621887b77db489fc5cd9bb",
+    "source_subject_commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+    "source_subject_identity": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+    "source_subject_tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e",
+    "terminal_limit": "Terminal bytes precede final readback; whole-app success also requires postflight",
+    "timing_scope": "mach_absolute_time start through raw result persistence; system sleep, terminal publication and postflight excluded. Not CPU time or energy.",
+    "utc_end": "2026-08-30T18:08:23.839Z",
+    "utc_start": "2026-08-30T18:08:23.826Z"
+  },
+  "raw_terminal_file_sha256": "1a4c92297c28f9e686bbe9930b54453d909a2102e3cde1d95dee9f1556e24568",
+  "raw_initial_run_inspection": {
+    "chunk_id": "75601a",
+    "wall_time_seconds": 0.000003167,
+    "exit_code": 0,
+    "original_token_count": 1539,
+    "output": "16777231|18354028|40700|501|20|14|448|1788113303.839224154|1788113303.839224154|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1\n16777231|18354029|100600|501|20|1|738|1788113303.826472686|1788113303.826472686|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/00-start.json\n16777231|18354032|100600|501|20|1|442|1788113303.836266726|1788113303.836266726|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/10-json-verifier.json\n16777231|18354033|100600|501|20|1|5278|1788113303.836401226|1788113303.836401226|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/11-json-graph.json\n16777231|18354034|100600|501|20|1|752|1788113303.836491352|1788113303.836491352|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/12-json-roundtrip.json\n16777231|18354035|100600|501|20|1|442|1788113303.836615602|1788113303.836615602|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/20-cbor-verifier.json\n16777231|18354036|100600|501|20|1|5278|1788113303.836746936|1788113303.836746936|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/21-cbor-graph.json\n16777231|18354037|100600|501|20|1|752|1788113303.836846228|1788113303.836846228|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/22-cbor-roundtrip.json\n16777231|18354038|100600|501|20|1|500|1788113303.836915770|1788113303.836915770|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/30-join-receipt.json\n16777231|18354039|100600|501|20|1|5278|1788113303.836995062|1788113303.836995062|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/31-authoritative-graph.json\n16777231|18354040|100600|501|20|1|3382|1788113303.839263238|1788113303.839263238|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/90-terminal.json\n16777231|18354031|100600|501|20|1|1239|1788113303.827251898|1788113303.827251898|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-cbor.bin\n16777231|18354030|100600|501|20|1|1405|1788113303.827154272|1788113303.827154272|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-json.bin\nd7679302187b5863bf8b348cb4622a4526c29e5b63fd439571525c2ef9db4784  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/00-start.json\n23b270a00ee76331482e4708ff50c8346250792bb676aaf04e3328c1f091e01a  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/10-json-verifier.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/11-json-graph.json\naa46f3485e7933fc7f33ab59c57f57df4806a6d4f98be11a6954e238791a8697  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/12-json-roundtrip.json\n07fda2449bea24b493c6918592daad0955256630029ee011e96bddb0ab1d184c  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/20-cbor-verifier.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/21-cbor-graph.json\na2cf192d87acc2195ca3078e5c58e5c9629db89dfaa3b4540c174400be11f669  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/22-cbor-roundtrip.json\n3ac202619d2ce9a3f67877e23b9ebc3f6472eb3199c02db2fa45662436503d94  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/30-join-receipt.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/31-authoritative-graph.json\n1a4c92297c28f9e686bbe9930b54453d909a2102e3cde1d95dee9f1556e24568  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/90-terminal.json\nc7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-cbor.bin\ncda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-json.bin\n60\t/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1\n"
+  },
+  "raw_final_postflight": {
+    "chunk_id": "2af651",
+    "wall_time_seconds": 0.000001458,
+    "exit_code": 0,
+    "original_token_count": 1502,
+    "output": "d7679302187b5863bf8b348cb4622a4526c29e5b63fd439571525c2ef9db4784  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/00-start.json\n23b270a00ee76331482e4708ff50c8346250792bb676aaf04e3328c1f091e01a  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/10-json-verifier.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/11-json-graph.json\naa46f3485e7933fc7f33ab59c57f57df4806a6d4f98be11a6954e238791a8697  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/12-json-roundtrip.json\n07fda2449bea24b493c6918592daad0955256630029ee011e96bddb0ab1d184c  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/20-cbor-verifier.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/21-cbor-graph.json\na2cf192d87acc2195ca3078e5c58e5c9629db89dfaa3b4540c174400be11f669  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/22-cbor-roundtrip.json\n3ac202619d2ce9a3f67877e23b9ebc3f6472eb3199c02db2fa45662436503d94  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/30-join-receipt.json\n5b5fcf3fa73b968b47ab6904eed3a6fc93b1cabbd3a6f36c4052e1fa98840bbd  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/31-authoritative-graph.json\n1a4c92297c28f9e686bbe9930b54453d909a2102e3cde1d95dee9f1556e24568  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/90-terminal.json\nc7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-cbor.bin\ncda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e  /Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-json.bin\n16777231|18354028|40700|501|20|14|448|1788113303.839224154|1788113303.839224154|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1\n16777231|18354029|100600|501|20|1|738|1788113303.826472686|1788113303.826472686|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/00-start.json\n16777231|18354032|100600|501|20|1|442|1788113303.836266726|1788113303.836266726|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/10-json-verifier.json\n16777231|18354033|100600|501|20|1|5278|1788113303.836401226|1788113303.836401226|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/11-json-graph.json\n16777231|18354034|100600|501|20|1|752|1788113303.836491352|1788113303.836491352|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/12-json-roundtrip.json\n16777231|18354035|100600|501|20|1|442|1788113303.836615602|1788113303.836615602|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/20-cbor-verifier.json\n16777231|18354036|100600|501|20|1|5278|1788113303.836746936|1788113303.836746936|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/21-cbor-graph.json\n16777231|18354037|100600|501|20|1|752|1788113303.836846228|1788113303.836846228|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/22-cbor-roundtrip.json\n16777231|18354038|100600|501|20|1|500|1788113303.836915770|1788113303.836915770|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/30-join-receipt.json\n16777231|18354039|100600|501|20|1|5278|1788113303.836995062|1788113303.836995062|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/31-authoritative-graph.json\n16777231|18354040|100600|501|20|1|3382|1788113303.839263238|1788113303.839263238|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/90-terminal.json\n16777231|18354031|100600|501|20|1|1239|1788113303.827251898|1788113303.827251898|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-cbor.bin\n16777231|18354030|100600|501|20|1|1405|1788113303.827154272|1788113303.827154272|/Users/ergentics/Library/Containers/com.ergentics.PrivateCompute/Data/Library/Application Support/ErgenticsPrivateCompute/native-static-177403f-r1/candidate-json.bin\n"
+  },
+  "exact_clock_recalculation": {
+    "delta_ticks": "273462",
+    "nanosecond_numerator": "34182750",
+    "nanosecond_denominator": "3",
+    "exact_ns": "11394250",
+    "integral": true
+  },
+  "timing_qualification": "The 11.39425 ms interval covers mach_absolute_time start through raw leaf persistence; excludes system sleep, image observation, terminal publication and final postflight. Not CPU time, launch/UI duration or energy.",
+  "display": {
+    "target_app_PID": 26678,
+    "target_window_ID": 13310,
+    "bounds": {
+      "x": 196,
+      "y": 88,
+      "width": 1120,
+      "height": 780
+    },
+    "existing_window_activated_without_relaunch": true,
+    "window_geometry_observation": {
+      "chunk_id": "f1a328",
+      "wall_time_seconds": 0.0000015,
+      "exit_code": 0,
+      "original_token_count": 22,
+      "output": "[{\"appPID\":26678,\"windowID\":13310,\"bounds\":{\"X\":196,\"Height\":780,\"Y\":88,\"Width\":1120}}]\n"
+    },
+    "screenshot_status": "UNAVAILABLE",
+    "screenshot_error": "screencapture: could not create image from window; no image file was created",
+    "visual_pixels_inspected": false,
+    "UI_observer_failures": [
+      "Initial restricted target-app lookup did not return one application",
+      "First host-access JXA window adapter failed CFArray conversion; corrected cast produced the scoped window identity"
+    ],
+    "observer_language": "JXA used only to inspect/activate this app window, never as computation controller"
+  },
+  "historical_failure_boundary": "Current native GUI computation succeeded with49 environment entries and CF encoding-key presence. This is not evidence that the previous empty-env CLI invocation failed for that cause; its unidentified failure remains retained.",
+  "tests": {
+    "pure_tests": 12,
+    "failures": 0,
+    "hostless": true,
+    "raw_first_test_attempt": {
+      "exit_code": 65,
+      "stage": "Xcode testmanagerd service connection rejected by execution sandbox",
+      "tests_observed": 0,
+      "result": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/PureTests.xcresult"
+    },
+    "successful_test": {
+      "exit_code": 0,
+      "tests": 12,
+      "failures": 0,
+      "log": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/pure-tests-host-access.log",
+      "xcresult": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/ergentics-private-compute-builds-177403f-2026-08-30-r1/PureTestsHostAccess.xcresult"
+    }
+  },
+  "preservation": {
+    "current_branch_unchanged": true,
+    "original_dirty_drafts_untouched": 23,
+    "original_five_authority_sources_and_package_manifest_unchanged": true,
+    "old_R18_R19_processes": "UNOBSERVED_UNACTUATED",
+    "old_bootstrap_roots": "UNTOUCHED",
+    "cleanup": 0,
+    "repair": 0,
+    "computation_child_process_API_calls": 0,
+    "computation_signal_API_calls": 0,
+    "energy_collection": 0,
+    "energy_ergs": null,
+    "network_probe": 0,
+    "legacy_one_shot_invocation": 0
+  },
+  "limitations": [
+    "App remains open as an ordinary GUI, not an indefinite child-containment controller; closing its last window exits it.",
+    "No live Gate E Git/Swift role or Prime current-source authority was exercised.",
+    "Independent JSON/CBOR/join modules share one process/address space.",
+    "Built app has sandbox-only ad-hoc signing, not Hardened Runtime or a remote isolated host.",
+    "Local sync/readback and manifest joins are not off-device backup or unconditional power-loss proof.",
+    "Current external postflight corroborates retained bytes; it cannot retroactively observe every syscall/intermediate state.",
+    "Screenshot capture failed, so no pixel-level visual QA is claimed."
+  ],
+  "digest_rule": "No self digest/commit. Commit pins this result; terminal digest is external to terminal bytes."
+}

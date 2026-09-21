@@ -1,0 +1,284 @@
+{
+  "schema": "ergentics-r19-obs11-c2-fchmod-bundle-build-outer-observation-v9",
+  "status": "PASS_TWO_BUILD_NATIVE_BUNDLE_IDENTICAL_UNEXECUTED",
+  "operation_scope": {
+    "scope": "THIS_EXACT_V9_OUTER_BUILD_ATTEMPT_AND_ITS_CONTROLLER_CHILDREN_ONLY",
+    "historical_operations_reinterpreted": false,
+    "post_exit_observer_processes_excluded": true
+  },
+  "lineage": {
+    "consumption": "CONSUMED_AT_OUTER_ZSH_ENTRY_NO_RETRY",
+    "retry_authorized": false,
+    "cleanup_repair_or_v9_namespace_reuse_authorized": false,
+    "freeze_commit": "84a5cc9e65b0bb0daf2eacc9c72551cefb9ca000",
+    "freeze_tree": "d77b9bf7e691dcf85ad5e3f41ba8ee2000c6d0dd",
+    "freeze_sha256": "e6981dd65c8725d15a3cae11e0bc38e9b001aeaf388261370c011e4bdee533da",
+    "controller_commit": "838aa8591cd9ef4b8f908d755e16e9de13c8a816",
+    "controller_tree": "64fc2a492e141811b6ab0ad7c2e9191ec443e0c8",
+    "controller_sha256": "4d10d2f4d6a45b4a94f2301583e4a3c86d14da77fb2ad5f37cdbcf3d4aec344d"
+  },
+  "outer_transport": {
+    "dispatch_attempts": 1,
+    "zsh_entries": 1,
+    "env_entries": 1,
+    "ruby_controller_entries": 1,
+    "shell": "/bin/zsh",
+    "login": false,
+    "command": "exec /usr/bin/env -i __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 /usr/bin/ruby --disable-gems /Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v9.rb",
+    "cwd": "/private/var/empty",
+    "replacement_environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "outer_timeout": null,
+    "outer_signals": 0,
+    "wait_completed": true,
+    "exit": {
+      "exited": true,
+      "exitstatus": 0,
+      "signaled": false,
+      "termsig": null,
+      "timed_out": false
+    },
+    "combined_capture": {
+      "scope": "OUTER_COMBINED_UNATTRIBUTED",
+      "bytes": 0,
+      "lf_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_hex": "",
+      "separate_stdout_stderr_metrics": null
+    }
+  },
+  "controller_receipt": {
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v9.json",
+    "presence": "COMPLETE",
+    "sha256": "ebaf82a0d4b08cbf6d6d15331e13246ec01942fde2e881c965eb3fe9746d0bda",
+    "git_blob": "33f3e3d26a99515b06c384f1d9707fec3e659b3a",
+    "bytes": 64339,
+    "lf_count": 1,
+    "live_identity": {
+      "device": 16777231,
+      "inode": 18009938,
+      "uid": 501,
+      "gid": 20,
+      "mode": "0400",
+      "nlink": 1,
+      "flags": 0,
+      "type": "REGULAR"
+    },
+    "git_archive_mode_after_add": "100644",
+    "schema": "ergentics-r19-obs11-c2-fchmod-bundle-build-result-v9",
+    "parsed_status": "PASS_TWO_BUILD_NATIVE_BUNDLE_IDENTICAL_UNEXECUTED",
+    "failure": null,
+    "failure_position": null,
+    "completed_ordered_label_count": 22,
+    "first_unentered_label": null
+  },
+  "process_observation": {
+    "source": "CONTROLLER_RECEIPT_COMMAND_RECORDS",
+    "ordered_labels": [
+      "COMPILE_A", "LINK_A", "COMPILE_B", "LINK_B",
+      "CMP_A_B_OBJECT", "CMP_A_B_BUNDLE",
+      "NM_DEFINED_A", "NM_DEFINED_B", "NM_UNDEFINED_A", "NM_UNDEFINED_B",
+      "OTOOL_LOAD_COMMANDS_A", "OTOOL_LOAD_COMMANDS_B",
+      "OTOOL_LINKED_IMAGES_A", "OTOOL_LINKED_IMAGES_B",
+      "DWARFDUMP_UUID_A", "DWARFDUMP_UUID_B",
+      "CODESIGN_DISPLAY_A", "CODESIGN_DISPLAY_B",
+      "CODESIGN_VERIFY_A", "CODESIGN_VERIFY_B", "FILE_A", "FILE_B"
+    ],
+    "ordered_pids": [
+      47366, 47368, 47370, 47372, 47374, 47375, 47376, 47377,
+      47378, 47379, 47380, 47382, 47384, 47386, 47388, 47389,
+      47390, 47391, 47392, 47393, 47394, 47395
+    ],
+    "positive_unique_pids": 22,
+    "all_waited_pid_equal_pid": true,
+    "all_exited_zero": true,
+    "any_signaled": false,
+    "spawn_wait_close_or_overflow_errors": 0,
+    "compiler_linker_captured_bytes": 0,
+    "analyzer_raw_captures_retained_in_receipt": true,
+    "path_bearing_analyzer_raw_captures_claimed_a_b_equal": false,
+    "operations": {
+      "compiler_attempts": 4,
+      "compiler_entries": 4,
+      "analyzer_attempts": 18,
+      "analyzer_entries": 18,
+      "build_root_creations": 2,
+      "receipt_creation_attempts": 1,
+      "bundle_executions": 0,
+      "runner_executions": 0,
+      "signals": 0,
+      "python_entries": 0
+    }
+  },
+  "continuity": {
+    "sdk_revalidation_count": 5,
+    "artifact_revalidation_count": 37,
+    "artifact_close_errors": {},
+    "root_close_errors": {},
+    "incoming_umask": "0022",
+    "sdk_identity_scope": "SDK_ALIAS_TARGET_AND_SDKSETTINGS_JSON_ONLY",
+    "whole_sdk_header_closure": "UNKNOWN_NOT_CONTENT_BOUND"
+  },
+  "retained_roots": {
+    "retention": "PERMANENT_NO_V9_RETRY_CLEANUP_REPAIR_OR_IN_PLACE_REUSE",
+    "successor_read_only_admission_requires_separate_freeze": true,
+    "observation_scope": {
+      "root_and_leaf_vnodes_modes_sizes": "POST_EXIT_LIVE_LSTAT_JOINED_TO_RECEIPT",
+      "content_hashes": "CONTROLLER_RECEIPT_PROJECTION",
+      "inventories": "CONTROLLER_RECEIPT_PROJECTION"
+    },
+    "A": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-a-79e4211-00e9242e",
+      "device": 16777231,
+      "inode": 18009932,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "names": [
+        "ergentics-r19-obs11-c2-fchmod-v7.o",
+        "libergentics-r19-obs11-c2-fchmod-v7.bundle"
+      ],
+      "object": {
+        "inode": 18009934,
+        "mode": "0400",
+        "nlink": 1,
+        "bytes": 728,
+        "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+      },
+      "bundle": {
+        "inode": 18009935,
+        "mode": "0400",
+        "nlink": 1,
+        "bytes": 33496,
+        "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+      },
+      "receipt_selector": "$.terminal_root_snapshots.A"
+    },
+    "B": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v9-build-b-79e4211-00e9242e",
+      "device": 16777231,
+      "inode": 18009933,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "names": [
+        "ergentics-r19-obs11-c2-fchmod-v7.o",
+        "libergentics-r19-obs11-c2-fchmod-v7.bundle"
+      ],
+      "object": {
+        "inode": 18009936,
+        "mode": "0400",
+        "nlink": 1,
+        "bytes": 728,
+        "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+      },
+      "bundle": {
+        "inode": 18009937,
+        "mode": "0400",
+        "nlink": 1,
+        "bytes": 33496,
+        "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+      },
+      "receipt_selector": "$.terminal_root_snapshots.B"
+    },
+    "a_b_root_vnodes_distinct": true,
+    "a_b_object_vnodes_distinct": true,
+    "a_b_bundle_vnodes_distinct": true,
+    "a_b_object_bytes_equal": true,
+    "a_b_bundle_bytes_equal": true
+  },
+  "macho_identity": {
+    "a_b_parsed_result_equal": true,
+    "uuid": "0371C336-3A6F-338E-9CD4-9349603C9F44",
+    "lc_code_signature": {
+      "dataoff": 33056,
+      "datasize": 440
+    },
+    "superblob": {
+      "bytes": 439,
+      "count": 1,
+      "sha256": "0fb2ce1e730c318301416493a95f112c5758c371b60319a13ad996120ae2ddff",
+      "structural_predicates": true,
+      "fresh_v9_expected_witness": true
+    },
+    "blob_bounds": [
+      {
+        "slot_type": 0,
+        "offset": 20,
+        "length": 419
+      }
+    ],
+    "code_directory": {
+      "offset": 20,
+      "bytes": 419,
+      "sha256": "aff7772ee4414e612b62b5bf4a8576527d33f285a22e97edd85a0f332e4eed03",
+      "cdhash": "aff7772ee4414e612b62b5bf4a8576527d33f285"
+    },
+    "lc_suffix": {
+      "bytes": 1,
+      "hex": "00",
+      "all_zero": true,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "signature_region_sha256": "370663a8ffe2452bde1e32d751852fde6defc1d047d841075fa4f5ae08f58cf2"
+  },
+  "analyzer_admission": {
+    "defined_exports": ["_ergentics_r19_obs11_c2_v7_fchmod"],
+    "undefined_imports": ["___error", "_fchmod"],
+    "linked_images": ["/usr/lib/libSystem.B.dylib"],
+    "file_type": "Mach-O 64-bit bundle arm64",
+    "normalized_load_commands_a_b_equal": true,
+    "dwarfdump_uuid_a_b_equal": true,
+    "codesign_display": {
+      "code_directory": "v=20400 size=419 flags=0x20002(adhoc,linker-signed) hashes=9+0 location=embedded",
+      "cdhash": "aff7772ee4414e612b62b5bf4a8576527d33f285",
+      "normalized_a_b_equal": true,
+      "raw_stderr_bytes_per_artifact": 911,
+      "raw_stderr_claimed_a_b_equal": false
+    },
+    "codesign_verify": {
+      "a_exitstatus": 0,
+      "b_exitstatus": 0,
+      "raw_stderr_bytes_per_artifact": 295,
+      "raw_stderr_claimed_a_b_equal": false
+    }
+  },
+  "historical_v8_continuity": {
+    "classification": "POST_OBSERVATION_COMMITTED_HASH_COMPARISON_NOT_V9_RUNTIME_INPUT",
+    "retained_v8_runtime_input_entries": 0,
+    "object_sha256_equal": true,
+    "bundle_sha256_equal": true,
+    "signature_region_sha256_equal": true,
+    "v8_result_sha256": "00e9242efaef8158465ebeefefca5eb2f57c31e49f02ddde4290b2263df050fa",
+    "v8_outer_observation_sha256": "9ceecf3f301b5674c264c9c59a0a2a5d3a3d1216a9d9dd2a3795dc3ef60a25d1"
+  },
+  "durability": {
+    "receipt_file_fsync": true,
+    "receipt_parent_directory_fsync": true,
+    "f_fullfsync_or_hardware_durability_established": false,
+    "outer_observation_self_hash_or_containing_commit_included": false
+  },
+  "scope_limits": {
+    "bundle_loaded_or_executed": false,
+    "runner_executed": false,
+    "d3_behavior_proven": false,
+    "historical_operation_success_reinterpreted": false,
+    "gate_e_promoted": false
+  },
+  "authority": {
+    "source": "CONTROLLER_RECEIPT_$.authority",
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0,
+    "outer_observation_promotes_authority": false
+  }
+}

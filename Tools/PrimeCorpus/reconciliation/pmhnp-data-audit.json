@@ -1,0 +1,114 @@
+{
+  "scope": "Read actual saved dataset and safetensors header; no inference, training or clinical recertification.",
+  "datasets": [
+    {
+      "split": "train",
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-lm0-train.jsonl",
+      "sha256": "0c07249494f308e48d88d925dc42f2fb7f4f93dd6faac7b3cfbde8547a49e549",
+      "rowCount": 2463,
+      "byKind": {
+        "quiz_rationale": 1149,
+        "l2_promoted_mcq": 375,
+        "med_monograph": 72,
+        "screening_band": 73,
+        "oracle_meta_sidecar": 3,
+        "oracle_chat_kernel": 6,
+        "oracle_chat_phrase": 19,
+        "oracle_l2_closure": 766
+      },
+      "missingPrompt": 0,
+      "missingTarget": 0,
+      "promptAt200Characters": 448,
+      "targetAt400Characters": 2
+    },
+    {
+      "split": "val",
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-lm0-val.jsonl",
+      "sha256": "b7ddb344e6d3e9fc049c5853d93b0f0b20c72641da55bdc3be05f6e981a74a5b",
+      "rowCount": 303,
+      "byKind": {
+        "l2_promoted_mcq": 53,
+        "quiz_rationale": 117,
+        "med_monograph": 8,
+        "screening_band": 14,
+        "oracle_meta_sidecar": 1,
+        "oracle_chat_kernel": 1,
+        "oracle_chat_phrase": 1,
+        "oracle_l2_closure": 108
+      },
+      "missingPrompt": 0,
+      "missingTarget": 0,
+      "promptAt200Characters": 57,
+      "targetAt400Characters": 0
+    },
+    {
+      "split": "holdout",
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/content-staging/prime-lm0-holdout.jsonl",
+      "sha256": "8525798d2563d0ab5a1639acca5d0677975d68bd36d51ec2f2715364d0f68245",
+      "rowCount": 324,
+      "byKind": {
+        "quiz_rationale": 134,
+        "l2_promoted_mcq": 47,
+        "med_monograph": 13,
+        "screening_band": 19,
+        "oracle_chat_kernel": 1,
+        "oracle_chat_phrase": 2,
+        "oracle_l2_closure": 108
+      },
+      "missingPrompt": 0,
+      "missingTarget": 0,
+      "promptAt200Characters": 58,
+      "targetAt400Characters": 0
+    }
+  ],
+  "exportReconstruction": {
+    "sourceRecords": 2463,
+    "matchesMinimalExport": true,
+    "matchesCurrentTrainText": true,
+    "sha256": "cef45e2df8a072a32910863f4cdbc5679a2441f834550279d79c01133fa67fb9",
+    "nonemptyPhysicalLines": 5695,
+    "recordsSplitAcrossPhysicalLines": 2463,
+    "recordBoundaryProblem": "PMHNP profile trains each physical line independently; exporter writes prompt and target on separate lines.",
+    "recordedCumulativeSteps": 85425,
+    "stepsDividedByCurrentPhysicalLines": 15.0
+  },
+  "model": {
+    "parametersFromActualTensorShapes": 29639680,
+    "tensors": 84,
+    "modelID": "ergentics_native_lab_v2",
+    "vocabulary": 8192,
+    "dModel": 512,
+    "layers": 8,
+    "maxSeqLenInTrainer": 512,
+    "recordedFinalLoss": 4.324900150299072,
+    "recordedCorpusManifestSHA256": "a9dcac78291b0c3149963b9eb2979aeb32464aa6152d4c40b3c755c82a861380",
+    "currentCorpusManifestSHA256": "f4c17dacb5d8d30e2daeaeeb3a043c19c3db2d2db1c340fbd4809679c0b5aa47",
+    "manifestStillMatches": false
+  },
+  "defaults": {
+    "exportRows": 32,
+    "exportPatchPreferredIfPresent": true,
+    "trainerNoArgumentSteps": 10,
+    "unknownTrainArguments": "silently ignored",
+    "invalidProfile": "falls back to PMHNP",
+    "LM0CurrentMinimum": 1200,
+    "LM0MinimumIsCap": false,
+    "model300MIsThisCheckpoint": false
+  },
+  "tokenizer": {
+    "id": "prime_native_bpe_v1",
+    "vocab": 8192,
+    "spmSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+    "sourceSlice": {
+      "languages": [
+        "en"
+      ],
+      "levels": [
+        "L2"
+      ],
+      "topics": [
+        "pmhnp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ergentics Agent load receipt",
+  "type": "object",
+  "required": [
+    "schema",
+    "agent_id",
+    "agent_version",
+    "bundle_version",
+    "status",
+    "load_mode",
+    "context",
+    "manifest",
+    "instructions_read",
+    "policy",
+    "assignment",
+    "limits",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ergentics.agent-load.v1"
+    },
+    "agent_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agent_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "bundle_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "status": {
+      "enum": [
+        "loaded",
+        "blocked"
+      ]
+    },
+    "load_mode": {
+      "enum": [
+        "explicit_instruction_handoff",
+        "native_role_registry"
+      ]
+    },
+    "context": {
+      "type": "object",
+      "required": [
+        "task_name",
+        "operator_model"
+      ],
+      "properties": {
+        "task_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator_model": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "instructions_read": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "policy": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "id",
+        "version",
+        "binding"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "binding": {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "assignment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "status": {
+        "const": "loaded"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "agent_id": {
+        "type": "string",
+        "enum": [
+          "ergentics_swift_c",
+          "ergentics_cpp"
+        ]
+      },
+      "agent_version": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+      },
+      "bundle_version": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+      },
+      "manifest": {
+        "type": "object"
+      },
+      "instructions_read": {
+        "minItems": 1
+      },
+      "policy": {
+        "type": "object"
+      }
+    }
+  },
+  "description": "An observed instruction-load receipt; the caller verifies identities and actual behavior. It is not self-authorization or proof of a native implementation run."
+}

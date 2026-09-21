@@ -1,0 +1,1332 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		EA2200000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests/PrimePromptTests.swift; sourceTree = SOURCE_ROOT; };
+		EA2200000000000000000002 = {isa = PBXBuildFile; fileRef = EA2200000000000000000001; };
+		DF295DD2F9D6906752CD50E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimePromptBackend.swift; sourceTree = SOURCE_ROOT; };
+		3CB284E53FD026BA798DD7C7 = {isa = PBXBuildFile; fileRef = DF295DD2F9D6906752CD50E5; };
+		24AA445B9D32381DEC926A9B = {isa = PBXBuildFile; fileRef = DF295DD2F9D6906752CD50E5; };
+		64F470FB50E1279EB7AC9C6B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimePromptModel.swift; sourceTree = SOURCE_ROOT; };
+		D2B7235EA637F2E9C0EBF90C = {isa = PBXBuildFile; fileRef = 64F470FB50E1279EB7AC9C6B; };
+		DD0259569C2B152C9E586514 = {isa = PBXBuildFile; fileRef = 64F470FB50E1279EB7AC9C6B; };
+		8D5D106E9CFF75994B1270F9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimePromptView.swift; sourceTree = SOURCE_ROOT; };
+		060C4536396DDDD92587EF73 = {isa = PBXBuildFile; fileRef = 8D5D106E9CFF75994B1270F9; };
+
+		B492F2E5A0DF72E4A48691D138EC19D6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeRuntimeBackend.swift; sourceTree = SOURCE_ROOT; };
+		E1946181E9DE6C3059E2C65D3E1500C3 = {isa = PBXBuildFile; fileRef = B492F2E5A0DF72E4A48691D138EC19D6; };
+		F6D247D1C921B9BE4C7CAF1514F9967E = {isa = PBXBuildFile; fileRef = B492F2E5A0DF72E4A48691D138EC19D6; };
+		F8E22530BA73BFCEA6132D2A6FF9676C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeRuntimeModel.swift; sourceTree = SOURCE_ROOT; };
+		BD2D6A0E6A65673CA839F3A82760E689 = {isa = PBXBuildFile; fileRef = F8E22530BA73BFCEA6132D2A6FF9676C; };
+		EFEB9DE0B17A5009722D5556AF841BE6 = {isa = PBXBuildFile; fileRef = F8E22530BA73BFCEA6132D2A6FF9676C; };
+		0DC28C1F270EE1C2C0319374AC50C546 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeRuntimeView.swift; sourceTree = SOURCE_ROOT; };
+		D9F2586F16FFD987A68BE231894C50DB = {isa = PBXBuildFile; fileRef = 0DC28C1F270EE1C2C0319374AC50C546; };
+		AD8CAAD94B3D5213435C54B2ED2AFA7E = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools/PrimeRuntime/main.swift; sourceTree = SOURCE_ROOT; };
+		F5CF20F1B3FF17C525093159BE9B4F9A = {isa = PBXBuildFile; fileRef = AD8CAAD94B3D5213435C54B2ED2AFA7E; };
+		5D5CEDBF94C4022A504659957DD7E00A = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = ErgenticsPrimeRuntime; sourceTree = BUILT_PRODUCTS_DIR; };
+		B138529C0BA4B4136D38C769FDA1247B = {isa = XCLocalSwiftPackageReference; relativePath = Packages/PrimeNativeRuntime; };
+		FDE012B2E72021B736C6C13870F6B655 = {isa = XCSwiftPackageProductDependency; package = B138529C0BA4B4136D38C769FDA1247B; productName = PrimeNativeRuntime; };
+		9F9A8026AA6D8E39B1A5EACD76D310A4 = {isa = PBXBuildFile; productRef = FDE012B2E72021B736C6C13870F6B655; };
+		3130C63C6B7075A8ED727AF23B0498F8 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (F5CF20F1B3FF17C525093159BE9B4F9A,); runOnlyForDeploymentPostprocessing = 0; };
+		79DB61548250F2DF85ECEBC6776071E3 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (9F9A8026AA6D8E39B1A5EACD76D310A4,); runOnlyForDeploymentPostprocessing = 0; };
+		9809D70C1AE73517EEF1AA00A69DF0C9 = {isa = PBXTargetDependency; target = 5FA956CD06F9460FBFC8F8FFD0B6935B; };
+		A86BAA51F02493078242C6C8DF0637EA = {isa = XCBuildConfiguration; name = Debug; buildSettings = {CODE_SIGN_ENTITLEMENTS = Tools/PrimeRuntime/Entitlements.plist; CODE_SIGN_IDENTITY = "Apple Development"; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = ZCQ435U8JP; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; CREATE_INFOPLIST_SECTION_IN_BINARY = YES; PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance.prime-runtime; PRODUCT_NAME = ErgenticsPrimeRuntime; SKIP_INSTALL = YES; SWIFT_VERSION = 6.0; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_COMPILATION_MODE = wholemodule; }; };
+		5C7F5C65D665B79B65D936372177BEB0 = {isa = XCBuildConfiguration; name = Release; buildSettings = {CODE_SIGN_ENTITLEMENTS = Tools/PrimeRuntime/Entitlements.plist; CODE_SIGN_IDENTITY = "Apple Development"; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = ZCQ435U8JP; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; CREATE_INFOPLIST_SECTION_IN_BINARY = YES; PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance.prime-runtime; PRODUCT_NAME = ErgenticsPrimeRuntime; SKIP_INSTALL = YES; SWIFT_VERSION = 6.0; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_COMPILATION_MODE = wholemodule; }; };
+		4E25BC86E12130EDDF390209D03AA148 = {isa = XCConfigurationList; buildConfigurations = (A86BAA51F02493078242C6C8DF0637EA, 5C7F5C65D665B79B65D936372177BEB0,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		5FA956CD06F9460FBFC8F8FFD0B6935B = {isa = PBXNativeTarget; buildConfigurationList = 4E25BC86E12130EDDF390209D03AA148; buildPhases = (3130C63C6B7075A8ED727AF23B0498F8, 79DB61548250F2DF85ECEBC6776071E3,); buildRules = (); dependencies = (); name = ErgenticsPrimeRuntime; productName = ErgenticsPrimeRuntime; productReference = 5D5CEDBF94C4022A504659957DD7E00A; productType = "com.apple.product-type.tool"; packageProductDependencies = (FDE012B2E72021B736C6C13870F6B655,); };
+		D74A2876F93BD492456CFCF4CC76EA5A = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); name = "Embed native Prime runtime"; runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "/usr/bin/ruby \"${SRCROOT}/Tools/PrimeRuntime/embed.rb\" \"${BUILT_PRODUCTS_DIR}\" \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\" \"${EXPANDED_CODE_SIGN_IDENTITY}\""; };
+		4404E38C4452D430EF4A3EA5D0BB8082 = {isa = PBXGroup; children = (EA2200000000000000000001, DF295DD2F9D6906752CD50E5, 64F470FB50E1279EB7AC9C6B, 8D5D106E9CFF75994B1270F9, B492F2E5A0DF72E4A48691D138EC19D6, F8E22530BA73BFCEA6132D2A6FF9676C, 0DC28C1F270EE1C2C0319374AC50C546, AD8CAAD94B3D5213435C54B2ED2AFA7E,); name = "Prime runtime"; sourceTree = "<group>"; };
+
+		ACDA0D64943F0D30A2F2509CBF395F6A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests/PrimeRuntimeTests.swift; sourceTree = SOURCE_ROOT; };
+		0B1FFF55B5E663AF8A90A5E99DDE3EB0 = {isa = PBXBuildFile; fileRef = ACDA0D64943F0D30A2F2509CBF395F6A; };
+		E56D9568DDD2C63985D25A04 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeStudyInput.swift; sourceTree = SOURCE_ROOT; };
+		C0769CF08CB4DD6FF3D6F7E7 = {isa = PBXBuildFile; fileRef = E56D9568DDD2C63985D25A04; };
+		205A0A0A4C21326BD8646FE5 = {isa = PBXBuildFile; fileRef = E56D9568DDD2C63985D25A04; };
+		DC0DFF32BA6E642650F7E97A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeComputeBackend.swift; sourceTree = SOURCE_ROOT; };
+		7CBF71D2732CAC4116A17F84 = {isa = PBXBuildFile; fileRef = DC0DFF32BA6E642650F7E97A; };
+		78D16C4A34176E7EC3FEEADF = {isa = PBXBuildFile; fileRef = DC0DFF32BA6E642650F7E97A; };
+		D21EEC852BDB48BE190E741A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeComputeModel.swift; sourceTree = SOURCE_ROOT; };
+		8D8A616B125F6A6F92877384 = {isa = PBXBuildFile; fileRef = D21EEC852BDB48BE190E741A; };
+		6DC226390B43075B9FA6277F = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeComputeView.swift; sourceTree = SOURCE_ROOT; };
+		90FC11B2AD9FDEECE6BD7D2C = {isa = PBXBuildFile; fileRef = 6DC226390B43075B9FA6277F; };
+		6ED8ACC281C01FB9894C6922 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests/PrimeStudyInputTests.swift; sourceTree = SOURCE_ROOT; };
+		1FDE79134C5D3363640525FF = {isa = PBXBuildFile; fileRef = 6ED8ACC281C01FB9894C6922; };
+		BF0953F2622DF135DE2DD822 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests/PrimeComputeBackendTests.swift; sourceTree = SOURCE_ROOT; };
+		4478D8584520F3FF28C7A6BC = {isa = PBXBuildFile; fileRef = BF0953F2622DF135DE2DD822; };
+		8BF038B4C2EC9A7018A9A130 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/PrimeComputeCheck.swift; sourceTree = SOURCE_ROOT; };
+		D97A4A880C287EBBB8657C47 = {isa = PBXBuildFile; fileRef = 8BF038B4C2EC9A7018A9A130; };
+/* Begin PBXBuildFile section */
+		FFCAF1981559AF77E294BDD8 = {isa = PBXBuildFile; fileRef = DFFE59035F6CF50A2B0686C8; };
+		F6C003C774794335DEDAB656 = {isa = PBXBuildFile; fileRef = EA551D1F447A02D45063ABC4; };
+		E7621C7ACED407B765711A18 = {isa = PBXBuildFile; fileRef = 74546EB8FA58615FDDB2AA6E; };
+		A42A36BAFC794B1E1CC2934F = {isa = PBXBuildFile; fileRef = 7035CB47D33F677B088725E7; };
+		2A13AC61B1430528D3AB797E = {isa = PBXBuildFile; fileRef = 7035CB47D33F677B088725E7; };
+		8B187605A236E269BC23D1B7 = {isa = PBXBuildFile; fileRef = F7A0EBF7A1B6F751BFFA008B; };
+		FE320886BBC79DA32DEAAAAB = {isa = PBXBuildFile; fileRef = 8AA0BCFBA334BE39AF1CCBA2; };
+		DA53B2550B938F1D5D7AB6A9 = {isa = PBXBuildFile; fileRef = 8F1F0BADF8E01716CA821961; };
+		AA0E6259879CF71165383F49 = {isa = PBXBuildFile; fileRef = 9FEC25A0B9408143BFE51676; };
+		88567F3D8C9A2C158EA7A2FA = {isa = PBXBuildFile; fileRef = 9FEC25A0B9408143BFE51676; };
+		03D0E7A16F6E8D986BBFCA9A = {isa = PBXBuildFile; fileRef = 4B7D346B3E5FE10D41BB9D21; };
+		8DA166317BAC0E58563E8A57 = {isa = PBXBuildFile; fileRef = 13718DF1418D1ED97E02A91F; };
+		06DBB2F34BB61DECD054E4D4 = {isa = PBXBuildFile; fileRef = 13718DF1418D1ED97E02A91F; };
+		D82000000000000000000001 = {isa = PBXBuildFile; fileRef = D81000000000000000000001; };
+		D82000000000000000000002 = {isa = PBXBuildFile; fileRef = D81000000000000000000001; };
+		D72000000000000000000001 = {isa = PBXBuildFile; fileRef = D71000000000000000000001; };
+		D72000000000000000000002 = {isa = PBXBuildFile; fileRef = D71000000000000000000001; };
+		D62000000000000000000001 = {isa = PBXBuildFile; fileRef = D61000000000000000000001; };
+		D62000000000000000000002 = {isa = PBXBuildFile; fileRef = D61000000000000000000001; };
+		D52000000000000000000001 = {isa = PBXBuildFile; fileRef = D51000000000000000000001; };
+		D52000000000000000000002 = {isa = PBXBuildFile; fileRef = D51000000000000000000001; };
+		D42000000000000000000001 = {isa = PBXBuildFile; fileRef = D41000000000000000000001; };
+		D42000000000000000000002 = {isa = PBXBuildFile; fileRef = D41000000000000000000001; };
+		D32000000000000000000000 = {isa = PBXBuildFile; fileRef = D31000000000000000000000; };
+		D32000000000000000000001 = {isa = PBXBuildFile; fileRef = D31000000000000000000001; };
+		D32000000000000000000002 = {isa = PBXBuildFile; fileRef = D31000000000000000000000; };
+		D32000000000000000000003 = {isa = PBXBuildFile; fileRef = D31000000000000000000004; };
+		D32000000000000000000004 = {isa = PBXBuildFile; fileRef = D31000000000000000000002; };
+		D32000000000000000000005 = {isa = PBXBuildFile; fileRef = D31000000000000000000000; };
+		D32000000000000000000006 = {isa = PBXBuildFile; fileRef = D31000000000000000000003; };
+		D32000000000000000000007 = {isa = PBXBuildFile; fileRef = D31000000000000000000004; };
+		D32000000000000000000008 = {isa = PBXBuildFile; fileRef = D31000000000000000000005; };
+		D32000000000000000000009 = {isa = PBXBuildFile; fileRef = D31000000000000000000006; };
+		D3200000000000000000000A = {isa = PBXBuildFile; fileRef = D31000000000000000000007; };
+		D3200000000000000000000B = {isa = PBXBuildFile; fileRef = D31000000000000000000009; };
+		D3200000000000000000000C = {isa = PBXBuildFile; fileRef = B10000000000000000000012; };
+		B20000000000000000000120 = {isa = PBXBuildFile; fileRef = B10000000000000000000120; };
+		B20000000000000000000121 = {isa = PBXBuildFile; fileRef = B10000000000000000000120; };
+		B20000000000000000000122 = {isa = PBXBuildFile; fileRef = B10000000000000000000121; };
+		B20000000000000000000123 = {isa = PBXBuildFile; fileRef = B10000000000000000000122; };
+		B20000000000000000000124 = {isa = PBXBuildFile; fileRef = B10000000000000000000122; };
+		B20000000000000000000125 = {isa = PBXBuildFile; fileRef = B10000000000000000000123; };
+		B20000000000000000000126 = {isa = PBXBuildFile; fileRef = B10000000000000000000124; };
+		B20000000000000000000127 = {isa = PBXBuildFile; fileRef = B10000000000000000000124; };
+		B20000000000000000000128 = {isa = PBXBuildFile; fileRef = B10000000000000000000125; };
+		B20000000000000000000110 = {isa = PBXBuildFile; fileRef = B10000000000000000000110; };
+		B20000000000000000000111 = {isa = PBXBuildFile; fileRef = B10000000000000000000110; };
+		B20000000000000000000112 = {isa = PBXBuildFile; fileRef = B10000000000000000000111; };
+		B20000000000000000000100 = {isa = PBXBuildFile; fileRef = B10000000000000000000100; };
+		B20000000000000000000101 = {isa = PBXBuildFile; fileRef = B10000000000000000000101; };
+		B20000000000000000000102 = {isa = PBXBuildFile; fileRef = B10000000000000000000101; };
+		B20000000000000000000103 = {isa = PBXBuildFile; fileRef = B10000000000000000000102; };
+		B200000000000000000000F0 = {isa = PBXBuildFile; fileRef = B100000000000000000000F0; };
+		B200000000000000000000F1 = {isa = PBXBuildFile; fileRef = B100000000000000000000F1; };
+		B200000000000000000000F2 = {isa = PBXBuildFile; fileRef = B100000000000000000000F2; };
+		B200000000000000000000F3 = {isa = PBXBuildFile; fileRef = B100000000000000000000F3; };
+		B200000000000000000000F4 = {isa = PBXBuildFile; fileRef = B100000000000000000000F0; };
+		B200000000000000000000F5 = {isa = PBXBuildFile; fileRef = B100000000000000000000F1; };
+		B200000000000000000000F6 = {isa = PBXBuildFile; fileRef = B100000000000000000000F2; };
+		B200000000000000000000F7 = {isa = PBXBuildFile; fileRef = B100000000000000000000F4; };
+		B200000000000000000000F8 = {isa = PBXBuildFile; fileRef = B100000000000000000000F5; };
+		B200000000000000000000F9 = {isa = PBXBuildFile; fileRef = B100000000000000000000F6; };
+		B200000000000000000000E0 = {isa = PBXBuildFile; fileRef = B100000000000000000000E0; };
+		B200000000000000000000E1 = {isa = PBXBuildFile; fileRef = B100000000000000000000E1; };
+		B200000000000000000000E2 = {isa = PBXBuildFile; fileRef = B100000000000000000000E0; };
+		B200000000000000000000E3 = {isa = PBXBuildFile; fileRef = B100000000000000000000E1; };
+		B200000000000000000000E4 = {isa = PBXBuildFile; fileRef = B100000000000000000000E2; };
+		B200000000000000000000E5 = {isa = PBXBuildFile; fileRef = B100000000000000000000E3; };
+		B200000000000000000000D0 = {isa = PBXBuildFile; fileRef = B100000000000000000000D0; };
+		B200000000000000000000D1 = {isa = PBXBuildFile; fileRef = B100000000000000000000D1; };
+		B200000000000000000000D2 = {isa = PBXBuildFile; fileRef = B100000000000000000000D0; };
+		B200000000000000000000D3 = {isa = PBXBuildFile; fileRef = B100000000000000000000D1; };
+		B200000000000000000000D4 = {isa = PBXBuildFile; fileRef = B100000000000000000000D2; };
+		B200000000000000000000D5 = {isa = PBXBuildFile; fileRef = B100000000000000000000D3; };
+		B200000000000000000000C0 = {isa = PBXBuildFile; fileRef = B100000000000000000000C0; };
+		B200000000000000000000C1 = {isa = PBXBuildFile; fileRef = B100000000000000000000C1; };
+		B200000000000000000000C2 = {isa = PBXBuildFile; fileRef = B100000000000000000000C0; };
+		B200000000000000000000C3 = {isa = PBXBuildFile; fileRef = B100000000000000000000C1; };
+		B200000000000000000000C4 = {isa = PBXBuildFile; fileRef = B100000000000000000000C2; };
+		B200000000000000000000C5 = {isa = PBXBuildFile; fileRef = B100000000000000000000C3; };
+		B200000000000000000000A0 = {isa = PBXBuildFile; fileRef = B100000000000000000000A0; };
+		B200000000000000000000A1 = {isa = PBXBuildFile; fileRef = B100000000000000000000A1; };
+		B200000000000000000000A2 = {isa = PBXBuildFile; fileRef = B100000000000000000000A2; };
+		B200000000000000000000A3 = {isa = PBXBuildFile; fileRef = B100000000000000000000A3; };
+		B200000000000000000000A4 = {isa = PBXBuildFile; fileRef = B100000000000000000000A4; };
+		B200000000000000000000B0 = {isa = PBXBuildFile; fileRef = B100000000000000000000A1; };
+		B200000000000000000000B1 = {isa = PBXBuildFile; fileRef = B100000000000000000000A2; };
+		B20000000000000000000087 = {isa = PBXBuildFile; fileRef = B10000000000000000000087; };
+		B20000000000000000000088 = {isa = PBXBuildFile; fileRef = B10000000000000000000088; };
+		B20000000000000000000092 = {isa = PBXBuildFile; fileRef = B10000000000000000000087; };
+		B20000000000000000000084 = {isa = PBXBuildFile; fileRef = B10000000000000000000084; };
+		B20000000000000000000085 = {isa = PBXBuildFile; fileRef = B10000000000000000000085; };
+		B20000000000000000000086 = {isa = PBXBuildFile; fileRef = B10000000000000000000086; };
+		B20000000000000000000091 = {isa = PBXBuildFile; fileRef = B10000000000000000000084; };
+		B20000000000000000000080 = {isa = PBXBuildFile; fileRef = B10000000000000000000080; };
+		B20000000000000000000081 = {isa = PBXBuildFile; fileRef = B10000000000000000000081; };
+		B20000000000000000000082 = {isa = PBXBuildFile; fileRef = B10000000000000000000082; };
+		B20000000000000000000083 = {isa = PBXBuildFile; fileRef = B10000000000000000000083; };
+		B20000000000000000000090 = {isa = PBXBuildFile; fileRef = B10000000000000000000080; };
+		B20000000000000000000001 /* ProvenanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000001 /* ProvenanceApp.swift */; };
+		B20000000000000000000002 /* ProvenanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000002 /* ProvenanceModel.swift */; };
+		B20000000000000000000003 /* ProvenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000003 /* ProvenanceView.swift */; };
+		B20000000000000000000004 /* ReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000004 /* ReceiptVerifier.swift */; };
+		B20000000000000000000005 /* ProvenanceReadOnly.c in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000005 /* ProvenanceReadOnly.c */; };
+		B20000000000000000000006 /* ReceiptVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000004 /* ReceiptVerifier.swift */; };
+		B20000000000000000000007 /* ReceiptVerifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000007 /* ReceiptVerifierTests.swift */; };
+		B20000000000000000000008 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000010 /* SwiftUI.framework */; };
+		B20000000000000000000009 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000011 /* AppKit.framework */; };
+		B2000000000000000000000A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* Security.framework */; };
+		B2000000000000000000000B /* Hypervisor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000013 /* Hypervisor.framework */; };
+		B2000000000000000000000C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000014 /* XCTest.framework */; };
+		B20000000000000000000030 /* GuestContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000030; };
+		B20000000000000000000031 /* GuestJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000031; };
+		B20000000000000000000032 /* HypervisorGuest.c in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000032; };
+		B20000000000000000000034 /* HypervisorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000034; };
+		B20000000000000000000035 /* HypervisorLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000035; };
+		B20000000000000000000036 /* MerkleGenesis.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000036; };
+		B20000000000000000000037 /* GuestResultVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000037; };
+		B20000000000000000000040 /* GuestJournalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000040; };
+		B20000000000000000000041 /* HypervisorContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000041; };
+		B20000000000000000000042 /* MerkleGenesisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000042; };
+		B20000000000000000000043 /* GuestResultVerifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000043; };
+		B20000000000000000000050 = {isa = PBXBuildFile; fileRef = B10000000000000000000030; };
+		B20000000000000000000051 = {isa = PBXBuildFile; fileRef = B10000000000000000000031; };
+		B20000000000000000000052 = {isa = PBXBuildFile; fileRef = B10000000000000000000036; };
+		B20000000000000000000053 = {isa = PBXBuildFile; fileRef = B10000000000000000000037; };
+		B20000000000000000000060 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000061 = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000070 = {isa = PBXBuildFile; fileRef = B10000000000000000000070; };
+		B20000000000000000000071 = {isa = PBXBuildFile; fileRef = B10000000000000000000071; };
+		B20000000000000000000130 /* CapabilityFlowClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000130 /* CapabilityFlowClosure.swift */; };
+		B20000000000000000000131 /* CapabilityFlowClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000130 /* CapabilityFlowClosure.swift */; };
+		B20000000000000000000132 /* CapabilityFlowClosureReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000131 /* CapabilityFlowClosureReference.swift */; };
+		B20000000000000000000133 /* CapabilityFlowClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000132 /* CapabilityFlowClosureTests.swift */; };
+		B20000000000000000000140 /* CapabilityFlowRustReceiptVerifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000140 /* CapabilityFlowRustReceiptVerifierTests.swift */; };
+		B20000000000000000000141 /* CapabilityFlowReceiptVerifier in Resources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000141 /* CapabilityFlowReceiptVerifier */; };
+		B20000000000000000000150 /* HypervisorStageRoadmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000150 /* HypervisorStageRoadmap.swift */; };
+		B20000000000000000000151 /* HypervisorStageRoadmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000150 /* HypervisorStageRoadmap.swift */; };
+		B20000000000000000000152 /* HypervisorStageRoadmapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000151 /* HypervisorStageRoadmapTests.swift */; };
+		B20000000000000000000170 /* HypervisorStageH2Admission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000170 /* HypervisorStageH2Admission.swift */; };
+		B20000000000000000000171 /* HypervisorStageH2Admission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000170 /* HypervisorStageH2Admission.swift */; };
+		B20000000000000000000172 /* HypervisorStageH2AdmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000171 /* HypervisorStageH2AdmissionTests.swift */; };
+		B20000000000000000000173 /* HypervisorGuest.c in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000032; settings = {COMPILER_FLAGS = "-fno-autolink -ffunction-sections -fvisibility=hidden"; }; };
+		B20000000000000000000180 /* HypervisorStageH3Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000180 /* HypervisorStageH3Cursor.swift */; };
+		B20000000000000000000181 /* HypervisorStageH3Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000180 /* HypervisorStageH3Cursor.swift */; };
+		B20000000000000000000182 /* HypervisorStageH3CursorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000181 /* HypervisorStageH3CursorTests.swift */; };
+		B20000000000000000000183 /* HypervisorH3LiveVerifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000183 /* HypervisorH3LiveVerifierTests.swift */; };
+		B20000000000000000000185 /* HypervisorH3LiveVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000185 /* HypervisorH3LiveVerifier.swift */; };
+		B20000000000000000000186 /* HypervisorH3LiveVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000185 /* HypervisorH3LiveVerifier.swift */; };
+		B20000000000000000000160 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000160 /* LICENSE */; };
+		B20000000000000000000161 /* ERGENTICS.spdx.json in Resources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000161 /* ERGENTICS.spdx.json */; };
+		B20000000000000000000162 /* THIRD_PARTY_NOTICES.md in Resources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000162 /* THIRD_PARTY_NOTICES.md */; };
+		B20000000000000000000200 /* ManagedWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000200 /* ManagedWorkspace.swift */; };
+		B20000000000000000000201 /* ManagedWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000200 /* ManagedWorkspace.swift */; };
+		B20000000000000000000202 /* ManagedWorkspaceObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000201 /* ManagedWorkspaceObservation.swift */; };
+		B20000000000000000000203 /* ManagedWorkspaceObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000201 /* ManagedWorkspaceObservation.swift */; };
+		B20000000000000000000204 /* ManagedWorkspaceAssessmentLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000202 /* ManagedWorkspaceAssessmentLease.swift */; };
+		B20000000000000000000205 /* ManagedWorkspaceAssessmentLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000202 /* ManagedWorkspaceAssessmentLease.swift */; };
+		B20000000000000000000206 /* ManagedWorkspaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000203 /* ManagedWorkspaceTests.swift */; };
+		B20000000000000000000207 /* ManagedWorkspaceAssessmentLeaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000204 /* ManagedWorkspaceAssessmentLeaseTests.swift */; };
+		B20000000000000000000220 /* ManagedWorkspaceProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000220 /* ManagedWorkspaceProjection.swift */; };
+		B20000000000000000000221 /* ManagedWorkspaceProjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000220 /* ManagedWorkspaceProjection.swift */; };
+		B20000000000000000000222 /* ManagedWorkspaceProjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000221 /* ManagedWorkspaceProjectionTests.swift */; };
+		B20000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift */; };
+		B20000000000000000000231 /* ManagedWorkspaceAssessmentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift */; };
+		B20000000000000000000232 /* ManagedWorkspaceAssessmentCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000231 /* ManagedWorkspaceAssessmentCoordinatorTests.swift */; };
+		B20000000000000000000240 /* HypervisorStageH4Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000240 /* HypervisorStageH4Privacy.swift */; };
+		B20000000000000000000241 /* HypervisorStageH4Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000240 /* HypervisorStageH4Privacy.swift */; };
+		B20000000000000000000242 /* HypervisorStageH4PrivacyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000241 /* HypervisorStageH4PrivacyTests.swift */; };
+		B20000000000000000000243 /* HypervisorStageH4CanonicalStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000242 /* HypervisorStageH4CanonicalStreams.swift */; };
+		B20000000000000000000244 /* HypervisorStageH4CanonicalStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000242 /* HypervisorStageH4CanonicalStreams.swift */; };
+		B20000000000000000000245 /* HypervisorStageH4CanonicalStreamsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000243 /* HypervisorStageH4CanonicalStreamsTests.swift */; };
+		B20000000000000000000246 /* HypervisorStageH4OwnerBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000244 /* HypervisorStageH4OwnerBinding.swift */; };
+		B20000000000000000000247 /* HypervisorStageH4OwnerBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000244 /* HypervisorStageH4OwnerBinding.swift */; };
+		B20000000000000000000248 /* HypervisorStageH4OwnerBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000245 /* HypervisorStageH4OwnerBindingTests.swift */; };
+		B20000000000000000000249 /* HypervisorStageH4Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000246 /* HypervisorStageH4Persistence.swift */; };
+		B20000000000000000000250 /* HypervisorStageH4Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000246 /* HypervisorStageH4Persistence.swift */; };
+		B20000000000000000000251 /* HypervisorStageH4PersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000247 /* HypervisorStageH4PersistenceTests.swift */; };
+		B20000000000000000000252 /* HypervisorStageH4DualStreamPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000248 /* HypervisorStageH4DualStreamPersistence.swift */; };
+		B20000000000000000000253 /* HypervisorStageH4DualStreamPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000248 /* HypervisorStageH4DualStreamPersistence.swift */; };
+		B20000000000000000000254 /* HypervisorStageH4DualStreamPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000249 /* HypervisorStageH4DualStreamPersistenceTests.swift */; };
+		B20000000000000000000255 /* HypervisorStageH4DualStreamRestartInspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000250 /* HypervisorStageH4DualStreamRestartInspection.swift */; };
+		B20000000000000000000256 /* HypervisorStageH4DualStreamRestartInspectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000252 /* HypervisorStageH4DualStreamRestartInspectionTests.swift */; };
+		B20000000000000000000257 /* HypervisorStageH4DualStreamRestartInspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000250 /* HypervisorStageH4DualStreamRestartInspection.swift */; };
+		B20000000000000000000258 /* H4D3bRestartReaderMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000251 /* H4D3bRestartReaderMain.swift */; };
+		B20000000000000000000259 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000260 /* HypervisorStageH4Privacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000240 /* HypervisorStageH4Privacy.swift */; };
+		B20000000000000000000261 /* HypervisorStageH4CanonicalStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000242 /* HypervisorStageH4CanonicalStreams.swift */; };
+		B20000000000000000000262 /* HypervisorStageH4OwnerBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000244 /* HypervisorStageH4OwnerBinding.swift */; };
+		B20000000000000000000263 /* HypervisorStageH4Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000246 /* HypervisorStageH4Persistence.swift */; };
+		B20000000000000000000264 /* HypervisorStageH4DualStreamPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000248 /* HypervisorStageH4DualStreamPersistence.swift */; };
+		B20000000000000000000265 /* H4D3cCutPublisherMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000254 /* H4D3cCutPublisherMain.swift */; };
+		B20000000000000000000266 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B10000000000000000000060; };
+		B20000000000000000000267 /* HypervisorStageH4DualStreamSigkillCutClassificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000255 /* HypervisorStageH4DualStreamSigkillCutClassificationTests.swift */; };
+		B20000000000000000000268 = {isa = PBXBuildFile; fileRef = B10000000000000000000257; };
+		B20000000000000000000269 = {isa = PBXBuildFile; fileRef = B10000000000000000000257; };
+		B20000000000000000000270 = {isa = PBXBuildFile; fileRef = B10000000000000000000258; };
+		B20000000000000000000271 = {isa = PBXBuildFile; fileRef = B10000000000000000000258; };
+		B20000000000000000000272 = {isa = PBXBuildFile; fileRef = B10000000000000000000259; };
+		B20000000000000000000273 = {isa = PBXBuildFile; fileRef = B10000000000000000000260; };
+		2B4F4F833FD56A4CBDE7AD66 /* ErgenticsAgentsModel.swift */ = {isa = PBXBuildFile; fileRef = EC28968F63849845610A78E6; };
+		DC307F4AD0B25880235252E2 /* ErgenticsAgentsView.swift */ = {isa = PBXBuildFile; fileRef = D7559C602BA2B078957BA239; };
+		F162786779CC421B278B3F80 /* ErgenticsAgentCatalogIdentity.swift */ = {isa = PBXBuildFile; fileRef = 4DEC6F19832F143A28926566; };
+		965734237A58D03A48D64DC1 /* ErgenticsAgentLibrary.swift */ = {isa = PBXBuildFile; fileRef = 8BCCBFBAC5551FA775C68754; };
+		8B4CBB27C8C3FD4CEE9C6046 /* ErgenticsAgentLibrary.swift */ = {isa = PBXBuildFile; fileRef = 8BCCBFBAC5551FA775C68754; };
+		2C7383D6A76895188D2665A6 /* ErgenticsAgentTaskStore.swift */ = {isa = PBXBuildFile; fileRef = 5153356D2509BC0FFAD1935F; };
+		2E6850A339B20432B3294874 /* ErgenticsAgentTaskStore.swift */ = {isa = PBXBuildFile; fileRef = 5153356D2509BC0FFAD1935F; };
+		FF3BB65AC8D90A319D482AAE /* ErgenticsAgentLibraryTests.swift */ = {isa = PBXBuildFile; fileRef = 0D451655B82170F8C509B67B; };
+		191A5AA2F561602FDED8A81C /* ErgenticsAgentTaskStoreTests.swift */ = {isa = PBXBuildFile; fileRef = 570F132211B2B54FA4FEF639; };
+		B6E7D00384C07EB04F8754DE /* ErgenticsAgents */ = {isa = PBXBuildFile; fileRef = 3F6B2668168B1E0FA24012D6; };
+		84F82924DFC9D095733F9329 /* ErgenticsAgentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC28968F63849845610A78E6; };
+		92EAD0ED0C4C689B7A397DC9 /* ErgenticsAgentCatalogIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DEC6F19832F143A28926566; };
+		11FE6D8FEEE4245198786499 /* ErgenticsAgentsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9996E1ED19291727C7E6D043; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B80000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B40000000000000000000003;
+			remoteInfo = H4D3bRestartReader;
+		};
+		B80000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B40000000000000000000004;
+			remoteInfo = H4D3cCutPublisher;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DFFE59035F6CF50A2B0686C8 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Virtualization.framework; path = System/Library/Frameworks/Virtualization.framework; sourceTree = SDKROOT; };
+		EA551D1F447A02D45063ABC4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitWorkspaceTests.swift; sourceTree = "<group>"; };
+		74546EB8FA58615FDDB2AA6E = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitWorkspaceView.swift; sourceTree = "<group>"; };
+		7035CB47D33F677B088725E7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitWorkspaceBackend.swift; sourceTree = "<group>"; };
+		F7A0EBF7A1B6F751BFFA008B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMWorkspaceTests.swift; sourceTree = "<group>"; };
+		8AA0BCFBA334BE39AF1CCBA2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMWorkspaceView.swift; sourceTree = "<group>"; };
+		8F1F0BADF8E01716CA821961 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMWorkspaceModel.swift; sourceTree = "<group>"; };
+		9FEC25A0B9408143BFE51676 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMWorkspaceStore.swift; sourceTree = "<group>"; };
+		4B7D346B3E5FE10D41BB9D21 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningCapabilityPolicyTests.swift; sourceTree = "<group>"; };
+		744EBF3C80E44CDFC50606E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SigningCapabilityPolicy.h; sourceTree = "<group>"; };
+		13718DF1418D1ED97E02A91F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SigningCapabilityPolicy.c; sourceTree = "<group>"; };
+		D81000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestH8Provenance.swift; sourceTree = "<group>"; };
+		D71000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestH7Execution.swift; sourceTree = "<group>"; };
+		D61000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH5Repeat.swift; sourceTree = "<group>"; };
+		D51000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestH4SavedReceipt.swift; sourceTree = "<group>"; };
+		D41000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestH3LivePersistence.swift; sourceTree = "<group>"; };
+		D31000000000000000000000 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationProtocol.swift; sourceTree = "<group>"; };
+		D31000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationCoordinator.swift; sourceTree = "<group>"; };
+		D31000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationRunnerTests.swift; sourceTree = "<group>"; };
+		D31000000000000000000003 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		D31000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationControllerPolicy.swift; sourceTree = "<group>"; };
+		D31000000000000000000005 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationProcess.swift; sourceTree = "<group>"; };
+		D31000000000000000000006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationSigning.swift; sourceTree = "<group>"; };
+		D31000000000000000000007 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H3QualificationStorage.swift; sourceTree = "<group>"; };
+		D31000000000000000000008 = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ErgenticsProvenanceH3QualificationController; sourceTree = BUILT_PRODUCTS_DIR; };
+		D31000000000000000000009 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B10000000000000000000120 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityLuminosity.swift; sourceTree = "<group>"; };
+		B10000000000000000000121 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityLuminosityTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000122 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSupervisorGrants.swift; sourceTree = "<group>"; };
+		B10000000000000000000123 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestSupervisorGrantsTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000124 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestCapabilityWitness.swift; sourceTree = "<group>"; };
+		B10000000000000000000125 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestCapabilityWitnessTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000126 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuestCapabilityPlan.h; sourceTree = "<group>"; };
+		B10000000000000000000110 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPULayoutPlan.swift; sourceTree = "<group>"; };
+		B10000000000000000000111 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPULayoutPlanTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000100 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUGUIReadiness.swift; sourceTree = "<group>"; };
+		B10000000000000000000101 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUGUIReadinessReport.swift; sourceTree = "<group>"; };
+		B10000000000000000000102 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUGUIReadinessTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000F0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemoVerification.swift; sourceTree = "<group>"; };
+		B100000000000000000000F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemonstration.swift; sourceTree = "<group>"; };
+		B100000000000000000000F2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemoModel.swift; sourceTree = "<group>"; };
+		B100000000000000000000F3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemoView.swift; sourceTree = "<group>"; };
+		B100000000000000000000F4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemoVerificationTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000F5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemonstrationTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000F6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUDemoModelTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000E0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUTypes.swift; sourceTree = "<group>"; };
+		B100000000000000000000E1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUEngine.swift; sourceTree = "<group>"; };
+		B100000000000000000000E2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUReference.swift; sourceTree = "<group>"; };
+		B100000000000000000000E3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaPUTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000D0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalReadiness.swift; sourceTree = "<group>"; };
+		B100000000000000000000D1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessAssessment.swift; sourceTree = "<group>"; };
+		B100000000000000000000D2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalReadinessTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000D3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessAssessmentTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000C0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecyclePolicy.swift; sourceTree = "<group>"; };
+		B100000000000000000000C1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleController.swift; sourceTree = "<group>"; };
+		B100000000000000000000C2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecyclePolicyTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000C3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleControllerTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000A0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentRustBoot.swift; sourceTree = "<group>"; };
+		B100000000000000000000A1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentRustBootReport.swift; sourceTree = "<group>"; };
+		B100000000000000000000A2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentRustBootExport.swift; sourceTree = "<group>"; };
+		B100000000000000000000A3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentRustBootTests.swift; sourceTree = "<group>"; };
+		B100000000000000000000A4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentRustBootExportTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000087 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RustBootstrapContract.swift; sourceTree = "<group>"; };
+		B10000000000000000000088 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RustBootstrapVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000089 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RustBootstrapImage.h; sourceTree = "<group>"; };
+		B10000000000000000000084 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentLaunch.swift; sourceTree = "<group>"; };
+		B10000000000000000000085 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentReadiness.swift; sourceTree = "<group>"; };
+		B10000000000000000000086 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopmentReadinessTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000080 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeGitSnapshot.swift; sourceTree = "<group>"; };
+		B10000000000000000000081 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeGitModel.swift; sourceTree = "<group>"; };
+		B10000000000000000000082 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeGitView.swift; sourceTree = "<group>"; };
+		B10000000000000000000083 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeGitSnapshotTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000070 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10000000000000000000071 = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B10000000000000000000001 /* ProvenanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceApp.swift; sourceTree = "<group>"; };
+		B10000000000000000000002 /* ProvenanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceModel.swift; sourceTree = "<group>"; };
+		B10000000000000000000003 /* ProvenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceView.swift; sourceTree = "<group>"; };
+		B10000000000000000000004 /* ReceiptVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptVerifier.swift; sourceTree = "<group>"; };
+		B10000000000000000000005 /* ProvenanceReadOnly.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ProvenanceReadOnly.c; sourceTree = "<group>"; };
+		B10000000000000000000006 /* ProvenanceReadOnly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProvenanceReadOnly.h; sourceTree = "<group>"; };
+		B10000000000000000000007 /* ReceiptVerifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B10000000000000000000009 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Entitlements.plist; sourceTree = "<group>"; };
+		B1000000000000000000000A /* read-only-successor.v1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "read-only-successor.v1.json"; sourceTree = "<group>"; };
+		B10000000000000000000010 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B10000000000000000000011 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		B10000000000000000000012 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B10000000000000000000013 /* Hypervisor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hypervisor.framework; path = System/Library/Frameworks/Hypervisor.framework; sourceTree = SDKROOT; };
+		B10000000000000000000014 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		B10000000000000000000020 /* Ergentics Provenance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ergentics Provenance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000021 /* ProvenanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProvenanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000030 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestContract.swift; sourceTree = "<group>"; };
+		B10000000000000000000031 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestJournal.swift; sourceTree = "<group>"; };
+		B10000000000000000000032 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HypervisorGuest.c; sourceTree = "<group>"; };
+		B10000000000000000000033 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HypervisorGuest.h; sourceTree = "<group>"; };
+		B10000000000000000000034 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorModel.swift; sourceTree = "<group>"; };
+		B10000000000000000000035 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorLabView.swift; sourceTree = "<group>"; };
+		B10000000000000000000036 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGenesis.swift; sourceTree = "<group>"; };
+		B10000000000000000000037 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestResultVerifier.swift; sourceTree = "<group>"; };
+		B10000000000000000000040 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestJournalTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000041 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorContractTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000042 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGenesisTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000043 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestResultVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000060 = {isa = PBXFileReference; lastKnownFileType = sourcecode.text-based-dylib-definition; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		B10000000000000000000130 /* CapabilityFlowClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityFlowClosure.swift; sourceTree = "<group>"; };
+		B10000000000000000000131 /* CapabilityFlowClosureReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityFlowClosureReference.swift; sourceTree = "<group>"; };
+		B10000000000000000000132 /* CapabilityFlowClosureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityFlowClosureTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000140 /* CapabilityFlowRustReceiptVerifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityFlowRustReceiptVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000141 /* CapabilityFlowReceiptVerifier */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = "capability-flow-independent-verifier-2026-08-31/CapabilityFlowReceiptVerifier"; sourceTree = "<group>"; };
+		B10000000000000000000150 /* HypervisorStageRoadmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageRoadmap.swift; sourceTree = "<group>"; };
+		B10000000000000000000151 /* HypervisorStageRoadmapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageRoadmapTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000170 /* HypervisorStageH2Admission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH2Admission.swift; sourceTree = "<group>"; };
+		B10000000000000000000171 /* HypervisorStageH2AdmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH2AdmissionTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000180 /* HypervisorStageH3Cursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH3Cursor.swift; sourceTree = "<group>"; };
+		B10000000000000000000181 /* HypervisorStageH3CursorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH3CursorTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000183 /* HypervisorH3LiveVerifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorH3LiveVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000185 /* HypervisorH3LiveVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorH3LiveVerifier.swift; sourceTree = "<group>"; };
+		B10000000000000000000160 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B10000000000000000000161 /* ERGENTICS.spdx.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ERGENTICS.spdx.json; sourceTree = "<group>"; };
+		B10000000000000000000162 /* THIRD_PARTY_NOTICES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = THIRD_PARTY_NOTICES.md; sourceTree = "<group>"; };
+		B10000000000000000000200 /* ManagedWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspace.swift; sourceTree = "<group>"; };
+		B10000000000000000000201 /* ManagedWorkspaceObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceObservation.swift; sourceTree = "<group>"; };
+		B10000000000000000000202 /* ManagedWorkspaceAssessmentLease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceAssessmentLease.swift; sourceTree = "<group>"; };
+		B10000000000000000000203 /* ManagedWorkspaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000204 /* ManagedWorkspaceAssessmentLeaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceAssessmentLeaseTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000220 /* ManagedWorkspaceProjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceProjection.swift; sourceTree = "<group>"; };
+		B10000000000000000000221 /* ManagedWorkspaceProjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceProjectionTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceAssessmentCoordinator.swift; sourceTree = "<group>"; };
+		B10000000000000000000231 /* ManagedWorkspaceAssessmentCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedWorkspaceAssessmentCoordinatorTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000240 /* HypervisorStageH4Privacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4Privacy.swift; sourceTree = "<group>"; };
+		B10000000000000000000241 /* HypervisorStageH4PrivacyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivacyTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000242 /* HypervisorStageH4CanonicalStreams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4CanonicalStreams.swift; sourceTree = "<group>"; };
+		B10000000000000000000243 /* HypervisorStageH4CanonicalStreamsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4CanonicalStreamsTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000244 /* HypervisorStageH4OwnerBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4OwnerBinding.swift; sourceTree = "<group>"; };
+		B10000000000000000000245 /* HypervisorStageH4OwnerBindingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4OwnerBindingTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000246 /* HypervisorStageH4Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4Persistence.swift; sourceTree = "<group>"; };
+		B10000000000000000000247 /* HypervisorStageH4PersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PersistenceTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000248 /* HypervisorStageH4DualStreamPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4DualStreamPersistence.swift; sourceTree = "<group>"; };
+		B10000000000000000000249 /* HypervisorStageH4DualStreamPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4DualStreamPersistenceTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000250 /* HypervisorStageH4DualStreamRestartInspection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4DualStreamRestartInspection.swift; sourceTree = "<group>"; };
+		B10000000000000000000251 /* H4D3bRestartReaderMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H4D3bRestartReaderMain.swift; sourceTree = "<group>"; };
+		B10000000000000000000252 /* HypervisorStageH4DualStreamRestartInspectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4DualStreamRestartInspectionTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000253 /* H4D3bRestartReader */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = H4D3bRestartReader; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000254 /* H4D3cCutPublisherMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H4D3cCutPublisherMain.swift; sourceTree = "<group>"; };
+		B10000000000000000000255 /* HypervisorStageH4DualStreamSigkillCutClassificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4DualStreamSigkillCutClassificationTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000256 /* H4D3cCutPublisher */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = H4D3cCutPublisher; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000257 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifier.swift; sourceTree = "<group>"; };
+		B10000000000000000000258 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormat.swift; sourceTree = "<group>"; };
+		B10000000000000000000259 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000260 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypervisorStageH4PrivateVerifierFormatTests.swift; sourceTree = "<group>"; };
+		EC28968F63849845610A78E6 /* ErgenticsAgentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsModel.swift; sourceTree = "<group>"; };
+		D7559C602BA2B078957BA239 /* ErgenticsAgentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsView.swift; sourceTree = "<group>"; };
+		4DEC6F19832F143A28926566 /* ErgenticsAgentCatalogIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentCatalogIdentity.swift; sourceTree = "<group>"; };
+		8BCCBFBAC5551FA775C68754 /* ErgenticsAgentLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentLibrary.swift; sourceTree = "<group>"; };
+		5153356D2509BC0FFAD1935F /* ErgenticsAgentTaskStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentTaskStore.swift; sourceTree = "<group>"; };
+		0D451655B82170F8C509B67B /* ErgenticsAgentLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentLibraryTests.swift; sourceTree = "<group>"; };
+		570F132211B2B54FA4FEF639 /* ErgenticsAgentTaskStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentTaskStoreTests.swift; sourceTree = "<group>"; };
+		3F6B2668168B1E0FA24012D6 /* ErgenticsAgents */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/ErgenticsAgents; sourceTree = "<group>"; };
+		9996E1ED19291727C7E6D043 /* ErgenticsAgentsModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErgenticsAgentsModelTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D35000000000000000000002 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (D3200000000000000000000B, D3200000000000000000000C,); runOnlyForDeploymentPostprocessing = 0; };
+		B50000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFCAF1981559AF77E294BDD8,
+				B20000000000000000000008 /* SwiftUI.framework in Frameworks */,
+				B20000000000000000000009 /* AppKit.framework in Frameworks */,
+				B2000000000000000000000A /* Security.framework in Frameworks */,
+				B2000000000000000000000B /* Hypervisor.framework in Frameworks */,
+				B20000000000000000000060,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2000000000000000000000C /* XCTest.framework in Frameworks */,
+				B20000000000000000000061,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50000000000000000000008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000259 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50000000000000000000009 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000266 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D33000000000000000000001 = {isa = PBXGroup; children = (D31000000000000000000003, D31000000000000000000004, D31000000000000000000005, D31000000000000000000006, D31000000000000000000007,); path = Tools/H3QualificationController; sourceTree = "<group>"; };
+		B30000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				3F6B2668168B1E0FA24012D6,8BF038B4C2EC9A7018A9A130,E56D9568DDD2C63985D25A04,DC0DFF32BA6E642650F7E97A,D21EEC852BDB48BE190E741A,6DC226390B43075B9FA6277F,6ED8ACC281C01FB9894C6922,BF0953F2622DF135DE2DD822,ACDA0D64943F0D30A2F2509CBF395F6A,4404E38C4452D430EF4A3EA5D0BB8082,
+				B30000000000000000000002 /* Sources */,
+				B30000000000000000000003 /* Tests */,
+				B30000000000000000000004 /* Control */,
+				B10000000000000000000008 /* Info.plist */,
+				B10000000000000000000009 /* Entitlements.plist */,
+				B10000000000000000000070 /* Assets.xcassets */,
+				B10000000000000000000071 /* PrivacyInfo.xcprivacy */,
+				B10000000000000000000160 /* LICENSE */,
+				B10000000000000000000161 /* ERGENTICS.spdx.json */,
+				B10000000000000000000162 /* THIRD_PARTY_NOTICES.md */,
+				B30000000000000000000005 /* Frameworks */,
+				B30000000000000000000006 /* Products */,
+				D33000000000000000000001,
+			);
+			sourceTree = "<group>";
+		};
+		B30000000000000000000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				EC28968F63849845610A78E6,
+				D7559C602BA2B078957BA239,
+				4DEC6F19832F143A28926566,
+				8BCCBFBAC5551FA775C68754,
+				5153356D2509BC0FFAD1935F,
+				74546EB8FA58615FDDB2AA6E,
+
+				7035CB47D33F677B088725E7,
+
+				8AA0BCFBA334BE39AF1CCBA2,
+
+				8F1F0BADF8E01716CA821961,
+
+				9FEC25A0B9408143BFE51676,
+
+				744EBF3C80E44CDFC50606E5,
+
+				13718DF1418D1ED97E02A91F,
+
+				D41000000000000000000001,
+				D51000000000000000000001,
+				D61000000000000000000001,
+				D71000000000000000000001,
+				D81000000000000000000001,
+				D31000000000000000000000,
+				D31000000000000000000001,
+				B10000000000000000000257,
+				B10000000000000000000258,
+				B10000000000000000000240 /* HypervisorStageH4Privacy.swift */,
+				B10000000000000000000244 /* HypervisorStageH4OwnerBinding.swift */,
+				B10000000000000000000242 /* HypervisorStageH4CanonicalStreams.swift */,
+				B10000000000000000000246 /* HypervisorStageH4Persistence.swift */,
+				B10000000000000000000248 /* HypervisorStageH4DualStreamPersistence.swift */,
+				B10000000000000000000250 /* HypervisorStageH4DualStreamRestartInspection.swift */,
+				B10000000000000000000251 /* H4D3bRestartReaderMain.swift */,
+				B10000000000000000000254 /* H4D3cCutPublisherMain.swift */,
+				B10000000000000000000200 /* ManagedWorkspace.swift */,
+				B10000000000000000000201 /* ManagedWorkspaceObservation.swift */,
+				B10000000000000000000202 /* ManagedWorkspaceAssessmentLease.swift */,
+				B10000000000000000000220 /* ManagedWorkspaceProjection.swift */,
+				B10000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift */,
+				B10000000000000000000185 /* HypervisorH3LiveVerifier.swift */,
+				B10000000000000000000180 /* HypervisorStageH3Cursor.swift */,
+				B10000000000000000000170 /* HypervisorStageH2Admission.swift */,
+				B10000000000000000000150 /* HypervisorStageRoadmap.swift */,
+				B10000000000000000000130 /* CapabilityFlowClosure.swift */,
+				B10000000000000000000120,
+				B10000000000000000000122,
+				B10000000000000000000124,
+				B10000000000000000000126,
+				B100000000000000000000E0,
+				B100000000000000000000E1,
+				B100000000000000000000F0,
+				B10000000000000000000100,
+				B10000000000000000000101,
+				B10000000000000000000110,
+				B100000000000000000000F1,
+				B100000000000000000000F2,
+				B100000000000000000000F3,
+				B100000000000000000000D0,
+				B100000000000000000000D1,
+				B100000000000000000000C0,
+				B100000000000000000000C1,
+				B100000000000000000000A0,
+				B100000000000000000000A1,
+				B100000000000000000000A2,
+				B10000000000000000000087,
+				B10000000000000000000089,
+				B10000000000000000000084,
+				B10000000000000000000085,
+				B10000000000000000000080,
+				B10000000000000000000081,
+				B10000000000000000000082,
+				B10000000000000000000001 /* ProvenanceApp.swift */,
+				B10000000000000000000002 /* ProvenanceModel.swift */,
+				B10000000000000000000003 /* ProvenanceView.swift */,
+				B10000000000000000000004 /* ReceiptVerifier.swift */,
+				B10000000000000000000005 /* ProvenanceReadOnly.c */,
+				B10000000000000000000006 /* ProvenanceReadOnly.h */,
+				B10000000000000000000030,
+				B10000000000000000000031,
+				B10000000000000000000032,
+				B10000000000000000000033,
+				B10000000000000000000034,
+				B10000000000000000000035,
+				B10000000000000000000036,
+				B10000000000000000000037,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000003 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9996E1ED19291727C7E6D043,
+				0D451655B82170F8C509B67B,
+				570F132211B2B54FA4FEF639,
+				EA551D1F447A02D45063ABC4,
+
+				F7A0EBF7A1B6F751BFFA008B,
+
+				4B7D346B3E5FE10D41BB9D21,
+
+				D31000000000000000000002,
+				B10000000000000000000259,
+				B10000000000000000000260,
+				B10000000000000000000241 /* HypervisorStageH4PrivacyTests.swift */,
+				B10000000000000000000245 /* HypervisorStageH4OwnerBindingTests.swift */,
+				B10000000000000000000243 /* HypervisorStageH4CanonicalStreamsTests.swift */,
+				B10000000000000000000247 /* HypervisorStageH4PersistenceTests.swift */,
+				B10000000000000000000249 /* HypervisorStageH4DualStreamPersistenceTests.swift */,
+				B10000000000000000000252 /* HypervisorStageH4DualStreamRestartInspectionTests.swift */,
+				B10000000000000000000255 /* HypervisorStageH4DualStreamSigkillCutClassificationTests.swift */,
+				B10000000000000000000203 /* ManagedWorkspaceTests.swift */,
+				B10000000000000000000204 /* ManagedWorkspaceAssessmentLeaseTests.swift */,
+				B10000000000000000000221 /* ManagedWorkspaceProjectionTests.swift */,
+				B10000000000000000000231 /* ManagedWorkspaceAssessmentCoordinatorTests.swift */,
+				B10000000000000000000183 /* HypervisorH3LiveVerifierTests.swift */,
+				B10000000000000000000181 /* HypervisorStageH3CursorTests.swift */,
+				B10000000000000000000171 /* HypervisorStageH2AdmissionTests.swift */,
+				B10000000000000000000151 /* HypervisorStageRoadmapTests.swift */,
+				B10000000000000000000140 /* CapabilityFlowRustReceiptVerifierTests.swift */,
+				B10000000000000000000131 /* CapabilityFlowClosureReference.swift */,
+				B10000000000000000000132 /* CapabilityFlowClosureTests.swift */,
+				B10000000000000000000121,
+				B10000000000000000000123,
+				B10000000000000000000125,
+				B100000000000000000000E2,
+				B100000000000000000000E3,
+				B100000000000000000000F4,
+				B10000000000000000000102,
+				B10000000000000000000111,
+				B100000000000000000000F5,
+				B100000000000000000000F6,
+				B100000000000000000000D2,
+				B100000000000000000000D3,
+				B100000000000000000000C2,
+				B100000000000000000000C3,
+				B100000000000000000000A3,
+				B100000000000000000000A4,
+				B10000000000000000000088,
+				B10000000000000000000086,
+				B10000000000000000000083,
+				B10000000000000000000007 /* ReceiptVerifierTests.swift */,
+				B10000000000000000000040,
+				B10000000000000000000041,
+				B10000000000000000000042,
+				B10000000000000000000043,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000004 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000141 /* CapabilityFlowReceiptVerifier */,
+				B1000000000000000000000A /* read-only-successor.v1.json */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000005 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DFFE59035F6CF50A2B0686C8,
+				D31000000000000000000009,
+				B10000000000000000000010 /* SwiftUI.framework */,
+				B10000000000000000000011 /* AppKit.framework */,
+				B10000000000000000000012 /* Security.framework */,
+				B10000000000000000000013 /* Hypervisor.framework */,
+				B10000000000000000000014 /* XCTest.framework */,
+				B10000000000000000000060,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (5D5CEDBF94C4022A504659957DD7E00A,
+				D31000000000000000000008,
+				B10000000000000000000020 /* Ergentics Provenance.app */,
+				B10000000000000000000021 /* ProvenanceTests.xctest */,
+				B10000000000000000000253 /* H4D3bRestartReader */,
+				B10000000000000000000256 /* H4D3cCutPublisher */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D30000000000000000000001 = {isa = PBXNativeTarget; buildConfigurationList = D37000000000000000000001; buildPhases = (D35000000000000000000001, D35000000000000000000002,); buildRules = (); dependencies = (); name = ErgenticsProvenanceH3QualificationController; productName = ErgenticsProvenanceH3QualificationController; productReference = D31000000000000000000008; productType = "com.apple.product-type.tool"; };
+		B40000000000000000000001 /* ErgenticsProvenance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000002 /* Build configuration list for ErgenticsProvenance */;
+			buildPhases = (
+				B50000000000000000000001 /* Sources */,
+				B50000000000000000000002 /* Frameworks */,
+				B50000000000000000000003 /* Resources */,
+				D74A2876F93BD492456CFCF4CC76EA5A,
+			);
+			buildRules = ();
+			dependencies = (9809D70C1AE73517EEF1AA00A69DF0C9,);
+			name = ErgenticsProvenance;
+			productName = "Ergentics Provenance";
+			productReference = B10000000000000000000020 /* Ergentics Provenance.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B40000000000000000000002 /* ProvenanceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000003 /* Build configuration list for ProvenanceTests */;
+			buildPhases = (
+				B50000000000000000000004 /* Sources */,
+				B50000000000000000000005 /* Frameworks */,
+				B50000000000000000000006 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+				B90000000000000000000001 /* PBXTargetDependency */,
+				B90000000000000000000002 /* PBXTargetDependency */,
+			);
+			name = ProvenanceTests;
+			productName = ProvenanceTests;
+			productReference = B10000000000000000000021 /* ProvenanceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B40000000000000000000003 /* H4D3bRestartReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000004 /* Build configuration list for H4D3bRestartReader */;
+			buildPhases = (
+				B50000000000000000000007 /* Sources */,
+				B50000000000000000000008 /* Frameworks */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = H4D3bRestartReader;
+			productName = H4D3bRestartReader;
+			productReference = B10000000000000000000253 /* H4D3bRestartReader */;
+			productType = "com.apple.product-type.tool";
+		};
+		B40000000000000000000004 /* H4D3cCutPublisher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000005 /* Build configuration list for H4D3cCutPublisher */;
+			buildPhases = (
+				B5000000000000000000000A /* Sources */,
+				B50000000000000000000009 /* Frameworks */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = H4D3cCutPublisher;
+			productName = H4D3cCutPublisher;
+			productReference = B10000000000000000000256 /* H4D3cCutPublisher */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BB0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					B40000000000000000000001 = {CreatedOnToolsVersion = 26.6; ProvisioningStyle = Automatic; };
+					B40000000000000000000002 = {CreatedOnToolsVersion = 26.6; ProvisioningStyle = Automatic; };
+					B40000000000000000000003 = {CreatedOnToolsVersion = 26.6; ProvisioningStyle = Manual; };
+					B40000000000000000000004 = {CreatedOnToolsVersion = 26.6; ProvisioningStyle = Manual; };
+				};
+			};
+			buildConfigurationList = B70000000000000000000001 /* Build configuration list for project */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = B30000000000000000000001;
+			productRefGroup = B30000000000000000000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			packageReferences = (B138529C0BA4B4136D38C769FDA1247B,);
+			targets = (5FA956CD06F9460FBFC8F8FFD0B6935B,
+				B40000000000000000000001 /* ErgenticsProvenance */,
+				B40000000000000000000002 /* ProvenanceTests */,
+				B40000000000000000000003 /* H4D3bRestartReader */,
+				B40000000000000000000004 /* H4D3cCutPublisher */,
+				D30000000000000000000001,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B50000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+				B6E7D00384C07EB04F8754DE,B20000000000000000000070, B20000000000000000000071, B20000000000000000000160 /* LICENSE in Resources */, B20000000000000000000161 /* ERGENTICS.spdx.json in Resources */, B20000000000000000000162 /* THIRD_PARTY_NOTICES.md in Resources */); runOnlyForDeploymentPostprocessing = 0; };
+		B50000000000000000000006 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (B20000000000000000000141 /* CapabilityFlowReceiptVerifier in Resources */,); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D35000000000000000000001 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (D32000000000000000000005, D32000000000000000000006, D32000000000000000000007, D32000000000000000000008, D32000000000000000000009, D3200000000000000000000A,); runOnlyForDeploymentPostprocessing = 0; };
+		B50000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B4F4F833FD56A4CBDE7AD66,
+				DC307F4AD0B25880235252E2,
+				F162786779CC421B278B3F80,
+				965734237A58D03A48D64DC1,
+				2C7383D6A76895188D2665A6,D97A4A880C287EBBB8657C47,C0769CF08CB4DD6FF3D6F7E7,7CBF71D2732CAC4116A17F84,8D8A616B125F6A6F92877384,90FC11B2AD9FDEECE6BD7D2C,
+				3CB284E53FD026BA798DD7C7,
+				D2B7235EA637F2E9C0EBF90C,
+				060C4536396DDDD92587EF73,
+				E1946181E9DE6C3059E2C65D3E1500C3,
+				BD2D6A0E6A65673CA839F3A82760E689,
+				D9F2586F16FFD987A68BE231894C50DB,
+				E7621C7ACED407B765711A18,
+
+				2A13AC61B1430528D3AB797E,
+
+				FE320886BBC79DA32DEAAAAB,
+
+				DA53B2550B938F1D5D7AB6A9,
+
+				88567F3D8C9A2C158EA7A2FA,
+
+				06DBB2F34BB61DECD054E4D4,
+
+				D42000000000000000000001,
+				D52000000000000000000001,
+				D62000000000000000000001,
+				D72000000000000000000001,
+				D82000000000000000000001,
+				D32000000000000000000000,
+				D32000000000000000000001,
+				B20000000000000000000268,
+				B20000000000000000000270,
+				B20000000000000000000240 /* HypervisorStageH4Privacy.swift in Sources */,
+				B20000000000000000000246 /* HypervisorStageH4OwnerBinding.swift in Sources */,
+				B20000000000000000000243 /* HypervisorStageH4CanonicalStreams.swift in Sources */,
+				B20000000000000000000249 /* HypervisorStageH4Persistence.swift in Sources */,
+				B20000000000000000000252 /* HypervisorStageH4DualStreamPersistence.swift in Sources */,
+				B20000000000000000000200 /* ManagedWorkspace.swift in Sources */,
+				B20000000000000000000202 /* ManagedWorkspaceObservation.swift in Sources */,
+				B20000000000000000000204 /* ManagedWorkspaceAssessmentLease.swift in Sources */,
+				B20000000000000000000220 /* ManagedWorkspaceProjection.swift in Sources */,
+				B20000000000000000000230 /* ManagedWorkspaceAssessmentCoordinator.swift in Sources */,
+				B20000000000000000000185 /* HypervisorH3LiveVerifier.swift in Sources */,
+				B20000000000000000000180 /* HypervisorStageH3Cursor.swift in Sources */,
+				B20000000000000000000170 /* HypervisorStageH2Admission.swift in Sources */,
+				B20000000000000000000150 /* HypervisorStageRoadmap.swift in Sources */,
+				B20000000000000000000130 /* CapabilityFlowClosure.swift in Sources */,
+				B20000000000000000000120,
+				B20000000000000000000123,
+				B20000000000000000000126,
+				B200000000000000000000E0,
+				B200000000000000000000E1,
+				B200000000000000000000F0,
+				B20000000000000000000100,
+				B20000000000000000000101,
+				B20000000000000000000110,
+				B200000000000000000000F1,
+				B200000000000000000000F2,
+				B200000000000000000000F3,
+				B200000000000000000000D0,
+				B200000000000000000000D1,
+				B200000000000000000000C0,
+				B200000000000000000000C1,
+				B200000000000000000000A0,
+				B200000000000000000000A1,
+				B200000000000000000000A2,
+				B20000000000000000000087,
+				B20000000000000000000084,
+				B20000000000000000000085,
+				B20000000000000000000080,
+				B20000000000000000000081,
+				B20000000000000000000082,
+				B20000000000000000000001 /* ProvenanceApp.swift in Sources */,
+				B20000000000000000000002 /* ProvenanceModel.swift in Sources */,
+				B20000000000000000000003 /* ProvenanceView.swift in Sources */,
+				B20000000000000000000004 /* ReceiptVerifier.swift in Sources */,
+				B20000000000000000000005 /* ProvenanceReadOnly.c in Sources */,
+				B20000000000000000000030,
+				B20000000000000000000031,
+				B20000000000000000000032,
+				B20000000000000000000034,
+				B20000000000000000000035,
+				B20000000000000000000036,
+				B20000000000000000000037,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84F82924DFC9D095733F9329,
+				92EAD0ED0C4C689B7A397DC9,
+				11FE6D8FEEE4245198786499,
+				8B4CBB27C8C3FD4CEE9C6046,
+				2E6850A339B20432B3294874,
+				FF3BB65AC8D90A319D482AAE,
+				191A5AA2F561602FDED8A81C,205A0A0A4C21326BD8646FE5,78D16C4A34176E7EC3FEEADF,1FDE79134C5D3363640525FF,4478D8584520F3FF28C7A6BC,EA2200000000000000000002, 0B1FFF55B5E663AF8A90A5E99DDE3EB0,
+				24AA445B9D32381DEC926A9B,
+				DD0259569C2B152C9E586514,
+				F6D247D1C921B9BE4C7CAF1514F9967E,
+				EFEB9DE0B17A5009722D5556AF841BE6,
+				F6C003C774794335DEDAB656,
+
+				A42A36BAFC794B1E1CC2934F,
+
+				8B187605A236E269BC23D1B7,
+
+				AA0E6259879CF71165383F49,
+
+				03D0E7A16F6E8D986BBFCA9A,
+
+				8DA166317BAC0E58563E8A57,
+
+				D42000000000000000000002,
+				D52000000000000000000002,
+				D62000000000000000000002,
+				D72000000000000000000002,
+				D82000000000000000000002,
+				D32000000000000000000002,
+				D32000000000000000000003,
+				D32000000000000000000004,
+				B20000000000000000000269,
+				B20000000000000000000271,
+				B20000000000000000000272,
+				B20000000000000000000273,
+				B20000000000000000000241 /* HypervisorStageH4Privacy.swift in Sources */,
+				B20000000000000000000242 /* HypervisorStageH4PrivacyTests.swift in Sources */,
+				B20000000000000000000247 /* HypervisorStageH4OwnerBinding.swift in Sources */,
+				B20000000000000000000248 /* HypervisorStageH4OwnerBindingTests.swift in Sources */,
+				B20000000000000000000244 /* HypervisorStageH4CanonicalStreams.swift in Sources */,
+				B20000000000000000000245 /* HypervisorStageH4CanonicalStreamsTests.swift in Sources */,
+				B20000000000000000000250 /* HypervisorStageH4Persistence.swift in Sources */,
+				B20000000000000000000251 /* HypervisorStageH4PersistenceTests.swift in Sources */,
+				B20000000000000000000253 /* HypervisorStageH4DualStreamPersistence.swift in Sources */,
+				B20000000000000000000254 /* HypervisorStageH4DualStreamPersistenceTests.swift in Sources */,
+				B20000000000000000000255 /* HypervisorStageH4DualStreamRestartInspection.swift in Sources */,
+				B20000000000000000000256 /* HypervisorStageH4DualStreamRestartInspectionTests.swift in Sources */,
+				B20000000000000000000267 /* HypervisorStageH4DualStreamSigkillCutClassificationTests.swift in Sources */,
+				B20000000000000000000201 /* ManagedWorkspace.swift in Sources */,
+				B20000000000000000000203 /* ManagedWorkspaceObservation.swift in Sources */,
+				B20000000000000000000205 /* ManagedWorkspaceAssessmentLease.swift in Sources */,
+				B20000000000000000000206 /* ManagedWorkspaceTests.swift in Sources */,
+				B20000000000000000000207 /* ManagedWorkspaceAssessmentLeaseTests.swift in Sources */,
+				B20000000000000000000221 /* ManagedWorkspaceProjection.swift in Sources */,
+				B20000000000000000000222 /* ManagedWorkspaceProjectionTests.swift in Sources */,
+				B20000000000000000000231 /* ManagedWorkspaceAssessmentCoordinator.swift in Sources */,
+				B20000000000000000000232 /* ManagedWorkspaceAssessmentCoordinatorTests.swift in Sources */,
+				B20000000000000000000186 /* HypervisorH3LiveVerifier.swift in Sources */,
+				B20000000000000000000183 /* HypervisorH3LiveVerifierTests.swift in Sources */,
+				B20000000000000000000181 /* HypervisorStageH3Cursor.swift in Sources */,
+				B20000000000000000000182 /* HypervisorStageH3CursorTests.swift in Sources */,
+				B20000000000000000000171 /* HypervisorStageH2Admission.swift in Sources */,
+				B20000000000000000000172 /* HypervisorStageH2AdmissionTests.swift in Sources */,
+				B20000000000000000000173 /* HypervisorGuest.c in Sources */,
+				B20000000000000000000151 /* HypervisorStageRoadmap.swift in Sources */,
+				B20000000000000000000152 /* HypervisorStageRoadmapTests.swift in Sources */,
+				B20000000000000000000140 /* CapabilityFlowRustReceiptVerifierTests.swift in Sources */,
+				B20000000000000000000131 /* CapabilityFlowClosure.swift in Sources */,
+				B20000000000000000000132 /* CapabilityFlowClosureReference.swift in Sources */,
+				B20000000000000000000133 /* CapabilityFlowClosureTests.swift in Sources */,
+				B20000000000000000000121,
+				B20000000000000000000122,
+				B20000000000000000000124,
+				B20000000000000000000125,
+				B20000000000000000000127,
+				B20000000000000000000128,
+				B200000000000000000000E2,
+				B200000000000000000000E3,
+				B200000000000000000000E4,
+				B200000000000000000000E5,
+				B200000000000000000000F4,
+				B20000000000000000000102,
+				B20000000000000000000103,
+				B20000000000000000000111,
+				B20000000000000000000112,
+				B200000000000000000000F5,
+				B200000000000000000000F6,
+				B200000000000000000000F7,
+				B200000000000000000000F8,
+				B200000000000000000000F9,
+				B200000000000000000000D2,
+				B200000000000000000000D3,
+				B200000000000000000000D4,
+				B200000000000000000000D5,
+				B200000000000000000000C2,
+				B200000000000000000000C3,
+				B200000000000000000000C4,
+				B200000000000000000000C5,
+				B200000000000000000000A3,
+				B200000000000000000000A4,
+				B200000000000000000000B0,
+				B200000000000000000000B1,
+				B20000000000000000000088,
+				B20000000000000000000092,
+				B20000000000000000000086,
+				B20000000000000000000091,
+				B20000000000000000000083,
+				B20000000000000000000090,
+				B20000000000000000000006 /* ReceiptVerifier.swift in Sources */,
+				B20000000000000000000007 /* ReceiptVerifierTests.swift in Sources */,
+				B20000000000000000000040,
+				B20000000000000000000041,
+				B20000000000000000000042,
+				B20000000000000000000043,
+				B20000000000000000000050,
+				B20000000000000000000051,
+				B20000000000000000000052,
+				B20000000000000000000053,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50000000000000000000007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000257 /* HypervisorStageH4DualStreamRestartInspection.swift in Sources */,
+				B20000000000000000000258 /* H4D3bRestartReaderMain.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5000000000000000000000A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000260 /* HypervisorStageH4Privacy.swift in Sources */,
+				B20000000000000000000261 /* HypervisorStageH4CanonicalStreams.swift in Sources */,
+				B20000000000000000000262 /* HypervisorStageH4OwnerBinding.swift in Sources */,
+				B20000000000000000000263 /* HypervisorStageH4Persistence.swift in Sources */,
+				B20000000000000000000264 /* HypervisorStageH4DualStreamPersistence.swift in Sources */,
+				B20000000000000000000265 /* H4D3cCutPublisherMain.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B90000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B40000000000000000000003 /* H4D3bRestartReader */;
+			targetProxy = B80000000000000000000001 /* PBXContainerItemProxy */;
+		};
+		B90000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B40000000000000000000004 /* H4D3cCutPublisher */;
+			targetProxy = B80000000000000000000002 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D36000000000000000000001 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "Apple Development"; CODE_SIGN_STYLE = Automatic; CODE_SIGNING_ALLOWED = YES; CODE_SIGNING_REQUIRED = YES; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CREATE_INFOPLIST_SECTION_IN_BINARY = YES; DEVELOPMENT_TEAM = ZCQ435U8JP; ENABLE_APP_SANDBOX = NO; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.provenance.h3-qualification-controller"; PRODUCT_NAME = ErgenticsProvenanceH3QualificationController; SKIP_INSTALL = YES; SWIFT_VERSION = 6.0;}; name = Debug; };
+		D36000000000000000000002 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "Apple Development"; CODE_SIGN_STYLE = Automatic; CODE_SIGNING_ALLOWED = YES; CODE_SIGNING_REQUIRED = YES; CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; CREATE_INFOPLIST_SECTION_IN_BINARY = YES; DEVELOPMENT_TEAM = ZCQ435U8JP; ENABLE_APP_SANDBOX = NO; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; MACOSX_DEPLOYMENT_TARGET = 26.0; PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.provenance.h3-qualification-controller"; PRODUCT_NAME = ErgenticsProvenanceH3QualificationController; SKIP_INSTALL = YES; SWIFT_VERSION = 6.0;}; name = Release; };
+		B60000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)");
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		B60000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B60000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_H4_LIVE);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CURRENT_PROJECT_VERSION = 24;
+				DEVELOPMENT_TEAM = ZCQ435U8JP;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance;
+				PRODUCT_MODULE_NAME = ErgenticsProvenance;
+				PRODUCT_NAME = "Ergentics Provenance";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Debug;
+		};
+		B60000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_H4_LIVE);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CURRENT_PROJECT_VERSION = 24;
+				DEVELOPMENT_TEAM = ZCQ435U8JP;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance;
+				PRODUCT_MODULE_NAME = ErgenticsProvenance;
+				PRODUCT_NAME = "Ergentics Provenance";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Release;
+		};
+		B60000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_BOOT_EXPORT_TESTS, EPR_APP_LIFECYCLE_TESTS, EPR_GUEST_JOURNAL_TESTS, EPR_H4_PRIVACY_TESTS, EPR_MANAGED_WORKSPACE_TESTS, EPR_H3_QUALIFICATION_TESTS, EPR_H4_LIVE);
+				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				DEVELOPMENT_TEAM = ZCQ435U8JP;
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(PLATFORM_DIR)/Developer/Library/Frameworks");
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@loader_path/Frameworks", "@executable_path/../Frameworks");
+				PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance.tests;
+				PRODUCT_MODULE_NAME = ProvenanceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		B60000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_BOOT_EXPORT_TESTS, EPR_APP_LIFECYCLE_TESTS, EPR_GUEST_JOURNAL_TESTS, EPR_H4_PRIVACY_TESTS, EPR_MANAGED_WORKSPACE_TESTS, EPR_H3_QUALIFICATION_TESTS, EPR_H4_LIVE);
+				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				DEVELOPMENT_TEAM = ZCQ435U8JP;
+				FRAMEWORK_SEARCH_PATHS = ("$(inherited)", "$(PLATFORM_DIR)/Developer/Library/Frameworks");
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@loader_path/Frameworks", "@executable_path/../Frameworks");
+				PRODUCT_BUNDLE_IDENTIFIER = com.ergentics.provenance.tests;
+				PRODUCT_MODULE_NAME = ProvenanceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+		B60000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				PRODUCT_MODULE_NAME = H4D3bRestartReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Debug;
+		};
+		B60000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				PRODUCT_MODULE_NAME = H4D3bRestartReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Release;
+		};
+		B60000000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				PRODUCT_MODULE_NAME = H4D3cCutPublisher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_H4_PRIVACY_TESTS);
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Debug;
+		};
+		B6000000000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_TESTABILITY = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/Sources");
+				PRODUCT_MODULE_NAME = H4D3cCutPublisher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = ("$(inherited)", EPR_H4_PRIVACY_TESTS);
+				SWIFT_OBJC_BRIDGING_HEADER = Sources/ProvenanceReadOnly.h;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D37000000000000000000001 = {isa = XCConfigurationList; buildConfigurations = (D36000000000000000000001, D36000000000000000000002,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B70000000000000000000001 /* Build configuration list for project */ = {isa = XCConfigurationList; buildConfigurations = (B60000000000000000000001 /* Debug */, B60000000000000000000002 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B70000000000000000000002 /* Build configuration list for ErgenticsProvenance */ = {isa = XCConfigurationList; buildConfigurations = (B60000000000000000000003 /* Debug */, B60000000000000000000004 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B70000000000000000000003 /* Build configuration list for ProvenanceTests */ = {isa = XCConfigurationList; buildConfigurations = (B60000000000000000000005 /* Debug */, B60000000000000000000006 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B70000000000000000000004 /* Build configuration list for H4D3bRestartReader */ = {isa = XCConfigurationList; buildConfigurations = (B60000000000000000000007 /* Debug */, B60000000000000000000008 /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B70000000000000000000005 /* Build configuration list for H4D3cCutPublisher */ = {isa = XCConfigurationList; buildConfigurations = (B60000000000000000000009 /* Debug */, B6000000000000000000000A /* Release */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = BB0000000000000000000001 /* Project object */;
+}

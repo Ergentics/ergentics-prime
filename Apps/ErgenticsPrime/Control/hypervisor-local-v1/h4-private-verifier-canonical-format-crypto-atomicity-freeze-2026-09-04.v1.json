@@ -1,0 +1,1262 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4-private-verifier-canonical-format-crypto-atomicity-freeze.v1",
+  "checkpoint": "H4_PRIVATE_VERIFIER_CANONICAL_FORMAT_CRYPTO_ATOMICITY_FREEZE",
+  "recorded_at_utc": "2026-09-04T10:00:33Z",
+  "result_contract": "FREEZE_H4_PRIVATE_VERIFIER_CANONICAL_BYTES_CRYPTO_AND_ABSTRACT_ATOMICITY_ONLY",
+  "predecessor": {
+    "parent_commit": "0ece13fa7aac0ab516a1bbd0fc44b7ab6e52170d",
+    "parent_tree": "96da768ff99a50c50dbf5a6a2fd801af35b2da71",
+    "parent_relation": "the committed private physical verifier architecture and custody freeze is the required direct parent",
+    "architecture_path": "Control/hypervisor-local-v1/h4-private-physical-verifier-architecture-custody-freeze-2026-09-04.v1.json",
+    "architecture_blob": "ab2577c261e3db925f4a4db4d89cb3017491fe74",
+    "architecture_sha256": "9680f1644f171a484eaf08ca85b8b11f76b273c1b34a989ad4a6c0123ee2e574",
+    "architecture_result": "FREEZE_H4_PRIVATE_PHYSICAL_VERIFIER_ARCHITECTURE_AND_CUSTODY_ONLY"
+  },
+  "governing_controls": {
+    "threat_model": {
+      "path": "Control/hypervisor-local-v1/h4-external-commitment-anti-replay-threat-model-freeze-2026-09-04.v1.json",
+      "blob": "0b11d60af0bd68c98cea0cf56ad9dd331d70a45f",
+      "sha256": "e7e78687199e34ad70c36d98fb86a5205d0624fd702eff1f57d052b5822a902b"
+    },
+    "privacy_architecture": {
+      "path": "Documentation/Architecture/PrivacyArchitecture.md",
+      "blob": "18b1060199c425e31c8c563ae070a6bac828abdf",
+      "sha256": "b638cea7f9224587da7deb0b31fd7721a07cdab43086817528157b3c684c2ecb"
+    },
+    "host_integrity_boundary": {
+      "path": "Control/host-integrity-trust-boundary.v1.json",
+      "blob": "4514b64da3019177c993ad75f81923ba86e0b757",
+      "sha256": "a4b1f3f850ec9d6939241f91398c7964dac6502fb7436f9aea8eaea5cd28e56b"
+    },
+    "stage_genesis": {
+      "path": "Control/hypervisor-local-v1/stage0-genesis-freeze.v1.json",
+      "blob": "777bd7b1e6b51b73214da9f2ebd6affdc1d99ee1",
+      "sha256": "459a830f72910236ec8d7c430229f3d82d974c1cc9396d3b4a551bc14c7487f7"
+    },
+    "precedence": "This artifact supplies the architecture's deferred bytes, suite and abstract state-store contract. It cannot broaden assurance, disclosure, recipients, retention, recovery, authority or live effects."
+  },
+  "local_precedent_pins": {
+    "purpose": "These exact committed sources are inspected design precedents only. No behavior, bound or authority is inherited unless explicitly reselected below.",
+    "core_deterministic_cbor": {
+      "path": "Sources/GuestJournal.swift",
+      "blob": "ae11bd85cf628119bea1c28357d6923724580706",
+      "sha256": "6e6b423d3c3a6782eec8d70fd06d8951d535ccf7f4fd020620a836d1d74a7f4c"
+    },
+    "h4_closed_codec": {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "blob": "8930a4ae727e3fb4a2d35cdb4713519df89f479a",
+      "sha256": "a88fff5977d3cd9b98f20f0f11851ddaea267323fb49c198f0b517257bdf91a5"
+    },
+    "sha256_merkle_framing": {
+      "path": "Sources/MerkleGenesis.swift",
+      "blob": "a0c6439e2aabf598ca993d9bc6ac5b36e47d5c50",
+      "sha256": "6d6a47252e498ca3c6ce27d4d4405e2201bf3b6b296fd2a6d4d035de83c730c3"
+    },
+    "h4_length_and_domain_framing": {
+      "path": "Sources/HypervisorStageH4Privacy.swift",
+      "blob": "7e640f2c8621a3b990f867421b2bafaa38d85e64",
+      "sha256": "cce3f47aa84795b58f290e938f3547f106948dd35c2b66a8703daa7964f979c1"
+    }
+  },
+  "selection_basis": {
+    "standing_direction": "PROCEED_AT_RECOMMENDATIONS",
+    "selected_architecture_commit": "0ece13fa7aac0ab516a1bbd0fc44b7ab6e52170d",
+    "selection": "one transport-agnostic protocol and abstract store for verifier-relative issuer-assertion ordering inside one private physically separate verifier domain",
+    "implementation_state": "NORMATIVE_FORMAT_DESIGN_ONLY",
+    "no_live_selection": "No physical device, firmware, transport, key bytes, randomness instance, store implementation or operating procedure is selected, generated, opened or exercised."
+  },
+  "assurance_and_authority_boundary": {
+    "positive_assurance": "VERIFIER_RELATIVE_ISSUER_ASSERTION_AUTHENTICATION_AND_ORDERING_ONLY",
+    "hidden_material_assurance": "OPAQUE_ISSUER_SIGNED_TOKEN_SHAPE_AND_EXACT_OUTER_JOIN_ONLY",
+    "not_full_governing_states": [
+      "VALID_CURRENT_READ_ONLY",
+      "VALID_EXACT_SUCCESSOR"
+    ],
+    "reason": "The verifier does not receive D3, representation, graph, predicate or evidence preimages or their deterministic sibling digests. It cannot independently reconstruct hidden semantics or prove evidence true.",
+    "high_value_rule": "HIGH_VALUE_INGRESS_AND_TRUSTED_EGRESS_DEFAULT_DENY",
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED"
+  },
+  "canonical_encoding": {
+    "codec": "RFC_8949_CORE_DETERMINISTIC_CBOR_CLOSED_SCHEMA_SUBSET",
+    "allowed_major_types": [
+      "0_UNSIGNED_INTEGER",
+      "2_BYTE_STRING",
+      "3_TEXT_STRING",
+      "4_ARRAY",
+      "5_MAP",
+      "7_FALSE_OR_TRUE_ONLY"
+    ],
+    "forbidden": [
+      "negative integers",
+      "floating point",
+      "tags",
+      "null or undefined",
+      "indefinite lengths",
+      "nonminimal integer or length arguments",
+      "duplicate keys",
+      "unknown keys",
+      "missing keys",
+      "trailing bytes"
+    ],
+    "map_rule": "Every record is one definite map with its exact schema-specific key inventory. Keys are unique printable-ASCII text and appear in bytewise lexicographic order of their complete deterministic CBOR key encodings.",
+    "text_rule": "Every text value is exact printable ASCII, 1 through 128 bytes, with no NUL, Unicode normalization, case folding or alternate spelling. Schema and enum strings are exact constants.",
+    "integer_rule": "All integers are unsigned and shortest encoded. Protocol counters use the stated numeric bounds and never wrap.",
+    "byte_string_rule": "Digests, identifiers, tokens, public keys and nonces are raw bytes of the exact stated length, never hexadecimal or Base64 inside CBOR.",
+    "decode_rule": "Decode independently under the schema, validate every type/length/value/join, re-encode, and require byte-for-byte equality before hashing, signing, classification or state access.",
+    "transport_rule": "Canonical objects are raw CBOR byte strings. No network, serial, USB, file, VM or application frame is selected here; a future transport may length-frame these objects but cannot alter their bytes."
+  },
+  "common_cryptographic_frame": {
+    "magic_ascii": "EPRH4PV1",
+    "magic_hex": "4550524834505631",
+    "formula": "magic[8] || domain_length_u16be[2] || domain_ascii[domain_length] || payload_length_u64be[8] || payload[payload_length]",
+    "domain_bound": "1 through 127 printable-ASCII bytes",
+    "payload_bound": "0 through 1048576 bytes unless a narrower record bound applies",
+    "integer_endianness": "BIG_ENDIAN",
+    "ambiguity_rule": "No concatenation without this frame is a hash, HMAC or signature input. The domain and payload lengths are covered."
+  },
+  "cryptographic_suite": {
+    "suite_id": "com.ergentics.provenance.hypervisor.h4.private-verifier.sha256-hmacsha256-ed25519-cbor.v1",
+    "lineage_format_id": "com.ergentics.provenance.hypervisor.h4.lineage.sha256-hmacsha256-cbor.v1",
+    "negotiation": "NONE; the independently provisioned genesis pins this exact protocol suite and audience-neutral lineage format and every other value rejects before state or position classification",
+    "hash": {
+      "algorithm": "SHA-256",
+      "digest_bytes": 32,
+      "encoding": "RAW_BYTES",
+      "use": "deterministic domain-separated identities for complete canonical public protocol objects"
+    },
+    "private_token_prf": {
+      "algorithm": "HMAC-SHA-256",
+      "key_bytes": 32,
+      "output_bytes": 32,
+      "use": "one-time randomized opaque token for each withheld low-entropy field instance",
+      "nonuse": "not issuer authentication, not verifier proof of the hidden preimage, not an opening protocol and not replay authority"
+    },
+    "detached_signature": {
+      "algorithm": "Ed25519",
+      "variant": "RFC8032_PURE_ED25519_NO_PREHASH_NO_CONTEXT_VARIANT",
+      "public_key_bytes": 32,
+      "private_seed_bytes": 32,
+      "signature_bytes": 64,
+      "strict_validation": "Reject noncanonical public-key or R encoding, small-order encodings, S greater than or equal to the group order, wrong length and every verification failure. No permissive ZIP-215-style acceptance, DER wrapper or alternate signature encoding.",
+      "signed_input": "the common cryptographic frame with the record-kind-specific signature domain and exact canonical body bytes"
+    },
+    "constant_time_requirement": "A live implementation must use reviewed constant-time platform or device primitives for secret-dependent HMAC and Ed25519 operations. This is a qualification requirement, not evidence supplied here.",
+    "algorithm_lifecycle": "No in-epoch algorithm, key, mode or policy negotiation or rotation. Change or compromise requires terminal handling and a new genesis."
+  },
+  "domain_registry": {
+    "rule": "Each ASCII value below is exact, unique, immutable for v1 and used only with the indicated complete payload.",
+    "values": {
+      "issuer_key_id": "com.ergentics.provenance.h4pv1.key-id.issuer",
+      "verifier_key_id": "com.ergentics.provenance.h4pv1.key-id.verifier",
+      "storage_key_id": "com.ergentics.provenance.h4pv1.key-id.storage",
+      "disclosure_mode_table": "com.ergentics.provenance.h4pv1.record.disclosure-mode-table",
+      "policy": "com.ergentics.provenance.h4pv1.record.policy",
+      "private_token": "com.ergentics.provenance.h4pv1.private-token",
+      "canonical_json_preimage": "com.ergentics.provenance.h4pv1.private-preimage.canonical-json",
+      "deterministic_cbor_preimage": "com.ergentics.provenance.h4pv1.private-preimage.deterministic-cbor",
+      "genesis_initial": "com.ergentics.provenance.h4pv1.record.genesis-initial",
+      "genesis_migration_intent": "com.ergentics.provenance.h4pv1.record.genesis-migration-intent",
+      "fixed_predecessor": "com.ergentics.provenance.h4pv1.fixed-predecessor",
+      "uninitialized_record": "com.ergentics.provenance.h4pv1.record.uninitialized",
+      "lineage_state": "com.ergentics.provenance.h4pv1.record.lineage-state",
+      "assertion_body": "com.ergentics.provenance.h4pv1.record.assertion-body",
+      "issuer_signature": "com.ergentics.provenance.h4pv1.signature.issuer-assertion",
+      "issuer_envelope": "com.ergentics.provenance.h4pv1.record.issuer-envelope",
+      "challenge_body": "com.ergentics.provenance.h4pv1.record.challenge",
+      "challenge_signature": "com.ergentics.provenance.h4pv1.signature.challenge",
+      "request": "com.ergentics.provenance.h4pv1.record.request",
+      "decision": "com.ergentics.provenance.h4pv1.record.decision",
+      "accepted_record": "com.ergentics.provenance.h4pv1.record.accepted",
+      "conflict_tombstone": "com.ergentics.provenance.h4pv1.record.conflict",
+      "storage_fault_latch": "com.ergentics.provenance.h4pv1.record.storage-fault",
+      "terminal_close": "com.ergentics.provenance.h4pv1.record.terminal-close",
+      "terminal_migration": "com.ergentics.provenance.h4pv1.record.terminal-migration",
+      "terminal_request": "com.ergentics.provenance.h4pv1.record.terminal-request",
+      "migration_body": "com.ergentics.provenance.h4pv1.record.migration",
+      "migration_signature": "com.ergentics.provenance.h4pv1.signature.migration",
+      "verifier_envelope": "com.ergentics.provenance.h4pv1.record.verifier-envelope",
+      "receipt_accepted_current": "com.ergentics.provenance.h4pv1.record.receipt-accepted-current",
+      "receipt_minimized": "com.ergentics.provenance.h4pv1.record.receipt-minimized",
+      "receipt_terminal": "com.ergentics.provenance.h4pv1.record.receipt-terminal",
+      "receipt_signature": "com.ergentics.provenance.h4pv1.signature.receipt",
+      "storage_genesis_tag": "com.ergentics.provenance.h4pv1.storage.genesis-tag",
+      "storage_record_auth": "com.ergentics.provenance.h4pv1.storage.record-auth",
+      "authority_pointer": "com.ergentics.provenance.h4pv1.storage.authority-pointer",
+      "authority_pointer_auth": "com.ergentics.provenance.h4pv1.storage.authority-pointer-auth"
+    }
+  },
+  "identifier_and_key_derivation": {
+    "lineage_id": "32 independently generated uniformly random bytes, not all zero, purpose scoped and fixed by genesis",
+    "epoch_id": "32 independently generated uniformly random bytes, not all zero and fixed by genesis",
+    "audience_id": "32 independently provisioned purpose-scoped bytes, not all zero and fixed by policy",
+    "assertion_instance_nonce": "32 independently generated uniformly random nonzero bytes for one signed wrapper instance over a completed logical lineage assertion; it is fixed before signing, reused for that wrapper's exact retry and excluded from audience-neutral lineage identity",
+    "issuer_key_id": "SHA-256(common-frame(domain_registry.issuer_key_id, raw Ed25519 public key bytes))",
+    "verifier_key_id_and_verifier_id": "SHA-256(common-frame(domain_registry.verifier_key_id, raw Ed25519 public key bytes)); verifier_id is exactly this value in v1",
+    "storage_key_id": "SHA-256(common-frame(domain_registry.storage_key_id, raw 32-byte device storage-authentication key)); the identifier may be in genesis but the key never leaves the device",
+    "key_positions": "issuer_key_position, verifier_key_position and storage_key_position are unsigned zero in v1 and immutable for the epoch",
+    "randomness_boundary": "This artifact specifies byte length, independence, uniqueness and CSPRNG quality but generates no identifier, key, nonce or challenge. Live generation and entropy evidence require device qualification."
+  },
+  "disclosure_and_private_token_freeze": {
+    "directly_disclosed_to_one_private_verifier": [
+      "schema, suite, product, roadmap, stage, durable-schema and purpose identifiers",
+      "verifier, audience, policy, issuer and key identifiers and public keys",
+      "high-entropy lineage and epoch identifiers",
+      "sequence, predecessor, assertion-instance nonce and outer commitment fields",
+      "exact byte and member counts",
+      "ordered predicate-token inventory and claimed one-byte result vector",
+      "claim, nonclaim and authority-ceiling values",
+      "signature bytes and minimized response classes"
+    ],
+    "withheld_preimages": [
+      "D3 semantic bytes",
+      "canonical JSON bytes",
+      "deterministic CBOR bytes",
+      "indexed-scalar preimage",
+      "state, witness and transition graph preimage",
+      "predicate identifier preimages",
+      "predicate evidence preimages",
+      "all corresponding deterministic sibling digests"
+    ],
+    "private_token_descriptor_schema": {
+      "schema": "com.ergentics.provenance.h4pv1.private-token-input.v1",
+      "transmitted": false,
+      "exact_fields": [
+        "schema:text:exact",
+        "lineage_format_id:text:exact",
+        "product_id:text:1..128",
+        "roadmap_stage_id:text:1..128",
+        "stage_id:text:1..128",
+        "durable_schema_id:text:1..128",
+        "purpose_id:text:1..128",
+        "lineage_id:bytes:32",
+        "epoch_id:bytes:32",
+        "sequence:uint:0..4096 candidate range; 4096 can only reach capacity rejection",
+        "field_kind:uint:0..6",
+        "field_ordinal:uint:0..4095",
+        "byte_count:uint:0..1048576",
+        "member_count_0:uint:0..1048576",
+        "member_count_1:uint:0..1048576",
+        "member_count_2:uint:0..1048576",
+        "deterministic_preimage_sha256:bytes:32"
+      ],
+      "field_kind_codes": {
+        "0": "D3_SEMANTIC",
+        "1": "CANONICAL_JSON",
+        "2": "DETERMINISTIC_CBOR",
+        "3": "INDEXED_SCALAR",
+        "4": "STATE_WITNESS_TRANSITION_GRAPH",
+        "5": "PREDICATE_IDENTIFIER",
+        "6": "PREDICATE_EVIDENCE"
+      },
+      "ordinal_rule": "field_ordinal is zero for kinds 0 through 4 and is the exact zero-based predicate ordinal for kinds 5 and 6",
+      "count_projection_rule": "byte_count and the three member counts use zero for inapplicable dimensions. D3 semantic uses member_count_0=4; JSON and CBOR use their exact byte count; indexed scalar uses member_count_0=4; graph uses member_count_0/1/2 for state/witness/transition; predicate identifier and evidence use their exact private-preimage byte count. Every publicly disclosed applicable count in the lineage state must equal its descriptor input before signing even though the verifier cannot recompute the HMAC."
+    },
+    "token_formula": "private_token = HMAC-SHA-256(key = independent 32-byte R_f, data = common-frame(domain_registry.private_token, canonical private-token descriptor bytes))",
+    "blinding_secret_rule": "R_f is generated once and used once to compute the token for one field kind and ordinal in one completed lineage-state construction. It is never used to compute another token or lineage state and is never sent to or generated by the verifier, serialized into a protocol, record, receipt, log, backup or Prime Git object, or treated as an authority key. Exact retries and nonce-only wrapper variants reference the same already-completed lineage-state and token bytes without recomputing HMAC or retaining R_f.",
+    "retry_rule": "An exact retry reuses the completed lineage-state, assertion-body including assertion-instance nonce, and issuer-envelope bytes and therefore the same already-computed tokens. It never recomputes or reblinds a field. If those exact pending bytes are lost after an ambiguous attempt, adoption fails closed; newly blinded bytes are a different candidate and may conflict.",
+    "opening_rule": "NO_OPENING_PROTOCOL_IN_V1. After local construction and exact self-check, R_f is logically released. No allocator overwrite, secure erasure, swap, crash-dump or physical deletion claim follows.",
+    "device_validation_limit": "The verifier validates each token's exact 32-byte shape, position, count, repetition and outer signed joins. Because it lacks R_f and the preimage, it cannot recompute a token or establish hidden truth.",
+    "local_source_digest_boundary": "For canonical JSON, deterministic_preimage_sha256 is exactly SHA-256(common-frame(domain_registry.canonical_json_preimage, the exact H4-C canonical JSON stream bytes)). For deterministic CBOR it is exactly SHA-256(common-frame(domain_registry.deterministic_cbor_preimage, the exact H4-C deterministic CBOR stream bytes)). Exact stream byte counts join the descriptor. For D3 semantic, indexed-scalar, graph, predicate-identifier and predicate-evidence fields, this format consumes a typed 32-byte issuer-side deterministic digest and exact counts but does not freeze or implement the source-to-digest projector. Those inputs remain claimed and fabricated-only until a separate local issuer-projection freeze binds them to exact source bytes and a new unique domain. No live or full-D3 assertion may be issued from an unfrozen projector.",
+    "accepted_private_domain_inference": "The current H4-C semantic, canonical JSON and deterministic CBOR values can be reconstructed from the directly disclosed semantic schema, OBSERVED_NONPASS claim, predicate count and 00000000 authority vector. That inference is explicitly accepted only inside this one private verifier domain. The byte streams and deterministic digests are still not transmitted, but no secrecy or declassification claim is made for content already derivable from disclosed fields.",
+    "forbidden_emission": "No raw hidden preimage, deterministic SHA-256 sibling, Merkle root, unblinded digest, blinding secret or token descriptor may accompany a private token. An issuer-originated H4/D3/source or evidence field not covered by the exact mode table is absent, not emitted under a candidate-selected mode. Mandatory challenge, canonical-object, public commitment, signature-envelope and receipt mechanics are outside the table and are limited instead by their exact closed schemas.",
+    "future_change": "Opening, semantic proof, OPRF, ZK proof, shared or long-lived HMAC key, public salt, additional recipient or different inference acceptance requires a new privacy and format freeze."
+  },
+  "numeric_code_registry": {
+    "claim_code": {
+      "0": "ISSUER_ASSERTS_D3_STRUCTURAL_OBSERVED_NONPASS"
+    },
+    "predicate_result_byte": {
+      "0": "CLAIMED_NOT_EVALUATED",
+      "1": "CLAIMED_SATISFIED",
+      "2": "CLAIMED_UNSATISFIED",
+      "3": "CLAIMED_UNKNOWN"
+    },
+    "lifecycle": {
+      "1": "UNINITIALIZED_FOR_TRUSTED_GENESIS",
+      "2": "ACTIVE",
+      "3": "CONFLICT_REQUIRES_INSPECTION",
+      "4": "STORAGE_FAULT_LOCKED",
+      "5": "TERMINAL"
+    },
+    "external_outcome": {
+      "1": "ASSERTION_ACCEPTED",
+      "2": "ASSERTION_READ_ONLY_CURRENT",
+      "3": "INSPECTION_REQUIRED",
+      "4": "ASSERTION_REJECTED",
+      "5": "UNAVAILABLE_OR_AMBIGUOUS"
+    },
+    "device_local_terminal_outcome": {
+      "5": "UNAVAILABLE_OR_AMBIGUOUS",
+      "6": "TERMINAL_COMMITTED"
+    },
+    "internal_decision": {
+      "1": "BOOTSTRAP_ACCEPTABLE",
+      "2": "SUCCESSOR_ACCEPTABLE",
+      "3": "CURRENT_READ_ONLY",
+      "4": "WRAPPER_VARIANT_INSPECTION",
+      "5": "ELIGIBLE_CONFLICT",
+      "22": "STALE_POSITION",
+      "23": "GAP_OR_PARENT_MISMATCH",
+      "24": "CAPACITY_EXHAUSTED",
+      "25": "LIFECYCLE_CONFLICT_LOCKED",
+      "26": "LIFECYCLE_STORAGE_FAULT_LOCKED",
+      "27": "LIFECYCLE_TERMINAL"
+    },
+    "persistent_record_kind": {
+      "1": "UNINITIALIZED",
+      "2": "ACCEPTED_TRANSITION",
+      "3": "CONFLICT_TOMBSTONE",
+      "4": "STORAGE_FAULT_LATCH",
+      "5": "TERMINAL_CLOSE",
+      "6": "TERMINAL_MIGRATION"
+    },
+    "all_other_codes": "REJECT_AS_UNKNOWN_BEFORE_STATE_OR_POSITION_CLASSIFICATION"
+  },
+  "record_commitment_rule": {
+    "formula": "For every canonical body named below, body_commitment = SHA-256(common-frame(the exact registered body domain, complete canonical body bytes)).",
+    "self_reference": "A body never contains its own commitment, its signature, its envelope commitment or a later decision, persistent-record or receipt commitment.",
+    "digest_rule": "All computed commitments are exactly 32 raw bytes and must not equal the all-zero value; the all-zero value is never an absent sentinel.",
+    "byte_count_rule": "An explicit exact canonical byte count is mandatory only where the closed schema lists one, principally for independently conveyed signed or policy children. When exact child bytes are embedded as a CBOR byte string, its canonical byte-string length is authoritative unless that schema also lists a duplicate count. Commitment-only retained or state-projection references do not duplicate a byte count; the common cryptographic frame already binds the original payload length. Every conveyed child is independently bounded, decoded, re-encoded and rehashed."
+  },
+  "disclosure_mode_table_body": {
+    "schema": "com.ergentics.provenance.h4pv1.disclosure-mode-table.v1",
+    "maximum_bytes": 4096,
+    "scope": "Exact issuer-to-private-verifier H4/D3/source and evidence disclosure categories. Mandatory protocol mechanics, verifier-to-custodian receipts and device-internal storage fields are outside this table and exist only where an exact closed schema below requires them.",
+    "mode_codes": {
+      "0": "ABSENT",
+      "1": "DIRECT_PRIVATE_VERIFIER_DISCLOSURE",
+      "2": "ONE_TIME_HMAC_OPAQUE_TOKEN_ONLY"
+    },
+    "exact_fields": [
+      "schema:text:exact",
+      "lineage_format_id:text:exact",
+      "context_identifiers_mode:uint:1",
+      "verifier_audience_policy_issuer_key_mode:uint:1",
+      "lineage_epoch_sequence_predecessor_mode:uint:1",
+      "assertion_instance_nonce_mode:uint:1",
+      "counts_mode:uint:1",
+      "predicate_token_inventory_mode:uint:2",
+      "predicate_result_vector_mode:uint:1",
+      "claim_nonclaim_authority_mode:uint:1",
+      "d3_semantic_mode:uint:2",
+      "canonical_json_mode:uint:2",
+      "deterministic_cbor_mode:uint:2",
+      "indexed_scalar_mode:uint:2",
+      "state_witness_transition_graph_mode:uint:2",
+      "predicate_identifier_mode:uint:2",
+      "predicate_evidence_mode:uint:2",
+      "raw_payload_mode:uint:0",
+      "source_build_tree_host_session_environment_mode:uint:0",
+      "unrestricted_diagnostic_timestamp_telemetry_log_mode:uint:0",
+      "h4c_structural_reconstruction_inference_accepted:bool:true only inside selected private domain"
+    ],
+    "commitment_domain": "disclosure_mode_table",
+    "candidate_choice": "NONE; the exact committed table is pinned by policy and genesis before bootstrap"
+  },
+  "policy_body": {
+    "schema": "com.ergentics.provenance.h4pv1.policy.v1",
+    "maximum_bytes": 16384,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "lineage_format_id:text:exact",
+      "product_id:text:1..128",
+      "roadmap_stage_id:text:1..128",
+      "stage_id:text:1..128",
+      "durable_schema_id:text:1..128",
+      "purpose_id:text:1..128",
+      "audience_id:bytes:32",
+      "disclosure_mode_table_commitment:bytes:32",
+      "disclosure_mode_table_byte_count:uint:1..4096",
+      "assurance_code:uint:1",
+      "claim_code:uint:0",
+      "authority_vector:text:exact 00000000",
+      "predicate_count_max:uint:4096",
+      "accepted_transition_max:uint:4096",
+      "private_token_mode:uint:1 HMAC_ONE_TIME_OPAQUE",
+      "hidden_semantic_verification:uint:0",
+      "in_epoch_rotation:uint:0",
+      "backup_or_replica:uint:0"
+    ],
+    "commitment_domain": "policy",
+    "policy_id": "the policy body commitment"
+  },
+  "trusted_genesis_bodies": {
+    "common_exact_fields": [
+      "schema:text:one exact initial or migration-intent schema",
+      "suite_id:text:exact",
+      "lineage_format_id:text:exact",
+      "policy_commitment:bytes:32",
+      "policy_byte_count:uint:1..16384",
+      "verifier_public_key:bytes:32",
+      "verifier_id:bytes:32 derived exact",
+      "verifier_key_position:uint:0",
+      "issuer_public_key:bytes:32",
+      "issuer_key_id:bytes:32 derived exact",
+      "issuer_key_position:uint:0",
+      "storage_key_id:bytes:32 derived exact",
+      "storage_key_position:uint:0",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "genesis_nonce:bytes:32",
+      "origin_code:uint:0 initial or 1 migration intent"
+    ],
+    "initial": {
+      "schema": "com.ergentics.provenance.h4pv1.genesis-initial.v1",
+      "origin_code": 0,
+      "additional_fields": [],
+      "commitment_domain": "genesis_initial"
+    },
+    "migration_intent": {
+      "schema": "com.ergentics.provenance.h4pv1.genesis-migration-intent.v1",
+      "origin_code": 1,
+      "additional_fields": [
+        "expected_old_verifier_id:bytes:32 independently trusted",
+        "expected_old_trusted_genesis_commitment:bytes:32 independently trusted",
+        "migration_nonce:bytes:32"
+      ],
+      "commitment_domain": "genesis_migration_intent"
+    },
+    "maximum_bytes": 16384,
+    "fixed_predecessor_formula": "SHA-256(common-frame(domain_registry.fixed_predecessor, trusted_genesis_body_commitment[32]))",
+    "noncircular_migration_rule": "A migration-intent genesis is completed and committed before the old terminal record. It independently pins the expected old verifier and old trusted genesis but contains no old terminal or migration-envelope commitment."
+  },
+  "uninitialized_record_body": {
+    "schema": "com.ergentics.provenance.h4pv1.uninitialized-record.v1",
+    "maximum_bytes": 65536,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "record_kind:uint:1",
+      "record_index:uint:0",
+      "previous_authority_tip_commitment:bytes:32 equal fixed predecessor",
+      "lifecycle_code:uint:1",
+      "trusted_genesis_body:bytes:1..16384 exact canonical object",
+      "trusted_genesis_commitment:bytes:32",
+      "policy_body:bytes:1..16384 exact canonical object",
+      "policy_commitment:bytes:32",
+      "verifier_id:bytes:32",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "fixed_predecessor:bytes:32",
+      "accepted_sequence:uint:0 placeholder qualified by accepted_present false",
+      "accepted_present:bool:false",
+      "accepted_record_commitment:bytes:32 equal fixed predecessor",
+      "accepted_lineage_state_commitment:bytes:32 equal fixed predecessor",
+      "migration_binding_present:bool",
+      "migration_authorization_envelope_commitment:bytes:32 equal fixed predecessor when absent"
+    ],
+    "commitment_domain": "uninitialized_record",
+    "migration_binding_rule": "Initial genesis requires migration_binding_present false and the fixed predecessor placeholder. Migration-intent genesis requires true and the exact verified old-verifier migration-envelope commitment; no other combination is canonical.",
+    "provisioning_rule": "Device-local custody independently authenticates the exact policy, keys and genesis before atomically creating this sole initial immutable record and authority pointer. For migration, custody separately establishes the expected old verifier ID and old trusted-genesis commitment already embedded in the new migration-intent genesis, then verifies the presented old-signed migration authorization against those anchors. Neither candidate input nor the migration bundle itself can create or select the trust anchor, reset policy or rebaseline state."
+  },
+  "lineage_state_body": {
+    "schema": "com.ergentics.provenance.h4pv1.lineage-state.v1",
+    "maximum_bytes": 524288,
+    "exact_fields": [
+      "schema:text:exact",
+      "lineage_format_id:text:exact",
+      "product_id:text:1..128",
+      "roadmap_stage_id:text:1..128",
+      "stage_id:text:1..128",
+      "durable_schema_id:text:1..128",
+      "purpose_id:text:1..128",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "sequence:uint:0..4096 candidate range; 4096 can only reach capacity rejection",
+      "predecessor_lineage_state_commitment:bytes:32",
+      "d3_semantic_private_token:bytes:32",
+      "d3_semantic_member_count:uint:4",
+      "canonical_json_private_token:bytes:32",
+      "canonical_json_byte_count:uint:1..158",
+      "deterministic_cbor_private_token:bytes:32",
+      "deterministic_cbor_byte_count:uint:1..158",
+      "indexed_scalar_private_token:bytes:32",
+      "indexed_scalar_member_count:uint:4",
+      "graph_private_token:bytes:32",
+      "graph_state_count:uint:0..4096",
+      "graph_witness_count:uint:0..4096",
+      "graph_transition_count:uint:0..4096",
+      "predicate_count:uint:1..4096",
+      "predicate_identifier_tokens:bytes:exactly predicate_count times 32",
+      "predicate_result_codes:bytes:exactly predicate_count; every byte 0..3",
+      "predicate_evidence_tokens:bytes:exactly predicate_count times 32",
+      "claim_code:uint:0",
+      "nonclaim_bits:uint:1023 all ten required nonclaims present",
+      "authority_vector:text:exact 00000000"
+    ],
+    "nonclaim_bit_positions": {
+      "0": "NO_HISTORICAL_EXECUTION_TRUTH",
+      "1": "NO_HONEST_COMPUTATION_PROOF",
+      "2": "NO_HOST_OR_GUEST_INTEGRITY",
+      "3": "NO_HIDDEN_EVIDENCE_VALIDITY",
+      "4": "NO_GLOBAL_NEWEST_STATE",
+      "5": "NO_WITHHELD_SUCCESSOR_DETECTION",
+      "6": "NO_CROSS_VERIFIER_FORK_EXCLUSION",
+      "7": "NO_HIGH_VALUE_INGRESS_OR_TRUSTED_EGRESS",
+      "8": "NO_H4_OR_GATE_E_ENTRY",
+      "9": "NO_SCIENTIFIC_AUTHORITY"
+    },
+    "commitment_domain": "lineage_state",
+    "audience_neutral_exclusions": "No verifier, audience, verifier policy, transport, issuer identity, issuer or verifier signature algorithm, key, signature, request challenge, decision or receipt field is present. The lineage_format_id selects only canonical CBOR, SHA-256 and private-token HMAC semantics and deliberately excludes Ed25519 wrapper semantics.",
+    "token_join_rule": "Each packed token sequence preserves ordinal order and exact width. The verifier recomputes this body's outer commitment but never a private token."
+  },
+  "issuer_assertion_body": {
+    "schema": "com.ergentics.provenance.h4pv1.issuer-assertion.v1",
+    "maximum_bytes": 16384,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "trusted_genesis_commitment:bytes:32",
+      "policy_commitment:bytes:32",
+      "verifier_id:bytes:32",
+      "audience_id:bytes:32",
+      "issuer_key_id:bytes:32",
+      "issuer_key_position:uint:0",
+      "assertion_instance_nonce:bytes:32 nonzero and fixed for exact retry",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "sequence:uint:0..4096 candidate range; 4096 can only reach capacity rejection",
+      "predecessor_lineage_state_commitment:bytes:32",
+      "lineage_state_commitment:bytes:32",
+      "lineage_state_byte_count:uint:1..524288",
+      "claim_code:uint:0",
+      "nonclaim_bits:uint:1023",
+      "authority_vector:text:exact 00000000"
+    ],
+    "commitment_domain": "assertion_body",
+    "signature_domain": "issuer_signature",
+    "self_reference_rule": "The body contains neither its own commitment nor signature bytes. All duplicate context, position and claim fields must join the canonical lineage-state body exactly. The assertion-instance nonce is the sole eligible signed-wrapper variance over one completed logical lineage assertion; changing it creates a wrapper variant that references the same lineage-state and token bytes without reblinding, while an exact retry reuses the complete body including nonce."
+  },
+  "issuer_signature_envelope": {
+    "schema": "com.ergentics.provenance.h4pv1.issuer-signature-envelope.v1",
+    "maximum_bytes": 1024,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "signature_algorithm:uint:1 Ed25519",
+      "issuer_key_id:bytes:32",
+      "issuer_key_position:uint:0",
+      "assertion_body_commitment:bytes:32",
+      "assertion_body_byte_count:uint:1..16384",
+      "signature:bytes:64"
+    ],
+    "commitment_domain": "issuer_envelope",
+    "verification_rule": "Recompute the exact body commitment and key ID, verify context/key-position joins, then strictly verify signature over common-frame(domain_registry.issuer_signature, exact assertion body bytes). Envelope bytes never define lineage identity or fork equality."
+  },
+  "freshness_challenge": {
+    "body_schema": "com.ergentics.provenance.h4pv1.challenge.v1",
+    "maximum_body_bytes": 4096,
+    "exact_body_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "verifier_id:bytes:32",
+      "verifier_key_id:bytes:32",
+      "verifier_key_position:uint:0",
+      "policy_commitment:bytes:32",
+      "audience_id:bytes:32",
+      "challenge_nonce:bytes:32",
+      "challenge_purpose:uint:1 assertion transaction"
+    ],
+    "body_commitment_domain": "challenge_body",
+    "signature_domain": "challenge_signature",
+    "maximum_outstanding": 16,
+    "rule": "The device independently generates a uniformly random nonzero 32-byte nonce for each challenge, rejects duplication within the current volatile outstanding set and permits at most 16 outstanding signed challenges. Issuing a new challenge does not invalidate another outstanding challenge. Each exact challenge is consumed at most once under the serializer after the supported canonical outer request and challenge signature pass; reboot invalidates the entire volatile set. Freshness relies on qualified 256-bit randomness and set membership, not an absolute persisted lifetime-uniqueness claim. Challenge state is not high-water authority and is never restored by the Mac.",
+    "freshness_limit": "These bytes enable a later live direct-interaction freshness check but do not prove that a challenge was freshly obtained. Transport, user observation and device randomness evidence remain separate live gates."
+  },
+  "verifier_signature_envelope": {
+    "schema": "com.ergentics.provenance.h4pv1.verifier-signature-envelope.v1",
+    "maximum_bytes": 1024,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "signed_body_kind:uint:1 challenge, 2 receipt or 3 migration",
+      "verifier_key_id:bytes:32",
+      "verifier_key_position:uint:0",
+      "signed_body_commitment:bytes:32",
+      "signed_body_byte_count:uint:1..16384",
+      "signature:bytes:64"
+    ],
+    "commitment_domain": "verifier_envelope",
+    "domain_selection": "The signed_body_kind selects exactly challenge_signature, receipt_signature or migration_signature. Any mismatch rejects."
+  },
+  "assertion_request": {
+    "schema": "com.ergentics.provenance.h4pv1.assertion-request.v1",
+    "maximum_bytes": 1048576,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "challenge_body:bytes:1..4096 exact canonical object",
+      "challenge_envelope:bytes:1..1024 exact canonical object",
+      "lineage_state_body:bytes:1..524288 exact canonical object",
+      "issuer_assertion_body:bytes:1..16384 exact canonical object",
+      "issuer_signature_envelope:bytes:1..1024 exact canonical object"
+    ],
+    "commitment_domain": "request",
+    "decode_order": "First bound and exact-schema canonical-decode the supported outer request and compute its commitment. Independently bound, canonical-decode, join and strictly authenticate its challenge body and envelope against one outstanding challenge. Under the serializer, atomically consume that challenge, then independently decode and validate lineage body, assertion body and issuer envelope, recompute every public outer commitment and applicable byte count, and enforce every cross-object join. Only a fully common-eligible candidate may access authority lifecycle and position state.",
+    "preauthentication_response_boundary": "An over-bound, malformed, noncanonical, unsupported-suite/schema or trailing outer request, or any malformed, invalid, noncurrent or already-consumed challenge, receives no authenticated receipt, consumes no challenge and accesses no authority state. Error handling at this boundary is fixed non-enumerating absence; it exposes no parser, suite, signature, challenge-membership or state distinction.",
+    "authenticated_prestate_rejection": "After a supported canonical outer request and its exact current signed challenge are authenticated and the challenge is consumed, any malformed embedded lineage/assertion/envelope, wrong context/key/signature/token/count/join or unsupported assurance receives the same signed minimized ASSERTION_REJECTED receipt bound to the canonical request and challenge. No verifier-decision body is constructed, no authority lifecycle or position is read and no persistent state mutates.",
+    "challenge_consumption": "Each request carries one independently issued outstanding challenge. Consumption is one-use and serialized but does not invalidate other outstanding challenges, so two common-eligible sibling requests may both reach position classification; a lost response requires a new challenge but the same exact lineage/assertion/envelope bytes."
+  },
+  "verifier_decision_body": {
+    "schema": "com.ergentics.provenance.h4pv1.verifier-decision.v1",
+    "maximum_bytes": 4096,
+    "retention": "transient complete bytes; only its commitment is retained for an accepted transition or eligible conflict",
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "verifier_id:bytes:32",
+      "policy_commitment:bytes:32",
+      "request_commitment:bytes:32",
+      "challenge_body_commitment:bytes:32",
+      "lifecycle_before:uint:1..5",
+      "prior_authority_pointer_commitment:bytes:32",
+      "prior_authority_generation:uint:0..4099",
+      "prior_authority_tip_commitment:bytes:32",
+      "prior_accepted_present:bool",
+      "prior_accepted_sequence:uint:0..4095",
+      "prior_accepted_record_commitment:bytes:32",
+      "prior_lineage_state_commitment:bytes:32",
+      "candidate_sequence:uint:0..4096",
+      "candidate_predecessor_commitment:bytes:32",
+      "candidate_lineage_state_commitment:bytes:32",
+      "candidate_assertion_body_commitment:bytes:32",
+      "candidate_signature_envelope_commitment:bytes:32",
+      "internal_decision_code:uint:registered",
+      "proposed_persistent_record_kind:uint:0 none or 2 accepted or 3 conflict"
+    ],
+    "commitment_domain": "decision",
+    "noncircularity": "The decision contains candidate and authenticated-prior inputs but no decision commitment, future persistent-record commitment, future authority-pointer commitment or receipt.",
+    "construction_gate": "This body is constructed only after every common precondition succeeds and authenticated authority state is read. Preauthentication and authenticated prestate failures construct no decision body.",
+    "determinism_rule": "Every field is an exact projection of the canonical request, authenticated prior pointer or registered classification. No predicate trace, reason bitmap, timestamp, free-form byte, diagnostic or implementation-selected value is present. proposed_persistent_record_kind is 2 only for BOOTSTRAP_ACCEPTABLE or SUCCESSOR_ACCEPTABLE, 3 only for ELIGIBLE_CONFLICT, and 0 for every other code.",
+    "prior_placeholder_rule": "When prior_accepted_present is false, prior_accepted_sequence is exactly zero and both prior accepted commitments equal the fixed predecessor. When true, all three fields equal the latest authenticated accepted transition.",
+    "privacy_rule": "A minimized rejection or inspection receipt does not expose the decision commitment."
+  },
+  "persistent_record_bodies": {
+    "common_fields": [
+      "schema:text:kind exact",
+      "suite_id:text:exact",
+      "record_kind:uint:registered",
+      "record_index:uint:1..4099",
+      "previous_authority_tip_commitment:bytes:32",
+      "trusted_genesis_commitment:bytes:32",
+      "policy_commitment:bytes:32",
+      "verifier_id:bytes:32",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "lifecycle_after:uint:1..5"
+    ],
+    "common_join_rule": "Every body record_index is exactly the prior authenticated authority generation plus one; previous_authority_tip_commitment equals that pointer's tip; genesis, policy, verifier, lineage and epoch equal provisioned state. Schema, record_kind and lifecycle_after are the exact kind-specific triple below and never independently selectable.",
+    "kind_lifecycle_invariants": {
+      "accepted_transition": "schema accepted-transition, record_kind 2, lifecycle_after 2 ACTIVE",
+      "conflict_tombstone": "schema conflict-tombstone, record_kind 3, lifecycle_after 3 CONFLICT_REQUIRES_INSPECTION",
+      "storage_fault_latch": "schema storage-fault-latch, record_kind 4, lifecycle_after 4 STORAGE_FAULT_LOCKED",
+      "terminal_close": "schema terminal-close, record_kind 5, lifecycle_after 5 TERMINAL",
+      "terminal_migration": "schema terminal-migration, record_kind 6, lifecycle_after 5 TERMINAL"
+    },
+    "accepted_transition": {
+      "schema": "com.ergentics.provenance.h4pv1.accepted-transition.v1",
+      "record_kind": 2,
+      "lifecycle_after": 2,
+      "maximum_bytes": 16384,
+      "additional_fields": [
+        "sequence:uint:0..4095",
+        "predecessor_lineage_state_commitment:bytes:32",
+        "lineage_state_commitment:bytes:32",
+        "issuer_assertion_body_commitment:bytes:32",
+        "issuer_signature_envelope_commitment:bytes:32",
+        "verifier_decision_commitment:bytes:32",
+        "issuer_key_position:uint:0",
+        "verifier_key_position:uint:0",
+        "prior_accepted_record_commitment:bytes:32 equal fixed predecessor for bootstrap or current accepted record for successor"
+      ],
+      "commitment_domain": "accepted_record"
+    },
+    "conflict_tombstone": {
+      "schema": "com.ergentics.provenance.h4pv1.conflict-tombstone.v1",
+      "record_kind": 3,
+      "lifecycle_after": 3,
+      "maximum_bytes": 32768,
+      "additional_fields": [
+        "occupied_sequence:uint:0..4095",
+        "common_predecessor_lineage_state_commitment:bytes:32",
+        "accepted_record_commitment:bytes:32",
+        "accepted_lineage_state_commitment:bytes:32",
+        "accepted_assertion_body_commitment:bytes:32",
+        "accepted_signature_envelope_commitment:bytes:32",
+        "accepted_decision_commitment:bytes:32",
+        "competing_lineage_state_commitment:bytes:32 distinct",
+        "competing_assertion_body_commitment:bytes:32",
+        "competing_signature_envelope_commitment:bytes:32",
+        "competing_decision_commitment:bytes:32",
+        "issuer_key_position:uint:0",
+        "conflict_lock_code:uint:1 permanent pending separate resolution"
+      ],
+      "commitment_domain": "conflict_tombstone"
+    },
+    "storage_fault_latch": {
+      "schema": "com.ergentics.provenance.h4pv1.storage-fault-latch.v1",
+      "record_kind": 4,
+      "lifecycle_after": 4,
+      "maximum_bytes": 8192,
+      "additional_fields": [
+        "last_authenticated_authority_tip_commitment:bytes:32",
+        "last_authenticated_accepted_record_or_fixed_predecessor:bytes:32",
+        "attempted_record_body_commitment:bytes:32",
+        "attempted_record_kind:uint:2 accepted, 3 conflict, 5 close or 6 migration",
+        "fault_code:uint:1 IO, 2 CAPACITY, 3 TORN_OR_DIVERGENT, 4 OUTCOME_UNPROVEN",
+        "fault_lock_code:uint:1 permanent"
+      ],
+      "commitment_domain": "storage_fault_latch",
+      "construction_rule": "The last authority tip is always the authenticated current record, including the uninitialized record during bootstrap. The attempted commitment is the already completed exact candidate record-body commitment; no free-form transaction identifier is introduced. The accepted field equals the latest accepted record or fixed predecessor when none exists.",
+      "fault_code_rule": "Use 3 only for a proven contained torn or divergent residue whose exclusion from the sole authenticated child relation is itself established; otherwise 2 only for specifically proven capacity failure; otherwise 1 only for specifically proven I/O failure; otherwise 4 for an outcome that remains unproven while the old tip and absence of any child remain authenticated. This priority is exact, no implementation-selected detail or combined bit field exists. Multiple children, uncontained residue or state unable to support the selected code remains offline without a latch."
+    },
+    "terminal_close": {
+      "schema": "com.ergentics.provenance.h4pv1.terminal-close.v1",
+      "record_kind": 5,
+      "lifecycle_after": 5,
+      "maximum_bytes": 16384,
+      "additional_fields": [
+        "terminal_request_commitment:bytes:32",
+        "accepted_present:bool",
+        "accepted_sequence:uint:0..4095",
+        "accepted_record_or_fixed_predecessor:bytes:32",
+        "accepted_lineage_state_or_fixed_predecessor:bytes:32",
+        "terminal_reason:uint:1 planned close, 2 compromise, 3 capacity retirement, 4 fault retirement",
+        "continuity_code:uint:0 discontinuous"
+      ],
+      "commitment_domain": "terminal_close",
+      "accepted_projection_rule": "If accepted_present is false, accepted_sequence is exactly zero and both accepted commitment fields equal the fixed predecessor. If true, all three equal the latest authenticated accepted transition projected by the prior authority pointer."
+    },
+    "terminal_migration": {
+      "schema": "com.ergentics.provenance.h4pv1.terminal-migration.v1",
+      "record_kind": 6,
+      "lifecycle_after": 5,
+      "maximum_bytes": 16384,
+      "additional_fields": [
+        "terminal_request_commitment:bytes:32",
+        "accepted_present:bool:true",
+        "accepted_sequence:uint:0..4095",
+        "accepted_record_commitment:bytes:32",
+        "accepted_lineage_state_commitment:bytes:32",
+        "new_genesis_intent_commitment:bytes:32",
+        "new_verifier_id:bytes:32",
+        "migration_nonce:bytes:32",
+        "terminal_reason:uint:5 planned migration",
+        "continuity_code:uint:1 old-device-authorized"
+      ],
+      "commitment_domain": "terminal_migration"
+    },
+    "raw_material_exclusion": "No persistent record contains a raw assertion, signature, D3/evidence preimage, private token descriptor, blinding secret, complete decision reasons, challenge, request, receipt, timestamp, path, source/build/host/session identifier, log or diagnostic."
+  },
+  "storage_record_authentication": {
+    "storage_genesis_tag": "HMAC-SHA-256(device storage key, common-frame(domain_registry.storage_genesis_tag, trusted_genesis_commitment))",
+    "wrapper_schema": "com.ergentics.provenance.h4pv1.storage-record-wrapper.v1",
+    "wrapper_exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "record_kind:uint:registered",
+      "record_index:uint:0..4099",
+      "previous_record_auth_tag:bytes:32 equal storage genesis tag for uninitialized or prior wrapper tag",
+      "record_body_commitment:bytes:32",
+      "record_body_byte_count:uint:1..65536"
+    ],
+    "auth_tag": "HMAC-SHA-256(device storage key, common-frame(domain_registry.storage_record_auth, canonical wrapper bytes))",
+    "storage_contents": "The immutable slot stores exact record body bytes, exact wrapper bytes and 32-byte auth tag. Recovery independently canonical-decodes, rehashes and verifies every link and tag.",
+    "internal_transaction_metadata_boundary": "A qualified atomic store may retain bounded authenticated transaction intent and recovery metadata needed to prove whether mutation linearization was crossed and to preserve an intended record-body commitment across interruption. It is device-internal, inaccessible to the Mac, never a public protocol record, receipt, alternate pointer or rollback authority, and must be cleared or advanced only by the same serializer after authenticated resolution. Its hardware-specific bytes remain a live-store qualification item; the pure harness models only its abstract states.",
+    "external_limit": "The storage tag is device-internal authentication, not a public receipt and not proof against coherent rollback of the complete store. Live qualification must prove nonrollback or identity-changing failure for the protected authority pointer."
+  },
+    "authority_pointer": {
+    "schema": "com.ergentics.provenance.h4pv1.authority-pointer.v1",
+    "maximum_bytes": 4096,
+    "exact_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "trusted_genesis_commitment:bytes:32",
+      "policy_commitment:bytes:32",
+      "lineage_id:bytes:32",
+      "epoch_id:bytes:32",
+      "authority_generation:uint:0..4099",
+      "authority_tip_record_index:uint:0..4099",
+      "authority_tip_record_kind:uint:1..6",
+      "authority_tip_record_commitment:bytes:32",
+      "authority_tip_record_auth_tag:bytes:32",
+      "lifecycle_code:uint:1..5",
+      "accepted_present:bool",
+      "accepted_sequence:uint:0..4095; exactly zero when accepted_present is false",
+      "accepted_record_or_fixed_predecessor:bytes:32",
+      "accepted_lineage_state_or_fixed_predecessor:bytes:32"
+    ],
+    "commitment": "SHA-256(common-frame(domain_registry.authority_pointer, canonical pointer bytes))",
+    "auth_tag": "HMAC-SHA-256(device storage key, common-frame(domain_registry.authority_pointer_auth, canonical pointer bytes))",
+    "index_generation_invariant": "authority_generation, authority_tip_record_index and the referenced immutable record_index are exactly equal for every valid state, beginning at zero for the uninitialized record.",
+    "tip_lifecycle_invariant": "The pointer tip body, wrapper and auth tag join exactly. Tip kind 1 requires lifecycle 1; kind 2 requires lifecycle 2; kind 3 requires lifecycle 3; kind 4 requires lifecycle 4; kind 5 or 6 requires lifecycle 5. The tip body's kind-specific schema and lifecycle fields must match the persistent-record registry.",
+    "accepted_projection_invariant": "When accepted_present is false, accepted_sequence is zero and both accepted commitment fields equal the fixed predecessor. When true, the sequence and commitments equal the latest authenticated accepted-transition record and lineage state. Uninitialized and a pre-bootstrap terminal/fault may be false; accepted, conflict, migration and every post-bootstrap terminal/fault are true.",
+    "mutation_limit": "This is the only mutable logical pointer. It advances generation and record index by exactly one to an already durable immutable authenticated record; it never points backward, skips a generation, rewrites a record or selects an arbitrary candidate head.",
+    "rollback_requirement": "A live store must protect the pointer and generation against coherent rollback by means outside the evaluated Mac's control. A valid old HMAC is insufficient. Inability to prove this property leaves live anti-replay UNKNOWN."
+  },
+  "terminal_request_and_migration": {
+    "terminal_request_maximum_bytes": 4096,
+    "terminal_close_request": {
+      "schema": "com.ergentics.provenance.h4pv1.terminal-close-request.v1",
+      "exact_fields": [
+        "schema:text:exact",
+        "suite_id:text:exact",
+        "verifier_id:bytes:32",
+        "trusted_genesis_commitment:bytes:32",
+        "expected_authority_pointer_commitment:bytes:32",
+        "terminal_kind:uint:0",
+        "terminal_reason:uint:1 planned close, 2 compromise, 3 capacity retirement or 4 fault retirement"
+      ]
+    },
+    "terminal_migration_request": {
+      "schema": "com.ergentics.provenance.h4pv1.terminal-migration-request.v1",
+      "exact_fields": [
+        "schema:text:exact",
+        "suite_id:text:exact",
+        "verifier_id:bytes:32",
+        "trusted_genesis_commitment:bytes:32",
+        "expected_authority_pointer_commitment:bytes:32",
+        "terminal_kind:uint:1",
+        "terminal_reason:uint:5 planned migration",
+        "new_genesis_intent_commitment:bytes:32",
+        "new_verifier_id:bytes:32",
+        "migration_nonce:bytes:32"
+      ]
+    },
+    "terminal_request_commitment": "SHA-256(common-frame(domain_registry.terminal_request, exact applicable terminal request bytes))",
+    "authorization": "A nonserializable device-local custodian authorization capability must accompany the request. These bytes alone never authorize terminal state.",
+    "lifecycle_gate": {
+      "close_from_uninitialized": "forbidden; the governing architecture has no direct UNINITIALIZED-to-TERMINAL transition",
+      "close_from_active": "allowed for planned close, compromise, capacity retirement or fault retirement",
+      "close_from_conflict": "allowed only for planned close, compromise or fault retirement; migration is forbidden",
+      "close_from_storage_fault_locked": "allowed only for fault retirement when the terminal reserve and complete authenticated chain remain provably writable; otherwise remain fault-locked or offline",
+      "migration_from_active": "allowed only from ACTIVE with accepted_present true and a separately authenticated migration-intent genesis; conflict, storage-fault, uninitialized and terminal migration are forbidden",
+      "terminal_replay": "When already TERMINAL, only a request whose exact commitment equals the retained terminal record's request commitment is idempotent; with fresh device-local authorization it returns the authenticated terminal receipt without mutation. Every different terminal request is rejected without mutation or signed state detail."
+    },
+    "migration_body_schema": "com.ergentics.provenance.h4pv1.migration-authorization.v1",
+    "migration_body_maximum_bytes": 16384,
+    "migration_body_fields": [
+      "schema:text:exact",
+      "suite_id:text:exact",
+      "old_verifier_id:bytes:32",
+      "old_verifier_public_key:bytes:32",
+      "old_verifier_key_position:uint:0",
+      "old_trusted_genesis_commitment:bytes:32",
+      "old_terminal_migration_record_commitment:bytes:32",
+      "old_terminal_record_index:uint:1..4099",
+      "old_accepted_sequence:uint:0..4095",
+      "old_accepted_lineage_state_commitment:bytes:32",
+      "new_verifier_id:bytes:32",
+      "new_genesis_intent_commitment:bytes:32",
+      "migration_nonce:bytes:32",
+      "continuity_code:uint:1"
+    ],
+    "migration_commitment_domain": "migration_body",
+    "migration_signature": "The old verifier signs exact migration body bytes under domain_registry.migration_signature after its terminal-migration record is authenticated durable. The generic verifier envelope carries that signature with signed_body_kind 3.",
+    "old_device_rule": "As part of the nonserializable custodian authorization, the old device receives and exact-schema validates the complete new migration-intent genesis body, recomputes its commitment, requires its embedded expected-old verifier and genesis anchors equal the old device's own authenticated identity, and requires the request's new verifier, genesis commitment and migration nonce join that body before appending terminal migration.",
+    "new_device_rule": "The new device, under a separate device-local provisioning ceremony, first authenticates the expected old verifier ID and old trusted-genesis commitment embedded in its migration-intent genesis independently of the presented migration bundle. It then derives the presented old public-key ID, requires both old anchors and every terminal/genesis/nonce join exact, strictly verifies the old signature, and stores the migration envelope commitment in its uninitialized record. It cannot learn its old trust anchor solely from the self-signed bundle or alter the already committed genesis intent.",
+    "construction_order": [
+      "construct and commit the new migration-intent genesis without an old-terminal or migration self-reference",
+      "old device atomically appends a terminal-migration record binding that new genesis commitment",
+      "freshly authenticate the old terminal record",
+      "construct and old-verifier-sign the migration authorization binding both commitments",
+      "new device independently provisions one migrated uninitialized record binding the migration envelope",
+      "new epoch still requires its own exact sequence-zero bootstrap"
+    ],
+    "loss_rule": "If any step becomes unavailable, no candidate reconstructs continuity. A discontinuous initial genesis is the only replacement path."
+  },
+  "receipt_bodies": {
+    "accepted_or_current": {
+      "schema": "com.ergentics.provenance.h4pv1.receipt-accepted-current.v1",
+      "maximum_bytes": 16384,
+      "exact_fields": [
+        "schema:text:exact",
+        "suite_id:text:exact",
+        "verifier_id:bytes:32",
+        "verifier_key_id:bytes:32",
+        "verifier_key_position:uint:0",
+        "policy_commitment:bytes:32",
+        "audience_id:bytes:32",
+        "challenge_body_commitment:bytes:32",
+        "request_commitment:bytes:32",
+        "decision_commitment:bytes:32",
+        "outcome_code:uint:1 accepted or 2 current",
+        "accepted_sequence:uint:0..4095",
+        "accepted_record_commitment:bytes:32",
+        "accepted_lineage_state_commitment:bytes:32",
+        "authority_pointer_commitment:bytes:32",
+        "authority_tip_commitment:bytes:32",
+        "authority_generation:uint:1..4099",
+        "claim_code:uint:0",
+        "nonclaim_bits:uint:1023",
+        "authority_vector:text:exact 00000000"
+      ],
+      "commitment_domain": "receipt_accepted_current"
+    },
+    "minimized": {
+      "schema": "com.ergentics.provenance.h4pv1.receipt-minimized.v1",
+      "maximum_bytes": 4096,
+      "exact_fields": [
+        "schema:text:exact",
+        "suite_id:text:exact",
+        "verifier_id:bytes:32",
+        "verifier_key_id:bytes:32",
+        "verifier_key_position:uint:0",
+        "policy_commitment:bytes:32",
+        "audience_id:bytes:32",
+        "challenge_body_commitment:bytes:32",
+        "request_commitment:bytes:32",
+        "outcome_code:uint:3 inspection, 4 rejected or 5 unavailable-ambiguous",
+        "claim_code:uint:0",
+        "nonclaim_bits:uint:1023",
+        "authority_vector:text:exact 00000000"
+      ],
+      "commitment_domain": "receipt_minimized",
+      "exclusion": "No sequence, head, authority generation, competing commitment, lifecycle subtype, decision commitment or rejection reason is present."
+    },
+    "terminal": {
+      "schema": "com.ergentics.provenance.h4pv1.receipt-terminal.v1",
+      "maximum_bytes": 4096,
+      "exact_fields": [
+        "schema:text:exact",
+        "suite_id:text:exact",
+        "verifier_id:bytes:32",
+        "verifier_key_id:bytes:32",
+        "verifier_key_position:uint:0",
+        "policy_commitment:bytes:32",
+        "terminal_request_commitment:bytes:32",
+        "outcome_code:uint:5 unavailable or 6 terminal committed",
+        "terminal_kind:uint:0 close or 1 migration",
+        "result_record_kind:uint:4 fault, 5 close or 6 migration",
+        "result_record_commitment:bytes:32",
+        "continuity_code:uint:0 discontinuous or 1 old-device-authorized"
+      ],
+      "commitment_domain": "receipt_terminal",
+      "conditional_rule": "TERMINAL_COMMITTED requires result kind 5 for close or 6 for migration and the exact authenticated terminal record and continuity. UNAVAILABLE_OR_AMBIGUOUS is emitted only when an authenticated kind-4 fault latch records attempted kind 5 or 6, its attempted record-body commitment independently reconstructs from the supplied exact terminal request and pre-fault state, and recovery proves no terminal record committed; it carries that exact fault-latch commitment and continuity 0. Every unresolved, unrelated or unauthenticated state emits no receipt.",
+      "idempotence": "The exact retained terminal-request commitment makes a same-request retry identifiable after response loss; a newly signed terminal receipt reports the authenticated existing terminal state without mutation."
+    },
+    "signature": "The verifier strictly signs common-frame(domain_registry.receipt_signature, exact accepted/current, minimized or terminal receipt body bytes); the generic verifier envelope with signed_body_kind 2 carries the schema-specific body commitment, byte count and signature.",
+    "retention": "Receipt and envelope are returned transiently and are not retained by the device. A same-Mac copy is non-authoritative historical evidence.",
+    "unavailability": "If state or signing cannot be authenticated, absence/unavailability is observed without fabricating a receipt."
+  },
+  "classification_and_state_precedence": {
+    "response_boundary": "Outer-request and challenge authentication follows assertion_request.preauthentication_response_boundary before this classifier. Authenticated prestate failures consume only that exact challenge and return the one minimized rejection class without constructing a decision or reading authority state.",
+    "common_preconditions": [
+      "after the outer request and challenge boundary, every embedded lineage/assertion/envelope object is within bounds, exact-schema canonical and byte-count exact",
+      "suite, genesis, verifier, audience, policy, product, roadmap, stage, durable-schema, purpose, lineage and epoch joins are exact",
+      "challenge was one exact device-generated outstanding signed challenge and has been atomically consumed",
+      "issuer key identifier, fixed key position and strict detached signature verify",
+      "every public outer commitment is independently reconstructed",
+      "every private token and packed vector has exact shape, count and ordinal relation; no hidden-preimage truth is inferred",
+      "claim, nonclaim and 00000000 authority ceiling are exact",
+      "unsupported evidence-preimage, D3-semantic, host-attestation, honest-computation, high-value-ingress or trusted-egress assurance rejects before state or position classification"
+    ],
+    "lifecycle_precedence": {
+      "UNPROVISIONED": "no assertion interface and no authenticated result",
+      "UNINITIALIZED": "only sequence zero with exact fixed predecessor can bootstrap; every other position rejects without mutation",
+      "ACTIVE": "current, wrapper, occupied conflict and exact successor classification is enabled",
+      "CONFLICT": "every assertion returns minimized INSPECTION_REQUIRED without mutation; only device-local terminal is available",
+      "STORAGE_FAULT_LOCKED": "every assertion returns minimized UNAVAILABLE_OR_AMBIGUOUS when signing remains safe, otherwise no receipt; only constrained device-local terminal is available",
+      "TERMINAL": "every assertion returns minimized ASSERTION_REJECTED without record lookup or mutation"
+    },
+    "active_position_rules": {
+      "current": "candidate sequence equals current accepted sequence and assertion-body commitment equals the admitted body commitment: read-only current; any valid signature-envelope byte difference over that exact body is audit variance only",
+      "wrapper_variant": "candidate sequence and predecessor equal one retained occupied accepted tuple, lineage-state commitment is equal, every provisioned and duplicated join is exact, and only the assertion-instance nonce makes the assertion-body commitment differ: minimized inspection, no append and no fork",
+      "occupied_conflict": "candidate sequence and predecessor equal one retained occupied accepted tuple but independently common-eligible lineage-state commitment differs: atomically append conflict tombstone before minimized inspection",
+      "successor": "candidate sequence is at most 4095, equals current accepted sequence plus one and predecessor lineage-state commitment equals current accepted lineage-state commitment: eligible to append one accepted transition",
+      "capacity": "when current accepted sequence is 4095, candidate sequence 4096 with the exact current lineage-state predecessor is common-eligible but internally CAPACITY_EXHAUSTED and externally rejected without mutation; sequence 4096 is never accepted or persisted as an accepted transition",
+      "stale": "every other candidate at or below current accepted sequence: minimized rejection without mutation unless the exact occupied-conflict or wrapper rule applies",
+      "gap_or_parent": "candidate above current plus one, or current plus one with wrong predecessor: minimized rejection without mutation"
+    },
+    "decision_code_mapping": "After common eligibility, UNINITIALIZED exact bootstrap uses 1 and every other bootstrap position uses 23. ACTIVE exact successor uses 2, current 3, nonce-only wrapper 4, occupied conflict 5, stale 22, gap/parent 23 and exact post-4095 capacity 24. CONFLICT, STORAGE_FAULT_LOCKED and TERMINAL use 25, 26 and 27 respectively. No other decision code is constructible.",
+    "classification_linearization": "The device holds one serializer from one-use challenge consumption through authenticated authority-pointer read, classification and receipt signing or mutation/readback. Other independently outstanding challenges remain eligible and are later classified against the winning state. No competing request can change the classified state between those operations.",
+    "ineligible_poison_rule": "Malformed, unauthenticated, wrong-context, unsupported-assurance, stale, gap or otherwise ineligible input never appends accepted, conflict, fault or terminal state."
+  },
+  "abstract_compare_and_append": {
+    "sole_writer": "The physical verifier owns the only authority-state serializer and storage-authentication key. The evaluated Mac supplies bounded messages only.",
+    "operation": "compareAndAppend(expected authenticated pointer commitment and generation, exact canonical new record body) runs only while the sole serializer is held and returns COMMITTED with an authenticated new pointer or RECOVERY_REQUIRED. An expectation mismatch is not a normal competing-request outcome under the serializer; it is an integrity discontinuity that enters recovery. The operation never reports committed before record and pointer durability are authenticated and never appends a sibling fault record while an intended child may exist.",
+    "assertion_mutation_successful_order": [
+      "authenticate the current pointer, immutable tip record and complete retained chain under the protected generation",
+      "verify and classify the exact request while holding the serializer",
+      "complete decision bytes and commitment without a future-record reference",
+      "complete accepted-transition or conflict-tombstone bytes, commitment, storage wrapper and HMAC tag with record_index and authority_generation exactly prior plus one",
+      "append the immutable body, wrapper and tag into the correct ordinary or reserved slot and make them durable",
+      "atomically advance the authenticated nonrollback authority pointer to that exact durable record",
+      "freshly authenticate pointer, record and complete chain",
+      "only then construct and sign a receipt"
+    ],
+    "terminal_mutation_successful_order": [
+      "authenticate the current pointer, immutable tip record and complete retained chain under the protected generation",
+      "validate the exact terminal request, lifecycle gate and fresh nonserializable custodian authorization while holding the serializer",
+      "complete terminal-close or terminal-migration body bytes directly from the request and authenticated prior state; no assertion decision exists",
+      "append and durably authenticate the terminal body, wrapper, tag and exact next pointer",
+      "freshly authenticate pointer, terminal record and complete chain",
+      "only then construct and sign the terminal receipt; terminal migration authorization follows the separately frozen order"
+    ],
+    "fault_latch_successful_order": [
+      "while service is stopped, prove the prior pointer remains authoritative, no complete child or unexcluded residue exists, and the exact failed intended body commitment remains available",
+      "complete the storage-fault body directly from the authenticated prior state and failed intended body; no assertion decision is invented",
+      "append and durably authenticate the fault body, wrapper, tag and exact next pointer in the independent fault reserve",
+      "freshly authenticate the fault-locked state before any signed unavailable result"
+    ],
+    "append_only_rule": "No accepted, uninitialized, conflict, fault or terminal body, wrapper or tag is overwritten, truncated, compacted, deleted, reused or made unreachable by a valid forward pointer. A compare-and-set may change only the protected pointer after immutable append.",
+    "expectation_mismatch_rule": "Because classification and mutation share one serializer, a compare mismatch cannot represent an ordinary race. It creates no receipt or mutation and enters authenticated recovery; a later independently challenged retry is classified only after recovery establishes one authoritative pointer.",
+    "ambiguous_rule": "If record durability or pointer advancement cannot be proven, no admitting or terminal-committed receipt is created and all service stops pending authenticated recovery. The verifier does not append any latch against the old tip until recovery has proved that no valid intended child exists.",
+    "conflict_linearization_rule": "An in-memory eligibility calculation is provisional and exposes no result. ELIGIBLE_CONFLICT becomes an authoritative classification only at the same atomic-store linearization as its durable tombstone and pointer advance. Once a conflict append transaction may have crossed that point, no later assertion is processed until recovery authenticates the tombstone, a storage-fault latch or permanent unavailability. If the qualified store proves the transaction never crossed its mutation linearization point and left no child or unexcluded residue, no conflict was durably classified and the prior ACTIVE state may resume; live qualification must prove this distinction and may use authenticated internal transaction metadata outside the public protocol records.",
+    "recovery_scan": "Before serving after every boot or interrupted mutation, scan every occupied ordinary and reserved slot from the provisioned uninitialized record, independently re-decode/re-hash/re-authenticate every wrapper and tag, and authenticate the protected pointer and generation. If the pointer selects the exact complete intended child and the qualified store proves there is no competing child, report committed. If exactly one complete authenticated intended child exists at prior generation plus one and the store proves it is the sole possible child, atomically advance and reauthenticate the pointer to reconcile it. If no complete authenticated child exists and the old pointer remains authenticated, the old state is proved authoritative and service may resume; a caller retries under a new challenge or authorization. Any multiple child, index gap, divergent backlink, unknown authenticated kind, unauthenticated residue whose exclusion cannot be proven, torn reserved slot or uncertain pointer leaves the verifier permanently offline; it never manufactures a sibling or overwrites residue.",
+    "fault_latch_rule": "A storage-fault latch is appended only when a permanent storage failure is detected while the exact intended record-body commitment remains available, either continuously or through authenticated internal transaction metadata, and the store proves the old authenticated tip is still authoritative with no complete authenticated child or unexcluded residue. Its previous tip and last_authenticated_authority_tip_commitment both equal that current record, including the uninitialized record during bootstrap; its attempted_record_body_commitment equals the exact completed intended body. Recovery never invents an attempted commitment. If it instead proves the transaction never crossed its mutation linearization point and has no authenticated pending intent, the prior state remains authoritative; if neither condition or durable latch/pointer advancement can be proven, the verifier remains offline without a receipt.",
+    "reserved_slot_failure": "The conflict, terminal and fault reserves are independent single-use physical capacity. A torn or unauthenticated write may permanently consume its target reserve; no overwrite or reuse is allowed. If remaining authenticated state cannot transition through another still-intact permitted reserve without ambiguity, the device remains fault-locked or offline. Reserved capacity prevents ordinary exhaustion from consuming these paths but does not imply repair after a torn reserved-slot write.",
+    "coherent_rollback": "A complete old but internally valid log, tag chain and pointer must be rejected or cause authenticated identity discontinuity by the qualified physical store. HMAC and hash-chain validity alone do not satisfy this requirement.",
+    "claim_state": "NORMATIVE_ABSTRACT_CONTRACT_UNIMPLEMENTED"
+  },
+  "capacity_and_reserved_state": {
+    "active_lineages_per_device": 1,
+    "epochs_per_device": 1,
+    "maximum_accepted_transitions": 4096,
+    "accepted_sequence_range": "0 through 4095",
+    "candidate_sequence_range": "0 through 4096; 4096 exists only to make the post-4095 capacity rejection representable and can never become accepted state",
+    "ordinary_immutable_slots": "one uninitialized plus 4096 accepted-transition slots",
+    "reserved_slots": {
+      "conflict_tombstone": 1,
+      "terminal_record": 1,
+      "storage_fault_latch": 1
+    },
+    "maximum_authority_generation": 4099,
+    "reserve_lifetime": "All three physically independent reserved slots and pointer-update capacity exist from authenticated provisioning through authenticated terminal durability. Ordinary or bootstrap transitions cannot consume them.",
+    "record_size_reserve": "Each reserved slot supports its exact maximum body plus storage wrapper, auth tag, atomic-pointer and bounded transaction-recovery metadata. A logical slot without proven physical capacity does not qualify.",
+    "accepted_capacity_exhaustion": "After sequence 4095, an otherwise common-eligible candidate at sequence 4096 with the exact current predecessor is internally CAPACITY_EXHAUSTED and externally ASSERTION_REJECTED without state mutation; current reads and device-local terminal remain possible.",
+    "fault_paths": [
+      "when a permanent bootstrap write failure is detected with its exact intended commitment available and no valid child or unexcluded residue, the fault record chains from the authenticated uninitialized authority-tip record while its no-accepted-head projection binds the governing fixed uninitialized/genesis predecessor",
+      "when a permanent accepted or conflict write failure is detected with its exact intended commitment available and no valid child or unexcluded residue, the fault slot is anchored to the last authenticated authority tip",
+      "when a permanent terminal write failure is detected with its exact intended commitment available and no terminal child or unexcluded residue, the fault slot may become the sole authenticated child and a terminal receipt reports unavailable; a valid or uncertain terminal child forbids a sibling latch",
+      "a failed close attempt from STORAGE_FAULT_LOCKED leaves the existing durable latch authoritative, advances to a proven terminal close, or leaves the device offline",
+      "failure to authenticate either intended record or latch permanently disqualifies the device from service"
+    ]
+  },
+  "acknowledgment_and_retry": {
+    "assertion_mutation_ambiguity": "The Mac obtains a new challenge and resubmits only the same exact lineage-state, assertion-body and issuer-envelope bytes. The new request/challenge wrapper may differ. Current exact body resolves accepted bootstrap/successor; existing conflict state resolves inspection; a fault resolves unavailable. The Mac never assumes the pre-attempt head.",
+    "terminal_ambiguity": "Resolve first by authenticated device recovery scan. The same exact canonical terminal request accompanied by fresh device-local authorization then returns a signed terminal receipt for the retained terminal record without mutation, or a signed unavailable terminal receipt only when a fault latch proves no terminal record committed. Unresolved or unauthenticated state returns no receipt; an assertion query cannot resolve terminal ambiguity.",
+    "cached_assertion_response": "An assertion receipt is usable only after strict verifier signature verification and an exact join to the freshly obtained challenge body and exact request. A terminal receipt instead joins the exact locally authorized terminal request. Either proves only the device's bounded result at that interaction, not a global current state forever.",
+    "implicit_retry": "FORBIDDEN"
+  },
+  "noncircular_construction_order": [
+    "construct each local hidden preimage and deterministic local digest; construct its one-time private token without emitting descriptor, digest or blind",
+    "complete canonical audience-neutral lineage-state bytes and compute the lineage-state commitment",
+    "complete canonical issuer-assertion bytes without a self-commitment and compute the assertion-body commitment",
+    "sign the exact assertion bytes and complete and commit the detached issuer envelope",
+    "obtain and authenticate one fresh verifier challenge",
+    "complete and commit the request containing the exact prior objects",
+    "authenticate current verifier state, classify, complete and commit the decision without future references",
+    "for an admitting or conflict transition, append and authenticate the new immutable record and protected pointer",
+    "freshly authenticate resulting state",
+    "complete the applicable receipt body and commitment, then sign and envelope it; no receipt feeds back into state"
+  ],
+  "transitive_binding_and_comparison_keys": {
+    "lineage_state_commitment": "sole audience-neutral order, predecessor and fork key",
+    "assertion_body_commitment": "logical idempotence and wrapper comparison key",
+    "issuer_envelope_commitment": "exact signature-byte audit key only",
+    "decision_commitment": "authorization/audit input retained by accepted or conflict record",
+    "accepted_record_commitment": "accepted high-water record identity",
+    "authority_tip_commitment": "current lifecycle record identity, which may be accepted, conflict, fault or terminal",
+    "receipt_commitment": "post-readback observation identity only; never an authority-state input",
+    "wrapper_rule": "Wrong verifier, audience, policy, issuer or key fields reject before position classification. Over one exact lineage state, a different assertion-instance nonce is the sole eligible assertion-body variance and requires inspection without mutation; a valid alternate signature envelope over the identical body is audit variance only. None changes audience-neutral lineage identity or creates a lineage fork."
+  },
+  "format_bounds": {
+    "canonical_object_maximum_bytes": 1048576,
+    "cbor_maximum_depth": 8,
+    "cbor_maximum_map_entries": 64,
+    "cbor_maximum_array_entries": 256,
+    "cbor_maximum_nodes": 8192,
+    "text_maximum_bytes": 128,
+    "predicate_count": "1 through 4096",
+    "candidate_sequence": "0 through 4096; accepted-state sequence remains 0 through 4095",
+    "packed_predicate_identifier_token_bytes": "predicate_count times 32",
+    "packed_predicate_result_bytes": "predicate_count",
+    "packed_predicate_evidence_token_bytes": "predicate_count times 32",
+    "aggregate_request_maximum_bytes": 1048576,
+    "aggregate_signed_response_maximum_bytes": 17408,
+    "overflow_rule": "Every multiplication, addition, length conversion, sequence increment, record-index increment and generation increment is checked before allocation or state access. Overflow rejects without mutation.",
+    "allocation_rule": "The decoder proves outer and derived packed-vector bounds before allocation. No declared length controls an unchecked allocation, recursion or loop."
+  },
+  "implementation_and_test_handoff": {
+    "next_implementation_shape": "One pure Swift schema-specific codec, cryptographic wrapper and in-memory abstract append-only store with dependency-injected deterministic test keys/blinds/challenges. No external I/O is needed for the first implementation slice.",
+    "required_known_answer_vectors": [
+      "canonical bytes and SHA-256 commitment for every body schema at minimum and maximum structural boundaries, including the framed H4-C JSON and CBOR preimage digests",
+      "private-token HMAC with fixed fabricated 32-byte blinds for every field kind and ordinal boundary",
+      "issuer and verifier Ed25519 public-key ID, exact signature input, signature and strict verification vectors from fixed fabricated test seeds",
+      "storage genesis tag, record-wrapper HMAC chain and authority-pointer HMAC from one fixed fabricated storage key",
+      "initial and independently old-anchored migration-intent genesis, fixed predecessor, bootstrap, successor, current, assertion-nonce wrapper, conflict, fault, terminal, migration and all three receipt classes",
+      "full noncircular commitment graph with independently recomputed joins"
+    ],
+    "required_negative_vectors": [
+      "unknown, missing, duplicate, reordered, nonminimal, indefinite, trailing, wrong-type and over-bound CBOR",
+      "wrong suite/domain/context/audience/policy/key position/key ID/public key and every mutated signature byte",
+      "noncanonical Ed25519 encodings, small-order key or R and out-of-range S",
+      "private token wrong length/order/count/domain, raw deterministic sibling leakage, blind reuse and attempted reblinding of an ambiguous exact retry",
+      "hidden-preimage truth or full-D3 assurance request rejected before lifecycle/position access",
+      "bootstrap nonzero/wrong predecessor, stale, gap, parent mismatch, exact current, assertion-instance wrapper and occupied conflict reachability",
+      "malformed outer or invalid challenge emits no receipt and consumes no challenge; authenticated embedded rejection is one minimized class and reads no authority state",
+      "ineligible competitor cannot poison conflict state and two separately challenged concurrent eligible siblings admit at most one before conflict lock",
+      "record self-reference, decision-to-future-record reference and receipt feedback cycles rejected",
+      "unexpected compare mismatch, append ambiguity, torn record, bad auth tag, old pointer, index gap, multiple child, capacity exhaustion and each reserved-latch path",
+      "cached receipt wrong challenge/request and terminal ambiguity through assertion query rejected",
+      "old valid coherent snapshot rejected by the live-qualified store or reported UNKNOWN in the pure abstract harness"
+    ],
+    "test_effect_boundary": "Future pure tests may use fabricated in-memory bytes only. Physical randomness, keys, device, transport, power loss and rollback resistance remain separate live qualification evidence."
+  },
+  "privacy_externality_and_retention": {
+    "recipients": "one private physical verifier and user-custodian only",
+    "network": "NONE",
+    "provider": "NONE",
+    "public_log": "NONE",
+    "backup_or_replica": "NONE",
+    "device_persistence": "only genesis/policy/key positions, immutable accepted commitments, storage authentication, authority pointer, conflict/fault/terminal tombstones and bounded authenticated internal transaction-recovery metadata",
+    "device_transient_only": "challenge, request, lineage state, assertion, signatures, complete decision, receipts and all canonical transport objects not explicitly named persistent",
+    "device_absent": "raw D3/evidence preimages, deterministic sibling digests, blinds, user payload, credentials, paths, source history, host/session/environment identity, unrestricted diagnostics, timestamps, telemetry and logs",
+    "linkability": "Lineage, epoch, issuer, policy, sequence and outer state commitments intentionally correlate activity within this one device and epoch. Subject to HMAC-SHA-256 PRF security, uncompromised independently generated secret blinds and negligible collision probability, distinct lineage-state constructions make direct hidden-value equality testing computationally infeasible from private tokens alone. Exact retries and nonce-only signed-wrapper variants deliberately reference identical lineage-state and token bytes and are linkable; compromise, blind misuse, disclosed counts/results and the lineage timeline are not hidden.",
+    "inference": "The verifier sees counts, result codes, protocol use and accepted activity and can reconstruct any H4-C content determined by disclosed fields. This one-recipient inference is explicitly accepted; external or cross-recipient disclosure is not.",
+    "erasure": "Logical release is not secure erasure. No flash, allocator, swap, diagnostic or physical deletion claim is made."
+  },
+  "manifest_entitlement_and_runtime_review": {
+    "control_only_result": "NO_CHANGE_REQUIRED",
+    "com_apple_security_hypervisor": "PRESENT_AND_UNCHANGED_BUT_UNUSED_BY_THIS_FORMAT_FREEZE",
+    "network_entitlement": "ABSENT_AND_NO_NETWORK_SELECTED",
+    "user_selected_read_write_entitlement": "ABSENT_AND_NO_EXTERNAL_VOLUME_SELECTED",
+    "privacy_manifest": "UNCHANGED",
+    "compiled_source_or_resource": false,
+    "application_or_test_execution": false,
+    "prime_git_vm": "NOT_OBSERVED_NOT_OPERATED_NOT_AUTHORITY"
+  },
+  "deferred_live_gates": [
+    "select and identify exact physically separate hardware and firmware",
+    "prove the Mac cannot mount, replace, reset, restore or administer authority state",
+    "qualify Ed25519, SHA-256, HMAC-SHA-256, CSPRNG, secret memory and parser implementations",
+    "provision actual issuer, verifier and storage keys plus lineage, epoch, audience, genesis and policy under separate authorization",
+    "select direct transport and prove fresh challenge acquisition and authenticated readback",
+    "prove linearizable append, durable reserved capacity, pointer nonrollback, recovery scan, torn-write, ENOSPC, EIO, reboot and power-loss behavior",
+    "review exact device display, update, recovery, diagnostics, logs, support, retirement and physical attack boundary",
+    "repeat privacy, entitlement, manifest, archive, TCB and externality review against the exact implementation"
+  ],
+  "successor_sequence": [
+    {
+      "order": 1,
+      "action": "Implement the frozen schema-specific codec, cryptographic operations and abstract in-memory append-only verifier with fabricated deterministic vectors only.",
+      "authorization": "RECOMMENDED_SEPARATE_PURE_IMPLEMENTATION_SLICE"
+    },
+    {
+      "order": 2,
+      "action": "Run focused Debug and Release tests followed by the complete local hostless suite for the pure implementation.",
+      "authorization": "RECOMMENDED_AFTER_IMPLEMENTATION"
+    },
+    {
+      "order": 3,
+      "action": "Select exact physical hardware, direct transport and live key-provisioning ceremony.",
+      "authorization": "SEPARATE_USER_SELECTION_AND_PERMISSION_REQUIRED"
+    },
+    {
+      "order": 4,
+      "action": "Perform constrained-I/O, reboot, rollback and power-loss qualification on the selected physical verifier.",
+      "authorization": "NOT_AUTHORIZED_BY_THIS_ARTIFACT"
+    }
+  ],
+  "implementation_boundary": {
+    "implementation_allowlist": [],
+    "source_change_allowed": false,
+    "test_change_allowed": false,
+    "project_change_allowed": false,
+    "entitlement_or_manifest_change_allowed": false,
+    "runtime_execution_allowed": false,
+    "durable_runtime_format_mutation_allowed": false,
+    "only_added_path": "Control/hypervisor-local-v1/h4-private-verifier-canonical-format-crypto-atomicity-freeze-2026-09-04.v1.json",
+    "future_parent_rule": "The pure implementation freeze must cite the committed exact bytes of this artifact and cannot relax a byte, cryptographic, privacy, state, reserve, authority or live-effect rule."
+  },
+  "authorization_boundary": {
+    "format_crypto_atomicity_design_validation_and_local_commit": "AUTHORIZED_BY_STANDING_PROCEED_AT_RECOMMENDATIONS_DIRECTION",
+    "prime_git_vm_observation_or_operation": false,
+    "physical_device_or_external_volume": false,
+    "key_or_randomness_generation": false,
+    "keychain_or_secure_enclave_mutation": false,
+    "network_or_remote_service": false,
+    "application_launch": false,
+    "xctest_execution": false,
+    "process_or_signal_control": false,
+    "installation": false,
+    "github": false,
+    "production_authority": false,
+    "local_git_commit_effect": "one control-only commit may create blob/tree/commit objects and advance local main and its reflog; no remote operation"
+  },
+  "effects": {
+    "control_artifact_added": true,
+    "production_source_changed": false,
+    "test_source_changed": false,
+    "project_configuration_changed": false,
+    "entitlement_or_privacy_manifest_changed": false,
+    "runtime_or_database_changed": false,
+    "device_vm_network_key_or_randomness_effect": false,
+    "existing_dirty_or_untracked_evidence_changed": false,
+    "authority_effect": "NONE"
+  },
+  "dirty_file_guard": {
+    "preserved_paths": {
+      "Control/hypervisor-local-v1/h2-live-build-plan.v1.json": "b0a73ca324d0c7dc4e9619b549c2c4c85cbcae1e32a021f55d282a7c150470ba",
+      "Control/hypervisor-local-v1/h2-live-build-wire.schema.v1.json": "307e614ca6940bb01a57c625ed8e2a22378269d0fc2c923b86154c2862ac79b1"
+    },
+    "rule": "These pre-existing tracked modifications remain unstaged and byte-identical. Untracked and ignored evidence is not cleaned, moved, copied, archived, flushed or pruned."
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "canonical_format_frozen_as_design": true,
+    "cryptographic_suite_frozen_as_design": true,
+    "abstract_atomicity_frozen_as_design": true,
+    "codec_implemented": false,
+    "cryptography_implemented": false,
+    "keys_or_randomness_generated": false,
+    "verifier_implemented": false,
+    "live_verifier_qualified": false,
+    "external_commitment_established": false,
+    "issuer_authenticity_established": false,
+    "freshness_established": false,
+    "anti_replay_established": false,
+    "rollback_resistance_established": false,
+    "host_integrity_established": false,
+    "trusted_ingress_or_egress": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "verification": {
+    "required_before_commit": [
+      "jq parses the artifact and every exact schema/domain/code registry is internally unique",
+      "direct parent commit/tree and architecture blob/SHA join exactly",
+      "all governing-control and local-precedent path/blob/SHA pins join HEAD exactly",
+      "independent reviews confirm no circular commitment, unreachable lifecycle branch, wrapper-to-fork confusion, preauthentication response ambiguity or ambiguous mutation success claim",
+      "independent crypto review confirms exact framing, canonical encoding, SHA-256, one-time private-token HMAC and strict Ed25519 coverage are mutually unambiguous",
+      "independent privacy review confirms H4-C structural inference is explicitly accepted only inside the private verifier and no hidden deterministic digest or blind is emitted",
+      "independent storage review confirms immutable history, protected pointer, three reserved failure slots and all bootstrap/conflict/terminal ambiguity paths fail closed",
+      "staged delta contains only this one control artifact and both dirty guards remain exact and unstaged",
+      "no pre-existing source, test, project, entitlement, manifest, runtime, VM, network, device, key, randomness, build-cache, dirty file or untracked evidence is mutated; only this new control artifact and its local Git objects may be added"
+    ],
+    "xcode_build_or_test_required": false,
+    "reason_no_xcode_run": "This commit adds one noncompiled control JSON and performs no implementation. Xcode cannot validate its cryptographic or atomic-store design semantics."
+  },
+  "nonclaims": [
+    "This format freeze generates no canonical protocol instance, key, nonce, blind, challenge, signature, device record or receipt.",
+    "No verifier runtime authority-state filesystem, physical device, VM, transport, SQLite authority store, Keychain, Secure Enclave, network, provider or external volume is inspected or operated; repository control files are read and this one artifact may be added to local Git.",
+    "SHA-256 and HMAC-SHA-256 do not prove hidden D3 or evidence true; a valid Ed25519 issuer signature authenticates the issuer assertion but not honest computation or historical execution.",
+    "One-time HMAC tokens are opaque nonopening issuer-side privacy wrappers. The verifier cannot recompute them, and their use does not upgrade commitment-only assurance.",
+    "The directly disclosed structural tuple may reveal or reconstruct current H4-C semantic/JSON/CBOR content inside the selected private verifier; no contrary secrecy claim is made.",
+    "Storage HMAC and an immutable hash chain do not alone prevent coherent rollback. Live anti-replay remains UNKNOWN until a physically separate store proves a nonrollback protected pointer or authenticated identity discontinuity.",
+    "A verifier challenge and signed receipt format do not prove that a live caller freshly obtained them over an unselected transport.",
+    "No in-epoch rotation, backup, replica, public log, global newest-state proof, split-view detection, high-value admission, trusted egress, H4 entry, Gate-E movement or scientific authority is created.",
+    "The same-Mac Prime Git VM remains untouched and non-authoritative. Local Git durability remains a separate workflow issue from verifier anti-replay authority.",
+    "No existing D3, D3b or D3c fixture is retroactively promoted; a live mechanism must start a newly provisioned genesis and sequence-zero claim class."
+  ],
+  "next_recommendation": "After exact review and local commit, implement only the pure schema-specific codec, cryptographic joins and abstract in-memory verifier with fabricated deterministic vectors, then run focused Debug/Release and the full hostless suite. Do not inspect or operate Prime Git VM or physical hardware and do not generate live keys or randomness."
+}

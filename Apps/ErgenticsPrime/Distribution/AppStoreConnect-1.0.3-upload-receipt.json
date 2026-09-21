@@ -1,0 +1,61 @@
+{
+  "schema": "com.ergentics.provenance.app-store-connect-upload-receipt.v1",
+  "recorded_at_utc": "2026-09-01T02:34:09Z",
+  "status": "UPLOAD_SUCCEEDED_PROCESSING_UNCONFIRMED",
+  "app_store_connect": {
+    "app_name": "Hyper-Visor",
+    "apple_app_id": "6807235450",
+    "bundle_identifier": "com.ergentics.provenance",
+    "destination": "internal_testflight",
+    "uploaded_version": "1.0",
+    "uploaded_build": "3",
+    "distribution_identifier": "ce527894-8dd9-4840-8b23-021628c5485b"
+  },
+  "source": {
+    "commit": "7d11a8a0fde6135a6eade198f85a8a28b29b8534",
+    "tree": "f2d35f9561344be9cca04df6137429def198947a",
+    "archive_embedded_build": "2",
+    "tracked_worktree_clean_before_archive_and_upload": true
+  },
+  "archive": {
+    "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/Ergentics Provenance 1.0 (2).xcarchive",
+    "application": "Ergentics Provenance.app",
+    "architecture": "arm64",
+    "macho_uuid": "A9F1FB11-DEED-3B56-A3E4-2CEA1570BD38",
+    "binary_sha256": "40b6e556433e8e0c5939ba13a50049199c8acc37ad54749ac63380d6c8c828ed",
+    "pre_distribution_signing_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "pre_distribution_team_identifier": "ZCQ435U8JP"
+  },
+  "upload": {
+    "tool": "Xcode Organizer",
+    "preparation_completed_at_utc": "2026-09-01T02:25:51Z",
+    "upload_completed_at_utc": "2026-09-01T02:26:56Z",
+    "result": "UPLOAD_SUCCEEDED",
+    "test_flight_internal_testing_only": true,
+    "manage_app_version_and_build_number": true,
+    "xcode_assigned_uploaded_build": "3",
+    "raw_distribution_log": "/private/var/folders/zv/5q6zw2k57698hn8q5hfy0wtm0000gn/T/ErgenticsProvenance_2026-08-31_19-25-51.337.xcdistributionlogs",
+    "raw_distribution_log_handling": "LOCAL_SENSITIVE_DO_NOT_PUBLISH_OR_COMMIT; may contain Xcode account session material"
+  },
+  "prior_build_observed_during_upload": {
+    "build": "2",
+    "distribution_identifier": "fe2524f0-f80d-4a06-ab21-8018feeca881",
+    "processing_state": "VALID",
+    "internal_build_state": "READY_FOR_BETA_TESTING",
+    "qc_state": "BETA_INTERNAL_TESTING",
+    "build_audience_type": "INTERNAL_ONLY",
+    "uses_non_exempt_encryption": false,
+    "meaning": "Build 2 completed processing and is eligible for internal TestFlight testing. This does not prove installation or runtime acceptance."
+  },
+  "claim_boundary": {
+    "build_2_processing_complete": true,
+    "build_2_ready_for_internal_testflight": true,
+    "build_3_upload_accepted": true,
+    "build_3_processing_complete": false,
+    "build_3_testflight_available": false,
+    "delivered_image_installed_or_inspected": false,
+    "external_beta_review_submitted": false,
+    "app_review_submitted": false,
+    "app_review_approved": false
+  }
+}

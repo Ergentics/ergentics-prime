@@ -1,0 +1,38 @@
+{
+  "afterTurn" : {
+    "turnPassed" : true,
+    "whiteAt16" : 1,
+    "whiteBar" : 0,
+    "whiteOff" : 14
+  },
+  "blockedEntryRejected" : true,
+  "legalTurns" : [
+    [
+      {
+        "destination" : 22,
+        "die" : 3,
+        "origin" : 25
+      },
+      {
+        "destination" : 16,
+        "die" : 6,
+        "origin" : 22
+      }
+    ]
+  ],
+  "position" : {
+    "blackOwnPipCounts" : {
+      "0" : 13,
+      "6" : 2
+    },
+    "dice" : [
+      6,
+      3
+    ],
+    "whiteOwnPipCounts" : {
+      "0" : 14,
+      "25" : 1
+    }
+  },
+  "reference" : "Original BackgammonKit rules, compiled without neural or UI code"
+}

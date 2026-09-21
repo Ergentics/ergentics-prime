@@ -1,0 +1,86 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-implementation-checkpoint-v3",
+  "status": "STATIC_PASS_FRESH_V3_BUILD_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "control_freeze": {
+    "commit": "5c43b071c5f80963509ef5ec11520a8b0c8bdfe6",
+    "tree": "d8c4719038755c8247a14521f0a76b7756f4856e",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v3.json",
+    "bytes": 6487,
+    "lf_count": 120,
+    "sha256": "af465c9f1a5f57dab1e87107ec0010c53dfa50bbf6c94230c1cc4e646ae9b08b"
+  },
+  "implementation": {
+    "commit": "6161b8a8afb87c8b5fb543d50b98b289c5c5b502",
+    "tree": "d762522d1cf6496c971cd4f4c0120ef675f7e105",
+    "sources": [
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+        "bytes": 101967,
+        "lf_count": 2187,
+        "sha256": "da7fa85358eca16f9b9d99d78f5ced8fde4603876ac4477497e99d6e584af1db",
+        "git_blob": "67a412f43afde034bb34a586c2d70a8edb99d49c"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+        "bytes": 22971,
+        "lf_count": 799,
+        "sha256": "bfb12f4a1bc4c1b5a252487d13304e84a3590ae8ee49278c4e0c935f59dc6711",
+        "git_blob": "ae8cdeff0d6c6782b4fc34783bce0b93d06b5c00"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+        "bytes": 5187,
+        "lf_count": 209,
+        "sha256": "188a21ecae2ccc8b95e86d61891a9eb753806a8214526e75cf1c7a3982feb3cd",
+        "git_blob": "92eb605ed7a708d7c36fabf2dcaa599a1e58e649"
+      }
+    ]
+  },
+  "v2_failure_ancestry": {
+    "record_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-build-a-failure.v2.json",
+    "record_bytes": 2936,
+    "record_sha256": "bab4628c684099e7c520fac8120ba277d0f3098e4599108a7878049f3f9ccdf5",
+    "retained_build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2",
+    "retained_product": "ABSENT",
+    "reuse": false
+  },
+  "static_review_convergence": [
+    "SWIFT_TYPE_DIAGNOSTIC_AND_V3_DELTA_PASS",
+    "JOURNAL_NAMESPACE_AND_INVARIANT_PASS",
+    "IDENTITY_PATH_TRUST_AND_FAIL_CLOSED_CWD_PASS"
+  ],
+  "target_plan": {
+    "algorithm": "SHA256_DOMAIN_SEPARATED_U64BE_LENGTH_FRAMED_BINARY_MERKLE_V2",
+    "leaf_count": 3,
+    "root_sha256": "c2b5f0e4477bae767be6bc4d40e471eb47c90763d5838b29b5944c02403ff2c7"
+  },
+  "fresh_namespace_admission": {
+    "build_a_root": "ABSENT",
+    "build_b_root": "ABSENT",
+    "journal_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "readiness_json": "ABSENT",
+    "result_json": "ABSENT"
+  },
+  "build_command": {
+    "swift_driver_flag": "-Xfrontend -no-serialize-debugging-options",
+    "warnings": "-warnings-as-errors",
+    "zero_captured_diagnostic_bytes_required": true,
+    "binary_execution_authorized": false
+  },
+  "operations": {
+    "v3_compiler_entries": 0,
+    "v3_build_roots_created": 0,
+    "v3_binaries_executed": 0,
+    "all_controller_invocations": 0,
+    "all_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CHECKPOINT_THEN_FRESH_V3_BUILD_A_ONLY_AND_FULL_STATIC_PRODUCT_ADMISSION_NO_EXECUTION"
+}

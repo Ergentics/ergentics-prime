@@ -1,0 +1,49 @@
+{
+  "cases": [
+    {
+      "caseID": "01-algebra",
+      "question": "Solve the linear equation x + 4 = 6 for x.",
+      "questionSHA256": "900ae7730c91a45d297ffdfb0826c68b6976f962d17a1dc569360d02462a7aa2"
+    },
+    {
+      "caseID": "02-geometry",
+      "question": "Find the area of the triangle with vertices A=(0,0), B=(3,0), C=(0,4). (right triangle, legs 3,4)",
+      "questionSHA256": "cb7f76295a3d08c966b8287a515dc78d84c561e684f9fd4ecf2e0a465afbe752"
+    },
+    {
+      "caseID": "03-logic-parsing",
+      "question": "Evaluate the arithmetic expression  2 + 3 * 4  respecting standard operator precedence (\u00d7 \u00f7 bind tighter than + \u2212) and LEFT-associativity. (\u00f7 is exact rational.)",
+      "questionSHA256": "69c010309b8b3b9bdf710cad219cfa93f463f4407a9377c71ca298a1383c594a"
+    },
+    {
+      "caseID": "04-music",
+      "question": "Classify the quality of the chord with pitch classes {C, E, G} (pc set [0, 4, 7]): major, minor, diminished, or augmented?",
+      "questionSHA256": "46bed3aa67633ecea4f5908f043e7bc5aab4fc17310fbf8248c7b56c09a42567"
+    },
+    {
+      "caseID": "05-agentcraft-christoffel",
+      "question": "Derive the lower Christoffel word of slope 2/3 (a=East,b=North; length 5) and certify it by independent methods.",
+      "questionSHA256": "870d6283160bf5c85529a9eae7d8b8eef7585b9529357d63b432b6e6ccfa3037"
+    },
+    {
+      "caseID": "coding-first-duplicate",
+      "question": "Write Python only: def first_duplicate(nums): return the first integer encountered twice scanning left to right, or None. No imports. Do not modify nums.",
+      "questionSHA256": "bb17742d1af934ff7c3ca7632bea7e4a92a84b1e9d19e81360fd37b47e788fa5"
+    },
+    {
+      "caseID": "coding-stable-unique",
+      "question": "Write Python only: def stable_unique(nums): return a new list keeping each integer's first occurrence in order. No imports. Do not modify nums.",
+      "questionSHA256": "6aa5fea68fb78b6723519c372b2bcca581e454b2a1a2b5ab07983c24d437c050"
+    },
+    {
+      "caseID": "ur-safe-rosette-entry",
+      "question": "Finkel Ur: you have one piece on 6 and six at home; your opponent has one on safe rosette 8 and six at home. You roll 2. List your legal moves.",
+      "questionSHA256": "426155bb003db457a5e572ee6fb3b831f728ec21e3ad129ac937cb9407b6a58f"
+    },
+    {
+      "caseID": "backgammon-bar-entry-order",
+      "question": "Backgammon (your pip indices): you have 1 on bar 25 and 14 off; opponent has 2 on your 19-point and 13 off. Roll 6 and 3. List your legal turn.",
+      "questionSHA256": "5b7445d368c9e3fc2b8b2e1b9ba048a81a438de1e6ba4053e63cf2762d0734b7"
+    }
+  ]
+}

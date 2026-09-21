@@ -1,0 +1,88 @@
+{
+  "schema": "com.ergentics.provenance.prime-git.development-verification.v1",
+  "date": "2026-08-30",
+  "app_home": "/Users/ergentics/Developer/ErgenticsProvenance",
+  "origin_commit": "05e81739cbe5a985809fb4b83ce3d8cadc48d301",
+  "app_feature": "Thin Prime Git imported-snapshot inspector; not a live Git scanner",
+  "source_review": "PASS",
+  "visual_review": {
+    "result": "PASS",
+    "method": "Offscreen NSHostingView of PrimeGitView only",
+    "size": [
+      1000,
+      720
+    ],
+    "image": "DerivedData/prime-git-preview.png",
+    "populated_snapshot_ui": "NOT_TESTED",
+    "native_app_window": "NOT_TESTED"
+  },
+  "build": {
+    "xcode": "26.6 (17F113)",
+    "deployment": "macOS 14.0 arm64",
+    "unsigned_debug": "PASS",
+    "development_signed_debug": "PASS",
+    "host_signature_verification": "PASS",
+    "restricted_signature_check": "CSSMERR_TP_NOT_TRUSTED; host verification subsequently passed"
+  },
+  "executable": {
+    "path": "DerivedData/DeveloperSigned/Build/Products/Debug/Ergentics Provenance.app/Contents/MacOS/Ergentics Provenance",
+    "sha256": "a33b59c795a1d51a2cbb7d441f6854638b5a3281700758fa59da35de162b9fe5",
+    "uuid": "49B494CF-B599-3A16-8592-BB2D7136C5A8",
+    "bundle": "com.ergentics.provenance",
+    "team": "ZCQ435U8JP"
+  },
+  "tests": {
+    "normal": {
+      "executed": 100,
+      "failures": 0,
+      "exit": 0,
+      "log": "verification-2026-08-30/standard-tests.log"
+    },
+    "empty_launch_environment": {
+      "executed": 100,
+      "failures": 0,
+      "exit": 0,
+      "transport": "/usr/bin/env -i /Applications/Xcode.app/Contents/Developer/usr/bin/xctest <external test bundle>",
+      "replacement_environment_variables": 0,
+      "log": "verification-2026-08-30/empty-environment-tests.log"
+    },
+    "new_snapshot_tests": 16,
+    "scope": "Hostless non-VM tests. Importer OS/file-picker path and signed GUI env-i launch are not established by these tests."
+  },
+  "app_actions": {
+    "stage": "INERT",
+    "unstage": "INERT",
+    "commit": "INERT",
+    "fetch": "INERT",
+    "pull": "INERT",
+    "push": "INERT",
+    "merge": "INERT",
+    "repository_selection": "path label only",
+    "snapshot_import": "bounded, explicit read-only selection, memory-only",
+    "git_backend": "NOT_IMPLEMENTED",
+    "automatic_refresh": false
+  },
+  "capabilities": {
+    "network_entitlements": [],
+    "virtual_nics": 0,
+    "added_background_services": 0,
+    "guest_owner": "UNCHANGED",
+    "new_guest_launches": 0
+  },
+  "retained_state": {
+    "new_git_commits": 0,
+    "github_sync": false,
+    "original_prime_head": "05e81739cbe5a985809fb4b83ce3d8cadc48d301",
+    "original_tracked_app_diff": "EMPTY",
+    "unrelated_drafts": "PRESERVED",
+    "external_app_git": "Unborn repository created during the earlier copy; no commit or remote; not used as Prime data"
+  },
+  "remaining": [
+    "Live read-only Git collection is future work and must not be inferred from imported snapshots",
+    "Signed GUI launch under env -i remains untested",
+    "TestFlight distribution-signature and profile checks remain separate; no upload"
+  ],
+  "gate_e": "ABSTAIN",
+  "authority_vector": "00000000",
+  "energy_ergs": "UNMEASURED"
+}

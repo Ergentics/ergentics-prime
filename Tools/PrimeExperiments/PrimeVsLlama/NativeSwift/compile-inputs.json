@@ -1,0 +1,2979 @@
+{
+  "scope": "New inference-only main, linked against 441 retained Release library objects in the recorded MLXLLM transitive dependency set. No dependency rebuild, package resolution or model invocation.",
+  "files": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/main.swift",
+      "byteCount": 13964,
+      "sha256": "4840c450f1ec208d1a2c8b8c584d9afdcb840fedb27fa6bbb90a5f0ea0588d31"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build.py",
+      "byteCount": 7239,
+      "sha256": "04a07133b7862e0bbba6b3dd6496ebfcb53c0b10f6b0cbb5fde596b24629d539"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/Sources/PrimeNativeMetalSwiftCanary/main.swift",
+      "byteCount": 34873,
+      "sha256": "c04b5bc43befc6a696f0f4f09fddb44be146bc06dbfd166875deeafe960c2136"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/description.json",
+      "byteCount": 4496171,
+      "sha256": "5e8936aadb2c41ea3bc2b2dcb089352e4644786680e23bf564455ccf09080ab5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/release.yaml",
+      "byteCount": 5244961,
+      "sha256": "01fb4136a9cf3ed39c21b67c9195d42d16d38f92eb4f293acec3ccb1ab3d1464"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeNativeLanguageSwiftCanary.product/Objects.LinkFileList",
+      "byteCount": 76786,
+      "sha256": "397c03b9e5e6067174dd3b0f4a92d9260becaf9f4bcd94ac2293e26234a6c474"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/swift-numerics/Sources/_NumericsShims/include/module.modulemap",
+      "byteCount": 54,
+      "sha256": "c97db16dd177b4cee16673108b1dd2703d5cba99132ae45e16e4c0945941d8ed"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/Cmlx/include/module.modulemap",
+      "byteCount": 37,
+      "sha256": "a97dea631e9b7fa3b130b39f88b947d521e67e1ba5819e90b194abbe84a372d8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/ComplexModule.swiftmodule",
+      "byteCount": 168656,
+      "sha256": "f4f78bc6fa741850deaf7da3f213909ae6ba0ad63404a8271344497db0af2a61"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/ErgenticsPrimeRuntime.swiftmodule",
+      "byteCount": 3689756,
+      "sha256": "f7349e453cb63e23ad87f4c1d50dd4b757e45eb8071a44f7fc840c35fc29f264"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Generation.swiftmodule",
+      "byteCount": 52300,
+      "sha256": "51258fe7e71fefbf51ec5a4a19a90894e99994cd00bf1ba52c8b2075a7dba500"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Hub.swiftmodule",
+      "byteCount": 342164,
+      "sha256": "3d07167bf294c43c8822ac6571ef1fdd75cbc889b76a80fe783e8de0b4ef92a5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/InternalCollectionsUtilities.swiftmodule",
+      "byteCount": 252844,
+      "sha256": "08e3aadcd93f732522f6dcc13ad4a51b9bef201e425f7f1e3ec68d695edef27a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Jinja.swiftmodule",
+      "byteCount": 475740,
+      "sha256": "b658dccdd233707df341622b308d7acccad8b706a462c4251c9b25267bfe9e3f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLX.swiftmodule",
+      "byteCount": 949400,
+      "sha256": "3bb2fd8050ad35f7a8f4d12fe23f582b37bb3c9dfa88bfb8fbe9c351c6ea4ec2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXFast.swiftmodule",
+      "byteCount": 29384,
+      "sha256": "fe8b07d647442146349485554453bb169912f1ff7c07bfb2c497085958c34465"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXLLM.swiftmodule",
+      "byteCount": 1454596,
+      "sha256": "e266603864492be1fa3062e90157e9bed82c980cba45dc8352d42ad4caf3de72"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXLMCommon.swiftmodule",
+      "byteCount": 577212,
+      "sha256": "304b42ea6b737d7e9e2c7654e16bccdd4a2c040bd0a91d41e78b295102f2fc4f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXLinalg.swiftmodule",
+      "byteCount": 42028,
+      "sha256": "279d05053f96d42731a84d471e6da16bed0f0dc7dbcfdbfcdce715714adff541"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXNN.swiftmodule",
+      "byteCount": 470560,
+      "sha256": "d6e45a5cbbc3189aefbdcdaaa97f7b6166d9a1bdb0c2e7b18a0bcf07e0f77a93"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXOptimizers.swiftmodule",
+      "byteCount": 104684,
+      "sha256": "19092cd96948c505563f0a2cfb424b950f994db85b8fe5d0ccc7d57666d64580"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/MLXRandom.swiftmodule",
+      "byteCount": 73644,
+      "sha256": "5df2e91128b3e23ec51547fe21408afecca7c85e0ba2063d69413ed19a7798ab"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Models.swiftmodule",
+      "byteCount": 85232,
+      "sha256": "2ac8867ef2e7dde1331691dc844a68460b9f935f72edf45a83f6f15680dfa35e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Numerics.swiftmodule",
+      "byteCount": 18344,
+      "sha256": "b855c0df442fd2baf4f82dd412ca1a844f8536c3069ebf72d8d2628c38c5d2b1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/OrderedCollections.swiftmodule",
+      "byteCount": 1050820,
+      "sha256": "a3de45fe0b3215f0c9e48aa29b1727a59bb16192bcfdfa19f580c4f9c1fda325"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeNativeCompositionalCorpusExport.swiftmodule",
+      "byteCount": 21820,
+      "sha256": "52f21959c7d1e9871b868f812721941d8c78508cfe1b15d8aa168e4c49831166"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeNativeCompositionalProbeExport.swiftmodule",
+      "byteCount": 43992,
+      "sha256": "f46a9162120d6823eab48b1575f30e6663ba66ea955be0c8ad9878b6a7633fc7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeNativeLanguageCanaryRecommend.swiftmodule",
+      "byteCount": 177788,
+      "sha256": "693a474901b2587df8ee514508c7191a552c0e31ffb0c90911e7347be98c955a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeNativeLanguageRecommendationFailureRecord.swiftmodule",
+      "byteCount": 90284,
+      "sha256": "1c455a6c8a8d42153e145be67186888cf8d8108794289db3729037b6655649e5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeNativeLanguageSwiftCanary.swiftmodule",
+      "byteCount": 166500,
+      "sha256": "00bc8ed04422fd1587cdef7224fdacdb5655a7edc4b539a4ead6047dc46da000"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/PrimeSeatKit.swiftmodule",
+      "byteCount": 101664,
+      "sha256": "a811c1d342d01d0fdf7f1058bbb0e8648685e35540a50ae3cd9ab91dbf7b5794"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/RealModule.swiftmodule",
+      "byteCount": 158316,
+      "sha256": "7674a92e29d5d93f24a30891fe17ea92eb2ef3eb20008c7aef67bcf563f1b8f7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Modules/Tokenizers.swiftmodule",
+      "byteCount": 242220,
+      "sha256": "ab89592066e3f887060737a656e2fe720132b21f4e56cce3a0698249f48acb4a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/swift-numerics/Sources/_NumericsShims/include/_NumericsShims.h",
+      "byteCount": 10396,
+      "sha256": "361bd79467ead784ac39b7f187895f996e149d017a7270dc590d01ffa0037b3a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/Cmlx/include/mlx.h",
+      "byteCount": 108,
+      "sha256": "c9c79beb34545869213b31a290d159ba61afb7792b7500ca5f43d60d6b861474"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/fmt/src/format.cc.o",
+      "byteCount": 1272816,
+      "sha256": "fe1e211c0bf8dbf7c7bad44ca704141dd450635a4630323d7e1fb5ce15a5ed17"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/array.cpp.o",
+      "byteCount": 1253616,
+      "sha256": "e293e901b8ee8de955b98fcbd004a42aeacc409cb1d3d6912e077f4525e518c0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/closure.cpp.o",
+      "byteCount": 985728,
+      "sha256": "ba29c052205dc27d63a48080ddd8cfa469e3028ee598e8bd400765b4b3890790"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/compile.cpp.o",
+      "byteCount": 184000,
+      "sha256": "cc4a16c85f4350d8bc852e5a84b0810348f96a2de80f3e1774201e9ddd02f354"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/device.cpp.o",
+      "byteCount": 127920,
+      "sha256": "4a3fe6f1730ecf220611a06289a075029825f0b001ad86a5685e1a723ba38be5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/error.cpp.o",
+      "byteCount": 108760,
+      "sha256": "4a29b448529bad407873e5b9249f7b40c05852f0a77c817684561ceb86274b21"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/export.cpp.o",
+      "byteCount": 406704,
+      "sha256": "7584eb04a52037dbdc9de69dea3e8deb430c5416121c327aa73ab1a6c22f6270"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/fast.cpp.o",
+      "byteCount": 710928,
+      "sha256": "4525faaf7c26dc383b25b5e126ca36e30c3a649c6ca2a9065f3fe3a40c12603a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/fft.cpp.o",
+      "byteCount": 337416,
+      "sha256": "169d2855e3181af2635b64a6c10737ae870ef6d7552b7cd12fb1567c400cb712"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/io.cpp.o",
+      "byteCount": 645048,
+      "sha256": "2a98501a9c75d4d950f42dcbdd250c9cbe3dc3061d1ade56c04a91b5e4868a6b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/io_types.cpp.o",
+      "byteCount": 167040,
+      "sha256": "643d2a980993cb07e0893808f5f2af5be7ddbdbed83669fb7dcd826f3f3e1742"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/linalg.cpp.o",
+      "byteCount": 332408,
+      "sha256": "9eb33b7a6ede9c30d3b875bf72d7f6d421efbcb1f6980185ec121d51a76b863a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/map.cpp.o",
+      "byteCount": 629872,
+      "sha256": "efa6e0e9de4b6f12a17ad8fd844cb13ad7f9f0b4460d750067fc8f5bb413a6e5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/memory.cpp.o",
+      "byteCount": 34352,
+      "sha256": "bca5e742f4ed0c61f8f3059bff8ecca2c4c487ee5b8722c7ff124c4dfdaf997f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/metal.cpp.o",
+      "byteCount": 354360,
+      "sha256": "b0c9c0b34d11dd1e001f3e0bfc100d33b2131c9d5e052a5170d5303f1ec64eca"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/ops.cpp.o",
+      "byteCount": 1602344,
+      "sha256": "08b71c9389685e2a9f3d5b9ac7e07916d4a102961bf7e3c41eec404e84f1c413"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/random.cpp.o",
+      "byteCount": 466280,
+      "sha256": "88c253f4596677227d8b6a574ab2b3b1e2d4f337ec6f351db4f167c57901136a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/stream.cpp.o",
+      "byteCount": 131808,
+      "sha256": "862cc4d7f622a1827a48abb4fbb41e304932a0b66d2e650f9273700728aab32b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/string.cpp.o",
+      "byteCount": 85688,
+      "sha256": "9ec0c55d6389f9587e1ea87d6ee4ad3e9a86653d603a8216b3ca0139c7bb9b19"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/transforms.cpp.o",
+      "byteCount": 369912,
+      "sha256": "c37f92475774967f43f73666a2132d95b06f85eb6f23e91ef5268005be40813b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/transforms_impl.cpp.o",
+      "byteCount": 225880,
+      "sha256": "ae1fb9be80c0e7f53d24668a9a29cc828fb15bbae62b4edb3bac05fb46c08b93"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/vector.cpp.o",
+      "byteCount": 611696,
+      "sha256": "d1278514e63cbf8507030e2cdfcf3b39684c4dc2a7813929995ac08cc5300dcf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-c/mlx/c/version.cpp.o",
+      "byteCount": 78120,
+      "sha256": "7ebd62458c3a87313d6d6c272293db713232f4e497aebdea709c5fb64ae8abc4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-conditional/compiled_conditional.cpp.o",
+      "byteCount": 1399120,
+      "sha256": "b10b9d6a2f69f4d3dae7b7b8adf08a6f4ab4954187fdfac61d9bd0749d0a8764"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/arange.cpp.o",
+      "byteCount": 2744,
+      "sha256": "793d59fd6b4447fa714c778d44a6ca1b7baa194cb87536d2b76b344b570efc84"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/binary.cpp.o",
+      "byteCount": 8464,
+      "sha256": "728853369564c22e0d7040732be8c92c23d2804a1507baa101108b012ac32b3a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/binary_ops.cpp.o",
+      "byteCount": 9248,
+      "sha256": "f639ee67b4636cee43963cbfa19d9facb8ac28d528ca6840d068508d74a9f5ff"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/binary_two.cpp.o",
+      "byteCount": 9552,
+      "sha256": "3466699035870f63aed953d2ed07619baccd2cc724f4c10669343ae214889b75"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/compiled_preamble.cpp.o",
+      "byteCount": 58504,
+      "sha256": "8b6afab95b8913f56d79be6d0a37896905d9f9943a637c7725e842baf66597a1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/conv.cpp.o",
+      "byteCount": 48432,
+      "sha256": "30cdf0ddcf5ca0bad68e73948b33b647296b6515275303bffd00b4e8b83067cc"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/copy.cpp.o",
+      "byteCount": 12272,
+      "sha256": "1eea0a18d86ed7c52abc2b25c9884f7019d2b97f5f640c3812b55b816c1c7ea6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/fft.cpp.o",
+      "byteCount": 39016,
+      "sha256": "a759a4894df36965c805d9aa223e2d7aad6aa825926df1c2b1f8d6b09c18f499"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/fp4_quantized.cpp.o",
+      "byteCount": 53856,
+      "sha256": "bf808a819c514e67b60763b96fcf43be61dcabdf225c0eb5aff44221a0f182c0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/gather.cpp.o",
+      "byteCount": 4648,
+      "sha256": "adaf18200bc53024af86dd5c7aee2a6082c76ed0e1cadabd12af7fdd617a62eb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/gather_axis.cpp.o",
+      "byteCount": 4024,
+      "sha256": "fee56588ef54a81c88ae42dedc8fa99943ae504272847325f1b8d8304dacf0c4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/gather_front.cpp.o",
+      "byteCount": 3600,
+      "sha256": "3c34320f1100ac8aed76cbd2317ef15ba12c25e4ba47c67805ee0f28883dfa4f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/gemm.cpp.o",
+      "byteCount": 39696,
+      "sha256": "8593d91be4fec53b77ad37dd38aa3d7ab941b0f793952a324cca23b7287a2fb5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/gemv_masked.cpp.o",
+      "byteCount": 25680,
+      "sha256": "42696440af205f934cb8f9382709334c53365b1cf40750baa46b651b73e67a10"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/hadamard.cpp.o",
+      "byteCount": 6800,
+      "sha256": "cf8a3b1db7a3387987813c70f21ec98381bd0c7cb68b0058b16f17336ce830f1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/logsumexp.cpp.o",
+      "byteCount": 6608,
+      "sha256": "671a299f917552cdbca5db16e906c2d2c30109293c445a1ee8a116fd6d33d01b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/quantized.cpp.o",
+      "byteCount": 79328,
+      "sha256": "8c1858f2c6eb8824428d715aaef9065d942f6f110f2467af12ff86ca31fccfa9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/quantized_utils.cpp.o",
+      "byteCount": 4544,
+      "sha256": "d1ad4f7b8683f7a71326fb6ac65a5c78bac53c79a42ed6ff2499623fe8e889f1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/reduce.cpp.o",
+      "byteCount": 26048,
+      "sha256": "797caf727de1d8036d92f9e5950712fad3a9f6a78d0fde1f03602730ee63ba27"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/reduce_utils.cpp.o",
+      "byteCount": 18896,
+      "sha256": "907e4a1a1b08ba9c6fb8e82499fa8032234d760248be6a951f42ee2a408073d2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/scan.cpp.o",
+      "byteCount": 22352,
+      "sha256": "2827067532f53d69637fa5a4c10e70f3098af58d562a2d43970fc67856974d0d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/scatter.cpp.o",
+      "byteCount": 4632,
+      "sha256": "6fab8b06795f068417a03975d8a03be85c9de94e6b4c46de1276901351f81c36"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/scatter_axis.cpp.o",
+      "byteCount": 4128,
+      "sha256": "ca17c8fdd71c32300391f4b249153ed6095d2e50329457ce1235a4b4bcb4e132"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/softmax.cpp.o",
+      "byteCount": 7640,
+      "sha256": "8da362139cf8d78a5e21eedc439022a408ee04ed432d2f9a860cbb4779bb98be"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/sort.cpp.o",
+      "byteCount": 21248,
+      "sha256": "cde3b14647dd07ccb88f2d6061e849ba0b2bba39afcdc5beea86f05a29f24a48"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_conv.cpp.o",
+      "byteCount": 6592,
+      "sha256": "1806a6d284c8a7f5a3671f6afebb58ed736936459a6b6e957b398a78f9d7665e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_conv_general.cpp.o",
+      "byteCount": 18032,
+      "sha256": "f39a5fe7ae4eb3a44ab7996de512798fc84b1383e6cbe052a7dc9fbc22635b4e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_gemm_fused.cpp.o",
+      "byteCount": 11112,
+      "sha256": "0edcd6ab8217a047d0d4c7e80e29e17be29a8854f0b45264ba24bac115c3824f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_gemm_gather.cpp.o",
+      "byteCount": 14248,
+      "sha256": "83bf9ea4dfd51239ecf77347d4b0074420d57b6b0aec198cffb394a4a89d5e1e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_gemm_masked.cpp.o",
+      "byteCount": 21984,
+      "sha256": "b8c5f73ade538bc8c00bce1db80233c8532d7c04c417e9c4906d86e303b8e343"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_gemm_segmented.cpp.o",
+      "byteCount": 10016,
+      "sha256": "b41579eb70440ce04a7f7598c8f0a6cf48490adb5c46862b1e90c27828cff080"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/steel_gemm_splitk.cpp.o",
+      "byteCount": 8264,
+      "sha256": "411703a7eb6273d157ddb925dd32fb628cdc1ffb79cd38b5151a06cb21a174e2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/ternary.cpp.o",
+      "byteCount": 6680,
+      "sha256": "ffe2695320a5a7ef6b18978e3e9a0cea60d5f0ec33059130fa2a774a810d451a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/ternary_ops.cpp.o",
+      "byteCount": 2688,
+      "sha256": "90e2c5086f20aee65421b98dabc3014548c97ac7378662483e22d76175dd332d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/unary.cpp.o",
+      "byteCount": 4304,
+      "sha256": "545c77bb0dcbe2a1406e8a4a774d54f6e347d77b780074fab6f763888de27b19"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/unary_ops.cpp.o",
+      "byteCount": 15432,
+      "sha256": "42549dce8e9d8f9421a6c8ff0be453205108fbc57b1483c638d180a29e8f1896"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx-generated/utils.cpp.o",
+      "byteCount": 105784,
+      "sha256": "9ee2e016bf4506e029a9b41ceed0145b23c5a1dab656edc93d310e13f8c7ebad"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/allocator.cpp.o",
+      "byteCount": 126352,
+      "sha256": "74e7cad0d1d06756bbdd64d051813208ef27ea2e9acc00922fb4bc90d4ec8dbf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/array.cpp.o",
+      "byteCount": 868496,
+      "sha256": "102acfc57a781e43f99db6e042e6b5727dbc8d174a1651cd1b07593f0fba6a34"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/broadcasting.cpp.o",
+      "byteCount": 117424,
+      "sha256": "6c373268a75023da37ba213996913a533e3ccbb1d694ee5decc37b856f0209a6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/common.cpp.o",
+      "byteCount": 379424,
+      "sha256": "8e1557a07eb63e4a4c81b37f762fa2258520b0a641ff380adfbb7fd8838652ea"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/compiled.cpp.o",
+      "byteCount": 505784,
+      "sha256": "d43c7be5c254d556980a354d6b8e58557786c992864930275f40dc894f0a727a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/load.cpp.o",
+      "byteCount": 584432,
+      "sha256": "ac43ff4b311f6319aedb339e2e5248e87d67d3abbbc6b5d574a41e71dfe5e549"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/reduce.cpp.o",
+      "byteCount": 392544,
+      "sha256": "8f387118543fc86bc44428ce6ea388121c09aa410886cde0811fc24e24a25701"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/slicing.cpp.o",
+      "byteCount": 152880,
+      "sha256": "9ba87f0e41f71e99a1e7290d1645d0f387278da66cf66de9494ddf1f3affd915"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/common/utils.cpp.o",
+      "byteCount": 423224,
+      "sha256": "b82e72019cc3c068e84c462bd9686ef18c1b36f61776b9427b3a285527682426"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/arg_reduce.cpp.o",
+      "byteCount": 1269168,
+      "sha256": "48b5fd920d88292509fc6b6e2c9dbcc200d2879f71ef0ddce042d3765646c9ac"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/available.cpp.o",
+      "byteCount": 2240,
+      "sha256": "1773c961076166a75bd365ed151bd4f1dfe24c106f7d13df0201c3f4fc91a510"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/binary.cpp.o",
+      "byteCount": 47343336,
+      "sha256": "3e4b847143c3cb1cbff648c2e73903159f53f2d0f80a50fac2b4bcee3d783ef2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/cholesky.cpp.o",
+      "byteCount": 565016,
+      "sha256": "e86b7fbdf8e68938a8867d7235c5359dce607ab3fb34a231235952eadc2196da"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/conv.cpp.o",
+      "byteCount": 2566048,
+      "sha256": "e5f6ab649ddac393ff9bd6aa2dd0557bc53dad871aa6c11f39a0e42294c5cc42"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/copy.cpp.o",
+      "byteCount": 11910808,
+      "sha256": "90e73214b22765e69f284774b5f8c8ddaff2ab6f84ce3df9c49af59d5cfd4b26"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/distributed.cpp.o",
+      "byteCount": 267064,
+      "sha256": "bdc2a06cca3fbde54a192ffa6e2c9b7152780fb1ce749d4280936f196369399f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/eig.cpp.o",
+      "byteCount": 604336,
+      "sha256": "a46e7732bfeff359ad31e002abe7b5274d5c3cd5ab2d90b6376ebc25394b48a6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/eigh.cpp.o",
+      "byteCount": 790088,
+      "sha256": "11118850d752320dcc2029b916df7ecc39c3c9f8ef06e1477b7290eb50d8ed39"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/encoder.cpp.o",
+      "byteCount": 203984,
+      "sha256": "39979540a411339ab7af131a14cc0934fcca3d2443bcd4bff4f81232c25ad0af"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/eval.cpp.o",
+      "byteCount": 693104,
+      "sha256": "b88598c44f932906e2cdd0cc0a02d632f3c6bc9e4b258e86277996696f623c19"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/fft.cpp.o",
+      "byteCount": 2329760,
+      "sha256": "d93855a7d791d27a1b467f603b9a2fcacdd72252e40433683570cb1188cb8abb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/gemms/bnns.cpp.o",
+      "byteCount": 79144,
+      "sha256": "765d10a20ed4f5ed6030346a95615a1ddc64ca3f80f977172290ed0e15c3e67b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/gemms/cblas.cpp.o",
+      "byteCount": 58184,
+      "sha256": "eaf2d456103d4f28f7e4312edcba7edd0dddb9262cf261a31af70e6adf74575b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/hadamard.cpp.o",
+      "byteCount": 793184,
+      "sha256": "af437ff23049195bd61e1c790700ac0da80b6192b8023a6b9fb4682aa93c7549"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/indexing.cpp.o",
+      "byteCount": 25117400,
+      "sha256": "d07fcacce2701d6ec90f734959afc90b3199f113975f96afed5e936916f20a7e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/inverse.cpp.o",
+      "byteCount": 697024,
+      "sha256": "09ce36325622a21d46eb87475b0925cdfd937fde55ee2ef4b7e0d227a7671b64"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/jit_compiler.cpp.o",
+      "byteCount": 258456,
+      "sha256": "7d8a0a3c606a28a4aea311dad06fca04cf9a043fe74ecbf63d63cc6f098bc0a6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/logsumexp.cpp.o",
+      "byteCount": 708600,
+      "sha256": "a5c724a75b5fe6ee27276c86dbf65810c0827a50d5f9b451a1837f56ba722352"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/luf.cpp.o",
+      "byteCount": 626048,
+      "sha256": "bcd1b683f72b9c8b8717eb6558f391fe2bbf22c08b4efef06b532d6ebf9e9c53"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/masked_mm.cpp.o",
+      "byteCount": 1304528,
+      "sha256": "c9e42d1a40203cc17edf453e398de9085e6bd6132b65686d78b9ac665ed6cf13"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/matmul.cpp.o",
+      "byteCount": 1108616,
+      "sha256": "49db14868599bfe1f7696364c8e1b608c1c4c209ef984138c24a9f041be1f27c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/primitives.cpp.o",
+      "byteCount": 1911608,
+      "sha256": "bdafb9d27f30aadf411c3b4fb08fc719b7fefaf2e4012e92fe68a965b4ab4b1d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/qrf.cpp.o",
+      "byteCount": 600944,
+      "sha256": "83b5c8a92bdcf70ed4a26cef07357467172c3649129577de11412e42b13cf044"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/quantized.cpp.o",
+      "byteCount": 2309008,
+      "sha256": "db48b40f7271537cba27c9c79171210c53bd9d1bf62d021d95418b3fa74705ba"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/reduce.cpp.o",
+      "byteCount": 5587528,
+      "sha256": "e7010b9f8c9fe20a3d54f2216071c48c21d32b97979a9aba0a49c32cdb539955"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/scan.cpp.o",
+      "byteCount": 2352008,
+      "sha256": "8ac86ad6a2dbabd561d323eaf0c40d8086a27603a2f29bc4271239a9e12a1a38"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/select.cpp.o",
+      "byteCount": 1417984,
+      "sha256": "8e48ad1ef4349e81519093ccbed1c8061186c79d0eec5da4db636e82c1d943dd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/softmax.cpp.o",
+      "byteCount": 832168,
+      "sha256": "c8a5ad9f6df01fabb6a80ebef4685efbee3adc7181f7eafc968c3b5491939f03"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/sort.cpp.o",
+      "byteCount": 4785856,
+      "sha256": "10ffa96e14498b45add9d6354694cd4e6d9fd22ebcf6d3603104e0be302f722e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/svd.cpp.o",
+      "byteCount": 663592,
+      "sha256": "86ce5455853c32af6b192dcb0e934fc8eda90152e6691e83d3eaacbd1cbfefd3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/threefry.cpp.o",
+      "byteCount": 17000,
+      "sha256": "0f77ced6b06c54431070c5aabefba09b18c7296de5b83175b5e9194765ad1e07"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cpu/unary.cpp.o",
+      "byteCount": 5661624,
+      "sha256": "39e1ca7add7f96813312d127be51b23b747765e472fbff142db4b634d605ac2a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/cuda/no_cuda.cpp.o",
+      "byteCount": 164312,
+      "sha256": "f883b6e479c17fe96e4db3169c59b389f91a16ad77c2c0ec634ac4932c225b45"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/gpu/copy.cpp.o",
+      "byteCount": 250192,
+      "sha256": "6942e8db287ddcb795c59db0719b34ee4394b8877d9d273e2d8bef8337bde6dc"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/gpu/primitives.cpp.o",
+      "byteCount": 328080,
+      "sha256": "0c5158447fd81239a365e4ef1e5c0214f24a8380feec4a196914e1c32f3a50f1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/gpu/slicing.cpp.o",
+      "byteCount": 126096,
+      "sha256": "ad76688bde93458444c23c3ce58f2956c11054f479ddf7c83583f9c3fd1c3c66"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/allocator.cpp.o",
+      "byteCount": 1348288,
+      "sha256": "f49c407afeacf583aacac63d0f4b493f22c5ce367a33fa0c6c876eced6f60009"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/binary.cpp.o",
+      "byteCount": 1271520,
+      "sha256": "f7004db4acdaf999ea3d42575d481300625d986374322d9fae0b9f6f207eb410"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/compiled.cpp.o",
+      "byteCount": 1466704,
+      "sha256": "1d6692b6fc6452c861aacdb01c0209dca33e61d52b3979240569801a5b6afa60"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/conv.cpp.o",
+      "byteCount": 1756488,
+      "sha256": "a98e8cc0ff0911008e351f801714f4b3f09cf1e0a24483a487ed896c90b6d694"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/copy.cpp.o",
+      "byteCount": 1172744,
+      "sha256": "44344ff9fa943e8ccd1292c2d33a942113b9c2df97183656f1087de58e991a76"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/custom_kernel.cpp.o",
+      "byteCount": 2973136,
+      "sha256": "3c2536e667f30837727c7cad919c460675792a84ed04f3203fd978f63dacaaf7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/device.cpp.o",
+      "byteCount": 3029688,
+      "sha256": "5bec6c95e4f51ec11eefd46f1707db99882d249975975a1f38047fb0d2bdf680"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/distributed.cpp.o",
+      "byteCount": 178688,
+      "sha256": "cba3ba721564bdb1b8347fee003cfea28436ef2dfbc5cbb7d7b8e697bb1bb992"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/eval.cpp.o",
+      "byteCount": 1473624,
+      "sha256": "67c28f93bb2cf7db6c1ae3fed44f8d7a328d8c96299b126ec89b276c14f51fad"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/event.cpp.o",
+      "byteCount": 1280336,
+      "sha256": "b40909c13b5e91daa686c8d5d3daf0c9bbae3a58848d9026731395df3048005f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/fence.cpp.o",
+      "byteCount": 1360336,
+      "sha256": "8df36fe07332597325c0c256080e1ebe34d6a4d8cfd1418d885163ad0cd5ac6f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/fft.cpp.o",
+      "byteCount": 3248600,
+      "sha256": "751161f070cd2240d25a11dd95e2326683638838ebdc827dbf21add8c4330bbf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/hadamard.cpp.o",
+      "byteCount": 1270016,
+      "sha256": "7aa472607eaa280b7dc72cdf5b87f69c0997d987f0f8fb742507d45388244c72"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/indexing.cpp.o",
+      "byteCount": 1705248,
+      "sha256": "f0637dead5c6ff608da167b9e7a45f526480994f485f893409c98589ab3ff32d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/jit_kernels.cpp.o",
+      "byteCount": 2784512,
+      "sha256": "4a7fac9bbc5d7938f9f14f395d98046c7759e5ed8186dfd420343bf3f34e5187"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/logsumexp.cpp.o",
+      "byteCount": 999464,
+      "sha256": "65d83715483add03aa3035628f0ba39d984b0488a5cd675209acbf2031512474"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/matmul.cpp.o",
+      "byteCount": 2355392,
+      "sha256": "bb64db39ccf5f844fd6243fd072008a02792f5a8fe9216b47e87654732ce5a2b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/metal.cpp.o",
+      "byteCount": 1315200,
+      "sha256": "d59057057fd14916e275dc56248cba29d0bc29a5caae8b110a78facab512014f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/normalization.cpp.o",
+      "byteCount": 1301144,
+      "sha256": "bc6f0139438865c7a71139bc3567fc598a7645efe7d78df1a71e949152e190f0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/primitives.cpp.o",
+      "byteCount": 1113056,
+      "sha256": "7a3b3bad35fdec42f300e0869842b1b355a054ba35059b67955e302bdfd61685"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/quantized.cpp.o",
+      "byteCount": 1790664,
+      "sha256": "4e0cb8377dbfdacd2e1f05e41886c59b237ac4cd2c04734fac254885f2122f49"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/reduce.cpp.o",
+      "byteCount": 1364224,
+      "sha256": "e9663e966bbd6b4351495c075659f89f5865943f6f78099507b0f3df58a3ee7c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/resident.cpp.o",
+      "byteCount": 602264,
+      "sha256": "2450e39681fc3cae05f197c482d68c0c007db6092e8af2cfc72ecc2f573e2513"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/rope.cpp.o",
+      "byteCount": 1117000,
+      "sha256": "954a44fcc17cfc3cb858c1ed014be4943e08193cc6359d989f53ac3072ab6d81"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/scaled_dot_product_attention.cpp.o",
+      "byteCount": 1386456,
+      "sha256": "adea2aeee87208959b0dd96a4985ddcc6aa46492040ca40b3d449d1181bdddc9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/scan.cpp.o",
+      "byteCount": 1054952,
+      "sha256": "c7ea037ead47cd6f2da1a0f2f2b6781920dcdab700c159a040008a6960694f73"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/slicing.cpp.o",
+      "byteCount": 1125568,
+      "sha256": "fc87affe7207b0eca803f9a8c707b178c9412c1875e249799caab78a1cc8d9fb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/softmax.cpp.o",
+      "byteCount": 988928,
+      "sha256": "bef229838305890628267f8f4472a6d8ffd1f32187f4b91958018932902e003a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/sort.cpp.o",
+      "byteCount": 1237264,
+      "sha256": "0d518009355e50b389ae110244ea84179739b20f9718f3f190cda83097f7c307"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/ternary.cpp.o",
+      "byteCount": 1227448,
+      "sha256": "9ec441f7752e8f26f698cecbdbcb585cc78fbc159ce238e132fd098e61b20bf3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/unary.cpp.o",
+      "byteCount": 1127240,
+      "sha256": "4faf5127a52e64d8829dc696b70e1349548f033a13958aa7a1462b94f1166243"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/backend/metal/utils.cpp.o",
+      "byteCount": 166576,
+      "sha256": "253a269445de3b37db9d4c8d2169c18d07423d1abf06fc6911025d4c681f6c50"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/compile.cpp.o",
+      "byteCount": 2133272,
+      "sha256": "f4c249a113dca8633ac82ed286f121aef46afcad7653ace71d42baf58732c74c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/device.cpp.o",
+      "byteCount": 18704,
+      "sha256": "805a7ce6c6be5efa8e8bd0dfa0209bc7abc3a2cbf6164f75af49e4c662b24200"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/distributed.cpp.o",
+      "byteCount": 463280,
+      "sha256": "c1a6919236d787a1dcf5ff8d6607cbd49593dfc42ceda61fa72eb125b3331df1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/mpi/no_mpi.cpp.o",
+      "byteCount": 70848,
+      "sha256": "cc04b216aae038f87ed25a71433f5cc55a1caf2d6c382d84b5103f35db938794"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/nccl/no_nccl.cpp.o",
+      "byteCount": 70880,
+      "sha256": "4c101ef4b80b4db252b59a1dacd933e4ae7e3e866f32acab56de0b41070ca90c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/ops.cpp.o",
+      "byteCount": 525104,
+      "sha256": "32ed3249d08fe5ec8eaafbca96465337ce1da75fbac150c13f456ab3840ad2fb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/primitives.cpp.o",
+      "byteCount": 357904,
+      "sha256": "55f8da5117f874d67326c7deec2f8afb3c3f2b080eed1f5480d72e960a7d1499"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/distributed/ring/no_ring.cpp.o",
+      "byteCount": 70880,
+      "sha256": "04c692f2bf48942d69869568b81bf292ec3f718b0fde2f09a6625ce5f7b8f893"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/dtype.cpp.o",
+      "byteCount": 56680,
+      "sha256": "2b54577d90ab469ae9d77e8c33b8751508bd749f5d5de920ead6625cf3d1bcaf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/dtype_utils.cpp.o",
+      "byteCount": 26664,
+      "sha256": "28ed8121206066d4b342926f98781488c57627fe33aae079bb00bc4d15d72463"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/einsum.cpp.o",
+      "byteCount": 1808320,
+      "sha256": "10b96fc9d3e15add47e6f1db5db1ff3787dde90652c56e7bdc51dac708fe1c0c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/export.cpp.o",
+      "byteCount": 8846984,
+      "sha256": "1dfca7b7fc19352450b24ce92f1b69c1e6b5f17e078020b30cf0c09f3aeb230d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/fast.cpp.o",
+      "byteCount": 1650184,
+      "sha256": "0e0d9a7c7b24c67b20182169cf753365dd183cf87b440c81ee32d6469e4a7b6c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/fft.cpp.o",
+      "byteCount": 504160,
+      "sha256": "06cd514526e0e3ca02ed83751e50c01817e6ca0a97cb88668ba2f07ed8bc316c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/graph_utils.cpp.o",
+      "byteCount": 651024,
+      "sha256": "cbd7895bda0d4301507a3a75e8af5b344bb4b5abfd10dad8c43c19cebb7d8534"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/io/load.cpp.o",
+      "byteCount": 823176,
+      "sha256": "9ec7a1aa0ee6beb5da182b0079bb7a2e4333b6c02c5bcb65f4b421577510822c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/io/no_gguf.cpp.o",
+      "byteCount": 322104,
+      "sha256": "3f898fccdcb4e52d329d2a05c66694fb39f3fb9027a062b70d4c1bb6b933c850"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/io/safetensors.cpp.o",
+      "byteCount": 3251672,
+      "sha256": "460537489c36f8a3173cd967b108d76ee595a3601509391d4686d543bc2fbc01"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/linalg.cpp.o",
+      "byteCount": 1277920,
+      "sha256": "ed8fba7f805d5db5c26fe1f05de2d2b0d52c7b2339f24c6b8a61ba5a87e23f1d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/ops.cpp.o",
+      "byteCount": 7538072,
+      "sha256": "fc83e1412467b90b58b37d5ac3eb3f2b4ae80320ebf07b0e18d6bc9a7d6d300c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/primitives.cpp.o",
+      "byteCount": 5862552,
+      "sha256": "6f4687b7df20ec4ae9309a47a99d8229b450df664e0bc139e0b3505fac94b99a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/random.cpp.o",
+      "byteCount": 923136,
+      "sha256": "95cdaa305ea6da039afab6619d7a12c9ccdb95643deed70202aaddbe17ebc623"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/scheduler.cpp.o",
+      "byteCount": 498296,
+      "sha256": "1690b21fe8b2865c32fb5015f6f37d0225c30417c849cda30e76b5f7ce437f94"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/transforms.cpp.o",
+      "byteCount": 3236752,
+      "sha256": "bc5902b35aade724bdd39b0aac126ecbbfe5829efe0d27819ab6a2fcc1e2d6cc"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/utils.cpp.o",
+      "byteCount": 487960,
+      "sha256": "75bf90353c0f00ecaa57a84ff82122af7c95d4c9ccaeeb79b60dffe2e3e06ed2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Cmlx.build/mlx/mlx/version.cpp.o",
+      "byteCount": 2488,
+      "sha256": "3dcbf62b6c7b3b540451cdf72864cb79330da0718f32bd5670678e72aa883855"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+AdditiveArithmetic.swift.o",
+      "byteCount": 13104,
+      "sha256": "94c9a3bd1b4c58a2e7387c3ee651da12ec400c60a68468e25ce6d6eb8ab28aab"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+AlgebraicField.swift.o",
+      "byteCount": 38776,
+      "sha256": "d2a3beb158c61d8671b75762e949515d34268f11f362dc9025d62fe96287285d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+Codable.swift.o",
+      "byteCount": 11952,
+      "sha256": "c97816de4552c81cdf673056293f3c84fd1758da81755352e7f40e3c2cca9094"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+ElementaryFunctions.swift.o",
+      "byteCount": 75008,
+      "sha256": "61df91ebfa8c4073010192db757485cfc6e1a034cc8ac8780eb5c5b3b36ed4dd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+Hashable.swift.o",
+      "byteCount": 12792,
+      "sha256": "096f692b2cc30058ea35c840a309ce4eb8cad39ddc09ac3605a51a59ed667eeb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+IntegerLiteral.swift.o",
+      "byteCount": 9224,
+      "sha256": "95431c5918bb04ca09563a5b4778288d83bc9bf5c39eda8b6077f01a06a9c839"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+Numeric.swift.o",
+      "byteCount": 18152,
+      "sha256": "d66bb70b3368df7ebf4fa83b28e13452fe4a5a9003622a94049616522594414e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex+StringConvertible.swift.o",
+      "byteCount": 11096,
+      "sha256": "dc873f2cdb10c93cc11185e834db088904bff528c09b1a66f2e37df4a998e866"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Complex.swift.o",
+      "byteCount": 32936,
+      "sha256": "5b3995138c3ccabacce1afacc1f466208a0d7c82720b62a9ccd285c53ae583f3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Polar.swift.o",
+      "byteCount": 12144,
+      "sha256": "222645eb710505d1336edbd3f59a0597d788ec7790bd59a5666db58e6a403ed1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ComplexModule.build/Scale.swift.o",
+      "byteCount": 6272,
+      "sha256": "f7eb056fc6f6ce4555c713975c9005b9392843a1413db5a7e5b9ad54e597949a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Generation.build/Decoders.swift.o",
+      "byteCount": 21952,
+      "sha256": "0779c55d4390aaf367d03727756cb880a86dae54b7b493102d46b454813d931d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Generation.build/Generation.swift.o",
+      "byteCount": 69232,
+      "sha256": "addedf71d423d0492a26314ef88344224cddc9bc11a9f2d628c336e8f55b09f4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Generation.build/GenerationConfig.swift.o",
+      "byteCount": 59928,
+      "sha256": "df515734e1caed1f09b4bf6719de91963e89acf37a9ede3320e51f676bb2e088"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/BinaryDistinct.swift.o",
+      "byteCount": 228240,
+      "sha256": "ca8b393548daf0cfa4f92d538f7e0eeedce3d066135cc20a0f1c7484b208de1c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/Config.swift.o",
+      "byteCount": 326128,
+      "sha256": "944478f24108851c5429e2069fa2ed0ecd1edb4427089b7a5877d999d06be8de"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/Downloader.swift.o",
+      "byteCount": 318800,
+      "sha256": "4994c70b253d473425ee920b4dd437155515e3a1bcbcd300ebe2b060e908f801"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/Hub.swift.o",
+      "byteCount": 191704,
+      "sha256": "7d8be8f23b88811b9c15482c16693aad1b4839e9dcf39e95c2729fdd86b6d8d2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/HubApi.swift.o",
+      "byteCount": 838160,
+      "sha256": "a7cce372c29f19f2ab0591eaee59eaeb58a77de8f518afb92c159aa0b378c9b0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/JSONSerialization+BOM.swift.o",
+      "byteCount": 29728,
+      "sha256": "b0272eaf4ce58dc4f5c7681adb6d8af4a0850a35a323131836326810714689f2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Hub.build/resource_bundle_accessor.swift.o",
+      "byteCount": 15752,
+      "sha256": "cb26ce6ec1bde207beee1b239fe572e974278bc468db088687fe4a80c7109101"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/Debugging.swift.o",
+      "byteCount": 4616,
+      "sha256": "83536dce40db02a11ab3fc2f56b807ff8587be0e19d8498547fc154382cb0074"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/Descriptions.swift.o",
+      "byteCount": 17736,
+      "sha256": "89c05d42d6f5bf9ca4ff1adf536363efb8f0e2836d8d08b4e722918c162978d5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/FixedWidthInteger+roundUpToPowerOfTwo.swift.o",
+      "byteCount": 8880,
+      "sha256": "214fa392dd5ccf48f40034d367a5f496d4f8545c60e03f10306227504bd4d4e4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/Integer rank.swift.o",
+      "byteCount": 14472,
+      "sha256": "8116f33ca9befdccea6460035ae6aa607c72bffb797893efd22bd7fab70eb2ab"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/LifetimeOverride.swift.o",
+      "byteCount": 3928,
+      "sha256": "3017e02084a7d94fd4ce320347ffb54b07a09c0137d7cb00344d8944139fd00a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/RandomAccessCollection+Offsets.swift.o",
+      "byteCount": 4024,
+      "sha256": "0fc898f172b7efbef0741c2f30b6919b458e262ca6216ad2d15805e6e0e2a76d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/Span+Extras.swift.o",
+      "byteCount": 3920,
+      "sha256": "70f23401a7368a30a4084b0380eae7f7c962ef7e5c63ea45414dae08f33844bd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/String+Padding.swift.o",
+      "byteCount": 3920,
+      "sha256": "971021785eea9d93813ee4b8f2b89c9ca720838c18e4880294d08fe790e0aa1f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UInt+first and last set bit.swift.o",
+      "byteCount": 5696,
+      "sha256": "27233d112a4fc1b481dda57e93ed1108f0166022ceffaddd2843f88f9c090e2e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UInt+reversed.swift.o",
+      "byteCount": 5104,
+      "sha256": "16f3eb857adc720df6139a498a7f40becdb2e15884af54a9e3c73a4acd6c62ff"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UnsafeBufferPointer+Extras.swift.o",
+      "byteCount": 6656,
+      "sha256": "17e6870790a93c83440fc6cbf367c0ac9f44c50cd672b35a6f4fe9903fac1eeb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UnsafeMutableBufferPointer+Extras.swift.o",
+      "byteCount": 46080,
+      "sha256": "c8afb07ad5b412cc215d1e7d5409265d35f6afaec903a1aefd59b57a48b0bfc3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UnsafeMutableRawBufferPointer+Extras.swift.o",
+      "byteCount": 5448,
+      "sha256": "0057d7d09c209214cf643ce2e74a5a4905881c4b48af539bb15bcb8f0e2a883c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/UnsafeRawBufferPointer+Extras.swift.o",
+      "byteCount": 5432,
+      "sha256": "40e86527d29aa0890a16149fd524dabf28e854e8020bbce9833ca29c024b3bb1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/_SortedCollection.swift.o",
+      "byteCount": 5824,
+      "sha256": "6f40da212364d4221be458b032c5c3a5a1dc47d5b4dd709673c17237ccef3119"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/_UniqueCollection.swift.o",
+      "byteCount": 6568,
+      "sha256": "3d36eca249ed266cc823e657d5e80c0fa8b9628be42fdaf4e624b932dc32487c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/_UnsafeBitSet+Index.swift.o",
+      "byteCount": 25112,
+      "sha256": "5780ec02e86e7dc5719eb3c2e63732ce90543ccbb12522e46b4f2a73dc0acb18"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/_UnsafeBitSet+_Word.swift.o",
+      "byteCount": 52856,
+      "sha256": "a5deac62dd297fdf7e5272ea90fd3e5fd280a53106006a7c49750905720eef1d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/InternalCollectionsUtilities.build/_UnsafeBitSet.swift.o",
+      "byteCount": 118376,
+      "sha256": "fae91c637e60a48e513da380de13c17617eaa19b46516f0f1e0130e5fc2a38ba"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/AST.swift.o",
+      "byteCount": 823912,
+      "sha256": "983fc87e5b68b4560d55298f34a3f3f01d46a77272ac3f0b46126484f2d95410"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Error.swift.o",
+      "byteCount": 21312,
+      "sha256": "fa167ee7d46b1256d4e5212e931ace737e938be09f63a6d2cc8276d4abf33c59"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Filters.swift.o",
+      "byteCount": 1204936,
+      "sha256": "26c5ff5b798126fbe90cceb3a1c9df7902c6f8aa760d57d0e9df43505bd40057"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Globals.swift.o",
+      "byteCount": 128808,
+      "sha256": "f65d74c38a276b8c5aa43f954f7b8647ece0d40dedfffdd43655a5b08183fab7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Interpreter.swift.o",
+      "byteCount": 377696,
+      "sha256": "1f4148178bbf9844fbaa430789044f11d0ba8204bb85f2dae8c2b0f0afe9a1ce"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Lexer.swift.o",
+      "byteCount": 91288,
+      "sha256": "7a283ed1d0a6c5290132d09ba935ea0110bafc6c6b8f0d1019aff37da9f347d3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Macro.swift.o",
+      "byteCount": 118416,
+      "sha256": "17f26573c974505d767403bacd6ccf20a5816885bf60c2b63f588dc501f0344d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Parser.swift.o",
+      "byteCount": 317288,
+      "sha256": "57fad1d9385e471d19f276f6fc5b95df0f66613dfd78efd75062acd98512be3d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/PropertyMembers.swift.o",
+      "byteCount": 148416,
+      "sha256": "4accd6a92b849c01200d68b496652e7738050f635cc13c5188ea12c3a520ea60"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Template.swift.o",
+      "byteCount": 53448,
+      "sha256": "76b4d528d5aa2ed4591701bf4e869f6cfd3492f09d0e216948febded5f89d1db"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Tests.swift.o",
+      "byteCount": 158560,
+      "sha256": "0fcee4b73c6fd6401851fc70eaccd94f27c37f4ed97880cd3bffc6bbb8fb45cd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Token.swift.o",
+      "byteCount": 709128,
+      "sha256": "bf7824c638708f73c88fc479aa110ba5bdf605ca496c3b0d63647aaa93912313"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Utilities.swift.o",
+      "byteCount": 32856,
+      "sha256": "b03ab8ae5686c5ae51a1753f3be0627249876a82e06a1303b6a6d670bdf608be"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Jinja.build/Value.swift.o",
+      "byteCount": 566112,
+      "sha256": "9ddc3f2e2e28f6824cd528fcc0b742ec960959c8c64a2e10c602e46279637aea"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/ArrayAt.swift.o",
+      "byteCount": 71672,
+      "sha256": "cce1d303759d0619c16804f91a6ec8bfcb08a574d7d17ed1e9e176d2e8e6e88b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Cmlx+Util.swift.o",
+      "byteCount": 72216,
+      "sha256": "71af4580e0ec35a692c25004389ddd009af75a4356c89a32fdf0e9a68f69aec8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/DType.swift.o",
+      "byteCount": 476064,
+      "sha256": "b6321074887c30b9c3f6511c421b32ff6b14944dbe0e114017bc10a099787d40"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Device.swift.o",
+      "byteCount": 63896,
+      "sha256": "12a3806f5a584c1f6ebc94c20e481169ddeeb8e4896a1ec05eaccec021d68dcf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/ErrorHandler.swift.o",
+      "byteCount": 77816,
+      "sha256": "46ddb2ad43b98639d32508d09eaa221e4dc889cd7e4801764efa8bd0b4447b60"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Export.swift.o",
+      "byteCount": 159184,
+      "sha256": "5d9027b440fb0ddcf296692546accf16b8eec7e3f97248253f559a4d8b5fc39c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/FFT.swift.o",
+      "byteCount": 50320,
+      "sha256": "56bdc1c49525168f456dc80f759d8aa0318d28e0adad9793e1aa1b1aaba84e5b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Factory.swift.o",
+      "byteCount": 87208,
+      "sha256": "0453d26252c6f520325ca04a08588da9faede8024750016b7cbb558eb727eeda"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Foundation+Util.swift.o",
+      "byteCount": 21496,
+      "sha256": "7e1c42474f5cc0e6b56670c502a0d6df2cc90e9a4c9cc559d8fa4836c53af644"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/GPU.swift.o",
+      "byteCount": 86672,
+      "sha256": "6d40544b03a487bb1859726e5eb8beba44a2820e78ba7fa2ac14f3a71f56829f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/IO.swift.o",
+      "byteCount": 124168,
+      "sha256": "e68841fed77176cf968902216427e4bb9dabe5219b7843939ad7a12dcba46e89"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Linalg.swift.o",
+      "byteCount": 64928,
+      "sha256": "ed7be5cc8c638ffc1d3832067bb4433e6537787002d753a1f795895efe3a2c63"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXArray+Bytes.swift.o",
+      "byteCount": 89800,
+      "sha256": "7feb23e5822d1c790a90b3c6a59e1d2b6df848c5a78ed7649acd62c5aeed5b3f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXArray+Indexing.swift.o",
+      "byteCount": 585960,
+      "sha256": "9167c05d5e01e31ad69bf5f9bd40ceacf0039719d25e5ab87bb941c7b4867140"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXArray+Init.swift.o",
+      "byteCount": 175552,
+      "sha256": "1e929d05ff0362f9915762d3ad3d7fa9fccc3d869a25a993f997f3a5d524f214"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXArray+Ops.swift.o",
+      "byteCount": 132512,
+      "sha256": "2991063c2eda0ca2a1e09fdcf4347b066e66764de6a56e127fa9cd708444e002"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXArray.swift.o",
+      "byteCount": 81776,
+      "sha256": "2932b75542e030e870a2d76797d50166c90952b670c5c7024ad2cf69fa7ab2c3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXFast.swift.o",
+      "byteCount": 54200,
+      "sha256": "5ac4a6af184be6bee1fb3293258de7b41ec2b445a42ce8233e32f8619f1a1cc9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/MLXFastKernel.swift.o",
+      "byteCount": 60296,
+      "sha256": "f1af9db85fbac4b3ee3f4a156e97a6795170f3f812a636d59785d2ae42d3530d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Nested.swift.o",
+      "byteCount": 295256,
+      "sha256": "3d019587d8e747df46725e937e0436aae6ef15595f51cb1f02bc76285fb1e017"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Ops+Array.swift.o",
+      "byteCount": 81840,
+      "sha256": "d66c0ebba53922d5fdfc5a6eec0f1088487f27eb6ad802ea7dbeb581b4a4a52f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Ops.swift.o",
+      "byteCount": 298152,
+      "sha256": "ad1db3c662816fee8566306d8af4cd30fe4eb60097f8db5ca7005067e94e1138"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/ParameterTypes.swift.o",
+      "byteCount": 50584,
+      "sha256": "8518765ef213b8c88f5a491849f098705a9c3d0cb1ae6eb37dbb27e3b5c0eae4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Protocols.swift.o",
+      "byteCount": 10616,
+      "sha256": "4ada9dacc729cb8ff92b4893fb31a76a0bb7d83a3b992b7716f9248e3e3a5ebf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Random.swift.o",
+      "byteCount": 116728,
+      "sha256": "537f363754a627778314ef7b154a1ffb7a45befc2462aa92242c6e1f3cfabaaa"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/State.swift.o",
+      "byteCount": 54768,
+      "sha256": "240137d6c109ed99021a249dbfb0c67eee93689e9d9e8edc76b2c3a953ab3aea"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Stream.swift.o",
+      "byteCount": 58968,
+      "sha256": "6fa687f793a8510dd912022ee61408cc4df581cb8f4af2aba8186d0e5952a9fe"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms+Compile.swift.o",
+      "byteCount": 120200,
+      "sha256": "286f031543125ae30808793f16f90cbe23ad0434968cd0f20010c07c2c2b777a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms+Eval.swift.o",
+      "byteCount": 40336,
+      "sha256": "394b0230cb9567b725eb84886a0ef37232b1e05a7824d029deece9d825e4cc95"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms+Grad.swift.o",
+      "byteCount": 38952,
+      "sha256": "c714f9593ae61f0feb167edbb522235cd029695d6c6022ac2ea3af3548f5bfa0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms+Internal.swift.o",
+      "byteCount": 190008,
+      "sha256": "24239b747f3af4ca67be63c6eaee5cafc6a029e53766cc8fb6932d0177514640"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms+Vmap.swift.o",
+      "byteCount": 49200,
+      "sha256": "8b1d637075b2247420c93f24af6a1bc641ed324ffd1b011d985bd3e265943494"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLX.build/Transforms.swift.o",
+      "byteCount": 11912,
+      "sha256": "c40c5282ad3db27bd89407e704fb679853e8fc0efd668c878067161f95a5d4f6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXFast.build/MLXFast.swift.o",
+      "byteCount": 10168,
+      "sha256": "f62d381969bb68fd02e07d8292eb3c0973faaa7eb2e80f32d24c80ff5aec610e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXFast.build/MLXFastKernel.swift.o",
+      "byteCount": 7496,
+      "sha256": "38c5047354696a5f4b42fefdb9036c2e68010730dad0bdd77f39c11753f67d95"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/BaichuanM1.swift.o",
+      "byteCount": 223184,
+      "sha256": "09c3270d334b228868f2252bdd9b5b6b1c50015c1a6270ab591e491072c921fa"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/BailingMoe.swift.o",
+      "byteCount": 228008,
+      "sha256": "b727fd8417a6d6ba53cd7577c627557c8c83902d222cda3562d19c72dbeab696"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Bitnet.swift.o",
+      "byteCount": 227192,
+      "sha256": "dcb4a57c1613e47bbb549b1a9f605ace9514a9dc5f2680581aa3a09eed0b9338"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Cohere.swift.o",
+      "byteCount": 150096,
+      "sha256": "6d425c4390820a7bcc7232bca801ce31a0fcf052c512ac1b6e08fac0ed889532"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/DeepseekV3.swift.o",
+      "byteCount": 338256,
+      "sha256": "642d3de780731afa02c714ea3fc274c11d3eef9fd613a5570e993a9a602b016e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Ernie4_5.swift.o",
+      "byteCount": 150272,
+      "sha256": "1a90ab39240c6f7ef03e5a16a03424e49b8d76f6f5586defb2198ec1f807efe8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Exaone4.swift.o",
+      "byteCount": 177512,
+      "sha256": "6fd1d0dc401ee154e2e49a915d7f1c626e726c56d199744f7fb53cff82015b69"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/FalconH1.swift.o",
+      "byteCount": 294472,
+      "sha256": "b4289c3ed880c6042528457d7c4f806ac280dbf042b83a4f1d93526773ddd957"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/GLM4.swift.o",
+      "byteCount": 161344,
+      "sha256": "3a7427335f8440a04b36d8d3df29da44254caf27b847ebc824bd35ac08536243"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/GPTOSS.swift.o",
+      "byteCount": 348232,
+      "sha256": "4e3c125ad526e5eef6b253c20e63e8affc07e3b4ef2cba240554fcbfd5a25854"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Gemma.swift.o",
+      "byteCount": 160928,
+      "sha256": "8efd73a2a6883596aa6264ea01c6e52e29e294bf3a4c8de202865924da9b01e9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Gemma2.swift.o",
+      "byteCount": 161784,
+      "sha256": "ca3c79dc03f1812913873337fbdaaf3b556aae2d51bbda9d348c97f2aba7eee2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Gemma3Text.swift.o",
+      "byteCount": 242576,
+      "sha256": "98a3a2b79dc0ceb565afc78fca3ccd83b013fcd8b0814d5c37b7f248fb56f8c5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Gemma3nText.swift.o",
+      "byteCount": 501968,
+      "sha256": "0186c99ecf914910c7dd47caf9600f28e9d027f22862dce4d4522e6b254a54f3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Granite.swift.o",
+      "byteCount": 166000,
+      "sha256": "64c56eff580037f68b00cbfa74bb42122efaf94979437be2bbfdabed0df5b542"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/GraniteMoeHybrid.swift.o",
+      "byteCount": 379496,
+      "sha256": "edc85f2b48e8b4a71e21975adf14a3bdab85af345ecc362378332373f1a124f6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Internlm2.swift.o",
+      "byteCount": 204680,
+      "sha256": "7925582e2978ef405bb6af67c34bc3caae82bf2e7ad9dc58a3ccc3d389105c22"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/LFM2.swift.o",
+      "byteCount": 225144,
+      "sha256": "e6a603271b1bc0a490dc3a73381bb088ad72477ee0492ad9f79d39c6363bf9a1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/LFM2MoE.swift.o",
+      "byteCount": 303288,
+      "sha256": "fa6ddb8a5f4ae7f9f75ff5df5edcbd8208ccb2288f64289d1ee02907a1459632"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/LLMModel.swift.o",
+      "byteCount": 125904,
+      "sha256": "558fbf98237e6faa4d83a65ed762ca4ddfe6b57d5ccca7123c0866d7345baf6e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/LLMModelFactory.swift.o",
+      "byteCount": 438400,
+      "sha256": "e3120567fa33933059eae1cfcb622b3bc3d3b6e43e8e935eb8ae6680b2b13d68"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Lille130m.swift.o",
+      "byteCount": 184208,
+      "sha256": "9ddae8c23334cd7d3ff8f8659b2b65a099be83690fed99efe9118fead945f98d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Llama.swift.o",
+      "byteCount": 214224,
+      "sha256": "ce9a50b111b23e35c18102ff982bb9d704f8411617cbaf494a137b0406ccfdd0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Lora+Data.swift.o",
+      "byteCount": 81536,
+      "sha256": "8cb6c81d09e82f072ffd7971a8afe76618000ab8bce9b56223ea1a37a30b66dd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/LoraTrain.swift.o",
+      "byteCount": 234648,
+      "sha256": "09278fad75fb7b5548a706a49c089c62c70dbc2b0acd2f830b28970d5d4afcd2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/MiMo.swift.o",
+      "byteCount": 170624,
+      "sha256": "b3b160a5c2d95c6d0eea7ecff0a5375c4109543c408faf01351e07b006129d58"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/NanoChat.swift.o",
+      "byteCount": 176768,
+      "sha256": "06bcb2dc94dd04d4660232df69668f7399c318042bf4df28eaf73dec4d25407e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Olmo2.swift.o",
+      "byteCount": 223968,
+      "sha256": "d13d9e6e38ba0f0c20442d76955323e0d592831127cd481ee116a53900eb48d0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/OlmoE.swift.o",
+      "byteCount": 250728,
+      "sha256": "ecd0667faaf5bf26c450a99a615b9cb1562b0d2242e93b0f6ab3a735dbcc1c6b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/OpenELM.swift.o",
+      "byteCount": 180856,
+      "sha256": "a02b401732c5484c65b41573858e4c767ceab7557996725cc60121f4b272674c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Phi.swift.o",
+      "byteCount": 153400,
+      "sha256": "39df3f88cdf220414b16a7e790e89cca72fe147a5f6ff6d2bedfa384ce5af5f1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Phi3.swift.o",
+      "byteCount": 209368,
+      "sha256": "7597c2cd027ef2b9a4d9a355854aa5d23b0f330a68065e8e21d97b0383e042f4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/PhiMoE.swift.o",
+      "byteCount": 210248,
+      "sha256": "6933890d267fec85c805efa2bcf824c16ca13499a91f992aa7ad56371c0e7bf1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Qwen2.swift.o",
+      "byteCount": 168336,
+      "sha256": "0ca13a65cd5797f64cbd95241dec0d75ba661c0370de0e2575b161f4bd136f55"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Qwen3.swift.o",
+      "byteCount": 165160,
+      "sha256": "03d9b67abc645954c4e1b8202b2fe0e01f69e13bfb66b0a311cf2b0a95f8bf8e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Qwen3MoE.swift.o",
+      "byteCount": 226104,
+      "sha256": "6dfbb1d646173425ff9810185948ac931fb902f425c3d84ba8123cb847678cde"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/RoPEUtils.swift.o",
+      "byteCount": 59232,
+      "sha256": "716dd3b9d910c2d499107b662c29e13dda4b6c137ba9e161e779c873b6af9cbd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/SSM.swift.o",
+      "byteCount": 97400,
+      "sha256": "a5b8314972aa472be24f4cf4356b066a81f93ef7a146e074b45d990b55627f15"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/SmolLM3.swift.o",
+      "byteCount": 199080,
+      "sha256": "90c13b23bec00a7cd426dcfd6275127a62abab835b29fe016a8905c408145248"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/Starcoder2.swift.o",
+      "byteCount": 154608,
+      "sha256": "899a7af16ad253c04c798949e706a7f7cfaf1f9a15b4789b36f3b794a004f180"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/SuScaledRotaryEmbedding.swift.o",
+      "byteCount": 38040,
+      "sha256": "cab6770d140dc4bce6e71701b70e8422dabe513e99333c253ddc8c0a18f75e7f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLLM.build/SwitchLayers.swift.o",
+      "byteCount": 74952,
+      "sha256": "9d9d095368d99bd102ded67a796f17300f3f532b5ab28170e314748cba4590a7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/AbstractModelRegistry.swift.o",
+      "byteCount": 65488,
+      "sha256": "3825941c426149cea25b8f9092e8ce3ff8b336b4d13c39a644d804ad3cb2f39d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/AttentionUtils.swift.o",
+      "byteCount": 56848,
+      "sha256": "9fd7b7b96be7a7788f34fc03ae59f3c6033cebee121b3ceb906dc55661aac4a5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/BaseConfiguration.swift.o",
+      "byteCount": 135336,
+      "sha256": "61348a31a867cc80ebda2e244e788eac6d0ab1896d21ffe8c36af5ab9c8eaa39"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Chat.swift.o",
+      "byteCount": 103288,
+      "sha256": "60932177bcaf875b62ce0707801a50a2d37144f79810a9b5d8efc811ff3dffe9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/DoRA+Layers.swift.o",
+      "byteCount": 120344,
+      "sha256": "a14fd46f90a91f62350374cd756ccffbee3d2e04a0b80ceca651608978eb3fac"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Encodable+toolResult.swift.o",
+      "byteCount": 14656,
+      "sha256": "d02bd0ffbae6b5813663c98691c9d17d8fac84f8d50c833d0617be2e4bf51201"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Evaluate.swift.o",
+      "byteCount": 286656,
+      "sha256": "3d4853d6de97d1bb4b32e866ba96e035c4773e384653e55c0825d15773d11bd0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Gemma.swift.o",
+      "byteCount": 33576,
+      "sha256": "45ca8d4eb0053fbf1537fe5e692f0ed682d04fdc3777c3ac3d79a142ae67db6d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/KVCache.swift.o",
+      "byteCount": 712544,
+      "sha256": "a6f1a2571a96cc89c92a90e813066abe4f4cac0c4e9863f7507e406b89984404"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/LanguageModel.swift.o",
+      "byteCount": 65512,
+      "sha256": "5e5ba9b4194292577ca32f83224c13b58cc22c593e4de59dda4eb34c243dd576"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/LoRA+Layers.swift.o",
+      "byteCount": 119056,
+      "sha256": "6ff78e99359482b6a0bef517ec83aa4040b9365fa30080eb26c43f1c8533be8c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/LoRAContainer.swift.o",
+      "byteCount": 167760,
+      "sha256": "ab6600ae038b857db005a58adcf7b05a6d1e2514ca2f64b69afa7733c289aad2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/LoRAModel.swift.o",
+      "byteCount": 31040,
+      "sha256": "e4f1909a937b3770f73f774adf9940584b316fc5517f7a6eecd7e6485e7a3b36"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Load.swift.o",
+      "byteCount": 47208,
+      "sha256": "7cc17e147de2c2cdf84a4e27a19c954798792afb8d55cd7a3982df90a2b840d6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelAdapter.swift.o",
+      "byteCount": 28784,
+      "sha256": "d2f62f5acb40bed746bba5ab1f64df05c7132168e37e1ee6dc533fca3327adbe"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelAdapterFactory.swift.o",
+      "byteCount": 71272,
+      "sha256": "e8f9967cfb131ca035c6effb83f6d62efed70cc6b5e483fbdd59972b2e03d889"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelAdapterTypeRegistry.swift.o",
+      "byteCount": 61376,
+      "sha256": "778a70a54715b6bec4aea103f6726750ba3c3e1389a1a527be285a9f36b4b162"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelConfiguration.swift.o",
+      "byteCount": 47672,
+      "sha256": "0eaa0d39c3ae107548e0118961bfcdffd373ae796b9261b7f0a01be5958e7d1c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelContainer.swift.o",
+      "byteCount": 33008,
+      "sha256": "6226262ff3916ca548eef67f5aa91db258624c3b63bb7e60ec3d8b92b099b5c6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelFactory.swift.o",
+      "byteCount": 169136,
+      "sha256": "a952614b58d85619222c34ca88037a2823083772a222a698d007e03b0af901b8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ModelTypeRegistry.swift.o",
+      "byteCount": 30504,
+      "sha256": "0a58b7c4ce0111c9356f30794cf8e3327eb2f98b172f882db5db022df4a9d906"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Module+Extensions.swift.o",
+      "byteCount": 27112,
+      "sha256": "bc7d20a0ffa5d59ea79959e223432faa26c0bb9c76cfdc9c6b683de8cb5c5b8a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ProcessorTypeRegistry.swift.o",
+      "byteCount": 30752,
+      "sha256": "a6b446a09c8c6b80b9ac4709871e7a9a2b354781fd22049c35b5df2da0098be6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Streamlined.swift.o",
+      "byteCount": 145880,
+      "sha256": "23a9a7a31c8d5e75f85db6789364d2808bd7b37980caa8d705a548c86157230b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/StringOrNumber.swift.o",
+      "byteCount": 45360,
+      "sha256": "0464c0637887ce27b8c0b46e8b3e21409940ca5adf4a4bb00e42ac5e76878de9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Tokenizer.swift.o",
+      "byteCount": 96192,
+      "sha256": "597093b9fbc337ce163c411f7e588c1e6a4f7de3be2918ca8114e2929d8521a4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Tool.swift.o",
+      "byteCount": 36056,
+      "sha256": "576d95eee6a1b36a22da69fe50edb05373b86da53061e270d921697b18f5ccc5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ToolCall.swift.o",
+      "byteCount": 231104,
+      "sha256": "125a66fa76751d4a6be09ef0d218efc4f9310c19ad1c079a144c8865acef660a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ToolCallProcessor.swift.o",
+      "byteCount": 61024,
+      "sha256": "a93315d16194c69a9b40bf055fb7c6ea90757affecb65ffdc05286d2fa4098dd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/ToolParameter.swift.o",
+      "byteCount": 54544,
+      "sha256": "57ba59ea7958a4487f7a08c6ab20b43dd2b286b6f55d6d5c2ffa3820ed3a05c4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/UserInput.swift.o",
+      "byteCount": 125584,
+      "sha256": "6b2ca16858a34745f0fdc5064f0cdbdf28730b452df0e85eb0df9c68b3b2cfa5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLMCommon.build/Value.swift.o",
+      "byteCount": 85568,
+      "sha256": "c98f4d884f1bf836d14521b35c6ada0eb8077c1bb6b828c3cd6e388a0a0c8cd0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXLinalg.build/Linalg.swift.o",
+      "byteCount": 16528,
+      "sha256": "c8f7e094912337af68e6bab087c0f1bd50cc35b59054ca245b2a6101f6889860"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Activations.swift.o",
+      "byteCount": 199960,
+      "sha256": "16a016a8d5c850969e24b6770eb929844363ec9c427a28beb7a9afffcdedf72e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Cache.swift.o",
+      "byteCount": 18096,
+      "sha256": "98930fc9a3df85e897aa285d08d1fbc8c764dac6deebfdd4a102a1e116e5465b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Containers.swift.o",
+      "byteCount": 39368,
+      "sha256": "3a6ff815fa75d6f44985a52d345da1b33250ebed37d1aeca0532b9568778dc9f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Convolution.swift.o",
+      "byteCount": 62784,
+      "sha256": "bf8569422f01b6c05fe1ca154381fbfc96ed8b4f467843cc7e31e6a5d13d1924"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/ConvolutionTransposed.swift.o",
+      "byteCount": 64104,
+      "sha256": "40396141c08ce420a7451a5afdfdb1a118a57d5e8e2afb0acc1638b6d47170f7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Dropout.swift.o",
+      "byteCount": 37856,
+      "sha256": "9cf985d2cf2932af21833cb0bb22f7c1be223a9cc85b7cc7c2b4e5a77adfb74b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Embedding.swift.o",
+      "byteCount": 35896,
+      "sha256": "d51ca8f2601a6ee606a6f65e14d48c9b42354124a6e8a628ad7e7f692b94f3c3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Linear.swift.o",
+      "byteCount": 72376,
+      "sha256": "e3c143ac1be632ff8a3e7cc40c9832e7a60ca13508a96ce293ed749d4ece7972"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Losses.swift.o",
+      "byteCount": 67680,
+      "sha256": "3b61cc1316e8c09817006044c1ad1911872e41530d275741ae310a94092e05f0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Module.swift.o",
+      "byteCount": 520904,
+      "sha256": "c42a66ee976a71b30c6bf5fd4a2e200db4f50ab1867e8d5d874e8ea0a504ca06"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Normalization.swift.o",
+      "byteCount": 121288,
+      "sha256": "261f013e28e8e2567e8217f3a7ccf5bc71285279ab62f80668b65d38f52d0e7e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Pooling.swift.o",
+      "byteCount": 79512,
+      "sha256": "655084e459d2f7d90c32825e19a10fe2dee22672bd86843b3b99045e944f186e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/PositionalEncoding.swift.o",
+      "byteCount": 123264,
+      "sha256": "6acb34166f4e1d404056784a5dbf929870c458b8f26126e4b8c9a0e6bb326195"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Quantized.swift.o",
+      "byteCount": 125328,
+      "sha256": "bb5131a28960792746cb0c522100ccf048d7216c06e51280c084bebf35554b67"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Recurrent.swift.o",
+      "byteCount": 129704,
+      "sha256": "57704698d1a23d4b6445b4a47a752f330d3c225cb5360b6163156d7faeea41e2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Transformer.swift.o",
+      "byteCount": 204976,
+      "sha256": "6bd9e38e6ac98c1a57ba7f90c62beeef9c207748f91649e8b36411b2a5be9f75"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/Upsample.swift.o",
+      "byteCount": 148976,
+      "sha256": "7544d8cf4669d88ceabcd7d7e7d5f06cf9bd408903ac02be56ba09a7c9649fba"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXNN.build/ValueAndGrad.swift.o",
+      "byteCount": 33552,
+      "sha256": "a2bd25755d627234ce6fde0b8fcf3cc25bb22256a8bc7a8c7a0388ebc0195dd7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXOptimizers.build/Optimizers.swift.o",
+      "byteCount": 252512,
+      "sha256": "c9ce922aa488c17d95108713b8a0fc4754050001b02e54aae4efc245ebe17815"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/MLXRandom.build/Random.swift.o",
+      "byteCount": 30016,
+      "sha256": "993ec18272e28fa92a3799edf4e7021a5a4b4b5343b0b34ff4aa0ab30032d0ef"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Models.build/LanguageModel.swift.o",
+      "byteCount": 247480,
+      "sha256": "ab0ec826c8205028b6a2eb226b70c70ab7a61278db33a269cc6ecf6920098c73"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Models.build/LanguageModelTypes.swift.o",
+      "byteCount": 22968,
+      "sha256": "69df80433c19bbaac36875a1e7fc2fc6b1040ca96e3efee6bd47fa8e3c1a4d12"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Models.build/Weights.swift.o",
+      "byteCount": 118648,
+      "sha256": "1bf7d8a20fa1c67a6212ae9ed221236b037e02c0339348a4dd4f719497b1d51e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Numerics.build/Numerics.swift.o",
+      "byteCount": 4264,
+      "sha256": "e98779895a1841122af9e40000c04b2dbe515f52280f97f36d2ef5ca8cdc07bf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Codable.swift.o",
+      "byteCount": 20696,
+      "sha256": "e6e66db544f620e3185a6d7f3f2a4842bd8a6581523bb3ccf94eb937742775f4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+CustomReflectable.swift.o",
+      "byteCount": 10320,
+      "sha256": "495c4e4a95dcfbed03fdad9563d31ed3f518203fafae13c8dbaf68173d3b60e3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Deprecations.swift.o",
+      "byteCount": 7768,
+      "sha256": "e2bef77e87154f2ae426570dfdaf522c289d1f72545581a0b67cc8473285e967"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Descriptions.swift.o",
+      "byteCount": 9312,
+      "sha256": "cffe9ec89bf960c8258535e2944ac175f7487d14fc98fdf82ea3076c36f6b0b1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Elements.SubSequence.swift.o",
+      "byteCount": 85832,
+      "sha256": "a1719d98408a35dd9704bd86c4b14b92e60cd29711f4ab1bb9b6084c704efc07"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Elements.swift.o",
+      "byteCount": 97528,
+      "sha256": "d4489462b9188702c9c67cb9706ce80ca67be1cc3fad0affb31398ad3d6708e5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Equatable.swift.o",
+      "byteCount": 7864,
+      "sha256": "d4971e9a26293e0da665097dde7397676f0d944d989d4ccced9bbcadffdc6926"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+ExpressibleByDictionaryLiteral.swift.o",
+      "byteCount": 10872,
+      "sha256": "73a91dbf646b121236ba23bca0faf59f481c2316c1c4493cc97dfaf191db576f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Hashable.swift.o",
+      "byteCount": 14040,
+      "sha256": "ab384726e9b365ca5d880f232fb819e77ca68a7ff889f3f0d4d979a7af7f1993"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Initializers.swift.o",
+      "byteCount": 44304,
+      "sha256": "60735a774f59c6959604db992104f8b612521766e5b5ac0c158730761067b682"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Invariants.swift.o",
+      "byteCount": 6048,
+      "sha256": "989fbe673c50047dc83021b0f18af9655fee31e317d76cb4da1b2d339df615aa"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Move.swift.o",
+      "byteCount": 16408,
+      "sha256": "5407ff33eb78c7018adec42f3c68318103042c6248be2859d1811b6f2f3b9b1b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Partial MutableCollection.swift.o",
+      "byteCount": 43784,
+      "sha256": "d50bbc2e4cc3444a0fd52ab2665a88758a2411c1ce02b585d5c044b2d1f1c9d6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Partial RangeReplaceableCollection.swift.o",
+      "byteCount": 21288,
+      "sha256": "598f3e06738163547bb486cede53a3cede781d6db320c9843ad37f2a681bf08d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Sendable.swift.o",
+      "byteCount": 4104,
+      "sha256": "be4695113ff005795594361e93ec2fae24cd78e71fb95f2986ac325e5514430e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Sequence.swift.o",
+      "byteCount": 25744,
+      "sha256": "37b8f34828f4a3de3caef3b25f571a8b57a2b740ef5e0af0b0e2f211620a74ff"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary+Values.swift.o",
+      "byteCount": 100448,
+      "sha256": "9c30d6b4d250afa886f169530cc0d3f01deb8654b5324dd3808bb183a5506073"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedDictionary.swift.o",
+      "byteCount": 86440,
+      "sha256": "eb385342f464a22090a7e046a8aff275e39fb37148afad6a23709e4d4e502d13"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Codable.swift.o",
+      "byteCount": 17248,
+      "sha256": "93b1d2109a390997328a5f30f5a5f7fe0114c99a5df7dab3daa3eead2026f65e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+CustomReflectable.swift.o",
+      "byteCount": 8960,
+      "sha256": "aaa0270fc1c1a25656235594100013a7faab1441bba89ec1a8a1d0d6a341bbd6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Descriptions.swift.o",
+      "byteCount": 8728,
+      "sha256": "0913ae236806a927d18f4b2efff15cc065f746ceade284c2bd408cd8da09be82"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Diffing.swift.o",
+      "byteCount": 16160,
+      "sha256": "9ebbbb89bf129053c23c84b6d6c28681bb32759672a4f5e16c9e6e510020d524"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Equatable.swift.o",
+      "byteCount": 6888,
+      "sha256": "3e327d6ff97d063c5a571e6696f57d4d31d17dc89096b589728b8f523db9ce90"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+ExpressibleByArrayLiteral.swift.o",
+      "byteCount": 8632,
+      "sha256": "02b5330b36ffb0cad62ce77a475bc3366158e852a0d1cae2c301062a465551c0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Hashable.swift.o",
+      "byteCount": 13136,
+      "sha256": "1644260a05003424ceac44ca67f5fc7a072c9758b633d76560fecfe211823a44"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Initializers.swift.o",
+      "byteCount": 21896,
+      "sha256": "0f1b2e1674fb443110762290b3e8ce7dc1c66df753c9ec7b2217fc3df0f96d22"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Insertions.swift.o",
+      "byteCount": 33776,
+      "sha256": "b4f47773274e65eaa5c6968ca57decfef339bac210f7bd7010b39ed7dda9fe4e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Invariants.swift.o",
+      "byteCount": 5824,
+      "sha256": "954600e0eb9762227cf88f8e12ccf6fa81c945107f8e1e5ce295cdb8ca479e12"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Move.swift.o",
+      "byteCount": 150104,
+      "sha256": "9607d399e50141e71acb3a8357d1499a88ea2f774c25eb2cf52affb2479c6549"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial MutableCollection.swift.o",
+      "byteCount": 67720,
+      "sha256": "937693868575d850ce463d82f18d866b08e9f1a094c48b9300ad654b71a1fe7e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial RangeReplaceableCollection.swift.o",
+      "byteCount": 48704,
+      "sha256": "b0a99ddb83352de092bf0055b05f5f7bc54ade4a6e073009bb14d92f1c6f2361"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra formIntersection.swift.o",
+      "byteCount": 6400,
+      "sha256": "0040fb5fc71b4a28680dad5a327cf2a413caf3dafbe245563bd2ea0c0fc150bf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra formSymmetricDifference.swift.o",
+      "byteCount": 7280,
+      "sha256": "be7bae07409142a36091919f548b3f1ee0518708d3d36cdce0c406a0429ed98d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra formUnion.swift.o",
+      "byteCount": 8312,
+      "sha256": "38d2f12546fc8ac7407df13d0bd5f0cf70fa8cbaeca958bc60a2b77d91b665c3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra intersection.swift.o",
+      "byteCount": 20712,
+      "sha256": "0bb8a5483a986bdb41a80cc0908792cdf16e62d41b6c9ad2e8bc6f15b8aebb89"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isDisjoint.swift.o",
+      "byteCount": 19120,
+      "sha256": "777893633216d0a258455dc11c9715054899946d7c22b72eec2eed5953a609b1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isEqualSet.swift.o",
+      "byteCount": 19008,
+      "sha256": "81b6f547ad233f006072531a35d38575f57b1c6049d76aeff6c7056abf33b97f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isStrictSubset.swift.o",
+      "byteCount": 21752,
+      "sha256": "407c3c15741256c863a6e06f508d096284b2cb4c9fad884e74bcca0b33adc601"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isStrictSuperset.swift.o",
+      "byteCount": 21512,
+      "sha256": "f4974defc959b76437fcffd54d23774d86e0d82f1087dd03378275a10525665d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isSubset.swift.o",
+      "byteCount": 21520,
+      "sha256": "61926ffcfd1e11eade0207703f62493fdcf994f8578c0818846c03561750c41f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra isSuperset.swift.o",
+      "byteCount": 11248,
+      "sha256": "2b3d9dd0de317ee85a3e1f6bc8d7be707c1d1a60343b181105e2dc586d830de7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra subtract.swift.o",
+      "byteCount": 6488,
+      "sha256": "ffb59b2a381a5af9f5df1d187ff5a46abef480ea8fd223cbb906ea979313c895"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra subtracting.swift.o",
+      "byteCount": 16384,
+      "sha256": "3ae92fd5d825e8302ddf6c65de3994ccb8f55eafd3869166cdf731228223d3c0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra symmetricDifference.swift.o",
+      "byteCount": 29016,
+      "sha256": "3105ef9a56171e9db2aa4a1a9ccb661895fa3338a48a7bd8b66f5390c9fa3552"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra union.swift.o",
+      "byteCount": 10904,
+      "sha256": "87998d658ebcabe40f50750e813da0556edbaf8f032c52712fd19232d457f2b2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Partial SetAlgebra+Basics.swift.o",
+      "byteCount": 10704,
+      "sha256": "657246b302ec7c22ba47e87518d3ac9ba743a258f8980542810e8e007e8d294b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+RandomAccessCollection.swift.o",
+      "byteCount": 62168,
+      "sha256": "6258e24cca36ade34bedc788bfe2381d1c94bdd32a25eaff6b20feb0cb961f90"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+ReserveCapacity.swift.o",
+      "byteCount": 10896,
+      "sha256": "6fdbb3ecf80971b017fb6fc5eecb56be3fe6e18b20d1186e03754f64b15ad688"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Sendable.swift.o",
+      "byteCount": 4080,
+      "sha256": "2df697b8a4416c5e7681ce49025c9d8fe3fe2e30cd48c36db6f9a8978ffc2490"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+SubSequence.swift.o",
+      "byteCount": 93616,
+      "sha256": "fdefc5755d65c08aeb4cf752cc8686ae72a1b93a65f6120f63ace725e79ee392"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+Testing.swift.o",
+      "byteCount": 21376,
+      "sha256": "0d273ef5b589611b9958512cd422f8a6c1885e020521ee9a3300dc1e51d543c6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+UnorderedView.swift.o",
+      "byteCount": 84056,
+      "sha256": "96f2a0f77255791497880835a272927f91f77c90c1af10914738dfb8d53b9da5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet+UnstableInternals.swift.o",
+      "byteCount": 17176,
+      "sha256": "ddb1875847ce2daeba6ad7fd692524f24c910b2d2e767fdf1045e2dbdee0baa3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/OrderedSet.swift.o",
+      "byteCount": 84944,
+      "sha256": "ae06f4494ebf82a7858faa63bf0d3a1b82418d345577afd6ee4666c8612eaf0c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+Bucket.swift.o",
+      "byteCount": 10048,
+      "sha256": "1362838616ba8d974cd7364a5b2bf6e2023fb5d77c78fb6e574553bb74d76635"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+BucketIterator.swift.o",
+      "byteCount": 36552,
+      "sha256": "d2be14e970b0de6ea3ade0d8fcfc95b48b4afd001ffb4d750aefa94a6ebfce1b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+Constants.swift.o",
+      "byteCount": 9112,
+      "sha256": "23d26b5ec2d5910c2dbc5252f16042e68a26b4dc9170a8cf3ec785fa66f11e53"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+CustomStringConvertible.swift.o",
+      "byteCount": 27872,
+      "sha256": "490b50cc1bcd9dae0a6c2fd7a8219b887205c29a23916d15f929e31b29605f7a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+Testing.swift.o",
+      "byteCount": 26128,
+      "sha256": "2427b0d710a98d4f5a9397c5105f6ecdc54300822e60fcc1111c9f669fc05ea5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable+UnsafeHandle.swift.o",
+      "byteCount": 141008,
+      "sha256": "a27dc64175378b10795af64d5321e1e2e1b67c6f85d9a029d8314fb9b729c386"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_HashTable.swift.o",
+      "byteCount": 48176,
+      "sha256": "d1553fec32af0d09bf1e4ffde04cda5292d6de34955d5a28bd94f4120cd109f9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_Hashtable+Header.swift.o",
+      "byteCount": 16576,
+      "sha256": "e069d201ea3b91ae2720981eabc0a0e5c54ce147e162cad20b062f1a2480dd93"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/OrderedCollections.build/_UnsafeBitset.swift.o",
+      "byteCount": 4240,
+      "sha256": "2476e233dbd33d534fe06ef71861fe777224b661f879ce4dcd8294fa407df0cf"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/AlgebraicField.swift.o",
+      "byteCount": 7552,
+      "sha256": "4dce4a96b3df85d0c2c120ba906c0fcb63fabf6dede928c62b897bb92ff0405c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/ApproximateEquality.swift.o",
+      "byteCount": 13472,
+      "sha256": "3fad06d6a18891d28a714745b497cff696db3621d93c6ccb6aaa851cb4dd0a40"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/AugmentedArithmetic.swift.o",
+      "byteCount": 8248,
+      "sha256": "154311fcc01ee3e5f4d396285dd8629aa1352fa5504e0596926814b9d9e48465"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/Double+Real.swift.o",
+      "byteCount": 42864,
+      "sha256": "b42d680bc9fe81fac6772c77bd947aebb39a19e02257b932101c59582d304d4b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/ElementaryFunctions.swift.o",
+      "byteCount": 5664,
+      "sha256": "bcb0c83981065ca625e3ede38d27d0cc5d84c26f3cc1c4a57e94b024a673bf52"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/Float+Real.swift.o",
+      "byteCount": 42864,
+      "sha256": "06d8f7bbdacdcb1f9e99e715af1d2f6919d01cfb8f5a02acf478cbe13b825204"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/Float16+Real.swift.o",
+      "byteCount": 49752,
+      "sha256": "37541f9229c4996c98e0339111f8b9aeb33216102201382e120903a541777721"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/Float80+Real.swift.o",
+      "byteCount": 4352,
+      "sha256": "b75098c6fc636b4d98a74f7a7e9eebd0e109fc8f65033ba54e2e34b0b9048df6"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/Real.swift.o",
+      "byteCount": 26280,
+      "sha256": "7f26803d3f86679b7acd67003a4bf5a4574b9981de3aca3f193fc6b4011a16ef"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/RealFunctions.swift.o",
+      "byteCount": 5528,
+      "sha256": "6371db2f7c9142f7574d3ee660f954a0f158b86e7ac3b391da5cc03f19d6c826"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/RealModule.build/RelaxedArithmetic.swift.o",
+      "byteCount": 7192,
+      "sha256": "05b43f1f734deca328e09e09c36c8fa4969ed14cb9af89d0ad5c1a275a5e945f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/BPETokenizer.swift.o",
+      "byteCount": 227760,
+      "sha256": "4705a325ab89b97c9cc52d47b9a8e962c87964a798e75c0741dccee7c0afa37c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/BertTokenizer.swift.o",
+      "byteCount": 171480,
+      "sha256": "433cbb1d2733156a5aeb13445571acea05f1640ca904407b1534beb2ca5cf5f9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/ByteEncoder.swift.o",
+      "byteCount": 18848,
+      "sha256": "3de26b58514c7ea3b17fe3fe54771c387af80bf43214b1f7bbe56b7b38a4dce9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/Decoder.swift.o",
+      "byteCount": 168136,
+      "sha256": "4d84df999e20dfb3a8a1cc6433f58956fd86be55323984a1ccbe81ec407a542e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/Normalizer.swift.o",
+      "byteCount": 137976,
+      "sha256": "868d38df8226587d6d83ed7722e975c1dba45e4a207a651e62bb0af0401f4f01"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/PostProcessor.swift.o",
+      "byteCount": 117144,
+      "sha256": "2cfd65f03fb5f5e70874aa3997119189810b8cd559b11e308859ef3aa334b686"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/PreTokenizer.swift.o",
+      "byteCount": 151264,
+      "sha256": "4eaa0a1f1cb3b29e132ab11556b40dfd257fd0928f59143882c55d784de5bf84"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/String+PreTokenization.swift.o",
+      "byteCount": 59584,
+      "sha256": "0bfd5d60e2fbee9ea2af47b7d807010316fef4336995f1f10d6102807a60667b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/TokenLattice.swift.o",
+      "byteCount": 65576,
+      "sha256": "c10da4330f2b6274bc35c1c30628e7a0dbfae265e26ae9411d5041054da1dc03"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/Tokenizer.swift.o",
+      "byteCount": 461792,
+      "sha256": "6aadcf9ed0b521f682f4f9783ecac4fa655540ef2875a847c8e8c1c9bba30f92"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/Trie.swift.o",
+      "byteCount": 34832,
+      "sha256": "01c217ce4805cc25a3db0527ede2eeff90e2c09afcc93ee9d382af963551d62c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/UnigramTokenizer.swift.o",
+      "byteCount": 108896,
+      "sha256": "73aa2a62edb7580edc3be8cf70cab9a6b136ccab73d593eeb2481e81cdbe6fe5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/Tokenizers.build/Utils.swift.o",
+      "byteCount": 6472,
+      "sha256": "425e2756d426e0b45b0e077692a20bea5368887c2243c6f991d224fe8808ebed"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/_NumericsShims.build/_NumericsShims.c.o",
+      "byteCount": 1800,
+      "sha256": "4addcfa518e2aeb32c9a14450bf1ec6972146c525ce63f98a3eb013f8dfa3466"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt",
+      "byteCount": 98,
+      "sha256": "b674f79b747370a1c05ae7cec551fffe557816c6c807f35f39f933ecbcca80d7"
+    }
+  ],
+  "excludedMain": {
+    "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeNativeLanguageSwiftCanary.build/main.swift.o",
+    "byteCount": 2718832,
+    "sha256": "5ea115444418f7663d6395b84284a1599b804bcaebe4e465e4b95c425b27b743"
+  },
+  "excludedUnusedRuntimeObjects": [
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLAutoregressiveDecoder.swift.o",
+      "byteCount": 115576,
+      "sha256": "0afaae4515061e68c6d310c041cb1a8db03146dc518d4157353d817af06e3a89"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLCompiledModelCache.swift.o",
+      "byteCount": 33920,
+      "sha256": "4d49a198337f144ee8c755129372f7ef77106bde6ad145299748a152cb0003e1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLComputeUnitsPolicy.swift.o",
+      "byteCount": 78832,
+      "sha256": "fea2b4472625f1f16c658bda3a761c04212fb3d216815484d4a6ea8d1962d949"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLGraphContract.swift.o",
+      "byteCount": 47680,
+      "sha256": "4534d04ef575f6da21abe21390485300f20d52f840f76685bbe6bb80f59724b4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLPackageInspector.swift.o",
+      "byteCount": 174248,
+      "sha256": "35a95644a6525964d4e1b206c64e1bcd30f6a59efc608ee088ddd8daccf39532"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLPackageMetadataProbe.swift.o",
+      "byteCount": 113904,
+      "sha256": "d6e9dab6057f7f90f2b29a7ac3bb40aef346b7f021d4ef8caaa857cfe4a11cf9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLPrimeRuntime.swift.o",
+      "byteCount": 103784,
+      "sha256": "96a31540c0f93d34595f780f4290941e0f00330d57fe9cf787ea98c73fb928a8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/CoreMLStudyGenerationPreflight.swift.o",
+      "byteCount": 227736,
+      "sha256": "0d7ea2a7d5076d6767d71bce985a82709e1b5bff97c8843650b98c70a66ae8ca"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsAttentionScratchBudget.swift.o",
+      "byteCount": 22112,
+      "sha256": "b751e3bb053691dfa4ceb07dad6d1a99e9ef4b5bb4485beb123032c362191e06"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCholesky.swift.o",
+      "byteCount": 34072,
+      "sha256": "04ab8baeba678f54975e429828ba7ef65592d5c11e39dccc49330caab593ab4f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLAppSuite.swift.o",
+      "byteCount": 119792,
+      "sha256": "d7408c0fa36396c534e495c3a6f09bf60ed2acdbd4f4f853bde86d0f3a5abf54"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLCheckpointWitness.swift.o",
+      "byteCount": 91856,
+      "sha256": "5eab231715ae3f9ff130249526be9212c2bf506878ad23101a37b0467ac444e8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLExportEngineLoop.swift.o",
+      "byteCount": 81360,
+      "sha256": "c29e3c6d2c49d4de4fd39bbd56388d8e217566aa800f5fb83b6ba88974f6da9f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLExportPolicy.swift.o",
+      "byteCount": 65000,
+      "sha256": "7324303a4820deaecda2ab11c1be0fce8a3e3f25cb5d84bbb815a7c28b061f65"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLMath.swift.o",
+      "byteCount": 112144,
+      "sha256": "09409983c416de47cdc05451d30aa93f099846dce654e0e5d1a3c4b94a0d9ab2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeContractProbeEmitter.swift.o",
+      "byteCount": 66872,
+      "sha256": "ff90555b4322ef924ae30cbd46ef5a98d8d4275e83c604e3217c5ba297caac81"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportDerive.swift.o",
+      "byteCount": 266696,
+      "sha256": "1372b19b48ec4a5aa7825eccc94355d6c1e309208c336771cb71dde7b2e19601"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportFixtureGenerator.swift.o",
+      "byteCount": 86696,
+      "sha256": "b1ad1d31c0fae3332cfc54fa5820e717b16c0b829ab022f757eb21369a654c3f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportFixtures.swift.o",
+      "byteCount": 104528,
+      "sha256": "1c1cffaaa60ce64999193c0d0c4c58407c7b9c8f50725f09a553c2e72cf67071"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportPackageArtifactReconciler.swift.o",
+      "byteCount": 242032,
+      "sha256": "2668895cb5b9cddb609e80edaa3cd6024d63fedb91bfc1b5f9e7175b4c2c35b2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportSession.swift.o",
+      "byteCount": 392512,
+      "sha256": "8748b7d6b7080b3bb9191b2d455c7440111c7a61c168317cc5a08a7da356f052"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeExportVeinMap.swift.o",
+      "byteCount": 164592,
+      "sha256": "164a0a1266651d28f9be76994081a5289f796f75d0e7325ae15eb4af47110192"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeForwardGraphEmitter.swift.o",
+      "byteCount": 49728,
+      "sha256": "08dbe808abd6016a803a394ff0ec5f00e083b0cb5f6d08ef84ca5152e9d9aa51"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeForwardGraphPlan.swift.o",
+      "byteCount": 188136,
+      "sha256": "78a320f18423b95846a5d73a15cf3269a120f743e5be8ef497889ebef8fe1984"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeLabPython.swift.o",
+      "byteCount": 32400,
+      "sha256": "9ac4f78bf1c6e9f1cfe854ea99eec91dc1abc0277492d80d4acf355af9a8ded5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeLayerEmitter.swift.o",
+      "byteCount": 202264,
+      "sha256": "c42fb0ae9607c1853ab5d1ed8a03cdcf5eaed6837d92a0f8b737a417b4faf2e3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeLlamaCompiler.swift.o",
+      "byteCount": 184632,
+      "sha256": "705bd9acd504db7fbf2fed21c24cc1948a1d8dc9b8fb0409c3c18a08cc147eeb"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlPackageAssembler.swift.o",
+      "byteCount": 60032,
+      "sha256": "a145f017142df17bf0ee1eb9a8cbc2539fdb5287b98e6a2ea6eca47d3c2f5038"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramCompilePlanEmitter.swift.o",
+      "byteCount": 212008,
+      "sha256": "1e75f47039c1e7585d5f833b5280c3fdb9f86186276aa2c26088a38f3598584a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMILPlanEmitter.swift.o",
+      "byteCount": 272256,
+      "sha256": "95019d7a5fd41c191937284cf8c483d217bf86225335045ac40711900b11b5b9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightEncodePlanEmitter.swift.o",
+      "byteCount": 180680,
+      "sha256": "5ed6f27527e164ac2febf96d1dea24204e8b28272b301ae36888c71a98dd6561"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightEncodeScaffold.swift.o",
+      "byteCount": 128480,
+      "sha256": "4e40046e4abe4e8ebb760bad516911b1f4e4e1a0807263ed02f2ab4acdcd4b2b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightProtobufEncoder.swift.o",
+      "byteCount": 232088,
+      "sha256": "56a1e57e8450d9a205661092fa5c2d51fbd65bed61cc7d7bcbe84d700a3177ab"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightWireEncoder.swift.o",
+      "byteCount": 72408,
+      "sha256": "ce4e662a712a9271df2c6eb5ca8d1d0e82709f13e2d022f567bcffdc04375807"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightWireV2Composer.swift.o",
+      "byteCount": 152000,
+      "sha256": "32ecde399ffbf7c43cff612878cd0c0b2cdaefaf651f585863f63f8b071b4da3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramMilWeightWireV2Encoder.swift.o",
+      "byteCount": 168936,
+      "sha256": "bb221b41e2dca7c7e58a6419c0d4a0869a53443c0c13462212725590be4e970a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramNativeEmitBridge.swift.o",
+      "byteCount": 12152,
+      "sha256": "5989583b7c15379d808d7d35cf553a61b878747bd976710c23a4585050680769"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramNativeEmitEngine.swift.o",
+      "byteCount": 73200,
+      "sha256": "1597441dc68684c0b15d36251bac566c8ec640f4a15680b885f5f64a6484e952"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramProtobufEmitter.swift.o",
+      "byteCount": 206000,
+      "sha256": "b1fa078dbbd9fddfdfd3795e662078bde099521d65c73db11c411f84142c7a9a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramProtobufPlanEmitter.swift.o",
+      "byteCount": 144272,
+      "sha256": "d0cec81c5fa9814b3182101b728569c119cc8b3fce045ec70013359613079645"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramProtobufWire.swift.o",
+      "byteCount": 68408,
+      "sha256": "dcb214735f699cdf97a4ea189183d3effb7453d2ec6b2bab21ac0ace97026961"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramPureSwiftProtobufWriter.swift.o",
+      "byteCount": 126544,
+      "sha256": "27deb2979876d05bb47e8c5ef9397a7b2dbdc01ce82f9728edc93d46b2edf0c3"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramRuntimeEmitter.swift.o",
+      "byteCount": 212000,
+      "sha256": "ea57c70f4ad5c06cf202e6ab7630d9f204a56dbfd1425601ab6ebd60536ec1e7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightBinPlanEmitter.swift.o",
+      "byteCount": 230544,
+      "sha256": "0ea6f83409a86bc8680d4a8483123bf516e6a17cd89a5d626457b5009f8b57b7"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightBinder.swift.o",
+      "byteCount": 277160,
+      "sha256": "3e60695faab8ccd4bd3dc1a7907f8736349fec80df3a8873685b151f6bd6dbe4"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightCompileBridge.swift.o",
+      "byteCount": 12160,
+      "sha256": "0fc1c0552605c3a40243be975bbedb1cb7faceaed34846241da41ac7828296ed"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightCompileEmitter.swift.o",
+      "byteCount": 24008,
+      "sha256": "0b6b74ecdf1f96812bd43dc6d7381ad3519b64caca3cccc6b094f6f9fc16e4e0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightCompileEngine.swift.o",
+      "byteCount": 93640,
+      "sha256": "eb9daec6477a6dad27be3fae4d9b3c2a1bab8e07fa5e7a5fa9c7882bfafaa8ef"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeMlProgramWeightCompileGrounding.swift.o",
+      "byteCount": 78720,
+      "sha256": "54c80c24e7f115fa97aa570f69678d3db1162d6bc5a509fcabce5091c3ec65bd"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativePackageIO.swift.o",
+      "byteCount": 152280,
+      "sha256": "3ba53f64955c6e5b881f6b79c59c148fa3579af5a856acea6d4dcf07ac9e555c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeSafetensorsCatalog.swift.o",
+      "byteCount": 168624,
+      "sha256": "59d3524fd2ac5ff4e13ab7fb309c3349cb34b936863b6684d04cf77fbc250b59"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLNativeSafetensorsStreamIO.swift.o",
+      "byteCount": 115696,
+      "sha256": "ad18262ae44cffa43e148e14e5513ece9297abffdcddd6949cef9d4044fd72f1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsCoreMLShipExportEngine.swift.o",
+      "byteCount": 243840,
+      "sha256": "ce3bf6f7881e222a7a1f6e47293e923ed10305adb7c0bc18585980ce87e6557d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsDeviceHarness.swift.o",
+      "byteCount": 164376,
+      "sha256": "c6d5770b7a18b910d70fb05d1d4f10d5679ab706395fab1a5868e4fc23161a10"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsGPTQEngine.swift.o",
+      "byteCount": 171464,
+      "sha256": "378a327a807b3a78d82dad78dda11c18e4c4e1f956853fe4e042dec6ab3e1b77"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsGPTQSchur.swift.o",
+      "byteCount": 37272,
+      "sha256": "2b106390e58c3be218ac7e7f3b9f7445aead72eeb3fc6b4e245b1d715d62ca33"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantCanary.swift.o",
+      "byteCount": 318304,
+      "sha256": "f9705acd615b1c7caa081ea0df7bd358bd84a7385fc3cb623290c32cf86ea8be"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantDeriveFast.swift.o",
+      "byteCount": 85024,
+      "sha256": "06695bf531d18be67d57514b605279c31a7e2c7ced41ef9e8916ec03d2c357ce"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantDerivePolicy.swift.o",
+      "byteCount": 53024,
+      "sha256": "e5894470ddbb9d9f5474d82021b3828efd945f2c886133825c9e00933c653a4b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantDeriveTiers.swift.o",
+      "byteCount": 35776,
+      "sha256": "d96aa7c3e088e2d8bde28380e45360e16619086ce6eef2990746f2a92ee5e0d8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantEngineLoopArtifact.swift.o",
+      "byteCount": 59240,
+      "sha256": "8db637f8cd7302605adfa45c3d8c128f777cd4b5ba9a29164797e98678ad1c70"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantEngineLoopArtifactReconciler.swift.o",
+      "byteCount": 58744,
+      "sha256": "ddef8208add4fc73aefa58c630f05353ebe8825f408e88ac5866ddb37f2ac8ea"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantEngineRecommend.swift.o",
+      "byteCount": 473704,
+      "sha256": "c62429093c3519f6e520e2cc8b9becafecbf5de4fdd6140b55a78a75a38c58c5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantExecutorPerfBStamp.swift.o",
+      "byteCount": 47784,
+      "sha256": "4f9010414dad5a2d9845ffc20b09b26c37683228689ba6e088c3a7ae40bcee4f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantExecutorPerfCDStamp.swift.o",
+      "byteCount": 87472,
+      "sha256": "a9d4f5e3d00c8bad81100e41932055eb545e2cf7391fa4c171bfca7aa9f869ac"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantIOTierB.swift.o",
+      "byteCount": 68016,
+      "sha256": "915ef8dfeaf5f97382d3fff282027a0029bb4a011a32596969aae07655fc9770"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantMutSweepStamp.swift.o",
+      "byteCount": 79136,
+      "sha256": "67c8220c99098eac6deab73db93344f915e674337bbd8b1b4b62fb067445aff2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantPolicy.swift.o",
+      "byteCount": 57656,
+      "sha256": "32e37c912848b97eee9e29059be61698292fdc32ea72b0d35a0286fa024f5a78"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantPreconvert.swift.o",
+      "byteCount": 549664,
+      "sha256": "cff378f62cf1bb82cf9336525ab17d5e499a9b4795ed01abaae25dfa385f4231"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantSafetensorsIOWitness.swift.o",
+      "byteCount": 72496,
+      "sha256": "d61e225e222d05e9191e3b4cd70e19aab25ae91e16b9693ac7793efb0ae11ed2"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantTransactionRecovery.swift.o",
+      "byteCount": 148552,
+      "sha256": "6fdb17a91233da79a2384bc09932eccd46b3fc73ecc5a68e3e897b621b10714f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsHFQuantWitness.swift.o",
+      "byteCount": 69800,
+      "sha256": "609b67eee86a9e9c1e0c5f4a72f4d7bec8d4b8de71e50351297c901fe1f60966"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsLabHessian.swift.o",
+      "byteCount": 78752,
+      "sha256": "f57b0b5de1a98384c3d2072965914165cd8e8952cafcfbfd566244cebfed7725"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsLinearEnginePrimitive.swift.o",
+      "byteCount": 39176,
+      "sha256": "7dc1375a484c68c901bc64572ef03f860349a9ebe6f92d74b93a55de5fdc0d31"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeAutoregressivePreflightArtifacts.swift.o",
+      "byteCount": 266992,
+      "sha256": "a822643810979cdfbd5575d35f3c6134ade648fb24d5f98dd6aec3dde348b753"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageArtifactPathSafety.swift.o",
+      "byteCount": 323912,
+      "sha256": "ed5e58aa6a63023f1ad6df4d644c17921075f374af13992f9f4f6b6907f5b031"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageAssetsRecommend.swift.o",
+      "byteCount": 295616,
+      "sha256": "e92a45556e2febef5c245ce9487bdb7d7bb98275b2cb75a3aaa162f374e8183f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageCanary.swift.o",
+      "byteCount": 2263728,
+      "sha256": "361ccc27823826524f8d683c718f7bf9175642302acf7e22996ba1cce8d2015a"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageMetalLibraryAuthority.swift.o",
+      "byteCount": 122512,
+      "sha256": "65498bbb012343a206794eb9b918ea0e8a846f3902c8db8a1ab262d955f4f456"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageProfileTrialCompletion.swift.o",
+      "byteCount": 403896,
+      "sha256": "51f80c9a5f27f26ee618997eb1c4880dbf64e26e6b8196f54a25376308645ec9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageProfileTrialFailure.swift.o",
+      "byteCount": 192192,
+      "sha256": "5f75d9fc15cd1d0340450e0b5e7ef2e70d4494b6d44ca6390e7d7511e12b37ce"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageRecommendationRunFailure.swift.o",
+      "byteCount": 609944,
+      "sha256": "43e5244fb8ff00d5a35bbab3a378c8820dc54c681c4d8768bd381add235ffa84"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeLanguageRunConfiguration.swift.o",
+      "byteCount": 214808,
+      "sha256": "7eddbfe7f02633922a4831317630f802f8d3886325f5c288d70a6dbb4d39e063"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeMetalLanguageCanary.swift.o",
+      "byteCount": 907536,
+      "sha256": "e3811bdccb1fd075fc21ce6bac38855d21ffc2b2cb0b5bbeb9be414b7dcbc404"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeModelEngineRecommend.swift.o",
+      "byteCount": 241152,
+      "sha256": "8440a2847295425d3f5e07dadb2f98ffc49c07316f04a8a64175c29aac02c472"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeOracleTransferCanary.swift.o",
+      "byteCount": 1143264,
+      "sha256": "b84ea1c0616246c91e627fa5644b8ebc1b42552278100e201ad0c0cacad6b43b"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeScaleEngineRecommend.swift.o",
+      "byteCount": 2146416,
+      "sha256": "d5eafa7596db3db2af22af5b8876ee11aebeaa1ed9798bb2a20730dbae3df04d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeTraceCurriculumCanary.swift.o",
+      "byteCount": 702640,
+      "sha256": "475946e1fd63149598fa141c3ea1176db8f74bcc47bf18f09160ddfa5e6e86e0"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsNativeVariableDepthCanary.swift.o",
+      "byteCount": 1385784,
+      "sha256": "80589d134748d40e03769938eb245a11d15128652b57666ca68193bd996aa800"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsPrimeNativeTextCorpus.swift.o",
+      "byteCount": 2624648,
+      "sha256": "092b31f247832198bef4f7a9b83e9cff327f815826133832220cf9399b966006"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsQuadraticFalsifier.swift.o",
+      "byteCount": 23608,
+      "sha256": "25659b866f614354710132577d856b1c5061bb67dcd5a96398c27f68f3064896"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsQuantQATEngineRecommend.swift.o",
+      "byteCount": 193784,
+      "sha256": "3039baf4929f4a9b80607286f11abd579a12f715725ff3019e2dd6adcbb209ab"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsRung2Parity.swift.o",
+      "byteCount": 125992,
+      "sha256": "9e9ade3274d043873cb0fc76eb20019158fca0fb549f77e3bf00c7b1bb83086f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/ErgenticsSafetensorsFloat32.swift.o",
+      "byteCount": 182752,
+      "sha256": "178fe8b5ccdb0ce075aab780a4319957afaa18d7f20fab4f2a93a0c3f79dd66d"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/MLMultiArrayLogits.swift.o",
+      "byteCount": 26544,
+      "sha256": "75b4e5b1f4e6095148eaea03c22293482a9bc19f0247566dfa9f3affe1dbfc0f"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/MLXPrimeRuntime.swift.o",
+      "byteCount": 60640,
+      "sha256": "326be36c0c70aeeefa9e73f37f649483f4087d1c5faddca55b9e7bcae00e22d9"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeChatMessage.swift.o",
+      "byteCount": 49104,
+      "sha256": "8dddb6dcb770430524dbe924463233d651dc2fef42d9cf19b2f944edc41dfc96"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeNativeByteTokenizer.swift.o",
+      "byteCount": 503320,
+      "sha256": "71258ca543f1bf6b4e5951914bf284ef600bf87e5066ba442e266333a1641d3c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeRuntime.swift.o",
+      "byteCount": 19912,
+      "sha256": "75155b1ba93d9e0ca5c58794f8556eebfcfc1d23176520851d9c99cb4992260c"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeRuntimeConfiguration.swift.o",
+      "byteCount": 62896,
+      "sha256": "b1e24220370f9604c621d0f14586a031097668a3281f0dcb14aa9d9e1dc8e672"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeRuntimeError.swift.o",
+      "byteCount": 32776,
+      "sha256": "7558b99ca804e0bf9cda28822b6bae39150ec4886ddfc70a914664062297e7d1"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeStudyPrompt.swift.o",
+      "byteCount": 37200,
+      "sha256": "3d178b27dde43358930f4769313f82436f1f9890b94ccd2806a3207dd97e4005"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/PrimeTokenizerBundle.swift.o",
+      "byteCount": 51064,
+      "sha256": "2348a7ff544b079f0362386f220e5ca206ee379c6fd101fdd366ef767c11f591"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/ErgenticsPrimeRuntime.build/resource_bundle_accessor.swift.o",
+      "byteCount": 20336,
+      "sha256": "ed6428f86987246b33e53b6a593285afcef3a4881ed62a044673e54731df4d76"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeDirectOutput.swift.o",
+      "byteCount": 91280,
+      "sha256": "593e27c5af46c97d609cbec8f50f44f09319f97a44cb59f8bce9879de8fa7291"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeLanguageGates.swift.o",
+      "byteCount": 11368,
+      "sha256": "af76ad67252f239a66d079251e65be20f8d839271e2d819964649643bf87ee3e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeMathDisposeStack.swift.o",
+      "byteCount": 48296,
+      "sha256": "a063c05a89ff9fe9fb1ef0af3c76f297929a1fbe3dca82f1ffe9439ca93fdd03"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeScreeningStudyPrompt.swift.o",
+      "byteCount": 17432,
+      "sha256": "d1dc7609c5876dabc241c3e4f7d68185798a06c57ed863a80a645f838e3603df"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeStatWitness.swift.o",
+      "byteCount": 50880,
+      "sha256": "28d6d867c09d51354f6ff4ea70fb5af2aac5c534eda6673f1665ccb531180ae8"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeStudyShipGate.swift.o",
+      "byteCount": 24800,
+      "sha256": "f98bd99fccdc1f02699fbf9d00184ddb606726fdf3ce19c178aef58ed71a2e2e"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/release/PrimeSeatKit.build/PrimeZetaBandCheck.swift.o",
+      "byteCount": 54224,
+      "sha256": "51193a02c00608d9378728431096084db1edd66ac976e0ae789a9f8e4a044b58"
+    }
+  ],
+  "compiler": {
+    "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+    "byteCount": 171036592,
+    "sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"
+  },
+  "metallib": {
+    "source": {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/arm64-apple-macosx/debug/mlx.metallib",
+      "byteCount": 2468361,
+      "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+    },
+    "copy": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/mlx.metallib",
+      "byteCount": 2468361,
+      "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+    },
+    "scope": "Existing colocated MLX library from the same upstream .build checkout; copied, not recompiled."
+  },
+  "runtimeDependencies": [
+    "macOS system frameworks and Swift runtime",
+    "executable-adjacent mlx.metallib",
+    "caller-selected Prime10M checkpoint and input-only request"
+  ],
+  "externalCompileDependencies": [
+    "retained upstream Release objects/modules and C headers",
+    "installed Xcode Swift compiler and macOS26.5 SDK"
+  ]
+}

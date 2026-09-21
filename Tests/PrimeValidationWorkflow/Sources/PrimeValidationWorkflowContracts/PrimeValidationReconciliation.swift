@@ -24,7 +24,15 @@ public struct PrimeValidationXCTestSkip:
     public let exactReason: String
 }
 
+/// The exact XCTest top-level frame expected by a known invocation. Selecting
+/// a mode never supplies test IDs, process facts, or permission to execute.
+public enum PrimeValidationXCTestTopLevelSuite: String, Sendable {
+    case allTests = "All tests"
+    case selectedTests = "Selected tests"
+}
+
 private enum PrimeValidationTopLevelXCTestEvent {
+
     case started
     case passed
     case failed
@@ -54,7 +62,9 @@ public struct PrimeValidationSequentialXCTestObservation:
         skips.map(\.rawID)
     }
 
-    public static func parse(_ data: Data) throws -> Self {
+    public static func parse(_ data: Data,
+        expectedTopLevelSuite: PrimeValidationXCTestTopLevelSuite = .allTests
+    ) throws -> Self {
         guard data.count <= maximumTranscriptBytes,
               !data.contains(0),
               !data.contains(13),
@@ -87,7 +97,7 @@ public struct PrimeValidationSequentialXCTestObservation:
             guard line.utf8.count <= maximumLineBytes else {
                 throw PrimeValidationContractError.invalidListFraming
             }
-            if let suiteEvent = try parseTopLevelSuiteEvent(line) {
+            if let suiteEvent = try parseTopLevelSuiteEvent(line, expected: expectedTopLevelSuite) {
                 switch suiteEvent {
                 case .started:
                     guard !topLevelStartObserved,
@@ -348,9 +358,13 @@ public struct PrimeValidationSequentialXCTestObservation:
     }
 
     private static func parseTopLevelSuiteEvent(
-        _ line: String
+        _ line: String, expected: PrimeValidationXCTestTopLevelSuite
     ) throws -> PrimeValidationTopLevelXCTestEvent? {
-        let prefix = "Test Suite 'All tests' "
+        let prefix = "Test Suite '\(expected.rawValue)' "
+        let other = expected == .allTests ? "Selected tests" : "All tests"
+        guard !line.hasPrefix("Test Suite '\(other)' ") else {
+            throw PrimeValidationContractError.unknownTransition(line)
+        }
         guard line.hasPrefix(prefix) else { return nil }
         let tail = String(line.dropFirst(prefix.count))
         let candidates: [(String, PrimeValidationTopLevelXCTestEvent)] = [

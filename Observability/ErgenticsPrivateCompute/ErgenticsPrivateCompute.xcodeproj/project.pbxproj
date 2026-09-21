@@ -1,0 +1,981 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A20000000000000000000001 /* GateEJSONAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* GateEJSONAuthority.swift */; };
+		A20000000000000000000002 /* GateEJSONReconstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* GateEJSONReconstructor.swift */; };
+		A20000000000000000000003 /* GateECBORAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* GateECBORAuthority.swift */; };
+		A20000000000000000000004 /* GateECBORReconstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* GateECBORReconstructor.swift */; };
+		A20000000000000000000005 /* GateEDualGraphJoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000005 /* GateEDualGraphJoin.swift */; };
+		A20000000000000000000006 /* PrivateComputeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006 /* PrivateComputeCore.swift */; };
+		A20000000000000000000007 /* ErgenticsPrivateComputeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007 /* ErgenticsPrivateComputeApp.swift */; };
+		A20000000000000000000008 /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* WorkspaceView.swift */; };
+		A20000000000000000000009 /* ComputeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000009 /* ComputeModel.swift */; };
+		A2000000000000000000000A /* NativeReceipt.c in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* NativeReceipt.c */; };
+		A2000000000000000000000B /* gate-e-static-bootstrap-json-input.v1.hex in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* gate-e-static-bootstrap-json-input.v1.hex */; };
+		A2000000000000000000000C /* gate-e-static-bootstrap-cbor-input.v1.hex in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* gate-e-static-bootstrap-cbor-input.v1.hex */; };
+		A2000000000000000000000D /* native-app-scope.v1.json in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000F /* native-app-scope.v1.json */; };
+		A2000000000000000000000E /* libGateEJSONAuthority.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* libGateEJSONAuthority.a */; };
+		A2000000000000000000000F /* libGateECBORAuthority.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* libGateECBORAuthority.a */; };
+		A20000000000000000000010 /* libGateEDualGraphJoin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* libGateEDualGraphJoin.a */; };
+		A20000000000000000000011 /* libPrivateComputeCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* libPrivateComputeCore.a */; };
+		A20000000000000000000012 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* AppKit.framework */; };
+		A20000000000000000000013 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* SwiftUI.framework */; };
+		A20000000000000000000014 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* Security.framework */; };
+		A20000000000000000000015 /* PrivateComputeCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000C /* PrivateComputeCoreTests.swift */; };
+		A20000000000000000000016 /* gate-e-static-bootstrap-json-input.v1.hex in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* gate-e-static-bootstrap-json-input.v1.hex */; };
+		A20000000000000000000017 /* gate-e-static-bootstrap-cbor-input.v1.hex in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* gate-e-static-bootstrap-cbor-input.v1.hex */; };
+		A20000000000000000000018 /* libGateEJSONAuthority.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* libGateEJSONAuthority.a */; };
+		A20000000000000000000019 /* libGateECBORAuthority.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* libGateECBORAuthority.a */; };
+		A2000000000000000000001A /* libGateEDualGraphJoin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* libGateEDualGraphJoin.a */; };
+		A2000000000000000000001B /* libPrivateComputeCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* libPrivateComputeCore.a */; };
+		A2000000000000000000001C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000015 /* XCTest.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A80000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000001;
+			remoteInfo = "GateEJSONAuthority";
+		};
+		A80000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000002;
+			remoteInfo = "GateECBORAuthority";
+		};
+		A80000000000000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000003;
+			remoteInfo = "GateEDualGraphJoin";
+		};
+		A80000000000000000000004 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000001;
+			remoteInfo = "GateEJSONAuthority";
+		};
+		A80000000000000000000005 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000002;
+			remoteInfo = "GateECBORAuthority";
+		};
+		A80000000000000000000006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000003;
+			remoteInfo = "GateEDualGraphJoin";
+		};
+		A80000000000000000000007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000004;
+			remoteInfo = "PrivateComputeCore";
+		};
+		A80000000000000000000008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000001;
+			remoteInfo = "GateEJSONAuthority";
+		};
+		A80000000000000000000009 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000002;
+			remoteInfo = "GateECBORAuthority";
+		};
+		A8000000000000000000000A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000003;
+			remoteInfo = "GateEDualGraphJoin";
+		};
+		A8000000000000000000000B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB0000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000000000000000000004;
+			remoteInfo = "PrivateComputeCore";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000001 /* GateEJSONAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "GateEJSONAuthority.swift"; path = "../ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONAuthority.swift"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000002 /* GateEJSONReconstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "GateEJSONReconstructor.swift"; path = "../ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONReconstructor.swift"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000003 /* GateECBORAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "GateECBORAuthority.swift"; path = "../ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000004 /* GateECBORReconstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "GateECBORReconstructor.swift"; path = "../ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORReconstructor.swift"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000005 /* GateEDualGraphJoin.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "GateEDualGraphJoin.swift"; path = "../ErgenticsGateEStaticControl/Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000006 /* PrivateComputeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "PrivateComputeCore.swift"; path = "PrivateComputeCore.swift"; sourceTree = "<group>"; };
+		A10000000000000000000007 /* ErgenticsPrivateComputeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "ErgenticsPrivateComputeApp.swift"; path = "ErgenticsPrivateComputeApp.swift"; sourceTree = "<group>"; };
+		A10000000000000000000008 /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "WorkspaceView.swift"; path = "WorkspaceView.swift"; sourceTree = "<group>"; };
+		A10000000000000000000009 /* ComputeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "ComputeModel.swift"; path = "ComputeModel.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000A /* NativeReceipt.c */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.c.c"; name = "NativeReceipt.c"; path = "NativeReceipt.c"; sourceTree = "<group>"; };
+		A1000000000000000000000B /* NativeReceipt.h */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.c.h"; name = "NativeReceipt.h"; path = "NativeReceipt.h"; sourceTree = "<group>"; };
+		A1000000000000000000000C /* PrivateComputeCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.swift"; name = "PrivateComputeCoreTests.swift"; path = "PrivateComputeCoreTests.swift"; sourceTree = "<group>"; };
+		A1000000000000000000000D /* gate-e-static-bootstrap-json-input.v1.hex */ = {isa = PBXFileReference; lastKnownFileType = "text"; name = "gate-e-static-bootstrap-json-input.v1.hex"; path = "../ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-json-input.v1.hex"; sourceTree = "SOURCE_ROOT"; };
+		A1000000000000000000000E /* gate-e-static-bootstrap-cbor-input.v1.hex */ = {isa = PBXFileReference; lastKnownFileType = "text"; name = "gate-e-static-bootstrap-cbor-input.v1.hex"; path = "../ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-cbor-input.v1.hex"; sourceTree = "SOURCE_ROOT"; };
+		A1000000000000000000000F /* native-app-scope.v1.json */ = {isa = PBXFileReference; lastKnownFileType = "text.json"; name = "native-app-scope.v1.json"; path = "Control/native-app-scope.v1.json"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = "text.plist.xml"; name = "Info.plist"; path = "Info.plist"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000011 /* Entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = "text.plist.entitlements"; name = "Entitlements.plist"; path = "Entitlements.plist"; sourceTree = "SOURCE_ROOT"; };
+		A10000000000000000000012 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = "AppKit.framework"; path = "System/Library/Frameworks/AppKit.framework"; sourceTree = "SDKROOT"; };
+		A10000000000000000000013 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = "SwiftUI.framework"; path = "System/Library/Frameworks/SwiftUI.framework"; sourceTree = "SDKROOT"; };
+		A10000000000000000000014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = "SDKROOT"; };
+		A10000000000000000000015 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.framework"; name = "XCTest.framework"; path = "Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework"; sourceTree = "DEVELOPER_DIR"; };
+		A10000000000000000000020 /* libGateEJSONAuthority.a */ = {isa = PBXFileReference; explicitFileType = "archive.ar"; includeInIndex = 0; path = "libGateEJSONAuthority.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000021 /* libGateECBORAuthority.a */ = {isa = PBXFileReference; explicitFileType = "archive.ar"; includeInIndex = 0; path = "libGateECBORAuthority.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000022 /* libGateEDualGraphJoin.a */ = {isa = PBXFileReference; explicitFileType = "archive.ar"; includeInIndex = 0; path = "libGateEDualGraphJoin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000023 /* libPrivateComputeCore.a */ = {isa = PBXFileReference; explicitFileType = "archive.ar"; includeInIndex = 0; path = "libPrivateComputeCore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000024 /* Ergentics Private Compute.app */ = {isa = PBXFileReference; explicitFileType = "wrapper.application"; includeInIndex = 0; path = "Ergentics Private Compute.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000025 /* PrivateComputeCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = "wrapper.cfbundle"; includeInIndex = 0; path = "PrivateComputeCoreTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A50000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000008 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2000000000000000000000E /* libGateEJSONAuthority.a in Frameworks */,
+				A2000000000000000000000F /* libGateECBORAuthority.a in Frameworks */,
+				A20000000000000000000010 /* libGateEDualGraphJoin.a in Frameworks */,
+				A20000000000000000000011 /* libPrivateComputeCore.a in Frameworks */,
+				A20000000000000000000012 /* AppKit.framework in Frameworks */,
+				A20000000000000000000013 /* SwiftUI.framework in Frameworks */,
+				A20000000000000000000014 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000011 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000018 /* libGateEJSONAuthority.a in Frameworks */,
+				A20000000000000000000019 /* libGateECBORAuthority.a in Frameworks */,
+				A2000000000000000000001A /* libGateEDualGraphJoin.a in Frameworks */,
+				A2000000000000000000001B /* libPrivateComputeCore.a in Frameworks */,
+				A2000000000000000000001C /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A30000000000000000000001 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A30000000000000000000002 /* Sources */,
+				A30000000000000000000003 /* Tests */,
+				A30000000000000000000004 /* Read-only static libraries */,
+				A30000000000000000000005 /* Resources */,
+				A10000000000000000000010 /* Info.plist */,
+				A10000000000000000000011 /* Entitlements.plist */,
+				A30000000000000000000006 /* Frameworks */,
+				A30000000000000000000007 /* Products */,
+			);
+			name = "Root";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000006 /* PrivateComputeCore.swift */,
+				A10000000000000000000007 /* ErgenticsPrivateComputeApp.swift */,
+				A10000000000000000000008 /* WorkspaceView.swift */,
+				A10000000000000000000009 /* ComputeModel.swift */,
+				A1000000000000000000000A /* NativeReceipt.c */,
+				A1000000000000000000000B /* NativeReceipt.h */,
+			);
+			path = "Sources";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000003 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000000C /* PrivateComputeCoreTests.swift */,
+			);
+			path = "Tests";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000004 /* Read-only static libraries */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000001 /* GateEJSONAuthority.swift */,
+				A10000000000000000000002 /* GateEJSONReconstructor.swift */,
+				A10000000000000000000003 /* GateECBORAuthority.swift */,
+				A10000000000000000000004 /* GateECBORReconstructor.swift */,
+				A10000000000000000000005 /* GateEDualGraphJoin.swift */,
+			);
+			name = "Read-only static libraries";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000005 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000000D /* gate-e-static-bootstrap-json-input.v1.hex */,
+				A1000000000000000000000E /* gate-e-static-bootstrap-cbor-input.v1.hex */,
+				A1000000000000000000000F /* native-app-scope.v1.json */,
+			);
+			name = "Resources";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000006 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000012 /* AppKit.framework */,
+				A10000000000000000000013 /* SwiftUI.framework */,
+				A10000000000000000000014 /* Security.framework */,
+				A10000000000000000000015 /* XCTest.framework */,
+			);
+			name = "Frameworks";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000007 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000020 /* libGateEJSONAuthority.a */,
+				A10000000000000000000021 /* libGateECBORAuthority.a */,
+				A10000000000000000000022 /* libGateEDualGraphJoin.a */,
+				A10000000000000000000023 /* libPrivateComputeCore.a */,
+				A10000000000000000000024 /* Ergentics Private Compute.app */,
+				A10000000000000000000025 /* PrivateComputeCoreTests.xctest */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A40000000000000000000001 /* GateEJSONAuthority */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000002 /* Build configuration list for GateEJSONAuthority */;
+			buildPhases = (
+				A50000000000000000000001 /* Sources */,
+				A50000000000000000000002 /* Frameworks */,
+				A50000000000000000000003 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+
+			);
+			name = "GateEJSONAuthority";
+			productName = "GateEJSONAuthority";
+			productReference = A10000000000000000000020 /* libGateEJSONAuthority.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A40000000000000000000002 /* GateECBORAuthority */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000003 /* Build configuration list for GateECBORAuthority */;
+			buildPhases = (
+				A50000000000000000000004 /* Sources */,
+				A50000000000000000000005 /* Frameworks */,
+				A50000000000000000000006 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+
+			);
+			name = "GateECBORAuthority";
+			productName = "GateECBORAuthority";
+			productReference = A10000000000000000000021 /* libGateECBORAuthority.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A40000000000000000000003 /* GateEDualGraphJoin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000004 /* Build configuration list for GateEDualGraphJoin */;
+			buildPhases = (
+				A50000000000000000000007 /* Sources */,
+				A50000000000000000000008 /* Frameworks */,
+				A50000000000000000000009 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+
+			);
+			name = "GateEDualGraphJoin";
+			productName = "GateEDualGraphJoin";
+			productReference = A10000000000000000000022 /* libGateEDualGraphJoin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A40000000000000000000004 /* PrivateComputeCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000005 /* Build configuration list for PrivateComputeCore */;
+			buildPhases = (
+				A5000000000000000000000A /* Sources */,
+				A5000000000000000000000B /* Frameworks */,
+				A5000000000000000000000C /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+				A90000000000000000000001 /* PBXTargetDependency */,
+				A90000000000000000000002 /* PBXTargetDependency */,
+				A90000000000000000000003 /* PBXTargetDependency */,
+			);
+			name = "PrivateComputeCore";
+			productName = "PrivateComputeCore";
+			productReference = A10000000000000000000023 /* libPrivateComputeCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A40000000000000000000005 /* ErgenticsPrivateCompute */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000006 /* Build configuration list for ErgenticsPrivateCompute */;
+			buildPhases = (
+				A5000000000000000000000D /* Sources */,
+				A5000000000000000000000E /* Frameworks */,
+				A5000000000000000000000F /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+				A90000000000000000000004 /* PBXTargetDependency */,
+				A90000000000000000000005 /* PBXTargetDependency */,
+				A90000000000000000000006 /* PBXTargetDependency */,
+				A90000000000000000000007 /* PBXTargetDependency */,
+			);
+			name = "ErgenticsPrivateCompute";
+			productName = "Ergentics Private Compute";
+			productReference = A10000000000000000000024 /* Ergentics Private Compute.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A40000000000000000000006 /* PrivateComputeCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000007 /* Build configuration list for PrivateComputeCoreTests */;
+			buildPhases = (
+				A50000000000000000000010 /* Sources */,
+				A50000000000000000000011 /* Frameworks */,
+				A50000000000000000000012 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (
+				A90000000000000000000008 /* PBXTargetDependency */,
+				A90000000000000000000009 /* PBXTargetDependency */,
+				A9000000000000000000000A /* PBXTargetDependency */,
+				A9000000000000000000000B /* PBXTargetDependency */,
+			);
+			name = "PrivateComputeCoreTests";
+			productName = "PrivateComputeCoreTests";
+			productReference = A10000000000000000000025 /* PrivateComputeCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					A40000000000000000000005 = {CreatedOnToolsVersion = "26.6"; ProvisioningStyle = Manual; };
+					A40000000000000000000006 = {CreatedOnToolsVersion = "26.6"; ProvisioningStyle = Manual; };
+				};
+			};
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for project */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = A30000000000000000000001 /* Root */;
+			productRefGroup = A30000000000000000000007 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A40000000000000000000001 /* GateEJSONAuthority */,
+				A40000000000000000000002 /* GateECBORAuthority */,
+				A40000000000000000000003 /* GateEDualGraphJoin */,
+				A40000000000000000000004 /* PrivateComputeCore */,
+				A40000000000000000000005 /* ErgenticsPrivateCompute */,
+				A40000000000000000000006 /* PrivateComputeCoreTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A50000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2000000000000000000000B /* gate-e-static-bootstrap-json-input.v1.hex in Resources */,
+				A2000000000000000000000C /* gate-e-static-bootstrap-cbor-input.v1.hex in Resources */,
+				A2000000000000000000000D /* native-app-scope.v1.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000012 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000016 /* gate-e-static-bootstrap-json-input.v1.hex in Resources */,
+				A20000000000000000000017 /* gate-e-static-bootstrap-cbor-input.v1.hex in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A50000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000001 /* GateEJSONAuthority.swift in Sources */,
+				A20000000000000000000002 /* GateEJSONReconstructor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000003 /* GateECBORAuthority.swift in Sources */,
+				A20000000000000000000004 /* GateECBORReconstructor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000005 /* GateEDualGraphJoin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000006 /* PrivateComputeCore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5000000000000000000000D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000007 /* ErgenticsPrivateComputeApp.swift in Sources */,
+				A20000000000000000000008 /* WorkspaceView.swift in Sources */,
+				A20000000000000000000009 /* ComputeModel.swift in Sources */,
+				A2000000000000000000000A /* NativeReceipt.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000000000000000000010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000015 /* PrivateComputeCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A90000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000001 /* GateEJSONAuthority */;
+			targetProxy = A80000000000000000000001 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000002 /* GateECBORAuthority */;
+			targetProxy = A80000000000000000000002 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000003 /* GateEDualGraphJoin */;
+			targetProxy = A80000000000000000000003 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000004 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000001 /* GateEJSONAuthority */;
+			targetProxy = A80000000000000000000004 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000005 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000002 /* GateECBORAuthority */;
+			targetProxy = A80000000000000000000005 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000003 /* GateEDualGraphJoin */;
+			targetProxy = A80000000000000000000006 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000004 /* PrivateComputeCore */;
+			targetProxy = A80000000000000000000007 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000001 /* GateEJSONAuthority */;
+			targetProxy = A80000000000000000000008 /* PBXContainerItemProxy */;
+		};
+		A90000000000000000000009 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000002 /* GateECBORAuthority */;
+			targetProxy = A80000000000000000000009 /* PBXContainerItemProxy */;
+		};
+		A9000000000000000000000A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000003 /* GateEDualGraphJoin */;
+			targetProxy = A8000000000000000000000A /* PBXContainerItemProxy */;
+		};
+		A9000000000000000000000B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000000000000000000004 /* PrivateComputeCore */;
+			targetProxy = A8000000000000000000000B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A60000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "arm64";
+				CLANG_ENABLE_MODULES = "YES";
+				CLANG_ENABLE_OBJC_ARC = "YES";
+				CLANG_WARN_BOOL_CONVERSION = "YES";
+				CLANG_WARN_CONSTANT_CONVERSION = "YES";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = "YES";
+				CLANG_WARN_EMPTY_BODY = "YES";
+				CLANG_WARN_ENUM_CONVERSION = "YES";
+				CLANG_WARN_INFINITE_RECURSION = "YES";
+				CLANG_WARN_INT_CONVERSION = "YES";
+				CLANG_WARN_UNREACHABLE_CODE = "YES";
+				COPY_PHASE_STRIP = "NO";
+				ENABLE_USER_SCRIPT_SANDBOXING = "YES";
+				GCC_C_LANGUAGE_STANDARD = "gnu17";
+				GCC_NO_COMMON_BLOCKS = "YES";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
+				GCC_WARN_ABOUT_RETURN_TYPE = "YES_ERROR";
+				GCC_WARN_UNINITIALIZED_AUTOS = "YES_AGGRESSIVE";
+				GCC_WARN_UNUSED_FUNCTION = "YES";
+				GCC_WARN_UNUSED_VARIABLE = "YES";
+				MACOSX_DEPLOYMENT_TARGET = "14.0";
+				ONLY_ACTIVE_ARCH = "YES";
+				SDKROOT = "macosx";
+				SUPPORTED_PLATFORMS = "macosx";
+				SWIFT_STRICT_CONCURRENCY = "complete";
+				SWIFT_VERSION = "6.0";
+				DEBUG_INFORMATION_FORMAT = "dwarf";
+				ENABLE_TESTABILITY = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			};
+			name = Debug;
+		};
+		A60000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "arm64";
+				CLANG_ENABLE_MODULES = "YES";
+				CLANG_ENABLE_OBJC_ARC = "YES";
+				CLANG_WARN_BOOL_CONVERSION = "YES";
+				CLANG_WARN_CONSTANT_CONVERSION = "YES";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = "YES";
+				CLANG_WARN_EMPTY_BODY = "YES";
+				CLANG_WARN_ENUM_CONVERSION = "YES";
+				CLANG_WARN_INFINITE_RECURSION = "YES";
+				CLANG_WARN_INT_CONVERSION = "YES";
+				CLANG_WARN_UNREACHABLE_CODE = "YES";
+				COPY_PHASE_STRIP = "NO";
+				ENABLE_USER_SCRIPT_SANDBOXING = "YES";
+				GCC_C_LANGUAGE_STANDARD = "gnu17";
+				GCC_NO_COMMON_BLOCKS = "YES";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
+				GCC_WARN_ABOUT_RETURN_TYPE = "YES_ERROR";
+				GCC_WARN_UNINITIALIZED_AUTOS = "YES_AGGRESSIVE";
+				GCC_WARN_UNUSED_FUNCTION = "YES";
+				GCC_WARN_UNUSED_VARIABLE = "YES";
+				MACOSX_DEPLOYMENT_TARGET = "14.0";
+				ONLY_ACTIVE_ARCH = "YES";
+				SDKROOT = "macosx";
+				SUPPORTED_PLATFORMS = "macosx";
+				SWIFT_STRICT_CONCURRENCY = "complete";
+				SWIFT_VERSION = "6.0";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_TESTABILITY = "NO";
+				GCC_OPTIMIZATION_LEVEL = "s";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_COMPILATION_MODE = "wholemodule";
+			};
+			name = Release;
+		};
+		A60000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateEJSONAuthority";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Debug;
+		};
+		A60000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateEJSONAuthority";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Release;
+		};
+		A60000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateECBORAuthority";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Debug;
+		};
+		A60000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateECBORAuthority";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Release;
+		};
+		A60000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateEDualGraphJoin";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Debug;
+		};
+		A60000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "GateEDualGraphJoin";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Release;
+		};
+		A60000000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "PrivateComputeCore";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Debug;
+		};
+		A6000000000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "PrivateComputeCore";
+				SKIP_INSTALL = "YES";
+				CODE_SIGNING_ALLOWED = "NO";
+				DEFINES_MODULE = "YES";
+				MACH_O_TYPE = "staticlib";
+				SWIFT_INSTALL_OBJC_HEADER = "NO";
+			};
+			name = Release;
+		};
+		A6000000000000000000000B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Ergentics Private Compute";
+				PRODUCT_MODULE_NAME = "ErgenticsPrivateCompute";
+				SKIP_INSTALL = "NO";
+				CODE_SIGN_ENTITLEMENTS = "Entitlements.plist";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = "NO";
+				CODE_SIGN_STYLE = "Manual";
+				CODE_SIGNING_ALLOWED = "YES";
+				CODE_SIGNING_REQUIRED = "YES";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = "YES";
+				ENABLE_DEBUG_DYLIB = "NO";
+				ENABLE_HARDENED_RUNTIME = "YES";
+				GENERATE_INFOPLIST_FILE = "NO";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Sources",
+				);
+				INFOPLIST_FILE = "Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.PrivateCompute";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/NativeReceipt.h";
+			};
+			name = Debug;
+		};
+		A6000000000000000000000C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Ergentics Private Compute";
+				PRODUCT_MODULE_NAME = "ErgenticsPrivateCompute";
+				SKIP_INSTALL = "NO";
+				CODE_SIGN_ENTITLEMENTS = "Entitlements.plist";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = "NO";
+				CODE_SIGN_STYLE = "Manual";
+				CODE_SIGNING_ALLOWED = "YES";
+				CODE_SIGNING_REQUIRED = "YES";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = "YES";
+				ENABLE_DEBUG_DYLIB = "NO";
+				ENABLE_HARDENED_RUNTIME = "YES";
+				GENERATE_INFOPLIST_FILE = "NO";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Sources",
+				);
+				INFOPLIST_FILE = "Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.PrivateCompute";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/NativeReceipt.h";
+			};
+			name = Release;
+		};
+		A6000000000000000000000D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "PrivateComputeCoreTests";
+				SKIP_INSTALL = "YES";
+				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = "NO";
+				CODE_SIGN_STYLE = "Manual";
+				CODE_SIGNING_ALLOWED = "YES";
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				GENERATE_INFOPLIST_FILE = "YES";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.PrivateCompute.CoreTests";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		A6000000000000000000000E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = "PrivateComputeCoreTests";
+				SKIP_INSTALL = "YES";
+				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = "NO";
+				CODE_SIGN_STYLE = "Manual";
+				CODE_SIGNING_ALLOWED = "YES";
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				GENERATE_INFOPLIST_FILE = "YES";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ergentics.PrivateCompute.CoreTests";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70000000000000000000001 /* Build configuration list for project */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A60000000000000000000001 /* Debug */,
+				A60000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000002 /* Build configuration list for GateEJSONAuthority */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A60000000000000000000003 /* Debug */,
+				A60000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000003 /* Build configuration list for GateECBORAuthority */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A60000000000000000000005 /* Debug */,
+				A60000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000004 /* Build configuration list for GateEDualGraphJoin */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A60000000000000000000007 /* Debug */,
+				A60000000000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000005 /* Build configuration list for PrivateComputeCore */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A60000000000000000000009 /* Debug */,
+				A6000000000000000000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000006 /* Build configuration list for ErgenticsPrivateCompute */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6000000000000000000000B /* Debug */,
+				A6000000000000000000000C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000007 /* Build configuration list for PrivateComputeCoreTests */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6000000000000000000000D /* Debug */,
+				A6000000000000000000000E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AB0000000000000000000001 /* Project object */;
+}

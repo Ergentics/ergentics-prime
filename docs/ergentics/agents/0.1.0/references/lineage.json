@@ -1,0 +1,89 @@
+{
+  "schema": "ergentics.agent-lineage.v1",
+  "owner": "Ergentics, LLC",
+  "definition_version": "0.1.0",
+  "transformation": "User-authorized Ergentics task maintenance: durable role instructions from selected Ergentics run evidence. No old helper binaries, fixtures, dependency trees, protected exam content or raw histories are included.",
+  "source_evidence": [
+    {
+      "id": "role_setup",
+      "scope": "Two local native implementation roles and a separate OpenAI participant; historical setup authority only.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/three-agent-setup-001/RUN-CONTRACT.json",
+      "bytes": 4226,
+      "sha256": "060525e24707b6fc54f5c5c44e1bbd4650133c1bd06c41f880f84511277233ab"
+    },
+    {
+      "id": "setup_observations",
+      "scope": "Reproducible builds and successful launches were separate observations; original C/C++ loader failure preserved.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/three-agent-setup-001/SETUP-READINESS.json",
+      "bytes": 8889,
+      "sha256": "3af69171871da73e09373e5182c35de36b04f4c5d6ef2f3dd4442fc8347d169c"
+    },
+    {
+      "id": "series_closeout",
+      "scope": "Closed historical math/display series; no current dispatch inherited.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/MATH-RUNS-CLOSEOUT-001.md",
+      "bytes": 5275,
+      "sha256": "2f5fe4aff362cc2cf35477bc20850874fd5963ca0f138aa34720da127d2aa909"
+    },
+    {
+      "id": "display_execution",
+      "scope": "Fixed nine-row fixture and known controls; no general-purpose renderer or blind evaluation claim.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/display-fidelity-study-003/execution-001/RESULT-001.md",
+      "bytes": 2169,
+      "sha256": "a2172a1cd3e2ce229ec0afb89348ed807086f0d648cf77de06d226d5918b6138"
+    },
+    {
+      "id": "installation",
+      "scope": "Historical v0.2.0 package installation receipt.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/display-fidelity-study-003/installation-001/INSTALLATION-001.json",
+      "bytes": 15802,
+      "sha256": "0c0914a97908998db46d27b05b14ef1b9671726f08a107a7db79490c948601b1"
+    },
+    {
+      "id": "energy_swift_role",
+      "scope": "New problem-specific Swift+C source reusing display guidance.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/energy-identifiability-study-004/swift/READY.json",
+      "bytes": 19230,
+      "sha256": "032e746a1348bb4bfb127f21609a9af8e8bb245ff14859636c97e7e6b594581e"
+    },
+    {
+      "id": "energy_cpp_role",
+      "scope": "New problem-specific C/C++ source and preserved first compile failure.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-math-gate-synthetic-001/energy-identifiability-study-004/cpp/READY.json",
+      "bytes": 12040,
+      "sha256": "e4c97a3a4080a82f0902929ccec483e28646d7e7122d3c9e6f0c4357b4e7fbde"
+    },
+    {
+      "id": "later_repository_review",
+      "scope": "Attributed later review reports five high TOCTOU findings retained in old v0.2.0/study C/C++ files and incomplete Swift extraction; matching historical package bytes does not clear these limits.",
+      "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-platform-skills-checkpoint-001/integration-002/RESULT.md",
+      "bytes": 2345,
+      "sha256": "86895845f220606a96c917d72f3da1f55bdb1d3372cddd79bb8489d383385e0c"
+    },
+    {
+      "id": "current_installed_identity_check",
+      "scope": "Current read-only 21-file match for two installed packages; no native execution.",
+      "path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-next-run-configurations-001.json",
+      "bytes": 11390,
+      "sha256": "300e23a154a5a6f4b5159f755e146eb3e657b66a4d57fe669101be006b56c9bc"
+    },
+    {
+      "id": "local_adapter_review",
+      "scope": "Local native registry conventions are statically evidenced; named-role loading remains untested.",
+      "path": "/Users/ergentics/2026-09-20/er/work/ergentics-agents-001/adapter-review/ADAPTER-REVIEW.json",
+      "bytes": 12139,
+      "sha256": "1e22abd230046215d63db2a0e81ced65da0be1b706b2c04c6c3a635c2d6a86b9"
+    }
+  ],
+  "attribution": "Ergentics retains first-party research/method authority. Native implementation, hosted Codex authoring and the OpenAI participant remain distinct; no new local model weights or independent model lineage is established.",
+  "readiness_limit": "Historical outcomes are attributed to their recorded objects. This bundle does not clear old alerts or qualify any new native implementation.",
+  "repository_provenance": "No existing agent-package Git checkout established from the selected platform-skills locators; existing repository lineage must be selected before a commit. No competing repository Provenance.md or new Git root created.",
+  "policy_binding_read": {
+    "id": "EA-POLICY-001",
+    "version": "0.4.1",
+    "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-alignment/ERGENTICS-ALIGNMENT.md",
+    "bytes": 16917,
+    "sha256": "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"
+  },
+  "policy_loading": "Load the current installed ergentics-alignment binding for each receiving task; this historical binding is the identity used to author this release, not a silent permanent policy override."
+}

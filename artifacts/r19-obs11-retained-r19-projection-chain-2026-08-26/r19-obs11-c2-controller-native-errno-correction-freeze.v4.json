@@ -1,0 +1,253 @@
+{
+  "schema": "ergentics-r19-obs11-c2-controller-native-errno-correction-freeze-v4",
+  "status": "C2_NATIVE_ERRNO_CORRECTION_FROZEN_SOURCE_EDIT_ONLY_CONTROLLER_UNCONSUMED",
+  "rank": "CONTROL_ONLY_PRELAUNCH_CORRECTION_FREEZE",
+  "predecessor": {
+    "current_commit": "6fbfc7043dc6e4b05ecaf69e3d608e68ab8dcc40",
+    "current_tree": "ad11fcee6456a4c02932f42914635bd80fd15714",
+    "tree_order_implementation_commit": "495132e036084a05d2dc7282ed4b36f85940c6df",
+    "tree_order_implementation_tree": "6ee09f99a0634debcc7d60649108a502dbe2c2be",
+    "tree_order_checkpoint": {
+      "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-tree-frame-order-correction-implementation-checkpoint.v3.json",
+      "bytes": 7031,
+      "lines": 186,
+      "sha256": "10b0c601be88b9dd8559fcfc09bb4206ae1c2357317a7153f47f9ff846b99a43",
+      "git_blob": "ed7cf9d25056e750d01cd947ec5a96ba5a6335e0"
+    },
+    "mapped_image_checkpoint_commit": "864b2a28d863cb75d08ce61e148b8bf1704cc352",
+    "mapped_image_checkpoint_tree": "d8c66e0e765ce54efc6ab294d9d8bcfa3e6b430d"
+  },
+  "source_before_correction": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+    "commit": "495132e036084a05d2dc7282ed4b36f85940c6df",
+    "tree": "6ee09f99a0634debcc7d60649108a502dbe2c2be",
+    "device": 16777231,
+    "inode": 17945704,
+    "uid": 501,
+    "gid": 20,
+    "mode": "0644",
+    "nlink": 1,
+    "flags": 0,
+    "bytes": 149947,
+    "lines": 4023,
+    "sha256": "99214280825e667b00cdfe20f27b900c031ba84520264074ffc76b83ca5b04a1",
+    "git_blob": "bf056c91d69c61e7c0520417caa0a9778e549ee2"
+  },
+  "failed_exact_prefix_harness": {
+    "source_prefix_marker": "LF_journal_equals_nil_LF_state_equals_C2StateMachine_new_LF",
+    "source_prefix_bytes": 143149,
+    "source_prefix_sha256": "9b6c45d85af885a40931bc2021b8b464884c8d3c48f52a934a856c6a8932bfdf",
+    "source_sha256": "99214280825e667b00cdfe20f27b900c031ba84520264074ffc76b83ca5b04a1",
+    "environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "argv_count": 0,
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "evaluated_bottom_entry": false,
+    "called_function": "bootstrap_preflight",
+    "exit": 1,
+    "exception_class": "C2Failure",
+    "exception_code": "DIRECTORY_INVENTORY:PACKAGE_ROOT:READDIR:25",
+    "native_errno": 25,
+    "native_errno_name": "ENOTTY",
+    "failure_phase": "VnodeContinuity_INITIAL_DIRECTORY_REVALIDATION",
+    "controller_consumed": false,
+    "journal_object_created": false,
+    "output_roots_created": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "product_executions": 0,
+    "signals": 0,
+    "captured_stderr_exact_bytes_retained": false,
+    "reinterpretation": false
+  },
+  "defect": {
+    "ruby_expression": "Fiddle.last_error = 0",
+    "actual_effect": "SETS_ONLY_RUBY_THREAD_LOCAL_SAVED_ERROR_SLOTS",
+    "required_effect": "WRITE_ZERO_TO_CURRENT_DARWIN_THREAD_NATIVE_ERRNO_BEFORE_FOREIGN_CALL",
+    "darwin_errno_definition": "errno_is_dereference_of___error_thread_local_int_pointer",
+    "deterministic_preflight_effect": "READDIR_NULL_AT_EOF_INHERITS_NATIVE_ENOTTY_25_AND_FALSE_FAILS",
+    "additional_runtime_risks": [
+      "PROC_LISTPIDS_ZERO_EMPTY_GROUP_CAN_FALSE_FAIL_AND_PREVENT_REAP_OR_CONSERVATION",
+      "PROC_PIDREGIONPATHINFO_ZERO_END_CAN_FALSE_FAIL",
+      "LIBPROC_ZERO_DISAPPEARANCE_CLASSIFICATION_CAN_USE_STALE_ERRNO"
+    ],
+    "unsafe_non_solution": "TREATING_NULL_PLUS_ENOTTY_AS_EOF_CAN_MASK_A_GENUINE_READDIR_ERROR"
+  },
+  "local_primary_evidence": [
+    {
+      "path": "/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/fiddle.rb",
+      "bytes": 1722,
+      "lines": 56,
+      "sha256": "d9f8894c029a2217fc368cb6fe26e11ea32270bdc98a68f4a0b33b8d1b55696a",
+      "predicate": "Fiddle_last_error_setter_writes_Thread_current_slots_only"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/errno.h",
+      "bytes": 13086,
+      "lines": 271,
+      "sha256": "109ace10e79b9467dee3b8c7890f1d5bea1102d982c521922e9d372ab9863c97",
+      "predicate": "extern_int_pointer___error_and_errno_dereference_definition"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/dirent.h",
+      "bytes": 8703,
+      "lines": 224,
+      "sha256": "46d55897015dc859be0181397444b74b22315db8f4ffcdd01c1c3c2a147f196d",
+      "predicate": "readdir_returns_null_for_eof_or_error"
+    }
+  ],
+  "native_primitive_probe": {
+    "runtime": "/usr/bin/ruby 2.6.10p210",
+    "cwd": "/private/var/empty",
+    "environment": "EMPTY_REPLACEMENT_WITH_LANG_LC_ALL_PATH_FOR_PROBE_ONLY",
+    "seeded_native_errno": 25,
+    "after_fiddle_setter": {
+      "fiddle_saved_error": 0,
+      "native_errno": 25
+    },
+    "direct_native_clear": {
+      "errno_pointer_nonzero": true,
+      "native_int_bytes": 4,
+      "directory": "/private/var/empty",
+      "entry_count_including_dot_and_dotdot": 2,
+      "terminal_readdir_pointer": "NULL",
+      "terminal_fiddle_saved_error": 0,
+      "terminal_native_errno": 0,
+      "closedir_return": 0,
+      "status": "PASS_NATIVE_ERRNO_PRIMITIVE"
+    }
+  },
+  "frozen_primitive": {
+    "darwin_binding": "extern_void_pointer___error_zero_arguments",
+    "wrapper": "call_with_native_errno_ZERO_ARGUMENT_BLOCK_ONLY",
+    "pointer_scope": "REACQUIRE_CURRENT_THREAD___error_POINTER_PER_CALL_NO_GLOBAL_CACHE",
+    "pointer_null": "FAIL_CLOSED",
+    "native_int_format": "pack_i_bang_AND_RAW_ZERO_BYTE_READBACK",
+    "native_int_bytes": 4,
+    "native_int_width_mismatch": "FAIL_CLOSED",
+    "before_target_call": [
+      "SET_Fiddle_SAVED_ERROR_TO_ZERO",
+      "WRITE_NATIVE_ERRNO_ZERO",
+      "READBACK_NATIVE_ZERO",
+      "WRITE_NATIVE_ERRNO_ZERO_AGAIN_IMMEDIATELY_BEFORE_YIELD"
+    ],
+    "after_target_call": "READ_Fiddle_last_error_IMMEDIATELY_AS_SAVED_NATIVE_ERRNO_SNAPSHOT",
+    "return_shape": "TWO_ELEMENT_ARRAY_RESULT_AND_EXACT_SAVED_ERRNO",
+    "external_caller_parameters": 0,
+    "generic_command_surface": false
+  },
+  "frozen_application_scope": {
+    "existing_fake_native_clears": 23,
+    "existing_fiddle_saved_error_reads": 26,
+    "decision_bearing_C2Darwin_calls_to_wrap": 29,
+    "best_effort_rescue_only_closedir_calls_unwrapped": 1,
+    "Fiddle_last_error_references_after": 2,
+    "Fiddle_last_error_role_after": "INSIDE_NATIVE_WRAPPER_ONLY_SET_ZERO_THEN_IMMEDIATE_POST_CALL_READ",
+    "required_semantic_sites": [
+      "READDIR_EOF_VERSUS_ERROR",
+      "PROC_LISTPIDS_EMPTY_VERSUS_ERROR",
+      "PROC_PIDREGIONPATHINFO_END_VERSUS_GONE_VERSUS_ERROR",
+      "PROC_PIDINFO_UNIQUE_SHORT_AND_CWD_GONE_VERSUS_UNKNOWN",
+      "PROC_PIDPATH_GONE_VERSUS_UNKNOWN"
+    ],
+    "all_other_wrapped_sites": "EXACT_NATIVE_FAILURE_DIAGNOSTICS_AND_SINGLE_PRIMITIVE_CONSISTENCY",
+    "descriptor_cloexec_correction": {
+      "before": "fcntl_F_GETFD_result_bitmask_without_negative_check",
+      "defect": "NEGATIVE_ONE_BIT_AND_FD_CLOEXEC_EQUALS_FD_CLOEXEC",
+      "after": "WRAPPED_FCNTL_THEN_NEGATIVE_HARD_STOP_THEN_BIT_TEST"
+    },
+    "readdir_classification": [
+      "NON_NULL_POINTER_EQUALS_ENTRY_IGNORE_SAVED_ERRNO",
+      "NULL_AND_SAVED_ERRNO_ZERO_EQUALS_EOF",
+      "NULL_AND_SAVED_ERRNO_NONZERO_EQUALS_FAILURE_WITH_EXACT_ERRNO"
+    ]
+  },
+  "unchanged_invariants": [
+    "NO_ENOTTY_OR_OTHER_ERRNO_ALLOWLIST",
+    "NO_RETRY_OR_ERROR_REINTERPRETATION",
+    "MAPPED_IMAGE_V2_CORRECTION_UNCHANGED",
+    "TREE_FRAME_ORDER_V3_CORRECTION_UNCHANGED",
+    "SOURCE_BUILD_INPUT_TOOL_AND_NAMESPACE_IDENTITIES_UNCHANGED",
+    "SPAWN_WAIT_SIGNAL_CUTOFF_HORIZON_AND_CONTAINMENT_POLICY_UNCHANGED",
+    "PRODUCT_EXECUTION_COUNT_ZERO_UNCHANGED",
+    "AUTHORITY_VECTOR_UNCHANGED"
+  ],
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-obs11-c2-build-controller.rb"
+  ],
+  "semantic_allowlist": [
+    "C2Darwin___error_BINDING",
+    "call_with_native_errno_HELPER",
+    "ALL_DECISION_BEARING_C2Darwin_CALLS_MECHANICAL_WRAPPING",
+    "descriptor_cloexec_NEGATIVE_RESULT_HARD_STOP"
+  ],
+  "successor_control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-controller-native-errno-correction-implementation-checkpoint.v4.json"
+  ],
+  "hard_stops": [
+    "CACHED_GLOBAL_ERRNO_POINTER",
+    "POINTER_NULL_OR_NATIVE_INT_WIDTH_NOT_FOUR",
+    "NO_NATIVE_ZERO_IMMEDIATELY_BEFORE_TARGET",
+    "DELAYED_POST_CALL_ERRNO_READ",
+    "ENOTTY_OR_OTHER_ERRNO_ADMITTED_AS_EOF",
+    "UNWRAPPED_DECISION_BEARING_C2Darwin_CALL",
+    "FCNTL_F_GETFD_NEGATIVE_RESULT_NOT_REJECTED",
+    "PROCESS_OR_NAMESPACE_SURFACE_DELTA",
+    "CONTROLLER_SWIFTPM_COMPILER_OR_PRODUCT_EXECUTION",
+    "SIGNAL_CLEANUP_REPAIR_OR_RETRY",
+    "PYTHON_ENTRY",
+    "AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+  ],
+  "correction_slice_operations": {
+    "source_edits_at_freeze": 0,
+    "root_read_only_ruby_entries": 4,
+    "source_prefix_evaluations": 1,
+    "independent_reported_read_only_ruby_entries_minimum": 6,
+    "c2_bottom_entry_evaluations": 0,
+    "c2_controller_invocations": 0,
+    "c2_controller_process_entries": 0,
+    "swiftpm_spawns": 0,
+    "compiler_entries": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "output_roots_created": 0,
+    "signals": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "output_namespaces": {
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-a-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-execution-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-chain-runner-296d32da-build-b-witness-closure-v1": "ABSENT",
+    "/private/tmp/ergentics-r19-obs11-c2-build-control-8405636a-v1": "ABSENT"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "controller_invocation_authorized_by_this_record": false,
+    "build_authorized_by_this_record": false
+  },
+  "next": {
+    "step": "SOURCE_ONLY_NATIVE_ERRNO_CORRECTION_THEN_THREE_INDEPENDENT_STATIC_AND_MICROPROBE_REVIEWS",
+    "requires": [
+      "RUBY_2_6_PARSE_WITHOUT_TOP_LEVEL_SOURCE_EVALUATION",
+      "EXACT_SOURCE_DIFF_HASH_AND_GIT_BLOB",
+      "ALL_DECISION_BEARING_CALLS_WRAPPED",
+      "READDIR_EOF_AND_FORCED_ERROR_CLASSIFICATION_MICROTESTS",
+      "DESCRIPTOR_CLOEXEC_NEGATIVE_CASE_MICROTEST",
+      "SEPARATE_IMPLEMENTATION_CHECKPOINT",
+      "REPEAT_EXACT_PRECONSUMPTION_PREFIX_HARNESS_FROM_SUCCESSOR_CHECKPOINT"
+    ]
+  },
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

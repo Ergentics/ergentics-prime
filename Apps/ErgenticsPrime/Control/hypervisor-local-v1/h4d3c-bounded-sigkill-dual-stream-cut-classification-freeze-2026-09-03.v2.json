@@ -1,0 +1,109 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3c-freeze.v2",
+  "checkpoint": "H4-D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_FREEZE_V2",
+  "recorded_at_utc": "2026-09-04T06:22:18Z",
+  "result_contract": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY",
+  "future_checkpoint": {
+    "schema": "com.ergentics.provenance.hypervisor.h4d3c-checkpoint.v1",
+    "checkpoint": "H4-D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION",
+    "filename_rule": "use the h4d3c-bounded-sigkill-dual-stream-cut-classification-checkpoint stem with the actual local completion date",
+    "result": "PASS_H4D3C_BOUNDED_SIGKILL_DUAL_STREAM_CUT_CLASSIFICATION_MECHANICS_ONLY",
+    "governing_freeze": "this v2 artifact",
+    "forbidden_claim": "No PASS against the superseded v1 errno-zero terminator predicate may be claimed."
+  },
+  "supersedes": {
+    "path": "Control/hypervisor-local-v1/h4d3c-bounded-sigkill-dual-stream-cut-classification-freeze-2026-09-03.v1.json",
+    "commit": "9672b7f12592dd83718e60ae03f720a85e908f87",
+    "tree": "5bc768f1320800cade4d29d873366f8c87cd747f",
+    "blob": "2564a1d99fd4e560119406fe5cf34f08c237ca1d",
+    "sha256": "c77e202051206755e8c435cf068b4d30476c53f424b7a6e9a8f857fe0bf4eab7",
+    "incorporation": "Every v1 member remains normative without textual change except the single mapped-image enumeration terminator predicate replaced below.",
+    "reason": "The first authorized focused Debug execution demonstrated that the Darwin libproc end-of-region sentinel is a zero return with errno EINVAL, making the v1 errno-zero terminator predicate unsatisfiable on the bound host."
+  },
+  "supersession": {
+    "scope": "executable_admission.mapped_image_enumeration terminal return pair only",
+    "incorporation": "Every v1 requirement remains normative except the explicitly replaced terminal result and errno predicate.",
+    "v1_disposition": "SUPERSEDED_BEFORE_IMPLEMENTATION; NO_V1_PASS_CLAIM"
+  },
+  "single_semantic_correction": {
+    "member": "executable_admission.mapped_image_enumeration",
+    "v1_predicate_not_satisfied": "v1 required the final PROC_PIDREGIONPATHINFO zero return to leave errno zero and rejected any nonzero errno.",
+    "bounded_observation": {
+      "configuration": "Debug",
+      "product": "H4D3cCutPublisher",
+      "spawn_state": "exact positive direct child suspended by POSIX_SPAWN_START_SUSPENDED",
+      "positive_exact_size_region_records": 17,
+      "regions_matching_held_executable_device_and_inode": 4,
+      "regions_matching_device_inode_offset_zero_and_executable_protection": 1,
+      "qualifying_region_offset": 0,
+      "qualifying_region_protection": 5,
+      "qualifying_region_path_join": "canonical exact admitted path",
+      "terminal_result": 0,
+      "terminal_errno": 22,
+      "terminal_errno_name": "EINVAL"
+    },
+    "v2_replacement_predicate": "Before every PROC_PIDREGIONPATHINFO call set errno to zero. Accept positive calls only when they return exactly PROC_PIDREGIONPATHINFO_SIZE and satisfy every v1 record, cursor, vnode, offset, protection and path predicate. After at most 4096 positive records, require exactly one terminating call returning zero with errno exactly EINVAL.",
+    "v2_rejections": [
+      "a positive partial or oversized return",
+      "a zero return with errno zero",
+      "a zero return with errno other than EINVAL",
+      "a negative return",
+      "a zero-size, nonadvancing or overflowing region",
+      "more than 4096 positive records",
+      "zero or multiple qualifying mapped-main-image matches",
+      "any failure of the held vnode, offset-zero, executable-protection or canonical-path join"
+    ],
+    "unchanged_invariants": "The 4096-record cap, checked strictly increasing address-plus-size cursor, exact one mapped-main-image match, held executable device/inode, file offset zero, executable protection, bounded NUL-terminated proc_regionfilename result and canonical admitted-path equality remain unchanged.",
+    "scope_delta": "NONE outside the exact libproc terminator pair"
+  },
+  "implementation_parent_rule": "The implementation commit must have the commit containing this v2 freeze artifact as its direct parent and must change exactly the five allowlisted paths below.",
+  "implementation_delta_rule": "The implementation delta must equal the unchanged exact five-path allowlist.",
+  "implementation_allowlist": [
+    "ErgenticsProvenance.xcodeproj/project.pbxproj",
+    "Sources/HypervisorStageH4Privacy.swift",
+    "Sources/HypervisorStageH4DualStreamPersistence.swift",
+    "Sources/H4D3cCutPublisherMain.swift",
+    "Tests/HypervisorStageH4DualStreamSigkillCutClassificationTests.swift"
+  ],
+  "verification": {
+    "v1_run_order_and_evidence_requirements": "incorporated unchanged",
+    "additional_required_evidence": [
+      "record the exact result-zero errno-EINVAL terminator in Debug and Release mapped-image admission",
+      "bind the final checkpoint to this v2 freeze commit, tree, blob and SHA-256",
+      "state explicitly that the superseded v1 errno-zero predicate was not satisfied and no v1 PASS is claimed"
+    ],
+    "suite_requirement": "zero failures, zero unexpected failures and zero skipped D3c tests"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "sigkill_cut_mechanics": "NOT_YET_EVALUATED_FREEZE_OBJECTIVE_ONLY",
+    "retained_state_classification": "NOT_YET_EVALUATED_FREEZE_OBJECTIVE_ONLY",
+    "power_loss_evaluated": false,
+    "restart_adoption": false,
+    "scientific_authority": false,
+    "next_stage_authorized": false
+  },
+  "authorization_boundary": {
+    "status": "AUTHORIZED_BY_USER_ON_2026-09-03",
+    "allowed": "the already authorized hostless XCTest-only bounded native publisher and reader execution, read-only libproc inspection, poll, WNOHANG waitpid, one exact-PID SIGCONT per admitted suspended child and at most one exact-PID SIGKILL per selected writer cut or containment path",
+    "excluded": "VM, networking, installation, GitHub, application launch, process-group signal, descendant control, production process control, authority-bearing execution, constrained-I/O and power-loss work"
+  },
+  "effects": {
+    "production_code_behavior": "UNCHANGED_BY_THIS_FREEZE",
+    "application_entitlement_or_framework": "UNCHANGED_BY_THIS_FREEZE",
+    "test_control_semantics": "ONE_LIBPROC_TERMINATOR_PAIR_CORRECTED",
+    "authority_effect": "NONE"
+  },
+  "nonclaims": [
+    "This correction does not itself establish the D3c result; the complete v2-governed build, test and binary verification matrix must pass.",
+    "The observed EINVAL sentinel is local Darwin/libproc behavior, not an authority, authenticity, durability, power-loss or restart-adoption fact.",
+    "No result against the superseded v1 errno-zero predicate is claimed.",
+    "All v1 scope limits, residuals, forbidden operations and nonclaims remain in force."
+  ],
+  "next_recommendation": "Commit this superseding freeze alone, make the exact five-path implementation its direct child, then record the completed v2-governed mechanics in a separate checkpoint commit."
+}

@@ -1,0 +1,988 @@
+{
+  "status": "REVIEW_COMPLETE",
+  "evidenceIntegrityVerified": true,
+  "scope": "Read-only completed Prime 10.227M learned-model regression; no model, GPU, hypervisor, build or signing operation by reviewer.",
+  "counts": {
+    "vectors": 96,
+    "bytes": 6291456,
+    "predecessorEqualVectors": 96,
+    "actualFeedbackBindings": 48,
+    "hostGuestEqualPairs": 48,
+    "guestVMs": 12,
+    "guestEntries": 60
+  },
+  "actualProcesses": 6,
+  "uniqueSelectedCases": 4,
+  "allFullVocabularyLogitsFiniteAndArgmaxVerified": true,
+  "allPredecessorAndHostGuestLogitsByteIdentical": true,
+  "allControllersNormalExactReapAndEOF": true,
+  "allGuestFeedbackAndCleanupVerified": true,
+  "timingStaticReview": {
+    "blockers": [],
+    "pinnedScopedStreamAPIMatches": true,
+    "forwardHostIsOverlappingSubtotal": "graphConstructionNanoseconds + evaluationAndSynchronizationNanoseconds; do not add it again to the eight disjoint components.",
+    "elapsedEqualsEightDisjointComponentsForAll96": true,
+    "hardwareGPUExecutionDurationAvailable": false,
+    "meaning": "Host monotonic intervals around explicit GPU-stream work and synchronization. Graph construction, synchronization, readback, scoring, encoding/hash and raw-logit fsync are separately recorded.",
+    "excluded": "Case JSON persistence, stdout emission, VM setup/teardown; model loading is also outside each prediction interval.",
+    "samplingLimit": "First predictions include cold setup effects; only 16 forwards per fresh process, host then guest order, no dedicated warmup/randomized performance protocol. No speedup or GPU-only timing claim."
+  },
+  "timingNanosecondsByRoute": {
+    "host": {
+      "priorStreamDrainNanoseconds": {
+        "count": 48,
+        "minimum": 17292,
+        "median": 22083.5,
+        "maximum": 123333
+      },
+      "inputPreparationNanoseconds": {
+        "count": 48,
+        "minimum": 1750,
+        "median": 4000.0,
+        "maximum": 30917
+      },
+      "graphConstructionNanoseconds": {
+        "count": 48,
+        "minimum": 62250,
+        "median": 70979.5,
+        "maximum": 355000
+      },
+      "evaluationAndSynchronizationNanoseconds": {
+        "count": 48,
+        "minimum": 733875,
+        "median": 1359979.0,
+        "maximum": 239424083
+      },
+      "readbackAndSynchronizationNanoseconds": {
+        "count": 48,
+        "minimum": 18125,
+        "median": 27521.0,
+        "maximum": 128708
+      },
+      "scoringNanoseconds": {
+        "count": 48,
+        "minimum": 47959,
+        "median": 53958.5,
+        "maximum": 65167
+      },
+      "outputEncodingAndHashNanoseconds": {
+        "count": 48,
+        "minimum": 46250,
+        "median": 52833.5,
+        "maximum": 94083
+      },
+      "logitsPersistenceNanoseconds": {
+        "count": 48,
+        "minimum": 92167,
+        "median": 130771.0,
+        "maximum": 274833
+      },
+      "forwardHostNanoseconds": {
+        "count": 48,
+        "minimum": 804083,
+        "median": 1428396.0,
+        "maximum": 239779083
+      },
+      "predictionElapsedNanoseconds": {
+        "count": 48,
+        "minimum": 1057833,
+        "median": 1700583.5,
+        "maximum": 240491250
+      }
+    },
+    "guest": {
+      "priorStreamDrainNanoseconds": {
+        "count": 48,
+        "minimum": 16958,
+        "median": 21291.5,
+        "maximum": 103292
+      },
+      "inputPreparationNanoseconds": {
+        "count": 48,
+        "minimum": 1792,
+        "median": 3583.5,
+        "maximum": 15000
+      },
+      "graphConstructionNanoseconds": {
+        "count": 48,
+        "minimum": 58375,
+        "median": 70479.0,
+        "maximum": 152958
+      },
+      "evaluationAndSynchronizationNanoseconds": {
+        "count": 48,
+        "minimum": 747292,
+        "median": 1365937.5,
+        "maximum": 9414042
+      },
+      "readbackAndSynchronizationNanoseconds": {
+        "count": 48,
+        "minimum": 21041,
+        "median": 27437.0,
+        "maximum": 89791
+      },
+      "scoringNanoseconds": {
+        "count": 48,
+        "minimum": 47833,
+        "median": 52833.0,
+        "maximum": 62083
+      },
+      "outputEncodingAndHashNanoseconds": {
+        "count": 48,
+        "minimum": 47584,
+        "median": 53166.5,
+        "maximum": 83750
+      },
+      "logitsPersistenceNanoseconds": {
+        "count": 48,
+        "minimum": 96042,
+        "median": 127854.0,
+        "maximum": 268291
+      },
+      "forwardHostNanoseconds": {
+        "count": 48,
+        "minimum": 808084,
+        "median": 1435687.5,
+        "maximum": 9567000
+      },
+      "predictionElapsedNanoseconds": {
+        "count": 48,
+        "minimum": 1063333,
+        "median": 1728166.5,
+        "maximum": 10119416
+      }
+    }
+  },
+  "scoresPerSeedEitherRoute": {
+    "1618": {
+      "cases": 4,
+      "correctByJob": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "bothSummariesCorrect": 4
+    },
+    "2718": {
+      "cases": 4,
+      "correctByJob": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "bothSummariesCorrect": 4
+    },
+    "3141": {
+      "cases": 4,
+      "correctByJob": [
+        4,
+        4,
+        4,
+        4
+      ],
+      "bothSummariesCorrect": 4
+    }
+  },
+  "caseScores": [
+    {
+      "seed": 1618,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "host",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "host",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "guest",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 1618,
+      "execution": "guest",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "host",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "host",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "guest",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 2718,
+      "execution": "guest",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "host",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "host",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "host",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e0",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        143,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "guest",
+      "id": "holdout-I-V-I-r0-e0-V-r0-e1",
+      "represented": true,
+      "predictions": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "targets": [
+        192,
+        149,
+        134,
+        192
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "guest",
+      "id": "mutation-invalid-20-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e0",
+      "represented": false,
+      "predictions": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "targets": [
+        224,
+        224,
+        137,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 3141,
+      "execution": "guest",
+      "id": "mutation-invalid-21-mutation-swap-holdout-I-V-I-r0-e1-V-r2-e1",
+      "represented": false,
+      "predictions": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "targets": [
+        224,
+        150,
+        224,
+        224
+      ],
+      "correctByJob": [
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "unchangedModelWeights": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0010-prime-domain-seed1618/Runtime/prime-domain-trace.safetensors",
+      "byteCount": 40919832,
+      "sha256": "122af63187129249ef0c85dbac6e6f1bd0c0e67c60f88b387844fd002bd2d0ec"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0011-prime-domain-seed2718/Runtime/prime-domain-trace.safetensors",
+      "byteCount": 40919832,
+      "sha256": "f5201fae919d8636300086829943fd38059767ab293147ca8c0c65ce91402067"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0012-prime-domain-seed3141/Runtime/prime-domain-trace.safetensors",
+      "byteCount": 40919832,
+      "sha256": "7064c514a9a41369951d1ee829ac0f028bb488a0b9551d5e8b1d2433173cd4e1"
+    }
+  ],
+  "signedExecutable": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference",
+    "byteCount": 29995536,
+    "sha256": "615f0b059e409477b31dcaa99fa501a867d37e24bd8cc84815f04b27fcc5038c"
+  },
+  "signingReceipt": {
+    "byteCount": 1449,
+    "sha256": "f5c8cfc623ab2666e6687b09ccaf9e1e2d80d7f9d2a45800276173cada68a4ea"
+  },
+  "compiledSourceBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/main.swift",
+      "byteCount": 28707,
+      "sha256": "9ec16afe817d8e65c4098808faa5ca1f3aa6f9c7c5f226ff3a691abf2e6f6fe5"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/Sources/PrimeNativeMetalSwiftCanary/main.swift",
+      "byteCount": 34873,
+      "sha256": "c04b5bc43befc6a696f0f4f09fddb44be146bc06dbfd166875deeafe960c2136"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.h",
+      "byteCount": 4034,
+      "sha256": "cb6edd41ee618feb882749d92552a0ab63995e153443ed379a6aebd04a901f57"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Admission/PrimeInferenceAdmission.h",
+      "byteCount": 1986,
+      "sha256": "2639d060edb6d4455beda20ab06247a884b3ace650b485c3fa0a5e3bf353aec0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Admission/PrimeInferenceAdmission.c",
+      "byteCount": 6147,
+      "sha256": "0d09694b4915e3ceffb6eb63657e1950537e6546295be7c5ec828d5bbd497567"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/main.before-measurement.swift",
+      "byteCount": 25969,
+      "sha256": "d0b99c19f29b89586aaae1201fb6524802ea3dc838e3002767ea0f80d05cf5eb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Native/main.swift",
+      "byteCount": 25969,
+      "sha256": "d0b99c19f29b89586aaae1201fb6524802ea3dc838e3002767ea0f80d05cf5eb"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/PrimeGuestBridge.h",
+      "byteCount": 4034,
+      "sha256": "cb6edd41ee618feb882749d92552a0ab63995e153443ed379a6aebd04a901f57"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/Device.swift",
+      "byteCount": 5524,
+      "sha256": "c357704669f8094bad35f1ea70920f9ce9a058256f776f593dbd81b1bb3e41ce"
+    },
+    {
+      "path": "/Users/ergentics/pmhnp-companion-ergentics/prime-runtime/.build/checkouts/mlx-swift/Source/MLX/Stream.swift",
+      "byteCount": 4560,
+      "sha256": "9647201e46b7d688e707ffcc4fcc4d662257ee72eb0f7c38a8cd5e33f1084557"
+    }
+  ],
+  "phaseBindings": [
+    {
+      "phase": "seed-1618-host",
+      "pid": 28986,
+      "controllerElapsedSeconds": 1.0188000000198372,
+      "result": {
+        "byteCount": 17455,
+        "sha256": "8ae7f87cff1484cf59a52d0485bbc3f086f78e2848548d0eed492a27324e7e59"
+      },
+      "controller": {
+        "byteCount": 777,
+        "sha256": "83211fc1937e426ba9206ffb45c5db65a835655c139c01fc140945610eff89bf"
+      },
+      "request": {
+        "byteCount": 5082,
+        "sha256": "2f3a2f4629c6b77955c8eabe633ce6afcdb9fc77edbc9c192c1ec02800384cb9"
+      }
+    },
+    {
+      "phase": "seed-1618-guest",
+      "pid": 29004,
+      "controllerElapsedSeconds": 0.12496399995870888,
+      "result": {
+        "byteCount": 27159,
+        "sha256": "28afb4dbab975dfdce5feb0520d97c6fcd62b369b561674a7bd1941743488686"
+      },
+      "controller": {
+        "byteCount": 778,
+        "sha256": "8bc071d70fa45fe63936b01e1fd9daa590ac143f9565792f99457b60c91fc109"
+      },
+      "request": {
+        "byteCount": 5083,
+        "sha256": "eaf7c1d6b29b6c156b6b00c89eb1217476cfd69c2dd2baaa40e58f5ea2382a1b"
+      }
+    },
+    {
+      "phase": "seed-2718-host",
+      "pid": 29007,
+      "controllerElapsedSeconds": 0.11956199997803196,
+      "result": {
+        "byteCount": 17444,
+        "sha256": "b43cddd2116f2ffbe64fcc01f397a687ae8d4416561ed9e92a3a5da31a2d5cbc"
+      },
+      "controller": {
+        "byteCount": 778,
+        "sha256": "4f7c46b9e9a42a74fd2024a46d185870cd05d1040ecd3c3dc7cfb6a305c7a435"
+      },
+      "request": {
+        "byteCount": 5082,
+        "sha256": "8a8b2a478c7ecac996ebe5c8ed1386465d093e2beada5ce4b75ad3d08e224692"
+      }
+    },
+    {
+      "phase": "seed-2718-guest",
+      "pid": 29010,
+      "controllerElapsedSeconds": 0.1238090000115335,
+      "result": {
+        "byteCount": 27161,
+        "sha256": "a46b0446b9b548d0cd87d6f702361a2bd044d0815e1598291da1f3b61c5eed31"
+      },
+      "controller": {
+        "byteCount": 777,
+        "sha256": "0b1f7b5629b98b9ccb1371c98e5c885bf290193cf1580c4570362d2ed5711821"
+      },
+      "request": {
+        "byteCount": 5083,
+        "sha256": "a70afe5d6ce02e8711575df9c02db8502248a8aff7ac3bfaef41f350bb45deeb"
+      }
+    },
+    {
+      "phase": "seed-3141-host",
+      "pid": 29013,
+      "controllerElapsedSeconds": 0.1189260000246577,
+      "result": {
+        "byteCount": 17446,
+        "sha256": "f742494b7909db2f6146c26e23bb6ec306d261217bc73cd1fa07325e3c1ff298"
+      },
+      "controller": {
+        "byteCount": 777,
+        "sha256": "63963ef4e14ac779cf1c742215c4641da1a4ab3a7eb509a5ff58c8f813c58902"
+      },
+      "request": {
+        "byteCount": 5082,
+        "sha256": "a2f61fd4c4ddd6c3d007032f2bd503fb24aaf021f881c0fada4c509b76db0239"
+      }
+    },
+    {
+      "phase": "seed-3141-guest",
+      "pid": 29018,
+      "controllerElapsedSeconds": 0.11972899996908382,
+      "result": {
+        "byteCount": 27159,
+        "sha256": "6d3a6e29fa7d80c1f4d58780996e41e4774ef5a180cf13d0a5b243bb86fa6752"
+      },
+      "controller": {
+        "byteCount": 778,
+        "sha256": "c086d46288d233a1996aff77e7aaf494f9a09bed87d2b12b36f2b970b4649b20"
+      },
+      "request": {
+        "byteCount": 5083,
+        "sha256": "01f33cd78f94ab722b7ccdd17ed0318dd737cfdd3005a1c5df7992391c9c91ad"
+      }
+    }
+  ],
+  "rawLogitBindingChainSHA256": "dc1bebba97fc9408038ba193709dd4656eba57d828dd3194d3e91acdec99de99",
+  "sourceSelectionScript": {
+    "byteCount": 2726,
+    "sha256": "0eb9a2b7f2764ab8e1440b8b2cce812d91007728a62060599f31eb8d0fccfd8e"
+  },
+  "goldUsedOnlyByReviewer": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-Domain-03/Comparison/References/gold.json",
+    "byteCount": 308010,
+    "sha256": "4d916846bd1921f5f5a4e1a3f971cc41fe8dae7c01534ad6447890fc56805091"
+  },
+  "reviewerSource": {
+    "byteCount": 20219,
+    "sha256": "8b06aa9f5f5815a9245d1be4d1b3ef027faf7740079772b29027528999e631c4"
+  },
+  "limits": [
+    "Four retained symbolic cases per seed: two represented holdout and two malformed mutation cases. This is a small integration regression, not a new language, open-ended reasoning or general GPU-design benchmark.",
+    "Host and guest both execute learned model math using host MLX/Metal. Guest owns typed requests and actual-prediction fan-in; model weights and GPU do not run inside a guest OS.",
+    "No Apple paravirtual GPU device, guest graphics driver, new training, tokenizer replacement, formal authority change or product promotion is established by this readback.",
+    "Original full-suite scientific status is preserved; exact parity here does not rewrite historical model quality."
+  ]
+}

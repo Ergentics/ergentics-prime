@@ -1,0 +1,184 @@
+{
+  "schema": "ergentics.provenance.host-integrity-trust-boundary.v1",
+  "record_kind": "design_requirement_not_runtime_enforcement_or_attestation",
+  "date": "2026-08-30",
+  "requirement": "The Mac may exist and the app may run. High-value state must not enter or leave the execution domain as trusted state unless an independent verifier proves the required host security configuration acceptable for that operation.",
+  "implementation_status": {
+    "host_attestation_provider": "NOT_IMPLEMENTED",
+    "independent_verifier": "NOT_SELECTED",
+    "high_value_ingress": "NOT_IMPLEMENTED_MUST_DEFAULT_DENY",
+    "trusted_egress": "NOT_IMPLEMENTED_MUST_DEFAULT_DENY",
+    "runtime_changed_by_this_record": false,
+    "host_security_configuration_measured_by_this_record": false,
+    "new_guest_executed": false,
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "existing_evidence_scope": {
+    "local_signing": "Sources/ProvenanceReadOnly.c:epr_admit_signing and Sources/ProvenanceModel.swift:admitted check the local app signature, bundle, Team, Hardened Runtime and exact entitlement set under the running OS. They are not whole-host integrity evidence or an exact approved-build attestation.",
+    "guest_mechanics": "The current 92-byte arithmetic guest and its retained journal prove only their recorded local mechanics. Their PASS does not attest macOS, the host app or a Rust successor.",
+    "commitments": "Hashes, Merkle ancestry, deterministic CBOR, SQLite and reconstruction bind recorded bytes. They do not establish the truth of a dishonest producer's claims.",
+    "environment": "env -i and the names-only GUI measurements are environment observations, not host integrity, network isolation or attestation."
+  },
+  "execution_architecture": {
+    "system": "One Swift macOS app controls a Hypervisor.framework execution domain; the freestanding guest is its execution kernel, not a second application or guest OS.",
+    "next_guest_direction": "A separately pinned fixed-address flat AArch64 image with a small assembly entry/doorbell shim and bounded no_std Rust core; build and inspect before any separately scoped boot.",
+    "prior_rust_review": "Control/rust-security-primitives-review.v1.md remains a historical host-side CBOR-validator recommendation. It is not the selected guest-kernel work or evidence that Rust is installed.",
+    "guest_requirements": [
+      "No OS, shell, package manager, filesystem service or toolchain inside the domain.",
+      "Separate bounded stack and explicit section initialization; the current reply-page zero-tail cannot silently become a Rust stack.",
+      "Preserve the existing 92-byte guest contract as its own baseline; a Rust successor needs new image, layout and verifier pins."
+    ],
+    "host_controls_guest_memory": true,
+    "confidential_vm_or_secure_enclave_claim": false,
+    "virtual_nic": false,
+    "new_network_entitlements": false
+  },
+  "trust_boundary": {
+    "trusted_definition": "Accepted by a relying party under a pinned policy and verified evidence, not a label or signature the evaluated Mac can grant itself.",
+    "authority_location": "The verifier, accepted trust roots, policy and key-release or trusted-output acceptance authority must not be replaceable by the Mac being evaluated. A helper process, another language or another VM on that same Mac is not independence against host compromise.",
+    "ingress_enforcement": "The data owner or key custodian withholds high-value plaintext, decryption capability and authoritative state adoption until the operation-specific grant verifies. Checking after plaintext has already entered host memory is too late.",
+    "egress_enforcement": "The relying party independently verifies the operation and exact result before accepting or publishing it as trusted state. An earlier ingress grant does not authorize later egress.",
+    "guest_check": "A future guest verifies the same bounded grant at its own boundary as defense in depth. This does not replace the independent relying party, because the host controls this Hypervisor guest.",
+    "confidentiality_limit": "If high-value plaintext must remain secret from a compromised Mac, this Hypervisor backend is insufficient. Such ingress stays unavailable until an appropriate independently attested execution boundary or different computation protocol is selected.",
+    "computation_limit": "Acceptable attested configuration is necessary, not proof that the guest image actually performed the claimed computation. A requirement for correctness against a dishonest host additionally needs independent result verification or an appropriate attested execution proof.",
+    "secure_enclave_limit": "A hardware-bound nonextractable key does not by itself prove honest computation or prevent misuse by an authorized compromised caller."
+  },
+  "grant_subject": {
+    "subject": "The specific logical VM/kernel session, execution epoch and operation; never a blanket grant to the Mac or its other workloads.",
+    "host_role": "Host integrity remains a required evidence condition joined to that session. Binding the grant to the VM does not remove the Mac from the threat model or authorize the VM to attest its own host.",
+    "verifier_role": "The accepted head, replay state and release/acceptance authority remain outside the evaluated host and VM control. A guest-local verifier is defense in depth, not the independent trust anchor.",
+    "logical_binding": [
+      "Approved kernel image and genesis commitment",
+      "Independent verifier's session identifier and execution epoch",
+      "Session public key and proof of possession if the eventual protocol uses one",
+      "Exact operation, direction, challenge, sequence and state commitments",
+      "Required host evidence and its explicitly proven association with this session"
+    ],
+    "identity_limit": "These fields name and bind a logical session; they do not establish nonclonable hardware VM identity. An image hash does not prove execution, and a key in host-controlled guest RAM can be copied or used by that host. An independently consumed grant prevents duplicate accepted authorization, not physical cloning or fabricated execution.",
+    "session_change": "Restart, restore, clone or migration cannot inherit an old grant. The verifier must establish a new admitted session/epoch and current required host evidence; an unprovable session change remains UNKNOWN.",
+    "continuity_limit": "An externally retained head rejects stale or conflicting accepted histories but does not prove that a hidden host-side rollback never occurred. Strong execution continuity requires its own evidence mechanism.",
+    "implementation_status": "DESIGN_ONLY_NO_VM_IDENTITY_OR_GRANT_IMPLEMENTED"
+  },
+  "classification": {
+    "development": "Public synthetic inputs, ordinary UI, read-only local views and clearly untrusted candidate outputs remain usable under existing application safety checks.",
+    "high_value": [
+      "Secrets or decryption capabilities",
+      "Authoritative state imported or adopted by the execution domain",
+      "Outputs accepted by another party or promoted to trusted state"
+    ],
+    "owner": "The data owner and independent relying-party policy classify the operation; the evaluated host cannot downgrade high-value state to development to bypass the gate.",
+    "unknown_classification": "DENY_HIGH_VALUE_TRANSFER",
+    "no_retroactive_promotion": "Existing lab or historical receipts retain their original scope. Later host evidence does not upgrade an earlier unproven interval."
+  },
+  "predicate_model": {
+    "status": "REQUIREMENTS_ONLY_NO_EVALUATOR_IMPLEMENTED",
+    "values": ["VERIFIED", "REJECTED", "UNKNOWN"],
+    "all_of_rule": "Every required predicate must be VERIFIED from its specified evidence. REJECTED or UNKNOWN denies the operation; an empty predicate set is invalid. No score, majority, prose override or local success Boolean can substitute.",
+    "required_for_each_direction": [
+      "independent_policy_and_verifier_pinned",
+      "attestation_chain_and_device_key_verified",
+      "all_required_host_properties_present_and_acceptable",
+      "evidence_freshness_acceptable_to_verifier",
+      "proof_of_possession_and_operation_binding_verified",
+      "approved_host_image_guest_image_and_session_binding_proven",
+      "direction_and_exact_state_commitment_match",
+      "one_use_grant_unspent_and_atomically_consumed",
+      "required_evidence_and_decision_durably_retained"
+    ],
+    "additional_for_trusted_egress": [
+      "result_verification_meets_relying_party_policy",
+      "required_execution_interval_and_conservation_witnesses_verified"
+    ],
+    "binding_fields_to_freeze_before_implementation": [
+      "schema_and_policy_digest",
+      "verifier_identity_and_audience",
+      "attested_device_key_identity",
+      "host_image_identity",
+      "guest_image_and_genesis_identity",
+      "operation_epoch_and_direction",
+      "independent_challenge_and_one_use_sequence",
+      "input_state_commitment",
+      "output_state_commitment_for_egress",
+      "evidence_digest_and_freshness_interval"
+    ],
+    "binding_limit": "Signing or hashing host-supplied image/session/state identifiers binds the claims but does not attest their truth. Unsupported image, live-session or interval claims stay UNKNOWN.",
+    "missing_policy_parameters": {
+      "verifier_identity": null,
+      "trust_anchor_pin": null,
+      "approved_os_builds": [],
+      "approved_host_images": [],
+      "approved_successor_guest_images": [],
+      "maximum_evidence_age": null,
+      "clock_and_rollback_protection": null,
+      "required_property_oid_and_value_mapping": null,
+      "execution_binding_or_independent_result_proof": null
+    },
+    "missing_parameter_rule": "Null, empty or unrecognized policy parameters cannot grant authority. No defaults are inferred from the current development Mac or its installed OS."
+  },
+  "host_posture_candidate": {
+    "status": "PROPOSED_BASELINE_NOT_A_MEASUREMENT_OR_DEPLOYABLE_POLICY",
+    "required_claims_to_map_to_verified_evidence": [
+      "Approved Apple-silicon device identity",
+      "Full Security boot configuration",
+      "System Integrity Protection fully enabled",
+      "Third-party kernel-extension permission disabled",
+      "Explicitly approved OS build and relevant security-version properties"
+    ],
+    "local_observation_rule": "Local signature, configuration or API checks may veto an operation or aid diagnosis. They cannot fill a missing independently attested claim.",
+    "not_claimed": [
+      "Proof that the Mac is free of all vulnerabilities or runtime compromise",
+      "FileVault, debugger absence or arbitrary app/guest measurement attested merely because device posture is attested",
+      "A valid certificate alone proves current posture for every later operation"
+    ]
+  },
+  "freshness_and_atomicity": {
+    "ingress_and_egress": "Evaluate at each actual boundary, not only app launch or VM creation. Each direction requires its own operation-bound decision.",
+    "grant_consumption": "Freeze an independent verifier's crash-safe, one-use state machine before implementation. The exact approved bytes must be the bytes transferred; no mutable-path reread between verification and use.",
+    "rollback_and_replay": "Use verifier-controlled replay state and time policy. A host wall clock, host-only counter or replayable local database is insufficient against that host.",
+    "proof_loss": "Missing, stale, conflicting, unsupported or expired evidence denies new high-value transfers. Retain qualified diagnostics without logging secret plaintext; do not erase ordinary development state or signal unrelated processes.",
+    "toctou_residual": "A fresh challenge proves response freshness within the evidence mechanism, not continuous host integrity after measurement. No before/after polling scheme is claimed to remove this interval.",
+    "no_retroactive_revocation_claim": "Closing a gate cannot recall plaintext already disclosed to a host. Required confidentiality must hold at the initial handoff."
+  },
+  "durability_and_projection": {
+    "planned_record": "Retain original signed evidence, its explicitly attested fields, policy identity, verifier decision, operation binding, predicate results and state commitments under a separately defined restricted evidence schema.",
+    "graph": "State, witness and transition records remain distinct. The transition refers to actual predicate results and evidence bytes, not a narrative verdict.",
+    "two_streams": "If JSON and deterministic CBOR are both used, independently decode and reconstruct their semantic join. Two encodings of one host claim are not two independent attestation authorities.",
+    "index_limit": "SQLite and graph projections support exact joins and inspection; they cannot manufacture missing host evidence or elevate an untrusted receipt.",
+    "no_current_schema_change": "No journal migration, new Merkle root or original Prime source-identity reseal is performed by this design record."
+  },
+  "apple_evidence_route": {
+    "managed_device_attestation": "A candidate building block for Apple-silicon Macs on macOS 14 or later, using managed-device or ACME infrastructure and Apple-backed attestation. Availability is not proof this app or Mac has been enrolled or attested.",
+    "validation": "Verify the Apple-rooted certificate chain, freshness and required property values; missing or blank required properties cannot grant. Hardware-bound device identity is distinct from arbitrary host-app or guest execution identity.",
+    "offline_limit": "Obtaining fresh Apple attestation involves external infrastructure. A separately transported proof could be checked offline only under an explicitly reviewed freshness and replay policy; it cannot provide an invented fresh Apple measurement while disconnected.",
+    "device_information_caveat": "Apple currently documents a seven-day limit for fresh DeviceInformation attestations. This is not a per-operation measurement primitive; do not assume the same rate rule for every ACME workflow.",
+    "app_attest_caveat": "Apple describes Mac App Attest for macOS 27 as a pre-release feature. It is not a macOS 14 deployment baseline, not established on the recorded 26.5.2 host, and not a complete execution-integrity solution.",
+    "account_limit": "Apple Developer or Small Business membership, a development signature and Hypervisor entitlement do not establish managed enrollment or hardware attestation.",
+    "no_configuration_change": "No MDM profile, enrollment, new entitlement, network service, account setup or OS upgrade is authorized or performed by this record."
+  },
+  "next_implementation_order": [
+    "Continue the ordinary app and synthetic freestanding-kernel development without high-value material.",
+    "Implement a pure fail-closed policy model with adversarial fixtures, separate from local signing admission; fixtures must never mint production grants.",
+    "Select the independent verifier and evidence mechanism, then freeze exact claims, value mappings, freshness, replay, image/session binding and result-proof policy before connecting real trust.",
+    "Only then implement separately gated high-value ingress and trusted egress, with durable atomic consumption and tests at the actual transfer boundary."
+  ],
+  "required_negative_tests_before_activation": [
+    "Correct app signature, env -i or local Merkle PASS with no host evidence denies.",
+    "Missing, blank, malformed, unsupported, stale or wrong-device attestation denies.",
+    "Unknown policy, incomplete posture mapping or unapproved image denies.",
+    "A matching hash of unproven image/session claims does not pass the execution binding.",
+    "Wrong audience, direction, epoch, input root or output root denies.",
+    "Duplicate, concurrent, crash-replayed or rollback-restored grant cannot authorize a second transfer.",
+    "Loss of acceptable evidence after ingress prevents trusted egress, without claiming to recall plaintext.",
+    "A valid device-key signature on an unverified computation does not create a trusted result.",
+    "Unavailable attestation leaves ordinary UI and synthetic development available, not high-value transfer.",
+    "JSON/CBOR reconstruction disagreement denies; agreement alone does not establish independent attestation."
+  ],
+  "sources_checked": [
+    { "topic": "Host-backed guest memory", "url": "https://developer.apple.com/documentation/hypervisor/hv_vm_map(_:_:_:_:)" },
+    { "topic": "Managed Device Attestation, infrastructure, freshness and missing evidence", "url": "https://support.apple.com/en-euro/guide/deployment/dep28afbde6a/web" },
+    { "topic": "Certificate-chain and property validation", "url": "https://developer.apple.com/documentation/devicemanagement/validating-a-managed-device-attestation-attestation" },
+    { "topic": "Attested Mac security properties", "url": "https://help.apple.com/pdf/security/en_US/apple-platform-security-guide.pdf" },
+    { "topic": "Pre-release macOS 27 App Attest availability", "url": "https://support.apple.com/en-euro/guide/deployment/depd567c9ffa/web" }
+  ]
+}

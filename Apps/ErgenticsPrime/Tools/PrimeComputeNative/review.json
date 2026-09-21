@@ -1,0 +1,134 @@
+{
+  "schema": "prime_compute_app_native_review_v1",
+  "status": "COMPILED_READY_FOR_SIGNED_APP_VALIDATION",
+  "scope": "App-only native admission and helper adapters; no app UI/backend/project edits; no execution by this agent.",
+  "buildResult": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build02/result.json",
+    "byteCount": 5853,
+    "sha256": "0015eb0c780f00de1527072e15999287bdf3393fe97363f281d2ad0ba17b3e2b"
+  },
+  "files": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Admission/PrimeInferenceAdmission.c",
+      "byteCount": 8295,
+      "sha256": "3c86780dfbcbeaee3365d462440befa40244c6413fd5574f7c84ec0301dab4de"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Admission/PrimeInferenceAdmission.h",
+      "byteCount": 2201,
+      "sha256": "19a707df5219a095be06f3efec209f6db07ff046fec3c57ba9b29a8b4f9d91b8"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Entitlements.plist",
+      "byteCount": 339,
+      "sha256": "5f606e86cf222662b7674e1e2a952ccf45b34370ff36f01930efb6e4b757662a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Model/main.swift",
+      "byteCount": 30024,
+      "sha256": "776c1d7c49932adbbcbc4a1349c545c3f3cdec1a491e0e8213e7a5718bea892b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Geometry/main.swift",
+      "byteCount": 13956,
+      "sha256": "f1ea6a27ab7087ae6deca67cf4b7b387d199a8cf04af17a87d47b70389b499f2"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Geometry/MetalFieldEvaluator.swift",
+      "byteCount": 8322,
+      "sha256": "ac4df9254d566e22e623b63e864e3cda14f4f4ab50ee8ed785b9a3ba02a7d3bd"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Geometry/CPUReference.swift",
+      "byteCount": 3259,
+      "sha256": "dc9aebd3f3ab59f923ebc89a0442515ae761ccedaa34db129c2d9d642bc0d4a7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build.py",
+      "byteCount": 11782,
+      "sha256": "79c7bbad13f606134217ba19d1373211feb208d9e9dc05970aec9f525a868499"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/README.md",
+      "byteCount": 4829,
+      "sha256": "61421878f501a0b48165874c71740066266d981670aaaa9fac7564482280c3d3"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Model/resource-device.cpp",
+      "byteCount": 23174,
+      "sha256": "a7893b57cb2840d03ce5689c4ac1b0972b3b2a320bc274f8a3921070ada478d4"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/Reference/device.before-resource-path.cpp",
+      "byteCount": 23385,
+      "sha256": "c0cc27098eed97e110cf978702dfa6d1e1b15bf81270c26c5cb5637bdd2a481c"
+    }
+  ],
+  "compilerProcesses": 5,
+  "allCompilerExitsZero": true,
+  "allCompilerGroupsAbsent": true,
+  "inputsUnchanged": true,
+  "outputs": [
+    {
+      "name": "PrimeModelService",
+      "byteCount": 30155296,
+      "sha256": "54be6f83dc87245a08dcfa342c7e27e9eadc1491cdfe0933875f1cd54226f42f"
+    },
+    {
+      "name": "PrimeGeometryService",
+      "byteCount": 256696,
+      "sha256": "d75b01c155d116f3aa2ed2cfc5c4ebfbaede35ca1f8503f4d8ed735adc1f5f62"
+    },
+    {
+      "name": "mlx.metallib",
+      "byteCount": 2468361,
+      "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+    }
+  ],
+  "invariants": [
+    "original Prime10M architecture and predictor source slices exactly unchanged",
+    "actual74 F32 tensors and10227968 parameters,strict loader,full-vocab argmax",
+    "geometry kernel and CPU reference files byte-identical to retained0013",
+    "both guest headers and original source/object/image receipts verified unchanged",
+    "separate app-only identity policy requires real signed parent; standalone policy remains untouched",
+    "geometry consumes dynamic input with one actual dispatch and retains full result/guest proof"
+  ],
+  "pending": [
+    "actual app signing and parent-launched sandbox admission",
+    "actual host/guest model and geometry execution from app"
+  ],
+  "limitations": [
+    "Effective code entitlements are checked; successful VM and Metal operations still require live platform verification.",
+    "Parent identity is inspected before and after compute; a200ms watchdog exits on parent loss.",
+    "Metal hardware timestamps are available for geometry only. Model timing remains synchronized host intervals.",
+    "Build uses retained external compile objects; packaged runtime does not require those caches."
+  ],
+  "modelRuns": 0,
+  "VMRuns": 0,
+  "signingPerformed": false,
+  "resourcePackagingRepair": {
+    "cause": "Outer app signing rejected bare metallib under Helpers nested-code directory",
+    "resourcePath": "Contents/Resources/PrimeCompute/mlx.metallib",
+    "change": "Only copied load_default_library function now resolves this executable-relative app resource and fails closed; original shader/model math unchanged.",
+    "libraryObject": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build02/resource-device.o",
+      "byteCount": 3035032,
+      "sha256": "081582ae731ac3e8d8b07f69367d4bef2a8ad8f9de6a1b2641dd1fee8bb48e66"
+    },
+    "compile": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build02/resource-device-binding.json",
+      "byteCount": 1306,
+      "sha256": "246669380ab6201394f96bd61a518daeb7c39f6fbf9f68245934d22e6df279fd"
+    },
+    "priorReview": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build01/review.before-resource-path.json",
+      "byteCount": 5071,
+      "sha256": "422eca9e267ab55d47a0f3ae5480b63b7528cf5e998b99426b5617353a18bcaf"
+    },
+    "priorBuild": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-app-integration/repo/Tools/PrimeComputeNative/build01/result.json",
+      "byteCount": 4903,
+      "sha256": "03b87564c46dced6e35d738b2762806d15f15982e360474dbe3ae55431c18499"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "schema": "ergentics-r19-obs11-c2-fchmod-bundle-build-outer-observation-v7",
+  "status": "FAIL_CONSUMED_NO_RETRY",
+  "classification": "FAIL_CONSUMED_NO_RETRY",
+  "control": {
+    "freeze_commit": "a59b2fd790569c1fc27c3fe27fa7de72ce424714",
+    "freeze_tree": "5be380bb77dd3d291c2922dac945a2e153bd4388",
+    "implementation_commit": "e6cc54dbe1753e4ee10f823c91ab3529765bbf46",
+    "implementation_tree": "63d58703f9cb5c9bb39504bf2bed3201de648999",
+    "controller_sha256": "7db4cae1c2ab27d75698bfbd2bcd12289bc4b54406e9389731aef9e9d66a7806"
+  },
+  "outer_transport": {
+    "entries": 1,
+    "exit": {
+      "exited": true,
+      "exitstatus": 70,
+      "signaled": false,
+      "termsig": null
+    },
+    "merged_capture": {
+      "bytes": 449,
+      "lf_count": 1,
+      "sha256": "a21dded937b37bf63dc920897d9a493bd8d259d0da44e6248e4cfa3be590ab36",
+      "raw_hex": "7b226661696c757265223a7b22636c617373223a2244334275696c644661696c757265222c226d6573736167655f6279746573223a31332c226d6573736167655f7072656669785f686578223a223463343934653462356634313361353335343431353435353533222c226d6573736167655f7072656669785f7472756e6361746564223a66616c73652c226d6573736167655f736861323536223a2231313733666333316138653838666161333338353933363231383664653335396631333863623139663636666539663263363036343930666465376539653533222c227068617365223a224c494e4b5f41227d2c2272656365697074223a7b226279746573223a31303632312c22736861323536223a2233373632623531313762346631616234633839393437663330643036613837363464323463306431386437623263663634373934386662346134633831376464227d2c22736368656d61223a22657267656e746963732d7231392d6f627331312d63322d6663686d6f642d62756e646c652d6275696c642d6f757465722d6661696c7572652d7637222c22737461747573223a224641494c5f434f4e53554d45445f4e4f5f5245545259227d0a"
+    }
+  },
+  "controller_receipt": {
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-fchmod-bundle-build-result.v7.json",
+    "presence": "COMPLETE",
+    "bytes": 10621,
+    "lf_count": 1,
+    "sha256": "3762b5117b4f1ab4c89947f30d06a8764d24c0d18d7b2cf647948fb4a4c817dd",
+    "identity": {
+      "device": 16777231,
+      "inode": 18008495,
+      "uid": 501,
+      "gid": 20,
+      "mode": "0400",
+      "nlink": 1,
+      "flags": 0,
+      "type": "REGULAR"
+    },
+    "parsed_status": "FAIL_CONSUMED_NO_RETRY",
+    "completed_ordered_labels": [
+      "COMPILE_A"
+    ],
+    "first_unentered_label": "COMPILE_B",
+    "first_unentered_ordinal_one_based": 3,
+    "failure_position": {
+      "phase": "LINK_A",
+      "attempted_label": "LINK_A",
+      "attempted_ordinal_one_based": 2,
+      "entered_label": "LINK_A",
+      "entered_ordinal_one_based": 2,
+      "failed_ordered_label": "LINK_A",
+      "failed_ordered_ordinal_one_based": 2,
+      "process_entry_observed": true
+    },
+    "operations": {
+      "compiler_attempts": 2,
+      "compiler_entries": 2,
+      "analyzer_attempts": 0,
+      "analyzer_entries": 0,
+      "build_root_creations": 2,
+      "receipt_creation_attempts": 1,
+      "bundle_executions": 0,
+      "runner_executions": 0,
+      "signals": 0,
+      "python_entries": 0
+    }
+  },
+  "failed_entry": {
+    "label": "LINK_A",
+    "pid": 43751,
+    "exitstatus": 1,
+    "stdout": {
+      "bytes": 0,
+      "lf_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_hex": ""
+    },
+    "stderr": {
+      "bytes": 177,
+      "lf_count": 3,
+      "sha256": "7075b6e950f62e9ac5ac1f2d6ca82c7fceb1696bb342be8bbc63cb18f6c736b1",
+      "raw_hex": "6c643a207761726e696e673a202d756e646566696e6564206572726f7220697320646570726563617465640a6c643a20666174616c207761726e696e6728732920696e6475636564206572726f7220282d666174616c5f7761726e696e6773290a636c616e673a206572726f723a206c696e6b657220636f6d6d616e64206661696c65642077697468206578697420636f646520312028757365202d7620746f2073656520696e766f636174696f6e290a"
+    }
+  },
+  "retained_prefix": {
+    "build_a_root": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v7-build-a-31c345d-ac9f4420",
+      "device": 16777231,
+      "inode": 18008491,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 4,
+      "bytes": 128,
+      "flags": 0,
+      "inventory": {
+        "ergentics-r19-obs11-c2-fchmod-v7.o": {
+          "device": 16777231,
+          "inode": 18008493,
+          "uid": 501,
+          "gid": 0,
+          "mode": "0400",
+          "nlink": 1,
+          "bytes": 728,
+          "flags": 0,
+          "sha256": "20502bf5d7958d9367712a01ba30c305840d65574d5bdd9f0c12d70a6d37a728"
+        },
+        "libergentics-r19-obs11-c2-fchmod-v7.bundle": {
+          "device": 16777231,
+          "inode": 18008494,
+          "uid": 501,
+          "gid": 0,
+          "mode": "0400",
+          "nlink": 1,
+          "bytes": 33496,
+          "flags": 0,
+          "sha256": "09b8f7d5cb6104e13e2cbc0d3731e81031287f1d6e3436c14e0ef3937d5a0c71"
+        }
+      }
+    },
+    "build_b_root": {
+      "path": "/private/tmp/ergentics-r19-obs11-c2-fchmod-bundle-v7-build-b-31c345d-ac9f4420",
+      "device": 16777231,
+      "inode": 18008492,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0700",
+      "nlink": 2,
+      "bytes": 64,
+      "flags": 0,
+      "inventory": {}
+    },
+    "cleanup_entries": 0,
+    "retention": "PERMANENT_NO_RETRY_NO_CLEANUP"
+  },
+  "diagnosis": {
+    "class": "FROZEN_LINK_ARGUMENT_DEPRECATION_FATALIZED",
+    "deprecated_argument": "-undefined error",
+    "fatalizer": "-fatal_warnings",
+    "observed_predicates": {
+      "linker_reported_deprecation_warning": true,
+      "fatal_warnings_promoted_warning_to_error": true,
+      "linker_exitstatus_one": true,
+      "compile_a_had_already_passed": true,
+      "build_b_or_analyzer_entry_observed": false
+    },
+    "toctou_classification": "NO_TOCTOU_EVIDENCE_IN_RETAINED_FAILURE",
+    "successor_effect": "REQUIRES_NEW_FREEZE_AND_FRESH_NAMESPACES; THIS_ATTEMPT_CANNOT_BE_RETRIED"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "bundle_execution_entries": 0,
+    "runner_execution_entries": 0,
+    "authority_closure": false
+  }
+}

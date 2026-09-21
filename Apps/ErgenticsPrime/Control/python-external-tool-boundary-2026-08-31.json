@@ -1,0 +1,101 @@
+{
+  "schema": "com.ergentics.provenance.python-external-tool-boundary.v1",
+  "recordedUTC": "2026-08-31T17:55:28.213Z",
+  "status": "RECORDED_NO_PYTHON_EXECUTION_AUTHORIZED",
+  "supersedes": {
+    "record": "Control/macos26-baseline-2026-08-31.json",
+    "sha256": "2dd9593e993237802c1032a41caf91e08ed263760921986c4516522319b6f585",
+    "scope": "Python scope only: replaces permission for application components. Prior record and all historical outcomes remain unchanged. Current README files intentionally advance beyond its historical documentation pins."
+  },
+  "boundary": {
+    "location": "External tooling only; Python/C shims remain external too.",
+    "appDependency": false,
+    "installRequirement": false,
+    "bundledRuntime": false,
+    "authoritativePath": false,
+    "controlsVM": false,
+    "issuesAuthority": false,
+    "closesGate": false,
+    "currentNeed": "NONE",
+    "deferredPurpose": "Potential Core AI/macOS 27 preparation only, if needed and separately approved; not current macOS 26 build/test work.",
+    "osUpgradeAuthorized": false,
+    "packageInstallationAuthorized": false,
+    "perUseExplicitApprovalRequired": true,
+    "generalDevelopmentApprovalSufficient": false
+  },
+  "requiredApprovalRequest": [
+    "Exact purpose, interpreter/tool/shim versions and content identities, source bytes, fixed invocation, actual host OS/SDK.",
+    "Exact read-only input set, versioned output schema, disjoint output/work roots, and import/environment configuration.",
+    "Filesystem, process, network, cache/temp, import/environment and resource effects: allowed operations, enforced restrictions, monitoring mechanism and coverage limits for each.",
+    "Finite work/resource limits, owner-visible cancellation and shutdown behavior; no indefinite waiting obligation or signals to unrelated processes.",
+    "Artifact retention and disposal plan; disposable does not mean automatic cleanup or erasure of evidence."
+  ],
+  "sideEffects": {
+    "required": "Bound and monitor every relevant side-effect class before launch approval.",
+    "unobservableEffects": "Report the gap and do not launch; monitoring must not be silently treated as confinement.",
+    "transientWrites": "Before/after hashes alone are insufficient.",
+    "resources": "Capture start/end and declared wall/CPU/memory measures; physical energy only if actually measured with qualifications.",
+    "unexpectedEffects": "Do not admit outputs; follow only the separately approved bounded cancellation/retention plan.",
+    "implementationStatus": "NOT_IMPLEMENTED_OR_TESTED"
+  },
+  "dataInterface": {
+    "status": "DESIGN_ONLY_NO_NEW_LOADER",
+    "shape": "Bounded versioned artifacts with pinned input/output identities; no executable commands or live capability transfer.",
+    "admission": "Independent native validation of structure, bounds, content identity and task-specific predicates; Python output is a proposal, never sole authority.",
+    "promotion": "No direct writes to canonical authoritative state."
+  },
+  "disposal": {
+    "automatic": false,
+    "requiresExplicitApproval": true,
+    "retainBeforeDisposal": [
+      "approved source/input identities",
+      "raw outputs",
+      "effect observations and coverage gaps",
+      "exit/cancellation outcome"
+    ],
+    "applicationDependsOnToolEnvironment": false
+  },
+  "currentAction": {
+    "documentationOnly": true,
+    "pythonLaunched": false,
+    "shimBuilt": false,
+    "dependencyInstalled": false,
+    "appBuild": false,
+    "appLaunch": false,
+    "guestLaunch": false,
+    "cleanup": false,
+    "gitMutation": false
+  },
+  "validation": {
+    "changedExistingFiles": [
+      "Distribution/README.md",
+      "README.md"
+    ],
+    "unchangedCodeMetadataAndPriorRecordPins": 49,
+    "projectMinimumRemains": "26.0"
+  },
+  "documentationPins": {
+    "Distribution/README.md": {
+      "before": {
+        "bytes": 5484,
+        "sha256": "23a429137079a02258f31b305ecdc8f6563a01255cec2369baaae4b55839393b"
+      },
+      "after": {
+        "bytes": 5794,
+        "sha256": "d8a9a69243a584e8d36928b72c1db6d4d39dd3e1bfc43e4b47d53254cb197958"
+      }
+    },
+    "README.md": {
+      "before": {
+        "bytes": 28168,
+        "sha256": "b4843bfeda5bd968dc49381a7acdf79b6813d05be4d25d6db9b35168acfc3fa5"
+      },
+      "after": {
+        "bytes": 29368,
+        "sha256": "f6a75a06b8a5f586588b330263332c4866f5c311cad0e73543f67492bebe70ba"
+      }
+    }
+  },
+  "authorityVector": "00000000",
+  "gateE": "ABSTAIN"
+}

@@ -1,0 +1,267 @@
+{
+  "status": "COMPILED_NOT_EXECUTED",
+  "sourceFiles": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.h",
+      "byteCount": 3903,
+      "sha256": "d2ae546092a1c728697883e663b07cf13eccd67795e8c1e7e9aa19a48760ab97"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+      "byteCount": 20215,
+      "sha256": "5b8db86cea4ccf1dfc10f2c94203f282ed03b5b4a2c4784e80b9f6101d89ab5c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+      "byteCount": 1612,
+      "sha256": "bbe37c301c49a92c4c6d6401dfd8054cd22f11fb9b7a06c94381a0fbd8131e6a"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build_guest.py",
+      "byteCount": 6554,
+      "sha256": "7ae0d5688db3324662dce9be51cc2003fa772739d62c6bcb86415011cbad444b"
+    }
+  ],
+  "sourceFilesUnchanged": true,
+  "abiVersion": 1,
+  "predecessorBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.h",
+      "byteCount": 4034,
+      "sha256": "cb6edd41ee618feb882749d92552a0ab63995e153443ed379a6aebd04a901f57"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/build_guest.py",
+      "byteCount": 6551,
+      "sha256": "81acc333eb090f95af3daaa4ec40cc99b9574725e6f113df881bef3f6379e204"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/build01/PrimeGuestBridge.o",
+      "byteCount": 10496,
+      "sha256": "4ee0c48eaa6a41aafe78f78e857154f0f52be907c97db32f61af0bec015df325"
+    }
+  ],
+  "predecessorUnchanged": true,
+  "commands": [
+    {
+      "name": "assemble",
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-c",
+        "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/guest.S",
+        "-o",
+        "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/guest.o"
+      ],
+      "pid": 27770,
+      "exitCode": 0,
+      "exactDirectChildReaped": true,
+      "timedOut": false,
+      "elapsedNanoseconds": 135012917,
+      "stdout": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/assemble.stdout",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/assemble.stderr",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "compile-c",
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-std=gnu11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01",
+        "-c",
+        "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/PrimeGuestCompute.c",
+        "-o",
+        "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/PrimeGuestCompute.o"
+      ],
+      "pid": 27773,
+      "exitCode": 0,
+      "exactDirectChildReaped": true,
+      "timedOut": false,
+      "elapsedNanoseconds": 185398000,
+      "stdout": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/compile-c.stdout",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/compile-c.stderr",
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "image": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/guest-image.bin",
+    "byteCount": 152,
+    "sha256": "6944c3187c9362271cba57a0a92ca8f95944cadfce439df6169ea5a85283dd0d"
+  },
+  "symbols": {
+    "complete": 144,
+    "complete_resume": 148,
+    "end": 152,
+    "request": 44,
+    "request_resume": 48,
+    "start": 0
+  },
+  "generatedHeader": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/PrimeComputeImage.h",
+    "byteCount": 1399,
+    "sha256": "b41b4c7bd732a634d0d9b8f0a193c82d6d116ef4db56cc9c9de4e8ff1d62be7d"
+  },
+  "bridgeObject": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/GuestCompute/build01/PrimeGuestCompute.o",
+    "byteCount": 9520,
+    "sha256": "caddeee1cca935208c961fc64850e7e7a605968c42129049099d82cd824d60e7"
+  },
+  "compiler": {
+    "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+    "byteCount": 141373024,
+    "sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a"
+  },
+  "sdkHypervisorHeaders": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/Hypervisor.h",
+      "byteCount": 906,
+      "sha256": "ef2dd179b54544dc37e158894272859474c1f886e534614a376ae676a6c667ff"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv.h",
+      "byteCount": 38794,
+      "sha256": "98387bf589442a8b8cd7416588e73d2e16a64c0e5036afcbbb08cb5772f41985"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_arch_vmx.h",
+      "byteCount": 21399,
+      "sha256": "a6742cf27e2994ee27d4442cd18e36b379a861150f02a5696183748569464c4b"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_arch_x86.h",
+      "byteCount": 4320,
+      "sha256": "19926e960116d989531558066f21f237a8482d1feffbc911bcaae3b145bc3368"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_base.h",
+      "byteCount": 507,
+      "sha256": "d939e9f9be177fe47de1761f6d81d9fd2c4e22028a5d10465af199888a17dc47"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_error.h",
+      "byteCount": 1224,
+      "sha256": "0479e1e2702a87a159b362aafee6d439ba1ec1f3b41971642c0f4f985faca2d8"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_gic.h",
+      "byteCount": 10851,
+      "sha256": "05caba2da304b657dda9c70c8424420d04195880d968d48a72bb29c85709a5a1"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_gic_config.h",
+      "byteCount": 3144,
+      "sha256": "40716c3f6b1453cb4828a193c8099e0d9a81fd6cdbd1ccdcfab2c84ffd9de55b"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_gic_parameters.h",
+      "byteCount": 3850,
+      "sha256": "af54c764bf582d008cdc89a423247c510c0f3d6955c4ac217d56e45acace5f28"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_gic_state.h",
+      "byteCount": 2030,
+      "sha256": "e01241a093857bad8fd4389001882319c4ccaa0f56946668846eeb31bf84d835"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_gic_types.h",
+      "byteCount": 86459,
+      "sha256": "83aa7196c190ab046821c1e54e3494fab9d809ff75e4a57afd7cc425abdc7fe8"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_intr.h",
+      "byteCount": 2235,
+      "sha256": "fb08224d5e2b8288844828947c74b39c08e094f13ce7e98ea70cb2335d646433"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_sme_config.h",
+      "byteCount": 756,
+      "sha256": "fe19196aa5eca158fd8f62fec206a547f217af48052ea424df428d65da6f8150"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_types.h",
+      "byteCount": 4653,
+      "sha256": "2a3a30d5d71f2ddb4316d20072a5d9d7cb7229a53bddb4036ad1ecd9585bdc10"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vcpu.h",
+      "byteCount": 16874,
+      "sha256": "5f5b8060fb21a70e800291dbd1069f7405c6354c93fab884475329ce136a4094"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vcpu_config.h",
+      "byteCount": 2042,
+      "sha256": "0adfce59daac3b03fd9fae3abd10d667fa047054f7aabff1bf22abdab08df574"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vcpu_types.h",
+      "byteCount": 13447,
+      "sha256": "195c2ec80800b33b26906a907bbf5689e90d3016b818dcc8c20124c1ede23b5c"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vm.h",
+      "byteCount": 2635,
+      "sha256": "f0e080fa024b144d6941d0e598eb57e4a8f6f1335d3762e2c4418cc5d7e6f40f"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vm_allocate.h",
+      "byteCount": 1717,
+      "sha256": "4ee2cb262916e79a41f53b4cb35d4cf9ab51df49fa49b8f82d3a6d56829caf7a"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vm_config.h",
+      "byteCount": 5595,
+      "sha256": "d78e79fcba06933850637e4bc572839a59b7aa3592c0830d7bf80e201fbc6e6a"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vm_types.h",
+      "byteCount": 767,
+      "sha256": "70a9c6cad172df8249f6a5d5e2298c99311897a230396b894ac6ead7a1453ea6"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Hypervisor.framework/Headers/hv_vmx.h",
+      "byteCount": 9865,
+      "sha256": "e62a6b975fdb9509ee632e4449f0d40626c78fcb0fc7b36ce1a178685e5b1413"
+    }
+  ],
+  "modelRuns": 0,
+  "guestRuns": 0,
+  "vmCreates": 0,
+  "derivation": "Mach-O64 __TEXT,__text bytes; no relocation; exported fixed labels and two HVC opcodes verified. No objcopy or linker needed.",
+  "linkInstruction": "Link PrimeGuestCompute.o with the Swift host and -framework Hypervisor. Import PrimeGuestCompute.h as its bridging header. Sign with com.apple.security.hypervisor entitlement."
+}

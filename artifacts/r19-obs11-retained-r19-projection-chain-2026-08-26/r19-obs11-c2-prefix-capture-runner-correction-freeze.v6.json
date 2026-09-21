@@ -1,0 +1,432 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-correction-freeze-v6",
+  "status": "C2_PREFIX_CAPTURE_RUNNER_V5_NO_GO_V6_CORRECTION_FROZEN_NO_ENTRY",
+  "rank": "CONTROL_ONLY_PRELAUNCH_INSTRUMENTATION_CORRECTION",
+  "predecessor": {
+    "v5_freeze_commit": "de52c06450eb84597d13ae054b361a4fb4e6666f",
+    "v5_freeze_tree": "7bda67787ceb9c6d89dcc1e2b4fcbe4a48058f26",
+    "v5_freeze_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-freeze.v5.json",
+    "v5_freeze_sha256": "fcc67e1f13c9308d1ae0ce7f59f93a6f0aa3ba40fe1db20b7bbb2a01c9b06610"
+  },
+  "rejected_uncommitted_v5_source": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v5.rb",
+    "bytes": 18264,
+    "lines": 570,
+    "sha256": "cf6d82b8035c2d3d77d9f85c27af4a9f34cf6d10946d1934cb87c5192a37bde4",
+    "git_blob": "2d33935a329a357d3f23182a98a8de3ba636efbd",
+    "runner_entries": 0,
+    "child_spawns": 0,
+    "capture_roots_created": 0,
+    "disposition": "NO_GO_SUPERSEDED_BEFORE_COMMIT_OR_ENTRY"
+  },
+  "independent_static_reviews": [
+    {
+      "review": "IDENTITY_NAMESPACE",
+      "decision": "NO_GO",
+      "blockers": [
+        "HELD_AND_NAMED_PARENT_ROOT_NOT_JOINED_AROUND_NAMED_OPERATIONS",
+        "NO_DESCRIPTOR_ROOTED_LEAF_PUBLICATION",
+        "NO_FINAL_APFS_NLINK_OR_FIVE_LEAF_CLOSURE",
+        "PARSED_CONTROLLER_PID_NOT_JOINED_TO_SPAWNED_AND_WAITED_PID",
+        "NAMED_HARNESS_OPEN_NOT_JOINED_TO_HELD_EXECUTION_BYTES",
+        "SUCCESS_PATH_DESCRIPTOR_CLOSE_ERRORS_IGNORED"
+      ]
+    },
+    {
+      "review": "JOURNAL_DATA_FIDELITY",
+      "decision": "NO_GO",
+      "blockers": [
+        "FALLIBLE_POSTREAP_REVALIDATION_PRECEDED_RAW_PUBLICATION",
+        "PRE_ROOT_PROCESS_ENTRY_FAILURE_HAD_NO_DURABLE_INTERNAL_MARKER",
+        "FAILURE_ROOT_NOT_DURABLY_TERMINAL",
+        "RESCUE_WAIT_COULD_PROCEED_WITHOUT_EXACT_REAP",
+        "RUNNER_EXIT_ZERO_COULD_COEXIST_WITH_SCIENTIFIC_FAIL"
+      ]
+    },
+    {
+      "review": "DARWIN_RUBY_PROCESS",
+      "decision": "NO_GO",
+      "blockers": [
+        "RETAINED_CHANNEL_PREFIX_COULD_BE_65537_BYTES",
+        "RESCUE_WAITPID2_DID_NOT_RETRY_EINTR_OR_REQUIRE_EXACT_PID"
+      ]
+    }
+  ],
+  "v6_source": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb",
+    "language": "APPLE_RUBY_2_6_WITH_FIXED_ARITY_DARWIN_PRIMITIVES",
+    "caller_arguments": 0,
+    "caller_paths": 0,
+    "caller_environment_parameters": 0,
+    "generic_command_surface": false,
+    "runner_entries_authorized_by_this_freeze": 0,
+    "child_spawns_maximum": 1,
+    "signals": 0,
+    "timeouts": 0,
+    "network_actions": 0,
+    "python_entries": 0
+  },
+  "consumption": {
+    "authorized_outer_launch_attempts_after_final_readiness": 1,
+    "concurrent_attempts": 0,
+    "boundary": "TRUSTED_OUTER_LAUNCH_ATTEMPT_AFTER_EXACT_PRE_EXEC_CHECKS",
+    "runner_process_entry_not_required_to_prove_consumption": true,
+    "root_absence_after_attempt": "CONSUMED_INCOMPLETE_EXEC_OR_PRE_ROOT_FAILURE_NO_RETRY",
+    "exec_ambiguity": "CONSUMED_INCOMPLETE_NO_RETRY",
+    "external_termination": "CONSUMED_INCOMPLETE_NO_RETRY",
+    "reusable_after_attempt": false,
+    "retry": false,
+    "mandatory_post_exec_codex_observation_commit": true,
+    "codex_observation_is_local_workstation_transport_not_scientific_authority": true
+  },
+  "outer_transport": {
+    "image": "/usr/bin/ruby",
+    "arguments": [
+      "--disable-gems",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb"
+    ],
+    "script_arguments": [],
+    "environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "tty": false,
+    "outer_timeout": null,
+    "outer_signal_authority": false,
+    "success_stdout": "EXACTLY_ONE_FROZEN_CANONICAL_JSON_OBJECT_PLUS_LF",
+    "success_stderr_bytes": 0,
+    "success_exit": 0,
+    "failure_stdout_bytes": 0,
+    "failure_stderr": "EXACTLY_ONE_BOUNDED_CANONICAL_JSON_OBJECT_PLUS_LF_WHERE_PROCESS_CAN_EMIT",
+    "failure_exit": 70,
+    "exit_only_admission": false
+  },
+  "parent_and_root": {
+    "parent": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26",
+    "parent_identity_join_fields": [
+      "device",
+      "inode",
+      "uid",
+      "gid",
+      "mode",
+      "flags"
+    ],
+    "root_leaf": "r19-obs11-c2-preconsumption-prefix-capture.v6",
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v6",
+    "root_before": "ABSENT_BY_FSTATAT_AT_SYMLINK_NOFOLLOW_AND_NAMED_LSTAT",
+    "root_creation": "FIXED_ARITY_MKDIRAT_PARENT_DESCRIPTOR_EXCLUSIVE_0700",
+    "root_open": "THREE_ARGUMENT_NONCREATING_OPENAT_DIRECTORY_NOFOLLOW_CLOEXEC",
+    "root_join": "FSTAT_ROOT_EQUALS_FSTATAT_PARENT_ROOTLEAF_AND_NAMED_LSTAT",
+    "root_device_equals_parent_device": true,
+    "root_initial_mode": "0700",
+    "root_success_mode": "0500",
+    "parent_sync_after_root": [
+      "fsync",
+      "F_FULLFSYNC"
+    ],
+    "permanent_retention": true,
+    "cleanup_or_reuse": false
+  },
+  "native_fixed_arity_surface": {
+    "darwin_errno": "CLEAR_AND_READ_POINTER_FROM___error_AROUND_EACH_NATIVE_CALL",
+    "mkdirat": "int_mkdirat_int_const_char_pointer_unsigned_int",
+    "openat_noncreating_only": "int_openat_int_const_char_pointer_int",
+    "openat_O_CREAT_entries": 0,
+    "fstatat": "int_fstatat_int_const_char_pointer_stat_pointer_int_AT_SYMLINK_NOFOLLOW",
+    "mkostempsat_np": "int_mkostempsat_np_int_mutable_char_pointer_int_int",
+    "renameatx_np": "int_renameatx_np_int_const_char_pointer_int_const_char_pointer_unsigned_int",
+    "fcntl_fullfsync": "int_fcntl_int_int_F_FULLFSYNC_ONLY",
+    "fdopendir": "void_pointer_fdopendir_int_OWNS_INDEPENDENT_NONCREATING_ROOT_DESCRIPTOR",
+    "readdir": "void_pointer_readdir_DIR_pointer_WITH_ERRNO_ZERO_AT_EOF",
+    "closedir": "int_closedir_DIR_pointer_CHECKED",
+    "leaf_staging": "ROOT_DESCRIPTOR_RELATIVE_MUTABLE_SIX_X_TEMPLATE_MODE_0600",
+    "leaf_publication": "SAME_ROOT_RENAMEATX_NP_RENAME_EXCL_OR_RENAME_NOFOLLOW_ANY",
+    "staging_failure": "RETAIN_GENERATED_STAGING_LEAF_AS_INCOMPLETE_EVIDENCE_NO_CLEANUP",
+    "variadic_openat_creation": "FORBIDDEN_PROVEN_MODE_0000_ABI_FAILURE"
+  },
+  "leaf_publication_order": [
+    "ROOT_HELD_NAMED_AND_FSTATAT_REJOIN",
+    "MKOSTEMPSAT_NP_ROOT_DESCRIPTOR_RELATIVE",
+    "HELD_AND_FSTATAT_STAGING_VNODE_JOIN",
+    "WRITE_ALL",
+    "HELD_READBACK_AND_SHA256",
+    "FSYNC_AND_F_FULLFSYNC",
+    "FCHMOD_0400",
+    "FSYNC_AND_F_FULLFSYNC",
+    "RENAMEATX_NP_EXCLUSIVE_NOFOLLOW_TO_FIXED_FINAL_LEAF",
+    "STAGING_ABSENT_FINAL_FSTATAT_AND_HELD_VNODE_JOIN",
+    "ROOT_FSYNC_AND_F_FULLFSYNC",
+    "FINAL_REOPEN_REHASH_REJOIN_AND_CHECKED_CLOSE"
+  ],
+  "child_transport": {
+    "physical_image": "/usr/bin/ruby",
+    "logical_argv0": "ruby",
+    "arguments": [
+      "--disable-gems",
+      "/dev/fd/3"
+    ],
+    "script_arguments": [],
+    "environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "cwd": "/private/var/empty",
+    "stdin": "INHERITED_DEV_NULL_FD_0",
+    "stdout": "DEDICATED_PIPE_FD_1",
+    "stderr": "DEDICATED_PIPE_FD_2",
+    "harness_source": "EXACT_HELD_REWOUND_DESCRIPTOR_MAPPED_TO_CHILD_FD_3",
+    "fd3_reason": "CONTROLLED_HELD_HARNESS_SOURCE_TRANSPORT_NOT_AMBIENT_FD",
+    "fd3_scientific_inference": false,
+    "close_others": true,
+    "unsetenv_others": true,
+    "pgroup": false,
+    "wait": "EXACT_PID_WAITPID2_RETRY_ONLY_EINTR",
+    "pid_join": "PARSED_CONTROLLER_PID_EQUALS_SPAWNED_PID_EQUALS_WAITED_PID",
+    "ppid_join": "PARSED_CONTROLLER_PPID_EQUALS_RUNNER_PID",
+    "signal_authority": false,
+    "timeout": null
+  },
+  "capture": {
+    "per_channel_retained_cap_bytes": 65536,
+    "cap_includes_no_plus_one_byte": true,
+    "drain_threads": 2,
+    "drains_concurrent": true,
+    "drain_to_eof": true,
+    "full_stream_fields": [
+      "bytes",
+      "lf_count",
+      "sha256",
+      "overflow"
+    ],
+    "over_cap": "RETAIN_EXACT_FIRST_65536_BYTES_AND_FULL_STREAM_FIELDS_THEN_CAPTURED_SCIENTIFIC_FAIL",
+    "raw_publication_precedes": [
+      "POSTREAP_HARNESS_REVALIDATION",
+      "JSON_PARSE",
+      "RECEIPT_INTERPRETATION",
+      "PASS_OR_FAIL_CLASSIFICATION"
+    ],
+    "channel_publications_attempted_independently": true,
+    "stdout_and_stderr_never_merged_inside_RUNNER": true
+  },
+  "success_inventory": [
+    "00-start.json",
+    "01-stdout.bin",
+    "02-stderr.bin",
+    "03-result.json",
+    "04-closure.json"
+  ],
+  "descriptor_rooted_inventory": {
+    "root_descriptor_for_scan": "INDEPENDENT_THREE_ARGUMENT_NONCREATING_OPENAT_FROM_HELD_PARENT",
+    "scan": "FDOPENDIR_READDIR_RAW_SINGLE_COMPONENT_NAMES_CLOSEDIR_CHECKED",
+    "allowed_success_names_exact": [
+      "00-start.json",
+      "01-stdout.bin",
+      "02-stderr.bin",
+      "03-result.json",
+      "04-closure.json"
+    ],
+    "entry_join": "EACH_NAME_FSTATAT_NOFOLLOW_EQUALS_NONCREATING_OPENAT_HELD_FILE_STAT",
+    "entry_types_success": "FIVE_DISTINCT_REGULAR_FILES_NO_SYMLINKS_OR_OTHER_TYPES",
+    "root_fstat_before_equals_after": true,
+    "post_scan_root_join": "HELD_ROOT_EQUALS_PARENT_FSTATAT_ROOTLEAF_EQUALS_NAMED_LSTAT",
+    "manifest_frame": "FOR_EACH_ASCII_SORTED_NAME_NAME_TAB_DEVICE_TAB_INODE_TAB_MODE_TAB_NLINK_TAB_BYTES_TAB_SHA256_LF",
+    "manifest_sha256": "SHA256_OF_EXACT_CONCATENATED_MANIFEST_FRAMES",
+    "failure_scan": "SAME_DESCRIPTOR_ROOTED_SCAN_WITH_FIXED_FINAL_AND_VALID_GENERATED_STAGING_NAME_GRAMMAR_ONLY"
+  },
+  "apfs_topology": {
+    "measured_equation": "ROOT_NLINK_EQUALS_2_PLUS_IMMEDIATE_ENTRY_COUNT",
+    "root_empty_nlink": 2,
+    "after_00": 3,
+    "after_01": 4,
+    "after_02": 5,
+    "after_03": 6,
+    "after_04": 7,
+    "temporary_staging_effect": "ADDS_ONE_ENTRY_UNTIL_SAME_DIRECTORY_RENAME_PRESERVES_COUNT",
+    "failure_nlink": "2_PLUS_DESCRIPTOR_SCANNED_ACTUAL_IMMEDIATE_ENTRY_COUNT",
+    "parent_nlink": "CAPTURE_BEFORE_ROOT_EXACT_PLUS_ONE_AFTER_ROOT_AND_STABLE_THEREAFTER"
+  },
+  "closure": {
+    "leaf": "04-closure.json",
+    "covers": [
+      "STABLE_ROOT_IDENTITY_AND_POLICY_BEFORE_04",
+      "EXACT_IDENTITIES_AND_CONTENT_HASHES_OF_00_THROUGH_03",
+      "CHILD_EXIT_SIGNAL_PID_PPID_JOIN",
+      "CHANNEL_CAPTURE_AND_RECEIPT_ADMISSION",
+      "CONSUMPTION_AND_NONREUSE",
+      "EXPECTED_FINAL_ROOT_MODE0500_NLINK7_FLAGS0_AND_EXACT_FIVE_NAME_INVENTORY"
+    ],
+    "self_hash_embedded": false,
+    "self_hash_reason": "NO_CIRCULAR_SELF_HASH",
+    "outer_summary_supplies_04_IDENTITY_AND_SHA256": true,
+    "outer_summary_supplies_final_root_identity_and_inventory_manifest": true,
+    "successor_post_exec_checkpoint_content_addresses_complete_observation": true,
+    "final_reopen_rehash_all_five": true,
+    "final_distinct_leaf_inodes": true,
+    "final_leaf_modes": "0400",
+    "final_leaf_nlinks": 1
+  },
+  "terminal_durability_order": [
+    "PUBLISH_REJOIN_04_CLOSURE",
+    "DESCRIPTOR_SCAN_AND_REOPEN_REHASH_FIVE_LEAF_VALIDATION",
+    "FCHMOD_HELD_ROOT_0500",
+    "ROOT_FSYNC_AND_F_FULLFSYNC",
+    "PARENT_FSYNC_AND_F_FULLFSYNC",
+    "FINAL_HELD_ROOT_EQUALS_PARENT_FSTATAT_ROOTLEAF_EQUALS_NAMED_LSTAT",
+    "FINAL_ROOT_DEVICE_INODE_UID_GID_MODE0500_NLINK7_FLAGS0",
+    "FINAL_DESCRIPTOR_SCAN_EXACT_FIVE_NAMES_AND_STABLE_MANIFEST_SHA256",
+    "CHECKED_CLOSES_REQUIRED_BEFORE_OUTER_PASS",
+    "OUTER_PASS_SUMMARY_EMISSION"
+  ],
+  "outer_summary_schema": {
+    "canonical_equation": "JSON_GENERATE_RECURSIVE_LEXICOGRAPHIC_OBJECT_KEYS_COMPACT_UTF8_PLUS_ONE_LF",
+    "pass_top_level_keys_exact": [
+      "capture_root",
+      "closure_leaf",
+      "final_inventory",
+      "final_inventory_manifest_sha256",
+      "final_root",
+      "runner_status",
+      "schema",
+      "scientific_status"
+    ],
+    "pass_schema": "ergentics-r19-obs11-c2-prefix-capture-outer-summary-v6",
+    "pass_runner_status": "PASS_DURABLE_CAPTURE_RUNNER_COMPLETED",
+    "pass_scientific_status": "PASS_CAPTURED_EXACT_NONCONSUMING_PREFIX_V6",
+    "pass_capture_root": "EXACT_FROZEN_V6_ROOT",
+    "pass_closure_leaf": "EXACT_04_IDENTITY_BYTES_SHA256_MODE0400_NLINK1",
+    "pass_final_root": "EXACT_DEVICE_INODE_UID501_GID20_MODE0500_NLINK7_FLAGS0",
+    "pass_final_inventory": "EXACT_FIVE_ASCII_SORTED_NAMES",
+    "pass_manifest_sha256": "EXACT_DESCRIPTOR_SCAN_MANIFEST_SHA256",
+    "pass_max_bytes": 16384,
+    "failure_top_level_keys_exact": [
+      "capture_root",
+      "consumption",
+      "error",
+      "root_state",
+      "runner_status",
+      "schema"
+    ],
+    "failure_schema": "ergentics-r19-obs11-c2-prefix-capture-outer-failure-v6",
+    "failure_runner_status": "FAIL_CAPTURE_RUNNER_CONSUMED_NO_RETRY",
+    "failure_consumption": "CONSUMED_NO_RETRY",
+    "failure_error": "BOUNDED_CLASS_MESSAGE_BYTES_PREFIX_HEX_TRUNCATION_SHA256_AND_PHASE",
+    "failure_root_state": "NULL_BEFORE_ROOT_OR_EXACT_OBSERVED_ROOT_INCOMPLETE_RECEIPT",
+    "failure_max_bytes": 16384,
+    "record_intended_outer_channel_bytes_lf_sha256_before_emit": true,
+    "self_hash_embedded": false
+  },
+  "complete_scientific_pass": {
+    "child_exit": 0,
+    "child_stderr_bytes": 0,
+    "child_stdout": "EXACTLY_ONE_CANONICAL_JSON_OBJECT_PLUS_LF",
+    "harness_status": "PASS_EXACT_NONCONSUMING_C2_PREFIX_PREFLIGHT_V4",
+    "controller_bottom_entries": 0,
+    "controller_or_build_invocations": 0,
+    "exact_source_prefix_operation_and_root_predicates": true,
+    "five_leaf_inventory_and_root_nlink7_mode0500": true,
+    "runner_stdout": "EXACT_FROZEN_PASS_SUMMARY",
+    "runner_stderr_bytes": 0,
+    "runner_exit": 0,
+    "post_exec_codex_observation_join": true
+  },
+  "failure_lattice": {
+    "captured_scientific_failure": "RAW_LEAVES_AND_03_RESULT_DURABLE_ROOT_SEALED_WHERE_ACHIEVABLE_RUNNER_EXIT70_NO_RETRY",
+    "post_entry_incomplete": "00_START_PLUS_ANY_DURABLE_PREFIX_PLUS_99_INCOMPLETE_WHERE_ACHIEVABLE_ROOT_SEALED_NO_RETRY",
+    "pre_root_or_exec_ambiguity": "OUTER_OBSERVATION_ONLY_CONSUMED_INCOMPLETE_NO_RETRY",
+    "late_postseal_or_outer_write_failure": "OUTER_OBSERVATION_OVERRIDES_PASS_CANDIDATE_CONSUMED_INCOMPLETE_NO_RETRY",
+    "root_absence_never_means_reusable": true,
+    "root_present_start_absent": "ROOT_PLUS_ZERO_PUBLISHED_PREFIX_OPTIONAL_GENERATED_STAGING_OR_99_ACTUAL_DESCRIPTOR_INVENTORY_NLINK2_PLUS_ENTRIES_SEALED_WHERE_ACHIEVABLE_CONSUMED_INCOMPLETE_NO_RETRY",
+    "failure_runner_stdout_bytes": 0,
+    "failure_runner_stderr_channel": "CANONICAL_BOUNDED_FAILURE_SUMMARY",
+    "failure_runner_exit": 70
+  },
+  "incomplete_leaf_schema": {
+    "leaf": "99-incomplete.json",
+    "top_level_keys_exact": [
+      "capture_root",
+      "channels",
+      "child",
+      "consumption",
+      "durable_leaves",
+      "failure",
+      "generated_staging_names",
+      "intended_outer",
+      "inventory",
+      "root",
+      "schema",
+      "status"
+    ],
+    "schema": "ergentics-r19-obs11-c2-prefix-capture-incomplete-v6",
+    "status": "CONSUMED_INCOMPLETE_NO_RETRY",
+    "failure": "PHASE_PLUS_BOUNDED_ERROR_DIAGNOSTIC",
+    "generated_staging_names": "EXACT_RETAINED_NAMES_SORTED",
+    "inventory": "ACTUAL_DESCRIPTOR_SCANNED_NAMES_NLINK_AND_MANIFEST_SHA256_OR_SCAN_ERROR",
+    "durable_leaves": "EACH_FIXED_LEAF_IDENTITY_SHA256_OR_PUBLICATION_ERROR",
+    "child": "PID_WAITED_PID_EXIT_SIGNAL_AND_EXACT_REAP_STATE",
+    "channels": "TOTAL_RETAINED_LF_SHA256_OVERFLOW_AND_PUBLICATION_STATE_FOR_BOTH",
+    "root": "DEVICE_INODE_UID_GID_MODE_NLINK_FLAGS_SYNC_REJOIN_AND_SEAL_STATE",
+    "intended_outer": "STDERR_EXACT_BYTES_LF_SHA256_AND_EXIT70",
+    "self_hash_embedded": false,
+    "outer_observation_supplies_99_IDENTITY_AND_SHA256": true
+  },
+  "outer_trust_boundary": {
+    "exact_pre_exec_runner_path_hash_blob_metadata_and_readiness_commit_tree": true,
+    "exact_host_environment_cwd_stdin_and_root_absence": true,
+    "no_concurrent_same_euid_mutator": true,
+    "one_attempt_token_burn_recorded_before_dispatch": true,
+    "post_exec_observation_records_actual_combined_or_separate_transport_fidelity_without_invention": true,
+    "missing_or_ambiguous_observation": "CONSUMED_INCOMPLETE_ABSTAIN"
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb"
+  ],
+  "successor_control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-implementation-checkpoint.v6.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v6.json"
+  ],
+  "hard_stops": [
+    "ANY_V6_RUNNER_ENTRY_BEFORE_IMPLEMENTATION_CHECKPOINT_AND_FINAL_READY_COMMIT",
+    "ANY_VARIADIC_OPENAT_O_CREAT_BINDING",
+    "ANY_ABSOLUTE_NAMED_CAPTURE_LEAF_OPEN",
+    "ANY_RECEIPT_INTERPRETATION_BEFORE_RAW_PUBLICATION",
+    "ANY_WAIT_ERROR_REINTERPRETED_AS_EXACT_REAP",
+    "ANY_RETAINED_CHANNEL_BYTES_ABOVE_65536",
+    "ANY_UNCONTROLLED_OR_UNCATALOGED_CHILD_FD3",
+    "ANY_SECOND_OR_CONCURRENT_OUTER_ATTEMPT_OR_CHILD_SPAWN",
+    "ANY_CAPTURE_ROOT_ABSENCE_USED_TO_AUTHORIZE_RETRY",
+    "ANY_CONTROLLER_BOTTOM_SWIFTPM_BUILD_PRODUCT_SIGNAL_TIMEOUT_CLEANUP_NETWORK_GITHUB_OR_PYTHON_ENTRY",
+    "ANY_AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+  ],
+  "operations": {
+    "v5_runner_entries": 0,
+    "v6_runner_entries": 0,
+    "child_spawns": 0,
+    "capture_roots_created": 0,
+    "capture_leaves_created": 0,
+    "controller_bottom_entries": 0,
+    "swiftpm_spawns": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "signals": 0,
+    "cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "runner_entry_authorized_by_this_freeze": false,
+    "controller_or_build_authorized": false
+  },
+  "next": {
+    "step": "COMMIT_CORRECTION_FREEZE_IMPLEMENT_V6_SOURCE_ONLY_THEN_OBTAIN_THREE_STATIC_GO_REVIEWS",
+    "execution_before_checkpoint_and_final_readiness": false
+  },
+  "artifact_addressing": "NO_RECORD_EMBEDS_ITS_OWN_HASH;SUCCESSOR_GIT_COMMIT_AND_TREE_CONTENT_ADDRESS_THIS_FREEZE"
+}

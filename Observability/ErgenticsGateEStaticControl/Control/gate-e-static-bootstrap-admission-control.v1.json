@@ -1,0 +1,513 @@
+{
+  "schema": "ergentics.gate-e.static.bootstrap-admission-control.v1",
+  "status": "FROZEN_SOURCE_AND_ADMISSION_DESIGN_NOT_LAUNCH_READINESS",
+  "authorization": {
+    "basis": "proceed",
+    "this_turn": "CONTROL_FILES_ONLY",
+    "source_edits": 0,
+    "builds": 0,
+    "product_entries": 0,
+    "signals": 0,
+    "process_census": 0,
+    "retained_runtime_root_creation": 0,
+    "launch_authorized": false
+  },
+  "identities": {
+    "control_predecessor": {
+      "commit": "c51f79615dab9830cc446d4236bb1d66e930ae1d",
+      "tree": "945ee7b2c9a374b7dfa1eff1e82f828c16c588c1",
+      "result_file": "gate-e-static-release-build-result.v1.json",
+      "result_sha256": "28cb8ffb36b0942d4176e4473d41d63e25985ea32826951b1ef460ea61e27a9c"
+    },
+    "built_implementation": {
+      "commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+      "tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e",
+      "source_file_count": 13,
+      "source_bytes": 169207
+    },
+    "static_candidate_subject": {
+      "commit": "04c5324ccfc6984ad7c407e93238cc44f9ce22dd",
+      "tree": "10615a2d66720b70ecafa891ab26e96ac9ee812e",
+      "identity": "2c25246de1b50148d8193167880828815b17c80e8ee66a09dec45b1430178fc1",
+      "meaning": "Declared committed implementation snapshot for a static schema/graph test; not the current dirty filesystem and not live Prime/Git admission"
+    },
+    "selected_images": "BUILD_A_ONLY",
+    "build_B": "Independent byte-identity witness only; no fallback or alternate launch",
+    "historical_result": {
+      "build_identity": "PASS",
+      "frozen_sequence": "FAIL_PRE_B_METADATA_CHECK_OMITTED",
+      "pre_B_metadata": "UNOBSERVED",
+      "rule": "Fresh admission may establish present facts but cannot repair or imply the missing historical observation"
+    }
+  },
+  "source_admission": {
+    "scope": "Exact saved 13-file static implementation, not the whole Prime tree",
+    "files": [
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Control/gate-e-static-graph-registry.v1.json",
+        "bytes": 3113,
+        "sha256": "d398b19918a779a2504a3a04ae72cd574da6caca6a8b27316b6b7f2dc3d89938",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341422,
+        "relative_path": "Control/gate-e-static-graph-registry.v1.json"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Package.swift",
+        "bytes": 1627,
+        "sha256": "1cb536ecee3fbc6d2864047ec9db5d7af78921167ba25083c8831ac0cc7baa86",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341423,
+        "relative_path": "Package.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateECBORProjector/main.swift",
+        "bytes": 2109,
+        "sha256": "d56a0b567bc9095f18997c7416735de8c1c9957889230154a20c57543c838a3f",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341426,
+        "relative_path": "Sources/ErgenticsGateECBORProjector/main.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEDualGraphJoin/main.swift",
+        "bytes": 2388,
+        "sha256": "5951953af6dc787a49216fdc942b116fc4ad8c76ded39a75a4d71265d19d720f",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341428,
+        "relative_path": "Sources/ErgenticsGateEDualGraphJoin/main.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/ErgenticsGateEJSONProjector/main.swift",
+        "bytes": 2109,
+        "sha256": "981c3e840f39859706571127ab4394b43ec409d57686c7acfbf20ffcf13c92ad",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341430,
+        "relative_path": "Sources/ErgenticsGateEJSONProjector/main.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift",
+        "bytes": 27841,
+        "sha256": "af84527ab2696131f36da89aaa2ec61d97368cb01c130783492eae4227319f82",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341432,
+        "relative_path": "Sources/GateECBORAuthority/GateECBORAuthority.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORReconstructor.swift",
+        "bytes": 30591,
+        "sha256": "f600e1d2a412f761a2119d43b2421ed8368ac84de3825b44137d8588cf61d93e",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341433,
+        "relative_path": "Sources/GateECBORAuthority/GateECBORReconstructor.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift",
+        "bytes": 32655,
+        "sha256": "32702cf823fdeb36eb348fbd82e0aa1620bd1e2efc06ee679717f039a53deae8",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341435,
+        "relative_path": "Sources/GateEDualGraphJoin/GateEDualGraphJoin.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONAuthority.swift",
+        "bytes": 27750,
+        "sha256": "85802f3c91199f8726b504ee5bc1162efdefeea627e984e17e96bbe5b979b4dd",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341437,
+        "relative_path": "Sources/GateEJSONAuthority/GateEJSONAuthority.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Sources/GateEJSONAuthority/GateEJSONReconstructor.swift",
+        "bytes": 12741,
+        "sha256": "1f6f180aa117afc998ac944185256dd8f4c2fe91c05f56e9f8b5098f25d84f83",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341438,
+        "relative_path": "Sources/GateEJSONAuthority/GateEJSONReconstructor.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateECBORAuthorityTests/GateECBORAuthorityTests.swift",
+        "bytes": 15541,
+        "sha256": "8949257abdd6797cfc73933d775a05586ea47ab434bfc8d705835297463731b7",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341441,
+        "relative_path": "Tests/GateECBORAuthorityTests/GateECBORAuthorityTests.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateEDualGraphJoinTests/GateEDualGraphJoinTests.swift",
+        "bytes": 6494,
+        "sha256": "2cc93d881b4aaf369d1755cff215b46c41f07728421bb0db258cb0b36d048322",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341443,
+        "relative_path": "Tests/GateEDualGraphJoinTests/GateEDualGraphJoinTests.swift"
+      },
+      {
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/source/Observability/ErgenticsGateEStaticControl/Tests/GateEJSONAuthorityTests/GateEJSONAuthorityTests.swift",
+        "bytes": 4248,
+        "sha256": "798cef57134d3a61fd098b1ac69e32e283c35c2ad570f8ff30cb3a15edc7ecc3",
+        "mode": "0644",
+        "nlink": 1,
+        "device": 16777231,
+        "inode": 18341445,
+        "relative_path": "Tests/GateEJSONAuthorityTests/GateEJSONAuthorityTests.swift"
+      }
+    ],
+    "require_original_saved_vnodes": true,
+    "require_regular_files": true,
+    "read_open": "O_RDONLY|O_NOFOLLOW|O_CLOEXEC",
+    "path_resolution": "Descriptor-rooted component walk and held parent/leaf joins; reject symlink components and group/other-writable ancestry",
+    "uid_rule": "Each source/image owner must equal the bootstrap effective UID; record GID rather than assuming a fixed group",
+    "capture_fields": [
+      "device",
+      "inode",
+      "file_type",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "mtime_seconds",
+      "mtime_nanoseconds",
+      "ctime_seconds",
+      "ctime_nanoseconds",
+      "sha256"
+    ],
+    "hashing": "pread from offset0 without changing an input cursor; fstat before and after; all captured fields stable",
+    "boundary_comparison": "Full metadata and byte comparison before EVERY stage and after EVERY reap; a bytes-only check cannot mint the admission token",
+    "prime_identity_scope": "The 2c25246d source identity is an inherited committed subject pin, not a new live Prime closure or dirty-worktree hash"
+  },
+  "image_admission": {
+    "images": [
+      {
+        "product": "ErgenticsGateEJSONProjector",
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEJSONProjector",
+        "sha256": "f77159f150e3704b26db5490c1750a0f2ace1332360eac6da7763a63b5ef90cb",
+        "mode": "755",
+        "nlink": 1,
+        "bytes": 185864,
+        "device": 16777231,
+        "inode": 18341869,
+        "uuid": "1239EC62-146B-32FA-8812-19575C52E622",
+        "architecture": "arm64",
+        "minimum_macos": "14.0",
+        "sdk": "26.5"
+      },
+      {
+        "product": "ErgenticsGateECBORProjector",
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateECBORProjector",
+        "sha256": "9d6b2e218682070f6053a51f180f39892111e60081b4e4c9197b62bc03cd058b",
+        "mode": "755",
+        "nlink": 1,
+        "bytes": 290136,
+        "device": 16777231,
+        "inode": 18341895,
+        "uuid": "AA3035CD-FE4D-3B97-9401-E5360CCF15DD",
+        "architecture": "arm64",
+        "minimum_macos": "14.0",
+        "sdk": "26.5"
+      },
+      {
+        "product": "ErgenticsGateEDualGraphJoin",
+        "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-release-builds-04c5324-2026-08-30-r1/A/scratch/arm64-apple-macosx/release/ErgenticsGateEDualGraphJoin",
+        "sha256": "8ae0dfe19edf1c8583b097ce110cf785abf2ec92dcd0cde085745bc10829b7f2",
+        "mode": "755",
+        "nlink": 1,
+        "bytes": 160888,
+        "device": 16777231,
+        "inode": 18341877,
+        "uuid": "71E66C53-B98C-3BCF-A0E8-12FB026C78F2",
+        "architecture": "arm64",
+        "minimum_macos": "14.0",
+        "sdk": "26.5"
+      }
+    ],
+    "holding": "Hold read-only descriptors and parent descriptors through the entire bootstrap; compare to saved device/inode/size/mode/nlink/hash plus Mach-O UUID/architecture/build-version",
+    "mode_rule": "0755 executable files inside the retained private Build A root; do not chmod, copy, strip, sign, relink or replace images",
+    "Mach_O_reading": "Parse bounded held bytes with explicit endian/offset checks; no analyzer subprocesses during the future bootstrap",
+    "spawn_identity_limit": "Ordinary named-path posix_spawn is only pre/post descriptor-and-name detection. No suspended mapped-image join, no mapped vnode authority, no claim that holding a descriptor eliminates the exec-path race"
+  },
+  "registry": {
+    "path": "Observability/ErgenticsGateEStaticControl/Control/gate-e-static-graph-registry.v1.json",
+    "bytes": 3113,
+    "sha256": "d398b19918a779a2504a3a04ae72cd574da6caca6a8b27316b6b7f2dc3d89938",
+    "scope": "Admit as one of the13 source files. Existing workers still enforce compiled literals; this control does not retrofit registry admission into them."
+  },
+  "inputs": {
+    "embedding": "Two separately frozen immutable decoded byte arrays inside the future Swift bootstrap. Do not derive CBOR from JSON output, import either authority, or invoke a product to create its own input.",
+    "hex_carrier": "Lowercase hexadecimal ASCII plus exactly one LF; the LF is carrier framing and is NOT part of the decoded input",
+    "JSON": {
+      "carrier": "Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-json-input.v1.hex",
+      "carrier_sha256": "15006935c6ad4933d8084e646c9c7254878923f4889fca85e50496d0c507cee8",
+      "decoded_bytes": 1405,
+      "decoded_sha256": "cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e",
+      "terminal_lf": false
+    },
+    "CBOR": {
+      "carrier": "Observability/ErgenticsGateEStaticControl/Control/gate-e-static-bootstrap-cbor-input.v1.hex",
+      "carrier_sha256": "9e77f8b16c24da21ba1582e4464c6954aa548340a8c4d6edd6100be13859b84a",
+      "decoded_bytes": 1239,
+      "decoded_sha256": "c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636",
+      "map_keys": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "key_meanings": [
+        "schema text",
+        "source_commit text",
+        "source_tree text",
+        "source_identity text",
+        "one-byte byte string h00",
+        "ABSTAIN text",
+        "16 roles text array",
+        "16 predicates text array"
+      ],
+      "definite_shortest_only": true,
+      "trailing_bytes": false
+    },
+    "expected_semantic_root": {
+      "sha256": "093b6e90214704a3e8fdf28cf430a8c4cd106d695e621887b77db489fc5cd9bb",
+      "preimage": "ASCII ERGENTICS-GATE-E-STATIC-SEMANTIC-V1, one00 byte, UInt64BE1405, exact JSON candidate bytes",
+      "scope": "Expected mathematical commitment to exact declared subject/roles/predicates/prestate; not an observed execution receipt"
+    },
+    "self_digest_in_candidates": false
+  },
+  "native_transport": {
+    "form": "New standalone excluded Swift executable with a tiny in-image fixed-arity C target",
+    "bootstrap_entry": "Zero arguments; empty replacement environment; no CLI language, env protocol, path/config/request loader, or caller-selected role",
+    "imports": "Neither authority target, join target, PrimeCore nor dirty StartOwner may be imported",
+    "source_allowlist": [
+      "Observability/ErgenticsGateEStaticBootstrap/Package.swift",
+      "Observability/ErgenticsGateEStaticBootstrap/Sources/ErgenticsGateEStaticBootstrap/main.swift",
+      "Observability/ErgenticsGateEStaticBootstrap/Sources/GateEStaticBootstrapCore/GateEStaticBootstrap.swift",
+      "Observability/ErgenticsGateEStaticBootstrap/Sources/GateEStaticBootstrapPrimitives/BootstrapPrimitives.c",
+      "Observability/ErgenticsGateEStaticBootstrap/Sources/GateEStaticBootstrapPrimitives/include/BootstrapPrimitives.h",
+      "Observability/ErgenticsGateEStaticBootstrap/Tests/GateEStaticBootstrapCoreTests/GateEStaticBootstrapCoreTests.swift"
+    ],
+    "unchanged": [
+      "All three existing product sources and binaries",
+      "Production Driver V2 supervisor main and DriverCore",
+      "PrimeCore and Prime source identity",
+      "Existing StartOwner/Ruby drafts and historical records"
+    ],
+    "C_surface": "Fixed-arity descriptor creation/read/stat/write/sync/close, clock, SIGCHLD configuration, three distinct fixed spawn entry points, exact-PID wait, and one fixed SIGKILL entry point. Private implementation helpers may share mechanics; no exported argv/env/path-command executor.",
+    "spawn_inputs": "C spawn entry points receive only already-owned descriptor slots and an out-result. Executable path, argv0, empty env and flags are compiled constants for each fixed stage.",
+    "spawn_flags": [
+      "POSIX_SPAWN_CLOEXEC_DEFAULT",
+      "POSIX_SPAWN_SETPGROUP with pgroup0",
+      "POSIX_SPAWN_SETSIGDEF for catchable signals",
+      "POSIX_SPAWN_SETSIGMASK with empty mask"
+    ],
+    "no_suspension": true,
+    "source_fd_parking_minimum": 32,
+    "parent_owned_fds_cloexec": true,
+    "no_Process_shell_fork_exec_pipeline": true,
+    "spawn_result_rule": "Return spawn-entry/return/PID and teardown statuses separately. On successful spawn, ownership of the exact PID must be captured before any fallible post-spawn operation; teardown errors cannot discard a live PID."
+  },
+  "stages": [
+    {
+      "stage": "JSON",
+      "image": "ErgenticsGateEJSONProjector",
+      "entry_leaf": "10-json-enter.json",
+      "exit_leaf": "15-json-exit.json",
+      "fd_inputs": {
+        "0": "candidate-json.bin"
+      },
+      "fd_outputs": {
+        "1": "11-json-verifier.json",
+        "2": "14-json-stderr.bin",
+        "3": "12-json-graph.json",
+        "4": "13-json-roundtrip.json"
+      }
+    },
+    {
+      "stage": "CBOR",
+      "image": "ErgenticsGateECBORProjector",
+      "entry_leaf": "20-cbor-enter.json",
+      "exit_leaf": "25-cbor-exit.json",
+      "fd_inputs": {
+        "0": "candidate-cbor.bin"
+      },
+      "fd_outputs": {
+        "1": "21-cbor-verifier.json",
+        "2": "24-cbor-stderr.bin",
+        "3": "22-cbor-graph.json",
+        "4": "23-cbor-roundtrip.json"
+      }
+    },
+    {
+      "stage": "JOIN",
+      "image": "ErgenticsGateEDualGraphJoin",
+      "entry_leaf": "30-join-enter.json",
+      "exit_leaf": "34-join-exit.json",
+      "fd_inputs": {
+        "0": "12-json-graph.json",
+        "3": "11-json-verifier.json",
+        "4": "13-json-roundtrip.json",
+        "5": "22-cbor-graph.json",
+        "6": "21-cbor-verifier.json",
+        "7": "23-cbor-roundtrip.json"
+      },
+      "fd_outputs": {
+        "1": "31-join-receipt.json",
+        "2": "33-join-stderr.bin",
+        "8": "32-authoritative-static-graph.json"
+      }
+    }
+  ],
+  "endpoint_invariants": {
+    "inputs": "Separate read-only regular-file open descriptions, exact held vnode/hash/size, offset0 and finite EOF. pread for parent reads. Duplication for FD parking may share only an as-yet-unconsumed role-local description; never use dup of a previously consumed description as a fresh cursor.",
+    "outputs": "Distinct exclusive no-replace regular files mode0600, initially zero bytes, no input/output or output/output inode aliases. Separate stderr file; no pipe chain.",
+    "join_readmission": "Only after both projectors are exactly reaped and all outputs checked: sync captures, close writer handles, independently open read-only descriptions and join them to captured vnodes/hashes before JOIN",
+    "cwd": "Held empty workspace subdirectory, passed by posix_spawn fchdir action; never source, image, evidence or candidate directory. Check still empty after each reap.",
+    "caps": {
+      "candidate": 4194304,
+      "graph": 16777216,
+      "receipt": 262144,
+      "stderr": 65536,
+      "accepted_stderr_bytes": 0
+    },
+    "cap_limit": "Post-read/acceptance bounds, not kernel-enforced filesystem quotas; fixed inputs and admitted closed images bound normal output structurally"
+  },
+  "ordering": {
+    "order": [
+      "JSON",
+      "CBOR",
+      "JOIN"
+    ],
+    "entries_per_stage_maximum": 1,
+    "total_child_entries_maximum": 3,
+    "next_requires": [
+      "Current stage normal exit0 and exactPID reaped",
+      "Complete expected outputs and stderr exactly empty",
+      "All stream/graph/receipt external joins pass",
+      "Full current source/image/endpoint metadata AND bytes admission complete",
+      "Durable next-entry control record prepared"
+    ],
+    "type_requirement": "A private immutable FullBoundaryAdmission token must contain the entire checked cut. Only its stage-specific one-shot consumer can reach the corresponding fixed C spawn. No public constructor or partial/boolean observation can stand in for this token.",
+    "reject": "Any failure forbids later stages and retries. Partial verifier output never counts as stage completion."
+  },
+  "receipt_binding": {
+    "JSON_candidate": "verifier.candidate_sha256 == roundtrip.candidate_sha256 == roundtrip.reconstructed_candidate_sha256 == cda57fec7b6ee67d308eddc1f19d6a844d7f72f7d02aea487ee73e265039961e",
+    "CBOR_candidate": "verifier.candidate_sha256 == roundtrip.candidate_sha256 == roundtrip.reconstructed_candidate_sha256 == c7242f65b69d16f05c67425241297e4e5d598eecc4155aca01c73e40af817636",
+    "cross_codec_candidate_hash_equality": false,
+    "graphs": "JSON and CBOR graph capture bytes must be identical; hash the actual held bytes. Both reconstructed_graph_frame_sha256 values and verifier graph_frame_sha256 values equal that actual hash.",
+    "semantic_root": "Every verifier/roundtrip/join semantic field must equal expected_semantic_root093b6e90. The join independently recomputes this root from the graph source witness, roles, predicates and00000000/ABSTAIN prestate; this binds the exact external subject without treating lowerhex syntax as identity.",
+    "merkle_root": "All verifier/roundtrip/join graph_merkle_root fields agree; JOIN independently recomputes all13 row identities and the Merkle tree.",
+    "output_join": "FD8 capture bytes equal BOTH admitted projector graphs; join receipt references their actual SHA256 and the same semantic/Merkle roots.",
+    "parser": "Use closed exact canonical receipt grammars: fixed key order, exact schemas/authority labels/PASS literals, lowercase64hex fields, no whitespace/LF/escaping/duplicates/unknown fields. No regex substring scraping or general command/data loader. Bootstrap must never generate worker graph/verifier/roundtrip/join output bytes.",
+    "static_transition": "CANDIDATE_SCHEMA_ROLE_PREDICATE_AND_PRESTATE_EXACT only; the16 GateE role names are data, not process entries."
+  },
+  "future_deadline_and_reap_policy": {
+    "authorized_now": false,
+    "approval_required": "A later exact launch approval must cover up to3 fixed direct children and at most1 positive-PID SIGKILL per still-owned unreaped child; no signal authority is derived from this design.",
+    "duration_ns": 5000000000,
+    "timebase": "mach_continuous_time and mach_timebase_info captured before spawn; numerator and denominator nonzero",
+    "deadline_predicate": "UInt128(now_tick-start_tick)*numerator >= UInt128(5000000000)*denominator; checked subtraction/conversion. Record raw ticks and rational timebase, not rounded nanoseconds.",
+    "poll_pause_ns": 10000000,
+    "polling_limit": "Observation cadence only, not a hard real-time completion bound",
+    "parent_reaper": "Before first child explicitly set SIGCHLD SIG_DFL with SA_NOCLDWAIT cleared. One serial sole reaper; no wait-any or competing waiter.",
+    "wait_transitions": {
+      "waitpid(exactPID,WNOHANG)==0": "OWNED_UNREAPED",
+      "waitpid==exactPID": "Atomically mark REAPED; later signal forbidden",
+      "EINTR": "Preserve slot and recheck deadline; no new child",
+      "ECHILD_or_unexpected_PID": "OWNERSHIP_LOST; no signal and no conservation inference"
+    },
+    "deadline_action": "Only while OWNED_UNREAPED: consume the one in-memory KILL commitment before entering kill(exactPositivePID,SIGKILL); capture raw return/errno and never retry that signal, including EINTR/ESRCH. Then wait only for exact reap.",
+    "PID_safety_basis": "Under the exclusive-reaper/no-auto-reap invariant, a child that exits between polling and KILL remains a zombie with its PID reserved. This does not establish arbitrary-PID or process-group safety.",
+    "forbidden": [
+      "STOP",
+      "CONT",
+      "negative-PGID signals",
+      "signal-zero probes",
+      "whole-host census",
+      "libproc generation inference",
+      "old process adoption/disposal"
+    ],
+    "reap_residual": "Kernel-blocked reap may remain nonterminal indefinitely. ECHILD is ownership loss, not successful containment. No process-group-empty or descendant conservation authority is claimed."
+  },
+  "retention": {
+    "future_root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/gate-e-static-bootstrap-c51f796-r1",
+    "root_creation": "Exclusive absent-to-present creation only under a held fixed parent, mode0700, current effectiveUID. Record actualGID; no assumed group0. Root must be disjoint from both retained builds, original drafts and Prime/companion roots.",
+    "cwd_leaf": "workspace",
+    "fixed_input_leaves": [
+      "candidate-json.bin",
+      "candidate-cbor.bin"
+    ],
+    "start_leaf": "00-start.json",
+    "terminal_leaf": "90-terminal.json",
+    "file_create": "Fixed-arity C openat with O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC and mode0600; no replacement, truncation of old leaves or cleanup",
+    "record_rule": "Separate bounded canonical observation leaves; no self digest. Every successor records exact previous record byte SHA256. Sync required records before advancing; preserve raw call results and all partial outputs.",
+    "start_semantics": "Declared future budgets are not entered-call observations. Missing terminal is incomplete, never evidence of zero calls or permission to rerun.",
+    "post_spawn_record_failure": "Keep exact child ownership. Predeclared approved disposal budget may contain the owned child even if later recording fails; do not infer a complete durable call receipt. No successor stage. Actual launch control must bind this residual explicitly.",
+    "product_scope": "Workers write only inherited capture FDs by source design; not kernel filesystem confinement. Do not claim archival release truth or power-loss proof beyond checked sync outcomes."
+  },
+  "implementation_verification": {
+    "current_code_execution": 0,
+    "next_source_slice": "Implement only the six native-bootstrap paths, embed these two frozen wire buffers, and add pure state/receipt/FD-plan tests. No live child test by inference.",
+    "pure_negative_cases": [
+      "Partial metadata cannot create FullBoundaryAdmission",
+      "Sequential/concurrent consume has one winner",
+      "Input offset not0 or wrong access mode rejects",
+      "FD source-target collision plan rejects or safely parks>=32",
+      "Input/output vnode alias rejects",
+      "Normal exit0 with missing output or nonempty stderr rejects",
+      "Wrong candidate hash or wrong semantic root rejects",
+      "Different candidate hashes across codecs are expected",
+      "Post-pair metadata never backfills prior-boundary proof",
+      "Reaped/ownership-lost state cannot signal",
+      "Repeated KILL commitment rejects",
+      "Wrong stage/duplicate output leaf prevents advance"
+    ],
+    "later_steps": [
+      "Separately freeze/build and identify the native bootstrap without executing it",
+      "Freshly admit this control, source/images and all endpoints; freeze exact static invocation and its conditional direct-child signal envelope",
+      "Only after explicit launch approval execute the static3-stage bootstrap",
+      "Live GateE remains a different subsequent authority-bearing sequence"
+    ]
+  },
+  "scope": {
+    "generic_command_api": false,
+    "product_entries_this_control": 0,
+    "gate_e_role_entries": 0,
+    "production_supervisor_entry": 0,
+    "source_or_image_mutations": 0,
+    "dirty_draft_mutations": 0,
+    "python": 0,
+    "ruby": 0,
+    "network": 0,
+    "energy": 0,
+    "authority_vector": "00000000",
+    "projection_write_mask": "00000000",
+    "gate_e": "ABSTAIN",
+    "live_E_requires": "Separately admitted dedicated supervisor and all16 fixed Git/Swift roles, independent DriverCore reparse/live bind and retained-lifetime continuity; this static control cannot produce11110000"
+  },
+  "digest_rule": "This control carries no self digest. Hash its complete bytes externally and bind its selective Git commit/tree. Input-carrier digests address carrier bytes; decoded-wire digests address the actual future input bytes."
+}

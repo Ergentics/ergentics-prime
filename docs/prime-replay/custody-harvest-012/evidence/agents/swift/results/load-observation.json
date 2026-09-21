@@ -1,0 +1,83 @@
+{
+  "schema": "ergentics.profile-load-observation.v1",
+  "run_id": "prime-custody-012-swift",
+  "profile_id": "ergentics_swift_c",
+  "profile_version": "0.1.0",
+  "context_task_name": "prime-custody-harvest-012 / swift bounded custody review",
+  "packet_receipt": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/RECEIPT.json",
+    "sha256": "538a57b71aafe67ee54ceb5bfdbb50e1a0041fea8444c4199c0018a7afaa5c93"
+  },
+  "requested": {
+    "model": "gpt-5.6-terra",
+    "reasoning_effort": "high",
+    "context": {
+      "mode": "fresh",
+      "inherited_context": "No parent conversation fork requested. Shared filesystem and model prior knowledge remain; not enforced isolation or blinded testing."
+    },
+    "tools": [
+      "Read exact selected files and verify SHA256",
+      "Write assigned bounded result and observation"
+    ]
+  },
+  "visible_model_label": "Codex (host-visible product label; not a verified serving-model build)",
+  "verified_serving_model_build": null,
+  "realized_reasoning_effort": null,
+  "observed": {
+    "preparation": "OBSERVED: RECEIPT.json is a prepared-packet receipt. Its SHA-256 matched the expected receipt pin and all nine declared packet members matched their declared size and SHA-256.",
+    "hosted_read_and_response": "OBSERVED: this hosted task read the selected staged instructions, policy, corpus, canonical observation template, and all eight pinned task inputs, then wrote original case responses and a candidate review in the assigned results directory.",
+    "additional_model_api_invocation": "NOT_OBSERVED: no additional model/API invocation was made by this task.",
+    "native_application_execution": "NOT_PERFORMED: no native application or CI execution was requested or performed."
+  },
+  "files_read": [
+    "/Users/ergentics/.codex/skills/ergentics-profile-loader/SKILL.md",
+    "/Users/ergentics/.codex/skills/ergentics-profile-loader/assets/load-observation.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/READ-ME.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/RECEIPT.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/request.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/profile.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/policy.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/corpus.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/agents/ergentics_swift_c/agent.json",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/agents/ergentics_swift_c/AGENT.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/shared/OPERATING-CONTRACT.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/packet/agent/contracts/run-record.schema.json",
+    "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/SKILL.md",
+    "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/gate-record.md",
+    "/Users/ergentics/2026-09-20/er/outputs/ergentics-prime-custody-v0.1.0-candidate/ergentics-prime-custody/references/lineage-and-extension.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/source/prime-gate-phase-custody.md",
+    "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/CASES.json",
+    "/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RESULT.json",
+    "/Users/ergentics/2026-09-20/er/outputs/prime-main-trigger-011/RECEIPT.json",
+    "/Users/ergentics/.codex/skills/ergentics-research-custody/SKILL.md"
+  ],
+  "corpus_entries_read": [
+    {
+      "id": "evidence-stages",
+      "version": "0.1.0",
+      "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06"
+    },
+    {
+      "id": "phase-scoped-observations",
+      "version": "0.1.0",
+      "sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346"
+    }
+  ],
+  "processing_route": "hosted / codex-task / OpenAI, as requested. The hosted read-and-response is observed; processing exclusivity and retention/training controls are not established.",
+  "provider_control_evidence": "Not independently verified by this task; no Ergentics-only processing or provider retention/training guarantee is established.",
+  "result": {
+    "path": "/Users/ergentics/2026-09-20/er/work/prime-custody-harvest-012/agents/swift/results/responses.json",
+    "sha256": "1f4e21a29429e266b9df6cdd2e39426f28e92d3caa784e6b1ad138d79b08ce2a"
+  },
+  "blockers": [
+    "No blocker affected the authorized bounded document review. Native/CI execution was outside the requested operation and therefore was not attempted.",
+    "Any claim of native qualification is blocked by separate native execution authority and evidence; no such execution was requested or performed."
+  ],
+  "limits": [
+    "Requested model gpt-5.6-terra and reasoning effort high are request fields, not verified serving-model or realized-effort facts.",
+    "Candidate skill and Prime custody lesson were review inputs only; neither was accepted into corpus or installed by this task.",
+    "Separate directories under a shared OS user do not enforce blinding or isolate agents.",
+    "A prepared receipt and hashes bind bytes; they do not prove automatic profile loading, native activation, gate execution, or provider controls."
+  ],
+  "extensions": {}
+}

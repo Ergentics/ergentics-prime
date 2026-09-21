@@ -1,0 +1,82 @@
+{
+  "schema": "ergentics.capability-flow-independent-verifier.contract-correction.v1",
+  "recordedAtUTC": "2026-08-31T23:13:23Z",
+  "correctsContractSHA256": "af122183045151f05500e16b7fea8d110ad02c58f7e0ae74d4b0d83b20466e1a",
+  "reason": "Independent pre-build review found that process-wide zero-I/O and per-event generation/transition semantics exceeded what the frozen protocol and source can establish.",
+  "effectiveClaims": {
+    "coreDeterministicCBORAndSemanticSetRepresentation": "OFFLINE_DECIDABLE",
+    "swiftDomainArrayNormalForm": "NOT_ENFORCED",
+    "merkleIntegrity": "INDEPENDENT_RUST_PROCESS",
+    "riemannDenyOnlyPredicate": "INDEPENDENT_RUST_PROCESS",
+    "declaredAccessEvidenceBijection": "OFFLINE_DECIDABLE",
+    "structuralScenarioReferenceJoins": "OFFLINE_DECIDABLE",
+    "declaredOperationSemanticValidity": "PARTIAL_RIEMANN_ONLY",
+    "perAccessGenerationBinding": "UNAVAILABLE_IN_V1_ACCESS_SCHEMA",
+    "perAccessTransitionIDBinding": "IMPLICIT_SINGLE_TRANSITION_CONTEXT",
+    "runtimeAttemptCompleteness": "UNASSESSED",
+    "verifierRuntimeSyscallCompleteness": "UNASSESSED",
+    "hostileRuntimeNoninterference": "UNASSESSED",
+    "formalRiemannProof": "NOT_CLAIMED",
+    "gateE": "ABSTAIN",
+    "authorityVector": "00000000",
+    "changeIndexDelta": 0
+  },
+  "structuralJoinPredicates": [
+    "one fixed authority root joins the fixed policy identity and generation",
+    "every object owner joins an execution",
+    "every grant issuer subject object and optional peer joins its declared table",
+    "every capability joins one declared grant",
+    "every execution-held and transition-held capability joins the capability table",
+    "the assessed execution purpose joins the transition purpose",
+    "the assessed execution held set equals transition after_caps",
+    "every access execution after-object optional peer and optional capability joins its declared table",
+    "every access has exactly one ordered unsuppressed evidence record with the recomputed digest",
+    "execution generation is present and nonzero",
+    "chi_before equals chi_after and result change_index_delta equals zero"
+  ],
+  "applicationRequestedEffects": {
+    "additionalArguments": 0,
+    "environmentValueReads": 0,
+    "pathOrFileProtocolOperations": 0,
+    "networkProtocolOperations": 0,
+    "persistenceProtocolOperations": 0,
+    "childProcessOperations": 0,
+    "input": "one fixed stdin frame followed by EOF"
+  },
+  "claimScopeCorrections": {
+    "processWideEnvironmentReads": "UNASSESSED_DYNAMIC_RUNTIME",
+    "processWideFileReads": "UNASSESSED_DYNAMIC_LOADER_AND_RUNTIME",
+    "stdoutBytes": "ZERO_ON_MODELED_ACCEPT_REJECT_AND_CAUGHT_PANIC_PATHS",
+    "stderrBytes": "ZERO_ON_MODELED_ACCEPT_REJECT_AND_CAUGHT_PANIC_PATHS",
+    "catastrophicAllocatorAbortLoaderFailureOrExternalSignal": "OUTSIDE_EXIT_70_CLAIM",
+    "postSpawnKernelCallBound": "UNASSESSED_WITHOUT_EXTERNAL_SUPERVISOR",
+    "wholeInvocationIndefiniteWait": "UNASSESSED_SYNCHRONOUS_POSIX_SPAWN"
+  },
+  "buildPins": {
+    "rustEdition": "2024",
+    "panicStrategy": "unwind",
+    "warnings": "deny",
+    "targetCPU": "apple-m1",
+    "macOSDeploymentTarget": "26.0",
+    "debugInfo": 0,
+    "linkTimeOptimization": "fat",
+    "codegenUnits": 1,
+    "linkerLocalSymbolRemoval": true
+  },
+  "hostHarnessDeadlines": {
+    "operationDeadlineSeconds": 4,
+    "hardHorizonSeconds": 5,
+    "timeoutCommitment": "at most one SIGKILL against the exact positive direct-child PID",
+    "reap": "WNOHANG polling only; PASS requires exact reap before the hard horizon",
+    "hardHorizonPredicate": "BEST_EFFORT_USERSPACE; entered kernel calls have no external bound",
+    "hardHorizonFailure": "CONTAINMENT_UNPROVEN with no second signal"
+  },
+  "hardStops": [
+    "do not reinterpret declared access coverage as runtime attempt completeness",
+    "do not reinterpret canonical CBOR plus set semantics as Swift's unique domain-array normal form",
+    "do not reinterpret structural joins as full independent reconstruction of non-Riemann findings",
+    "do not reinterpret dynamically linked source inspection as a process-wide syscall census",
+    "no application or guest launch",
+    "no Gate-E promotion"
+  ]
+}

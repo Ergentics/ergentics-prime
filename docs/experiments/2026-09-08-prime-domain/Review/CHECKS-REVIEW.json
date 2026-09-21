@@ -1,0 +1,189 @@
+{
+  "status": "VERIFIED_SIX_MECHANISM_CHECKS",
+  "checks": 194,
+  "failedChecks": [],
+  "scope": "Fixed callback fixtures exercised the actual signed ABI 2 bridge. No model, GPU inference, teacher labels or scientific accuracy claim.",
+  "controllerPID": 25324,
+  "controllerElapsedSeconds": 0.2614150000154041,
+  "results": [
+    {
+      "test": 0,
+      "name": "two_distinct_guest_sources",
+      "status": 0,
+      "vmCreated": true,
+      "callbacks": 4,
+      "guestCommitted": 4,
+      "entries": 5,
+      "cleanupComplete": 1
+    },
+    {
+      "test": 1,
+      "name": "duplicate_input_offset_rejected_before_vm",
+      "status": 1,
+      "vmCreated": false,
+      "callbacks": 0,
+      "guestCommitted": 0,
+      "entries": 0,
+      "cleanupComplete": 1
+    },
+    {
+      "test": 2,
+      "name": "self_source_rejected_before_vm",
+      "status": 1,
+      "vmCreated": false,
+      "callbacks": 0,
+      "guestCommitted": 0,
+      "entries": 0,
+      "cleanupComplete": 1
+    },
+    {
+      "test": 3,
+      "name": "forward_source_rejected_before_vm",
+      "status": 1,
+      "vmCreated": false,
+      "callbacks": 0,
+      "guestCommitted": 0,
+      "entries": 0,
+      "cleanupComplete": 1
+    },
+    {
+      "test": 4,
+      "name": "full_vocabulary_224_feedback",
+      "status": 0,
+      "vmCreated": true,
+      "callbacks": 2,
+      "guestCommitted": 2,
+      "entries": 3,
+      "cleanupComplete": 1
+    },
+    {
+      "test": 5,
+      "name": "invalid_second_z8_binding_keeps_first_insertion",
+      "status": 7,
+      "vmCreated": true,
+      "callbacks": 3,
+      "guestCommitted": 3,
+      "entries": 4,
+      "cleanupComplete": 1
+    }
+  ],
+  "actualTotals": {
+    "admissions": 6,
+    "VMs": 3,
+    "vCPURunEntries": 12,
+    "callbacks": 9,
+    "guestCommittedPredictions": 9
+  },
+  "evidence": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/build01/build-result.json",
+      "byteCount": 8092,
+      "sha256": "366f349e0f9381284ce117a3d547f59e5b81d5f04694c9e3a6119eb97ba8cb45"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/main.c",
+      "byteCount": 13517,
+      "sha256": "67a93a43a6984c5302edc23a72abd708d0490dcdeb2c9dcf00858ae9ef6d359d"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/build.py",
+      "byteCount": 4924,
+      "sha256": "1e9edc9d08b86669dab472f1dd8611e10478b6a07d673819a2e35d0b33ff7d33"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.h",
+      "byteCount": 4034,
+      "sha256": "cb6edd41ee618feb882749d92552a0ab63995e153443ed379a6aebd04a901f57"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/PrimeGuestBridge.c",
+      "byteCount": 22557,
+      "sha256": "39999f3e6087b3c544821943242558a65371b609b4c90e2a425644ac541852d5"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/guest.S",
+      "byteCount": 2317,
+      "sha256": "2d42628f212eb77ad7efc9881292eac5c5b6d7822a4cf3f3d722d14534a2b532"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/build01/PrimeGuestBridge.o",
+      "byteCount": 10496,
+      "sha256": "4ee0c48eaa6a41aafe78f78e857154f0f52be907c97db32f61af0bec015df325"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Guest/build01/build-result.json",
+      "byteCount": 14187,
+      "sha256": "e73b78ee2dc23fbccc6f5017786b7d8528d11dbc6de2527648992515a577e68d"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Admission/PrimeInferenceAdmission.h",
+      "byteCount": 1986,
+      "sha256": "2639d060edb6d4455beda20ab06247a884b3ace650b485c3fa0a5e3bf353aec0"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Admission/PrimeInferenceAdmission.c",
+      "byteCount": 6147,
+      "sha256": "0d09694b4915e3ceffb6eb63657e1950537e6546295be7c5ec828d5bbd497567"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Native/build01/PrimeInferenceAdmission.o",
+      "byteCount": 5272,
+      "sha256": "9844c5f88314d3f761f4c665faba1c582d99f91071783978752525f2402a878b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Native/build01/compile-inputs.json",
+      "byteCount": 167189,
+      "sha256": "58aef9c1802d0c803f150854f4130c9aae68c7f3dcfb679780ce1fac3d6a2730"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/controller/stdout.bin",
+      "byteCount": 17922,
+      "sha256": "df925ef0e9d02dfbadfd602fec0cf759932d613c9c0a0825c7d57563d58cab5b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/controller/stderr.bin",
+      "byteCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/controller/result.json",
+      "byteCount": 777,
+      "sha256": "bf0f00ca41ce5294ad23deaa78fd0eca927a47be05b48d7b751e20a7a4f62611"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/controller/invocation.json",
+      "byteCount": 1130,
+      "sha256": "dfa768033114e87a3a68ab88a657f0f0506872e4575f30ebdd4ff12de53fde23"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/specification.json",
+      "byteCount": 711,
+      "sha256": "889c22fcfc25cefa0e5d6fd638fdb260f33771208e81bb78137680d3f406e83e"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Prime-vCPU-02/Runtime/controller.rb",
+      "byteCount": 8747,
+      "sha256": "fc0fd22db11fbcaef5985e3bf1388ea29ba69211edd2d892f97b60fd25581931"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/outer.stdout",
+      "byteCount": 619,
+      "sha256": "38be58a239f970b0b9025f7aa239edf963a181d49956a4b1dd92b56a3111fba2"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/Live/outer.stderr",
+      "byteCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/Checks/build01/PrimeGuestABITwoChecks",
+      "byteCount": 90064,
+      "sha256": "9286f37fd748b367c1384ef2fc0e29a9fdf038fd81a9ca1cca8e870d65b0cd97"
+    }
+  ],
+  "limits": [
+    "Invalid-second-binding partial memory content is established by the source-bound native full-page comparison and its validated receipt, not a separate dumped guest memory image.",
+    "The binary hash records the current signed file; its pre-signing compiler image is separately preserved in build-result.json. Actual executed identity/signature/hypervisor entitlement was inspected by the fixture before every bridge call.",
+    "The controller verifies the recorded process group; it does not claim App Sandbox or arbitrary detached-session containment."
+  ]
+}

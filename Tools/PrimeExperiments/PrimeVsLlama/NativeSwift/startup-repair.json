@@ -1,0 +1,88 @@
+{
+  "status": "SOURCE_FIX_COMPILED_RUNTIME_VALIDATION_PENDING",
+  "observedFailure": {
+    "signal": "SIGTRAP",
+    "code": 5,
+    "processID": 20971,
+    "crash": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/Prime10MInference-2026-09-08-153941.ips",
+      "byteCount": 6209,
+      "sha256": "b2d2adc9e46cef7f19dd3ff68508f19e2e2ac4789779af155987d7b4db82fb10"
+    },
+    "topFrames": [
+      "specialized Data.InlineSlice.withUnsafeMutableBytes",
+      "specialized Data._Representation.withUnsafeMutableBytes",
+      "readBounded(_:maximum:)",
+      "run(requestPath:output:)",
+      "main"
+    ],
+    "scope": "Coordinated build01 pilot failed during the first request-file read; no completed inference result."
+  },
+  "cause": "The first checkpoint evaluated DispatchTime.now().uptimeNanoseconds before accessing the lazily initialized start global. Initializing start then sampled a later time, so checked UInt64 subtraction could underflow and trap inside the inlined Data read closure.",
+  "fix": [
+    "Read origin = start before sampling now.",
+    "Require now >= origin before evaluating now - origin.",
+    "Force start initialization at Main entry before file operations."
+  ],
+  "preservedBuild01": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build01/Prime10MInference",
+    "byteCount": 30034128,
+    "sha256": "b24b546113cfdd1dbf01ede44f613cd29f4f21413f2351845c5b9c698d856590"
+  },
+  "beforeSource": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/main.before.swift",
+    "byteCount": 13741,
+    "sha256": "d1ba786ccb1a13e38c68da563bbef9dd07776f0e8ced7a20c69937fe92e6705e"
+  },
+  "afterSource": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/main.swift",
+    "byteCount": 13964,
+    "sha256": "4840c450f1ec208d1a2c8b8c584d9afdcb840fedb27fa6bbb90a5f0ea0588d31"
+  },
+  "afterBuildHelper": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/build.py",
+    "byteCount": 7239,
+    "sha256": "04a07133b7862e0bbba6b3dd6496ebfcb53c0b10f6b0cbb5fde596b24629d539"
+  },
+  "buildResult": {
+    "status": "PASS",
+    "pid": 21030,
+    "exitCode": 0,
+    "exactDirectChildReaped": true,
+    "elapsedNanoseconds": 3382275458,
+    "timedOut": false,
+    "signals": [],
+    "finalGroupObservation": "absent_ESRCH",
+    "capture": "separate ordinary files; no pipe EOF claim",
+    "stdout": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/stdout.log",
+      "byteCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/stderr.log",
+      "byteCount": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "retainedInputsUnchanged": true,
+    "modelOrMetalExecution": false,
+    "binary": {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/Prime10MInference",
+      "byteCount": 30034128,
+      "sha256": "5b9d32b2427ff1e8bdbd3e8184ee8e12b82d26fbe9185e044fdffa1a5671a274"
+    }
+  },
+  "newBinary": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/Prime10MInference",
+    "byteCount": 30034128,
+    "sha256": "5b9d32b2427ff1e8bdbd3e8184ee8e12b82d26fbe9185e044fdffa1a5671a274"
+  },
+  "metallib": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-system-comparison-2026-09-08/native-driver/build02/mlx.metallib",
+    "byteCount": 2468361,
+    "sha256": "bfbd3e228d4ac2462d8e73910bee6e8a22a9d3c9a131197474a4355a823bc68d"
+  },
+  "originalSourcesOrCachedObjectsChanged": false,
+  "modelOrGPUInvokedByThisRepair": false,
+  "comparisonOrQualityClaim": false
+}

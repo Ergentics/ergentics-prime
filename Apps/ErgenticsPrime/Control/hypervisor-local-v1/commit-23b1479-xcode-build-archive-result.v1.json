@@ -1,0 +1,165 @@
+{
+  "authority": {
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "authority_vector": "00000000",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h2_execution_authorized": false,
+    "scientific_authority": false
+  },
+  "effects": {
+    "app_launches": 0,
+    "exports": 0,
+    "guest_entries": 0,
+    "launch_services_registrations_by_xcode": 2,
+    "network_observation": "NOT_MEASURED",
+    "notarizations": 0,
+    "provisioning_updates_requested": 0,
+    "tests_executed": 0,
+    "uploads": 0,
+    "vm_launches": 0
+  },
+  "inventory_hash_profile": {
+    "entry_order": "BYTEWISE_SORTED_RELATIVE_PATH",
+    "entry_row": "relative_path NUL type NUL mode_low_07777_decimal NUL lstat_size_decimal NUL payload_digest_or_dash",
+    "entry_separator": "LF",
+    "file_payload_digest": "SHA256_FILE_BYTES",
+    "name": "ERGENTICS_DIRECTORY_INVENTORY_V1",
+    "root_digest": "SHA256_CONCATENATED_ENTRY_ROWS",
+    "root_entry": "EXCLUDED",
+    "special_payload": "DASH",
+    "symlink_payload_digest": "SHA256_LINK_TARGET_BYTES",
+    "type_labels": [
+      "file",
+      "directory",
+      "symlink",
+      "special"
+    ],
+    "walk": "DESCEND_ALL_DOT_ENTRIES_EXCEPT_DOT_AND_DOTDOT_USING_LSTAT"
+  },
+  "local_artifacts": {
+    "archive": {
+      "directory_count": 14,
+      "entry_count": 25,
+      "file_count": 11,
+      "inventory_root_sha256": "9a7bd23598be664d9dbfa2ce689f40d233ecbe2109325b111a382675bc7964bf",
+      "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-23b1479.xcarchive",
+      "regular_file_bytes": 9164286,
+      "special_count": 0,
+      "symlink_count": 0,
+      "xcode_organizer_visible_location": true
+    },
+    "archive_result_bundle": {
+      "directory_count": 1,
+      "entry_count": 8,
+      "file_count": 7,
+      "inventory_root_sha256": "bbce715b238a2ad3b48c2979caa25e3bcb93d7400eba5300e3a5e07228b989ff",
+      "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-23b1479-archive.xcresult",
+      "regular_file_bytes": 24211,
+      "special_count": 0,
+      "symlink_count": 0
+    },
+    "build_result_bundle": {
+      "directory_count": 1,
+      "entry_count": 8,
+      "file_count": 7,
+      "inventory_root_sha256": "1160048a379d08b57d9256a598e9da71f14c98d11b56ec5382c841c897e90320",
+      "path": "/Users/ergentics/Library/Developer/Xcode/Archives/2026-08-31/ErgenticsProvenance-23b1479-build.xcresult",
+      "regular_file_bytes": 23507,
+      "special_count": 0,
+      "symlink_count": 0
+    },
+    "build_product": {
+      "durability": "TEMPORARY_DERIVED_DATA",
+      "path": "/private/tmp/ergentics-provenance-23b1479-release-build-dd/Build/Products/Release/Ergentics Provenance.app"
+    }
+  },
+  "postflight": {
+    "archive": {
+      "app_info_plist_sha256": "16ec2915d6523f4756ac6b6d62853c613e798f1dfe04ccc94c5688489fff42bc",
+      "archive_info_plist_sha256": "12650803c1f53f26c76bb006f3f4b131e7ecbad8d99deba8fb6cd6ff15e88599",
+      "candidate_cdhash_full_sha256": "0d1e2fafd5f11ccef1f356ec3e9f4de98ae7800516f52266a06b9be5f5cb839d",
+      "codesign_deep_strict_host": "SATISFIED",
+      "dsym_dwarf_sha256": "55a4791cf1d1b259d5ecd209bdb2abe6cb31cd2c6862e32d878ad408dd045a58",
+      "dsym_uuid": "24375EB0-6FEC-3D3F-AD98-D1F4F98F6111",
+      "executable_sha256": "7c33d5a0d83f50d03476ad4d483d35ebfe30be3ecf363ff65dce9cc8de4fdf36",
+      "macho_architecture": "arm64",
+      "macho_uuid": "24375EB0-6FEC-3D3F-AD98-D1F4F98F6111",
+      "privacy_manifest_sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77",
+      "uuid_dsym_join": "SATISFIED"
+    },
+    "build": {
+      "app_info_plist_sha256": "16ec2915d6523f4756ac6b6d62853c613e798f1dfe04ccc94c5688489fff42bc",
+      "candidate_cdhash_full_sha256": "25d34928e7d66567bce8cb23da58c0236fb9d01ac4a51e1c59073dce14554251",
+      "codesign_deep_strict_host": "SATISFIED",
+      "executable_sha256": "09263b021bc03d583c55fb42f3862024bf9da91a1550939e3e05d6e2c1acb9ff",
+      "macho_architecture": "arm64",
+      "macho_uuid": "2C33F47E-77AE-3521-8F56-75454C14FB1C",
+      "privacy_manifest_sha256": "ca7b9e01d281ddd388f7bfd621ec6220175a2f1029a9996525a79d43b1ecda77"
+    },
+    "effective_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-only": true,
+      "com.apple.security.hypervisor": true
+    },
+    "hardened_runtime": true,
+    "signing_identity": "Apple Development: Ashton Wilson (43KWC8944S)",
+    "team_identifier": "ZCQ435U8JP"
+  },
+  "restricted_postflight_diagnostic": {
+    "archive_codesign_result": "CSSMERR_TP_NOT_TRUSTED",
+    "build_codesign_result": "CSSMERR_TP_NOT_TRUSTED",
+    "classification": "CODEX_SANDBOX_KEYCHAIN_VISIBILITY_FAILURE",
+    "host_archive_codesign_exit": 0,
+    "host_build_codesign_exit": 0,
+    "scientific_or_product_authority": false
+  },
+  "schema": "ergentics.provenance.hypervisor.post-control-xcode-build-archive-result.v1",
+  "source": {
+    "commit": "23b1479fcc2ee576a5f0e3c3d8101bbe48b45d2c",
+    "configuration": "Release",
+    "project": "ErgenticsProvenance.xcodeproj",
+    "scheme": "ErgenticsProvenance",
+    "tracked_postflight": "CLEAN",
+    "tracked_preflight": "CLEAN",
+    "tree": "9b16a5cdae313a9ec6ea38ad20f9bab030c2bc7d"
+  },
+  "status": "PASS_LOCAL_SIGNED_XCODE_RELEASE_BUILD_AND_ARCHIVE",
+  "toolchain": {
+    "archive_destination": "generic/platform=macOS",
+    "build_destination": "platform=macOS,arch=arm64",
+    "host_os_build": "25F84",
+    "host_os_version": "26.5.2",
+    "sdk": "macOS 26.5",
+    "xcode_build": "17F113",
+    "xcode_version": "26.6"
+  },
+  "xcode_actions": {
+    "archive": {
+      "analyzer_warning_count": 0,
+      "ended_utc": "2026-09-01T01:39:01.195Z",
+      "error_count": 0,
+      "exit_code": 0,
+      "started_utc": "2026-09-01T01:38:46.375Z",
+      "status": "succeeded",
+      "warning_count": 1
+    },
+    "build": {
+      "analyzer_warning_count": 0,
+      "ended_utc": "2026-09-01T01:38:31.075Z",
+      "error_count": 0,
+      "exit_code": 0,
+      "started_utc": "2026-09-01T01:38:15.283Z",
+      "status": "succeeded",
+      "warning_count": 1
+    },
+    "warning": {
+      "file": "Sources/GuestJournal.swift",
+      "source_physical_line_1_based": 454,
+      "message": "'init(validatingUTF8:)' is deprecated: replaced by 'String.init(validatingCString:)'",
+      "severity": "POTENTIAL_DEPRECATION_COMPROMISE_NON_BLOCKING_FOR_THIS_ACTION",
+      "xcode_source_url_line": 453
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ergentics Prime Assessment"
+  short_description: "Assess Prime helpers, runtime risks and gate evidence"
+  default_prompt: "Use $ergentics-prime-assessment to complete the Prime assessment and authorized repairs, preserving open findings and current holds."

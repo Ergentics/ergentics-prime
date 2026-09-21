@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/usr/bin/xcrun",
+    "clang",
+    "-target",
+    "arm64-apple-macosx14.0",
+    "-isysroot",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-c",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Admission/PrimeInferenceAdmission.c",
+    "-o",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-vcpu-integration-2026-09-08/Native/build02/PrimeInferenceAdmission.o"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}

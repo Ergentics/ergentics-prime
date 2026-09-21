@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "caseCount": 80,
+  "primeCheckpoints": 2,
+  "modes": [
+    "direct",
+    "iterative"
+  ],
+  "llamaCases": 80,
+  "modelTrainingPerformed": false,
+  "goldLoadedByOrchestrator": false
+}

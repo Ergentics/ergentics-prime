@@ -1,0 +1,106 @@
+{
+  "scope": "Corpus staging, source identity, split/label handling and actual SentencePiece encoding; no fresh oracle certification or model training.",
+  "recordCount": 5930,
+  "trainPositiveCount": 2029,
+  "holdoutPositiveCount": 527,
+  "negativeCount": 3374,
+  "completeSHA256": "ac7ac8af4549f6a00498303166b25078660715a27626c79d9e290b91ee3494bf",
+  "sourceGitVerification": {
+    "verifiedFiles": 33,
+    "allPinnedFilesMatchDeclaredGitRevisions": true
+  },
+  "tokenizerCoverage": {
+    "train": {
+      "lines": 2029,
+      "tokens": 135205,
+      "unknownTokens": 0,
+      "linesWithUnknown": 0,
+      "linesOver512": 0,
+      "maximumTokens": 113,
+      "medianTokens": 66,
+      "outputSHA256": "5431546336f7f4635323cae83cbceccbfb777d32c0267413f2669c1bda618e42"
+    },
+    "holdout": {
+      "lines": 527,
+      "tokens": 31280,
+      "unknownTokens": 0,
+      "linesWithUnknown": 0,
+      "linesOver512": 0,
+      "maximumTokens": 145,
+      "medianTokens": 41,
+      "outputSHA256": "ce7291ee9220643601c25518754f0ba1281880b66701b226462eced7659d197e"
+    },
+    "tokenizerSHA256": "2c47522f64827565c7e399a5d8dc14fff27568ea73c323f3aa82d898c447f430",
+    "encoderSHA256": "8046ae10d650d07c264a650ded0aecfb5782ac6a30d88edd3a159a5419e5e20b",
+    "encoderVersion": "SentencePiece 0.2.2",
+    "scope": "Encode-only coverage and length check; no model inference or training; holdout encoded separately."
+  },
+  "independentReview": {
+    "passed": true,
+    "checked": "All raw/index/render joins, output/source hashes, labels, splits, source reference files and native encoder output."
+  },
+  "guardChecks": {
+    "cases": [
+      {
+        "elapsedNanoseconds": 1078760042,
+        "existingOutputUnchanged": null,
+        "exitCode": 1,
+        "expectedError": "input_pin_mismatch",
+        "name": "changed-source-pin",
+        "noCompleteReceipt": true,
+        "registrySHA256": "ca9365b959064f37621faeb0a037b10f80c96dfa04e4d38fa4e5d393532f7e08",
+        "status": "PASS",
+        "stderrSHA256": "1cd2c7e0becdc8e352afdbd2c06e086fcb1a3d3a4a9cdcdb4fc258561822d862",
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "elapsedNanoseconds": 48899792,
+        "existingOutputUnchanged": null,
+        "exitCode": 1,
+        "expectedError": "record_schema_or_polarity",
+        "name": "missing-polarity",
+        "noCompleteReceipt": true,
+        "registrySHA256": "3a685080ca259b2785cf992207bdfd7330be5c89614c7980e8d6349f69ce656f",
+        "status": "PASS",
+        "stderrSHA256": "05c6cb09f1db8ae458691200c9309b8b93a54d97980e05de4f252a299fb8471e",
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "elapsedNanoseconds": 43855708,
+        "existingOutputUnchanged": true,
+        "exitCode": 1,
+        "expectedError": "Errno::EEXIST",
+        "name": "output-reuse",
+        "noCompleteReceipt": true,
+        "registrySHA256": "b3629490ec30c42ea9d85bbf99a42f52c8ccaf4fe7040717d67c519637b45961",
+        "status": "PASS",
+        "stderrSHA256": "6ee116c05aac7d2debd291b7336f9e2eb57cabe916ef91f3c4a9772a44c994f0",
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "elapsedNanoseconds": 49511500,
+        "existingOutputUnchanged": null,
+        "exitCode": 1,
+        "expectedError": "duplicate_json_key",
+        "name": "duplicate-json-key",
+        "noCompleteReceipt": true,
+        "registrySHA256": "b5eae1110cb0978e568a43335e75190cec988df4ccdd1beb86c23c5c187ca3d4",
+        "status": "PASS",
+        "stderrSHA256": "43de58a2d2573dab1ac0a15ce1ce7eddddd428dc5c81628d0c4944477f8b5507",
+        "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "checkedOriginalFileCount": 35,
+    "failed": 0,
+    "modelMetadataUnchanged": true,
+    "originalSourceFileHashesUnchanged": true,
+    "passed": 4,
+    "privateFixturesCleaned": true,
+    "schema": "prime_corpus_guard_checks_v1",
+    "sourceRegistrySHA256": "b3629490ec30c42ea9d85bbf99a42f52c8ccaf4fe7040717d67c519637b45961",
+    "status": "PASS",
+    "testSourceSHA256": "f4cc6063d7c071f5ae6e7e7d7c1ee2da78f884ca7538b9a069b07940d7c784e0",
+    "toolSHA256": "d34cfc5827397de6d30f9f645edf2b696d6e6e66829179b30ce72bebc88cbdcb",
+    "trainingOrModelExecution": false
+  }
+}

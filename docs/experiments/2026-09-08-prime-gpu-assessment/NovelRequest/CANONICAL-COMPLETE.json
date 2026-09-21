@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "models": 3,
+  "originalAdaptersUsed": true,
+  "requestedMaximumNewTokens": 512,
+  "trainingPerformed": false,
+  "generatedCodeExecuted": false
+}

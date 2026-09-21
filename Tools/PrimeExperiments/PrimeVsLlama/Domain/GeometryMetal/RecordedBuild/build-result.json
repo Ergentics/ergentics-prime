@@ -1,0 +1,69 @@
+{
+  "status": "COMPILED_NOT_EXECUTED",
+  "processID": 23721,
+  "exitCode": 0,
+  "exactDirectChildReaped": true,
+  "timedOut": false,
+  "elapsedNanoseconds": 2789078125,
+  "inputs": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/main.swift",
+      "byteCount": 10861,
+      "sha256": "7705eb64383cb822467f2e57f7987c1afb9c74d4fd942b006c500aafa1d43e8b"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/MetalFieldEvaluator.swift",
+      "byteCount": 7905,
+      "sha256": "c8d3811c569f4cfb5d225fc2cbbf9e87167dc6915ab01b89d4256a8581fceb3c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/CPUReference.swift",
+      "byteCount": 3259,
+      "sha256": "dc9aebd3f3ab59f923ebc89a0442515ae761ccedaa34db129c2d9d642bc0d4a7"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/PROVENANCE.json",
+      "byteCount": 2258,
+      "sha256": "eb4a18d1130a4af122aa87c255deec50e9db9969c394694ab5b061513dcf6f43"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/ADAPTER.patch",
+      "byteCount": 3202,
+      "sha256": "d888bd945257599bfa58d73f895c18cbbd4ec6210c12fcf6fc52f9c281bfeeaa"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/Original/MetalFieldEvaluator.swift",
+      "byteCount": 6401,
+      "sha256": "b36c4451c6bd4c1b18a9415af08cc832af83d59505a155e8bee53bc57c8c907c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/Original/FieldPotential.functions.swift.txt",
+      "byteCount": 3134,
+      "sha256": "c3f079b0835b9908bca77d48e1b6c8b571bfe1947d345dea76923baecfe3d99d"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/build.py",
+      "byteCount": 2708,
+      "sha256": "a6ef84d57dd82a4d58ae7eb4559a6e2ff2084b5f554534c02e81fb4b19b367b8"
+    }
+  ],
+  "inputsUnchanged": true,
+  "stdout": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/build01/stdout.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/build01/stderr.log",
+    "byteCount": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "modelRuns": 0,
+  "guestRuns": 0,
+  "GPUExecutions": 0,
+  "binary": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-domain-vcpu-2026-09-08/GeometryMetal/build01/GeometryMetalComparison",
+    "byteCount": 180040,
+    "sha256": "f7c0b247b993aac51699cb3dc3279b9f0f8b3267265348e752602f5722c99c5e"
+  }
+}

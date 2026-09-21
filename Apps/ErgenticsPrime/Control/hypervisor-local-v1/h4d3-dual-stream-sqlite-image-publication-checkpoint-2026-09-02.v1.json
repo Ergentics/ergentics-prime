@@ -1,0 +1,431 @@
+{
+  "schema": "com.ergentics.provenance.hypervisor.h4d3-checkpoint.v1",
+  "checkpoint": "H4-D3_DUAL_STREAM_SQLITE_IMAGE_PUBLICATION",
+  "recorded_at_utc": "2026-09-02T22:10:56Z",
+  "result": "PASS_H4D3_DUAL_STREAM_PUBLICATION_MECHANICS_ONLY",
+  "authority": {
+    "authority_vector": "00000000",
+    "authority_delta": "00000000",
+    "authority_effect": "NONE",
+    "candidate_selection": "NOT_EVALUATED",
+    "gate_e": "ABSTAIN",
+    "h4_state": "NOT_ENTERED",
+    "restart_adopted": false,
+    "scientific_authority": false,
+    "production_h3_mint": "ABSENT",
+    "production_store_mint": "ABSENT",
+    "next_stage_authorized": false
+  },
+  "object_binding": {
+    "implementation_commit": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5",
+    "implementation_tree": "be9a7002ba6dc4638a4bd4b779a9c81b6384efe1",
+    "implementation_parent": "5adafd6acce2037f1323a6c5d71585e245d9bb20",
+    "implementation_paths": [
+      "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "Sources/HypervisorStageH4OwnerBinding.swift",
+      "Sources/ProvenanceReadOnly.h",
+      "Tests/HypervisorStageH4DualStreamPersistenceTests.swift"
+    ],
+    "delta_equals_freeze_allowlist": true,
+    "diff_check": "PASS",
+    "worktree_implementation_bytes_equal_head": true
+  },
+  "control_binding": {
+    "freeze_commit": "5adafd6acce2037f1323a6c5d71585e245d9bb20",
+    "freeze_tree": "d7c88318669e7db7fd1a5484d9dc1c578a6e38e9",
+    "freeze_path": "Control/hypervisor-local-v1/h4d3-dual-stream-sqlite-image-publication-freeze-2026-09-01.v1.json",
+    "freeze_blob_at_implementation_parent": "0f5b3808836d0355ad73f646e786d2352a7ebe12",
+    "freeze_sha256": "99d172225df50a747d96433e9bdf9b12c3855d8c53df95eb381692cf8cd65ae5"
+  },
+  "closed_mechanics": {
+    "operation": "persist()",
+    "operation_arguments": 0,
+    "production_factory": "ABSENT",
+    "test_factory": "EPR_H4_PRIVACY_TESTS_ONLY",
+    "format": {
+      "schema": "com.ergentics.provenance.hypervisor.h4.dual-stream-sqlite-image-publication.v3",
+      "application_id": 1162891828,
+      "user_version": 2,
+      "page_size": 4096,
+      "maximum_pages": 64,
+      "maximum_image_bytes": 262144,
+      "table": "h4_dual_receipts",
+      "table_properties": [
+        "STRICT",
+        "WITHOUT ROWID"
+      ],
+      "row_count": 1,
+      "column_count": 7,
+      "secondary_indexes": 0,
+      "triggers": 0,
+      "views": 0,
+      "virtual_tables": 0,
+      "extensions": 0,
+      "filesystem_sqlite_connections": 0
+    },
+    "representation_join": {
+      "canonical_json_source": "direct owner-bound Projection.json bytes",
+      "canonical_cbor_source": "direct owner-bound Projection.cbor bytes",
+      "cross_derivation": "ABSENT",
+      "canonical_json_retained_exact": true,
+      "canonical_cbor_retained_exact": true,
+      "indexed_scalars_exact": true,
+      "json_cbor_scalar_semantics_equal": true,
+      "original_owner_bound_projection_joined": true,
+      "join_phases": [
+        "before COMMIT",
+        "after INSERT",
+        "after serialization before filesystem publication",
+        "after final readback"
+      ]
+    },
+    "sqlite": {
+      "writer_database": ":memory:",
+      "writer_flags": "READWRITE|CREATE|MEMORY|FULLMUTEX|PRIVATECACHE|EXRESCODE",
+      "journal_mode": "MEMORY",
+      "temp_store": "MEMORY",
+      "foreign_keys": true,
+      "defensive": true,
+      "trusted_schema": false,
+      "dqs_ddl": false,
+      "dqs_dml": false,
+      "busy_timeout_milliseconds": 0,
+      "reader_authorizer": "SELECT_AND_READ_ONLY",
+      "query_only": true,
+      "database_filename_empty": true,
+      "integrity_check": "ok",
+      "statement_finalized_before_exact_close": true,
+      "writer_serialization_destination_allocation_bytes": 262144,
+      "test_fault_mutable_image_deserialize_allocation_bytes": 262144,
+      "test_fault_mutable_image_deserialize_flags": [
+        "SQLITE_DESERIALIZE_FREEONCLOSE"
+      ],
+      "test_fault_mutable_image_deserialize_resizeable": false,
+      "test_reconstruction_readonly_deserialize_allocation": "inspected_image.count after 262144-byte cap validation",
+      "readonly_deserialize_flags": [
+        "SQLITE_DESERIALIZE_FREEONCLOSE",
+        "SQLITE_DESERIALIZE_READONLY"
+      ]
+    },
+    "image_validation": {
+      "minimum_bytes": 100,
+      "maximum_bytes": 262144,
+      "alignment_bytes": 4096,
+      "header_magic_exact": true,
+      "header_page_size_bytes_16_17": "0x10 0x00",
+      "header_write_version_byte_18": "0x01",
+      "header_read_version_byte_19": "0x01",
+      "page_count_range": "1...64",
+      "page_geometry_arithmetic": "UInt64(page_count) * UInt64(page_size) == UInt64(image_count)",
+      "cap_checked_before_read_allocation": true,
+      "pread_retries_eintr": true,
+      "positive_short_reads_accumulated_until_exact_count": true,
+      "zero_or_incomplete_read_rejected": true,
+      "exact_eof_required": true
+    },
+    "namespace": {
+      "root": "fresh disjoint canonical absolute 0700 effective-uid-owned empty directory",
+      "root_descriptor": "O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC",
+      "root_lock": "nonblocking exclusive flock",
+      "staging_leaf": ".h4d3-dual-receipt.sqlite.staging",
+      "final_leaf": "h4d3-dual-receipt.sqlite",
+      "staging_create": "O_RDWR|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC mode 0600",
+      "sealed_mode": "0400",
+      "publication": "renameatx_np within retained root descriptor",
+      "publication_flags": [
+        "RENAME_EXCL",
+        "RENAME_NOFOLLOW_ANY",
+        "RENAME_RESOLVE_BENEATH"
+      ],
+      "final_open": "O_RDONLY|O_NONBLOCK|O_NOFOLLOW|O_CLOEXEC",
+      "v2_namespace_relation": "DISJOINT_AND_UNTOUCHED",
+      "terminal_final_only_inventory": true,
+      "terminal_named_opened_vnode_join": true,
+      "post_close_named_vnode_join": true,
+      "terminal_root_rejoin": true
+    },
+    "durability_order": [
+      "one complete-image pwrite at offset zero",
+      "seal staging mode 0400",
+      "fsync staging",
+      "F_FULLFSYNC staging",
+      "exact staging readback and EOF",
+      "exclusive descriptor-rooted rename",
+      "fsync retained root directory",
+      "exact final readback and EOF"
+    ],
+    "entered_call_counters": [
+      "COMMIT",
+      "staging create",
+      "complete-image pwrite",
+      "rename",
+      "final open"
+    ],
+    "entered_call_maximum_each": 1,
+    "one_shot": {
+      "one_winner": true,
+      "concurrent_loser": "inProgress",
+      "terminal_success_replay": "alreadyConsumed",
+      "terminal_prepublication_failure_replay": "poisoned",
+      "terminal_indeterminate_or_published_failure_replay": "persistenceRequiresInspection",
+      "retry": false,
+      "cleanup": false,
+      "repair": false,
+      "adoption": false
+    },
+    "outcome_classes": [
+      "admitted",
+      "unavailable",
+      "rejectedBeforePublication",
+      "transactionOutcomeUnknown",
+      "prepublicationStateUnknown",
+      "stagingRetained",
+      "publicationOutcomeUnknown",
+      "publishedUnverified"
+    ]
+  },
+  "verification": {
+    "tests": {
+      "focused_debug": {
+        "result": "Passed",
+        "executed": 24,
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3-Ownership-Focused-Debug-r2.xcresult"
+      },
+      "focused_release": {
+        "result": "Passed",
+        "executed": 24,
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3-Ownership-Focused-Release.xcresult"
+      },
+      "full_debug": {
+        "result": "Passed",
+        "executed": 675,
+        "passed": 675,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3-Ownership-Full-Debug.xcresult"
+      },
+      "full_release": {
+        "result": "Passed",
+        "executed": 628,
+        "passed": 628,
+        "failed": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "xcresult": "/private/tmp/ErgenticsProvenance-H4D3-Ownership-Full-Release.xcresult"
+      }
+    },
+    "focused_test_class": "HypervisorStageH4DualStreamPersistenceTests",
+    "focused_test_method_count": 24,
+    "test_execution_binding": {
+      "runs_predated_implementation_commit": true,
+      "tested_worktree_implementation_paths_later_committed_byte_identically": true,
+      "current_implementation_paths_equal_implementation_commit": true
+    },
+    "required_predicates": {
+      "stale_h4d3_truncateRejected_references": 0,
+      "stale_h4d3_finalDescriptorCloseRejected_references": 0,
+      "final_close_fault_name": "finalDescriptorCloseResponseLost",
+      "exact_dual_stream_and_scalar_join": true,
+      "independent_json_and_cbor_mutation_rejection": true,
+      "self_consistent_three_field_substitution_rejected": true,
+      "schema_version_application_id_and_cardinality_rejection": true,
+      "root_alias_symlink_ownership_mode_inventory_lock_rejection": true,
+      "staging_and_final_symlink_fifo_rejection_without_blocking": true,
+      "same_bytes_new_inode_substitution_rejected": true,
+      "root_rebound_detected_for_every_terminal_class": true,
+      "transaction_and_publication_taxonomy_exact": true,
+      "complete_write_error_zero_short_overrun_never_retried": true,
+      "leaked_statements_contained_but_exact_close_failed": true,
+      "copied_sequential_and_concurrent_one_winner": true,
+      "cross_d2b_d3_shared_owner_one_winner": true,
+      "expiry_revalidated_at_three_frozen_gates": true,
+      "completion_half_state_never_admitted": true,
+      "staging_and_final_byte_divergence_rejected": true,
+      "v2_sentinel_byte_and_vnode_exact": true,
+      "success_receipt_empty_reflection_and_no_payload": true
+    },
+    "production_builds": {
+      "scope": "Xcode code signing disabled; ad-hoc linker-signed compile/link and production-surface verification only",
+      "code_signing_allowed": false,
+      "linker_signature": "ADHOC",
+      "team_identifier": "NOT_SET",
+      "effective_entitlement_evaluation": "NOT_CLAIMED",
+      "application_launched": false,
+      "debug": {
+        "result": "BUILD_SUCCEEDED",
+        "configuration": "Debug",
+        "architecture": "arm64",
+        "binary_sha256": "e26aa5135e841ff2856d1d1cd92ab4f531015e067f220d1d75d79e2598148064",
+        "binary_uuid": "4316D635-5B79-3000-BB89-0A2810F884FB",
+        "binary_size_bytes": 9514904,
+        "derived_data": "/private/tmp/ErgenticsProvenance-H4D3-Final-Production-Debug"
+      },
+      "release": {
+        "result": "BUILD_SUCCEEDED",
+        "configuration": "Release",
+        "architecture": "arm64",
+        "binary_sha256": "2667051e348807034f9822c6ec64dc5cd9348ee1d70ac04a7c6d8559ce70610a",
+        "binary_uuid": "818B5AEE-F811-3A69-946B-B085745A6AB5",
+        "binary_size_bytes": 3555160,
+        "derived_data": "/private/tmp/ErgenticsProvenance-H4D3-Final-Production-Release"
+      }
+    },
+    "production_binary_surface": {
+      "pattern_regex": "EPR_H4_PRIVACY_TESTS|makeTestCoordinator|makeTestSharedStoreCoordinators|makeTestDualStreamPersistenceCoordinator|makeTestSharedDualStreamStoreCoordinators|inspectTestStore|finalTestURL|stagingTestURL|TestEnteredCalls|TestFault|rejectStoreCompletionForTest|rejectOwnerCompletionForTest|completionIntersticeForTest|storeGrantStateForTestOnly|probeTransitionForTestOnly|rootMetadataIsValidForTest|faultDisplacedLeafName|h4d3-fault-displaced|finalDescriptorCloseResponseLost|H4D3-RAW-DIAGNOSTIC-CANARY|epr-h4d3",
+      "scan_commands": [
+        "strings -a <binary> | grep -Ec <pattern_regex>",
+        "nm -gjU <binary> | grep -Ec <pattern_regex>"
+      ],
+      "scan_count_semantics": "grep prints zero and exits 1 when no line matches",
+      "debug_strings_matches": 0,
+      "debug_nm_matches": 0,
+      "release_strings_matches": 0,
+      "release_nm_matches": 0,
+      "focused_test_binary_strings_positive_control": 13,
+      "focused_test_binary_nm_positive_control": 114
+    },
+    "hypervisor_context": {
+      "app_entitlement_configuration_path": "Entitlements.plist",
+      "app_entitlement_file_configured_value": true,
+      "app_target_debug_and_release_code_sign_entitlements_setting": "Entitlements.plist",
+      "app_links_system_hypervisor_framework": true,
+      "debug_binary_hypervisor_load_command": true,
+      "release_binary_hypervisor_load_command": true,
+      "h4d3_added_diff_hypervisor_api_scan": {
+        "scope": "added lines only",
+        "base_commit": "5adafd6acce2037f1323a6c5d71585e245d9bb20",
+        "implementation_commit": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5",
+        "paths": [
+          "Sources/HypervisorStageH4CanonicalStreams.swift",
+          "Sources/HypervisorStageH4DualStreamPersistence.swift",
+          "Sources/HypervisorStageH4OwnerBinding.swift",
+          "Sources/ProvenanceReadOnly.h",
+          "Tests/HypervisorStageH4DualStreamPersistenceTests.swift"
+        ],
+        "pattern_regex": "import Hypervisor|\\bhv_[A-Za-z0-9_]+|epr_hypervisor_capabilities|epr_guest_",
+        "matches": 0
+      },
+      "h4d3_test_bundle_links_hypervisor_framework": false,
+      "entitlement_or_linkage_implies_execution": false,
+      "current_build_effective_entitlement_evaluation": "NOT_CLAIMED_CODE_SIGNING_DISABLED_ADHOC_LINKER_SIGNED",
+      "explanation": "The configured entitlement and framework support the wider product capability and fixed-guest paths. H4-D3 contains no Hypervisor API callsite; its persistence mechanics use SQLite and descriptor-rooted filesystem I/O."
+    },
+    "static": {
+      "forbidden_added_production_source_surface_matches": 0,
+      "forbidden_added_production_source_surface_paths": [
+        "Sources/HypervisorStageH4CanonicalStreams.swift",
+        "Sources/HypervisorStageH4DualStreamPersistence.swift",
+        "Sources/HypervisorStageH4OwnerBinding.swift",
+        "Sources/ProvenanceReadOnly.h"
+      ],
+      "forbidden_added_production_source_surface_pattern": "posix_spawn|CommandLine|Process\\b|getenv\\(|URLSession|NWConnection|hv_vm|system\\(|popen\\(|fork\\(|execv|kill\\(|signal\\(",
+      "h4d3_cross_encoder_paths": 0,
+      "sqlite_deserialize_resizeable_uses": 0,
+      "freeze_json": "PASS",
+      "checkpoint_json": "PASS",
+      "entitlements_plist": "PASS",
+      "diff_check": "PASS"
+    },
+    "independent_reviews": [
+      {
+        "review": "checkpoint convention, object binding and test-evidence audit",
+        "object": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5/be9a7002ba6dc4638a4bd4b779a9c81b6384efe1",
+        "result": "PASS"
+      },
+      {
+        "review": "entitlement, framework linkage and H4-D3 call-surface separation audit",
+        "object": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5/be9a7002ba6dc4638a4bd4b779a9c81b6384efe1",
+        "result": "PASS"
+      },
+      {
+        "review": "publication taxonomy, terminal vnode join and regression-evidence audit",
+        "object": "f54431b6d26f4ce587f4e0ce4d10b82f0d2e3ab5/be9a7002ba6dc4638a4bd4b779a9c81b6384efe1",
+        "result": "PASS"
+      }
+    ]
+  },
+  "source_commitments": [
+    {
+      "path": "ErgenticsProvenance.xcodeproj/project.pbxproj",
+      "sha256": "2d38f553826ce3206fee01d14a0740026d1f2ada219cc772b3078529c5366023"
+    },
+    {
+      "path": "Sources/HypervisorStageH4DualStreamPersistence.swift",
+      "sha256": "561d3abb7fef24e752d358c9cc6916b2aa2f95d4b24557d8280f948b8dc4f7fe"
+    },
+    {
+      "path": "Sources/HypervisorStageH4OwnerBinding.swift",
+      "sha256": "67639694dc2b8a80eb09c62b9966da53d428158d957b05f18134465c02b508d7"
+    },
+    {
+      "path": "Sources/HypervisorStageH4CanonicalStreams.swift",
+      "sha256": "a88fff5977d3cd9b98f20f0f11851ddaea267323fb49c198f0b517257bdf91a5"
+    },
+    {
+      "path": "Sources/ProvenanceReadOnly.h",
+      "sha256": "cb910dd840799a790288b95a7dfa090b3840806677f7ed2d169b200af41bf7c1"
+    },
+    {
+      "path": "Tests/HypervisorStageH4DualStreamPersistenceTests.swift",
+      "sha256": "3db01920ad359a4bbe0616521648890df910fe5a0b8674fcac1099c5670b8ece"
+    },
+    {
+      "path": "Control/hypervisor-local-v1/h4d3-dual-stream-sqlite-image-publication-freeze-2026-09-01.v1.json",
+      "sha256": "99d172225df50a747d96433e9bdf9b12c3855d8c53df95eb381692cf8cd65ae5"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "macos": "26.5.2",
+    "host_build": "25F84",
+    "xcode": "26.6",
+    "xcode_build": "17F113",
+    "swift": "6.3.3",
+    "swift_target": "arm64-apple-macosx26.0",
+    "sdk": "macOS 26.5"
+  },
+  "effects": {
+    "xctest_runner_execution": true,
+    "code_signing_disabled_adhoc_linker_signed_compile_and_link": true,
+    "application_launch": false,
+    "vm_launch": false,
+    "guest_execution": false,
+    "h4d3_hypervisor_api_execution": false,
+    "network": false,
+    "h4d3_process_control_or_signal_api_calls": false,
+    "installation": false,
+    "github": false,
+    "authority_bearing_execution": false
+  },
+  "residuals": [
+    "The named-staging snapshot-to-rename interval cannot atomically instruct Darwin to rename one exact held inode; descriptor, inventory and post-rename joins detect but do not prevent every same-uid substitution.",
+    "Advisory flock does not exclude same-euid, root or Full-Disk-Access mutation.",
+    "fsync and F_FULLFSYNC are returned Darwin durability requests, not mathematical proof against every device, firmware, filesystem or power-loss failure.",
+    "Filesystem, SQLite and transition-lock calls have no independent constrained-I/O deadline.",
+    "Same-process writer reconstruction and XCTest object recreation are not fresh-process restart evidence."
+  ],
+  "nonclaims": [
+    "This PASS is H4-D3 dual-stream fixture publication mechanics only.",
+    "SQLite is a checked non-authoritative container; JSON, CBOR and scalar agreement creates no truth or authority.",
+    "The app target configures the Hypervisor entitlement and both current production binaries load the system Hypervisor framework, but the code-signing-disabled ad-hoc artifacts establish no effective-entitlement claim; H4-D3 contains no Hypervisor callsite and launched no VM or guest.",
+    "No authenticity, anti-replay, rollback resistance, historical owner recovery, H4 entry, Gate-E movement, candidate result or scientific conclusion is claimed.",
+    "No successor stage or authority-bearing launch is authorized by this checkpoint."
+  ],
+  "next_recommendation": {
+    "stage": "H4-D3b",
+    "action": "Freeze a separate fresh-operating-system-process restart reader that retains no writer object, expected byte array, owner anchor or persistence lease and admits only exact v3 dual-stream three-way representation agreement.",
+    "separate_freeze_required": true,
+    "authorized_by_this_checkpoint": false
+  }
+}

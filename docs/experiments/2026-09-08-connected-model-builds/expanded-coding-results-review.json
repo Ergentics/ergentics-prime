@@ -1,0 +1,281 @@
+{
+  "schema": "prime_expanded_coding_results_independent_review_v1",
+  "reviewedAtUTC": "2026-09-08T21:49:06.122155+00:00",
+  "status": "functional_results_and_corrected_format_metadata_verified",
+  "checkCount": 201,
+  "failedChecks": [],
+  "checks": [
+    {
+      "build": "0001-pmhnp-native",
+      "caseID": "coding-first-duplicate",
+      "rawOutputSHA256": "49bfcca2d5b0075e4ea591e0f9650ec775387fff5dbe167083657c71ea1c2075",
+      "codingCheckSHA256": "247da77ce643b6ae019cde6b99749c482beb9a2caf928255b3f99f14ea38fb27",
+      "classification": "non_python_prose",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    },
+    {
+      "build": "0001-pmhnp-native",
+      "caseID": "coding-stable-unique",
+      "rawOutputSHA256": "406c7ff1a5b69048046c7788ea5996d5e49a7dd830e9f476cebbb85712508638",
+      "codingCheckSHA256": "cced12a09f651bc10f11f7f5958a8527fa8eef6fe4a939b9f1f9e339f928dc30",
+      "classification": "non_python_prose",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    },
+    {
+      "build": "0002-older-llama",
+      "caseID": "coding-first-duplicate",
+      "rawOutputSHA256": "c2aef7a1017a2485256bb67516b6a8fc875a592297dbdcdd3f6a0d48bd7fa605",
+      "codingCheckSHA256": "7f0e74d7d37ae4d8791c10d2a17df401399dae846e633a75deca3d8e44631b73",
+      "classification": "function_passes_saved_vectors_after_fence_extraction",
+      "functionalPass": true,
+      "vectorsChecked": 15,
+      "actualCPythonPerformed": true,
+      "extraction": "single_enclosing_python_fence",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": true
+    },
+    {
+      "build": "0002-older-llama",
+      "caseID": "coding-stable-unique",
+      "rawOutputSHA256": "3a4b9dd00d67b0fe3e1a6d2f7e7be482dce847d129aae87d369b2e7a1aa6e4ee",
+      "codingCheckSHA256": "148f7279c58963143fde0069883eae00ca5fe64c348a440cb75daf4e4317e635",
+      "classification": "function_passes_saved_vectors_after_fence_extraction",
+      "functionalPass": true,
+      "vectorsChecked": 12,
+      "actualCPythonPerformed": true,
+      "extraction": "single_enclosing_python_fence",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": true
+    },
+    {
+      "build": "0003-native-llm-english",
+      "caseID": "coding-first-duplicate",
+      "rawOutputSHA256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb",
+      "codingCheckSHA256": "48c2b4e819217b645301953acd4212c5a9ea10fcb033cd11bfd3d6e8eb3db059",
+      "classification": "result_marker_not_function",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    },
+    {
+      "build": "0003-native-llm-english",
+      "caseID": "coding-stable-unique",
+      "rawOutputSHA256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb",
+      "codingCheckSHA256": "2c8179a0ba9e57336e4ecdcd770e2a05c07d45b532ca4cc3028f628681fe1c26",
+      "classification": "result_marker_not_function",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    },
+    {
+      "build": "0004-native-llm-latin",
+      "caseID": "coding-first-duplicate",
+      "rawOutputSHA256": "d244b865d9be84be1369fe8215b4131f5d5ebc736bb04e394423f0706ba8601a",
+      "codingCheckSHA256": "d0fc98ed19464e52959a5910ee7de2b6ff3920223c268e29aa0c73c8588f6d04",
+      "classification": "whitespace_no_function",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    },
+    {
+      "build": "0004-native-llm-latin",
+      "caseID": "coding-stable-unique",
+      "rawOutputSHA256": "85de0641a65ec1e2454a839fa6a9f18cdeea77b49fbd0ad38b8b1c5c1b88e03e",
+      "codingCheckSHA256": "586f6b58ce97b3d30ee2d22e052558f4898b9107e48c9008ce404e5f79b5237e",
+      "classification": "whitespace_no_function",
+      "functionalPass": false,
+      "vectorsChecked": 0,
+      "actualCPythonPerformed": false,
+      "extraction": "none",
+      "codeOnlyInstructionCompliantByReviewer": false,
+      "inputUnchangedOnAllExecutedVectors": null
+    }
+  ],
+  "metadataIssues": [],
+  "conclusion": "Older Llama produced two functioning Python implementations: first_duplicate15/15, stable_unique12/12, each verified by recorded restricted-AST and actual CPython results with input preservation/new-list checks. Both responses have enclosing Markdown fences. Three historical native text checkpoints produced no requested function; no CPython execution or functional pass is claimed for those six outputs.",
+  "evidenceScope": "All raw generated bytes match previously verified model final text and saved hash. Test vectors and grades are evaluation-only, separate from model requests. The original36-run review remains valid; no GPU, generated-code execution, checker run, build or source changes were performed by this reviewer.",
+  "resourceScope": "2s/3s CPU and4s parent wall limits are recorded; macOS rejected RLIMIT_AS. Do not claim a successfully installed512MiB address-space limit. The evaluated Llama functions use ordinary local sets/lists and no imports.",
+  "metadataCorrection": "The original six non-function receipts had codeOnlyCompliant:true. Parent preserved original checker and receipts, changed exactly two exception-handler metadata fields, then reran the cheap checker only. All eight current receipts equal their originals apart from the six true-to-false compliance flags. Raw model outputs and all functional vectors/results are unchanged. Self-check04 binds current checker SHA and all14 fixtures pass. Reviewer performed no checker execution.",
+  "productScope": "These are historical four-checkpoint diagnostics, not a full future Prime plus execution-runtime versus Llama evaluation or comprehensive coding benchmark. Primary future Prime runtime comparison remains a separate objective.",
+  "fileBindings": {
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Source/coding-cases.json": {
+      "byteCount": 7940,
+      "sha256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Inputs/coding-cases.json": {
+      "byteCount": 7940,
+      "sha256": "46c24af5116ef657066a04273200bc4ad8b4816224900b52602abece580121f6"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Source/check-coding.py": {
+      "byteCount": 29251,
+      "sha256": "641e90c937d06b0620e5ed0f2fba3c3be1f270c2667d3c50775b92233072b79a"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Source/coding-checker-self-check-04.json": {
+      "byteCount": 3199,
+      "sha256": "5e3f1cf2facd73526d25a1e29a9c2e2238174845670134675a3d7ce4228af15b"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Source/check-coding.before-compliance-fix.py": {
+      "byteCount": 29201,
+      "sha256": "2242418a6ac12b8a87b70950bce5560edfecaa8c4c9095ce086d8c511e82b805"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/Source/coding-checker-self-check-03.json": {
+      "byteCount": 3199,
+      "sha256": "f6e2d03d1e7ae8ce657997b7042b45fb5ee92cf1f7fe2f39cb5562d60ff45db2"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/Expanded-01/coding-results.json": {
+      "byteCount": 42486,
+      "sha256": "456da4507ac1f8bbf04c4278dc16e530292c88f523919d45a2e8114a80037e90"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-expanded-comparison/results-readback.json": {
+      "byteCount": 157907,
+      "sha256": "c7f20268959e0ab8a59471abc1c5f66d0158bcee3ef414780ae6a4a4e6c5afc7"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-first-duplicate/coding-check.json": {
+      "byteCount": 2505,
+      "sha256": "247da77ce643b6ae019cde6b99749c482beb9a2caf928255b3f99f14ea38fb27"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-first-duplicate/coding-check.initial.json": {
+      "byteCount": 2504,
+      "sha256": "736e31943ce8f1d7bd1a1dde3fee1ccac608de8e87c89a4a4608c5d5bb1c8e5e"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-first-duplicate/controller/stdout.bin": {
+      "byteCount": 399234,
+      "sha256": "3e138000afa321996fb0eb7c0a6cfc5a27a23f755e127c4c988e72372413c3f1"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-first-duplicate/generated-code.raw.txt": {
+      "byteCount": 1432,
+      "sha256": "49bfcca2d5b0075e4ea591e0f9650ec775387fff5dbe167083657c71ea1c2075"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-stable-unique/coding-check.json": {
+      "byteCount": 2558,
+      "sha256": "cced12a09f651bc10f11f7f5958a8527fa8eef6fe4a939b9f1f9e339f928dc30"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-stable-unique/coding-check.initial.json": {
+      "byteCount": 2557,
+      "sha256": "f74a2249bc0234f670c4fb91f39faa66bcccad371aade39a62a3d287944c2a86"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-stable-unique/controller/stdout.bin": {
+      "byteCount": 402707,
+      "sha256": "9fea9f201473fb71704ce2cd99d2bf3330a8241a05448f337fb313e427d09aaf"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0001-pmhnp-native/Results/expanded-coding-stable-unique/generated-code.raw.txt": {
+      "byteCount": 1487,
+      "sha256": "406c7ff1a5b69048046c7788ea5996d5e49a7dd830e9f476cebbb85712508638"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-first-duplicate/coding-check.json": {
+      "byteCount": 11291,
+      "sha256": "7f0e74d7d37ae4d8791c10d2a17df401399dae846e633a75deca3d8e44631b73"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-first-duplicate/coding-check.initial.json": {
+      "byteCount": 11291,
+      "sha256": "7f0e74d7d37ae4d8791c10d2a17df401399dae846e633a75deca3d8e44631b73"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-first-duplicate/controller/stdout.bin": {
+      "byteCount": 6333,
+      "sha256": "7a2c25317da9cb99fcc389d1bea93a70b62a57412933048ccdd6831f96ed578d"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-first-duplicate/generated-code.raw.txt": {
+      "byteCount": 163,
+      "sha256": "c2aef7a1017a2485256bb67516b6a8fc875a592297dbdcdd3f6a0d48bd7fa605"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-stable-unique/coding-check.json": {
+      "byteCount": 11897,
+      "sha256": "148f7279c58963143fde0069883eae00ca5fe64c348a440cb75daf4e4317e635"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-stable-unique/coding-check.initial.json": {
+      "byteCount": 11897,
+      "sha256": "148f7279c58963143fde0069883eae00ca5fe64c348a440cb75daf4e4317e635"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-stable-unique/controller/stdout.bin": {
+      "byteCount": 6974,
+      "sha256": "16aa1249f281a4afc2977b2432736fa809c3c1925f9cddf49c42b7b4a9044a2f"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0002-older-llama/Results/expanded-coding-stable-unique/generated-code.raw.txt": {
+      "byteCount": 195,
+      "sha256": "3a4b9dd00d67b0fe3e1a6d2f7e7be482dce847d129aae87d369b2e7a1aa6e4ee"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-first-duplicate/coding-check.json": {
+      "byteCount": 1105,
+      "sha256": "48c2b4e819217b645301953acd4212c5a9ea10fcb033cd11bfd3d6e8eb3db059"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-first-duplicate/coding-check.initial.json": {
+      "byteCount": 1104,
+      "sha256": "3edcde0e556231aedd52b4226da32a2d068b9ecb7b3b0fefc9dbdee642499cef"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-first-duplicate/controller/stdout.bin": {
+      "byteCount": 2412,
+      "sha256": "72d40825c821a123393d492cff026eb70f459260413afd11af92a21cb1e73e05"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-first-duplicate/generated-code.raw.txt": {
+      "byteCount": 12,
+      "sha256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-stable-unique/coding-check.json": {
+      "byteCount": 1103,
+      "sha256": "2c8179a0ba9e57336e4ecdcd770e2a05c07d45b532ca4cc3028f628681fe1c26"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-stable-unique/coding-check.initial.json": {
+      "byteCount": 1102,
+      "sha256": "a0e182eb976619717bd222cf29702bb496e6a1197253c285be8ce8658cc7a504"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-stable-unique/controller/stdout.bin": {
+      "byteCount": 2372,
+      "sha256": "30216454af4b6dbaad8474238b5155a7355a722a8f8a5c25088da10f4988a8cc"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0003-native-llm-english/Results/expanded-coding-stable-unique/generated-code.raw.txt": {
+      "byteCount": 12,
+      "sha256": "477aafdce32c85ef0904f7d67ac4ed3568a2fc360868020c4b7d1bdc87ca82fb"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-first-duplicate/coding-check.json": {
+      "byteCount": 1513,
+      "sha256": "d0fc98ed19464e52959a5910ee7de2b6ff3920223c268e29aa0c73c8588f6d04"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-first-duplicate/coding-check.initial.json": {
+      "byteCount": 1512,
+      "sha256": "2d274b71da7b99bb3be502700846c08382eae5c51baf766a1e5ac320bad39874"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-first-duplicate/controller/stdout.bin": {
+      "byteCount": 130502,
+      "sha256": "94c592ca11ceeb1891d29f3ca2c4e930684dbcf83bad863211510aa668e4f227"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-first-duplicate/generated-code.raw.txt": {
+      "byteCount": 439,
+      "sha256": "d244b865d9be84be1369fe8215b4131f5d5ebc736bb04e394423f0706ba8601a"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-stable-unique/coding-check.json": {
+      "byteCount": 1517,
+      "sha256": "586f6b58ce97b3d30ee2d22e052558f4898b9107e48c9008ce404e5f79b5237e"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-stable-unique/coding-check.initial.json": {
+      "byteCount": 1516,
+      "sha256": "9e39b1ba8565a7c69679d7d5be3fe7a5292605f71c451daab5357fa742863a31"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-stable-unique/controller/stdout.bin": {
+      "byteCount": 133566,
+      "sha256": "a45ca4856d72dfe58224aa825c770accf33ef8a6429198f791e96fb1b1be6106"
+    },
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0004-native-llm-latin/Results/expanded-coding-stable-unique/generated-code.raw.txt": {
+      "byteCount": 445,
+      "sha256": "85de0641a65ec1e2454a839fa6a9f18cdeea77b49fbd0ad38b8b1c5c1b88e03e"
+    }
+  }
+}

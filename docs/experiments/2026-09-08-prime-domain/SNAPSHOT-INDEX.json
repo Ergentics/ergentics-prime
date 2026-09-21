@@ -1,0 +1,61 @@
+{
+  "snapshots": [
+    {
+      "directory": "../0009-prime-domain-feedback-runtime",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 6758,
+        "sha256": "161775e8c8b3c2f0207ae4c45910292bae4f7e8580ad915a6426dcdcd078825d"
+      },
+      "fileCount": 39,
+      "byteCount": 65274531
+    },
+    {
+      "directory": "../0010-prime-domain-seed1618",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 704,
+        "sha256": "c914245ac8dca5253132e180fa89e55d11e38451c0c8d1abb70ca19890419178"
+      },
+      "fileCount": 4,
+      "byteCount": 41458352
+    },
+    {
+      "directory": "../0011-prime-domain-seed2718",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 704,
+        "sha256": "f55996e32bf2df7febdf930a00118d3119fea880c877a39a5b1b347d791cd238"
+      },
+      "fileCount": 4,
+      "byteCount": 41458335
+    },
+    {
+      "directory": "../0012-prime-domain-seed3141",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 704,
+        "sha256": "950b13beec10db91d41997006845e7c43a6e0b92b972808997cdca93fcfb2ca4"
+      },
+      "fileCount": 4,
+      "byteCount": 41458351
+    },
+    {
+      "directory": ".",
+      "manifest": {
+        "path": "FILE-MANIFEST.json",
+        "byteCount": 23343194,
+        "sha256": "49c6089e577d4d0d6aa27d0032c3de115b47b1c551452069e42b46eb70707be5"
+      },
+      "fileCount": 109863,
+      "byteCount": 3271251729
+    }
+  ],
+  "scope": "Runtime0009, three retained domain checkpoints and actual host/guest/Llama/geometry comparisons",
+  "excludedUnsealedAdministrativeFiles": [
+    "SNAPSHOT-INDEX.json",
+    "VERIFICATION.json",
+    "SOURCE-INTEGRATION.json",
+    "prime-domain-source.bundle"
+  ]
+}

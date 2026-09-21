@@ -1,0 +1,10 @@
+{
+  "purpose": "Separate natural-language control for the same sixteen semantic programs/starts; task-symbol codebooks removed.",
+  "timing": "Added after the fixed coded-symbol suite exposed frequent invalid symbols; not part of its 80-case score.",
+  "caseCount": 16,
+  "goldReadByPreparation": false,
+  "inputSourceSHA256": "a06c946aced5661c03b9785d36e2983edaaadd790fdebac5f1a67e57c463649f",
+  "sourceRuntimeSHA256": "2ea192b0cd5feadb2a9b0c05cfada2c50d655581889c813281f78937f47f309d",
+  "scope": "Only the question rendering and schema/domain validation differ from the original comparator. Same weights, original tokenizer/template, greedy decode, 512-token budget and continuation rule.",
+  "fieldNaming": "Inherited token-ID field names hold task data, not tokenizer IDs. User-facing questions contain ordinary numbers and operation words."
+}

@@ -1,0 +1,202 @@
+{
+  "schema": "ergentics.provenance.tiny-aarch64-guest-research.v1",
+  "record_kind": "working_research_plan_not_execution_evidence_or_launch_freeze",
+  "date": "2026-08-30",
+  "source_checkpoint": "a208e0843f3a3df364713d72830832896511e000",
+  "source_checkpoint_tree": "04ad68f65ac0235f8b1fc2f085ad86eb586dc38c",
+  "scope": {
+    "swift_host_bundle": "com.ergentics.provenance",
+    "deployment_target": "macOS 14",
+    "architecture": "arm64",
+    "purpose": "ordinary offline destination-app development, separate from candidate-selection evidence",
+    "new_branch": false,
+    "historical_evidence_reinterpreted": false,
+    "historical_processes_observed_or_signaled": false,
+    "gate_e_promoted": false,
+    "guest_execution_observed": false,
+    "persistence_implemented_by_this_record": false,
+    "rust_core_implemented_by_this_record": false,
+    "prime_source_identity_resealed": false
+  },
+  "findings": {
+    "image_requirement": "A freestanding AArch64 guest needs executable guest bytes, an entry point and a machine-state contract; it does not require a macOS IPSW or virtual OS disk.",
+    "current_app": "The committed SwiftUI app links Hypervisor but only inspects signing and host capabilities. It does not create or execute a VM.",
+    "prime_runtime": "Existing Prime decoder/runtime products are macOS Swift/MLX/Metal code, not freestanding guest binaries.",
+    "existing_exit_canary": "PrimeValidationWorkflowDriverV2SpawnCanary imports Darwin and calls Darwin._exit(0); it is not a bare-metal guest.",
+    "github_paravirtualization": "Stage code consumes a Metal device supplied by hosted macOS. Apple Paravirtual device is an observed device name, not a repository implementation or proof of the runner's backend topology.",
+    "mmio_queues_in_inspected_stack": "No doorbell, MMIO, SPSC, virtqueue, virtio or ParavirtualizedGraphics implementation found in Sources, Tests, Observability and .github.",
+    "apple_pg_framework": "Public ParavirtualizedGraphics provides host-Metal-backed device, guest-memory, MMIO and interrupt interfaces. Apple's documented accelerated path uses a macOS guest driver. It does not automatically supply Metal or MLX to a freestanding guest.",
+    "existing_sqlite": "ErgenticsInterface contains SQLite projection utilities, including in-memory/temporary and serialized read-only use. These are reference implementations, not already a durable live guest journal.",
+    "existing_cbor": "ErgenticsGateEStaticControl contains a schema-specific CBOR authority and independent reconstruction. Preserve its existing Gate-E semantics; do not silently turn it into the new guest-event schema."
+  },
+  "trajectory_stage_audit": {
+    "numbering_source": "Sources/PrimeCore/PrimeNativeDecoderTrajectoryExactResumeDesignAuthority.swift:732",
+    "numbering_note": "These are trajectory stages. The earlier tokenizer/Native-300M interface witness was also called Stage-1 in an earlier arc; it is not this trajectory stage 1.",
+    "evidence_basis": "local committed Swift observations and contracts; no workflow rerun or fresh GitHub certification",
+    "stages": [
+      {
+        "stage": 1,
+        "subject": "trajectory schema and pure contract",
+        "result": "recorded reviewed-main closure success",
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsAuthority.swift:910",
+        "counts": { "focused_tests": 39, "metal_tests": 44, "runtime_receipts": 1, "tokenizer_receipts": 1 }
+      },
+      {
+        "stage": 2,
+        "subject": "tiny CPU train/evaluate, successor metallib bootstrap",
+        "result": "recorded PASS after distinct repair arc",
+        "run_number": 79,
+        "counts": { "tests": 1, "failures": 0, "skips": 0, "receipt_bytes": 6428 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyCPUTrainEvaluateMechanicsDefaultMetallibBootstrapFreshMetallibEvidenceSurfaceRepairExecutionObservation.swift:864",
+        "limit": "Staged metallib identity is not independent observation of the loaded metallib. Earlier failed attempts remain failed."
+      },
+      {
+        "stage": 3,
+        "subject": "explicit RNG/cursor CPU resume",
+        "result": "recorded PASS for exact in-memory resumed successor step",
+        "run_number": 89,
+        "counts": { "tests": 1, "receipt_bytes": 2842 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyCPUExplicitRNGCursorResumeExecutionObservation.swift:104"
+      },
+      {
+        "stage": 4,
+        "subject": "durable multileaf commit fault injection",
+        "result": "recorded PASS; final commit published last",
+        "run_number": 97,
+        "counts": { "tests": 1, "receipt_bytes": 4147, "leaves": 4, "injected_failures": 7 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyDurableMultileafCommitFaultInjectionExecutionObservation.swift:255"
+      },
+      {
+        "stage": 5,
+        "subject": "repeated same-device Metal trajectory",
+        "original_run_number": 105,
+        "original_result": "Combined three-conjunct guard failed; equality was neither established nor disproved; zero receipt.",
+        "replacement_run_number": 117,
+        "replacement_result": "Arm-B PASS_CLEARANCE receipt; later outer lease postflight failed and remains separate.",
+        "counts": { "b_trials": 3, "b_branches": 9, "b_training_steps": 15, "snapshots": 3, "restores": 3, "exact_domains": 7, "forward_equivalence_checks": 9 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayReplacementExecutionObservation.swift:633",
+        "original_failure_evidence": "Sources/PrimeCore/PrimeNativeDecoderTinyRepeatedMetalTrajectoryDeterminismAssayExecutionFailureObservation.swift:629",
+        "limit": "Same-device evidence, not cross-device determinism."
+      },
+      {
+        "stage": 6,
+        "subject": "Native-300M resource witness",
+        "original_run_number": 111,
+        "original_result": "Recorded resource-only one-step PASS for 271107072 parameters and 218 paths.",
+        "b_specific_run_number": 123,
+        "b_specific_result": "Recorded resource, integrity and workflow PASS.",
+        "counts": { "b_calls": 1, "barriers": 6, "peak_mlx_bytes": 4790771492 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MResourceWitnessExecutionObservation.swift:833",
+        "limit": "Resource mechanics, not model quality or checkpoint admission."
+      },
+      {
+        "stage": 7,
+        "subject": "Native-300M trajectory checkpoint execution",
+        "run_number": 129,
+        "result": "Workflow FAIL; supervisor nonzero; scientific/checkpoint/resume outcome UNKNOWN.",
+        "counts": { "public_receipts": 0, "supervisor_invocations": 1 },
+        "evidence": "Sources/PrimeCore/PrimeNativeDecoderBSpecificNative300MTrajectoryCheckpointExecutionFailureObservation.swift:670",
+        "causality_limit": "Cleanup of sleep PID 29906 was observed. Watchdog-role attribution is inference only; it does not establish the supervisor failure cause."
+      }
+    ]
+  },
+  "proposed_host_guest_boundary": {
+    "status": "independently_reviewed_direction_not_frozen_binary_or_ABI",
+    "host": "SwiftUI and Swift lifecycle owner, with a narrow fixed native bridge where thread/atomic primitives require it",
+    "guest": "one bundled freestanding AArch64 flat image; assembly/C initially, Embedded Swift only after toolchain/runtime contract is verified",
+    "initial_work": "one fixed arithmetic request with independently calculated expected output",
+    "machine_limits": { "vcpus": 1, "requests_per_initial_run": 1, "request_slots": 1, "reply_slots": 1, "guest_network_devices": 0, "guest_disks": 0, "guest_gpu_devices": 0 },
+    "image_contract_to_freeze": ["exact bytes and digest", "architecture and endianness", "load address and entry offset", "page size/alignment", "code RX and data RW mappings", "unmapped guards", "initial registers and memory attributes"],
+    "queue_contract_to_freeze": ["fixed ABI version and byte offsets", "fixed operation and payload lengths", "separate producer/consumer ownership", "sequence 0 to 1 with no reuse or wrap", "no host pointers or variable commands", "explicit acquire/release operations", "explicit completion ordering before notification"],
+    "doorbell": "One fixed-width write to a deliberately unmapped guest IPA, handled as the exact expected data-abort exit. Check IPA, syndrome, instruction location, direction and value. The exit witnesses an intercepted write attempt, not a completed MMIO store.",
+    "first_run_reentry": false,
+    "snapshot_rule": "After vCPU exit, while all possible guest/DMA/host writers are quiescent, copy the bounded reply once into private host memory. Validate, hash, encode and display that copy; do not repeatedly parse live guest memory.",
+    "ownership": "One dedicated OS thread owns create/register-access/run/destroy for the whole vCPU lifetime. An actor or serial dispatch queue alone is insufficient to guarantee that OS-thread identity.",
+    "cancellation": "A separate bounded timer may request hv_vcpus_exit with protected vCPU identity/lifetime. Cancellation is not completion; memory remains held until observed exit and completed teardown. No finite kernel acknowledgment latency is claimed.",
+    "accelerator_followup": "The proposed DeltaPU occupies the application's primary accelerator role and processes state changes. The initial CPU guest/queue proof establishes transport, not DeltaPU acceleration. Metal/MLX is an optional comparison or explicitly selected fallback, not a required DeltaPU backend. Full PGDevice integration is a separate research item."
+  },
+  "proposed_persistence": {
+    "owner": "Swift host only",
+    "location": "new app-container Application Support journal, disjoint from historical receipts and temporary build roots; exact leaf still to be frozen",
+    "database": "system SQLite, one writer; exact deterministic CBOR BLOB, digest, ancestry and indexed projection committed in the same database transaction",
+    "not_two_independent_witnesses": true,
+    "new_cbor_profile": "RFC 8949 section 4.2.1 core deterministic encoding, explicitly versioned; shortest integers/lengths, definite lengths, encoded-key lexical order, duplicate-key and trailing-byte rejection; no floats/tags in the initial schema",
+    "event_content": ["schema and event kind", "run identifier", "sequence and parent event digest", "guest and ABI identity", "exact copied request/reply bytes", "raw Hypervisor results and exit state", "predicate outcomes", "raw monotonic ticks and timebase numerator/denominator", "distinct execution/teardown/persistence status"],
+    "commitments": "Digest is outside its own hashed payload. Seal the captured-input/output commitment before teardown, then append teardown and terminal witnesses referring to it. Merkle ancestry binds bytes and declared relationships, not hardware attestation or truth by itself.",
+    "durability_configuration_to_verify": ["journal_mode=WAL", "synchronous=FULL", "fullfsync=ON on macOS", "bounded busy handling", "effective settings read back and recorded", "no actor suspension inside a transaction", "unique event identity and predecessor consistency", "native bindings copy or retain Data for the required lifetime"],
+    "publication_order": ["commit run configuration/start before guest entry", "capture exit and stable reply", "seal captured observation", "record actual teardown outcome", "commit terminal CBOR and its projection together", "read back and independently reconstruct before displaying durable terminal success"],
+    "failure_semantics": "Execution, conservation and persistence are separate outcomes. A commit error may leave persistence uncertain; do not call the guest failed or assume the transaction absent. A committed start with no terminal remains incomplete. Later ordinary development runs use distinct IDs; historical one-shot authorities are not reopened.",
+    "graph": "Typed state/witness nodes and transition nodes, explicit transition predicates, content-addressed ancestry, and independent semantic reconstruction from stored CBOR. SQL columns/graph are checked projections of the event bytes, not substitutes for them.",
+    "archive": "Use the SQLite backup API or a coordinated consistent snapshot. Never copy only an active main database while ignoring its WAL. Exported CBOR is a derivative of committed records unless a later separate authority says otherwise.",
+    "energy": "Use ergs only for actually measured energy with source and conversion retained. CPU ticks or elapsed time do not establish energy.",
+    "minimum_tests": ["truncated or tampered CBOR", "integer and length boundaries", "projection mismatch", "stale predecessor", "duplicate event identity", "disk-full and commit-error handling", "reopen and reconstruct committed versus interrupted transactions"]
+  },
+  "research_items": [
+    {
+      "id": "delta-pu-primary-accelerator",
+      "previous_working_id": "dpu-core-c-abi-rust",
+      "display_name": "ΔPU - Delta Processing Unit",
+      "code_name": "DeltaPU",
+      "name_status": "proposed working name following the user's request to distinguish it from Data Processing Unit",
+      "original_research_request": "dynamic performance core: C ABI Rust",
+      "user_architectural_definition": "An alternative compute architecture occupying the GPU's usual role as the application's primary accelerator, designed around dynamic state and change rather than graphics or tensor throughput.",
+      "supersedes_prior_interpretation": "Not merely a Rust hashing optimization library, generic data-processing service, runtime kernel selector or dynamically loaded library. Dynamic refers principally to evolving computational state.",
+      "status": "research_architecture_not_implemented_or_validated",
+      "hypothesis": "Retaining versioned state and dependency information, then propagating typed changes through the affected computation, can reduce end-to-end work relative to repeatedly processing the full state for suitable application workloads.",
+      "primary_operation": "Apply a base-bound input delta, identify affected computation, update necessary results, and emit an output delta plus the new committed state identity.",
+      "architectural_components_to_specify": ["versioned state store", "typed input/output delta representation", "data and control dependency tracking", "invalidation rules", "affected-work scheduling", "result materialization", "completion and conflict semantics"],
+      "correctness_invariant": "applyOutput(F(S), deltaOut) == F(applyState(S, deltaIn)), with the function/schema version, base state identity and input delta all bound",
+      "first_candidate_operation": "A bounded pure acyclic dependency graph with incremental predicate/materialized-result updates; compare every result with an independently implemented full recomputation. Include insertion, deletion, changed values, absent dependencies and newly introduced edges.",
+      "delta_ordering": "Bind every delta to its base state and epoch/sequence. Same-base concurrent changes require explicit ordering or conflict rejection; do not assume commutativity, silently rebase, or apply a duplicate twice.",
+      "invalidation_rule": "Recompute the sound affected dependency region, including transitive and control-dependency effects; directly changed nodes alone are insufficient. Cyclic/fixed-point semantics are deferred from the first experiment.",
+      "fallback": "Global invalidation or unsupported changes may require full recomputation. Record that work and its reason. Small input changes do not guarantee small affected regions or O(delta) cost.",
+      "commitment_limit": "Merkle ancestry binds represented states and transitions, not correctness of change propagation. Preserve the existing genesis algorithm; any new incremental commitment structure requires its own explicit schema and reconstruction proof.",
+      "independence_requirement": "Keep a separately implemented full-computation oracle and independent semantic reconstruction. Do not merge the existing independent JSON/CBOR verifiers into the accelerator under test.",
+      "implementation_options": "Swift remains the application control/persistence owner. A Rust reference engine behind a versioned C ABI is an implementation option for the DeltaPU semantics, not the architecture's definition. Start with static integration; dynamic library loading is unrelated to change-driven computation and is not required.",
+      "execution_mapping": "Physical execution backend remains to be selected and measured. A CPU-hosted reference model does not by itself establish distinct accelerator hardware, GPU-equivalent capability or acceleration. The guest/MMIO/shared-queue path is transport, not an implementation of the DeltaPU computation model.",
+      "selection_provenance": "Bind the computation model, implementation, dependency policy, state schema and selected physical backend in each experiment. Adaptive policy changes need an explicit experiment and trace.",
+      "first_baseline": "Independent full recomputation over identical state/change sequences, first in Swift/C; compare the incremental reference engine on the same hardware. Compare a GPU baseline where the selected workload has a meaningful GPU implementation, without requiring graphics/tensor semantics from DeltaPU.",
+      "abi_requirements": ["versioned C ABI and explicit struct sizes", "fixed-width scalar types and bounded byte buffers", "opaque versioned state handles with explicit owner/create/destroy semantics", "caller-owned delta/output/scratch buffers; no retained borrowed pointers", "check size arithmetic, capacity, alignment and overlap", "no Swift or Rust native object layout crossing", "no panic unwinding across the C boundary; aborts and memory faults are not recoverable C status results", "explicit single-owner and completion contract before introducing parallel scheduling", "caller buffers valid and stable for the complete call", "no guest pointers or live queue aliasing", "bounded return statuses"],
+      "loader_requirements_if_justified": ["preserve Hardened Runtime and library validation", "pinned signed library identity and ABI compatibility", "no ambient loader search path or unreviewed plugins", "retain handle while any call or allocation depends on it", "no hot-swap during a run"],
+      "measurement": ["incremental result equals independent full recomputation", "explicit numeric semantics and equality rule", "insert/delete/reorder/conflict rejection cases", "changed input size versus affected computation size", "work actually executed and work avoided", "dependency-maintenance and scheduling overhead", "state, cache and output-materialization costs", "hashing and persistence costs", "full-recompute fallback frequency and cost", "cold initial materialization and warm update latency distributions", "end-to-end throughput and FFI overhead", "raw clocks/timebase", "energy in ergs only if separately measured"],
+      "decision_rule": "Define the computation semantics, workloads, change distributions, equality rules and acceptance thresholds before measuring. Evaluate the architecture, not an assumed language speedup. Retain negative results and crossover points where full recomputation is better.",
+      "related_research": ["https://www.microsoft.com/en-us/research/publication/differential-dataflow/", "https://www.cs.cmu.edu/~blelloch/papers/ABBHT09.pdf"],
+      "limits": "Primary accelerator is the intended application role, not yet an observed performance result or hardware replacement. No claim that change-driven computation is inherently unavailable on GPUs. C ABI is interoperability, not a security boundary; a host Rust library is not automatically a freestanding guest or additional scientific authority."
+    }
+  ],
+  "recommended_order": [
+    "Specify DeltaPU's state/delta/dependency semantics and independent full-recomputation oracle as the primary-accelerator research track; do not reduce it to a host hashing optimization.",
+    "Finalize the small guest/queue/persistence schemas and independent negative-test expectations.",
+    "Implement and test host CBOR/SQLite/graph reconstruction with synthetic data, independent of guest execution.",
+    "Build and inspect the fixed freestanding guest image; bind bytes, entry and memory contract.",
+    "Integrate the dedicated-thread Hypervisor owner, terminal doorbell and stable-copy checks into the existing Swift app.",
+    "Review then perform the bounded local development run and read-back verification; do not call it Gate-E closure.",
+    "Evaluate a minimal incremental DeltaPU reference engine against full recomputation, including all state/dependency/persistence costs; Rust/C ABI is an implementation option.",
+    "Use Metal/MLX only as an explicitly selected comparison or fallback when meaningful. Full paravirtual graphics is not a prerequisite for DeltaPU."
+  ],
+  "preserved_drafts": {
+    "Sources/MerkleGenesis.swift": "new pure source draft; not yet built, tested or integrated",
+    "Tests/MerkleGenesisTests.swift": "new pure tests; not yet executed or added to the project",
+    "Sources/GuestStorage.swift": "paused, incomplete macOS-IPSW storage draft; excluded from the target; reviewer identified a possible failure-path double-close; do not use as-is"
+  },
+  "references": [
+    "Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift:4",
+    "Sources/PrimeNativeDecoderRuntime/PrimeNativeDecoderRuntime.swift:840",
+    ".github/scripts/prime-ci-native-decoder-metal.sh:43",
+    "Sources/PrimeCore/PrimeMetalDeviceLease.swift:40",
+    "Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2SpawnCanary/main.swift:4",
+    "Observability/ErgenticsProvenance/Sources/ProvenanceReadOnly.c:223",
+    "Observability/ErgenticsInterface/Sources/LedgerProjectionCore/SQLiteStore.swift:6",
+    "Observability/ErgenticsGateEStaticControl/Sources/GateECBORAuthority/GateECBORAuthority.swift:23",
+    "https://developer.apple.com/documentation/hypervisor",
+    "https://developer.apple.com/documentation/paravirtualizedgraphics",
+    "https://docs.swift.org/embedded/documentation/embedded/baremetal/",
+    "https://www.rfc-editor.org/rfc/rfc8949.html#section-4.2.1",
+    "https://www.sqlite.org/atomiccommit.html",
+    "https://www.sqlite.org/pragma.html#pragma_synchronous",
+    "https://www.sqlite.org/pragma.html#pragma_fullfsync",
+    "https://www.sqlite.org/backup.html",
+    "https://doc.rust-lang.org/nomicon/ffi.html",
+    "https://doc.rust-lang.org/reference/linkage.html"
+  ]
+}

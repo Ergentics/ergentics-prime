@@ -1,0 +1,1285 @@
+{
+  "cases": [
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        17,
+        23,
+        16
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s0",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        18,
+        22,
+        23
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s1",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        19,
+        21,
+        22
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s2",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        20,
+        21
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s3",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        21,
+        19,
+        20
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s4",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        22,
+        18,
+        19
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s5",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        23,
+        17,
+        18
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s6",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        16,
+        17
+      ],
+      "id": "holdout-base-canonical-train-a-d3-32-34-32-s7",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        17,
+        18,
+        19,
+        18
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s0",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        18,
+        19,
+        20,
+        19
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s1",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        19,
+        20,
+        21,
+        20
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s2",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        21,
+        22,
+        21
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s3",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        21,
+        22,
+        23,
+        22
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s4",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        22,
+        23,
+        16,
+        23
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s5",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        23,
+        16,
+        17,
+        16
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s6",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        17,
+        18,
+        17
+      ],
+      "id": "holdout-base-canonical-train-a-d4-32-32-32-33-s7",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 67,
+      "expectedStateIDs": [
+        64,
+        69,
+        67
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s0",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 69,
+      "expectedStateIDs": [
+        70,
+        66,
+        69
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s1",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 66,
+      "expectedStateIDs": [
+        65,
+        68,
+        66
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s2",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 68,
+      "expectedStateIDs": [
+        71,
+        71,
+        68
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s3",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 71,
+      "expectedStateIDs": [
+        68,
+        65,
+        71
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s4",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 65,
+      "expectedStateIDs": [
+        66,
+        70,
+        65
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s5",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 70,
+      "expectedStateIDs": [
+        69,
+        64,
+        70
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s6",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 64,
+      "expectedStateIDs": [
+        67,
+        67,
+        64
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d3-32-34-32-s7",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 70,
+      "expectedStateIDs": [
+        64,
+        70,
+        65,
+        70
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s0",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 65,
+      "expectedStateIDs": [
+        70,
+        65,
+        71,
+        65
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s1",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 71,
+      "expectedStateIDs": [
+        65,
+        71,
+        68,
+        71
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s2",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 68,
+      "expectedStateIDs": [
+        71,
+        68,
+        66,
+        68
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s3",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 66,
+      "expectedStateIDs": [
+        68,
+        66,
+        69,
+        66
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s4",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 69,
+      "expectedStateIDs": [
+        66,
+        69,
+        67,
+        69
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s5",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 67,
+      "expectedStateIDs": [
+        69,
+        67,
+        64,
+        67
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s6",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 64,
+      "expectedStateIDs": [
+        67,
+        64,
+        70,
+        64
+      ],
+      "id": "mutation-alphabet_b-alphabet_b-train-a-d4-32-32-32-33-s7",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        17,
+        23,
+        16
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s0",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        18,
+        22,
+        23
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s1",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        19,
+        21,
+        22
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s2",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        20,
+        21
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s3",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        21,
+        19,
+        20
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s4",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        22,
+        18,
+        19
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s5",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        23,
+        17,
+        18
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s6",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        16,
+        17
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d3-32-34-32-s7",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        17,
+        18,
+        19,
+        18
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s0",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        18,
+        19,
+        20,
+        19
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s1",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        19,
+        20,
+        21,
+        20
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s2",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        21,
+        22,
+        21
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s3",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        21,
+        22,
+        23,
+        22
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s4",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        22,
+        23,
+        16,
+        23
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s5",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        23,
+        16,
+        17,
+        16
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s6",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        17,
+        18,
+        17
+      ],
+      "id": "mutation-heldout_codebook-canonical-holdout-d4-32-32-32-33-s7",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 67,
+      "expectedStateIDs": [
+        64,
+        69,
+        67
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s0",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 69,
+      "expectedStateIDs": [
+        70,
+        66,
+        69
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s1",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 66,
+      "expectedStateIDs": [
+        65,
+        68,
+        66
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s2",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 68,
+      "expectedStateIDs": [
+        71,
+        71,
+        68
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s3",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 71,
+      "expectedStateIDs": [
+        68,
+        65,
+        71
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s4",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 65,
+      "expectedStateIDs": [
+        66,
+        70,
+        65
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s5",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 70,
+      "expectedStateIDs": [
+        69,
+        64,
+        70
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s6",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 64,
+      "expectedStateIDs": [
+        67,
+        67,
+        64
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d3-32-34-32-s7",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 70,
+      "expectedStateIDs": [
+        64,
+        70,
+        65,
+        70
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s0",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 65,
+      "expectedStateIDs": [
+        70,
+        65,
+        71,
+        65
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s1",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 71,
+      "expectedStateIDs": [
+        65,
+        71,
+        68,
+        71
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s2",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 68,
+      "expectedStateIDs": [
+        71,
+        68,
+        66,
+        68
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s3",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 66,
+      "expectedStateIDs": [
+        68,
+        66,
+        69,
+        66
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s4",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 69,
+      "expectedStateIDs": [
+        66,
+        69,
+        67,
+        69
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s5",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 67,
+      "expectedStateIDs": [
+        69,
+        67,
+        64,
+        67
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s6",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 64,
+      "expectedStateIDs": [
+        67,
+        64,
+        70,
+        64
+      ],
+      "id": "mutation-joint_alphabet_b_codebook-alphabet_b-holdout-d4-32-32-32-33-s7",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        17,
+        23,
+        16
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s0-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        18,
+        22,
+        23
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s1-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        19,
+        21,
+        22
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s2-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        20,
+        21
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s3-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        21,
+        19,
+        20
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s4-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        22,
+        18,
+        19
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s5-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        23,
+        17,
+        18
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s6-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        16,
+        17
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d3-32-34-32-s7-context",
+      "semanticOperations": [
+        32,
+        34,
+        32
+      ],
+      "semanticStart": 7
+    },
+    {
+      "directTargetID": 18,
+      "expectedStateIDs": [
+        17,
+        18,
+        19,
+        18
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s0-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 0
+    },
+    {
+      "directTargetID": 19,
+      "expectedStateIDs": [
+        18,
+        19,
+        20,
+        19
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s1-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 1
+    },
+    {
+      "directTargetID": 20,
+      "expectedStateIDs": [
+        19,
+        20,
+        21,
+        20
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s2-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 2
+    },
+    {
+      "directTargetID": 21,
+      "expectedStateIDs": [
+        20,
+        21,
+        22,
+        21
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s3-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 3
+    },
+    {
+      "directTargetID": 22,
+      "expectedStateIDs": [
+        21,
+        22,
+        23,
+        22
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s4-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 4
+    },
+    {
+      "directTargetID": 23,
+      "expectedStateIDs": [
+        22,
+        23,
+        16,
+        23
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s5-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 5
+    },
+    {
+      "directTargetID": 16,
+      "expectedStateIDs": [
+        23,
+        16,
+        17,
+        16
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s6-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 6
+    },
+    {
+      "directTargetID": 17,
+      "expectedStateIDs": [
+        16,
+        17,
+        18,
+        17
+      ],
+      "id": "mutation-neutral_context-canonical-train-a-d4-32-32-32-33-s7-context",
+      "semanticOperations": [
+        32,
+        32,
+        32,
+        33
+      ],
+      "semanticStart": 7
+    }
+  ],
+  "schemaVersion": "prime-variable-depth-v1-references-1"
+}

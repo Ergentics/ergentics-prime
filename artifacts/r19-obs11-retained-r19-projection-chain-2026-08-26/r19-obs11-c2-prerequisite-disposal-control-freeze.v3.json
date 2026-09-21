@@ -1,0 +1,120 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-control-freeze-v3",
+  "status": "FRESH_SUCCESSOR_AFTER_V2_BUILD_A_COMPILE_FAILURE_ACTUATION_ABSTAIN",
+  "rank": "CONTROL_ONLY_SUCCESSOR_FREEZE",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "authorization_basis": "USER_AUTHORIZED_START_TO_END_AND_WILL_NOT_INTERVENE_IN_THIS_PROCESS",
+  "ancestry": {
+    "v2_control_commit": "d7ecc1dab5d9bd8e2d7ae2354de10292113dd0f8",
+    "v2_control_tree": "3bc7b2840a1eb11806ed83be0d3c56e421ab4c4f",
+    "v2_control_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v2.json",
+    "v2_control_bytes": 12111,
+    "v2_control_sha256": "71a5e61d38b9e20e7d2c907376f63dd1b92c9ce9d6fe5b9408c54dfdcf7ce656",
+    "v2_implementation_checkpoint_commit": "2a26c708a43852d63794e5fda24cfa31d9c2f88d",
+    "v2_implementation_checkpoint_tree": "20b7c49dd812255d3bb9abb13b3d7613552820ab",
+    "v2_implementation_commit": "32763b1b95b3f1d8f14c93808bc5ca057bd76541",
+    "v2_implementation_tree": "a2ae278e18188f3c0a3bfe4cb54c0c461714d45d",
+    "v2_build_a_failure_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-build-a-failure.v2.json",
+    "v2_build_a_failure_bytes": 2936,
+    "v2_build_a_failure_sha256": "bab4628c684099e7c520fac8120ba277d0f3098e4599108a7878049f3f9ccdf5"
+  },
+  "inheritance": {
+    "source": "V2_CONTROL_FRAME_BY_EXACT_HASH",
+    "inherited_without_semantic_change": [
+      "PURPOSE_CLASSIFICATION_AND_AUTHORITY_VECTOR",
+      "EXACT_THREE_TARGET_GENERATIONS_AND_ORDER",
+      "ENTRY_LATTICE_EXCEPT_NAMESPACE_NAMES",
+      "INDEPENDENT_OUTCOME_STREAM_AND_POWER_LOSS_ORDER",
+      "SELF_IMAGE_AND_TARGET_CONTINUITY",
+      "FINAL_COMPACT_ACTUATION_GATE",
+      "EXACT_THREE_FIXED_C_SIGKILL_WRAPPERS_AND_SIGNAL_ZERO_PROBES",
+      "POST_SIGNAL_DURABLE_CONSERVATION_OR_LOW_POWER_CONTAINMENT",
+      "TRUSTED_OUTER_READINESS_TRANSFER_BOUNDARY_AND_ALL_NAMED_RESIDUALS",
+      "NO_RETRY_NO_CLEANUP_NO_AUTHORITY_CLOSURE_NO_GATE_E_PROMOTION"
+    ],
+    "superseded": [
+      "ALL_V2_BUILD_AND_EXECUTION_NAMESPACES",
+      "V2_BUILD_COMMAND_FLAG_SPELLING",
+      "V2_SOURCE_BYTES_WITH_COMPILE_ERROR_AND_WARNINGS"
+    ]
+  },
+  "v2_failure_disposition": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-1cb03c1-v2",
+    "retention": "PERMANENT_NO_REUSE_NO_CLEANUP",
+    "clang_entries": 1,
+    "swiftc_entries": 1,
+    "product_created": false,
+    "binary_entries": 0,
+    "controller_invocations": 0,
+    "signals_entered": 0,
+    "v2_build_b_root": "ABSENT_AND_PERMANENTLY_UNENTERED",
+    "v2_readiness": "ABSENT_AND_PERMANENTLY_UNENTERED",
+    "v2_journal": "ABSENT_AND_PERMANENTLY_UNENTERED"
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+    "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c"
+  ],
+  "source_corrections_only": [
+    "ADD_TRY_TO_THROWING_PROCESS_PATH_CALL",
+    "REPLACE_DEPRECATED_STRING_CSTRING_WITH_EXACT_NUL_BOUNDED_UTF8_DECODE",
+    "PARENTHESIZE_GROUPS_MAP_CLOSURE",
+    "REPOINT_FIXED_BUILD_READINESS_JOURNAL_AND_CONTROL_IDENTITIES_TO_V3"
+  ],
+  "build_command_corrections_only": [
+    "REPLACE_BARE_NO_SERIALIZE_DEBUGGING_OPTIONS_WITH_XFRONTEND_NO_SERIALIZE_DEBUGGING_OPTIONS",
+    "ADD_WARNINGS_AS_ERRORS"
+  ],
+  "namespaces": {
+    "build_a_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3",
+    "build_a_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-a-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal",
+    "build_b_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3",
+    "build_b_image": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-build-b-2a26c70-v3/ErgenticsR19C2PrerequisiteDisposal",
+    "journal_root": "/private/tmp/ergentics-r19-obs11-c2-prerequisite-disposal-2a26c70-8930176-8930235-8668003-v3",
+    "readiness_frame": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.frame",
+    "readiness_json": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-readiness.v3.json",
+    "implementation_checkpoint": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-implementation-checkpoint.v3.json",
+    "result": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v3.json",
+    "all_observed_absent_at_freeze": true,
+    "all_created_states_permanently_retained": true
+  },
+  "build_only_verification": {
+    "target": "arm64-apple-macosx14.0",
+    "configuration": "OPTIMIZED_NO_DEBUG_TOP_LEVEL_EXECUTABLE_NO_PARSE_AS_LIBRARY_WARNINGS_AS_ERRORS",
+    "two_disjoint_roots": true,
+    "raw_product_and_c_object_equality_required": true,
+    "build_a_final_mode": "0500",
+    "build_b_final_mode": "0400",
+    "binary_execution_authorized": false,
+    "compiler_diagnostics_required": "ZERO_CAPTURED_BYTES"
+  },
+  "toolchain": {
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+    "clang_sha256": "7def90dd8829726686213a747fc5bff1583df933dae5edc55d755479e0bfe00a",
+    "swiftc_and_frontend_sha256": "2ed38571e92c0283091838c1649e27650ad9c99950288e883c7b2dc6c4ce89fb"
+  },
+  "transition_predicates": [
+    "V2_FAILURE_RECORD_AND_V3_FREEZE_COMMITTED_BEFORE_SOURCE_EDIT",
+    "EXACT_SOURCE_ALLOWLIST_ONLY",
+    "STATIC_REVIEW_BEFORE_ANY_V3_COMPILER_ENTRY",
+    "V3_BUILD_A_COMPLETE_ADMISSION_BEFORE_V3_BUILD_B_CREATION",
+    "TWO_BUILD_RAW_EQUALITY_AND_READINESS_COMMIT_BEFORE_BINARY_EXECUTION",
+    "FRESH_LIVE_GENERATION_AND_ABSENT_JOURNAL_REVALIDATION_IMMEDIATELY_BEFORE_EXEC"
+  ],
+  "operations_at_freeze": {
+    "v3_source_edits": 0,
+    "v3_compiler_entries": 0,
+    "v3_build_roots_created": 0,
+    "v3_binary_entries": 0,
+    "v3_journal_roots_created": 0,
+    "all_controller_invocations": 0,
+    "all_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_V2_FAILURE_AND_THIS_V3_FREEZE_THEN_APPLY_EXACT_SOURCE_ONLY_CORRECTIONS_AND_REPEAT_STATIC_REVIEW"
+}

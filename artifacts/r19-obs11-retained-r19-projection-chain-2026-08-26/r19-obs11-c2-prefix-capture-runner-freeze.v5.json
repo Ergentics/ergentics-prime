@@ -1,0 +1,260 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prefix-capture-runner-freeze-v5",
+  "status": "C2_PREFIX_CAPTURE_RUNNER_FROZEN_SOURCE_ONLY_NO_ENTRY",
+  "rank": "CONTROL_ONLY_PRELAUNCH_INSTRUMENTATION_FREEZE",
+  "predecessor": {
+    "no_go_draft_commit": "dbd1b7d09075ac2b832768b44a9949235a4cbeb5",
+    "no_go_draft_tree": "242cf1af2d848edb6e433274c790aa8552b63c2d",
+    "implementation_checkpoint_commit": "abbbc6a2b111b4965b5da8ec65ecec5ac20c5aba",
+    "implementation_checkpoint_tree": "64141619013cf7d493eb7d34c37b3688c20eb84a"
+  },
+  "no_go_draft": {
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v5.json",
+    "bytes": 10187,
+    "lines": 232,
+    "sha256": "92d76e3cfcfe8b0467ef53cbafd5b9a9717d0faa4fc2fdeca90d2034699d32f6",
+    "git_blob": "ccc78df32495a45621e48a2bb46f406b272ea61c",
+    "status": "DRAFT_NO_GO_MISSING_V5_CONSUMPTION_BOUNDARY_AND_DURABLE_SEPARATE_CAPTURE",
+    "entry_authorized": false
+  },
+  "defects_to_close": [
+    "NO_EXACT_V5_CONSUMPTION_BOUNDARY",
+    "NO_EXPLICIT_V5_NONREUSABILITY_AFTER_ENTRY",
+    "NO_UNIQUE_EXCLUSIVE_DURABLE_V5_STDOUT_STDERR_START_AND_RESULT_PATHS",
+    "NO_EXACT_SEPARATE_CHANNEL_PASS_ADMISSION",
+    "NO_MALFORMED_MERGED_TRUNCATED_OR_MISSING_CAPTURE_CONSUMPTION_RULE"
+  ],
+  "runner": {
+    "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v5.rb",
+    "language": "APPLE_RUBY_2_6",
+    "caller_arguments": 0,
+    "caller_paths": 0,
+    "caller_environment_parameters": 0,
+    "generic_command_surface": false,
+    "child_spawns_maximum": 1,
+    "child": "EXACT_PINNED_PREFIX_HARNESS_ONLY",
+    "signals": 0,
+    "timeouts": 0,
+    "network_actions": 0,
+    "python_entries": 0
+  },
+  "outer_transport": {
+    "image": "/usr/bin/ruby",
+    "arguments": [
+      "--disable-gems",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v5.rb"
+    ],
+    "script_arguments": [],
+    "environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "cwd": "/private/var/empty",
+    "stdin": "/dev/null",
+    "tty": false,
+    "outer_timeout": null,
+    "outer_signal_authority": false
+  },
+  "consumption": {
+    "authorized_runner_entries": 1,
+    "concurrent_runner_entries": 0,
+    "boundary": "CAPTURE_RUNNER_RUBY_PROCESS_ENTRY_AFTER_OUTER_PRE_EXEC_IDENTITY_AND_ABSENCE_CHECKS",
+    "consumed_on_early_failure": true,
+    "consumed_on_exec_ambiguity": true,
+    "consumed_on_external_termination": true,
+    "reusable_after_entry": false,
+    "retry": false
+  },
+  "capture_namespace": {
+    "parent": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26",
+    "parent_identity_at_freeze": {
+      "device": 16777231,
+      "inode": 17940458,
+      "uid": 501,
+      "gid": 20,
+      "mode": "0755",
+      "nlink": 44,
+      "flags": 0
+    },
+    "runner_parent_identity_join_fields": [
+      "device",
+      "inode",
+      "uid",
+      "gid",
+      "mode"
+    ],
+    "parent_nlink_observational_only": true,
+    "root": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-capture.v5",
+    "root_before": "ABSENT_SYMLINK_AWARE",
+    "root_creation": "EXCLUSIVE_Dir_mkdir_MODE_0700",
+    "success_inventory": [
+      "00-start.json",
+      "01-stdout.bin",
+      "02-stderr.bin",
+      "03-result.json"
+    ],
+    "failure_optional_leaf": "99-failure.json",
+    "leaf_creation": "File_open_WRONLY_CREAT_EXCL_MODE_0600_THEN_FSYNC_FCHMOD_0400_FSYNC",
+    "directory_sync": "FSYNC_ROOT_AFTER_EACH_LEAF_AND_PARENT_AFTER_ROOT_CREATION",
+    "final_root_mode_success": "0500",
+    "retention": "PERMANENT_NO_REWRITE_NO_CLEANUP_NO_REUSE"
+  },
+  "child_transport": {
+    "physical_image": "/usr/bin/ruby",
+    "logical_argv0": "ruby",
+    "arguments": [
+      "--disable-gems",
+      "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/.phase-a-v2-fixture-identity-restore-only-staging/docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb"
+    ],
+    "script_arguments": [],
+    "environment": {
+      "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0"
+    },
+    "cwd": "/private/var/empty",
+    "stdin": "INHERITED_DEV_NULL",
+    "stdout": "DEDICATED_PIPE",
+    "stderr": "DEDICATED_PIPE",
+    "close_others": true,
+    "unsetenv_others": true,
+    "pgroup": false,
+    "wait": "EXACT_PID_WAITPID2",
+    "signal_authority": false,
+    "timeout": null
+  },
+  "capture": {
+    "per_channel_cap_bytes": 65536,
+    "drain_threads": 2,
+    "drains_concurrent": true,
+    "drain_to_eof": true,
+    "over_cap": "RETAIN_PREFIX_TOTAL_BYTES_AND_FULL_STREAM_SHA256_THEN_FAIL_CONSUMED_NO_RETRY",
+    "stdout_and_stderr_never_merged": true,
+    "raw_empty_channel_leaf_required": true,
+    "result_fields": [
+      "CHILD_EXIT_OR_SIGNAL_STATUS",
+      "EACH_CHANNEL_BYTES_LF_SHA256_AND_OVERFLOW",
+      "EXACT_RECEIPT_ADMISSION",
+      "CAPTURE_ROOT_AND_LEAF_IDENTITIES",
+      "CONSUMPTION_AND_NONREUSABILITY"
+    ]
+  },
+  "success_admission": {
+    "child_exit": 0,
+    "stdout": "EXACTLY_ONE_CANONICAL_JSON_OBJECT_PLUS_ONE_LF",
+    "stderr_bytes": 0,
+    "status": "PASS_EXACT_NONCONSUMING_C2_PREFIX_PREFLIGHT_V4",
+    "required_top_level_keys_exact": [
+      "bottom_entry_evaluated",
+      "continuity",
+      "controller",
+      "controller_source",
+      "descriptor_close_count",
+      "dot_build",
+      "frozen_roots_after",
+      "historical_operations_reinterpreted",
+      "language_and_fd_policy",
+      "mapped_ruby",
+      "operation_scope",
+      "operations",
+      "prefix",
+      "status",
+      "tmp"
+    ],
+    "bottom_entry_evaluated": false,
+    "operation_scope": "THIS_EXACT_HARNESS_PROCESS_ONLY",
+    "harness_operations": {
+      "apple_ruby_harness_entries": 1,
+      "bootstrap_preflight_entries": 1,
+      "continuity_revalidation_entries_after_bootstrap": 2,
+      "controller_bottom_entries": 0,
+      "controller_full_invocations": 0,
+      "dot_build_snapshot_entries_after_bootstrap": 1,
+      "filesystem_creation_call_entries": 0,
+      "journal_constructor_entries": 0,
+      "process_signal_call_entries": 0,
+      "process_spawn_call_entries": 0,
+      "product_execution_entries": 0,
+      "python_entries": 0,
+      "source_prefix_evaluation_entries": 1,
+      "state_machine_constructor_entries": 0,
+      "swiftpm_spawn_entries": 0
+    },
+    "descriptor_closure": "EXACT_continuity_nodes_plus_two_AND_ALL_CLOSED",
+    "all_five_roots": "ABSENT",
+    "controller_source_and_prefix_identical_to_freeze": true,
+    "mapped_ruby_and_process_join": "EXACT_PINNED_UUID_OFFSET_VNODE_PATH_AND_CREDENTIALS"
+  },
+  "failure_admission": {
+    "any_nonzero_or_signal": "FAIL_CONSUMED_RETAIN_CAPTURE",
+    "stdout_or_stderr_over_cap": "FAIL_CONSUMED_RETAIN_PREFIX_AND_FULL_DIGEST",
+    "malformed_noncanonical_missing_or_extra_receipt_bytes": "FAIL_CONSUMED_RETAIN_CAPTURE",
+    "exit_zero_receipt_predicate_mismatch": "FAIL_CONSUMED_RETAIN_CAPTURE",
+    "missing_capture_or_result_leaf": "ABSTAIN_CONSUMED_INCOMPLETE_NO_RETRY",
+    "outer_merged_or_truncated_observation": "DOES_NOT_REINTERPRET_DURABLE_SEPARATE_CHILD_CHANNEL_LEAVES"
+  },
+  "failure_containment": {
+    "child_spawn_failure": "NO_CHILD_RETAIN_START_AND_FAILURE",
+    "post_spawn_failure": "NO_SIGNAL_WAIT_EXACT_CHILD_TO_REAP_AND_DRAIN_CHANNELS_THEN_RETAIN_FAILURE",
+    "potentially_indefinite": true,
+    "manual_signal_or_cleanup_authorized": false
+  },
+  "source_allowlist": [
+    "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v5.rb"
+  ],
+  "successor_control_allowlist": [
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prefix-capture-runner-implementation-checkpoint.v5.json",
+    "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-preconsumption-prefix-harness-readiness.v5.json"
+  ],
+  "unchanged_invariants": [
+    "CONTROLLER_AND_PREFIX_HARNESS_SOURCE_BYTES_UNCHANGED",
+    "PREFIX_BOUNDARY_AND_INNER_HARNESS_CALL_GRAPH_UNCHANGED",
+    "NO_CONTROLLER_BOTTOM_STATE_JOURNAL_BUILD_SWIFTPM_PRODUCT_OR_SIGNAL_ENTRY",
+    "NO_DRIVER_V2_EVIDENCE_LEDGER_WRITE_OR_AUTHORITY_BIT",
+    "NO_GITHUB_NETWORK_PYTHON_CLEANUP_RETRY_OR_REUSE",
+    "V4_READINESS_AND_FAILURE_HISTORY_UNCHANGED"
+  ],
+  "hard_stops": [
+    "RUNNER_SOURCE_OR_READINESS_ENTRY_BEFORE_SEPARATE_IMPLEMENTATION_CHECKPOINT_AND_FINAL_READY_COMMIT",
+    "CALLER_ARGUMENT_PATH_ENVIRONMENT_ROLE_TIMEOUT_OR_GENERIC_COMMAND_SURFACE",
+    "CAPTURE_ROOT_PRESENT_OR_PARENT_IDENTITY_DRIFT",
+    "SECOND_OR_CONCURRENT_RUNNER_OR_CHILD_ENTRY",
+    "CAPTURE_LEAF_OVERWRITE_REWRITE_MERGE_OR_OMISSION",
+    "CHILD_OTHER_THAN_EXACT_PREFIX_HARNESS",
+    "MORE_THAN_ONE_CHILD_SPAWN",
+    "ANY_SIGNAL_TIMEOUT_CLEANUP_RETRY_NETWORK_GITHUB_OR_PYTHON_ENTRY",
+    "CONTROLLER_BOTTOM_SWIFTPM_BUILD_PRODUCT_AUTHORITY_CLOSURE_OR_GATE_E_PROMOTION"
+  ],
+  "freeze_operations": {
+    "control_records_created": 1,
+    "runner_source_edits": 0,
+    "runner_entries": 0,
+    "child_spawns": 0,
+    "capture_roots_created": 0,
+    "capture_leaves_created": 0,
+    "prefix_harness_entries": 0,
+    "controller_bottom_entries": 0,
+    "swiftpm_spawns": 0,
+    "builds": 0,
+    "product_executions": 0,
+    "signals": 0,
+    "filesystem_cleanup_actions": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "scientific_outcome": "ABSTAIN",
+    "prose_may_supply_fact": false,
+    "runner_entry_authorized_by_this_freeze": false,
+    "prefix_harness_entry_authorized_by_this_freeze": false,
+    "controller_or_build_authorized": false
+  },
+  "next": {
+    "step": "COMMIT_THIS_FREEZE_THEN_IMPLEMENT_THE_CLOSED_CAPTURE_RUNNER_SOURCE_ONLY_AND_OBTAIN_THREE_STATIC_REVIEWS",
+    "runner_execution_before_checkpoint_and_FINAL_READY": false
+  },
+  "artifact_addressing": "THIS_FREEZE_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

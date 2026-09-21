@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "/usr/bin/codesign",
+    "--force",
+    "--sign",
+    "C0CBEC8DDAC4C1ABF4F2780D2E7170A828101CAF",
+    "--identifier",
+    "com.ergentics.prime.vcpu-inference",
+    "--options",
+    "runtime",
+    "--timestamp=none",
+    "--entitlements",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/outputs/Prime-Experiment-Builds/0009-prime-domain-feedback-runtime/Source/Native/Entitlements.plist",
+    "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference: replacing existing signature\n",
+  "beforeSHA256": "757ef46fb0e8f3d22c6b1d53afb0b30234d37f0f63d5668f725effb59c87bbc6",
+  "afterSHA256": "615f0b059e409477b31dcaa99fa501a867d37e24bd8cc84815f04b27fcc5038c",
+  "verify": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference: valid on disk\n/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-os-logic-2026-09-08/PrimeIntegration/build02/PrimeVCPUInference: satisfies its Designated Requirement\n"
+  }
+}

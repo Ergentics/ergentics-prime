@@ -1,0 +1,120 @@
+{
+  "schema": "ergentics-r19-obs11-c2-prerequisite-disposal-implementation-checkpoint-v5",
+  "status": "THREE_STATIC_PASS_FRESH_V5_BUILD_NOT_STARTED_ACTUATION_ABSTAIN",
+  "rank": "LOCAL_CONTROL_ONLY_IMPLEMENTATION_CHECKPOINT",
+  "authority_vector": "00000000",
+  "gate_e": "ABSTAIN",
+  "control_freeze": {
+    "commit": "e947ae9be8a4614a6bf79e34d7ff3ab9ad4379b3",
+    "tree": "cd23ce34f280fe5f80761883e56205f9a443f57b",
+    "path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-control-freeze.v5.json",
+    "bytes": 8833,
+    "lf_count": 170,
+    "sha256": "98b96fa84a3c30fca0c953e160317e235db34ffb2db48543c2232fcb558700c1"
+  },
+  "implementation": {
+    "commit": "c3ba073fe33fb6cb24ba6070c3889148bac72485",
+    "tree": "d1f133fea61c68e33acc7e8dd4bbf897229e968b",
+    "sources": [
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+        "bytes": 102482,
+        "lf_count": 2201,
+        "sha256": "f4fb78b607a3e0cc3cb28a2f9a822334d262da7ce1062a703ad78ef0540152ee",
+        "git_blob": "96556002906ed33054751a9ab4485cf97491df30"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.c",
+        "bytes": 24972,
+        "lf_count": 847,
+        "sha256": "0f7a83801179db50ac7d103aa83f6b8fd0f18e0eb107c034ac81dc7e822c4c67",
+        "git_blob": "3bb26e9726814041f104657d33a35f5d9865c373"
+      },
+      {
+        "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal-fixed.h",
+        "bytes": 5070,
+        "lf_count": 203,
+        "sha256": "6bdea3ac307226d06aee9ef4dc6ae902415aca5a2446571ee4170a64922bdc26",
+        "git_blob": "14879287bd084cd7e6e9b7fa3444b964a491688e"
+      }
+    ]
+  },
+  "v4_consumed_ancestry": {
+    "result_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c2-prerequisite-disposal-result.v4.json",
+    "result_sha256": "84c8c6bee84f9eaf768be80e31025c7be0a6e9fd6e1e8232461fd03f66bc3203",
+    "fixed_coordinate": "journal-prefix-before-1",
+    "kill_commitments": 0,
+    "signals_entered": 0,
+    "retained_root_reuse": false
+  },
+  "combined_root_primitive": {
+    "symbol": "ergentics_r19_disposal_validate_root",
+    "old_symbols_present": 0,
+    "swift_call_count": 8,
+    "full_entry_mask_bits": 16,
+    "outcome_entry_bit": 15,
+    "derived_nlink": "2_PLUS_POPCOUNT16_FULL_ENTRY_MASK",
+    "scan_open_description": "FRESH_OPENAT_FROM_HELD_PARENT",
+    "shared_offset_duplicate": false,
+    "named_held_scan_vnode_join": true,
+    "pre_and_post_selected_stat_join": true,
+    "post_materialize_uses_next_mask": true
+  },
+  "static_review_convergence": [
+    {
+      "review": "IDENTITY_PATH_SCHEMA_ALLOWLIST_AND_VNODE_JOIN",
+      "result": "PASS",
+      "python_entries": 0
+    },
+    {
+      "review": "JOURNAL_EIGHT_BOUNDARIES_MASK_NLINK_AND_DURABILITY",
+      "result": "PASS",
+      "python_entries": 0
+    },
+    {
+      "review": "C_SWIFT_ABI_BUILDABILITY_FD_OWNERSHIP_AND_ERRNO",
+      "result": "PASS",
+      "python_entries": 0
+    }
+  ],
+  "target_plan": {
+    "algorithm": "SHA256_DOMAIN_SEPARATED_U64BE_LENGTH_FRAMED_BINARY_MERKLE_V2",
+    "leaf_count": 3,
+    "root_sha256": "c2b5f0e4477bae767be6bc4d40e471eb47c90763d5838b29b5944c02403ff2c7"
+  },
+  "fresh_namespace_admission": {
+    "build_a_root": "ABSENT",
+    "build_b_root": "ABSENT",
+    "journal_root": "ABSENT",
+    "readiness_frame": "ABSENT",
+    "readiness_json": "ABSENT",
+    "result_json": "ABSENT"
+  },
+  "language_and_fd_policy": {
+    "python": "FORBIDDEN_FROM_V5_FREEZE_FORWARD",
+    "v5_python_entries": 0,
+    "ruby_fd3_through_fd7": "CATALOGED_RUNTIME_DEVIATION_NOT_AUTHORITY",
+    "native_swift_envelope_expected_fds": [0, 1, 2]
+  },
+  "build_command": {
+    "target": "arm64-apple-macosx14.0",
+    "swift_driver_flag": "-Xfrontend -no-serialize-debugging-options",
+    "warnings": "-warnings-as-errors",
+    "zero_captured_diagnostic_bytes_required": true,
+    "build_a_before_build_b": true,
+    "binary_execution_authorized": false
+  },
+  "operations": {
+    "v5_compiler_entries": 0,
+    "v5_build_roots_created": 0,
+    "v5_binaries_executed": 0,
+    "v5_journal_roots_created": 0,
+    "all_v5_signals_entered": 0,
+    "processes_disposed": 0,
+    "c2_invocations": 0,
+    "v5_python_entries": 0,
+    "authority_closures": 0,
+    "gate_e_promotions": 0
+  },
+  "next": "COMMIT_THIS_CHECKPOINT_THEN_FRESH_V5_BUILD_A_ONLY_AND_FULL_STATIC_PRODUCT_ADMISSION_NO_EXECUTION"
+}

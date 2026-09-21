@@ -1,0 +1,259 @@
+{
+  "schema": "prime_llama_live_scores_v1",
+  "models": [
+    {
+      "tag": "0006",
+      "label": "Prime Swift 4000",
+      "aggregate": {
+        "caseCount": 80,
+        "directCorrect": 8,
+        "traceFinalCorrect": 54,
+        "fullTraceCorrect": 48,
+        "traceCompleted": 80,
+        "directAssignedValue": 80,
+        "finalCorrectWithIntermediateError": 6
+      },
+      "perAxis": {
+        "alphabet_b": {
+          "caseCount": 16,
+          "directCorrect": 2,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "base": {
+          "caseCount": 16,
+          "directCorrect": 2,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "heldout_codebook": {
+          "caseCount": 16,
+          "directCorrect": 1,
+          "traceFinalCorrect": 3,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 3
+        },
+        "joint_alphabet_b_codebook": {
+          "caseCount": 16,
+          "directCorrect": 1,
+          "traceFinalCorrect": 3,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 3
+        },
+        "neutral_context": {
+          "caseCount": 16,
+          "directCorrect": 2,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        }
+      },
+      "perDepth": {
+        "3": {
+          "caseCount": 40,
+          "directCorrect": 5,
+          "traceFinalCorrect": 29,
+          "fullTraceCorrect": 24,
+          "traceCompleted": 40,
+          "directAssignedValue": 40,
+          "finalCorrectWithIntermediateError": 5
+        },
+        "4": {
+          "caseCount": 40,
+          "directCorrect": 3,
+          "traceFinalCorrect": 25,
+          "fullTraceCorrect": 24,
+          "traceCompleted": 40,
+          "directAssignedValue": 40,
+          "finalCorrectWithIntermediateError": 1
+        }
+      },
+      "sourceSummarySHA256": "9389c7205d06a5c0532bce1c3a1ca0fc0ee0be54da2ed9d21642446c421c436d"
+    },
+    {
+      "tag": "0007",
+      "label": "Prime Swift 8000",
+      "aggregate": {
+        "caseCount": 80,
+        "directCorrect": 15,
+        "traceFinalCorrect": 61,
+        "fullTraceCorrect": 48,
+        "traceCompleted": 80,
+        "directAssignedValue": 80,
+        "finalCorrectWithIntermediateError": 13
+      },
+      "perAxis": {
+        "alphabet_b": {
+          "caseCount": 16,
+          "directCorrect": 2,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "base": {
+          "caseCount": 16,
+          "directCorrect": 3,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "heldout_codebook": {
+          "caseCount": 16,
+          "directCorrect": 4,
+          "traceFinalCorrect": 5,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 5
+        },
+        "joint_alphabet_b_codebook": {
+          "caseCount": 16,
+          "directCorrect": 3,
+          "traceFinalCorrect": 8,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 8
+        },
+        "neutral_context": {
+          "caseCount": 16,
+          "directCorrect": 3,
+          "traceFinalCorrect": 16,
+          "fullTraceCorrect": 16,
+          "traceCompleted": 16,
+          "directAssignedValue": 16,
+          "finalCorrectWithIntermediateError": 0
+        }
+      },
+      "perDepth": {
+        "3": {
+          "caseCount": 40,
+          "directCorrect": 11,
+          "traceFinalCorrect": 37,
+          "fullTraceCorrect": 24,
+          "traceCompleted": 40,
+          "directAssignedValue": 40,
+          "finalCorrectWithIntermediateError": 13
+        },
+        "4": {
+          "caseCount": 40,
+          "directCorrect": 4,
+          "traceFinalCorrect": 24,
+          "fullTraceCorrect": 24,
+          "traceCompleted": 40,
+          "directAssignedValue": 40,
+          "finalCorrectWithIntermediateError": 0
+        }
+      },
+      "sourceSummarySHA256": "63d1e28720a2fa9cc388f89993442eb0b244a7fe53d2b41a69cfae0f1a027eb9"
+    },
+    {
+      "tag": "llama",
+      "label": "Older Ergentics Llama 3.2 3B",
+      "aggregate": {
+        "caseCount": 80,
+        "directCorrect": 5,
+        "traceFinalCorrect": 0,
+        "fullTraceCorrect": 0,
+        "traceCompleted": 0,
+        "directAssignedValue": 22,
+        "finalCorrectWithIntermediateError": 0
+      },
+      "perAxis": {
+        "alphabet_b": {
+          "caseCount": 16,
+          "directCorrect": 3,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 9,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "base": {
+          "caseCount": 16,
+          "directCorrect": 0,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 2,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "heldout_codebook": {
+          "caseCount": 16,
+          "directCorrect": 0,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 3,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "joint_alphabet_b_codebook": {
+          "caseCount": 16,
+          "directCorrect": 2,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 6,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "neutral_context": {
+          "caseCount": 16,
+          "directCorrect": 0,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 2,
+          "finalCorrectWithIntermediateError": 0
+        }
+      },
+      "perDepth": {
+        "3": {
+          "caseCount": 40,
+          "directCorrect": 3,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 12,
+          "finalCorrectWithIntermediateError": 0
+        },
+        "4": {
+          "caseCount": 40,
+          "directCorrect": 2,
+          "traceFinalCorrect": 0,
+          "fullTraceCorrect": 0,
+          "traceCompleted": 0,
+          "directAssignedValue": 10,
+          "finalCorrectWithIntermediateError": 0
+        }
+      },
+      "sourceSummarySHA256": "7020e2a4502eaded5ac3a782f9efd49b4c8b814eb391fe680452a72a6a8f8014"
+    }
+  ],
+  "independentScoresAgree": true,
+  "modelExecutionPerformedByScorer": false,
+  "caseCountPerModel": 80,
+  "distinctSemanticPrograms": 2,
+  "interpretation": "Focused symbolic program diagnostic. Direct and iterative use actual model outputs; no reference repair. Final correctness can mask wrong intermediate states.",
+  "mainSuite": {
+    "nativeForwardCalls": 720,
+    "llamaGenerationCalls": 189,
+    "controllerPhases": 20
+  },
+  "referencesSHA256": "a49033a2ce5e8ba9b606a8334d483329936d24439a156e9713cb5cc1fcd74f4a"
+}

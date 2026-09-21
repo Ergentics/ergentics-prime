@@ -1,0 +1,448 @@
+{
+  "status": "INDEPENDENT_READBACK_PASSED",
+  "device": "Apple M5 Max",
+  "hostGuestByteIdenticalPairs": 24,
+  "measuredVectorFiles": 48,
+  "measuredVectorBytes": 44736,
+  "guestReturnedFloatValues": 5592,
+  "measuredGuestEntries": 48,
+  "measuredGuestVMs": 24,
+  "CPUFormulaParity": {
+    "allWithinDeclaredTolerances": true,
+    "maximumPotentialError": 3.4923050140633904e-07,
+    "maximumGradientError": 5.052916978165456e-07,
+    "maximumErrorDifferenceFromRecordedSwiftCPU": 4.440892098500626e-16,
+    "formula": "V=-sum(w*exp(-r2/(2*sigma2))); gradient=sum(w*exp(-r2/(2*sigma2))*(p-node)/sigma2)",
+    "potentialTolerance": "max(1e-5,1e-4*max(abs(reference),abs(actual)))",
+    "gradientTolerance": "max(1e-4,1e-3*max(abs(reference),abs(actual)))"
+  },
+  "validMeasuredGPUTimestamps": 48,
+  "timingsNanoseconds": [
+    {
+      "pointCount": 1,
+      "route": "host",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 13041.659258306026,
+        "median": 16312.5223480165,
+        "max": 382958.329282701
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 175375,
+        "median": 490979.0,
+        "max": 643041
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 198084,
+        "median": 526438.0,
+        "max": 676750
+      }
+    },
+    {
+      "pointCount": 1,
+      "route": "guest",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 12916.629202663898,
+        "median": 16375.008272007108,
+        "max": 436750.0077933073
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 185792,
+        "median": 386937.0,
+        "max": 612417
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 327125,
+        "median": 604520.5,
+        "max": 787958
+      }
+    },
+    {
+      "pointCount": 32,
+      "route": "host",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 12708.362191915512,
+        "median": 31166.68085567653,
+        "max": 308250.0188611448
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 165416,
+        "median": 196229.0,
+        "max": 555833
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 187750,
+        "median": 221250.5,
+        "max": 610250
+      }
+    },
+    {
+      "pointCount": 32,
+      "route": "guest",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 12999.982573091984,
+        "median": 19562.517991289496,
+        "max": 61666.70937091112
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 117334,
+        "median": 167083.5,
+        "max": 525959
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 268625,
+        "median": 297500.0,
+        "max": 678042
+      }
+    },
+    {
+      "pointCount": 200,
+      "route": "host",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 12749.980669468641,
+        "median": 13437.500456348062,
+        "max": 110833.32356065512
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 129625,
+        "median": 177041.5,
+        "max": 211083
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 156708,
+        "median": 203104.5,
+        "max": 241667
+      }
+    },
+    {
+      "pointCount": 200,
+      "route": "guest",
+      "samples": 8,
+      "gpuNanoseconds": {
+        "count": 8,
+        "min": 13041.659258306026,
+        "median": 45562.483137473464,
+        "max": 214625.03354996443
+      },
+      "callbackWallNanoseconds": {
+        "count": 8,
+        "min": 165666,
+        "median": 241791.5,
+        "max": 520916
+      },
+      "totalWallNanoseconds": {
+        "count": 8,
+        "min": 302541,
+        "median": 378083.0,
+        "max": 661166
+      }
+    }
+  ],
+  "initializationNanoseconds": 67522166,
+  "warmupGPUDispatches": 2,
+  "negativeChecks": {
+    "preVMRejections": 3,
+    "nonfiniteReplyVM": 1,
+    "GPUUsedForNegativeReply": false,
+    "rawNaNBitsRetained": true
+  },
+  "controller": {
+    "PID": 27911,
+    "normalExit": 0,
+    "exactReapCount": 1,
+    "groupEmpty": true,
+    "streamsEOFAndHashesVerified": true,
+    "elapsedSeconds": 0.6130170000251383
+  },
+  "rawCRecordsAndJSONExact": 25,
+  "allBuild02InputsUnchanged": true,
+  "admissionReceiptVerified": true,
+  "currentSignedExecutableBinding": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build02/PrimeGuestGPU",
+    "bytes": 204592,
+    "sha256": "a8c66af70ac67fdc3694c1f0efe08b473398b926e6e4285a2d88e77fb1e694d7"
+  },
+  "sourceBuildReceipt": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/NativeGPU/build02/build-result.json",
+    "bytes": 4446,
+    "sha256": "e6dd577ca42becafbe78e561fae0d045944d161ebe869c9d588ad96ef4c0c7cf"
+  },
+  "resultBinding": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/result.json",
+    "bytes": 35083,
+    "sha256": "844c6b8fc8139fc0f6197e96622e604de5950b732ebe7f193ee8d7a4b409ddf1"
+  },
+  "vectorBindings": [
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-0.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-0.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-1.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-1.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-2.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-2.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-3.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-3.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-4.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-4.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-5.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-5.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-6.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-6.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-1-7.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-1-7.f32le",
+      "bytes": 12,
+      "sha256": "c7f0d24d084d7222b608d578aa4d7cbb8c9f93c414e02d621a55dacb1c01d69c"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-0.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-0.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-1.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-1.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-2.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-2.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-3.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-3.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-4.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-4.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-5.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-5.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-6.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-6.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-32-7.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-32-7.f32le",
+      "bytes": 384,
+      "sha256": "de016b879d12c85c9da17f91a498d86b53632cae72914601afe75d8795a9b263"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-0.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-0.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-1.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-1.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-2.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-2.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-3.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-3.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-4.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-4.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-5.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-5.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-6.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-6.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/guest-200-7.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    },
+    {
+      "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Live/native/host-200-7.f32le",
+      "bytes": 2400,
+      "sha256": "5dec11c8ccdbfc0b54b586b8005265a1010b463ab4f59f14190c7c3d7fc9e37f"
+    }
+  ],
+  "reviewer": {
+    "path": "/Users/ergentics/Documents/Codex/2026-09-05/build-11-is-archived-locally-users/work/prime-gpu-route-2026-09-08/Readiness/review_live.py",
+    "bytes": 14931,
+    "sha256": "067cee468c46acfc5e3f2856434ba9ce4430412aebdb70bfa1bf7d71a73414b0"
+  },
+  "limits": [
+    "Only saved artifacts were read; no new model, GPU, VM or calibration execution.",
+    "Eight paired samples per size, with alternating route order and two shared GPU warmups. Every guest sample creates a fresh VM.",
+    "GPU interval, evaluator wall and full route wall have separate scopes. No speedup, utilization or isolated vCPU-cost claim.",
+    "Custom typed HVC-to-host-Metal offload; no Apple PGDevice or learned model execution. CPU formula is independent scoring, not a reply fallback.",
+    "Admission receipt and current executable bytes verified here; no fresh codesign trust evaluation was launched."
+  ]
+}

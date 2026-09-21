@@ -1,0 +1,119 @@
+{
+  "allowed_implementation_paths": [
+    "Control/hypervisor-local-v1/stage0-genesis-freeze.v1.json",
+    "ErgenticsProvenance.xcodeproj/project.pbxproj",
+    "Sources/HypervisorStageRoadmap.swift",
+    "Tests/HypervisorStageRoadmapTests.swift"
+  ],
+  "authority_vector": "00000000",
+  "canonical_source_checkpoint": {
+    "commit": "ba1750406bfab63afcdf83252c1f907829d78ac5",
+    "tree": "21a75ec7cfc47b9b8351f6d0023cb9a91af319af"
+  },
+  "effects": {
+    "clock_read": false,
+    "environment_read": false,
+    "file_read": false,
+    "file_write": false,
+    "git_operation": false,
+    "journal_open": false,
+    "network": false,
+    "process_launch": false,
+    "vm_launch": false
+  },
+  "gate_e": "ABSTAIN",
+  "h1_contract": {
+    "id": "hypervisor_product_schema_and_pure_contract_v1",
+    "maximum_cbor_bytes": 65536,
+    "maximum_json_bytes": 65536,
+    "next_stage_authorized": false,
+    "operation": "PURE_IN_MEMORY_CONTRACT_VERIFICATION_ONLY",
+    "predicate_ids": [
+      "namespace_new_and_product_local",
+      "stage_order_exact",
+      "predecessor_dag_exact",
+      "authority_ceiling_zero",
+      "historical_comparators_non_authoritative",
+      "json_cbor_semantic_join",
+      "merkle_ancestry_exact",
+      "no_live_effects"
+    ],
+    "success_outcome": "PASS_PURE_CONTRACT_ONLY",
+    "vm_disposition": "NOT_CREATED"
+  },
+  "historical_comparator_policy": {
+    "admitted_comparators": [],
+    "may_authorize_transition": false,
+    "may_set_authority_bit": false,
+    "required_role": "NON_AUTHORITATIVE_COMPARATOR_ONLY"
+  },
+  "lineage_disposition": "NEW_PRODUCT_LOCAL_NON_CONTINUATION",
+  "product_id": "com.ergentics.provenance",
+  "roadmap_id": "ergentics.provenance.hypervisor-local-v1",
+  "schema": "ergentics.provenance.hypervisor-stage-genesis-freeze.v1",
+  "stage_state": "H0_GENESIS_FROZEN_H1_NOT_RUN",
+  "stages": [
+    {
+      "id": "hypervisor_product_schema_and_pure_contract_v1",
+      "ordinal": 1,
+      "predecessor": null
+    },
+    {
+      "id": "hypervisor_tiny_fixed_guest_mechanics_v1",
+      "ordinal": 2,
+      "predecessor": "hypervisor_product_schema_and_pure_contract_v1"
+    },
+    {
+      "id": "hypervisor_explicit_state_cursor_resume_v1",
+      "ordinal": 3,
+      "predecessor": "hypervisor_tiny_fixed_guest_mechanics_v1"
+    },
+    {
+      "id": "hypervisor_durable_receipt_fault_injection_v1",
+      "ordinal": 4,
+      "predecessor": "hypervisor_explicit_state_cursor_resume_v1"
+    },
+    {
+      "id": "hypervisor_repeated_same_host_resume_determinism_v1",
+      "ordinal": 5,
+      "predecessor": "hypervisor_durable_receipt_fault_injection_v1"
+    },
+    {
+      "id": "hypervisor_signed_product_resource_probe_v1",
+      "ordinal": 6,
+      "predecessor": "hypervisor_repeated_same_host_resume_determinism_v1"
+    },
+    {
+      "id": "hypervisor_bounded_product_checkpoint_execution_v1",
+      "ordinal": 7,
+      "predecessor": "hypervisor_signed_product_resource_probe_v1"
+    },
+    {
+      "id": "hypervisor_retained_product_provenance_and_admission_v1",
+      "ordinal": 8,
+      "predecessor": "hypervisor_bounded_product_checkpoint_execution_v1"
+    }
+  ],
+  "stream_policy": {
+    "cbor": "DETERMINISTIC_RFC8949_SUBSET",
+    "json": "CANONICAL_SORTED_KEYS_NO_WHITESPACE",
+    "merkle_leaves": [
+      "schema",
+      "state.json",
+      "state.cbor",
+      "transition.json",
+      "transition.cbor",
+      "witnesses.json",
+      "witnesses.cbor"
+    ],
+    "semantic_join_required": true,
+    "sqlite_role": "NON_AUTHORITATIVE_PROJECTION_ONLY"
+  },
+  "transition_policy": {
+    "h1_may_close_gate_e": false,
+    "h1_may_launch_guest": false,
+    "h1_may_mint_product_admission": false,
+    "h1_pass_allows_only": "SEPARATE_H2_FREEZE_RECOMMENDATION",
+    "receipt_last": true
+  }
+}

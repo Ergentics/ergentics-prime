@@ -1,0 +1,1234 @@
+{
+  "schema": "ergentics.prime-hypervisor-source-selection.v1",
+  "version": "0.1.0",
+  "owner": "Ergentics, LLC",
+  "phase": "PRE_COMMIT_SOURCE_SELECTION",
+  "user_direction": "Prime/HyperVisor source closeout and local commit; Surface deferred",
+  "base_commit": "085d921114971f97c1600a460414426199f3c9c6",
+  "prior_selected_tree": "01ea5adce18b02d1b6e2ca103272e54f181a1a12",
+  "original_selection_manifest": {
+    "path": "/Users/ergentics/2026-09-20/er/outputs/prime-root-analysis-package-005/integration-candidate/MANIFEST.json",
+    "bytes": 54024,
+    "sha256": "df701a0d6e980401512f56b154c737add70acb6f0c956bb009fef8188602dce3"
+  },
+  "repairs": [
+    {
+      "path": "Apps/ErgenticsPrime/Guest/RustBootstrap/README.md",
+      "state": " M",
+      "sha256": "82df406c222c3b5f7d7e7f36a3dcee948a5dbd96fa2160ca78dd6125c1ab94ed",
+      "bytes": 2462,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeNativeNeuralGateHeldSourceClosure.swift",
+      "state": " M",
+      "sha256": "88384b2e71e9684b68e06d2e55d98b55dc0fe9610157567594bb3b52ab4d1973",
+      "bytes": 79381,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeSecureChildDarwinSubstrate.swift",
+      "state": " M",
+      "sha256": "a18419472029457725b4719cb65badc88db0146add185612cda668fec102d7c5",
+      "bytes": 26889,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeSecureChildKernel.swift",
+      "state": " M",
+      "sha256": "bffde821550882fdc5e69c98946d58e33ee5dd7a3f9a9510dffa3c746c91508b",
+      "bytes": 83714,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+      "state": " M",
+      "sha256": "90fc0e2e7cd582ad65c0e015c0f6fc1f0509be04946fc6d8a16c156652c40d0d",
+      "bytes": 38141,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift",
+      "state": " M",
+      "sha256": "901569ef0e9f68f9b063fd84ec5cb1b73311c1c584bfabd6276581184bd1e7fb",
+      "bytes": 145439,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Packages/PrimeNativeRuntime/Sources/PrimeCore/PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+      "state": " M",
+      "sha256": "c6e145eb6d2f047ea5418c8173cab6067eb73e349b2670fc2cd4986870dad294",
+      "bytes": 57071,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Observability/ErgenticsGateEStaticBootstrap/Sources/ErgenticsGateEStaticBootstrap/main.swift",
+      "state": " M",
+      "sha256": "0591ca5ec86e09680ba750147f5dd2fa63c633310164e3330fab3148c4ee1c8b",
+      "bytes": 894,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeNativeNeuralGateHeldSourceClosure.swift",
+      "state": " M",
+      "sha256": "1bbee1a6a6834a4e72db627cee4f7b839f211a3e18bc0919571729902e6ebb8f",
+      "bytes": 86275,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeSecureChildDarwinSubstrate.swift",
+      "state": " M",
+      "sha256": "a18419472029457725b4719cb65badc88db0146add185612cda668fec102d7c5",
+      "bytes": 26889,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeSecureChildKernel.swift",
+      "state": " M",
+      "sha256": "bffde821550882fdc5e69c98946d58e33ee5dd7a3f9a9510dffa3c746c91508b",
+      "bytes": 83714,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeSecureHeldSourceWatch.swift",
+      "state": " M",
+      "sha256": "b128ad678998fb8962c126fd1c54afb3079df12a0cba9c717f28d4e7d18b3500",
+      "bytes": 38385,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeValidationDriverV2FixedProbeExecutor.swift",
+      "state": " M",
+      "sha256": "79b7bd2083a3aaf41a46198ac72401d7a3635c19bee54f81418719c87ee77e45",
+      "bytes": 157193,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Sources/PrimeCore/PrimeValidationDriverV2IsolatedSpawnCanary.swift",
+      "state": " M",
+      "sha256": "c6e145eb6d2f047ea5418c8173cab6067eb73e349b2670fc2cd4986870dad294",
+      "bytes": 57071,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverCore/PrimeValidationDriverV2FixedProbeBinding.swift",
+      "state": " M",
+      "sha256": "42c344decf8798ca467ab21df561fc8aa92d941b21aabd07a68ce3fcde48f461",
+      "bytes": 176399,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Tests/PrimeValidationWorkflow/Sources/PrimeValidationWorkflowDriverV2ShotGovernorCore/PrimeValidationDriverV2ShotGovernor.swift",
+      "state": " M",
+      "sha256": "df08a0a284656f2f2d0ed0d33b4ac394e65fae37f745865783e3e0688a2cacb3",
+      "bytes": 357202,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2BuildBindingTests.swift",
+      "state": " M",
+      "sha256": "d7a5c52b9ef628697e432d910978ba42bdcf44387f0709cd5421a479962f6dd9",
+      "bytes": 32032,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationDriverV2ExecutionRoutingTests.swift",
+      "state": " M",
+      "sha256": "36b412975ae7812021eecf793d8365327f2dc6d709ce60f8a664783f4119434b",
+      "bytes": 13212,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Tests/PrimeValidationWorkflow/Tests/PrimeValidationWorkflowDriverCoreTests/PrimeValidationSwiftPMBuildInventoryAdmissionLiveTests.swift",
+      "state": " M",
+      "sha256": "1697ca71d33b9d1ebb385749789fb2f4876efa6ca119c25ca41be2256373b78d",
+      "bytes": 317116,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-c2-prerequisite-disposal.swift",
+      "state": " M",
+      "sha256": "e51633ee705c88a26f71cf45fa5c532617124c2549a6eba7983ce266342da41a",
+      "bytes": 102813,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-build-controller.rb",
+      "state": " M",
+      "sha256": "98d0c9eca456dc91feabb46c7d41f41760afebd42048cdad8acb02a1423fdc5b",
+      "bytes": 151428,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v7.rb",
+      "state": " M",
+      "sha256": "c502c5ff95f78727f15620404a3dd9dbd398fe235c7ca51f1296efb1c5eab810",
+      "bytes": 56617,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v8.rb",
+      "state": " M",
+      "sha256": "3cd9d2c0ed50672a63036075a55dd4b56f4f4d5a76694bebbb015df880e04f1f",
+      "bytes": 57377,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-fchmod-bundle-build-controller.v9.rb",
+      "state": " M",
+      "sha256": "bff19401c8c06657db155bf4d483942eca8fc132b092c7527e32cb96aede69c4",
+      "bytes": 59788,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-preconsumption-prefix-harness.v4.rb",
+      "state": " M",
+      "sha256": "290a9174e8b02987cc4b96630974c3b3f22eb3e34ce1d88f3ed92a1b9266ae8b",
+      "bytes": 10162,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v6.rb",
+      "state": " M",
+      "sha256": "d4611556e26a76ef615efcccaefd09a72b06d302bc57fbeade878936b914a1e8",
+      "bytes": 51784,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/ergentics-r19-obs11-c2-prefix-capture-runner.v9.rb",
+      "state": " M",
+      "sha256": "e61bb5dda5031b86634188f340cfebbdf3beb5b7c47f1399bc0269e386cc1108",
+      "bytes": 137073,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-e13-readiness-holder.rb",
+      "state": " M",
+      "sha256": "3c91252fd47c91b0517b35b457691255a18c0727ef289a49d4c89a472b09fb76",
+      "bytes": 17153,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r14-guardian.rb",
+      "state": " M",
+      "sha256": "217be9e248430d992991d074f30e02b28a060263e668cb1b341fcb984ddfd956",
+      "bytes": 36524,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r15-guardian.rb",
+      "state": " M",
+      "sha256": "37328fc5f2e538c630216c5204fc61b9b1ff2b54b963df6709c517c9f6d46f19",
+      "bytes": 36538,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r16-guardian.rb",
+      "state": " M",
+      "sha256": "0338368cd479b5625d49429734a9aa61177161477a87e4a86f8e7c289ce1b930",
+      "bytes": 43378,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r17-guardian.rb",
+      "state": " M",
+      "sha256": "7928d90de9197ab160210879b8fdfc851df86ed2171629baed84e2e3eb855d07",
+      "bytes": 43378,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r18-guardian.rb",
+      "state": " M",
+      "sha256": "6ec04adb9c1e97ee290659e8aa808483b2017078cfabee13c0e849318889cbce",
+      "bytes": 77721,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r18-process-actuation-canary.rb",
+      "state": " M",
+      "sha256": "ecf2f772f993175abcd301e2a0aa6de4e2f711ec913f144177eb1e9f20246b1c",
+      "bytes": 71268,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r18-process-generation-canary.rb",
+      "state": " M",
+      "sha256": "56688429c0c2fca61605bae9e73db38314d198d6185593ed263c9a864b0a96da",
+      "bytes": 62051,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r18-successor-stopped-adoption-canary.rb",
+      "state": " M",
+      "sha256": "9b0a1e2e025e04e9476a384a9c0159db0c3e2ce9b6aaa1f769587cf5ebd7fda3",
+      "bytes": 94855,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-coordinated-disposal.rb",
+      "state": " M",
+      "sha256": "6f575dcb34e7539350034c9fbecb3d7b8eae691c0d32c39c30d2b6bde21b5953",
+      "bytes": 73372,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-guardian.rb",
+      "state": " M",
+      "sha256": "948d7085fefb30a5b86e180110c0f598e31f338a6da93f54363a124872182af9",
+      "bytes": 77739,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-local-archive-build-controller.rb",
+      "state": " M",
+      "sha256": "3c90fe00fc65c40b19805474bd4c1a2abff9c5047dd0841a48d1a8e4c74ab013",
+      "bytes": 55988,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-local-archive-build-outer-supervisor.swift",
+      "state": " M",
+      "sha256": "783fc707f5e0613db05a33ae4886c8878faf1e8cdfa4b8b064536f3543f730ce",
+      "bytes": 144877,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-native-leaf-admission-controller.swift",
+      "state": " M",
+      "sha256": "b54eb38a9d50e3c900c956e5f9b3d23dbefea30f7ed6acddfedc1caa17acab4a",
+      "bytes": 68888,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-native-leaf-controller-runtime-supervisor.swift",
+      "state": " M",
+      "sha256": "7e28153f1f2eef589fc9f66935b1753d80ba3c461e85ef08e8865c077f0447bf",
+      "bytes": 115217,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/prime-driver-v2-r19-native-leaf-split-stream-owner.swift",
+      "state": " M",
+      "sha256": "a4d1a4b2a4b723ad454133a8210f3ad2d17ec78cd9101589ae04103787ccbdf3",
+      "bytes": 154245,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/audit-candidate.rb",
+      "state": " M",
+      "sha256": "7434f676afe99e280feed7f462d36e313f7944f5cbca55d3e6791515a4c50e24",
+      "bytes": 9894,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/build-custom.rb",
+      "state": " M",
+      "sha256": "8223ad3735907abe708e6c9a2b78dc10ed224e27d5afc6544135cd2797cdbd2e",
+      "bytes": 134216,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/finalize-control.rb",
+      "state": " M",
+      "sha256": "4987ff0013c308d27a7ad43d667ec661139c3059da11e58a2150b41690af2750",
+      "bytes": 104337,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/publish-candidate.rb",
+      "state": " M",
+      "sha256": "d55ce1105d2acb6f52cb083da0ba7ae94ec376172a52cf344596d4c8d76d5066",
+      "bytes": 19952,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "Apps/ErgenticsPrime/Control/rust-guest-bootstrap-custody-locator.v1.json",
+      "state": "??",
+      "sha256": "0025d165dbab336004cba5fe704587d90f5e98c774152a5d97cd7df7403cd859",
+      "bytes": 3737,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/manifest.json",
+      "state": "??",
+      "sha256": "9c4f2494b76c4be439e90cad31b817716fdb6edcf1f3fcf2ae0f19989af7863f",
+      "bytes": 10785,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/05c46045d9e9b7eeacb9a5306dff99fe7e16a769c5b69af1acf0d62f8a048573",
+      "state": "??",
+      "sha256": "05c46045d9e9b7eeacb9a5306dff99fe7e16a769c5b69af1acf0d62f8a048573",
+      "bytes": 3366,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548",
+      "state": "??",
+      "sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548",
+      "bytes": 18696,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/0d7b7edf135619140011fa9cd2a45bf4be3718940b6f8873080c19bd1d68379c",
+      "state": "??",
+      "sha256": "0d7b7edf135619140011fa9cd2a45bf4be3718940b6f8873080c19bd1d68379c",
+      "bytes": 225,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/0db71074bc1a0c2e4492db9fd59c9c488dd7596ee5e270e1d32dc4e2a757ba10",
+      "state": "??",
+      "sha256": "0db71074bc1a0c2e4492db9fd59c9c488dd7596ee5e270e1d32dc4e2a757ba10",
+      "bytes": 5414,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e",
+      "state": "??",
+      "sha256": "0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e",
+      "bytes": 1343,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834",
+      "state": "??",
+      "sha256": "0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834",
+      "bytes": 7668,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/19059659922c59dea9b402b5a7708c84d632cf4f2f66186437e72801b5597b60",
+      "state": "??",
+      "sha256": "19059659922c59dea9b402b5a7708c84d632cf4f2f66186437e72801b5597b60",
+      "bytes": 6701,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+      "state": "??",
+      "sha256": "402bc03ca6ea52dfa5c950d406eba5de56c189b10fe12e6ba747b9706c1be293",
+      "bytes": 66576,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531",
+      "state": "??",
+      "sha256": "60bccc9ca0bac848aaedabddaaee9a5ebeccb4a3965adf768ceb4477d028a531",
+      "bytes": 2026,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311",
+      "state": "??",
+      "sha256": "67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311",
+      "bytes": 8272,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "state": "??",
+      "sha256": "6e1b2a92646a69ef353491b2cde8104c6d6f311bc4d03bb8cb3bd5bb28f4dfa1",
+      "bytes": 164,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/6e6a6eadd10f454a462df3bb548b65f40f255fde94079828e8af6f58b729756b",
+      "state": "??",
+      "sha256": "6e6a6eadd10f454a462df3bb548b65f40f255fde94079828e8af6f58b729756b",
+      "bytes": 225,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/6e7543e83a095f190cc13310a5cb6d40fa72d3543cbf5998ff197c3cb2153bf5",
+      "state": "??",
+      "sha256": "6e7543e83a095f190cc13310a5cb6d40fa72d3543cbf5998ff197c3cb2153bf5",
+      "bytes": 2016,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea",
+      "state": "??",
+      "sha256": "98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea",
+      "bytes": 1381,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/9e5b284e7479d9bd410fb48b26b4209d17f7dce3b0ee2d4e4d6128c4933877f1",
+      "state": "??",
+      "sha256": "9e5b284e7479d9bd410fb48b26b4209d17f7dce3b0ee2d4e4d6128c4933877f1",
+      "bytes": 568,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/bcb3378254868b23f902cc761358de3365fd9306ce15b27ce2b2cb40534b655b",
+      "state": "??",
+      "sha256": "bcb3378254868b23f902cc761358de3365fd9306ce15b27ce2b2cb40534b655b",
+      "bytes": 3493,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/f766213202bdd5628ab639b5405a05cf8d289d4f49f3877f16f1ea4f2be635c5",
+      "state": "??",
+      "sha256": "f766213202bdd5628ab639b5405a05cf8d289d4f49f3877f16f1ea4f2be635c5",
+      "bytes": 743,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/prime-replay/rust-bootstrap-custody-v1/objects/f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014",
+      "state": "??",
+      "sha256": "f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014",
+      "bytes": 1324,
+      "git_mode": "100644",
+      "family": "provenance_rust",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/SKILL.md",
+      "state": "??",
+      "sha256": "ebf782df25b8696a104a1125915efaffadebacf855328e53085e4114862904cf",
+      "bytes": 7287,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/agents/openai.yaml",
+      "state": "??",
+      "sha256": "c5a63a523e54196e969f7008e679249d7a90bbd99649d7ff1313ba49f279a0fe",
+      "bytes": 286,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/assessment-format.md",
+      "state": "??",
+      "sha256": "f408909b2f4fa8d9b4c6e62d5ec73a93c77d0082def6c856beff91ddee1fcfb4",
+      "bytes": 4293,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/changelog.md",
+      "state": "??",
+      "sha256": "a04b602422f5736c15eed33ce58bf52350780232fe3c87a2446e86c087c56ac7",
+      "bytes": 1667,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/golden-cases.json",
+      "state": "??",
+      "sha256": "ca2700a944a7a23433e4020b87f1fa1764ed730c2f99a46890d2b1349fc67b91",
+      "bytes": 6453,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/harvest-and-extension.md",
+      "state": "??",
+      "sha256": "c54794973acbb0207430b008f6ba15d1a6d126939ce8c8a56706e425f35f9d66",
+      "bytes": 3392,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/install-readiness.md",
+      "state": "??",
+      "sha256": "8b77f87733c09b333837c01388cdc2015bf69ffc5f2ac7b5ec1903a09fa05b9a",
+      "bytes": 2724,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/lesson-lineage.json",
+      "state": "??",
+      "sha256": "d123d42f9c1a44bd32a933841e48306f4b737b9c6591f4e2e217d819d98d0f46",
+      "bytes": 6167,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/metadata-validation.md",
+      "state": "??",
+      "sha256": "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352",
+      "bytes": 4327,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/prime-v2-surfaces.json",
+      "state": "??",
+      "sha256": "7845eff786e19560328facda57ce8eb2f525da5744c43f0ff15cbe7c04229bfb",
+      "bytes": 1603,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/root-analysis-golden.json",
+      "state": "??",
+      "sha256": "4a6084ceb140396c51f3571d854422e85280a24ac112f83438b414950524609c",
+      "bytes": 4469,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/references/root-analysis.md",
+      "state": "??",
+      "sha256": "54b4d6f22cc7583345ded126f2453460e5ba8e797d0b563d35cc5c734f8cca9b",
+      "bytes": 5987,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/scripts/requirements-validation.txt",
+      "state": "??",
+      "sha256": "c9e3d5b71ce6e54e3c1cd3e97da9a4682811879f2ed85455982ccb9a035fd158",
+      "bytes": 17,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/scripts/test_golden_cases.py",
+      "state": "??",
+      "sha256": "6800797ea9807dc9bef0c7f656c97fc0068a37d76010b958d9654c26c190d3d2",
+      "bytes": 8387,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/scripts/test_validate_assessment.py",
+      "state": "??",
+      "sha256": "b244f86f9a841566cb7ea59922289acd13815633b6c8775aab45b42aca782648",
+      "bytes": 10904,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/skills/ergentics-prime-assessment/scripts/validate_assessment.py",
+      "state": "??",
+      "sha256": "815490606d3079aa07bb1e5e7099c4c2341e756b52ff15f0f1b6c7b9479d3d66",
+      "bytes": 13363,
+      "git_mode": "100644",
+      "family": "assessment_skill",
+      "change_class": "PROVENANCE_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/control-file.rb",
+      "state": "??",
+      "sha256": "791371f197b12e6a97971ef8df44f353a89a7fc4015102b24a96feeab0daae77",
+      "bytes": 4164,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    },
+    {
+      "path": "docs/tools/r19-v12-control-builder/tests/control-file-test.rb",
+      "state": "??",
+      "sha256": "60e3ca9092d46cd448f43aba03e94d344ee3bebb78e2c999f957564d7f0845bd",
+      "bytes": 9046,
+      "git_mode": "100644",
+      "family": "prior_reviewed_repair",
+      "change_class": "IMPLEMENTATION_FIX"
+    }
+  ],
+  "releases": [
+    {
+      "name": "agents",
+      "version": "0.1.0",
+      "source": "/Users/ergentics/2026-09-20/er/outputs/ergentics-agents-v0.1.0",
+      "repository_root": "docs/ergentics/agents/0.1.0",
+      "manifest_sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596",
+      "files": [
+        {
+          "path": "docs/ergentics/agents/0.1.0/CHANGELOG.md",
+          "bytes": 690,
+          "sha256": "4bea484dfea0cc4ee72eeaadfb606290600ae2a0b990098de1744dc3500ce360",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/LOAD.md",
+          "bytes": 3383,
+          "sha256": "36ca9e17782f816e0b1499b227008842ff637b9a975b1212754ffd23c483c925",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/MANIFEST.json",
+          "bytes": 2808,
+          "sha256": "d4b7fc5037d5f0a1ec504e39c2af65a14ce2ddc4954561c6aba29497ca040596",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/README.md",
+          "bytes": 4116,
+          "sha256": "11bf77a15d1990cf69b9792d2531396cbb13e072731afdb79660dab4e3f02e60",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/adapters/codex/README.md",
+          "bytes": 2323,
+          "sha256": "852d1e60b8071089007a158c6b1930aedc8020a5dfd46ffa6a371fad680e90a6",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/adapters/codex/config.fragment.toml",
+          "bytes": 515,
+          "sha256": "2c6ca3b9dd34692ab23f06435cd0ac81c919c255b35e9c48bdb25b3e2bdf7a8e",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/adapters/codex/roles/ergentics_cpp.toml",
+          "bytes": 8613,
+          "sha256": "a3e23ea40160fbf31e10fdf41435bb31b0ebe937d5502c04fb0845461e6fccfb",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/adapters/codex/roles/ergentics_swift_c.toml",
+          "bytes": 8361,
+          "sha256": "21e3eaab29612edf26b50a0565e50a4116d3aa3a15496188a2e69f13aa309b34",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/agents.json",
+          "bytes": 617,
+          "sha256": "c8473f27dd61b5dc19d01ec8d9f6a1867c7e559ac6d3561ee7e699e2c639b5b7",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/agents/ergentics_cpp/AGENT.md",
+          "bytes": 2228,
+          "sha256": "c25453b511b63a42b5cd95a304f28ad4501d9024e1163f973ba239526b27d8ee",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/agents/ergentics_cpp/agent.json",
+          "bytes": 1118,
+          "sha256": "23ee293cce8efef7306bf95a55cb41beb7adb96169969ac716ca86109954f647",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/agents/ergentics_swift_c/AGENT.md",
+          "bytes": 1972,
+          "sha256": "0b906b5f4ce7032895dd5d80a095bccc1738e5817bae6a0bff2259951068879c",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/agents/ergentics_swift_c/agent.json",
+          "bytes": 1120,
+          "sha256": "efd243cd5c1c41e7b4d5dc538e9169a617829a848309da8693261426b7d1e930",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/contracts/load-receipt.schema.json",
+          "bytes": 4392,
+          "sha256": "6aadb78e2011f756e43599a109ea08d08663d8e1b95088a7c2428d4f82b9f74b",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/contracts/run-record.schema.json",
+          "bytes": 2888,
+          "sha256": "c826ff7a7ae54b3680ec6a16f2ac8e089b5f7db51fa3e91a7fd0a0cd586296a1",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/references/lineage.json",
+          "bytes": 5434,
+          "sha256": "23d723bbae17fbefc32a7633053716945872956a8655dd1926a7d59406545da5",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/agents/0.1.0/shared/OPERATING-CONTRACT.md",
+          "bytes": 5571,
+          "sha256": "1fbd1d438d46bbf2bb03a908f8c02233e2f020c24dd038d1a528505579a76021",
+          "git_mode": "100644"
+        }
+      ]
+    },
+    {
+      "name": "profiles",
+      "version": "0.1.0",
+      "source": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profiles-v0.1.0",
+      "repository_root": "docs/ergentics/profiles/0.1.0",
+      "manifest_sha256": "049117e198ebea67fa4aa38661d49c62d504692a837cee1fbdc661c7df8d58c6",
+      "files": [
+        {
+          "path": "docs/ergentics/profiles/0.1.0/CHANGELOG.md",
+          "bytes": 497,
+          "sha256": "0f4156d809a582ddef6e267d583631b27d09dcacd92b1891a1a874b10084d11f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/CONTRACTS.md",
+          "bytes": 5665,
+          "sha256": "016d41efe63161e9f4393535898ba04ae635223fd05e147620a19e2642f6b3e8",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/CORPUS.md",
+          "bytes": 2539,
+          "sha256": "81c55b449dd1371d858ae34fb6e00c12a7b1b512ece972fb47fdbf523dab055e",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/LOAD.md",
+          "bytes": 2922,
+          "sha256": "1118b4d730068c56cce46d7064546e50a57786b2e76df2e9d1b2fcf237ec7df3",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/MANIFEST.json",
+          "bytes": 3054,
+          "sha256": "049117e198ebea67fa4aa38661d49c62d504692a837cee1fbdc661c7df8d58c6",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/README.md",
+          "bytes": 2455,
+          "sha256": "bd00d4c9aefecf223df6eabab473210c72f17004da0240233a77b6c9c69951a4",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/adapters/codex.md",
+          "bytes": 1350,
+          "sha256": "899a5ff80d8a87880f423630f308aa9886817154e864984deddc14c37cce6a3b",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/adapters/portability.md",
+          "bytes": 1314,
+          "sha256": "f26cc6e75d2d080fa22e066c9a7bf1a72d5453fab339ce084982c512020b4468",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/INDEX.json",
+          "bytes": 7857,
+          "sha256": "5cd67f5a562261434d5b0cdcac970a8779d109dc80ec5fc2e4ce59cd0b5cd95f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/bounded-polling-control.md",
+          "bytes": 481,
+          "sha256": "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/bounded-supervision.md",
+          "bytes": 420,
+          "sha256": "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/cpp-file-identity.md",
+          "bytes": 499,
+          "sha256": "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/evidence-stages.md",
+          "bytes": 538,
+          "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/sharing-and-processing.md",
+          "bytes": 705,
+          "sha256": "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/corpus/entries/swift-c-boundary.md",
+          "bytes": 405,
+          "sha256": "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/profiles/ergentics_cpp.json",
+          "bytes": 2792,
+          "sha256": "65d7b7684d4ac0238c48bbd677f01f11aeb5fb4f2d95ac9c36e3de7fed5784b2",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/profiles/ergentics_swift_c.json",
+          "bytes": 2791,
+          "sha256": "b511e3123cdfe44aa6b14c99eb8efb9e2ddc68ae532d5297b69a6a347900698d",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/scripts/profile_packet.rb",
+          "bytes": 28257,
+          "sha256": "63ed495b1b26732133141205074bc9321e7d431c9a25b87ad3e30380eb55e459",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/profiles/0.1.0/tests/check_profile_packet.rb",
+          "bytes": 23558,
+          "sha256": "d0a8d7fbc5dfd98aacceca8c253d6e076133a76609002b725eea699bb6f924e1",
+          "git_mode": "100644"
+        }
+      ]
+    },
+    {
+      "name": "corpus",
+      "version": "0.1.0",
+      "source": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profile-corpus-v0.1.0",
+      "repository_root": "docs/ergentics/corpus/0.1.0",
+      "manifest_sha256": "5291986352b17a7429ff9c4b37154667af11f26a6f811d220741f2216bb3f000",
+      "files": [
+        {
+          "path": "docs/ergentics/corpus/0.1.0/CHANGELOG.md",
+          "bytes": 451,
+          "sha256": "f099b8b9491254e00241a19d05024979222b05bfc7f384098e3cfaa7079d3058",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/INDEX.json",
+          "bytes": 11293,
+          "sha256": "9fb0ca3b3991074b5c573ffe89757cfd200723c837048ab716521a0da82368b5",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/MANIFEST.json",
+          "bytes": 1801,
+          "sha256": "5291986352b17a7429ff9c4b37154667af11f26a6f811d220741f2216bb3f000",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/README.md",
+          "bytes": 2072,
+          "sha256": "9baa7a065a9d18c7c86c2d64970d3d68c3b153d9cb7c1f3181b40fe596d9c0f0",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/bounded-polling-control.md",
+          "bytes": 481,
+          "sha256": "4ef7d29d4cc382599170c54fb61c4bb69825de78b4469630ac2e90a13b060a48",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/bounded-supervision.md",
+          "bytes": 420,
+          "sha256": "4c52d243a6056af3f1e1bce02c6617623a1af7b46b07e922bc85997367c9fc73",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/cpp-file-identity.md",
+          "bytes": 499,
+          "sha256": "9a1f31c68d083760c2d9637c196daef53a3717566a0104a4182e6f5c0da94cf4",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/evidence-stages.md",
+          "bytes": 538,
+          "sha256": "fa7afb83b35e03d9a74ba05d56c0e69744b40d512bedd723eed892f77c623d06",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/phase-scoped-observations.md",
+          "bytes": 1836,
+          "sha256": "b5a34d0a0f2bb2455a2e15f10a9d86a3a9c5dfd446148da02651185d8120b346",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/sharing-and-processing.md",
+          "bytes": 705,
+          "sha256": "e15f8b957d5ee7ede4c3e021efaf0c78140e7effe6369d53399170eb49963ec0",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/ergentics/corpus/0.1.0/entries/swift-c-boundary.md",
+          "bytes": 405,
+          "sha256": "b731a7e0363821d4ec61da90c1cca4388e65566738bde1d4c88d2c0293e76669",
+          "git_mode": "100644"
+        }
+      ]
+    },
+    {
+      "name": "profile-loader",
+      "version": "0.1.1",
+      "source": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profile-loader-v0.1.1-candidate/ergentics-profile-loader",
+      "repository_root": "docs/skills/ergentics-profile-loader",
+      "manifest_identity": {
+        "path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profile-loader-v0.1.1-candidate-manifest.json",
+        "bytes": 1423,
+        "sha256": "209d4bfe1ecab085c7cd366a78b4ab509385e5f941c569db8fc2c3726e037e42"
+      },
+      "files": [
+        {
+          "path": "docs/skills/ergentics-profile-loader/SKILL.md",
+          "bytes": 5334,
+          "sha256": "b72a165b11bac60e16bbe22501d2642bdd406fecb2c9117600afd3dc6b156089",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/agents/openai.yaml",
+          "bytes": 258,
+          "sha256": "ab74837f4a7fde9f5dfe941a69df643a1c4c4c2a6f45b77129da5e94d985f29a",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/assets/load-observation.json",
+          "bytes": 1206,
+          "sha256": "2242a694c354c4729cc17039acd297ccbc6249fe30e86b0781ed842b8b7c4ec9",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/references/changelog.md",
+          "bytes": 640,
+          "sha256": "9a7bdfd2cc94c396b03b1df47c77aefad2f8a55b155c3a9c898563b09525f65f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/references/installed-bindings.json",
+          "bytes": 1580,
+          "sha256": "d43a8fd65560b24fd3d0e96f3af4c11e84f7def45eadccc7fd6f06c16cff0ca8",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/references/lineage-and-extension.md",
+          "bytes": 2786,
+          "sha256": "9f845cdfa622060b5737e427e862652dd0ca788cec3b950db09dfe01fff683d9",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/references/metadata-validation.md",
+          "bytes": 4327,
+          "sha256": "b05b6723249294b56f439e8168449074c76cb691d91a1deed4eab6ac20151352",
+          "git_mode": "100644"
+        },
+        {
+          "path": "docs/skills/ergentics-profile-loader/scripts/requirements-validation.txt",
+          "bytes": 17,
+          "sha256": "c9e3d5b71ce6e54e3c1cd3e97da9a4682811879f2ed85455982ccb9a035fd158",
+          "git_mode": "100644"
+        }
+      ]
+    }
+  ],
+  "excluded_preexisting_work": [
+    {
+      "path": "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result-binding.e8aa9e68.v1.json",
+      "sha256": "66db52a349dfc1d32194d7f8b73c1e6d12e90f4c633b6c4f94b2568222527c31",
+      "disposition": "PRESERVED_SEPARATELY_UNCHANGED; NOT_SELECTED_FOR_THIS_OVERLAY"
+    },
+    {
+      "path": "Observability/ErgenticsGateEDriverV2Control/Control/gate-e-driver-v2-shot-launch-result.e8aa9e68.v1.json",
+      "sha256": "0904ac3d16a690017e462fcf63699a2324c3c8ad75f4e14d768daa1085ae28d8",
+      "disposition": "PRESERVED_SEPARATELY_UNCHANGED; NOT_SELECTED_FOR_THIS_OVERLAY"
+    },
+    {
+      "path": "Observability/ErgenticsProvenance/Sources/GuestStorage.swift",
+      "sha256": "9df9392e2a2a41bb45cdcdd1215abebd91facc2e93e28edfacd783c350800a28",
+      "disposition": "PRESERVED_SEPARATELY_UNCHANGED; NOT_SELECTED_FOR_THIS_OVERLAY"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/ergentics/2026-09-20/er/outputs/prime-root-analysis-package-005/EVIDENCE-INDEX.json",
+      "sha256": "58c73d0e1c79b1d45ef1dc9454b41780ea4307b30b39e0cc004ab88cb8962163",
+      "bytes": 348722
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/outputs/prime-root-analysis-package-005/ASSESSMENT-VALIDATION.json",
+      "sha256": "d4c59a6040d828b00bec85663370cd1de934a57d7c01b87d50501d0d45db6e28",
+      "bytes": 920
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/outputs/hypervisor-fit-007/MANIFEST.json",
+      "sha256": "adf384a130ee7d0981c08deaca37c1011c98d60413c29124e9107b2641b7c7f4",
+      "bytes": 9516
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/outputs/hypervisor-fit-007-receipt.json",
+      "sha256": "7b59faf5c9fd50dc870dcf2e7fe2aa9c9b4c2aa4c79fc13065a681ef3c3961ca",
+      "bytes": 1240
+    },
+    {
+      "path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profile-installation-003.json",
+      "sha256": "dc25933e1486b46125e9d0fda1cf621d48b380812a491d91918ac995880a03e0",
+      "bytes": 2781
+    }
+  ],
+  "policy": {
+    "path": "/Users/ergentics/2026-09-18/c/outputs/ergentics-alignment/ERGENTICS-ALIGNMENT.md",
+    "bytes": 16917,
+    "sha256": "c0c8b4f64cb9245d25f6b9e9ebff30739338d4c0a7f7be90b497c602cef7e8d1"
+  },
+  "change_class": {
+    "repairs": "Original IMPLEMENTATION_FIX/PROVENANCE_FIX classifications retained.",
+    "release_custody_and_closeout_notes": "PROVENANCE_FIX",
+    "protocol_amendment": false
+  },
+  "native_qualification": "OPEN; historical results retain exact source/phase scope",
+  "new_runtime_attempt": false,
+  "corpus_promoted": false,
+  "auto_harvest": "OFF after completed bounded Prime release",
+  "durability_note": "This pre-commit record binds selected bytes. The enclosing Git commit/tree supplies committed identity; publication is separate.",
+  "relocated_evidence": [
+    {
+      "id": "profile-corpus-evidence-002",
+      "declared_by": [
+        "docs/ergentics/corpus/0.1.0/README.md",
+        "docs/ergentics/corpus/0.1.0/INDEX.json"
+      ],
+      "original_relative_locator": "../ergentics-profiles-evidence-002",
+      "classification": "EXTERNAL_HISTORICAL_EVIDENCE_LOCATOR",
+      "external_root": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profiles-evidence-002",
+      "evidence_index": {
+        "path": "/Users/ergentics/2026-09-20/er/outputs/ergentics-profiles-evidence-002/EVIDENCE-INDEX.json",
+        "bytes": 40470,
+        "sha256": "9728d60d0d42c40b4513d55274ac0af6834a8dc987da9fdfc24f969f8befe1ab"
+      },
+      "included_in_repository": false,
+      "original_release_bytes_modified": false,
+      "automatic_intake": false,
+      "verification_scope": "Current index identity and directory presence; original reviewed payload/check records retain their own validation, without a new whole-bundle payload rehash.",
+      "relocation_note": "The original relative location describes the issued output layout. It is not resolved relative to this repository copy. Source checkout is intentionally not a self-contained evidence archive."
+    }
+  ]
+}

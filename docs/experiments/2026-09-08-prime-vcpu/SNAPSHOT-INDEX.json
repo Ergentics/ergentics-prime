@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "directory": "../0008-prime-vcpu-runtime",
+      "manifest": {
+        "path": "file-manifest.json",
+        "byteCount": 5813,
+        "sha256": "75f655598eaa0bd364a347669478821c02552eeb11369f2a71edd4ff3d8f9527"
+      },
+      "fileCount": 34,
+      "byteCount": 32713381
+    },
+    {
+      "directory": ".",
+      "manifest": {
+        "path": "FILE-MANIFEST.json",
+        "byteCount": 370466,
+        "sha256": "abda163071e97b022f58bafd459d59dca12d51c8bb7c983b8af4f69b2246ac23"
+      },
+      "fileCount": 1954,
+      "byteCount": 53144520
+    }
+  ],
+  "scope": "Runtime0008 and actual vCPU comparison02; original checkpoint builds retain their prior seals.",
+  "excludedUnsealedAdministrativeFiles": [
+    "SNAPSHOT-INDEX.json",
+    "VERIFICATION.json",
+    "SOURCE-INTEGRATION.json",
+    "prime-vcpu-source.bundle"
+  ]
+}

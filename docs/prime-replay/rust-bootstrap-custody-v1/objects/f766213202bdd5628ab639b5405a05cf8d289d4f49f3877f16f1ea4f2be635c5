@@ -1,0 +1,26 @@
+{
+  "kernel.rs": {
+    "bytes": 1381,
+    "sha256": "98a6d4f3b25e06f40a9dd07a79ff6b080c334094ad8dd9bb79153f1b4c16a9ea"
+  },
+  "entry.S": {
+    "bytes": 1343,
+    "sha256": "0e64445dcbac6e791b51e436eab5ef097cd26e1edf9638be37729d030713425e"
+  },
+  "linker.ld": {
+    "bytes": 1324,
+    "sha256": "f91585881dad84689bbe1f48c5ed2587ce7cbf3991bb757c35f0c459e511c014"
+  },
+  "inspect.rb": {
+    "bytes": 18696,
+    "sha256": "0bb620c0a079b25850caaa2128715d965b33b6332bec26b0ed78fa6708c69548"
+  },
+  "inspector-tests.rb": {
+    "bytes": 7668,
+    "sha256": "0e6fb2b03b2948bae283ad3a29067b461b6d4ac5716dc3bc5255316f3d5ab834"
+  },
+  "build.rb": {
+    "bytes": 8272,
+    "sha256": "67f41eb179e02e31a65bb645bfcc464511fa4e36215bef16325cc7088d304311"
+  }
+}

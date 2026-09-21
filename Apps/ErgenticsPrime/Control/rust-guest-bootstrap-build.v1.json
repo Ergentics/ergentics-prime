@@ -1,0 +1,83 @@
+{
+  "schema": "ergentics.provenance.rust-guest-bootstrap-build.v1",
+  "record_kind": "build_only_contract_not_execution_evidence",
+  "date": "2026-08-30",
+  "purpose": "Build and independently inspect a freestanding Rust successor to the synthetic arithmetic guest. No guest or resulting executable is run.",
+  "baseline": {
+    "source": "Guest/doorbell.S",
+    "embedded_image_bytes": 92,
+    "embedded_image_sha256": "67290a73b53047374096142356a35338f6722d724586cc10373dfecab9a4cc44",
+    "host_runtime": "Sources/HypervisorGuest.c",
+    "unchanged": true,
+    "old_pass_applies_to_successor": false
+  },
+  "scope": {
+    "new_source_directory": "Guest/RustBootstrap",
+    "new_control_and_result_records": "Control",
+    "readme_index_update": true,
+    "production_source_changes": false,
+    "xcode_project_changes": false,
+    "new_guest_launches": 0,
+    "resulting_host_test_binary_executions": 0,
+    "network_in_guest_or_app": false,
+    "high_value_material": false,
+    "git_mutation": false,
+    "gate_e": "ABSTAIN",
+    "authority_vector": "00000000"
+  },
+  "toolchain": {
+    "version": "1.98.0",
+    "release_date": "2026-08-20",
+    "host": "aarch64-apple-darwin",
+    "target": "aarch64-unknown-none-softfloat",
+    "directory": "/Users/ergentics/Developer/ErgenticsToolchains/rust-1.98.0-guest-bootstrap",
+    "components": ["rustc", "rust-std-aarch64-unknown-none-softfloat", "llvm-tools-preview"],
+    "cargo_or_registry_dependencies": false,
+    "shell_profile_changes": false,
+    "installation_in_guest": false,
+    "download_trust": "Official HTTPS release manifest and component SHA-256 checks. Retain manifest and archives; this is not an independently authenticated reproducible compiler or a host attestation.",
+    "compiler_and_linker_execution": "Only the host compiler, linker and offline analyzers execute. No output image is executed."
+  },
+  "guest": {
+    "runtime": ["no_std", "no_main", "panic abort", "no allocator", "no OS calls", "no guest environment", "no file or network access"],
+    "image": "ELF64 little-endian AArch64 ET_EXEC is an analysis container. The eventual guest payload is exactly the inspected .text bytes, loaded at a fixed address; no runtime ELF loader is added.",
+    "entry": "0x10000000",
+    "maximum_image_bytes": 16384,
+    "code": {"base": "0x10000000", "bytes": 16384, "future_guest_permissions": "RX"},
+    "request": {"base": "0x10004000", "bytes": 16384, "future_guest_permissions": "R", "words_u64_le": [1, 1, 19, 23], "remaining_bytes_zero": true},
+    "reply": {"base": "0x10008000", "bytes": 16384, "future_guest_permissions": "RW_NX", "expected_words_u64_le": [1, 1, 42, 0], "remaining_bytes_zero": true},
+    "doorbell": {"base": "0x1000c000", "mapped": false, "store_width_bytes": 4, "register": "W4", "value": 1, "pc": "Derived from the linked epr_guest_doorbell symbol, never the baseline offset."},
+    "stack": {"bottom": "0x10010000", "top_exclusive": "0x10014000", "bytes": 16384, "initial_sp": "0x10014000", "alignment": 16, "future_guest_permissions": "RW_NX", "initialization": "Future host supplies a zeroed disjoint mapping; assembly sets SP before calling Rust.", "not_in_reply_or_elf_load_segment": true},
+    "machine": "Future EL1h with DAIF masked, baseline SCTLR_EL1 0x30d00800, no MMU/cache, no assumed FP/SIMD/SVE/LSE/PAC enablement. Current host is not upgraded by this build.",
+    "entry_count_on_future_success": 1,
+    "future_resume_after_exit": false,
+    "sections": "One RX .text load segment may contain read-only constants. .data/.bss/TLS/constructors/destructors/GOT/PLT are forbidden through zero-size linker assertions and independent ELF inspection. No unwind/runtime/dynamic imports or relocations remain.",
+    "ownership": "Assembly owns shared-memory reads, acquire/release, stack setup and deliberate fault. Rust receives four copied u64 values through the C ABI; it owns no host/guest pointers.",
+    "rust_result_abi": "One u64 in X0: 42 means the exact fixed request validated and checked addition succeeded; 0 means rejection. This private fixed-operation ABI has no generic request or command surface.",
+    "publication": "After checking Rust returned exactly 42, assembly reloads caller-clobbered pointers, writes reply ABI/sum/status, publishes sequence using STLR X4,[X1], DSB SY, then STR W4,[X3] at the unmapped doorbell.",
+    "rejection": "Unexpected Rust result branches to a named BRK before any reply publication. Panic has a distinct named BRK. If any trap is unexpectedly resumed, a local branch loop prevents fallthrough; future host must never resume.",
+    "no_malicious_host_protection_claim": true
+  },
+  "build_and_inspection": {
+    "source_snapshots": "Two separately copied and hash-compared source sets in disjoint retained A/B directories, not one reused compiler output.",
+    "path_stability": "Relative source/linker paths, fixed crate metadata, remapped source prefixes, no debug info, static relocation model, no build id, no incremental state or Cargo build scripts.",
+    "minimum_comparison": ["Exact flat guest bytes", "ELF container bytes", "Entry and .text bounds", "Load segment permissions", "Required symbol addresses", "Map, disassembly, section, symbol and relocation observations"],
+    "static_acceptance": [
+      "Entry exactly code base; single RX load segment and no unexpected allocated content",
+      "No unresolved symbol, dynamic dependency, TLS or residual relocation",
+      "Stack initialized and bounded before Rust call; no recursion or runtime calls",
+      "All machine instructions inspected for baseline support and intended control flow",
+      "Doorbell opcode and release/barrier prefix match the frozen assembly contract",
+      "Compile-time positive/rejection assertions pass without executing an output binary",
+      "Independent bounded ELF parser rejects malformed and mutated inputs"
+    ],
+    "retention": "Retain source snapshots, exact invocation/environment, compiler/analyzer identities, stdout/stderr, ELF/map/disassembly, extracted image, inspections and comparisons. Failures remain recorded; ordinary development successor builds use new directories.",
+    "limits": "Build reproducibility and static inspection are not execution correctness, continuous host integrity, VM attestation, energy measurement or authority closure."
+  },
+  "before_any_later_boot": [
+    "Independently review the final image and successor-specific host/receipt integration",
+    "Add the separate stack mapping and exact new image/trap/machine-state checks",
+    "Pass pure verifier positive and negative tests",
+    "Retain signed host identity and use an explicitly scoped synthetic development invocation"
+  ]
+}

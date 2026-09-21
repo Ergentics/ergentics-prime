@@ -1,0 +1,194 @@
+{
+  "schema": "ergentics-r19-obs11-c1-source-checkpoint-v1",
+  "status": "C1_SOURCE_IMPLEMENTED_STATIC_AUDITED_COMPILER_BUILD_TEST_RUN_ABSTAIN",
+  "predecessor": {
+    "commit": "633d4cdf5a5fa409fed315b2e1913a2304c4ff18",
+    "tree": "e9eff0086feeca57fefa43db951cfbecf9006f51",
+    "c0_artifact_path": "artifacts/r19-obs11-retained-r19-projection-chain-2026-08-26/r19-obs11-c0-readiness.v1.json",
+    "c0_artifact_bytes": 18035,
+    "c0_artifact_sha256": "e68dd4f83bd59f66d94824c4e9476a1b8ea70c2383dd24dd0c3a846d7f72bf54",
+    "c0_artifact_git_blob": "6954a3b29ea1c4a603b18615a2228fb40dcdbba3"
+  },
+  "authority": {
+    "authority_vector": "00000000",
+    "authoritative": false,
+    "gate_e": "ABSTAIN",
+    "may_feed_controller": false,
+    "prose_may_supply_fact": false,
+    "scientific_outcome": "ABSTAIN"
+  },
+  "operations": {
+    "swift_commands": 0,
+    "compiler_commands": 0,
+    "build_commands": 0,
+    "test_commands": 0,
+    "runner_executions": 0,
+    "projection_roots_created": 0,
+    "receipt_roots_created": 0,
+    "signals": 0,
+    "network_actions": 0,
+    "github_actions": 0,
+    "cleanup_actions": 0
+  },
+  "static_verification": {
+    "git_diff_check": "PASS",
+    "swift_lexical_delimiter_files": 30,
+    "swift_lexical_delimiter_status": "PASS",
+    "changed_source_manifest_entries": 19,
+    "changed_source_manifest_bytes": 635601,
+    "frozen_namespace_count": 18,
+    "frozen_namespace_unique_count": 18,
+    "frozen_namespaces_observed_absent": 18,
+    "source_prefix_count": 8,
+    "source_prefix_sha256_and_tail_lf_join": "PASS_EXACT",
+    "rule_resource_count": 5,
+    "rule_resource_bytes_and_sha256_join": "PASS_EXACT",
+    "nofile_soft_limit_observed": 1048575,
+    "nofile_minimum_required": 256,
+    "closed_runner_forbidden_process_network_git_surface": "PASS_STATIC_SOURCE_SCAN",
+    "tracked_build_output_changes": "ABSENT"
+  },
+  "source_closure": {
+    "parent": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45",
+      "device": 16777231,
+      "inode": 13612594,
+      "mode": "0755",
+      "uid": 501,
+      "gid": 20,
+      "link_count": 37,
+      "bytes": 1184
+    },
+    "root": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/r19-observability-eaf9b76-v1",
+      "device": 16777231,
+      "inode": 17509052,
+      "mode": "0500",
+      "uid": 501,
+      "gid": 20,
+      "link_count": 4,
+      "bytes": 128
+    },
+    "journal": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/r19-observability-eaf9b76-v1/r19-observations.v1.jsonl",
+      "device": 16777231,
+      "inode": 17509053,
+      "mode": "0400",
+      "uid": 501,
+      "gid": 20,
+      "link_count": 1,
+      "bytes": 17557,
+      "sha256": "6f90d4709ad136c356d75ee28ba49a71854215ed386721e734a42eac86f56743"
+    },
+    "sqlite_sibling": {
+      "path": "/Users/ergentics/Documents/Codex/2026-08-09/resume-latin-roadmap-pr45/r19-observability-eaf9b76-v1/r19-observations.v1.sqlite3",
+      "device": 16777231,
+      "inode": 17509057,
+      "mode": "0400",
+      "uid": 501,
+      "gid": 20,
+      "link_count": 1,
+      "bytes": 1802240,
+      "sha256": "cc3cc4489b4dee8218173721051ebc0d9be12a26a8ff1f8e3fe4e7fa6f5b4032"
+    }
+  },
+  "implemented_invariants": {
+    "runner_surface": "PACKAGE_ZERO_ARGUMENT_RUNFROZEN_ONLY",
+    "caller_execution_parameters": 0,
+    "main_contract": "ARGV_COUNT_1_EMPTY_ENV_CWD_PRIVATE_VAR_EMPTY_STDIN_DEV_NULL",
+    "source_admission": "DESCRIPTOR_HELD_PARENT_ROOT_JSONL_SQLITE_FULL_LIFETIME",
+    "resource_admission": "DESCRIPTOR_HELD_EXACT_FIVE_RESOURCE_BYTES_FULL_LIFETIME",
+    "projection_chain": "F01_TO_F08_EXACT_PREFIX_AND_IMMEDIATE_PREDECESSOR_READER_ADMISSION",
+    "genesis_machine_prefix": "NOT_APPLICABLE_GENESIS_NO_PREDECESSOR",
+    "successor_machine_prefix": "PASS_EXACT_ONLY_AFTER_PUBLIC_PREFIX_EQUALITY",
+    "receipt_chain": "CANONICAL_SELF_HASH_FREE_PAYLOAD_AND_IMMEDIATE_PREVIOUS_FRAME_WITH_LF_SHA256",
+    "receipt_merkle": "LENGTH_FRAMED_RFC6962_LARGEST_POWER_OF_TWO_SPLIT",
+    "failure_present_namespace": "TERMINAL_ONLY_AFTER_BUILDER_ORIGIN_TOKEN_EXACT_FOUR_LEAVES_0500_ROOT_ROOT_AND_PARENT_SYNC_AND_POST_BARRIER_REVALIDATION",
+    "failure_partial_namespace": "INCOMPLETE_RECEIPT_PREFIX_NO_TERMINAL",
+    "failure_snapshot_commitment": "BOUNDED_STRING_PREIMAGE_EMITTED_AND_LENGTH_FRAMED_SHA256_RECOMPUTED_BY_RECEIPT_CODEC",
+    "retained_projection_lifetime": "ALL_COMPLETED_PROJECTION_DESCRIPTORS_HELD_AND_REVALIDATED",
+    "retry": false,
+    "cleanup": false
+  },
+  "authored_tests": {
+    "count": 11,
+    "execution_count": 0,
+    "status": "ABSTAIN_NOT_RUN_UNTIL_C2",
+    "classes": [
+      "DisposalR19OBS11ProjectionChainTests",
+      "R19OBS11ProjectionChainStaticSurfaceTests"
+    ]
+  },
+  "independent_reviews": [
+    {
+      "scope": "HELD_DESCRIPTOR_ORIGIN_DURABILITY_AND_LIFETIME",
+      "status": "NO_BLOCKER",
+      "residual": "FINAL_REVALIDATION_TO_RENAME_EXCL_WINDOW_AND_CRASH_AFTER_RECEIPT_RENAME_FINAL_OR_STAGING_ABSTAIN"
+    },
+    {
+      "scope": "MACHINE_PREFIX_RECEIPT_HASH_CHAIN_MERKLE_AND_ORDINALS",
+      "status": "NO_BLOCKER",
+      "residual": "STANDALONE_INGESTOR_DOES_NOT_YET_CROSS_BIND_ALL_DUPLICATED_CURRENT_NAMESPACE_FIELDS_TO_VARIABLE_SNAPSHOT_COMPONENT_GRAMMAR"
+    },
+    {
+      "scope": "C1_SCOPE_API_AUTHORITY_AND_TEST_HOST_BOUNDARY",
+      "status": "NO_BLOCKER",
+      "residual": "COMPILER_BUILD_TEST_AND_RUNTIME_REMAIN_ABSTAIN"
+    },
+    {
+      "scope": "STATIC_SWIFT_COMPILE_LIKENESS",
+      "status": "NO_BLOCKER",
+      "residual": "SWIFT_6_2_TYPECHECK_AND_DARWIN_C_IMPORT_REMAIN_ABSTAIN"
+    }
+  ],
+  "residuals": [
+    "COMPILER_BUILD_TEST_AND_RUN_NOT_EXECUTED",
+    "BUNDLE_RESOURCE_RUNTIME_LAYOUT_AND_MODE_NOT_YET_ADMITTED",
+    "MACH_O_EXECUTABLE_IDENTITY_NOT_YET_MEASURED",
+    "FINAL_CHECK_TO_RENAME_EXCL_SAME_UID_RACE_REMAINS_NAMED",
+    "CRASH_AFTER_EXCLUSIVE_RECEIPT_RENAME_IS_FINAL_OR_STAGING_ABSTAIN",
+    "PRESENT_NAMESPACE_BEFORE_DURABLE_BUILDER_PREPARATION_LEAVES_ONLY_AN_INCOMPLETE_RECEIPT_PREFIX",
+    "STANDALONE_RECEIPT_INGESTOR_CROSS_FIELD_SNAPSHOT_GRAMMAR_HARDENING_DEFERRED"
+  ],
+  "next": {
+    "checkpoint": "R19_OBS11_C2_BUILD_ONLY_IDENTITY_ADMISSION",
+    "requires_separate_freeze": true,
+    "allowed": [
+      "TWO_DISJOINT_RELEASE_BUILDS",
+      "RAW_EXECUTABLE_BYTES_SIZE_SHA256_MACH_O_UUID_LOAD_COMMAND_AND_CODE_IDENTITY_COMPARE",
+      "EXACT_FIVE_RESOURCE_BYTES_LAYOUT_MODE_AND_HASH_CLOSURE_COMPARE",
+      "STATIC_TEST_TYPECHECK_OR_NONEXECUTING_TEST_BUILD_IF_SEPARATELY_FROZEN"
+    ],
+    "forbidden": [
+      "RUNNER_EXECUTION",
+      "PROJECTION_OR_RECEIPT_ROOT_CREATION",
+      "GATE_E_PROMOTION",
+      "AUTHORITY_CLOSURE",
+      "GITHUB",
+      "NETWORK",
+      "CLEANUP_OR_RETRY"
+    ]
+  },
+  "content_manifest": [
+    {"path":"Observability/ErgenticsInterface/Package.swift","bytes":2189,"sha256":"4558792ce1724002121730e95b74ed2a262d518da4443731c3d073609f80688c","git_blob":"3c8d14e7157868ca7e99e01d3ec8bb9fd4086a73"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalDurableReceiptJournal.swift","bytes":26201,"sha256":"1fea41b10017afaa73534c9796c4412b3512c8d766965bf076fe436d14cc147c","git_blob":"392a879bd1346b1cd72bd432c513fedc6422f392"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalEvidenceBuilder.swift","bytes":25553,"sha256":"c543a344d5fb81ab455b6eaa9dec931fb2c27443226fdb3810f73397f9a902c3","git_blob":"1f004a6d1f7b0dcd3f5e5c7b3aa1085add9ba335"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalGraphBuilder.swift","bytes":157113,"sha256":"139d41bf5ff22e89a9536c2a9afe0ec0e7b025f5d78c08250ca54f0d1e7ad583","git_blob":"369db9657fd418f835d70069862850161680857b"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalHeldProjectionSet.swift","bytes":20414,"sha256":"4a46b2863e5883da943ea8b2cd92046d5bb93b31384616331d4ef11808d9b716","git_blob":"512e6b51a0ab758fb06a3b09fc19e10136fc59bf"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalHeldR19Source.swift","bytes":17673,"sha256":"2c5c7a6de1b5024c890318a3baeb45a25144ffd0c8eab3f3eac2429a2d16f554","git_blob":"c3ade9ab064a4a35ddc678dbf09b51dfee32aa81"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalMetricsBuilder.swift","bytes":39723,"sha256":"58022b73c8310b3eb2ba69ea450f6b702c18c16427d0f56aa41cb696e3ee0481","git_blob":"72cc06d0ec5da6bc52f31819bb6887b1918a3719"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionPredecessorAdmission.swift","bytes":9113,"sha256":"13b9b75c60141cf8d287a66a29b4601fb038bc36685d588ff6cb9340d473f592","git_blob":"af8512da51d5e3d88123b2258134a824f3e11862"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionReader.swift","bytes":58345,"sha256":"8c6faf8307d5b08b92ac0f910b755206eb140dd3710f98f2522afff7007f72a0","git_blob":"290c003f3f3b839e1308b89f0393cd6c399e9895"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionRuleResources.swift","bytes":19211,"sha256":"026f85632580d845ffc132a3687d12107584e0e4a63c064735902e4c10d25860","git_blob":"251b0c9ff013870d1603b17f93db4d8f244e4877"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalProjectionSetBuilder.swift","bytes":13769,"sha256":"609e71dbd8cc53eb2f6eb743ca6ec9b17c34008aeaf3de8d44cc9267378a934c","git_blob":"cc479d3a913e3a7a0ed03a9d318a03f3ecb95ca9"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalR19OBS11HeldNamespacePair.swift","bytes":24706,"sha256":"96a3fc3bb76c9fd879b5f9a3ff3da35e16706ff0ac41d3f39df3e4bbd9a22306","git_blob":"fab8f7b6f11e52b00f6b5b5e7697d8be07173581"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalR19OBS11ProjectionChain.swift","bytes":50562,"sha256":"752ecf3bcc7845cc4a7c6ae89a7a2077e4b0cf2cce8d72a9781c7b223789a112","git_blob":"ade7746a7b50118324457a45a62d0b92b26dc82b"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalR19OBS11ReceiptFrames.swift","bytes":13688,"sha256":"a218467787596abb51c253b0831316fe0e6f72ca145bf0d8a134796cf4400f77","git_blob":"64c29f7a89e200ead2b0b12c68033c50cd17d80a"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalSealedArtifactSet.swift","bytes":27119,"sha256":"a073e5bb9ef07229f58ad95d774465985d95cbf89c2130aebfd56182eaf7f02b","git_blob":"b03fb6c2afb0ea53f63239cd3c522b8b4b95260f"},
+    {"path":"Observability/ErgenticsInterface/Sources/DisposalProjectionCore/DisposalTypedProcessEvidence.swift","bytes":97319,"sha256":"516efa6441a3278bee33e0fef5ef903f9c2c551cbd3773243aa30273d1a7dc8b","git_blob":"f728719eb4d08f266edcdcc1d95e418422b25478"},
+    {"path":"Observability/ErgenticsInterface/Sources/ErgenticsR19OBS11ProjectionChain/main.swift","bytes":1599,"sha256":"3df10dfd1235ef5bc8f4d042c27bea062a226fb6fac66cc61fb31d8ce936a55a","git_blob":"25e5df235f3abc4101001733a204ba7ad612ed37"},
+    {"path":"Observability/ErgenticsInterface/Tests/DisposalProjectionCoreTests/DisposalR19OBS11ProjectionChainTests.swift","bytes":23274,"sha256":"80e4cb933c6dfb6c4c9ad3b15ba2d4340cc7775a7d233040a113fbfae956ffa0","git_blob":"a131f1836e3f71e84a7555e680e78d13cbf72b40"},
+    {"path":"Observability/ErgenticsInterface/Tests/DisposalProjectionCoreTests/R19OBS11ProjectionChainStaticSurfaceTests.swift","bytes":8030,"sha256":"2648f888a8aa15c28201aa6b18a9332578f9cafdc09c72728d4bc58f916e5649","git_blob":"a4b639311acf92f776f6d74f5cd5e86039099c81"}
+  ],
+  "artifact_addressing": "THIS_RECORD_IS_CONTENT_ADDRESSED_BY_ITS_SUCCESSOR_GIT_COMMIT_TREE_AND_DOES_NOT_SELF_EMBED_A_DIGEST"
+}

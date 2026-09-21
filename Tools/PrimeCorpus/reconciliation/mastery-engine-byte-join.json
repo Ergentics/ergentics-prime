@@ -1,0 +1,385 @@
+{
+  "scope": "Actual present source bytes; no build or new upstream history claim",
+  "masteryRoot": "/Users/ergentics/MasteryKit/Sources/MasteryKit/Engine",
+  "companionHead": "f7cfa6d59c906b9f2b9d458d592f12b029e227b9",
+  "comparisons": [
+    {
+      "root": "/Users/ergentics/pmhnp-companion-ergentics/PMHNPCompanion/PMHNPCompanion/Sources/Engine",
+      "matched": 9,
+      "masteryFiles": 17,
+      "files": [
+        {
+          "file": "Aggregator.swift",
+          "masterySHA256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "peerPresent": true,
+          "peerBytes": 4846,
+          "peerSHA256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "AntiRedundancy.swift",
+          "masterySHA256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "peerPresent": true,
+          "peerBytes": 3115,
+          "peerSHA256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Calibration.swift",
+          "masterySHA256": "7a646226eb0e604115f9b35497d789d670fbffed4e008c86705141861c515d4d",
+          "peerPresent": true,
+          "peerBytes": 11207,
+          "peerSHA256": "ac1268b0ff942ffd3e95f19808b832887195ad8896101f4fb46a7eff7e9d5456",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "CoupledRecall.swift",
+          "masterySHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "peerPresent": true,
+          "peerBytes": 3565,
+          "peerSHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EngineConstants.swift",
+          "masterySHA256": "7573dae4d066594f98dbeabec68393d4dced206a1b502c021a265f59fae44c0b",
+          "peerPresent": true,
+          "peerBytes": 9505,
+          "peerSHA256": "e2c991b716d8c35faccf75e858b8ee27ac402889ebd05038c438ebe7b67bd403",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "EngineV21.swift",
+          "masterySHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "peerPresent": true,
+          "peerBytes": 8602,
+          "peerSHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EventType.swift",
+          "masterySHA256": "27be4ea2d341e9366f363d3d8dcdee55b3b8577d886acaeaf0c11a72d2d56174",
+          "peerPresent": false
+        },
+        {
+          "file": "Headroom.swift",
+          "masterySHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "peerPresent": true,
+          "peerBytes": 2575,
+          "peerSHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "LearnerCalibration.swift",
+          "masterySHA256": "f099b807977951fb0a344e4aaef33d1aa4eabd1fa823ecef60eaa9155755287a",
+          "peerPresent": false
+        },
+        {
+          "file": "MatchScore.swift",
+          "masterySHA256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "peerPresent": true,
+          "peerBytes": 4923,
+          "peerSHA256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "PracticeEvent.swift",
+          "masterySHA256": "68d772de08f129defd49aec0556980973d77c1773c47d65f856987d7975ca643",
+          "peerPresent": false
+        },
+        {
+          "file": "Reading.swift",
+          "masterySHA256": "e30c125d21afe28a5d77ea8b0150d15a0725c7c6c198ef0bbd5d812433ef702d",
+          "peerPresent": false
+        },
+        {
+          "file": "RecencyKernel.swift",
+          "masterySHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "peerPresent": true,
+          "peerBytes": 1767,
+          "peerSHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Recommendation.swift",
+          "masterySHA256": "403fac367f730a0de99de5d9d6490de53e4e7bc858bb3e94e2ed05856d936b53",
+          "peerPresent": false
+        },
+        {
+          "file": "SelectionClass.swift",
+          "masterySHA256": "6eff0d9273a0df5cff7e3e56fd72cc5ba3d66f5ef00e43610873f931e1d63c06",
+          "peerPresent": false
+        },
+        {
+          "file": "SelectionClassifier.swift",
+          "masterySHA256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "peerPresent": true,
+          "peerBytes": 919,
+          "peerSHA256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Staleness.swift",
+          "masterySHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "peerPresent": true,
+          "peerBytes": 2409,
+          "peerSHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "exactBytesEqual": true
+        }
+      ]
+    },
+    {
+      "root": "/Users/ergentics/pmhnp-companion-ergentics/recommender-seat/Sources/SeatEngine",
+      "matched": 13,
+      "masteryFiles": 17,
+      "files": [
+        {
+          "file": "Aggregator.swift",
+          "masterySHA256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "peerPresent": true,
+          "peerBytes": 4846,
+          "peerSHA256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "AntiRedundancy.swift",
+          "masterySHA256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "peerPresent": true,
+          "peerBytes": 3115,
+          "peerSHA256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Calibration.swift",
+          "masterySHA256": "7a646226eb0e604115f9b35497d789d670fbffed4e008c86705141861c515d4d",
+          "peerPresent": true,
+          "peerBytes": 11207,
+          "peerSHA256": "ac1268b0ff942ffd3e95f19808b832887195ad8896101f4fb46a7eff7e9d5456",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "CoupledRecall.swift",
+          "masterySHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "peerPresent": true,
+          "peerBytes": 3565,
+          "peerSHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EngineConstants.swift",
+          "masterySHA256": "7573dae4d066594f98dbeabec68393d4dced206a1b502c021a265f59fae44c0b",
+          "peerPresent": true,
+          "peerBytes": 9505,
+          "peerSHA256": "e2c991b716d8c35faccf75e858b8ee27ac402889ebd05038c438ebe7b67bd403",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "EngineV21.swift",
+          "masterySHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "peerPresent": true,
+          "peerBytes": 8602,
+          "peerSHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EventType.swift",
+          "masterySHA256": "27be4ea2d341e9366f363d3d8dcdee55b3b8577d886acaeaf0c11a72d2d56174",
+          "peerPresent": true,
+          "peerBytes": 1200,
+          "peerSHA256": "27be4ea2d341e9366f363d3d8dcdee55b3b8577d886acaeaf0c11a72d2d56174",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Headroom.swift",
+          "masterySHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "peerPresent": true,
+          "peerBytes": 2575,
+          "peerSHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "LearnerCalibration.swift",
+          "masterySHA256": "f099b807977951fb0a344e4aaef33d1aa4eabd1fa823ecef60eaa9155755287a",
+          "peerPresent": true,
+          "peerBytes": 4125,
+          "peerSHA256": "36e8201b119f94dc6ceb93c9ad4121a079c47d1065dab2f60d611cf6ea3c0d2b",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "MatchScore.swift",
+          "masterySHA256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "peerPresent": true,
+          "peerBytes": 4923,
+          "peerSHA256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "PracticeEvent.swift",
+          "masterySHA256": "68d772de08f129defd49aec0556980973d77c1773c47d65f856987d7975ca643",
+          "peerPresent": true,
+          "peerBytes": 5557,
+          "peerSHA256": "49a32436f7e6accc49517e76d2142fcb37fc81f067ceb62bc4d4b1c5cb5c0dda",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "Reading.swift",
+          "masterySHA256": "e30c125d21afe28a5d77ea8b0150d15a0725c7c6c198ef0bbd5d812433ef702d",
+          "peerPresent": true,
+          "peerBytes": 1828,
+          "peerSHA256": "e30c125d21afe28a5d77ea8b0150d15a0725c7c6c198ef0bbd5d812433ef702d",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "RecencyKernel.swift",
+          "masterySHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "peerPresent": true,
+          "peerBytes": 1767,
+          "peerSHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Recommendation.swift",
+          "masterySHA256": "403fac367f730a0de99de5d9d6490de53e4e7bc858bb3e94e2ed05856d936b53",
+          "peerPresent": true,
+          "peerBytes": 2625,
+          "peerSHA256": "403fac367f730a0de99de5d9d6490de53e4e7bc858bb3e94e2ed05856d936b53",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "SelectionClass.swift",
+          "masterySHA256": "6eff0d9273a0df5cff7e3e56fd72cc5ba3d66f5ef00e43610873f931e1d63c06",
+          "peerPresent": true,
+          "peerBytes": 1128,
+          "peerSHA256": "6eff0d9273a0df5cff7e3e56fd72cc5ba3d66f5ef00e43610873f931e1d63c06",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "SelectionClassifier.swift",
+          "masterySHA256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "peerPresent": true,
+          "peerBytes": 919,
+          "peerSHA256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Staleness.swift",
+          "masterySHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "peerPresent": true,
+          "peerBytes": 2409,
+          "peerSHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "exactBytesEqual": true
+        }
+      ]
+    },
+    {
+      "root": "/Users/ergentics/pmhnp-companion-ergentics/native-bugsweep/Sources/ShippedEngine",
+      "matched": 5,
+      "masteryFiles": 17,
+      "files": [
+        {
+          "file": "Aggregator.swift",
+          "masterySHA256": "e4e7de8e92aabb6c2be8f839960f9de97523f89d63f1436846e57039994a1d12",
+          "peerPresent": false
+        },
+        {
+          "file": "AntiRedundancy.swift",
+          "masterySHA256": "80d41f246cc1a1cf007fb0cfdb09f2f3422f9ae159db0474815f58a3bb870683",
+          "peerPresent": false
+        },
+        {
+          "file": "Calibration.swift",
+          "masterySHA256": "7a646226eb0e604115f9b35497d789d670fbffed4e008c86705141861c515d4d",
+          "peerPresent": false
+        },
+        {
+          "file": "CoupledRecall.swift",
+          "masterySHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "peerPresent": true,
+          "peerBytes": 3565,
+          "peerSHA256": "86bd0bb80410d677d18af7c87abe61775b1b9ef2c9582095269bdcce316c1787",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EngineConstants.swift",
+          "masterySHA256": "7573dae4d066594f98dbeabec68393d4dced206a1b502c021a265f59fae44c0b",
+          "peerPresent": true,
+          "peerBytes": 9505,
+          "peerSHA256": "e2c991b716d8c35faccf75e858b8ee27ac402889ebd05038c438ebe7b67bd403",
+          "exactBytesEqual": false
+        },
+        {
+          "file": "EngineV21.swift",
+          "masterySHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "peerPresent": true,
+          "peerBytes": 8602,
+          "peerSHA256": "8d9cb14e538d14208aa029d437c9acefe7ac23ac1c21610bf19e1e72dc9625fa",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "EventType.swift",
+          "masterySHA256": "27be4ea2d341e9366f363d3d8dcdee55b3b8577d886acaeaf0c11a72d2d56174",
+          "peerPresent": false
+        },
+        {
+          "file": "Headroom.swift",
+          "masterySHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "peerPresent": true,
+          "peerBytes": 2575,
+          "peerSHA256": "c9a3f6a85e41710171117d23b87adae6a5e11cfb90b70c82bc9e54fa72cdbe17",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "LearnerCalibration.swift",
+          "masterySHA256": "f099b807977951fb0a344e4aaef33d1aa4eabd1fa823ecef60eaa9155755287a",
+          "peerPresent": false
+        },
+        {
+          "file": "MatchScore.swift",
+          "masterySHA256": "e585bbd85f15dafed29024be6a731788295d39b4e01c039f0d543cfecba4e521",
+          "peerPresent": false
+        },
+        {
+          "file": "PracticeEvent.swift",
+          "masterySHA256": "68d772de08f129defd49aec0556980973d77c1773c47d65f856987d7975ca643",
+          "peerPresent": false
+        },
+        {
+          "file": "Reading.swift",
+          "masterySHA256": "e30c125d21afe28a5d77ea8b0150d15a0725c7c6c198ef0bbd5d812433ef702d",
+          "peerPresent": false
+        },
+        {
+          "file": "RecencyKernel.swift",
+          "masterySHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "peerPresent": true,
+          "peerBytes": 1767,
+          "peerSHA256": "01a59e4670738f57e0a1d527b7ac03dbfdcbc3d0c6226c2c6e10b3ac6c579a0f",
+          "exactBytesEqual": true
+        },
+        {
+          "file": "Recommendation.swift",
+          "masterySHA256": "403fac367f730a0de99de5d9d6490de53e4e7bc858bb3e94e2ed05856d936b53",
+          "peerPresent": false
+        },
+        {
+          "file": "SelectionClass.swift",
+          "masterySHA256": "6eff0d9273a0df5cff7e3e56fd72cc5ba3d66f5ef00e43610873f931e1d63c06",
+          "peerPresent": false
+        },
+        {
+          "file": "SelectionClassifier.swift",
+          "masterySHA256": "1b4637aa6ee0d3bcf69d950ef822565e1389a4fc47ab06bef2ad3ff9b7f6c746",
+          "peerPresent": false
+        },
+        {
+          "file": "Staleness.swift",
+          "masterySHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "peerPresent": true,
+          "peerBytes": 2409,
+          "peerSHA256": "7c2aab7ce50b4c2aea6705ec95ad288bd095e4c4b059875041aaaca7419cb357",
+          "exactBytesEqual": true
+        }
+      ]
+    }
+  ]
+}

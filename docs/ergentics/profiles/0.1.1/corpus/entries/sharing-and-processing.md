@@ -1,0 +1,3 @@
+# Share selected knowledge and preserve boundaries
+A prepared packet records selected files and requested settings. Actual agent reads and execution need later observations. Agents sharing a filesystem are not isolated by separate output folders. Material submitted to a hosted model enters that hosting service's processing context. Local files, review labels and hashes do not establish provider retention controls, authority or offline inference.
+Keep first results separate where required, then review attributed contributions for a versioned corpus. Reading selected knowledge is distinct from model-weight training. This is authored current-task method guidance, with no raw history or credentials.
