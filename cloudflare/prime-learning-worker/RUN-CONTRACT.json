@@ -1,0 +1,76 @@
+{
+  "schema": "ergentics.prime.hosted-ai-pilot.v1",
+  "state": "AUTHORED_NOT_EXECUTED_NOT_DEPLOYED",
+  "accountId": "940705aeb10207356a9e0b2445bb06b6",
+  "worker": "ergentics-prime-learning-dev",
+  "workflow": "ergentics-prime-learning-pilot",
+  "attemptId": "PRIME-AI-BINDING-20261009-01",
+  "callerBoundary": "CLOUDFLARE_DASHBOARD_ACCOUNT_AUTHORIZATION_NOT_INDEPENDENT_HUMAN_IDENTITY",
+  "publicHttp": "EMPTY_404",
+  "workerDev": false,
+  "previewURLs": false,
+  "routes": [],
+  "schedules": [],
+  "defaultArmed": false,
+  "activationGates": [
+    "PILOT_ENABLED",
+    "PILOT_ROUTE_POLICY_ATTESTED",
+    "PILOT_DEFAULT_ALIAS_ATTESTED",
+    "PILOT_FALLBACK_DISABLED_ATTESTED"
+  ],
+  "canonicalStorage": {
+    "binding": "RUN_STATE",
+    "className": "PrimeLearningRun",
+    "jurisdiction": "us",
+    "fixedIdentityRequiredAcrossReplays": true,
+    "recreateToReset": false,
+    "deadlineAlarm": "ONE_SHOT_SEALS_ONLY_NEVER_INFERENCE"
+  },
+  "inference": {
+    "binding": "AI",
+    "gateway": "default",
+    "model": "dynamic/ergentics_learning_v1",
+    "providerKeyAliasRequired": "default",
+    "providerCredentialRetrieved": false,
+    "input": "FIXED_SYNTHETIC_PUBLIC_DOC_QUESTION",
+    "requestedMaxOutputTokens": 8,
+    "stream": false,
+    "cache": "SKIP_REQUESTED",
+    "contentLogging": "DISABLED_REQUESTED",
+    "maxControllerDispatches": 1,
+    "workflowRetries": 0,
+    "physicalProviderCalls": "UNOBSERVED",
+    "providerCancellation": "NOT_ESTABLISHED",
+    "firstDisabledCloudInvocationDispatches": 0,
+    "controllerAllowanceMs": 30000,
+    "workflowStepTimeoutSeconds": 45
+  },
+  "authority": {
+    "currentNativeGrant": [
+      "account:read",
+      "artifacts:write"
+    ],
+    "workerUploadDocumentedPermission": "Workers Scripts Write",
+    "workflowCreateAndLaunchDocumentedPermission": "Workers Scripts Write",
+    "allAncillaryDeployEndpointMinimums": "NOT_QUALIFIED",
+    "managementAndProviderCredentialsSeparate": true,
+    "newLocalCredentialInput": false
+  },
+  "qualification": {
+    "localSourceExecution": "NOT_RUN",
+    "cloudBuild": "NOT_RUN",
+    "runtimeDeployment": "NOT_SUBMITTED",
+    "hostedAcceptanceCases": "NOT_RUN",
+    "providerModelIdentity": "NOT_INDEPENDENTLY_QUALIFIED",
+    "providerBilling": "UNKNOWN",
+    "currentRouteGraph": "NOT_READ_THIS_TURN",
+    "gateEvidence": "OWNER_OPERATOR_ATTESTATION_NOT_API_READBACK",
+    "usWorkflowOrProviderProcessing": "NOT_ESTABLISHED",
+    "exactlyOnceExternalInference": "NOT_CLAIMED",
+    "findings": "ALL_TWELVE_OPEN",
+    "hostedResponseProjectionGoldenCases": "AUTHORED_NOT_RUN",
+    "actualUpstreamErrorDeadlinePaths": "CONDITIONAL_NOT_RUN",
+    "hostedResponseProjectionGoldenCaseCount": 11,
+    "unreadCanonicalLedgerRefusal": "UNKNOWN_NOT_READ_NOT_UNCONSUMED"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "ergentics.prime.github-source-origin.v1",
+  "owner": "Ergentics",
+  "date": "2026-10-09",
+  "source": {
+    "service": "Cloudflare Artifacts",
+    "namespace": "ergentics-prime-us",
+    "repository": "ergentics-prime",
+    "jurisdiction": "us",
+    "commit": "d965b2bf3831f4d6bbe16a4a67ab4d401acd8e3c",
+    "tree": "746e82cd735e4f72597d334552a13e361149b484",
+    "runtimeOriginalCommit": "90603cf8a8a6bceebcfded016541df86ea5bd8c1",
+    "projectRoot": "reviews/prime-worker-curriculum-v1/cloudflare/prime-learning-worker"
+  },
+  "destination": {
+    "repository": "Ergentics/ergentics-prime",
+    "visibility": "public",
+    "branch": "review/cloudflare-learning-20261009",
+    "baseCommit": "c0fb08006755b54d56230d2eb28a84438e00e4a1",
+    "projectRoot": "cloudflare/prime-learning-worker",
+    "mode": "SELECTED_ONE_WAY_SOURCE_COPY_NOT_AUTOMATIC_SYNC"
+  },
+  "exactFiles": [
+    {
+      "path": "worker.mjs",
+      "bytes": 14920,
+      "sha256": "8eeed328e614ca4e05c07e52ed038119ee56a6c188f46f486a7c9e645bddf1e5",
+      "gitBlob": "27f03ce6350e80889baed3cb4310c063c6133f67"
+    },
+    {
+      "path": "wrangler.jsonc",
+      "bytes": 988,
+      "sha256": "510f778fd6d00a0ab75816630128afe70bcc9100b539a9881f0d9011d3027743",
+      "gitBlob": "3d9849b46ef10a8b0fc60c49928a49e4392a9f93"
+    },
+    {
+      "path": "RUN-CONTRACT.json",
+      "bytes": 2763,
+      "sha256": "e61a4696b419070f30774cda6e69a6832af17a134da4ef737d93e90d566c9c49",
+      "gitBlob": "dff61a10390a70435863559c771712ccfb17e5fe"
+    }
+  ],
+  "adaptedDocuments": [
+    "README.md",
+    "HOSTED-PILOT.md",
+    "../GITHUB-CONNECTION.md",
+    "../CHANGELOG.md"
+  ],
+  "historicalAuthorityField": "RUN-CONTRACT.json authority.currentNativeGrant predates verified workers_scripts:write extension; it is not the current grant inventory",
+  "laterVerifiedNativeGrant": [
+    "offline_access",
+    "account:read",
+    "artifacts:write",
+    "workers_scripts:write"
+  ],
+  "qualification": {
+    "sourceExecution": "NOT_RUN",
+    "deployment": "NOT_SUBMITTED",
+    "hostedFixtures": "NOT_RUN",
+    "inference": "NOT_RUN",
+    "activationGates": false,
+    "cloudflareGitHubAppConnection": "NOT_VERIFIED",
+    "automaticSync": "NOT_ESTABLISHED",
+    "downstreamAutomation": "NOT_ASSESSED",
+    "usWorkerWorkflowProviderProcessing": "NOT_ESTABLISHED",
+    "findings": "ALL_TWELVE_OPEN",
+    "gitSignature": "NOT_CLAIMED",
+    "originalSourceNotices": "INHERITED_FROM_GITHUB_BASE_UNCHANGED"
+  },
+  "credentials": {
+    "included": false,
+    "input": false,
+    "retrievedProviderKey": false
+  }
+}
